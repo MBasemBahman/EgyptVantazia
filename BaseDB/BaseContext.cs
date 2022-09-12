@@ -1,10 +1,18 @@
-﻿using Entities.DBModels.DashboardAdministrationModels;
+﻿using Entities.DBModels.AccountModels;
+using Entities.DBModels.AppInfoModels;
+using Entities.DBModels.DashboardAdministrationModels;
+using Entities.DBModels.LocationModels;
 using Entities.DBModels.SharedModels;
+using Entities.DBModels.SponsorModels;
+using Entities.DBModels.TeamModels;
 using Entities.DBModels.UserModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata;
+using ModelBuilderConfig.Configurations.AccountModels;
+using ModelBuilderConfig.Configurations.AppInfoModels;
 using ModelBuilderConfig.Configurations.DashboardAdministrationModels;
+using ModelBuilderConfig.Configurations.SponsorViewModels;
 using ModelBuilderConfig.Configurations.UserModels;
 
 namespace BaseDB
@@ -31,6 +39,31 @@ namespace BaseDB
         public DbSet<DashboardAdministrationRole> DashboardAdministrationRoles { get; set; }
         public DbSet<DashboardAdministrator> DashboardAdministrators { get; set; }
         public DbSet<DashboardView> DashboardViews { get; set; }
+
+        #endregion
+
+        #region AppInfoModels
+        public DbSet<AppAbout> AppAbout { get; set; }
+        #endregion
+
+        #region LocationModels
+        public DbSet<Country> Countries { get; set; }
+        #endregion
+
+        #region AccountModels
+        public DbSet<Account> Accounts { get; set; }
+        #endregion
+
+        #region SponsorModels
+        public DbSet<Sponsor> Sponsors { get; set; }
+        public DbSet<SponsorView> SponsorViews { get; set; }
+        #endregion
+
+        #region TeamModels
+        public DbSet<Team> Teams { get; set; }
+        public DbSet<Player> Players { get; set; }
+        public DbSet<PlayerPosition> PlayerPositions { get; set; }
+        public DbSet<PlayerPrice> PlayerPrices { get; set; }
 
         #endregion
 
@@ -75,6 +108,22 @@ namespace BaseDB
 
             #endregion
 
+            #region AppInfoModels
+            _ = modelBuilder.ApplyConfiguration(new AppAboutConfiguration());
+            _ = modelBuilder.ApplyConfiguration(new AppAboutLangConfiguration());
+            #endregion
+
+            #region AccountModels
+            _ = modelBuilder.ApplyConfiguration(new AccountConfiguration());
+            #endregion
+
+            #region SponsorModels
+            _ = modelBuilder.ApplyConfiguration(new SponsorViewConfiguration());
+            #endregion
+
+            #region TeamModels
+
+            #endregion
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)

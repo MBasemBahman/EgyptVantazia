@@ -1,4 +1,5 @@
-﻿using Entities.DBModels.DashboardAdministrationModels;
+﻿using Entities.DBModels.AccountModels;
+using Entities.DBModels.DashboardAdministrationModels;
 
 namespace Entities.DBModels.UserModels
 {
@@ -31,6 +32,9 @@ namespace Entities.DBModels.UserModels
 
         [DisplayName(nameof(DashboardAdministrator))]
         public DashboardAdministrator DashboardAdministrator { get; set; }
+
+        [DisplayName(nameof(Account))]
+        public Account Account { get; set; }
 
         [DisplayName(nameof(RefreshTokens))]
         public List<RefreshToken> RefreshTokens { get; set; }

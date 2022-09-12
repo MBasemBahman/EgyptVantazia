@@ -14,12 +14,9 @@
             Developer = 1,
         }
 
-        public enum ScoringSystemEnum
+        public enum AppViewEnum
         {
-            MET = 1,
-            PARTIALMET = 2,
-            NOTMET = 3,
-            NOTApplicable = 4
+
         }
 
         public enum DashboardViewEnum
@@ -33,9 +30,6 @@
             RefreshToken = 7,
             UserDevice = 8,
             Verification = 9,
-            Enterprise = 10,
-            EnterpriseType = 11,
-            Governerate = 12
         }
     }
 }

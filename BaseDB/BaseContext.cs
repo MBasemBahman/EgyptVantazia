@@ -5,10 +5,12 @@ using Entities.DBModels.DashboardAdministrationModels;
 using Entities.DBModels.LocationModels;
 using Entities.DBModels.NewsModels;
 using Entities.DBModels.PlayerScoreModels;
+using Entities.DBModels.PlayersTransfersModels;
 using Entities.DBModels.PrivateLeagueModels;
 using Entities.DBModels.SeasonModels;
 using Entities.DBModels.SharedModels;
 using Entities.DBModels.SponsorModels;
+using Entities.DBModels.StandingsModels;
 using Entities.DBModels.TeamModels;
 using Entities.DBModels.UserModels;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +24,7 @@ using ModelBuilderConfig.Configurations.PlayerScoreModels;
 using ModelBuilderConfig.Configurations.PrivateLeagueModels;
 using ModelBuilderConfig.Configurations.SeasonModels;
 using ModelBuilderConfig.Configurations.SponsorModels;
+using ModelBuilderConfig.Configurations.StandingsModels;
 using ModelBuilderConfig.Configurations.UserModels;
 
 namespace BaseDB
@@ -108,6 +111,15 @@ namespace BaseDB
 
         #endregion
 
+        #region PlayersTransfersModels
+        public DbSet<PlayerTransfer> PlayerTransfers { get; set; }
+        #endregion
+
+        #region StandingsModels
+        public DbSet<Standings> Standings { get; set; }
+
+        #endregion
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             foreach (IMutableEntityType entityType in modelBuilder.Model.GetEntityTypes()
@@ -181,6 +193,10 @@ namespace BaseDB
 
             #region PrivateLeagueModels
             _ = modelBuilder.ApplyConfiguration(new PrivateLeagueMemberConfiguration());
+            #endregion
+
+            #region StandingsModels
+            _ = modelBuilder.ApplyConfiguration(new StandingsConfiguration());
             #endregion
         }
 

@@ -11,5 +11,10 @@
         {
 
         }
+
+        public enum TransferTypeEnum
+        {
+
+        }
     }
 }

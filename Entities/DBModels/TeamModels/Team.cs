@@ -1,5 +1,6 @@
 ﻿using Entities.DBModels.AccountModels;
 using Entities.DBModels.SeasonModels;
+using Entities.DBModels.StandingsModels;
 
 namespace Entities.DBModels.TeamModels
 {
@@ -27,6 +28,9 @@ namespace Entities.DBModels.TeamModels
 
         [DisplayName(nameof(AccountFavourites))]
         public IList<Account> AccountFavourites { get; set; }
+
+        [DisplayName(nameof(Standings))]
+        public IList<Standings> Standings { get; set; }
 
         public TeamLang TeamLang { get; set; }
     }

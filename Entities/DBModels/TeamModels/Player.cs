@@ -1,5 +1,6 @@
 ﻿using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.PlayerScoreModels;
+using Entities.DBModels.PlayersTransfersModels;
 
 namespace Entities.DBModels.TeamModels
 {
@@ -34,6 +35,9 @@ namespace Entities.DBModels.TeamModels
 
         [DisplayName(nameof(AccountTeamPlayers))]
         public IList<AccountTeamPlayer> AccountTeamPlayers { get; set; }
+
+        [DisplayName(nameof(PlayerTransfers))]
+        public IList<PlayerTransfer> PlayerTransfers { get; set; }
 
         public PlayerPositionLang PlayerPositionLang { get; set; }
     }

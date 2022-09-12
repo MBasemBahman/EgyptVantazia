@@ -1,4 +1,6 @@
-﻿using Entities.DBModels.LocationModels;
+﻿using Entities.DBModels.AccountTeamModels;
+using Entities.DBModels.LocationModels;
+using Entities.DBModels.PrivateLeagueModels;
 using Entities.DBModels.TeamModels;
 using Entities.DBModels.UserModels;
 
@@ -50,5 +52,11 @@ namespace Entities.DBModels.AccountModels
 
         [DisplayName(nameof(FavouriteTeam))]
         public Team FavouriteTeam { get; set; }
+
+        [DisplayName(nameof(AccountTeams))]
+        public IList<AccountTeam> AccountTeams { get; set; }
+
+        [DisplayName(nameof(PrivateLeagueMembers))]
+        public IList<PrivateLeagueMember> PrivateLeagueMembers { get; set; }
     }
 }

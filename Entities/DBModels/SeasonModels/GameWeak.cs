@@ -1,4 +1,5 @@
-﻿using Entities.DBModels.NewsModels;
+﻿using Entities.DBModels.AccountTeamModels;
+using Entities.DBModels.NewsModels;
 using Entities.DBModels.PlayerScoreModels;
 
 namespace Entities.DBModels.SeasonModels
@@ -27,6 +28,12 @@ namespace Entities.DBModels.SeasonModels
 
         [DisplayName(nameof(PlayerGameWeaks))]
         public IList<PlayerGameWeak> PlayerGameWeaks { get; set; }
+
+        [DisplayName(nameof(AccountTeamGameWeaks))]
+        public IList<AccountTeamGameWeak> AccountTeamGameWeaks { get; set; }
+
+        [DisplayName(nameof(AccountTeamPlayerGameWeaks))]
+        public IList<AccountTeamPlayerGameWeak> AccountTeamPlayerGameWeaks { get; set; }
 
         public SeasonLang SeasonLang { get; set; }
     }

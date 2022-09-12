@@ -1,4 +1,6 @@
-﻿namespace Entities.DBModels.SeasonModels
+﻿using Entities.DBModels.AccountTeamModels;
+
+namespace Entities.DBModels.SeasonModels
 {
     [Index(nameof(Name), IsUnique = true)]
     public class Season : AuditImageEntity, ILookUpEntity
@@ -12,6 +14,10 @@
 
         [DisplayName(nameof(GameWeaks))]
         public IList<GameWeak> GameWeaks { get; set; }
+
+
+        [DisplayName(nameof(AccountTeams))]
+        public IList<AccountTeam> AccountTeams { get; set; }
 
         public SeasonLang SeasonLang { get; set; }
     }

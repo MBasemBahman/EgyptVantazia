@@ -1,4 +1,5 @@
-﻿using Entities.DBModels.PlayerScoreModels;
+﻿using Entities.DBModels.AccountTeamModels;
+using Entities.DBModels.PlayerScoreModels;
 
 namespace Entities.DBModels.TeamModels
 {
@@ -30,6 +31,9 @@ namespace Entities.DBModels.TeamModels
 
         [DisplayName(nameof(PlayerGameWeaks))]
         public IList<PlayerGameWeak> PlayerGameWeaks { get; set; }
+
+        [DisplayName(nameof(AccountTeamPlayers))]
+        public IList<AccountTeamPlayer> AccountTeamPlayers { get; set; }
 
         public PlayerPositionLang PlayerPositionLang { get; set; }
     }

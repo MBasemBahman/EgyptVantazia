@@ -1,9 +1,11 @@
 ﻿using Entities.DBModels.AccountModels;
+using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.AppInfoModels;
 using Entities.DBModels.DashboardAdministrationModels;
 using Entities.DBModels.LocationModels;
 using Entities.DBModels.NewsModels;
 using Entities.DBModels.PlayerScoreModels;
+using Entities.DBModels.PrivateLeagueModels;
 using Entities.DBModels.SeasonModels;
 using Entities.DBModels.SharedModels;
 using Entities.DBModels.SponsorModels;
@@ -13,9 +15,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata;
 using ModelBuilderConfig.Configurations.AccountModels;
+using ModelBuilderConfig.Configurations.AccountTeamModels;
 using ModelBuilderConfig.Configurations.AppInfoModels;
 using ModelBuilderConfig.Configurations.DashboardAdministrationModels;
 using ModelBuilderConfig.Configurations.PlayerScoreModels;
+using ModelBuilderConfig.Configurations.PrivateLeagueModels;
 using ModelBuilderConfig.Configurations.SeasonModels;
 using ModelBuilderConfig.Configurations.SponsorModels;
 using ModelBuilderConfig.Configurations.UserModels;
@@ -89,6 +93,21 @@ namespace BaseDB
         public DbSet<PlayerGameWeakScore> PlayerGameWeakScores { get; set; }
         #endregion
 
+        #region AccountTeamModels
+        public DbSet<AccountTeam> AccountTeams { get; set; }
+        public DbSet<AccountTeamPlayer> AccountTeamPlayers { get; set; }
+        public DbSet<AccountTeamGameWeak> AccountTeamGameWeaks { get; set; }
+        public DbSet<TeamPlayerType> TeamPlayerTypes { get; set; }
+        public DbSet<AccountTeamPlayerGameWeak> AccountTeamPlayerGameWeaks { get; set; }
+
+        #endregion
+
+        #region PrivateLeagueModels
+        public DbSet<PrivateLeague> PrivateLeagues { get; set; }
+        public DbSet<PrivateLeagueMember> PrivateLeagueMembers { get; set; }
+
+        #endregion
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             foreach (IMutableEntityType entityType in modelBuilder.Model.GetEntityTypes()
@@ -151,6 +170,17 @@ namespace BaseDB
             #region PlayerScoreModels
             _ = modelBuilder.ApplyConfiguration(new PlayerGameWeakConfiguration());
             _ = modelBuilder.ApplyConfiguration(new PlayerGameWeakScoreConfiguration());
+            #endregion
+
+            #region AccountTeamModels
+            _ = modelBuilder.ApplyConfiguration(new AccountTeamConfiguration());
+            _ = modelBuilder.ApplyConfiguration(new AccountTeamGameWeakConfiguration());
+            _ = modelBuilder.ApplyConfiguration(new AccountTeamPlayerConfiguration());
+            _ = modelBuilder.ApplyConfiguration(new AccountTeamPlayerGameWeakConfiguration());
+            #endregion
+
+            #region PrivateLeagueModels
+            _ = modelBuilder.ApplyConfiguration(new PrivateLeagueMemberConfiguration());
             #endregion
         }
 

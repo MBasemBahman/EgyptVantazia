@@ -1,9 +1,10 @@
 ﻿using Entities.DBModels.LocationModels;
+using Entities.DBModels.TeamModels;
 using Entities.DBModels.UserModels;
 
 namespace Entities.DBModels.AccountModels
 {
-    public class Account: AuditImageEntity
+    public class Account : AuditImageEntity
     {
         [DisplayName(nameof(User))]
         [ForeignKey(nameof(User))]
@@ -42,5 +43,12 @@ namespace Entities.DBModels.AccountModels
         [DisplayName(nameof(Address))]
         [DataType(DataType.MultilineText)]
         public string Address { get; set; }
+
+        [DisplayName(nameof(FavouriteTeam))]
+        [ForeignKey(nameof(FavouriteTeam))]
+        public int Fk_FavouriteTeam { get; set; }
+
+        [DisplayName(nameof(FavouriteTeam))]
+        public Team FavouriteTeam { get; set; }
     }
 }

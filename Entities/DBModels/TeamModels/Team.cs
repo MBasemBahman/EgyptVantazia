@@ -1,4 +1,7 @@
-﻿namespace Entities.DBModels.TeamModels
+﻿using Entities.DBModels.AccountModels;
+using Entities.DBModels.SeasonModels;
+
+namespace Entities.DBModels.TeamModels
 {
     [Index(nameof(Name), IsUnique = true)]
     public class Team : AuditImageEntity, ILookUpEntity
@@ -15,6 +18,15 @@
 
         [DisplayName(nameof(PlayerPrices))]
         public IList<PlayerPrice> PlayerPrices { get; set; }
+
+        [DisplayName(nameof(HomeGameWeaks))]
+        public IList<TeamGameWeak> HomeGameWeaks { get; set; }
+
+        [DisplayName(nameof(AwayGameWeaks))]
+        public IList<TeamGameWeak> AwayGameWeaks { get; set; }
+
+        [DisplayName(nameof(AccountFavourites))]
+        public IList<Account> AccountFavourites { get; set; }
 
         public TeamLang TeamLang { get; set; }
     }

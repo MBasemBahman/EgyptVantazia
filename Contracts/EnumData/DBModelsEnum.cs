@@ -14,11 +14,6 @@
             Developer = 1,
         }
 
-        public enum AppViewEnum
-        {
-
-        }
-
         public enum DashboardViewEnum
         {
             Home = 1,

@@ -1,6 +1,5 @@
 ﻿
 using Entities.DBModels.AccountModels;
-using Entities.DBModels.LocationModels;
 
 namespace ModelBuilderConfig.Configurations.AccountModels
 {
@@ -8,11 +7,11 @@ namespace ModelBuilderConfig.Configurations.AccountModels
     {
         public void Configure(EntityTypeBuilder<Account> builder)
         {
-            builder.HasOne<Country>()
+            _ = builder.HasOne(a => a.Country)
                    .WithMany(a => a.Accounts)
                    .HasForeignKey(a => a.Fk_Country);
 
-            builder.HasOne<Country>()
+            _ = builder.HasOne(a => a.Nationality)
                    .WithMany(a => a.AccountNationalities)
                    .HasForeignKey(a => a.Fk_Nationality);
         }

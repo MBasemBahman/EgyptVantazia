@@ -2,6 +2,8 @@
 using Entities.DBModels.AppInfoModels;
 using Entities.DBModels.DashboardAdministrationModels;
 using Entities.DBModels.LocationModels;
+using Entities.DBModels.NewsModels;
+using Entities.DBModels.SeasonModels;
 using Entities.DBModels.SharedModels;
 using Entities.DBModels.SponsorModels;
 using Entities.DBModels.TeamModels;
@@ -12,7 +14,8 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using ModelBuilderConfig.Configurations.AccountModels;
 using ModelBuilderConfig.Configurations.AppInfoModels;
 using ModelBuilderConfig.Configurations.DashboardAdministrationModels;
-using ModelBuilderConfig.Configurations.SponsorViewModels;
+using ModelBuilderConfig.Configurations.SeasonModels;
+using ModelBuilderConfig.Configurations.SponsorModels;
 using ModelBuilderConfig.Configurations.UserModels;
 
 namespace BaseDB
@@ -59,12 +62,23 @@ namespace BaseDB
         public DbSet<SponsorView> SponsorViews { get; set; }
         #endregion
 
+        #region NewsModels
+        public DbSet<News> News { get; set; }
+        public DbSet<NewsAttachment> NewsAttachments { get; set; }
+        #endregion
+
         #region TeamModels
         public DbSet<Team> Teams { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<PlayerPosition> PlayerPositions { get; set; }
         public DbSet<PlayerPrice> PlayerPrices { get; set; }
 
+        #endregion
+
+        #region SeasonModels
+        public DbSet<Season> Seasons { get; set; }
+        public DbSet<GameWeak> GameWeaks { get; set; }
+        public DbSet<TeamGameWeak> TeamGameWeaks { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -121,8 +135,9 @@ namespace BaseDB
             _ = modelBuilder.ApplyConfiguration(new SponsorViewConfiguration());
             #endregion
 
-            #region TeamModels
-
+            #region SeasonModels
+            _ = modelBuilder.ApplyConfiguration(new GameWeakConfiguration());
+            _ = modelBuilder.ApplyConfiguration(new TeamGameWeakConfiguration());
             #endregion
         }
 

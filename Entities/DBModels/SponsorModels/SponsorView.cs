@@ -1,4 +1,6 @@
-﻿namespace Entities.DBModels.SponsorModels
+﻿using static Entities.EnumData.LogicEnumData;
+
+namespace Entities.DBModels.SponsorModels
 {
     public class SponsorView : BaseEntity
     {
@@ -10,6 +12,6 @@
         public Sponsor Sponsor { get; set; }
 
         [DisplayName(nameof(AppViewEnum))]
-        public int AppViewEnum { get; set; }
+        public AppViewEnum AppViewEnum { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 using Entities.DBModels.SponsorModels;
 
-namespace ModelBuilderConfig.Configurations.SponsorViewModels
+namespace ModelBuilderConfig.Configurations.SponsorModels
 {
     public class SponsorViewConfiguration : IEntityTypeConfiguration<SponsorView>
     {

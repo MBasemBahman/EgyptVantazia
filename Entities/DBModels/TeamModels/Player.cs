@@ -1,4 +1,6 @@
-﻿namespace Entities.DBModels.TeamModels
+﻿using Entities.DBModels.PlayerScoreModels;
+
+namespace Entities.DBModels.TeamModels
 {
     public class Player : AuditImageEntity, ILookUpEntity
     {
@@ -25,6 +27,9 @@
 
         [DisplayName(nameof(PlayerNumber))]
         public string PlayerNumber { get; set; }
+
+        [DisplayName(nameof(PlayerGameWeaks))]
+        public IList<PlayerGameWeak> PlayerGameWeaks { get; set; }
 
         public PlayerPositionLang PlayerPositionLang { get; set; }
     }

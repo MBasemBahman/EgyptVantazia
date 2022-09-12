@@ -3,6 +3,7 @@ using Entities.DBModels.AppInfoModels;
 using Entities.DBModels.DashboardAdministrationModels;
 using Entities.DBModels.LocationModels;
 using Entities.DBModels.NewsModels;
+using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.SeasonModels;
 using Entities.DBModels.SharedModels;
 using Entities.DBModels.SponsorModels;
@@ -14,6 +15,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using ModelBuilderConfig.Configurations.AccountModels;
 using ModelBuilderConfig.Configurations.AppInfoModels;
 using ModelBuilderConfig.Configurations.DashboardAdministrationModels;
+using ModelBuilderConfig.Configurations.PlayerScoreModels;
 using ModelBuilderConfig.Configurations.SeasonModels;
 using ModelBuilderConfig.Configurations.SponsorModels;
 using ModelBuilderConfig.Configurations.UserModels;
@@ -81,6 +83,12 @@ namespace BaseDB
         public DbSet<TeamGameWeak> TeamGameWeaks { get; set; }
         #endregion
 
+        #region PlayerScoreModels
+        public DbSet<ScoreType> ScoreTypes { get; set; }
+        public DbSet<PlayerGameWeak> PlayerGameWeaks { get; set; }
+        public DbSet<PlayerGameWeakScore> PlayerGameWeakScores { get; set; }
+        #endregion
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             foreach (IMutableEntityType entityType in modelBuilder.Model.GetEntityTypes()
@@ -138,6 +146,11 @@ namespace BaseDB
             #region SeasonModels
             _ = modelBuilder.ApplyConfiguration(new GameWeakConfiguration());
             _ = modelBuilder.ApplyConfiguration(new TeamGameWeakConfiguration());
+            #endregion
+
+            #region PlayerScoreModels
+            _ = modelBuilder.ApplyConfiguration(new PlayerGameWeakConfiguration());
+            _ = modelBuilder.ApplyConfiguration(new PlayerGameWeakScoreConfiguration());
             #endregion
         }
 

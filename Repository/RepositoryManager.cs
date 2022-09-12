@@ -1,4 +1,5 @@
 ﻿using Repository.DBModels.DashboardAdministrationModels;
+using Repository.DBModels.LocationModels;
 
 namespace Repository
 {
@@ -21,6 +22,10 @@ namespace Repository
         private DashboardAdministratorRepository _dashboardAdministratorRepository;
         private DashboardViewRepository _dashboardViewRepository;
 
+        #endregion
+
+        #region LocationModels
+        private CountryRepository _countryRepository;
         #endregion
 
         public RepositoryManager(DbContext dBContext)
@@ -124,5 +129,15 @@ namespace Repository
 
         #endregion
 
+        #region LocationModels
+        public CountryRepository Country
+        {
+            get
+            {
+                _countryRepository ??= new CountryRepository(_dBContext);
+                return _countryRepository;
+            }
+        }
+        #endregion
     }
 }

@@ -29,6 +29,10 @@ namespace Entities.CoreServicesModels.AccountModels
         public DateTime? LastActiveFrom { get; set; }
 
         public DateTime? LastActiveTo { get; set; }
+
+        public int Fk_Country { get; set; }
+        public int Fk_Nationality { get; set; }
+        public int Fk_FavouriteTeam { get; set; }
     }
 
     public class AccountModel : AuditImageEntity

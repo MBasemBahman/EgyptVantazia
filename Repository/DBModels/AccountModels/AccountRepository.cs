@@ -24,7 +24,10 @@ namespace Repository.DBModels.AccountModels
                            parameters.IsLoginBefore,
                            parameters.AccountUserName,
                            parameters.Phone,
-                           parameters.Email);
+                           parameters.Email,
+                           parameters.Fk_Country,
+                           parameters.Fk_Nationality,
+                           parameters.Fk_FavouriteTeam);
 
         }
 
@@ -83,10 +86,18 @@ namespace Repository.DBModels.AccountModels
             bool? isLoginBefore,
             string accountUserName,
             string phone,
-            string email)
+            string email,
+            int fk_Country,
+            int fk_Nationality,
+            int fk_FavouriteTeam)
         {
             return accounts.Where(a => (id == 0 || a.Id == id) &&
                                        (fk_Account_Ignored == 0 || a.Id != fk_Account_Ignored) &&
+
+                                       (fk_Country == 0 || a.Fk_Country == fk_Country) &&
+                                       (fk_Nationality == 0 || a.Fk_Nationality == fk_Nationality) &&
+                                       (fk_FavouriteTeam == 0 || a.Fk_FavouriteTeam == fk_FavouriteTeam) &&
+
                                        (isLoginBefore == null || (isLoginBefore == true ? a.User.RefreshTokens.Any() : !a.User.RefreshTokens.Any())) &&
                                        (fk_Accounts == null || !fk_Accounts.Any() || fk_Accounts.Contains(a.Id)) &&
                                        (fk_User == 0 || a.Fk_User == fk_User) &&

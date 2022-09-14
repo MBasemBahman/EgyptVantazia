@@ -1,6 +1,5 @@
 ﻿using Entities.CoreServicesModels.PrivateLeagueModels;
 using Entities.DBModels.PrivateLeagueModels;
-using Entities.RequestFeatures;
 
 
 namespace Repository.DBModels.PrivateLeagueModels
@@ -45,7 +44,7 @@ namespace Repository.DBModels.PrivateLeagueModels
     public static class PrivateLeagueMemberRepositoryExtension
     {
         public static IQueryable<PrivateLeagueMember> Filter(
-            this IQueryable<PrivateLeagueMember> PrivateLeagueMembers, 
+            this IQueryable<PrivateLeagueMember> PrivateLeagueMembers,
             int id,
             int Fk_Account,
             int Fk_PrivateLeague

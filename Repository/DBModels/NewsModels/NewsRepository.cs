@@ -1,6 +1,5 @@
 ﻿using Entities.CoreServicesModels.NewsModels;
 using Entities.DBModels.NewsModels;
-using Entities.RequestFeatures;
 
 
 namespace Repository.DBModels.NewsModels

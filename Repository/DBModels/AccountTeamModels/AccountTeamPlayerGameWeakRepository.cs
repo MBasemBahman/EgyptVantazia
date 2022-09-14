@@ -1,6 +1,5 @@
 ﻿using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.DBModels.AccountTeamModels;
-using Entities.RequestFeatures;
 
 namespace Repository.DBModels.AccountTeamModels
 {
@@ -51,7 +50,7 @@ namespace Repository.DBModels.AccountTeamModels
 
         {
             return AccountTeamPlayerGameWeaks.Where(a => (id == 0 || a.Id == id) &&
-                                                   (Fk_AccountTeamPlayer == 0 || a.Fk_AccountTeamPlayer == Fk_AccountTeamPlayer)&&
+                                                   (Fk_AccountTeamPlayer == 0 || a.Fk_AccountTeamPlayer == Fk_AccountTeamPlayer) &&
                                                    (Fk_TeamPlayerType == 0 || a.Fk_TeamPlayerType == Fk_TeamPlayerType));
 
 

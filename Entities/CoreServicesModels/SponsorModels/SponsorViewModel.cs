@@ -1,10 +1,4 @@
-﻿using Entities.DBModels.SponsorModels;
-using Entities.RequestFeatures;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Entities.RequestFeatures;
 using static Entities.EnumData.LogicEnumData;
 
 namespace Entities.CoreServicesModels.SponsorModels

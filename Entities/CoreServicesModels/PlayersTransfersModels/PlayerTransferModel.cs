@@ -1,17 +1,9 @@
-﻿using Entities.DBModels.AccountTeamModels;
-using Entities.DBModels.SeasonModels;
-using Entities.DBModels.TeamModels;
-using Entities.RequestFeatures;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Entities.RequestFeatures;
 using static Entities.EnumData.LogicEnumData;
 
 namespace Entities.CoreServicesModels.PlayersTransfersModels
 {
-    public class PlayerTransferParameters:RequestParameters
+    public class PlayerTransferParameters : RequestParameters
     {
         public int Fk_Player { get; set; }
 

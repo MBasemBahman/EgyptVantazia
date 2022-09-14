@@ -1,6 +1,5 @@
 ﻿using Entities.CoreServicesModels.PlayerScoreModels;
 using Entities.DBModels.PlayerScoreModels;
-using Entities.RequestFeatures;
 
 
 namespace Repository.DBModels.PlayerScoreModels
@@ -53,7 +52,7 @@ namespace Repository.DBModels.PlayerScoreModels
             return PlayerGameWeaks.Where(a => (id == 0 || a.Id == id) &&
                                               (Fk_GameWeak == 0 || a.Fk_GameWeak == Fk_GameWeak) &&
                                               (Fk_Player == 0 || a.Fk_Player == Fk_Player));
-                                                  
+
 
         }
 

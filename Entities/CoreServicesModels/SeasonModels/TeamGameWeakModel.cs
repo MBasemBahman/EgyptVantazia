@@ -1,15 +1,8 @@
-﻿using Entities.DBModels.SeasonModels;
-using Entities.DBModels.TeamModels;
-using Entities.RequestFeatures;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Entities.RequestFeatures;
 
 namespace Entities.CoreServicesModels.SeasonModels
 {
-    public class TeamGameWeakParameters:RequestParameters
+    public class TeamGameWeakParameters : RequestParameters
     {
         public int Fk_Home { get; set; }
 

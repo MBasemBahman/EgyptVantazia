@@ -1,11 +1,4 @@
-﻿using Entities.DBModels.AppInfoModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Entities.CoreServicesModels.AppInfoModels
+﻿namespace Entities.CoreServicesModels.AppInfoModels
 {
     public class AppAboutModel : AuditEntity
     {

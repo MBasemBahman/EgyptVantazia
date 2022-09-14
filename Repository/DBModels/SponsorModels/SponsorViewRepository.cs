@@ -1,6 +1,5 @@
 ﻿using Entities.CoreServicesModels.SponsorModels;
 using Entities.DBModels.SponsorModels;
-using Entities.RequestFeatures;
 
 namespace Repository.DBModels.SponsorModels
 {

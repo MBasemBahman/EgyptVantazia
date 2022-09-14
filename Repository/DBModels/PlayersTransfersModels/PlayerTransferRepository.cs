@@ -1,6 +1,5 @@
 ﻿using Entities.CoreServicesModels.PlayersTransfersModels;
 using Entities.DBModels.PlayersTransfersModels;
-using Entities.RequestFeatures;
 
 
 namespace Repository.DBModels.PlayersTransfersModels

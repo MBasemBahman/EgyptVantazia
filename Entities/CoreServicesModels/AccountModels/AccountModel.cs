@@ -1,7 +1,6 @@
 ﻿using Entities.CoreServicesModels.LocationModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.LocationModels;
-using Entities.DBModels.TeamModels;
 using Entities.RequestFeatures;
 
 namespace Entities.CoreServicesModels.AccountModels

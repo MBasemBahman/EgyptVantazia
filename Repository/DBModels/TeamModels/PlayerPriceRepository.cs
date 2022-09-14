@@ -1,6 +1,5 @@
 ﻿using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.TeamModels;
-using Entities.RequestFeatures;
 
 namespace Repository.DBModels.TeamModels
 {
@@ -48,7 +47,7 @@ namespace Repository.DBModels.TeamModels
             int id,
             int Fk_Team,
             int Fk_Player)
- 
+
         {
             return PlayerPrices.Where(a => (id == 0 || a.Id == id) &&
                                                    (Fk_Team == 0 || a.Fk_Team == Fk_Team) &&

@@ -1,6 +1,5 @@
 ﻿using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.DBModels.AccountTeamModels;
-using Entities.RequestFeatures;
 
 
 namespace Repository.DBModels.AccountTeamModels
@@ -49,7 +48,7 @@ namespace Repository.DBModels.AccountTeamModels
             int id,
             int Fk_Account,
             int Fk_Season)
-            
+
         {
             return AccountTeams.Where(a => (id == 0 || a.Id == id) &&
                                            (Fk_Account == 0 || a.Fk_Account == Fk_Account) &&

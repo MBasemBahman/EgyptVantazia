@@ -1,11 +1,4 @@
-﻿using Entities.DBModels.PlayerScoreModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Entities.CoreServicesModels.PlayerScoreModels
+﻿namespace Entities.CoreServicesModels.PlayerScoreModels
 {
     public class ScoreTypeModel : AuditLookUpEntity
     {

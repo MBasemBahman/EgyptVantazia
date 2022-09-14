@@ -1,12 +1,4 @@
-﻿using Entities.DBModels.AccountModels;
-using Entities.DBModels.SeasonModels;
-using Entities.DBModels.StandingsModels;
-using Entities.DBModels.TeamModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Entities.DBModels.TeamModels;
 
 namespace Entities.CoreServicesModels.TeamModels
 {

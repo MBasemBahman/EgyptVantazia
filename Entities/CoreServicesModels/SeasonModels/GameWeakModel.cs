@@ -1,14 +1,5 @@
-﻿using Entities.DBModels.AccountTeamModels;
-using Entities.DBModels.NewsModels;
-using Entities.DBModels.PlayerScoreModels;
-using Entities.DBModels.PlayersTransfersModels;
-using Entities.DBModels.SeasonModels;
+﻿using Entities.DBModels.SeasonModels;
 using Entities.RequestFeatures;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Entities.CoreServicesModels.SeasonModels
 {

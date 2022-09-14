@@ -1,15 +1,8 @@
-﻿using Entities.DBModels.SeasonModels;
-using Entities.DBModels.TeamModels;
-using Entities.RequestFeatures;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Entities.RequestFeatures;
 
 namespace Entities.CoreServicesModels.StandingsModels
 {
-    public class StandingsParameters:RequestParameters
+    public class StandingsParameters : RequestParameters
     {
         public int Fk_Season { get; set; }
 

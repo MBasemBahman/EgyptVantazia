@@ -1,6 +1,5 @@
 ﻿using Entities.CoreServicesModels.StandingsModels;
 using Entities.DBModels.StandingsModels;
-using Entities.RequestFeatures;
 
 
 namespace Repository.DBModels.StandingsModels
@@ -45,7 +44,7 @@ namespace Repository.DBModels.StandingsModels
     public static class StandingsRepositoryExtension
     {
         public static IQueryable<Standings> Filter(
-            this IQueryable<Standings> Standingss, 
+            this IQueryable<Standings> Standingss,
             int id,
             int Fk_Season,
             int Fk_Team

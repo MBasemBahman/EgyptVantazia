@@ -1,6 +1,5 @@
 ﻿using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.SeasonModels;
-using Entities.RequestFeatures;
 
 namespace Repository.DBModels.SeasonModels
 {

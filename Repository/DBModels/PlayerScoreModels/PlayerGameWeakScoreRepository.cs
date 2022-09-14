@@ -1,6 +1,5 @@
 ﻿using Entities.CoreServicesModels.PlayerScoreModels;
 using Entities.DBModels.PlayerScoreModels;
-using Entities.RequestFeatures;
 
 
 namespace Repository.DBModels.PlayerScoreModels

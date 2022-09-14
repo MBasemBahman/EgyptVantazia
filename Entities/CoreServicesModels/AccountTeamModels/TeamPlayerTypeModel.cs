@@ -1,11 +1,4 @@
-﻿using Entities.DBModels.AccountTeamModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Entities.CoreServicesModels.AccountTeamModels
+﻿namespace Entities.CoreServicesModels.AccountTeamModels
 {
     public class TeamPlayerTypeModel : AuditLookUpEntity
     {

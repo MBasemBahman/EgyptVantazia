@@ -28,13 +28,16 @@ namespace API.Extensions
 
         public static void ConfigureLoggerService(this IServiceCollection services)
         {
-
             _ = services.AddSingleton<ILoggerManager, LoggerManager>();
+        }
+
+        public static void ConfigureSingletonService(this IServiceCollection services)
+        {
+            _ = services.AddSingleton<IJwtUtils, JwtUtils>();
         }
 
         public static void ConfigureScopedService(this IServiceCollection services)
         {
-            _ = services.AddScoped<IJwtUtils, JwtUtils>();
             _ = services.AddScoped<IAuthenticationManager, AuthenticationManager>();
         }
 

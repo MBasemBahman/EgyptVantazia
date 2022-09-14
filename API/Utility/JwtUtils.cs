@@ -4,23 +4,26 @@
     {
         private readonly AppSettings _appSettings;
         private readonly byte[] _secret;
+        private string _key;
+        private int _expires;
 
         public JwtUtils(IOptions<AppSettings> appSettings)
         {
             _appSettings = appSettings.Value;
             _secret = Encoding.UTF8.GetBytes(_appSettings.Secret);
+            _key = "id";
+            _expires = 60;
         }
 
-        public string Key { get; set; } = "id";
-        public int Expires { get; set; } = 60;
-
-        public TokenResponse GenerateJwtToken(int id)
+        public TokenResponse GenerateJwtToken(int id, int? expires)
         {
+            _expires = expires > 0 ? expires ?? 0 : _expires;
+
             JwtSecurityTokenHandler tokenHandler = new();
             SecurityTokenDescriptor tokenDescriptor = new()
             {
-                Subject = new ClaimsIdentity(new[] { new Claim(Key, id.ToString()) }),
-                Expires = DateTime.UtcNow.AddMinutes(Expires),
+                Subject = new ClaimsIdentity(new[] { new Claim(_key, id.ToString()) }),
+                Expires = DateTime.UtcNow.AddMinutes(_expires),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(_secret), SecurityAlgorithms.HmacSha256Signature)
             };
             SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
@@ -48,7 +51,7 @@
                 }, out SecurityToken validatedToken);
 
                 JwtSecurityToken jwtToken = (JwtSecurityToken)validatedToken;
-                int id = int.Parse(jwtToken.Claims.First(x => x.Type == Key).Value);
+                int id = int.Parse(jwtToken.Claims.First(x => x.Type == _key).Value);
 
                 // return account id from JWT token if validation successful
                 return id;

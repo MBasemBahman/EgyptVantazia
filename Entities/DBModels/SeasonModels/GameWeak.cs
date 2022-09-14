@@ -39,7 +39,7 @@ namespace Entities.DBModels.SeasonModels
         [DisplayName(nameof(PlayerTransfers))]
         public IList<PlayerTransfer> PlayerTransfers { get; set; }
 
-        public SeasonLang SeasonLang { get; set; }
+        public GameWeakLang GameWeakLang { get; set; }
     }
 
     public class GameWeakLang : LangEntity<GameWeak>

@@ -24,7 +24,7 @@ namespace Repository.DBModels.SeasonModels
 
         public new void Create(GameWeak entity)
         {
-            entity.SeasonLang ??= new SeasonLang
+            entity.GameWeakLang ??= new GameWeakLang
             {
                 Name = entity.Name,
             };

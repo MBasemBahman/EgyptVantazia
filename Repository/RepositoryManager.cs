@@ -1,4 +1,5 @@
 ﻿using Repository.DBModels.AccountModels;
+using Repository.DBModels.AppInfoModels;
 using Repository.DBModels.DashboardAdministrationModels;
 using Repository.DBModels.LocationModels;
 using Repository.DBModels.LogModels;
@@ -30,6 +31,10 @@ namespace Repository
 
         #region AccountModels
         private AccountRepository _accountRepository;
+        #endregion
+
+        #region AppInfoModels
+        private AppAboutRepository _appAboutRepository;
         #endregion
 
         #region DashboardAdministrationModels
@@ -161,6 +166,18 @@ namespace Repository
             }
         }
         #endregion
+
+        #region AppInfoModels
+        public AppAboutRepository AppAbout
+        {
+            get
+            {
+                _appAboutRepository ??= new AppAboutRepository(_dBContext);
+                return _appAboutRepository;
+            }
+        }
+        #endregion
+
 
         #region DashboardAdministrationModels
 

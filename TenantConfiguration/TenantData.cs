@@ -11,6 +11,8 @@
         public enum TenantApis
         {
             Authentication,
+            Location,
+            AppInfo
         }
 
         public enum TenantViews

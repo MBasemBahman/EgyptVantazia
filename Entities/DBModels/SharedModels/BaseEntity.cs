@@ -1,4 +1,6 @@
-﻿namespace Entities.DBModels.SharedModels
+﻿using Entities.Extensions;
+
+namespace Entities.DBModels.SharedModels
 {
     public class BaseEntity : IBaseEntity
     {
@@ -10,5 +12,8 @@
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [DisplayName(nameof(CreatedAt))]
         public DateTime CreatedAt { get; set; }
+
+        [DisplayName(nameof(CreatedAt))]
+        public string CreatedAtString => CreatedAt.AddHours(2).ToShortDateTimeString();
     }
 }

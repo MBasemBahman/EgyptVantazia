@@ -25,7 +25,7 @@ namespace API.Utility
                 throw new Exception("login failed. Wrong user name or password.");
             }
 
-            TokenResponse jwtToken = _jwtUtils.GenerateJwtToken(_user.Id);
+            TokenResponse jwtToken = _jwtUtils.GenerateJwtToken(_user.Id, expires: 0);
 
             RefreshToken refreshToken = await _unitOfWork.User.FindValidRefreshToken(userForAuth.UserName, GetRefreshTokenTTL());
 
@@ -85,7 +85,7 @@ namespace API.Utility
             await _unitOfWork.Save();
 
             // generate new jwt
-            TokenResponse jwtToken = _jwtUtils.GenerateJwtToken(_user.Id);
+            TokenResponse jwtToken = _jwtUtils.GenerateJwtToken(_user.Id, expires: 0);
 
             return GetAuthenticatedUser(_user, jwtToken, new TokenResponse(refreshToken.Token, refreshToken.Expires));
         }

@@ -10,7 +10,6 @@ builder.Configuration.AddJsonFile(config.AppSettings);
 // Add services to the container
 builder.Services.ConfigureRequestsLimit();
 builder.Services.ConfigureCors();
-builder.Services.AddSignalR();
 builder.Services.ConfigureLoggerService();
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 builder.Services.AddSingleton(provider => new MapperConfiguration(cfg =>
@@ -21,6 +20,7 @@ builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureLocalization();
 builder.Services.ConfigureVersioning();
 builder.Services.ConfigureResponseCaching();
+builder.Services.ConfigureSingletonService();
 builder.Services.ConfigureScopedService();
 
 builder.Services.ConfigureSqlContext(builder.Configuration, config);
@@ -34,8 +34,8 @@ builder.Services.AddControllers(opt =>
 {
     opt.Filters.Add(typeof(GlobalModelStateValidatorAttribute));
 });
-builder.Services.ConfigureFirebase(config.AppSettings);
-builder.Services.ConfigureEmailSender(builder.Configuration);
+//builder.Services.ConfigureFirebase(config.AppSettings);
+//builder.Services.ConfigureEmailSender(builder.Configuration);
 
 WebApplication app = builder.Build();
 

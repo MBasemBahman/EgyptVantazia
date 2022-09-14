@@ -1,4 +1,8 @@
-﻿using Entities.RequestFeatures;
+﻿using Entities.CoreServicesModels.LocationModels;
+using Entities.CoreServicesModels.TeamModels;
+using Entities.DBModels.LocationModels;
+using Entities.DBModels.TeamModels;
+using Entities.RequestFeatures;
 
 namespace Entities.CoreServicesModels.AccountModels
 {
@@ -57,6 +61,36 @@ namespace Entities.CoreServicesModels.AccountModels
 
         [DisplayName(nameof(LastActive))]
         public DateTime? LastActive { get; set; }
+
+        [DataType(DataType.PhoneNumber)]
+        [Phone]
+        [DisplayName(nameof(PhoneNumberTwo))]
+        public string PhoneNumberTwo { get; set; }
+
+        [DisplayName(nameof(Country))]
+        [ForeignKey(nameof(Country))]
+        public int Fk_Country { get; set; }
+
+        [DisplayName(nameof(Country))]
+        public CountryModel Country { get; set; }
+
+        [DisplayName(nameof(Nationality))]
+        [ForeignKey(nameof(Nationality))]
+        public int Fk_Nationality { get; set; }
+
+        [DisplayName(nameof(Nationality))]
+        public CountryModel Nationality { get; set; }
+
+        [DisplayName(nameof(Address))]
+        [DataType(DataType.MultilineText)]
+        public string Address { get; set; }
+
+        [DisplayName(nameof(FavouriteTeam))]
+        [ForeignKey(nameof(FavouriteTeam))]
+        public int Fk_FavouriteTeam { get; set; }
+
+        [DisplayName(nameof(FavouriteTeam))]
+        public TeamModel FavouriteTeam { get; set; }
     }
 
     public class AccountEditModel
@@ -66,6 +100,24 @@ namespace Entities.CoreServicesModels.AccountModels
 
         [DisplayName(nameof(LastName))]
         public string LastName { get; set; }
+
+        [DataType(DataType.PhoneNumber)]
+        [Phone]
+        [DisplayName(nameof(PhoneNumberTwo))]
+        public string PhoneNumberTwo { get; set; }
+
+        [DisplayName(nameof(Country))]
+        public int Fk_Country { get; set; }
+
+        [DisplayName(nameof(Fk_Nationality))]
+        public int Fk_Nationality { get; set; }
+
+        [DisplayName(nameof(Address))]
+        [DataType(DataType.MultilineText)]
+        public string Address { get; set; }
+
+        [DisplayName(nameof(Fk_FavouriteTeam))]
+        public int Fk_FavouriteTeam { get; set; }
     }
 
     public class AccountCreateModel
@@ -75,5 +127,18 @@ namespace Entities.CoreServicesModels.AccountModels
 
         [DisplayName(nameof(LastName))]
         public string LastName { get; set; }
+
+        [DisplayName(nameof(Country))]
+        public int Fk_Country { get; set; }
+
+        [DisplayName(nameof(Fk_Nationality))]
+        public int Fk_Nationality { get; set; }
+
+        [DisplayName(nameof(Address))]
+        [DataType(DataType.MultilineText)]
+        public string Address { get; set; }
+
+        [DisplayName(nameof(Fk_FavouriteTeam))]
+        public int Fk_FavouriteTeam { get; set; }
     }
 }

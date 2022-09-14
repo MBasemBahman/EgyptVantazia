@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entities.CoreServicesModels.TeamModels
 {
-    internal class TeamModel
+    public class TeamModel
     {
     }
 }

@@ -1,5 +1,7 @@
-﻿using Repository.DBModels.DashboardAdministrationModels;
+﻿using Repository.DBModels.AccountModels;
+using Repository.DBModels.DashboardAdministrationModels;
 using Repository.DBModels.LocationModels;
+using Repository.DBModels.LogModels;
 
 namespace Repository
 {
@@ -7,11 +9,19 @@ namespace Repository
     {
         private readonly DbContext _dBContext;
 
+        #region LogModels
+        private LogRepository _logRepository;
+        #endregion
+
         #region UserModels
         private UserRepository _userRepository;
         private DeviceRepository _deviceRepository;
         private VerificationRepository _verificationRepository;
         private RefreshTokenRepository _refreshTokenRepository;
+        #endregion
+
+        #region AccountModels
+        private AccountRepository _accountRepository;
         #endregion
 
         #region DashboardAdministrationModels
@@ -37,6 +47,17 @@ namespace Repository
         {
             _ = await _dBContext.SaveChangesAsync();
         }
+
+        #region LogModels
+        public LogRepository Log
+        {
+            get
+            {
+                _logRepository ??= new LogRepository(_dBContext);
+                return _logRepository;
+            }
+        }
+        #endregion
 
         #region UserModels
 
@@ -78,6 +99,17 @@ namespace Repository
             }
         }
 
+        #endregion
+
+        #region AccountModels
+        public AccountRepository Account
+        {
+            get
+            {
+                _accountRepository ??= new AccountRepository(_dBContext);
+                return _accountRepository;
+            }
+        }
         #endregion
 
         #region DashboardAdministrationModels

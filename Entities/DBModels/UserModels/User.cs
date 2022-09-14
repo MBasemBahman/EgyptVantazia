@@ -30,6 +30,9 @@ namespace Entities.DBModels.UserModels
         [DisplayName(nameof(PhoneNumber))]
         public string PhoneNumber { get; set; }
 
+        [DisplayName(nameof(Culture))]
+        public string Culture { get; set; }
+
         [DisplayName(nameof(DashboardAdministrator))]
         public DashboardAdministrator DashboardAdministrator { get; set; }
 

@@ -22,6 +22,15 @@ namespace Entities.AuthenticationModels
         [DataType(DataType.PhoneNumber)]
         [Phone]
         public string PhoneNumber { get; set; }
+
+        [DisplayName(nameof(Culture))]
+        public string Culture { get; set; }
+    }
+
+    public class UserForEditCultureDto
+    {
+        [DisplayName(nameof(Culture))]
+        public string Culture { get; set; }
     }
 
     public class UserForEditDto
@@ -100,6 +109,8 @@ namespace Entities.AuthenticationModels
         public string UserName { get; set; }
         public string EmailAddress { get; set; }
         public string PhoneNumber { get; set; }
+        public int Fk_Account { get; set; }
+        public string ImageUrl { get; set; }
         public DateTime CreatedAt { get; set; }
 
         public TokenResponse TokenResponse { get; set; }

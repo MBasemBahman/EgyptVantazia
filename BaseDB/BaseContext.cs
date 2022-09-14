@@ -3,6 +3,7 @@ using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.AppInfoModels;
 using Entities.DBModels.DashboardAdministrationModels;
 using Entities.DBModels.LocationModels;
+using Entities.DBModels.LogModels;
 using Entities.DBModels.NewsModels;
 using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.PlayersTransfersModels;
@@ -34,6 +35,12 @@ namespace BaseDB
         public BaseContext(DbContextOptions options) : base(options)
         {
         }
+
+        #region LogModels
+
+        public DbSet<Log> Logs { get; set; }
+
+        #endregion
 
         #region UserModels
 

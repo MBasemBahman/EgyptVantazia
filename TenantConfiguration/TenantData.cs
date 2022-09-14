@@ -1,22 +1,30 @@
 ﻿namespace TenantConfiguration
 {
-    public enum TenantEnvironments
+    public static class TenantData
     {
-        Development,
-        GAH,
-    }
+        public enum TenantEnvironments
+        {
+            Development,
+            Live,
+        }
 
-    public enum TenantViews
-    {
-        #region Base
-        Home,
+        public enum TenantApis
+        {
+            Authentication,
+        }
 
-        // User
-        User,
-        RefreshToken,
-        UserDevice,
-        Verification,
+        public enum TenantViews
+        {
+            #region Base
+            Home,
 
-        #endregion
+            // User
+            User,
+            RefreshToken,
+            UserDevice,
+            Verification,
+
+            #endregion
+        }
     }
 }

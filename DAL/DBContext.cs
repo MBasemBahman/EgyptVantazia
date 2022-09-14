@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ModelBuilderConfig.Configurations.DashboardAdministrationModels;
 using TenantConfiguration;
+using static TenantConfiguration.TenantData;
 
 namespace DAL
 {

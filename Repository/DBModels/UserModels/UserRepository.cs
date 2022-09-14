@@ -68,6 +68,13 @@ namespace Repository.DBModels.UserModels
                          .SingleOrDefaultAsync();
         }
 
+        public async Task<User> FindByAccountId(int fk_Account, bool trackChanges)
+        {
+
+            return await FindByCondition(a => a.Account.Id == fk_Account, trackChanges: trackChanges)
+                            .SingleOrDefaultAsync();
+        }
+
         public async Task<User> FindByVerificationCode(string code, bool trackChanges)
         {
             return string.IsNullOrWhiteSpace(code)

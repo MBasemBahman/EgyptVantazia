@@ -2,7 +2,7 @@
 using Entities.DBModels.LocationModels;
 
 
-namespace CoreServices.Services
+namespace CoreServices.Logic
 {
     public class LocationServices
     {

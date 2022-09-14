@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ModelBuilderConfig.Configurations.DashboardAdministrationModels;
 using TenantConfiguration;
+using static TenantConfiguration.TenantData;
 
 namespace Live
 {
@@ -15,7 +16,7 @@ namespace Live
         {
             base.OnModelCreating(modelBuilder);
 
-            TenantConfig config = new(TenantEnvironments.GAH);
+            TenantConfig config = new(TenantEnvironments.Live);
 
             #region DashboardAdministrationModels
 

@@ -2,6 +2,7 @@
 global using CoreServices.Extensions;
 global using Entities.DBModels.UserModels;
 global using Entities.RequestFeatures;
+global using Microsoft.AspNetCore.Http;
 global using Microsoft.EntityFrameworkCore;
 global using Repository;
 global using Services;

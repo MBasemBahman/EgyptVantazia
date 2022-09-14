@@ -50,7 +50,7 @@ namespace CoreServices.Logic
             }
 
             user.Password = ChangePassword(user.Password);
-            _repository.User.CreateUser(user);
+            _repository.User.Create(user);
         }
 
         public async Task ChangePassword(int id, ChangePasswordDto model)
@@ -168,13 +168,13 @@ namespace CoreServices.Logic
             }
             else
             {
-                _repository.Device.CreateDevice(device);
+                _repository.Device.Create(device);
             }
         }
 
         public void DeleteDevice(Device device)
         {
-            _repository.Device.DeleteDevice(device);
+            _repository.Device.Delete(device);
         }
 
         public async Task<IEnumerable<Device>> FindDevicesByUserId(int id, bool trackChanges)

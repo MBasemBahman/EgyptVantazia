@@ -23,22 +23,6 @@ namespace Repository.DBModels.AccountTeamModels
             return await FindByCondition(a => a.Id == id, trackChanges)
                         .SingleOrDefaultAsync();
         }
-
-        public new void Create(AccountTeamGameWeak entity)
-        {
-            base.Create(entity);
-        }
-
-        public new void Delete(AccountTeamGameWeak entity)
-        {
-            base.Delete(entity);
-        }
-
-
-        public new int Count()
-        {
-            return base.Count();
-        }
     }
 
     public static class AccountTeamGameWeakRepositoryExtension

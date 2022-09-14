@@ -32,16 +32,6 @@ namespace Repository.DBModels.DashboardAdministrationModels
             };
             base.Create(entity);
         }
-
-        public new void Delete(DashboardAdministrationRole entity)
-        {
-            base.Delete(entity);
-        }
-
-        public new int Count()
-        {
-            return base.Count();
-        }
     }
 
     public static class DashboardAdministrationRoleRepositoryExtension

@@ -24,18 +24,11 @@ namespace Repository.DBModels.SeasonModels
 
         public new void Create(GameWeak entity)
         {
+            entity.SeasonLang ??= new SeasonLang
+            {
+                Name = entity.Name,
+            };
             base.Create(entity);
-        }
-
-        public new void Delete(GameWeak entity)
-        {
-            base.Delete(entity);
-        }
-
-
-        public new int Count()
-        {
-            return base.Count();
         }
     }
 
@@ -48,7 +41,7 @@ namespace Repository.DBModels.SeasonModels
             )
         {
             return GameWeaks.Where(a => (id == 0 || a.Id == id) &&
-                                                   (Fk_Season == 0 || a.Fk_Season == Fk_Season));
+                                        (Fk_Season == 0 || a.Fk_Season == Fk_Season));
 
         }
 

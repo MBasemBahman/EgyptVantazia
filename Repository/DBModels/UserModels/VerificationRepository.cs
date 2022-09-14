@@ -17,11 +17,6 @@ namespace Repository.DBModels.UserModels
 
         }
 
-        public new int Count()
-        {
-            return base.Count();
-        }
-
         public bool CheckVerificationCodeExisting(string code)
         {
             return FindByCondition(a => a.Code == code, trackChanges: false).Any();

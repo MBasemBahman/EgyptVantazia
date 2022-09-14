@@ -19,28 +19,7 @@ namespace Repository.DBModels.PrivateLeagueModels
         public async Task<PrivateLeague> FindById(int id, bool trackChanges)
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
-                        .Include(a => a.PrivateLeagueLang)
                         .SingleOrDefaultAsync();
-        }
-
-        public new void Create(PrivateLeague entity)
-        {
-            entity.PrivateLeagueLang ??= new PrivateLeagueLang
-            {
-                Name = entity.Name,
-            };
-            base.Create(entity);
-        }
-
-        public new void Delete(PrivateLeague entity)
-        {
-            base.Delete(entity);
-        }
-
-
-        public new int Count()
-        {
-            return base.Count();
         }
     }
 

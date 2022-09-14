@@ -31,17 +31,6 @@ namespace Repository.DBModels.PlayerScoreModels
             };
             base.Create(entity);
         }
-
-        public new void Delete(ScoreType entity)
-        {
-            base.Delete(entity);
-        }
-
-
-        public new int Count()
-        {
-            return base.Count();
-        }
     }
 
     public static class ScoreTypeRepositoryExtension

@@ -29,21 +29,6 @@ namespace Repository.DBModels.DashboardAdministrationModels
             return await FindByCondition(a => a.Fk_User == id, trackChanges)
                         .SingleOrDefaultAsync();
         }
-
-        public new void Create(DashboardAdministrator entity)
-        {
-            base.Create(entity);
-        }
-
-        public new void Delete(DashboardAdministrator entity)
-        {
-            base.Delete(entity);
-        }
-
-        public new int Count()
-        {
-            return base.Count();
-        }
     }
 
     public static class DashboardAdministratorRepositoryExtension

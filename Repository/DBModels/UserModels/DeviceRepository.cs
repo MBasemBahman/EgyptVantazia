@@ -29,25 +29,10 @@ namespace Repository.DBModels.UserModels
             return FindByCondition(a => a.NotificationToken.ToLower() == notificationToken, trackChanges).SingleOrDefault();
         }
 
-        public void CreateDevice(Device device)
-        {
-            Create(device);
-        }
-
-        public void DeleteDevice(Device device)
-        {
-            Delete(device);
-        }
-
         public async Task<IEnumerable<Device>> FindDevicesByUserId(int id, bool trackChanges)
         {
             return await FindByCondition(a => a.Fk_User == id, trackChanges)
                         .ToListAsync();
-        }
-
-        public new int Count()
-        {
-            return base.Count();
         }
     }
 

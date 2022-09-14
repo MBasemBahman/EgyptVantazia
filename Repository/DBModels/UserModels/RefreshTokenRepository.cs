@@ -16,12 +16,6 @@ namespace Repository.DBModels.UserModels
                    .Filter(parameters.Fk_User, parameters.refreshTokenTTL);
 
         }
-
-        public new int Count()
-        {
-            return base.Count();
-        }
-
     }
 
     public static class RefreshTokenRepositoryExtensions

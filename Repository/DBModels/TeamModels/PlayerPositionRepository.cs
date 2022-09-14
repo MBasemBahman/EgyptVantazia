@@ -31,17 +31,6 @@ namespace Repository.DBModels.TeamModels
             };
             base.Create(entity);
         }
-
-        public new void Delete(PlayerPosition entity)
-        {
-            base.Delete(entity);
-        }
-
-
-        public new int Count()
-        {
-            return base.Count();
-        }
     }
 
     public static class PlayerPositionRepositoryExtension

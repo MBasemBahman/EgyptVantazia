@@ -25,20 +25,6 @@ namespace Repository.DBModels.LogModels
             return await FindByCondition(a => a.Id == id, trackChanges)
                         .SingleOrDefaultAsync();
         }
-
-
-        public new void Delete(Log entity)
-        {
-            base.Delete(entity);
-        }
-
-
-
-        public new int Count()
-        {
-            return base.Count();
-        }
-
     }
 
     public static class RefreshTokenRepositoryExtensions

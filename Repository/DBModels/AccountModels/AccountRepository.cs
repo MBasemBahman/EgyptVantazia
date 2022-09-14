@@ -59,15 +59,6 @@ namespace Repository.DBModels.AccountModels
             }
             base.Create(entity);
         }
-        public new int Count()
-        {
-            return base.Count();
-        }
-
-        public new void Delete(Account entity)
-        {
-            base.Delete(entity);
-        }
     }
 
     public static class AccountRepositoryExtension

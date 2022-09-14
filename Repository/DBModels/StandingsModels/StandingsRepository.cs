@@ -23,22 +23,6 @@ namespace Repository.DBModels.StandingsModels
             return await FindByCondition(a => a.Id == id, trackChanges)
                         .SingleOrDefaultAsync();
         }
-
-        public new void Create(Standings entity)
-        {
-            base.Create(entity);
-        }
-
-        public new void Delete(Standings entity)
-        {
-            base.Delete(entity);
-        }
-
-
-        public new int Count()
-        {
-            return base.Count();
-        }
     }
 
     public static class StandingsRepositoryExtension

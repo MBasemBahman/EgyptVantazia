@@ -91,20 +91,6 @@ namespace Repository.DBModels.UserModels
             return await FindByCondition(a => a.DashboardAdministrator.Id == fk_admin, trackChanges: trackChanges)
                             .SingleOrDefaultAsync();
         }
-        public void CreateUser(User user)
-        {
-            Create(user);
-        }
-
-        public new void Delete(User entity)
-        {
-            base.Delete(entity);
-        }
-
-        public new int Count()
-        {
-            return base.Count();
-        }
     }
 
     public static class UserRepositoryExtensions

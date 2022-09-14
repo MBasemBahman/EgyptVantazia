@@ -30,17 +30,6 @@ namespace Repository.DBModels.LocationModels
             };
             base.Create(entity);
         }
-
-        public new void Delete(Country entity)
-        {
-            base.Delete(entity);
-        }
-
-
-        public new int Count()
-        {
-            return base.Count();
-        }
     }
 
     public static class CountryRepositoryExtension

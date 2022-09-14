@@ -31,17 +31,6 @@ namespace Repository.DBModels.AccountTeamModels
             };
             base.Create(entity);
         }
-
-        public new void Delete(TeamPlayerType entity)
-        {
-            base.Delete(entity);
-        }
-
-
-        public new int Count()
-        {
-            return base.Count();
-        }
     }
 
     public static class TeamPlayerTypeRepositoryExtension

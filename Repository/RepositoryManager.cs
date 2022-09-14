@@ -2,6 +2,14 @@
 using Repository.DBModels.DashboardAdministrationModels;
 using Repository.DBModels.LocationModels;
 using Repository.DBModels.LogModels;
+using Repository.DBModels.NewsModels;
+using Repository.DBModels.PlayerScoreModels;
+using Repository.DBModels.PlayersTransfersModels;
+using Repository.DBModels.PrivateLeagueModels;
+using Repository.DBModels.SeasonModels;
+using Repository.DBModels.SponsorModels;
+using Repository.DBModels.StandingsModels;
+using Repository.DBModels.TeamModels;
 
 namespace Repository
 {
@@ -36,6 +44,48 @@ namespace Repository
 
         #region LocationModels
         private CountryRepository _countryRepository;
+        #endregion
+
+        #region NewsModels
+        private NewsAttachmentRepository _newsAttachmentRepository;
+        private NewsRepository _newsRepository;
+        #endregion
+
+        #region PlayerScoreModels
+        private PlayerGameWeakRepository _playerGameWeakRepository;
+        private PlayerGameWeakScoreRepository _playerGameWeakScoreRepository;
+        private ScoreTypeRepository _scoreTypeRepository;
+        #endregion
+
+        #region PlayersTransfersModels
+        private PlayerTransferRepository _playerTransferRepository;
+        #endregion
+
+        #region PrivateLeagueModels
+        private PrivateLeagueMemberRepository _privateLeagueMemberRepository;
+        private PrivateLeagueRepository _privateLeagueRepository;
+        #endregion
+
+        #region SeasonModels
+        private GameWeakRepository _gameWeakRepository;
+        private SeasonRepository _seasonRepository;
+        private TeamGameWeakRepository _teamGameWeakRepository;
+        #endregion
+
+        #region SponsorModels
+        private SponsorRepository _sponsorRepository;
+        private SponsorViewRepository _sponsorViewRepository;
+        #endregion
+
+        #region StandingsModels
+        private StandingsRepository _standingsRepository;
+        #endregion
+
+        #region TeamModels
+        private PlayerPositionRepository _playerPositionRepository;
+        private PlayerPriceRepository _playerPriceRepository;
+        private PlayerRepository _playerRepository;
+        private TeamRepository _teamRepository;
         #endregion
 
         public RepositoryManager(DbContext dBContext)
@@ -168,6 +218,176 @@ namespace Repository
             {
                 _countryRepository ??= new CountryRepository(_dBContext);
                 return _countryRepository;
+            }
+        }
+        #endregion
+
+
+        #region NewsModels
+        public NewsAttachmentRepository NewsAttachment
+        {
+            get
+            {
+                _newsAttachmentRepository ??= new NewsAttachmentRepository(_dBContext);
+                return _newsAttachmentRepository;
+            }
+        }
+
+        public NewsRepository News
+        {
+            get
+            {
+                _newsRepository ??= new NewsRepository(_dBContext);
+                return _newsRepository;
+            }
+        }
+        #endregion
+
+        #region PlayerScoreModels
+        public PlayerGameWeakRepository PlayerGameWeak
+        {
+            get
+            {
+                _playerGameWeakRepository ??= new PlayerGameWeakRepository(_dBContext);
+                return _playerGameWeakRepository;
+            }
+        }
+        public PlayerGameWeakScoreRepository PlayerGameWeakScore
+        {
+            get
+            {
+                _playerGameWeakScoreRepository ??= new PlayerGameWeakScoreRepository(_dBContext);
+                return _playerGameWeakScoreRepository;
+            }
+        }
+        public ScoreTypeRepository ScoreType
+        {
+            get
+            {
+                _scoreTypeRepository ??= new ScoreTypeRepository(_dBContext);
+                return _scoreTypeRepository;
+            }
+        }
+        #endregion
+
+        #region PlayersTransfersModels
+        public PlayerTransferRepository PlayerTransfer
+        {
+            get
+            {
+                _playerTransferRepository ??= new PlayerTransferRepository(_dBContext);
+                return _playerTransferRepository;
+            }
+        }
+        #endregion
+
+        #region PrivateLeagueModels
+        public PrivateLeagueMemberRepository PrivateLeagueMember
+        {
+            get
+            {
+                _privateLeagueMemberRepository ??= new PrivateLeagueMemberRepository(_dBContext);
+                return _privateLeagueMemberRepository;
+            }
+        }
+        public PrivateLeagueRepository PrivateLeague
+        {
+            get
+            {
+                _privateLeagueRepository ??= new PrivateLeagueRepository(_dBContext);
+                return _privateLeagueRepository;
+            }
+        }
+        #endregion
+
+        #region SeasonModels
+        public GameWeakRepository GameWeak
+        {
+            get
+            {
+                _gameWeakRepository ??= new GameWeakRepository(_dBContext);
+                return _gameWeakRepository;
+            }
+        }
+        public SeasonRepository Season
+        {
+            get
+            {
+                _seasonRepository ??= new SeasonRepository(_dBContext);
+                return _seasonRepository;
+            }
+        }
+        public TeamGameWeakRepository TeamGameWeak
+        {
+            get
+            {
+                _teamGameWeakRepository ??= new TeamGameWeakRepository(_dBContext);
+                return _teamGameWeakRepository;
+            }
+        }
+        #endregion
+
+        #region SponsorModels
+        public SponsorRepository Sponsor
+        {
+            get
+            {
+                _sponsorRepository ??= new SponsorRepository(_dBContext);
+                return _sponsorRepository;
+            }
+        }
+        public SponsorViewRepository SponsorView
+        {
+            get
+            {
+                _sponsorViewRepository ??= new SponsorViewRepository(_dBContext);
+                return _sponsorViewRepository;
+            }
+        }
+        #endregion
+
+        #region StandingsModels
+        public StandingsRepository Standings
+        {
+            get
+            {
+                _standingsRepository ??= new StandingsRepository(_dBContext);
+                return _standingsRepository;
+            }
+        }
+        #endregion
+
+        #region TeamModels
+        public PlayerPositionRepository PlayerPosition
+        {
+            get
+            {
+                _playerPositionRepository ??= new PlayerPositionRepository(_dBContext);
+                return _playerPositionRepository;
+            }
+        }
+        public PlayerPriceRepository PlayerPrice
+        {
+            get
+            {
+                _playerPriceRepository ??= new PlayerPriceRepository(_dBContext);
+                return _playerPriceRepository;
+            }
+        }
+        public PlayerRepository Player
+        {
+            get
+            {
+                _playerRepository ??= new PlayerRepository(_dBContext);
+                return _playerRepository;
+            }
+        }
+        public TeamRepository Team
+        {
+            get
+            {
+                _teamRepository ??= new TeamRepository(_dBContext);
+                return _teamRepository;
             }
         }
         #endregion

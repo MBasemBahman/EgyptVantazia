@@ -31,17 +31,6 @@ namespace Repository.DBModels.SeasonModels
             };
             base.Create(entity);
         }
-
-        public new void Delete(Season entity)
-        {
-            base.Delete(entity);
-        }
-
-
-        public new int Count()
-        {
-            return base.Count();
-        }
     }
 
     public static class SeasonRepositoryExtension

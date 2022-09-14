@@ -22,22 +22,6 @@ namespace Repository.DBModels.NewsModels
             return await FindByCondition(a => a.Id == id, trackChanges)
                         .SingleOrDefaultAsync();
         }
-
-        public new void Create(NewsAttachment entity)
-        {
-            base.Create(entity);
-        }
-
-        public new void Delete(NewsAttachment entity)
-        {
-            base.Delete(entity);
-        }
-
-
-        public new int Count()
-        {
-            return base.Count();
-        }
     }
 
     public static class NewsAttachmentRepositoryExtension

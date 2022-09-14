@@ -23,22 +23,6 @@ namespace Repository.DBModels.PrivateLeagueModels
             return await FindByCondition(a => a.Id == id, trackChanges)
                         .SingleOrDefaultAsync();
         }
-
-        public new void Create(PrivateLeagueMember entity)
-        {
-            base.Create(entity);
-        }
-
-        public new void Delete(PrivateLeagueMember entity)
-        {
-            base.Delete(entity);
-        }
-
-
-        public new int Count()
-        {
-            return base.Count();
-        }
     }
 
     public static class PrivateLeagueMemberRepositoryExtension

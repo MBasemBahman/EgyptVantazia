@@ -31,17 +31,6 @@ namespace Repository.DBModels.SponsorModels
             };
             base.Create(entity);
         }
-
-        public new void Delete(Sponsor entity)
-        {
-            base.Delete(entity);
-        }
-
-
-        public new int Count()
-        {
-            return base.Count();
-        }
     }
 
     public static class SponsorRepositoryExtension

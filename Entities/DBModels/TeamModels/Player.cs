@@ -39,7 +39,7 @@ namespace Entities.DBModels.TeamModels
         [DisplayName(nameof(PlayerTransfers))]
         public IList<PlayerTransfer> PlayerTransfers { get; set; }
 
-        public PlayerPositionLang PlayerPositionLang { get; set; }
+        public PlayerLang PlayerLang { get; set; }
     }
 
     public class PlayerLang : LangEntity<Player>

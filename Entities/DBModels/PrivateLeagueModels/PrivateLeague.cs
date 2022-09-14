@@ -13,14 +13,5 @@
 
         [DisplayName(nameof(PrivateLeagueMembers))]
         public IList<PrivateLeagueMember> PrivateLeagueMembers { get; set; }
-
-        public PrivateLeagueLang PrivateLeagueLang { get; set; }
-    }
-
-    public class PrivateLeagueLang : LangEntity<PrivateLeague>
-    {
-        [DisplayName($"{nameof(Name)}{PropertyAttributeConstants.EnLang}")]
-        [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
-        public string Name { get; set; }
     }
 }

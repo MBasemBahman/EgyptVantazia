@@ -25,18 +25,11 @@ namespace Repository.DBModels.TeamModels
 
         public new void Create(Player entity)
         {
+            entity.PlayerLang ??= new PlayerLang
+            {
+                Name = entity.Name,
+            };
             base.Create(entity);
-        }
-
-        public new void Delete(Player entity)
-        {
-            base.Delete(entity);
-        }
-
-
-        public new int Count()
-        {
-            return base.Count();
         }
     }
 

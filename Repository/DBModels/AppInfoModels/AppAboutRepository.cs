@@ -30,6 +30,16 @@ namespace Repository.DBModels.AppInfoModels
 
         public new void Delete(AppAbout entity)
         {
+            entity.AppAboutLang ??= new AppAboutLang
+            {
+                AboutCompany = entity.AboutCompany,
+                AboutApp = entity.AboutApp,
+                TermsAndConditions = entity.TermsAndConditions,
+                QuestionsAndAnswer = entity.QuestionsAndAnswer,
+                GameRules = entity.GameRules,
+                Subscriptions = entity.Subscriptions,
+                Prizes = entity.Prizes,
+            };
             base.Delete(entity);
         }
 

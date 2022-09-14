@@ -26,18 +26,13 @@ namespace Repository.DBModels.NewsModels
 
         public new void Create(News entity)
         {
+            entity.NewsLang ??= new NewsLang
+            {
+                Title = entity.Title,
+                ShortDescription = entity.ShortDescription,
+                LongDescription = entity.LongDescription,
+            };
             base.Create(entity);
-        }
-
-        public new void Delete(News entity)
-        {
-            base.Delete(entity);
-        }
-
-
-        public new int Count()
-        {
-            return base.Count();
         }
     }
 

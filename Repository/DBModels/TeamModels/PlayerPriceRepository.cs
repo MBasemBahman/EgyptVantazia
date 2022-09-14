@@ -27,17 +27,6 @@ namespace Repository.DBModels.TeamModels
         {
             base.Create(entity);
         }
-
-        public new void Delete(PlayerPrice entity)
-        {
-            base.Delete(entity);
-        }
-
-
-        public new int Count()
-        {
-            return base.Count();
-        }
     }
 
     public static class PlayerPriceRepositoryExtension

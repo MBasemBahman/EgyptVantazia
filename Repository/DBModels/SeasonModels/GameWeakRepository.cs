@@ -1,4 +1,5 @@
-﻿using Entities.DBModels.SeasonModels;
+﻿using Entities.CoreServicesModels.SeasonModels;
+using Entities.DBModels.SeasonModels;
 using Entities.RequestFeatures;
 
 namespace Repository.DBModels.SeasonModels
@@ -9,10 +10,11 @@ namespace Repository.DBModels.SeasonModels
         {
         }
 
-        public IQueryable<GameWeak> FindAll(RequestParameters parameters, bool trackChanges)
+        public IQueryable<GameWeak> FindAll(GameWeakParameters parameters, bool trackChanges)
         {
             return FindByCondition(a => true, trackChanges)
-                   .Filter(parameters.Id);
+                   .Filter(parameters.Id,
+                           parameters.Fk_Season);
         }
 
         public async Task<GameWeak> FindById(int id, bool trackChanges)
@@ -40,9 +42,15 @@ namespace Repository.DBModels.SeasonModels
 
     public static class GameWeakRepositoryExtension
     {
-        public static IQueryable<GameWeak> Filter(this IQueryable<GameWeak> GameWeaks, int id)
+        public static IQueryable<GameWeak> Filter(
+            this IQueryable<GameWeak> GameWeaks,
+            int id,
+            int Fk_Season
+            )
         {
-            return GameWeaks.Where(a => id == 0 || a.Id == id);
+            return GameWeaks.Where(a => (id == 0 || a.Id == id) &&
+                                                   (Fk_Season == 0 || a.Fk_Season == Fk_Season));
+
         }
 
     }

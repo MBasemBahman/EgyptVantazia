@@ -1,4 +1,5 @@
-﻿using Entities.DBModels.SeasonModels;
+﻿using Entities.CoreServicesModels.SeasonModels;
+using Entities.DBModels.SeasonModels;
 using Entities.RequestFeatures;
 
 namespace Repository.DBModels.SeasonModels
@@ -9,10 +10,13 @@ namespace Repository.DBModels.SeasonModels
         {
         }
 
-        public IQueryable<TeamGameWeak> FindAll(RequestParameters parameters, bool trackChanges)
+        public IQueryable<TeamGameWeak> FindAll(TeamGameWeakParameters parameters, bool trackChanges)
         {
             return FindByCondition(a => true, trackChanges)
-                   .Filter(parameters.Id);
+                   .Filter(parameters.Id,
+                           parameters.Fk_Home,
+                           parameters.Fk_Away,
+                           parameters.Fk_GameWeak);
         }
 
         public async Task<TeamGameWeak> FindById(int id, bool trackChanges)
@@ -40,9 +44,19 @@ namespace Repository.DBModels.SeasonModels
 
     public static class TeamGameWeakRepositoryExtension
     {
-        public static IQueryable<TeamGameWeak> Filter(this IQueryable<TeamGameWeak> TeamGameWeaks, int id)
+        public static IQueryable<TeamGameWeak> Filter(
+            this IQueryable<TeamGameWeak> TeamGameWeaks,
+            int id,
+            int Fk_Home,
+            int Fk_Away,
+            int Fk_GameWeak)
+
         {
-            return TeamGameWeaks.Where(a => id == 0 || a.Id == id);
+            return TeamGameWeaks.Where(a => (id == 0 || a.Id == id) &&
+                                                   (Fk_Home == 0 || a.Fk_Home == Fk_Home) &&
+                                                   (Fk_Away == 0 || a.Fk_Away == Fk_Away) &&
+                                                   (Fk_GameWeak == 0 || a.Fk_GameWeak == Fk_GameWeak));
+
         }
 
     }

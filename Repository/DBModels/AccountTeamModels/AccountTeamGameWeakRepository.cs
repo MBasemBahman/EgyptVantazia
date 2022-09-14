@@ -10,11 +10,13 @@ namespace Repository.DBModels.AccountTeamModels
         {
         }
 
-        public IQueryable<AccountTeamGameWeak> FindAll(RequestParameters parameters, bool trackChanges)
+        public IQueryable<AccountTeamGameWeak> FindAll(AccountTeamGameWeakParameters parameters, bool trackChanges)
         {
             return FindByCondition(a => true, trackChanges)
-                   .Filter(parameters.Id
-                           );
+                   .Filter(parameters.Id,
+                           parameters.Fk_AccountTeam,
+                           parameters.Fk_GameWeak);
+
         }
 
         public async Task<AccountTeamGameWeak> FindById(int id, bool trackChanges)
@@ -44,12 +46,17 @@ namespace Repository.DBModels.AccountTeamModels
     {
         public static IQueryable<AccountTeamGameWeak> Filter(
             this IQueryable<AccountTeamGameWeak> AccountTeamGameWeaks,
-            int id
+            int id,
+            int Fk_AccountTeam,
+            int Fk_GameWeak
+
             )
 
         {
-            return AccountTeamGameWeaks.Where(a => (id == 0 || a.Id == id)
-                                                  );
+            return AccountTeamGameWeaks.Where(a => (id == 0 || a.Id == id)&&
+                                                   (Fk_AccountTeam == 0 || a.Fk_AccountTeam == Fk_AccountTeam) &&
+                                                   (Fk_GameWeak == 0 || a.Fk_GameWeak == Fk_GameWeak));
+
         }
 
     }

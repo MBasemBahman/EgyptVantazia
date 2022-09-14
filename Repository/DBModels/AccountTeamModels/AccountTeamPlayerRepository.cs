@@ -1,4 +1,5 @@
-﻿using Entities.DBModels.AccountTeamModels;
+﻿using Entities.CoreServicesModels.AccountTeamModels;
+using Entities.DBModels.AccountTeamModels;
 using Entities.RequestFeatures;
 
 namespace Repository.DBModels.AccountTeamModels
@@ -9,10 +10,12 @@ namespace Repository.DBModels.AccountTeamModels
         {
         }
 
-        public IQueryable<AccountTeamPlayer> FindAll(RequestParameters parameters, bool trackChanges)
+        public IQueryable<AccountTeamPlayer> FindAll(AccountTeamPlayerParameters parameters, bool trackChanges)
         {
             return FindByCondition(a => true, trackChanges)
-                   .Filter(parameters.Id);
+                   .Filter(parameters.Id,
+                           parameters.Fk_AccountTeam,
+                           parameters.Fk_Player);
         }
 
         public async Task<AccountTeamPlayer> FindById(int id, bool trackChanges)
@@ -40,9 +43,16 @@ namespace Repository.DBModels.AccountTeamModels
 
     public static class AccountTeamPlayerRepositoryExtension
     {
-        public static IQueryable<AccountTeamPlayer> Filter(this IQueryable<AccountTeamPlayer> AccountTeamPlayers, int id)
-        {
-            return AccountTeamPlayers.Where(a => id == 0 || a.Id == id);
+        public static IQueryable<AccountTeamPlayer> Filter(
+            this IQueryable<AccountTeamPlayer> AccountTeamPlayers,
+            int id,
+            int Fk_AccountTeam,
+            int Fk_Player)
+        { 
+            return AccountTeamPlayers.Where(a => (id == 0 || a.Id == id) &&
+                                                   (Fk_AccountTeam == 0 || a.Fk_AccountTeam == Fk_AccountTeam) &&
+                                                   (Fk_Player == 0 || a.Fk_Player == Fk_Player));
+
         }
 
     }

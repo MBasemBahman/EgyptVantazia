@@ -1,4 +1,5 @@
-﻿using Entities.DBModels.NewsModels;
+﻿using Entities.CoreServicesModels.NewsModels;
+using Entities.DBModels.NewsModels;
 using Entities.RequestFeatures;
 
 
@@ -10,10 +11,11 @@ namespace Repository.DBModels.NewsModels
         {
         }
 
-        public IQueryable<NewsAttachment> FindAll(RequestParameters parameters, bool trackChanges)
+        public IQueryable<NewsAttachment> FindAll(NewsAttachmentParameters parameters, bool trackChanges)
         {
             return FindByCondition(a => true, trackChanges)
-                   .Filter(parameters.Id);
+                   .Filter(parameters.Id,
+                           parameters.Fk_News);
         }
 
         public async Task<NewsAttachment> FindById(int id, bool trackChanges)
@@ -41,9 +43,14 @@ namespace Repository.DBModels.NewsModels
 
     public static class NewsAttachmentRepositoryExtension
     {
-        public static IQueryable<NewsAttachment> Filter(this IQueryable<NewsAttachment> NewsAttachments, int id)
+        public static IQueryable<NewsAttachment> Filter(
+            this IQueryable<NewsAttachment> NewsAttachments,
+            int id,
+            int Fk_News)
         {
-            return NewsAttachments.Where(a => id == 0 || a.Id == id);
+            return NewsAttachments.Where(a => (id == 0 || a.Id == id) &&
+                                                   (Fk_News == 0 || a.Fk_News == Fk_News));
+
         }
 
     }

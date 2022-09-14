@@ -1,4 +1,5 @@
-﻿using Entities.DBModels.TeamModels;
+﻿using Entities.CoreServicesModels.TeamModels;
+using Entities.DBModels.TeamModels;
 using Entities.RequestFeatures;
 
 namespace Repository.DBModels.TeamModels
@@ -9,10 +10,12 @@ namespace Repository.DBModels.TeamModels
         {
         }
 
-        public IQueryable<PlayerPrice> FindAll(RequestParameters parameters, bool trackChanges)
+        public IQueryable<PlayerPrice> FindAll(PlayerPriceParameters parameters, bool trackChanges)
         {
             return FindByCondition(a => true, trackChanges)
-                   .Filter(parameters.Id);
+                   .Filter(parameters.Id,
+                           parameters.Fk_Team,
+                           parameters.Fk_Player);
         }
 
         public async Task<PlayerPrice> FindById(int id, bool trackChanges)
@@ -40,9 +43,17 @@ namespace Repository.DBModels.TeamModels
 
     public static class PlayerPriceRepositoryExtension
     {
-        public static IQueryable<PlayerPrice> Filter(this IQueryable<PlayerPrice> PlayerPrices, int id)
+        public static IQueryable<PlayerPrice> Filter(
+            this IQueryable<PlayerPrice> PlayerPrices,
+            int id,
+            int Fk_Team,
+            int Fk_Player)
+ 
         {
-            return PlayerPrices.Where(a => id == 0 || a.Id == id);
+            return PlayerPrices.Where(a => (id == 0 || a.Id == id) &&
+                                                   (Fk_Team == 0 || a.Fk_Team == Fk_Team) &&
+                                                   (Fk_Player == 0 || a.Fk_Player == Fk_Player));
+
         }
 
     }

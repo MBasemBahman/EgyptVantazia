@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace Entities.CoreServicesModels.NewsModels
 {
-    public class NewsAttachmentParameters:RequestParameters
+    public class NewsAttachmentParameters : RequestParameters
     {
         public int Fk_News { get; set; }
 
     }
-    public class NewsAttachmentModel: AttachmentEntity
+    public class NewsAttachmentModel : AttachmentEntity
     {
         [DisplayName(nameof(News))]
         [ForeignKey(nameof(News))]

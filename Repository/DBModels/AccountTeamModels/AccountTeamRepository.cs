@@ -1,4 +1,5 @@
-﻿using Entities.DBModels.AccountTeamModels;
+﻿using Entities.CoreServicesModels.AccountTeamModels;
+using Entities.DBModels.AccountTeamModels;
 using Entities.RequestFeatures;
 
 
@@ -10,10 +11,12 @@ namespace Repository.DBModels.AccountTeamModels
         {
         }
 
-        public IQueryable<AccountTeam> FindAll(RequestParameters parameters, bool trackChanges)
+        public IQueryable<AccountTeam> FindAll(AccountTeamParameters parameters, bool trackChanges)
         {
             return FindByCondition(a => true, trackChanges)
-                   .Filter(parameters.Id);
+                   .Filter(parameters.Id,
+                           parameters.Fk_Account,
+                           parameters.Fk_Season);
         }
 
         public async Task<AccountTeam> FindById(int id, bool trackChanges)
@@ -43,10 +46,14 @@ namespace Repository.DBModels.AccountTeamModels
     {
         public static IQueryable<AccountTeam> Filter(
             this IQueryable<AccountTeam> AccountTeams,
-            int id
-            )
-        { 
-            return AccountTeams.Where(a => id == 0 || a.Id == id);
+            int id,
+            int Fk_Account,
+            int Fk_Season)
+            
+        {
+            return AccountTeams.Where(a => (id == 0 || a.Id == id) &&
+                                           (Fk_Account == 0 || a.Fk_Account == Fk_Account) &&
+                                           (Fk_Season == 0 || a.Fk_Season == Fk_Season));
         }
 
     }

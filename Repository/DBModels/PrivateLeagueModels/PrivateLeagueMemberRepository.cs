@@ -1,4 +1,5 @@
-﻿using Entities.DBModels.PrivateLeagueModels;
+﻿using Entities.CoreServicesModels.PrivateLeagueModels;
+using Entities.DBModels.PrivateLeagueModels;
 using Entities.RequestFeatures;
 
 
@@ -10,10 +11,12 @@ namespace Repository.DBModels.PrivateLeagueModels
         {
         }
 
-        public IQueryable<PrivateLeagueMember> FindAll(RequestParameters parameters, bool trackChanges)
+        public IQueryable<PrivateLeagueMember> FindAll(PrivateLeagueMemberParameters parameters, bool trackChanges)
         {
             return FindByCondition(a => true, trackChanges)
-                   .Filter(parameters.Id);
+                   .Filter(parameters.Id,
+                           parameters.Fk_Account,
+                           parameters.Fk_PrivateLeague);
         }
 
         public async Task<PrivateLeagueMember> FindById(int id, bool trackChanges)
@@ -41,9 +44,17 @@ namespace Repository.DBModels.PrivateLeagueModels
 
     public static class PrivateLeagueMemberRepositoryExtension
     {
-        public static IQueryable<PrivateLeagueMember> Filter(this IQueryable<PrivateLeagueMember> PrivateLeagueMembers, int id)
+        public static IQueryable<PrivateLeagueMember> Filter(
+            this IQueryable<PrivateLeagueMember> PrivateLeagueMembers, 
+            int id,
+            int Fk_Account,
+            int Fk_PrivateLeague
+            )
         {
-            return PrivateLeagueMembers.Where(a => id == 0 || a.Id == id);
+            return PrivateLeagueMembers.Where(a => (id == 0 || a.Id == id) &&
+                                                   (Fk_Account == 0 || a.Fk_Account == Fk_Account) &&
+                                                   (Fk_PrivateLeague == 0 || a.Fk_PrivateLeague == Fk_PrivateLeague));
+
         }
 
     }

@@ -14,6 +14,7 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
         [DisplayName(nameof(Player))]
         public int Fk_Player { get; set; }
     }
+
     public class PlayerGameWeakModel : AuditEntity
     {
         [DisplayName(nameof(GameWeak))]
@@ -29,6 +30,5 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
 
         [DisplayName(nameof(Player))]
         public PlayerModel Player { get; set; }
-
     }
 }

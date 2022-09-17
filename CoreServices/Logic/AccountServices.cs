@@ -28,7 +28,6 @@ namespace CoreServices.Logic
                                   LastModifiedAt = a.LastModifiedAt,
                                   LastModifiedBy = a.LastModifiedBy,
                                   ImageUrl = a.StorageUrl + a.ImageUrl,
-                                  StorageUrl = a.StorageUrl,
                                   FirstName = a.FirstName,
                                   LastName = a.LastName,
                                   EmailAddress = a.User.EmailAddress,

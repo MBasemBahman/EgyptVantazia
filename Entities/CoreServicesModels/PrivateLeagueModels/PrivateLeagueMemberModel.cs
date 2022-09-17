@@ -1,4 +1,6 @@
-﻿using Entities.RequestFeatures;
+﻿using Entities.CoreServicesModels.AccountModels;
+using Entities.DBModels.AccountModels;
+using Entities.RequestFeatures;
 
 namespace Entities.CoreServicesModels.PrivateLeagueModels
 {
@@ -8,9 +10,14 @@ namespace Entities.CoreServicesModels.PrivateLeagueModels
 
         public int Fk_PrivateLeague { get; set; }
     }
+
     public class PrivateLeagueMemberModel : AuditEntity
     {
+        [DisplayName(nameof(Account))]
         public int Fk_Account { get; set; }
+
+        [DisplayName(nameof(Account))]
+        public AccountModel Account { get; set; }
 
         public int Fk_PrivateLeague { get; set; }
 

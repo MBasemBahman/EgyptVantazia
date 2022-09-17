@@ -16,7 +16,8 @@ namespace Repository.DBModels.PlayersTransfersModels
                    .Filter(parameters.Id,
                            parameters.Fk_Player,
                            parameters.Fk_AccountTeam,
-                           parameters.Fk_GameWeak);
+                           parameters.Fk_GameWeak,
+                           parameters.IsFree);
         }
 
         public async Task<PlayerTransfer> FindById(int id, bool trackChanges)
@@ -33,12 +34,14 @@ namespace Repository.DBModels.PlayersTransfersModels
             int id,
             int Fk_Player,
             int Fk_AccountTeam,
-            int Fk_GameWeak)
+            int Fk_GameWeak,
+            bool? IsFree)
         {
             return PlayerTransfers.Where(a => (id == 0 || a.Id == id) &&
-                                                   (Fk_AccountTeam == 0 || a.Fk_AccountTeam == Fk_AccountTeam) &&
-                                                   (Fk_Player == 0 || a.Fk_Player == Fk_Player) &&
-                                                   (Fk_GameWeak == 0 || a.Fk_GameWeak == Fk_GameWeak));
+                                              (Fk_AccountTeam == 0 || a.Fk_AccountTeam == Fk_AccountTeam) &&
+                                              (IsFree == null || a.IsFree == IsFree) &&
+                                              (Fk_Player == 0 || a.Fk_Player == Fk_Player) &&
+                                              (Fk_GameWeak == 0 || a.Fk_GameWeak == Fk_GameWeak));
 
         }
 

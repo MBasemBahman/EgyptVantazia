@@ -1,4 +1,6 @@
-﻿using Entities.RequestFeatures;
+﻿using Entities.CoreServicesModels.SeasonModels;
+using Entities.CoreServicesModels.TeamModels;
+using Entities.RequestFeatures;
 
 namespace Entities.CoreServicesModels.StandingsModels
 {
@@ -7,12 +9,25 @@ namespace Entities.CoreServicesModels.StandingsModels
         public int Fk_Season { get; set; }
 
         public int Fk_Team { get; set; }
+
+        public int _365_For { get; set; }
     }
+
     public class StandingsModel : AuditEntity
     {
+        [DisplayName(nameof(Season))]
+        [ForeignKey(nameof(Season))]
         public int Fk_Season { get; set; }
 
+        [DisplayName(nameof(Season))]
+        public SeasonModel Season { get; set; }
+
+        [DisplayName(nameof(Team))]
+        [ForeignKey(nameof(Team))]
         public int Fk_Team { get; set; }
+
+        [DisplayName(nameof(Team))]
+        public TeamModel Team { get; set; }
 
         [DisplayName(nameof(GamePlayed))]
         public int GamePlayed { get; set; }

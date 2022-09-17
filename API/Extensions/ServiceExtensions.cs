@@ -103,6 +103,7 @@ namespace API.Extensions
                 }
 
                 c.OperationFilter<DocsFilter>();
+                c.SchemaFilter<SwaggerSkipPropertyFilter>();
 
                 string xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 string xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);

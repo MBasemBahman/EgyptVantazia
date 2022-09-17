@@ -1,10 +1,19 @@
 ﻿using Entities.DBModels.SponsorModels;
+using Entities.RequestFeatures;
+using static Entities.EnumData.LogicEnumData;
 
 namespace Entities.CoreServicesModels.SponsorModels
 {
-    public class SponsorModel : AuditImageEntity, ILookUpEntity
+    public class SponsorParameters : RequestParameters
     {
-        [DisplayName($"{nameof(Name)}{PropertyAttributeConstants.ArLang}")]
+        public AppViewEnum? AppViewEnum { get; set; }
+
+        public bool GetViews { get; set; } = false;
+    }
+
+    public class SponsorModel : AuditImageEntity
+    {
+        [DisplayName(nameof(Name))]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
 
@@ -13,6 +22,10 @@ namespace Entities.CoreServicesModels.SponsorModels
         [Url]
         public string LinkUrl { get; set; }
 
-        public SponsorLang SponsorLang { get; set; }
+        [DisplayName(nameof(SponsorViewsCount))]
+        public int SponsorViewsCount { get; set; }
+
+        [DisplayName(nameof(SponsorViews))]
+        public IList<AppViewEnum> SponsorViews { get; set; }
     }
 }

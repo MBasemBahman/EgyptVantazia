@@ -10,8 +10,6 @@ namespace Entities.CoreServicesModels.SponsorModels
     }
     public class SponsorViewModel : BaseEntity
     {
-        public int Fk_Sponsor { get; set; }
-
         [DisplayName(nameof(AppViewEnum))]
         public AppViewEnum AppViewEnum { get; set; }
     }

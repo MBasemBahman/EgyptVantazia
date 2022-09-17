@@ -12,7 +12,12 @@
         {
             Authentication,
             Location,
-            AppInfo
+            AppInfo,
+            News,
+            Sponsor,
+            Standings,
+            Season,
+            Team
         }
 
         public enum TenantViews

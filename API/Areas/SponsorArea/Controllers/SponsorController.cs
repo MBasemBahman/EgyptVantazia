@@ -1,18 +1,18 @@
 ﻿using API.Controllers;
 using Entities.CoreServicesModels.LocationModels;
-using Entities.CoreServicesModels.NewsModels;
-using Entities.DBModels.NewsModels;
+using Entities.CoreServicesModels.SponsorModels;
+using Entities.DBModels.SponsorModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace API.Areas.NewsArea.Controllers
+namespace API.Areas.SponsorArea.Controllers
 {
     [ApiVersion("1.0")]
-    [Area("News")]
-    [ApiExplorerSettings(GroupName = "News")]
+    [Area("Sponsor")]
+    [ApiExplorerSettings(GroupName = "Sponsor")]
     [Route("[area]/v{version:apiVersion}/[controller]")]
-    public class NewsController : ExtendControllerBase
+    public class SponsorController : ExtendControllerBase
     {
-        public NewsController(
+        public SponsorController(
         ILoggerManager logger,
         IMapper mapper,
         UnitOfWork unitOfWork,
@@ -22,15 +22,13 @@ namespace API.Areas.NewsArea.Controllers
         { }
 
         [HttpGet]
-        [Route(nameof(GetNews))]
-        public async Task<IEnumerable<NewsModel>> GetNews(
-        [FromQuery] NewsParameters parameters)
+        [Route(nameof(GetSponsor))]
+        public async Task<IEnumerable<SponsorModel>> GetSponsor(
+        [FromQuery] SponsorParameters parameters)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
-            parameters.GetAttachments = true;
-
-            PagedList<NewsModel> data = await _unitOfWork.News.GetNewsPaged(parameters, otherLang);
+            PagedList<SponsorModel> data = await _unitOfWork.Sponsor.GetSponsorPaged(parameters, otherLang);
 
             SetPagination(data.MetaData, parameters);
 
@@ -38,18 +36,19 @@ namespace API.Areas.NewsArea.Controllers
         }
 
         [HttpGet]
-        [Route(nameof(GetNewsById))]
-        public NewsModel GetNewsById(
+        [Route(nameof(GetSponsorById))]
+        public SponsorModel GetSponsorById(
         [FromQuery, BindRequired] int id)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
-            NewsModel data = _unitOfWork.News.GetNewsbyId(id, otherLang);
+            SponsorModel data = _unitOfWork.Sponsor.GetSponsorbyId(id, otherLang);
 
-            data.NewsAttachments = _unitOfWork.News.GetNewsAttachments(new NewsAttachmentParameters
+            data.SponsorViews = _unitOfWork.Sponsor.GetSponsorViews(new SponsorViewParameters
             {
-                Fk_News = id
-            }).ToList();
+                Fk_Sponsor = id
+            }).Select(a => a.AppViewEnum)
+              .ToList();
 
             return data;
         }

@@ -13,7 +13,8 @@ namespace Repository.DBModels.SeasonModels
         {
             return FindByCondition(a => true, trackChanges)
                    .Filter(parameters.Id,
-                           parameters.Fk_Season);
+                           parameters.Fk_Season,
+                           parameters._365_GameWeakId);
         }
 
         public async Task<GameWeak> FindById(int id, bool trackChanges)
@@ -37,11 +38,12 @@ namespace Repository.DBModels.SeasonModels
         public static IQueryable<GameWeak> Filter(
             this IQueryable<GameWeak> GameWeaks,
             int id,
-            int Fk_Season
-            )
+            int Fk_Season,
+            string _365_GameWeakId)
         {
             return GameWeaks.Where(a => (id == 0 || a.Id == id) &&
-                                        (Fk_Season == 0 || a.Fk_Season == Fk_Season));
+                                        (Fk_Season == 0 || a.Fk_Season == Fk_Season) &&
+                                        (string.IsNullOrWhiteSpace(_365_GameWeakId) || a._365_GameWeakId == _365_GameWeakId));
 
         }
 

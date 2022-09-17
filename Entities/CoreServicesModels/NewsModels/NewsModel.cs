@@ -7,22 +7,23 @@ namespace Entities.CoreServicesModels.NewsModels
 {
     public class NewsParameters : RequestParameters
     {
+        [DisplayName(nameof(GameWeak))]
         public int? Fk_GameWeak { get; set; }
 
         public bool GetAttachments { get; set; } = false;
     }
     public class NewsModel : AuditImageEntity
     {
-        [DisplayName($"{nameof(Title)}{PropertyAttributeConstants.ArLang}")]
+        [DisplayName(nameof(Title))]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Title { get; set; }
 
-        [DisplayName($"{nameof(ShortDescription)}{PropertyAttributeConstants.ArLang}")]
+        [DisplayName(nameof(ShortDescription))]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         [DataType(DataType.MultilineText)]
         public string ShortDescription { get; set; }
 
-        [DisplayName($"{nameof(LongDescription)}{PropertyAttributeConstants.ArLang}")]
+        [DisplayName(nameof(LongDescription))]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         [DataType(DataType.MultilineText)]
         public string LongDescription { get; set; }

@@ -5,20 +5,27 @@ namespace Entities.CoreServicesModels.SeasonModels
 {
     public class GameWeakParameters : RequestParameters
     {
+        [DisplayName(nameof(Season))]
         public int Fk_Season { get; set; }
 
+        [DisplayName(nameof(_365_GameWeakId))]
+        public string _365_GameWeakId { get; set; }
     }
+
     public class GameWeakModel : AuditEntity
     {
-        [DisplayName($"{nameof(Name)}{PropertyAttributeConstants.ArLang}")]
+        [DisplayName(nameof(Name))]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
 
         [DisplayName(nameof(_365_GameWeakId))]
         public string _365_GameWeakId { get; set; }
 
+        [DisplayName(nameof(Season))]
+        [ForeignKey(nameof(Season))]
         public int Fk_Season { get; set; }
 
-        public SeasonLang SeasonLang { get; set; }
+        [DisplayName(nameof(Season))]
+        public SeasonModel Season { get; set; }
     }
 }

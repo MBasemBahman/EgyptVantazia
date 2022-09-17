@@ -1,4 +1,5 @@
-﻿using Entities.DBModels.SeasonModels;
+﻿using Entities.CoreServicesModels.SeasonModels;
+using Entities.DBModels.SeasonModels;
 using Entities.RequestFeatures;
 
 
@@ -10,10 +11,11 @@ namespace Repository.DBModels.SeasonModels
         {
         }
 
-        public IQueryable<Season> FindAll(RequestParameters parameters, bool trackChanges)
+        public IQueryable<Season> FindAll(SeasonParameters parameters, bool trackChanges)
         {
             return FindByCondition(a => true, trackChanges)
-                   .Filter(parameters.Id);
+                   .Filter(parameters.Id,
+                           parameters._365_SeasonId);
         }
 
         public async Task<Season> FindById(int id, bool trackChanges)
@@ -35,9 +37,13 @@ namespace Repository.DBModels.SeasonModels
 
     public static class SeasonRepositoryExtension
     {
-        public static IQueryable<Season> Filter(this IQueryable<Season> Seasons, int id)
+        public static IQueryable<Season> Filter(
+            this IQueryable<Season> Seasons,
+            int id,
+            string _365_SeasonId)
         {
-            return Seasons.Where(a => id == 0 || a.Id == id);
+            return Seasons.Where(a => (id == 0 || a.Id == id) &&
+                                      (string.IsNullOrWhiteSpace(_365_SeasonId) || a._365_SeasonId == _365_SeasonId));
         }
 
     }

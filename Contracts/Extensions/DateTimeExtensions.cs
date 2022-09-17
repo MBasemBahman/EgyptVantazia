@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace Entities.Extensions
+namespace Contracts.Extensions
 {
     public static class DateTimeExtensions
     {

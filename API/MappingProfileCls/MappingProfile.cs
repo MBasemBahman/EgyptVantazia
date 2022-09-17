@@ -1,4 +1,8 @@
-﻿using API.Areas.UserArea.Models;
+﻿using API.Areas.SeasonArea.Models;
+using API.Areas.TeamArea.Models;
+using API.Areas.UserArea.Models;
+using Entities.CoreServicesModels.SeasonModels;
+using Entities.CoreServicesModels.TeamModels;
 using Entities.CoreServicesModels.UserModels;
 
 namespace API.MappingProfileCls
@@ -43,6 +47,23 @@ namespace API.MappingProfileCls
 
             _ = CreateMap<User, UserDto>();
 
+
+            #endregion
+
+            #region SeasonModels
+
+            _ = CreateMap<SeasonModel, SeasonDto>();
+            _ = CreateMap<GameWeakModel, GameWeakDto>();
+            _ = CreateMap<TeamGameWeakModel, TeamGameWeakDto>();
+
+            #endregion
+
+            #region TeamModels
+
+            _ = CreateMap<TeamModel, TeamDto>();
+            _ = CreateMap<PlayerModel, PlayerDto>();
+            _ = CreateMap<PlayerPositionModel, PlayerPositionDto>();
+            _ = CreateMap<PlayerPriceModel, PlayerPriceDto>();
 
             #endregion
         }

@@ -1,10 +1,6 @@
-﻿using Entities.CoreServicesModels.LocationModels;
-using Entities.CoreServicesModels.NewsModels;
+﻿using Entities.CoreServicesModels.NewsModels;
 using Entities.CoreServicesModels.SeasonModels;
-using Entities.DBModels.LocationModels;
 using Entities.DBModels.NewsModels;
-using Entities.DBModels.SeasonModels;
-using static Entities.EnumData.LogicEnumData;
 
 namespace CoreServices.Logic
 {

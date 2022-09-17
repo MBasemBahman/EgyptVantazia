@@ -1,7 +1,5 @@
 ﻿using API.Controllers;
-using Entities.CoreServicesModels.LocationModels;
 using Entities.CoreServicesModels.SponsorModels;
-using Entities.DBModels.SponsorModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace API.Areas.SponsorArea.Controllers

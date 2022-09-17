@@ -1,5 +1,4 @@
-﻿using Entities.CoreServicesModels.LogModels;
-using Entities.CoreServicesModels.TeamModels;
+﻿using Entities.CoreServicesModels.TeamModels;
 
 namespace CoreServices.Extensions
 {

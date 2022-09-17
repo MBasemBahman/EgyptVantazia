@@ -1,6 +1,4 @@
-﻿using Entities.CoreServicesModels.SeasonModels;
-using Entities.CoreServicesModels.TeamModels;
-using Entities.DBModels.SeasonModels;
+﻿using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.TeamModels;
 
 namespace CoreServices.Logic

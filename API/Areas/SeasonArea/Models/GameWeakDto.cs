@@ -1,5 +1,4 @@
 ﻿using Entities.CoreServicesModels.SeasonModels;
-using Entities.DBModels.SeasonModels;
 using System.ComponentModel;
 
 namespace API.Areas.SeasonArea.Models

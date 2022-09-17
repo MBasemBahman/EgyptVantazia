@@ -4,7 +4,7 @@
     {
         private readonly AppSettings _appSettings;
         private readonly byte[] _secret;
-        private string _key;
+        private readonly string _key;
         private int _expires;
 
         public JwtUtils(IOptions<AppSettings> appSettings)

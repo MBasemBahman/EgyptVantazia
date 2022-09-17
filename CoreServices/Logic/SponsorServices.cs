@@ -1,5 +1,4 @@
 ﻿using Entities.CoreServicesModels.SponsorModels;
-using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.SponsorModels;
 
 namespace CoreServices.Logic

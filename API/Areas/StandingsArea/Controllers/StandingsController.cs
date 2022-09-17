@@ -1,7 +1,6 @@
 ﻿using API.Areas.StandingsArea.Models;
 using API.Controllers;
 using Entities.CoreServicesModels.StandingsModels;
-using Entities.DBModels.StandingsModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace API.Areas.StandingsArea.Controllers

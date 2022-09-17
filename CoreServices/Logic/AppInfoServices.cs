@@ -1,7 +1,5 @@
 ﻿using Entities.CoreServicesModels.AppInfoModels;
-using Entities.CoreServicesModels.LocationModels;
 using Entities.DBModels.AppInfoModels;
-using Entities.DBModels.LocationModels;
 
 namespace CoreServices.Logic
 {

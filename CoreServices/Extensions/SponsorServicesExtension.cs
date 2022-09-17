@@ -1,5 +1,4 @@
-﻿using Entities.CoreServicesModels.LocationModels;
-using Entities.CoreServicesModels.SponsorModels;
+﻿using Entities.CoreServicesModels.SponsorModels;
 
 namespace CoreServices.Extensions
 {

@@ -1,5 +1,4 @@
 ﻿using API.Areas.SeasonArea.Models;
-using API.Areas.StandingsArea.Models;
 using API.Controllers;
 using Entities.CoreServicesModels.SeasonModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;

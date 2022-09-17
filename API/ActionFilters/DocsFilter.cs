@@ -82,15 +82,15 @@ namespace API.ActionFilters
                 return;
             }
 
-            var skipProperties = context.Type.GetProperties().Where(t => t.GetCustomAttribute<SwaggerIgnoreAttribute>() != null);
+            IEnumerable<PropertyInfo> skipProperties = context.Type.GetProperties().Where(t => t.GetCustomAttribute<SwaggerIgnoreAttribute>() != null);
 
-            foreach (var skipProperty in skipProperties)
+            foreach (PropertyInfo skipProperty in skipProperties)
             {
-                var propertyToSkip = schema.Properties.Keys.SingleOrDefault(x => string.Equals(x, skipProperty.Name, StringComparison.OrdinalIgnoreCase));
+                string propertyToSkip = schema.Properties.Keys.SingleOrDefault(x => string.Equals(x, skipProperty.Name, StringComparison.OrdinalIgnoreCase));
 
                 if (propertyToSkip != null)
                 {
-                    schema.Properties.Remove(propertyToSkip);
+                    _ = schema.Properties.Remove(propertyToSkip);
                 }
             }
         }

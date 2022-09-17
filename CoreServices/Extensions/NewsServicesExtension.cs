@@ -1,5 +1,4 @@
-﻿using Entities.CoreServicesModels.LocationModels;
-using Entities.CoreServicesModels.NewsModels;
+﻿using Entities.CoreServicesModels.NewsModels;
 
 namespace CoreServices.Extensions
 {

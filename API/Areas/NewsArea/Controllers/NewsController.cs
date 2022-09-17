@@ -1,7 +1,5 @@
 ﻿using API.Controllers;
-using Entities.CoreServicesModels.LocationModels;
 using Entities.CoreServicesModels.NewsModels;
-using Entities.DBModels.NewsModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace API.Areas.NewsArea.Controllers

@@ -1,5 +1,4 @@
-﻿using Entities.DBModels.TeamModels;
-using Entities.RequestFeatures;
+﻿using Entities.RequestFeatures;
 
 namespace Entities.CoreServicesModels.TeamModels
 {

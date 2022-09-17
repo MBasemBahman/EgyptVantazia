@@ -1,6 +1,5 @@
-﻿using Entities.DBModels.PlayerScoreModels;
-using Entities.RequestFeatures;
-
+﻿using Entities.CoreServicesModels.PlayerScoreModels;
+using Entities.DBModels.PlayerScoreModels;
 
 namespace Repository.DBModels.PlayerScoreModels
 {
@@ -10,10 +9,11 @@ namespace Repository.DBModels.PlayerScoreModels
         {
         }
 
-        public IQueryable<ScoreType> FindAll(RequestParameters parameters, bool trackChanges)
+        public IQueryable<ScoreType> FindAll(ScoreTypeParameters parameters, bool trackChanges)
         {
             return FindByCondition(a => true, trackChanges)
-                   .Filter(parameters.Id);
+                   .Filter(parameters.Id,
+                           parameters._365_TypeId);
         }
 
         public async Task<ScoreType> FindById(int id, bool trackChanges)
@@ -35,9 +35,13 @@ namespace Repository.DBModels.PlayerScoreModels
 
     public static class ScoreTypeRepositoryExtension
     {
-        public static IQueryable<ScoreType> Filter(this IQueryable<ScoreType> ScoreTypes, int id)
+        public static IQueryable<ScoreType> Filter(
+            this IQueryable<ScoreType> ScoreTypes,
+            int id,
+            string _365_TypeId)
         {
-            return ScoreTypes.Where(a => id == 0 || a.Id == id);
+            return ScoreTypes.Where(a => (id == 0 || a.Id == id) &&
+                                         (string.IsNullOrWhiteSpace(_365_TypeId) || a._365_TypeId == _365_TypeId));
         }
 
     }

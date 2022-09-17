@@ -30,21 +30,18 @@ namespace Entities.CoreServicesModels.SeasonModels
     public class TeamGameWeakModel : AuditEntity
     {
         [DisplayName(nameof(Home))]
-        [ForeignKey(nameof(Home))]
         public int Fk_Home { get; set; }
 
         [DisplayName(nameof(Home))]
         public TeamModel Home { get; set; }
 
         [DisplayName(nameof(Away))]
-        [ForeignKey(nameof(Away))]
         public int Fk_Away { get; set; }
 
         [DisplayName(nameof(Away))]
         public TeamModel Away { get; set; }
 
         [DisplayName(nameof(GameWeak))]
-        [ForeignKey(nameof(GameWeak))]
         public int Fk_GameWeak { get; set; }
 
         [DisplayName(nameof(GameWeak))]

@@ -1,5 +1,13 @@
-﻿namespace Entities.CoreServicesModels.PlayerScoreModels
+﻿using Entities.RequestFeatures;
+
+namespace Entities.CoreServicesModels.PlayerScoreModels
 {
+    public class ScoreTypeParameters : RequestParameters
+    {
+        [DisplayName(nameof(_365_TypeId))]
+        public string _365_TypeId { get; set; }
+    }
+
     public class ScoreTypeModel : AuditLookUpEntity
     {
         [DisplayName($"{nameof(Name)}{PropertyAttributeConstants.ArLang}")]

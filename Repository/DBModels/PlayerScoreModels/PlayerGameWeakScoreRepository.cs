@@ -15,7 +15,9 @@ namespace Repository.DBModels.PlayerScoreModels
             return FindByCondition(a => true, trackChanges)
                    .Filter(parameters.Id,
                            parameters.Fk_PlayerGameWeak,
-                           parameters.Fk_ScoreType);
+                           parameters.Fk_ScoreType,
+                           parameters.Fk_Player,
+                           parameters.Fk_GameWeak);
         }
 
         public async Task<PlayerGameWeakScore> FindById(int id, bool trackChanges)
@@ -31,11 +33,15 @@ namespace Repository.DBModels.PlayerScoreModels
             (this IQueryable<PlayerGameWeakScore> PlayerGameWeakScores,
              int id,
              int Fk_PlayerGameWeak,
-             int Fk_ScoreType)
+             int Fk_ScoreType,
+             int Fk_Player,
+             int Fk_GameWeak)
 
         {
             return PlayerGameWeakScores.Where(a => (id == 0 || a.Id == id) &&
                                                    (Fk_PlayerGameWeak == 0 || a.Fk_PlayerGameWeak == Fk_PlayerGameWeak) &&
+                                                   (Fk_Player == 0 || a.PlayerGameWeak.Fk_Player == Fk_Player) &&
+                                                   (Fk_GameWeak == 0 || a.PlayerGameWeak.Fk_GameWeak == Fk_GameWeak) &&
                                                    (Fk_ScoreType == 0 || a.Fk_ScoreType == Fk_ScoreType));
 
         }

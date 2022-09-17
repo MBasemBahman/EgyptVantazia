@@ -21,14 +21,12 @@ namespace Entities.CoreServicesModels.TeamModels
         public string _365_PlayerId { get; set; }
 
         [DisplayName(nameof(Team))]
-        [ForeignKey(nameof(Team))]
         public int Fk_Team { get; set; }
 
         [DisplayName(nameof(Team))]
         public TeamModel Team { get; set; }
 
         [DisplayName(nameof(PlayerPosition))]
-        [ForeignKey(nameof(PlayerPosition))]
         public int Fk_PlayerPosition { get; set; }
 
         [DisplayName(nameof(PlayerPosition))]

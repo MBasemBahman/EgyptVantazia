@@ -17,7 +17,8 @@
             Sponsor,
             Standings,
             Season,
-            Team
+            Team,
+            PlayerScore
         }
 
         public enum TenantViews

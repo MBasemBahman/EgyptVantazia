@@ -22,7 +22,6 @@ namespace Entities.CoreServicesModels.SeasonModels
         public string _365_GameWeakId { get; set; }
 
         [DisplayName(nameof(Season))]
-        [ForeignKey(nameof(Season))]
         public int Fk_Season { get; set; }
 
         [DisplayName(nameof(Season))]

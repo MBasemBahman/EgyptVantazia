@@ -10,6 +10,14 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public int Fk_AccountTeamPlayer { get; set; }
 
         public int Fk_TeamPlayerType { get; set; }
+
+        public int Fk_AccountTeam { get; set; }
+
+        public int Fk_Player { get; set; }
+
+        public int Fk_Account { get; set; }
+
+        public int Fk_Season { get; set; }
     }
     public class AccountTeamPlayerGameWeakModel : AuditEntity
     {

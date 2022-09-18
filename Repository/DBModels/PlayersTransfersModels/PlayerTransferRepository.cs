@@ -1,4 +1,4 @@
-﻿using Entities.CoreServicesModels.PlayersTransfersModels;
+﻿using Entities.CoreServicesModels.PlayerTransfersModels;
 using Entities.DBModels.PlayersTransfersModels;
 
 
@@ -17,6 +17,8 @@ namespace Repository.DBModels.PlayersTransfersModels
                            parameters.Fk_Player,
                            parameters.Fk_AccountTeam,
                            parameters.Fk_GameWeak,
+                           parameters.Fk_Account,
+                           parameters.Fk_Season,
                            parameters.IsFree);
         }
 
@@ -35,10 +37,14 @@ namespace Repository.DBModels.PlayersTransfersModels
             int Fk_Player,
             int Fk_AccountTeam,
             int Fk_GameWeak,
+            int Fk_Account,
+            int Fk_Season,
             bool? IsFree)
         {
             return PlayerTransfers.Where(a => (id == 0 || a.Id == id) &&
                                               (Fk_AccountTeam == 0 || a.Fk_AccountTeam == Fk_AccountTeam) &&
+                                              (Fk_Account == 0 || a.AccountTeam.Fk_Account == Fk_Account) &&
+                                              (Fk_Season == 0 || a.AccountTeam.Fk_Season == Fk_Season) &&
                                               (IsFree == null || a.IsFree == IsFree) &&
                                               (Fk_Player == 0 || a.Fk_Player == Fk_Player) &&
                                               (Fk_GameWeak == 0 || a.Fk_GameWeak == Fk_GameWeak));

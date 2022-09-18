@@ -19,7 +19,9 @@
             Season,
             Team,
             PlayerScore,
-            PrivateLeague
+            PrivateLeague,
+            PlayerTransfer,
+            AccountTeam
         }
 
         public enum TenantViews

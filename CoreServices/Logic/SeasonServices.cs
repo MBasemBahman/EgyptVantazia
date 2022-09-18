@@ -67,6 +67,14 @@ namespace CoreServices.Logic
         {
             return _repository.Season.Count();
         }
+
+        public SeasonModel GetCurrentSeason()
+        {
+            return GetSeasons(new SeasonParameters(), otherLang: false)
+                   .OrderByDescending(x => x.Id)
+                   .FirstOrDefault();
+        }
+
         #endregion
 
         #region GameWeak Services

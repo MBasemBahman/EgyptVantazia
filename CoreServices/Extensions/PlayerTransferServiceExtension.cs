@@ -1,4 +1,4 @@
-﻿using Entities.CoreServicesModels.PlayersTransfersModels;
+﻿using Entities.CoreServicesModels.PlayerTransfersModels;
 
 namespace CoreServices.Extensions
 {

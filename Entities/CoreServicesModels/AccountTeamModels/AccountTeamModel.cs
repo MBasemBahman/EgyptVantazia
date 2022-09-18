@@ -1,6 +1,7 @@
 ﻿using Entities.CoreServicesModels.AccountModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.RequestFeatures;
+using Microsoft.AspNetCore.Http;
 
 namespace Entities.CoreServicesModels.AccountTeamModels
 {
@@ -10,6 +11,7 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public int Fk_Season { get; set; }
 
     }
+
     public class AccountTeamModel : AuditImageEntity
     {
         [DisplayName(nameof(Account))]
@@ -33,6 +35,15 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         [DisplayName(nameof(TotalMoney))]
         public int TotalMoney { get; set; }
+    }
 
+    public class AccountTeamCreateModel
+    {
+        [DisplayName(nameof(Name))]
+        [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
+        public string Name { get; set; }
+
+        [DisplayName(nameof(ImageFile))]
+        public IFormFile ImageFile { get; set; }
     }
 }

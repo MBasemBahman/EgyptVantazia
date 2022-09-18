@@ -83,6 +83,22 @@ namespace CoreServices.Logic
         {
             return _repository.AccountTeam.Count();
         }
+
+        public AccountTeamModel GetCurrentTeam(int fk_Account, int fk_Season)
+        {
+            return GetAccountTeams(new AccountTeamParameters()
+            {
+                Fk_Account = fk_Account,
+                Fk_Season = fk_Season
+            }, otherLang: false).FirstOrDefault();
+        }
+
+        public async Task<string> UploadAccountTeamImage(string rootPath, IFormFile file)
+        {
+            FileUploader uploader = new(rootPath);
+            return await uploader.UploudFile(file, "Uploud/AccountTeam");
+        }
+
         #endregion
 
         #region AccountTeamGameWeak Services

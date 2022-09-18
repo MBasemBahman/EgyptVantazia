@@ -3,9 +3,13 @@ using API.Areas.SeasonArea.Models;
 using API.Areas.TeamArea.Models;
 using API.Areas.UserArea.Models;
 using Entities.CoreServicesModels.PlayerScoreModels;
+using Entities.CoreServicesModels.PlayerTransfersModels;
+using Entities.CoreServicesModels.PrivateLeagueModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.CoreServicesModels.UserModels;
+using Entities.DBModels.PlayersTransfersModels;
+using Entities.DBModels.PrivateLeagueModels;
 
 namespace API.MappingProfileCls
 {
@@ -71,6 +75,17 @@ namespace API.MappingProfileCls
 
             #region PlayerScoreModels
             _ = CreateMap<ScoreTypeModel, ScoreTypeDto>();
+            #endregion
+
+            #region PrivateLeagueModels
+            _ = CreateMap<PrivateLeagueCreateModel, PrivateLeague>();
+            #endregion
+
+            #region PlayerTransferModels
+            _ = CreateMap<PlayerTransferCreateModel, PlayerTransfer>();
+            #endregion
+
+            #region AccountTeamModels
             #endregion
         }
 

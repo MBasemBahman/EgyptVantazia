@@ -1,15 +1,15 @@
-﻿using Entities.CoreServicesModels.PlayersTransfersModels;
+﻿using Entities.CoreServicesModels.PlayerTransfersModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayersTransfersModels;
 
 namespace CoreServices.Logic
 {
-    public class PlayersTransfersServices
+    public class PlayerTransfersServices
     {
         private readonly RepositoryManager _repository;
 
-        public PlayersTransfersServices(RepositoryManager repository)
+        public PlayerTransfersServices(RepositoryManager repository)
         {
             _repository = repository;
         }

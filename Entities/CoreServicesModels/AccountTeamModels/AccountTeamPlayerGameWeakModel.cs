@@ -1,4 +1,7 @@
-﻿using Entities.RequestFeatures;
+﻿using Entities.CoreServicesModels.SeasonModels;
+using Entities.DBModels.AccountTeamModels;
+using Entities.DBModels.SeasonModels;
+using Entities.RequestFeatures;
 
 namespace Entities.CoreServicesModels.AccountTeamModels
 {
@@ -10,11 +13,23 @@ namespace Entities.CoreServicesModels.AccountTeamModels
     }
     public class AccountTeamPlayerGameWeakModel : AuditEntity
     {
+        [DisplayName(nameof(AccountTeamPlayer))]
         public int Fk_AccountTeamPlayer { get; set; }
 
+        [DisplayName(nameof(AccountTeamPlayer))]
+        public AccountTeamPlayerModel AccountTeamPlayer { get; set; }
+
+        [DisplayName(nameof(TeamPlayerType))]
         public int Fk_TeamPlayerType { get; set; }
 
+        [DisplayName(nameof(TeamPlayerType))]
+        public TeamPlayerTypeModel TeamPlayerType { get; set; }
+
+        [DisplayName(nameof(GameWeak))]
         public int Fk_GameWeak { get; set; }
+
+        [DisplayName(nameof(GameWeak))]
+        public GameWeakModel GameWeak { get; set; }
 
         [DisplayName(nameof(TrippleCaptain))]
         public bool TrippleCaptain { get; set; }

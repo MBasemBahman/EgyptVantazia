@@ -20,5 +20,17 @@ namespace Entities.CoreServicesModels.PrivateLeagueModels
         [DisplayName(nameof(UniqueCode))]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string UniqueCode { get; set; }
+
+        [DisplayName(nameof(MemberCount))]
+        public int MemberCount { get; set; }
+    }
+
+    public class PrivateLeagueCreateModel
+    {
+        [DisplayName(nameof(Name))]
+        [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
+        public string Name { get; set; }
+
+        public IList<int> Fk_Accounts { get; set; }
     }
 }

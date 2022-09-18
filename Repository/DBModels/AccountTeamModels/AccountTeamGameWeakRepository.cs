@@ -31,9 +31,7 @@ namespace Repository.DBModels.AccountTeamModels
             this IQueryable<AccountTeamGameWeak> AccountTeamGameWeaks,
             int id,
             int Fk_AccountTeam,
-            int Fk_GameWeak
-
-            )
+            int Fk_GameWeak)
 
         {
             return AccountTeamGameWeaks.Where(a => (id == 0 || a.Id == id) &&

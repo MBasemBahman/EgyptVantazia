@@ -38,4 +38,8 @@
     <ProjectReference Include="..\TenantConfiguration\TenantConfiguration.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\PrivateLeagueArea\Models\" />
+  </ItemGroup>
+
 </Project>

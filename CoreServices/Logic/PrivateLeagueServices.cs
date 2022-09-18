@@ -27,6 +27,7 @@ namespace CoreServices.Logic
                            LastModifiedBy = a.LastModifiedBy,
                            Name = a.Name,
                            UniqueCode = a.UniqueCode,
+                           MemberCount = a.PrivateLeagueMembers.Count,
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

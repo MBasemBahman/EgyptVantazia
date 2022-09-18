@@ -18,7 +18,8 @@
             Standings,
             Season,
             Team,
-            PlayerScore
+            PlayerScore,
+            PrivateLeague
         }
 
         public enum TenantViews

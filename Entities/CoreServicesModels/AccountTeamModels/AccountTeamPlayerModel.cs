@@ -1,4 +1,5 @@
-﻿using Entities.RequestFeatures;
+﻿using Entities.CoreServicesModels.TeamModels;
+using Entities.RequestFeatures;
 
 namespace Entities.CoreServicesModels.AccountTeamModels
 {
@@ -6,12 +7,22 @@ namespace Entities.CoreServicesModels.AccountTeamModels
     {
         public int Fk_AccountTeam { get; set; }
         public int Fk_Player { get; set; }
-
     }
+
     public class AccountTeamPlayerModel : BaseEntity
     {
+
+        [DisplayName(nameof(AccountTeam))]
         public int Fk_AccountTeam { get; set; }
+
+        [DisplayName(nameof(AccountTeam))]
+        public AccountTeamModel AccountTeam { get; set; }
+
+        [DisplayName(nameof(Player))]
         public int Fk_Player { get; set; }
+
+        [DisplayName(nameof(Player))]
+        public PlayerModel Player { get; set; }
 
     }
 }

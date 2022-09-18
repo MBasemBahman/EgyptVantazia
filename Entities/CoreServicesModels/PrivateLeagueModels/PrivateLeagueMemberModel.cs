@@ -1,5 +1,4 @@
 ﻿using Entities.CoreServicesModels.AccountModels;
-using Entities.DBModels.AccountModels;
 using Entities.RequestFeatures;
 
 namespace Entities.CoreServicesModels.PrivateLeagueModels
@@ -9,6 +8,8 @@ namespace Entities.CoreServicesModels.PrivateLeagueModels
         public int Fk_Account { get; set; }
 
         public int Fk_PrivateLeague { get; set; }
+
+        public bool? IsAdmin { get; set; }
     }
 
     public class PrivateLeagueMemberModel : AuditEntity
@@ -23,5 +24,13 @@ namespace Entities.CoreServicesModels.PrivateLeagueModels
 
         [DisplayName(nameof(IsAdmin))]
         public bool IsAdmin { get; set; }
+    }
+
+    public class PrivateLeagueMemberCreateModel
+    {
+        public int Fk_PrivateLeague { get; set; }
+
+        [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
+        public IList<int> Fk_Accounts { get; set; }
     }
 }

@@ -1,5 +1,4 @@
-﻿using API.Areas.PlayerScoreArea.Models;
-using API.Controllers;
+﻿using API.Controllers;
 using Entities.CoreServicesModels.PlayerScoreModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 

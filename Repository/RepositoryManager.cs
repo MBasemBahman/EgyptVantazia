@@ -1,4 +1,5 @@
 ﻿using Repository.DBModels.AccountModels;
+using Repository.DBModels.AccountTeamModels;
 using Repository.DBModels.AppInfoModels;
 using Repository.DBModels.DashboardAdministrationModels;
 using Repository.DBModels.LocationModels;
@@ -93,6 +94,15 @@ namespace Repository
         private TeamRepository _teamRepository;
         #endregion
 
+        #region AccountTeamModels
+        private AccountTeamGameWeakRepository _accountTeamGameWeakRepository;
+        private AccountTeamPlayerGameWeakRepository _accountTeamPlayerGameWeakRepository;
+        private AccountTeamPlayerRepository _accountTeamPlayerRepository;
+        private AccountTeamRepository _accountTeamRepository;
+        private TeamPlayerTypeRepository _teamPlayerTypeRepository;
+        #endregion
+
+
         public RepositoryManager(DbContext dBContext)
         {
             _dBContext = dBContext;
@@ -178,7 +188,6 @@ namespace Repository
         }
         #endregion
 
-
         #region DashboardAdministrationModels
 
         public AdministrationRolePremissionRepository AdministrationRolePremission
@@ -238,7 +247,6 @@ namespace Repository
             }
         }
         #endregion
-
 
         #region NewsModels
         public NewsAttachmentRepository NewsAttachment
@@ -405,6 +413,50 @@ namespace Repository
             {
                 _teamRepository ??= new TeamRepository(_dBContext);
                 return _teamRepository;
+            }
+        }
+        #endregion
+
+        #region AccountTeamModels
+        public AccountTeamGameWeakRepository AccountTeamGameWeak
+        {
+            get
+            {
+                _accountTeamGameWeakRepository ??= new AccountTeamGameWeakRepository(_dBContext);
+                return _accountTeamGameWeakRepository;
+            }
+        }
+        public AccountTeamPlayerGameWeakRepository AccountTeamPlayerGameWeak
+        {
+            get
+            {
+                _accountTeamPlayerGameWeakRepository ??= new AccountTeamPlayerGameWeakRepository(_dBContext);
+                return _accountTeamPlayerGameWeakRepository;
+            }
+        }
+        public AccountTeamPlayerRepository AccountTeamPlayer
+        {
+            get
+            {
+                _accountTeamPlayerRepository ??= new AccountTeamPlayerRepository(_dBContext);
+                return _accountTeamPlayerRepository;
+            }
+        }
+        public AccountTeamRepository AccountTeam
+        {
+            get
+            {
+                _accountTeamRepository ??= new AccountTeamRepository(_dBContext);
+                return _accountTeamRepository;
+            }
+        }
+
+        public TeamPlayerTypeRepository TeamPlayerType
+        {
+            get
+            {
+                _teamPlayerTypeRepository ??= new TeamPlayerTypeRepository(_dBContext);
+                return _teamPlayerTypeRepository;
             }
         }
         #endregion

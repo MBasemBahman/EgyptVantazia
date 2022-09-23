@@ -39,6 +39,9 @@ namespace Entities.DBModels.TeamModels
         [DisplayName(nameof(PlayerTransfers))]
         public IList<PlayerTransfer> PlayerTransfers { get; set; }
 
+        [DisplayName(nameof(PlayerPrices))]
+        public IList<PlayerPrice> PlayerPrices { get; set; }
+
         public PlayerLang PlayerLang { get; set; }
     }
 

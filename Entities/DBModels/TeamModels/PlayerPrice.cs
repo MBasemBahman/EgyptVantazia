@@ -17,9 +17,9 @@
         public Player Player { get; set; }
 
         [DisplayName(nameof(BuyPrice))]
-        public int BuyPrice { get; set; }
+        public double BuyPrice { get; set; }
 
         [DisplayName(nameof(SellPrice))]
-        public int SellPrice { get; set; }
+        public double SellPrice { get; set; }
     }
 }

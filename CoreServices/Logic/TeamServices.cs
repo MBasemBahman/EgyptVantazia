@@ -27,7 +27,7 @@ namespace CoreServices.Logic
                            LastModifiedBy = a.LastModifiedBy,
                            _365_TeamId = a._365_TeamId,
                            Name = otherLang ? a.TeamLang.Name : a.Name,
-                           ImageUrl = a.StorageUrl + a.ImageUrl
+                           ImageUrl = a.StorageUrl + a.ImageUrl,
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);
@@ -153,6 +153,8 @@ namespace CoreServices.Logic
                                Name = otherLang ? a.Team.TeamLang.Name : a.Team.Name,
                                ImageUrl = a.Team.StorageUrl + a.Team.ImageUrl
                            },
+                           BuyPrice = a.PlayerPrices.OrderBy(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault(),
+                           SellPrice = a.PlayerPrices.OrderBy(b => b.Id).Select(a => a.SellPrice).FirstOrDefault(),
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

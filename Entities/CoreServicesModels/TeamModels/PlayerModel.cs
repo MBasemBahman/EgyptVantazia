@@ -34,5 +34,11 @@ namespace Entities.CoreServicesModels.TeamModels
 
         [DisplayName(nameof(PlayerNumber))]
         public string PlayerNumber { get; set; }
+
+        [DisplayName(nameof(BuyPrice))]
+        public double BuyPrice { get; set; }
+
+        [DisplayName(nameof(SellPrice))]
+        public double SellPrice { get; set; }
     }
 }

@@ -9,21 +9,21 @@
             {
                 return;
             }
-            string validator = context.HttpContext.Request.Headers[HeadersConstants.Validator];
 
-            if (string.IsNullOrWhiteSpace(validator))
-            {
-                context.Result = new BadRequestResult();
-                return;
-            }
+            //string validator = context.HttpContext.Request.Headers[HeadersConstants.Validator];
+            //if (string.IsNullOrWhiteSpace(validator))
+            //{
+            //    context.Result = new BadRequestResult();
+            //    return;
+            //}
 
-            IServiceProvider services = context.HttpContext.RequestServices;
-            JwtUtils _jwtUtils = services.GetService<JwtUtils>();
-            if (_jwtUtils.ValidateJwtToken(validator) == null)
-            {
-                context.Result = new BadRequestResult();
-                return;
-            }
+            //IServiceProvider services = context.HttpContext.RequestServices;
+            //JwtUtils _jwtUtils = services.GetService<JwtUtils>();
+            //if (_jwtUtils.ValidateJwtToken(validator) == null)
+            //{
+            //    context.Result = new BadRequestResult();
+            //    return;
+            //}
 
             if (context.ActionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().Any())
             {

@@ -21,7 +21,7 @@ namespace API.ActionFilters
                     {
                         Name = HeadersConstants.Validator,
                         In = ParameterLocation.Header,
-                        Required = true,
+                        Required = false,
                         Schema = new OpenApiSchema
                         {
                             Type = "string"

@@ -20,12 +20,11 @@ namespace API.Areas.AppInfoArea.Controllers
 
         [HttpGet]
         [Route(nameof(GetAppAbout))]
-        public async Task<AppAboutModel> GetAppAbout(
-       [FromQuery] RequestParameters parameters)
+        public async Task<AppAboutModel> GetAppAbout()
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
-            AppAboutModel data = await _unitOfWork.AppInfo.GetAppAbouts(parameters, otherLang).FirstOrDefaultAsync();
+            AppAboutModel data = await _unitOfWork.AppInfo.GetAppAbouts(new RequestParameters(), otherLang).FirstOrDefaultAsync();
 
             return data;
         }

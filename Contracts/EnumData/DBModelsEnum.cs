@@ -25,6 +25,10 @@
             RefreshToken = 7,
             UserDevice = 8,
             Verification = 9,
+            Account = 10,
+            Country = 11,
+            DBLogs = 12,
+            AppAbout = 13
         }
     }
 }

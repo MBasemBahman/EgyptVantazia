@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = Localizer.Get("Error");
+
+}
+<!-- BEGIN: Content-->
+<div class="app-content content ">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body">
+            <!-- Error page-->
+            <div class="misc-wrapper">
+                <div class="misc-inner p-2 p-sm-3">
+                    <div class="w-100 text-center">
+                        <h2 class="mb-1">@Localizer.Get("Something Error") 🕵🏻‍♀️</h2>
+                        <p class="mb-2">@Localizer.Get("Oops! The request have error.")</p>
+                        <a class="btn btn-primary mb-2 btn-sm-block" asp-action="Index" asp-controller="Home" asp-area="Dashboard">
+                            @Localizer.Get("Back to home")
+                        </a>
+                        <br />
+                        <img class="img-fluid" src="~/app-assets/images/pages/error.svg" style="height:400px" alt="Error page" />
+                    </div>
+                </div>
+            </div>
+            <!-- / Error page-->
+        </div>
+    </div>
+</div>
+<!-- END: Content-->

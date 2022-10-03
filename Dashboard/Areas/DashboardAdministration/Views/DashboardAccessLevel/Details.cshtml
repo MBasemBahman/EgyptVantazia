@@ -1,0 +1,85 @@
+﻿@model DashboardAccessLevelDto
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.emptyLayout = true;
+}
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalScrollableTitle">@Localizer.Get("DashboardAccessLevel")</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-xl-7 col-12">
+            <dl class="row mb-0">
+                <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.Name):</dt>
+                <dd class="col-sm-8 mb-1">@Model.Name</dd>
+            </dl>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.CreateAccess)</th>
+                        <th>@Html.DisplayNameFor(model => model.EditAccess)</th>
+                        <th>@Html.DisplayNameFor(model => model.DeleteAccess)</th>
+                        <th>@Html.DisplayNameFor(model => model.ViewAccess)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@if (Model.CreateAccess)
+                            {
+                                <input type="checkbox"  class="form-check-input" checked disabled>
+                            }
+                            else
+                            {
+                                <input type="checkbox"  class="form-check-input" disabled>
+                            }
+                        </td>
+                          <td>@if (Model.EditAccess)
+                            {
+                                <input type="checkbox"  class="form-check-input" checked disabled>
+                            }
+                            else
+                            {
+                                <input type="checkbox"  class="form-check-input" disabled>
+                            }
+                        </td>
+                          <td>@if (Model.DeleteAccess)
+                            {
+                                <input type="checkbox"  class="form-check-input" checked disabled>
+                            }
+                            else
+                            {
+                                <input type="checkbox"  class="form-check-input" disabled>
+                            }
+                        </td>
+                          <td>@if (Model.ViewAccess)
+                            {
+                                <input type="checkbox"  class="form-check-input" checked disabled>
+                            }
+                            else
+                            {
+                                <input type="checkbox"  class="form-check-input" disabled>
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-7 col-12">
+            <dl class="row mb-0">
+
+                <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.CreatedAt):</dt>
+                <dd class="col-sm-8 mb-1">@Model.CreatedAt</dd>
+            </dl>
+        </div>
+
+    </div>
+</div>
+

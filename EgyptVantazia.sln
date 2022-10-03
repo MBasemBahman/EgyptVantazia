@@ -31,7 +31,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Live", "Live\Live.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{2972EF0F-370D-4769-9099-E22E382991B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerService", "LoggerService\LoggerService.csproj", "{E0F677B7-70F4-4381-AD2A-BD3B7DF338EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggerService", "LoggerService\LoggerService.csproj", "{E0F677B7-70F4-4381-AD2A-BD3B7DF338EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dashboard", "Dashboard\Dashboard.csproj", "{D8CF4B71-CBF0-4EF5-A630-BEEEA5C27342}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +89,10 @@ Global
 		{E0F677B7-70F4-4381-AD2A-BD3B7DF338EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0F677B7-70F4-4381-AD2A-BD3B7DF338EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E0F677B7-70F4-4381-AD2A-BD3B7DF338EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8CF4B71-CBF0-4EF5-A630-BEEEA5C27342}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8CF4B71-CBF0-4EF5-A630-BEEEA5C27342}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8CF4B71-CBF0-4EF5-A630-BEEEA5C27342}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8CF4B71-CBF0-4EF5-A630-BEEEA5C27342}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

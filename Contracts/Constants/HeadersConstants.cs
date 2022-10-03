@@ -2,6 +2,7 @@
 {
     public class HeadersConstants
     {
+        public const string AppKey = "Api-Key";
         public const string AuthorizationToken = "Authorization-Token";
         public const string Culture = "culture";
         public const string Status = "x-Status";

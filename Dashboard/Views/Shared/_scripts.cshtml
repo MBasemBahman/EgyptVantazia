@@ -1,0 +1,170 @@
+﻿    <!-- BEGIN: Vendor JS-->
+@if (ViewBag.emptyLayout == null || !ViewBag.emptyLayout)
+{
+    <script src="~/app-assets/vendors/js/vendors.min.js"></script>
+      
+
+}
+
+
+<!-- BEGIN Vendor JS-->
+@if ((ViewBag.useForm != null && ViewBag.useForm) ||
+           (ViewBag.useCharts != null && ViewBag.useCharts) ||
+            (ViewBag.useDatePicker != null && ViewBag.useDatePicker))
+{
+    <script src="~/app-assets/vendors/js/jquery/jquery.min.js"></script>
+
+
+}
+
+@if (ViewBag.useDatePicker != null && ViewBag.useDatePicker)
+{
+    <script src="~/app-assets/vendors/js/pickers/pickadate/picker.js"></script>
+    <script src="~/app-assets/vendors/js/pickers/pickadate/picker.date.js"></script>
+    <script src="~/app-assets/vendors/js/pickers/pickadate/picker.time.js"></script>
+    <script src="~/app-assets/vendors/js/pickers/flatpickr/flatpickr.min.js"></script>
+}
+
+<!-- BEGIN: Page Vendor JS-->
+@if (ViewBag.useDatatable != null && ViewBag.useDatatable)
+{
+    <script src="~/app-assets/vendors/js/tables/datatable/jquery.dataTables.min.js"></script>
+    <script src="~/app-assets/vendors/js/tables/datatable/dataTables.bootstrap5.min.js"></script>
+    <script src="~/app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js"></script>
+    <script src="~/app-assets/vendors/js/tables/datatable/responsive.bootstrap5.min.js"></script>
+    <script src="~/app-assets/vendors/js/tables/datatable/datatables.buttons.min.js"></script>
+    <script src="~/app-assets/vendors/js/tables/datatable/jszip.min.js"></script>
+    <script src="~/app-assets/vendors/js/tables/datatable/pdfmake.min.js"></script>
+    <script src="~/app-assets/vendors/js/tables/datatable/vfs_fonts.js"></script>
+    <script src="~/app-assets/vendors/js/tables/datatable/buttons.html5.min.js"></script>
+    <script src="~/app-assets/vendors/js/tables/datatable/buttons.print.min.js"></script>
+    <script src="~/app-assets/vendors/js/pickers/flatpickr/flatpickr.min.js"></script>
+}
+
+
+@if (ViewBag.userFormRepeater != null && ViewBag.userFormRepeater)
+{
+    <script src="~/assets/js/forms/form-repeater/jquery.repeater.min.js"></script>
+}
+
+@if (ViewBag.useSummernote != null && ViewBag.useSummernote)
+{
+    <script src="~/assets/vendors/summernote/summernote-lite.js"></script>
+    <script>
+        $(".summernote").each(function () {
+            $(this).summernote({
+                tabsize: 2,
+                height: 120,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                ]
+            });
+        });
+
+    </script>
+}
+
+@if ((ViewBag.useForm != null && ViewBag.useForm) ||
+           (ViewBag.useCharts != null && ViewBag.useCharts) ||
+            (ViewBag.useDatePicker != null && ViewBag.useDatePicker))
+{
+    <script src="~/app-assets/vendors/js/pickers/flatpickr/flatpickr.min.js"></script>
+
+}
+@if (ViewBag.useDropzone != null && ViewBag.useDropzone)
+{
+    <script src="~/app-assets/vendors/js/file-uploaders/dropzone.min.js"></script>
+}
+
+@if (ViewBag.useForm != null && ViewBag.useForm)
+{
+    <script src="~/app-assets/vendors/js/forms/select/select2.full.min.js"></script>
+    <script src="~/app-assets/vendors/js/forms/validation/jquery.validate.min.js"></script>
+}
+
+@if (ViewBag.useCharts != null && ViewBag.useCharts)
+{
+    <script src="~/app-assets/vendors/js/charts/apexcharts.min.js"></script>
+    
+}
+<!-- END: Page Vendor JS-->
+<!-- BEGIN: Theme JS-->
+
+@if (ViewBag.emptyLayout == null || !ViewBag.emptyLayout)
+{
+    <script src="~/app-assets/js/core/app-menu.min.js"></script>
+    <script src="~/app-assets/js/core/app.min.js"></script>
+}
+<!-- END: Theme JS-->
+<!-- BEGIN: Page JS-->
+@if (ViewBag.useDatatable != null && ViewBag.useDatatable)
+{
+    <script src="~/assets/js/tables/table-datatables.js"></script>
+}
+@if (ViewBag.useDropzone != null && ViewBag.useDropzone)
+{
+    <script src="~/assets/js/forms/form-file-uploader.js"></script>
+}
+@if (ViewBag.useForm != null && ViewBag.useForm)
+{
+    <script src="~/app-assets/js/scripts/forms/form-validation.js"></script>
+}
+
+@if (ViewBag.useDatePicker != null && ViewBag.useDatePicker)
+{
+    <script src="~/app-assets/js/scripts/forms/pickers/form-pickers.js"></script>
+    <script src="~/assets/js/forms/table-search/multi-date-picker.js"></script>
+
+}
+@if (ViewBag.userFormRepeater != null && ViewBag.userFormRepeater)
+{
+    <script src="~/assets/js/forms/form-repeater/form-repeater.js"></script>
+}
+
+@if (ViewBag.useCharts != null && ViewBag.useCharts)
+{
+    <script src="~/assets/js/charts/apexcharts.js"></script>
+}
+
+@if (ViewBag.useImageUploud != null && ViewBag.useImageUploud)
+{
+    <script>
+        const imagesSrc = [];
+        $(".account-upload").each(function () {
+            var indx = $(".account-upload").index($(this));
+            imagesSrc[indx] = $(".account-upload-img").eq(indx).attr("src") == undefined
+                || $(".account-upload-img").eq(indx).attr("src") == "" ? "" : $(".account-upload-img").eq(indx).attr("src");
+
+            $(this).on('change', function (t) {
+                var n = new FileReader, c = t.target.files;
+                n.onload = function () {
+                    $(".account-upload-img").eq(indx)
+                        && $(".account-upload-img").eq(indx).attr("src", n.result)
+                },
+                    n.readAsDataURL(c[0]);
+
+            });
+        });
+        $(".account-reset").each(function (indx) {
+            var indx = $(".account-reset").index($(this));
+            $(this).on('click', function () {
+                $(".account-upload-img").eq(indx).attr("src", imagesSrc[indx]);
+            });
+        });
+
+    </script>
+}
+<!-- END: Page JS-->
+<script>
+    $(window).on('load', function () {
+        if (feather) {
+            feather.replace({ width: 14, height: 14 });
+        }
+    });
+</script>
+<script src="~/assets/js/scripts.js"></script>

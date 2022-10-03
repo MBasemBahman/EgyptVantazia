@@ -1,0 +1,266 @@
+﻿@model AppAboutCreateOrEditModel
+@{
+    ViewData["Title"] = $"{Localizer.Get("CreateOrEdit")} {Localizer.Get("AppAbout")}";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.useForm = true;
+    ViewBag.useSummernote = true;
+
+}
+
+
+<!-- BEGIN: Content-->
+<div class="app-content content ">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row">
+            <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h2 class="content-header-title float-start mb-0">@ViewData["Title"]</h2>
+                        <div class="breadcrumb-wrapper">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="/AppInfoEntity/AppAbout/Details">@Localizer.Get("AppAbout")</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    @ViewData["Title"]
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-body">
+            <section id="multiple-column-form">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form class="form" asp-action="CreateOrEdit">
+                                    <div asp-validation-summary="All" class="text-danger">@ViewData["Error"]</div>
+
+                                    <div class="row">
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("About")} {Localizer.Get("Company")} {Localizer.Get("InArabic")}")</label>
+                                                <textarea rows="5" asp-for="AboutCompany" class="form-control summernote"></textarea>
+                                                <span asp-validation-for="AboutCompany" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("About")} {Localizer.Get("Company")} {Localizer.Get("InEnglish")}")</label>
+                                                <textarea rows="5" asp-for="AppAboutLang.AboutCompany" class="form-control summernote"></textarea>
+                                                <span asp-validation-for="AppAboutLang.AboutCompany" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("About")} {Localizer.Get("App")} {Localizer.Get("InArabic")} ")</label>
+                                                <textarea rows="5" asp-for="AboutApp" class="form-control summernote"></textarea>
+                                                <span asp-validation-for="AboutApp" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("About")} {Localizer.Get("App")} {Localizer.Get("InEnglish")} ")</label>
+                                                <textarea rows="5" asp-for="AppAboutLang.AboutApp" class="form-control summernote"></textarea>
+                                                <span asp-validation-for="AppAboutLang.AboutApp" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("TermsAndConditions")} {Localizer.Get("InArabic")} ")</label>
+                                                <textarea rows="5" asp-for="TermsAndConditions" class="form-control summernote"></textarea>
+                                                <span asp-validation-for="TermsAndConditions" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("TermsAndConditions")} {Localizer.Get("InEnglish")} ")</label>
+                                                <textarea rows="5" asp-for="AppAboutLang.TermsAndConditions" class="form-control summernote"></textarea>
+                                                <span asp-validation-for="AppAboutLang.TermsAndConditions" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("QuestionsAndAnswer")} {Localizer.Get("InArabic")} ")</label>
+                                                <textarea rows="5" asp-for="QuestionsAndAnswer" class="form-control summernote"></textarea>
+                                                <span asp-validation-for="QuestionsAndAnswer" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("QuestionsAndAnswer")} {Localizer.Get("InEnglish")} ")</label>
+                                                <textarea rows="5" asp-for="AppAboutLang.QuestionsAndAnswer" class="form-control summernote"></textarea>
+                                                <span asp-validation-for="AppAboutLang.QuestionsAndAnswer" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("GameRules")} {Localizer.Get("InArabic")} ")</label>
+                                                <textarea rows="5" asp-for="GameRules" class="form-control summernote"></textarea>
+                                                <span asp-validation-for="GameRules" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("GameRules")} {Localizer.Get("InEnglish")} ")</label>
+                                                <textarea rows="5" asp-for="AppAboutLang.GameRules" class="form-control summernote"></textarea>
+                                                <span asp-validation-for="AppAboutLang.GameRules" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("Subscriptions")} {Localizer.Get("InArabic")} ")</label>
+                                                <textarea rows="5" asp-for="Subscriptions" class="form-control summernote"></textarea>
+                                                <span asp-validation-for="Subscriptions" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("Subscriptions")} {Localizer.Get("InEnglish")} ")</label>
+                                                <textarea rows="5" asp-for="AppAboutLang.Subscriptions" class="form-control summernote"></textarea>
+                                                <span asp-validation-for="AppAboutLang.Subscriptions" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("Prizes")} {Localizer.Get("InArabic")} ")</label>
+                                                <textarea rows="5" asp-for="Prizes" class="form-control summernote"></textarea>
+                                                <span asp-validation-for="Prizes" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("Prizes")} {Localizer.Get("InEnglish")} ")</label>
+                                                <textarea rows="5" asp-for="AppAboutLang.Prizes" class="form-control summernote"></textarea>
+                                                <span asp-validation-for="AppAboutLang.Prizes" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Phone" class="form-label"></label>
+                                                <input asp-for="Phone" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("Phone"))" />
+                                                <span asp-validation-for="Phone" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="WhatsApp" class="form-label"></label>
+                                                <input asp-for="WhatsApp" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("WhatsApp"))" />
+                                                <span asp-validation-for="WhatsApp" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="EmailAddress" class="form-label"></label>
+                                                <input asp-for="EmailAddress" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("EmailAddress"))" />
+                                                <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                         <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="TwitterUrl" class="form-label"></label>
+                                                <input asp-for="TwitterUrl" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("TwitterUrl"))" />
+                                                <span asp-validation-for="TwitterUrl" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                         <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="FacebookUrl" class="form-label"></label>
+                                                <input asp-for="FacebookUrl" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("FacebookUrl"))" />
+                                                <span asp-validation-for="FacebookUrl" class="text-danger"></span>
+                                            </div>
+                                        </div> <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="InstagramUrl" class="form-label"></label>
+                                                <input asp-for="InstagramUrl" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("InstagramUrl"))" />
+                                                <span asp-validation-for="InstagramUrl" class="text-danger"></span>
+                                            </div>
+                                        </div> <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="SnapChatUrl" class="form-label"></label>
+                                                <input asp-for="SnapChatUrl" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("SnapChatUrl"))" />
+                                                <span asp-validation-for="SnapChatUrl" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+
+                                        <hr />
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary me-1">@Localizer.Get("Submit")</button>
+                                            <button type="reset" class="btn btn-outline-secondary me-1">@Localizer.Get("Reset")</button>
+                                            <a asp-action="Details" class="btn btn-warning"> @Localizer.Get("Back") </a>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+
+    </div>
+</div>
+<!-- END: Content-->
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('.summernote-dark').each(function () {
+                var elem_id = $(this).attr('id');
+                $(this).summernote({
+                    tabsize: 2,
+                    height: 120,
+                    toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'underline', 'clear']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['table', ['table']],
+                        ['insert', ['link', 'picture', 'video']],
+                    ],
+                    callbacks: {
+                        onChange: function (e) {
+                            setTimeout(function () {
+                                $("#" + elem_id + "InDark").summernote('code', $("#" + elem_id).val());
+                            }, 200);
+                        }
+                    }
+                });
+            });
+
+        });
+    </script>
+}

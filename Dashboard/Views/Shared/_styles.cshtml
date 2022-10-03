@@ -1,0 +1,79 @@
+﻿@{
+    string rtl = ViewBag.ltr ? "" : "-rtl";
+}
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap" rel="stylesheet">
+
+<!-- BEGIN: Vendor CSS-->
+<link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/vendors@(rtl).min.css">
+
+@if (ViewBag.useDatatable != null && ViewBag.useDatatable)
+{
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/tables/datatable/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/tables/datatable/responsive.bootstrap5.min.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/tables/datatable/buttons.bootstrap5.min.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css">
+
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/plugins/forms/pickers/form-flat-pickr.min.css">
+
+}
+@if (ViewBag.useSummernote != null && ViewBag.useSummernote)
+{
+    <link href="~/assets/vendors/summernote/summernote-lite.css" rel="stylesheet">
+}
+@if (ViewBag.useDropzone != null && ViewBag.useDropzone)
+{
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/file-uploaders/dropzone.min.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/plugins/forms/form-file-uploader.min.css">
+}
+@if (ViewBag.useForm != null && ViewBag.useForm)
+{
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/forms/select/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css">
+
+
+}
+
+<!-- END: Vendor CSS-->
+<!-- BEGIN: Theme CSS-->
+
+<link rel="stylesheet" type="text/css" href="~/app-assets/css@(rtl)/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="~/app-assets/css@(rtl)/bootstrap-extended.min.css">
+<link rel="stylesheet" type="text/css" href="~/app-assets/css@(rtl)/colors.min.css">
+<link rel="stylesheet" type="text/css" href="~/app-assets/css@(rtl)/components.min.css">
+<link rel="stylesheet" type="text/css" href="~/app-assets/css@(rtl)/themes/dark-layout.min.css">
+<link rel="stylesheet" type="text/css" href="~/app-assets/css@(rtl)/themes/bordered-layout.min.css">
+<link rel="stylesheet" type="text/css" href="~/app-assets/css@(rtl)/themes/semi-dark-layout.min.css">
+
+@if (ViewBag.useDatatable != null && ViewBag.useDatatable)
+{
+    <link rel="stylesheet" type="text/css" href="~/assets/css/table-datatables.css">
+}
+<!-- BEGIN: Page CSS-->
+
+<link rel="stylesheet" type="text/css" href="~/app-assets/css@(rtl)/core/menu/menu-types/vertical-menu.min.css">
+
+@if (!ViewBag.ltr)
+{
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css-rtl/custom-rtl.min.css">
+}
+
+<link rel="stylesheet" type="text/css" href="~/assets/css/style@(rtl).css">
+
+@if (ViewBag.useForm != null && ViewBag.useForm)
+{
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/plugins/forms/form-validation.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/plugins/forms/pickers/form-flat-pickr.min.css">
+
+}
+@if (ViewBag.useDatePicker != null && ViewBag.useDatePicker)
+{
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/plugins/forms/pickers/form-pickadate.css">
+
+}
+@if (ViewBag.useCharts != null && ViewBag.useCharts)
+{
+    <link rel="stylesheet" type="text/css" href="~/assets/css/apexcharts.css">
+
+}

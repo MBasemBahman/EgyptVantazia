@@ -75,6 +75,11 @@ namespace CoreServices.Logic
             return await _repository.User.FindByRefreshToken(token, trackChanges);
         }
 
+        public async Task<User> FindByAccountId(int fk_Account, bool trackChanges)
+        {
+            return await _repository.User.FindByAccountId(fk_Account, trackChanges);
+        }
+
         public async Task<User> FindByVerificationCode(string code, bool trackChanges)
         {
             return await _repository.User.FindByVerificationCode(code, trackChanges);

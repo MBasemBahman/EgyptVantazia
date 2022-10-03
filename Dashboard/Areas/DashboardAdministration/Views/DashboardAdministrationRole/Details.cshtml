@@ -1,0 +1,99 @@
+﻿@model DashboardAdministrationRoleDetailsViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.emptyLayout = true;
+}
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalScrollableTitle">@Localizer.Get("DashboardAdministrationRole")</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <a class="btn btn-primary me-2" target="_blank" href="/DashboardAdministration/DashboardAdministrator/Index/?Fk_DashboardAdministrationRole=@Model.Role.Id">
+                @($"{Html.DisplayNameFor(model=>model.Role.AdministratorsCount)} ({Model.Role.AdministratorsCount})")
+            </a>
+        </div>
+    </div>
+    <br />
+    <hr />
+    <div class="row">
+        <div class="col-xl-7 col-12">
+            <dl class="row mb-0">
+                <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.Role.Name):</dt>
+                <dd class="col-sm-8 mb-1">@Model.Role.Name</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-7 col-12">
+            <dl class="row mb-0">
+
+                <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.Role.CreatedAt):</dt>
+                <dd class="col-sm-8 mb-1">@Model.Role.CreatedAt</dd>
+            </dl>
+        </div>
+
+    </div>
+    <hr />
+    @if (Model.Permissions!=null&&Model.Permissions.Any())
+    {
+        int i = 0;
+
+        <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+            @foreach (var item in Model.Permissions)
+            {
+                <li class="nav-item">
+                    <a class="nav-link @(i == 0 ? "active" : "")"  data-bs-toggle="tab" href="#@item.Key" role="tab" aria-controls="home-fill" aria-selected="@(i == 0 ? true:false)">
+                        @item.Key
+                    </a>
+                </li>
+                i++;
+            }
+
+        </ul>
+    }
+
+    @if (Model.Permissions!=null&&Model.Permissions.Any())
+    {
+        int i = 0;
+        <!-- Tab panes -->
+        <div class="tab-content pt-1">
+            @foreach (var item in Model.Permissions)
+            {
+                <div class="tab-pane @(i == 0 ? "active" : "")" id="@item.Key" role="tabpanel" aria-labelledby="@item.Key">
+                    <ul style="column-count:2;list-style-type: square;">
+                        @foreach (var view in item.Value)
+                        {
+                            <li class="">@view</li>
+                        }
+
+                    </ul>
+
+                </div>
+                i++;
+            }
+
+
+        </div>
+    }
+</div>
+
+@section scripts{
+    <script>
+    $(document).ready(function(){
+        $(".nav-link").each(function(){
+            $(this).on("click",function(){
+                $(".active").each(function(){
+                    $(this).removeClass("active");
+                });
+                $(this).addClass("active");
+                $($(this).attr("href")).addClass("active");
+            });
+        });
+    });
+    </script>
+}
+

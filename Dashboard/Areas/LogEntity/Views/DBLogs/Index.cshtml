@@ -1,0 +1,134 @@
+﻿@model LogFilter
+@{
+    ViewData["Title"] = Localizer.Get("Logs");
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.useDatatable = true;
+    ViewBag.useModels = true;
+     ViewBag.useForm = true;
+    ViewBag.useDatePicker = true;
+
+    var row = new LogDto();
+    var accessLevel = (DashboardAccessLevelModel)ViewData[ViewDataConstants.AccessLevel];
+
+}
+
+<!-- BEGIN: Content-->
+<div class="app-content content ">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row">
+            <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h2 class="content-header-title float-start mb-0">@ViewData["Title"]</h2>
+                        <div class="breadcrumb-wrapper">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="#">@Localizer.Get("Dashboard")</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    @ViewData["Title"]
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-body">
+            <section id="ajax-datatable">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header border-bottom">
+                                <h4 class="card-title"> @ViewData["Title"]</h4>
+                            </div>  
+                            <p class="m-2 demo-inline-spacing">
+                                <a class="btn btn-primary me-1" data-bs-toggle="collapse" href="#AdvancedFilter" role="button" aria-expanded="false" aria-controls="AdvancedFilter">
+                                    <i data-feather='filter'></i>
+                                    @Localizer.Get("Advanced Search")
+                                </a>
+                             
+                            </p>
+                            @{await Html.RenderPartialAsync("../DBLogs/Filter", Model,ViewData);}
+
+                            <div class="card-datatable">
+                                <table class="datatables datatables-ajax table table-responsive table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                @Html.DisplayNameFor(model => row.Id)
+
+                                                <a id="details" asp-action="Details">
+                                                </a>
+                                                @if (accessLevel.DeleteAccess)
+                                                {
+                                                    <a id="delete" asp-action="Delete">
+                                                    </a>
+                                                }
+                                               
+                                                    
+                                                
+                                            </th>
+                                            <th>@Html.DisplayNameFor(model => row.Details)</th>
+                                            <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => row.Id)
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </div>
+</div>
+<!-- END: Content-->
+@section scripts{
+    <script>
+    $(function () {
+        var dt_ajax_table = $('.datatables');
+        if (dt_ajax_table.length) {
+            var dt_ajax = dt_ajax_table.dataTable({
+                // Ajax Filter
+                ajax: {
+                    url: '@Url.Action("LoadTable")',
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: function (data) {
+                        data.Id = @Model.Id;
+                        data.CreatedAtFrom =$("#CreatedAtFrom").length > 0 ? $("#CreatedAtFrom").val() : '@Model.CreatedAtFrom';
+                        data.CreatedAtTo =$("#CreatedAtTo").length > 0 ? $("#CreatedAtTo").val() : '@Model.CreatedAtTo';
+                        return JSON.stringify(data);
+                    }
+                },
+                // Columns Setups
+                columns: [
+                   {data:"id"},
+                   {data:"details"},
+                   {data:"createdAt"},
+                   {data:"id"},
+                ]
+            });
+
+             $("button[type=reset]").on("click", function () {
+                    $(".dt-date").each(function () {
+                        $(this).val('');
+                    })
+                });
+                $('body').on('submit', '.filter', function () {
+                    event.preventDefault();
+                    dt_ajax_table.DataTable().draw();
+
+                });
+        }
+    });
+    </script>
+}

@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.ltr = CultureInfo.CurrentUICulture.Name == ViewDataConstants.English;
+    ViewBag.light = ContextAccessor.HttpContext.Request.Cookies[ViewDataConstants.Theme] == null || ContextAccessor.HttpContext.Request.Cookies[ViewDataConstants.Theme].ToString() == ViewDataConstants.Light;
+
+    ViewBag.useDatatable = (ViewBag.useDatatable != null && ViewBag.useDatatable == true);
+    ViewBag.useForm = (ViewBag.useForm != null && ViewBag.useForm == true);
+    ViewBag.useModels = (ViewBag.useModels != null && ViewBag.useModels == true);
+    ViewBag.useSummernote = (ViewBag.useSummernote != null && ViewBag.useSummernote == true);
+    ViewBag.useCharts = (ViewBag.useCharts != null && ViewBag.useCharts == true);
+    ViewBag.useDropzone = (ViewBag.useDropzone != null && ViewBag.useDropzone == true);
+    ViewBag.emptyLayout = (ViewBag.emptyLayout != null && ViewBag.emptyLayout == true);
+    ViewBag.useImageUploud = (ViewBag.useImageUploud != null && ViewBag.useImageUploud == true);
+    ViewBag.useDatePicker = (ViewBag.useDatePicker != null && ViewBag.useDatePicker == true);
+    ViewBag.userFormRepeater = (ViewBag.userFormRepeater != null && ViewBag.userFormRepeater == true);
+}
+<!DOCTYPE html>
+<html lang="en" data-textdirection="@(ViewBag.ltr?"ltr":"rtl")" class="loading @(ViewBag.light?"light":"dark")-layout">
+<head>
+    @await Html.PartialAsync("_title_meta")
+    @await Html.PartialAsync("_styles")
+    @RenderSection("styles", false)
+</head>
+<body class="vertical-layout vertical-menu-modern  navbar-floating footer-fixed" data-open="click"
+      data-menu="vertical-menu-modern" data-col="">
+    @if (!ViewBag.emptyLayout)
+    {
+        @await Html.PartialAsync("_header")
+        ;
+        @await Html.PartialAsync("_menu")
+        ;
+    }
+
+    @RenderBody()
+
+    @if (ViewBag.useDatatable || ViewBag.useModels)
+    {
+        await Html.RenderPartialAsync("Externalhtml/_labels");
+        await Html.RenderPartialAsync("Externalhtml/_modals");
+    }
+
+
+    @if (!ViewBag.emptyLayout)
+    {
+        await Html.PartialAsync("_footer");
+    }
+
+
+    @RenderSection("externalhtml", required: false)
+
+    @await Html.PartialAsync("_scripts")
+    @await RenderSectionAsync("scripts", required: false)
+</body>
+</html>

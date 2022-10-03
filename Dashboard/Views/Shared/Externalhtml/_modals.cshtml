@@ -1,0 +1,72 @@
+﻿<!-- BEGIN: Modals-->
+<div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="Modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content form-content">
+        </div>
+    </div>
+</div>
+
+@if(ViewBag.emptyLayout == null || !ViewBag.emptyLayout)
+{
+    <div class="modal fade LoadingModal" id="LoadingModal" tabindex="-1" aria-labelledby="Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="text-center">
+                <img src="https://c.tenor.com/8ZhQShCQe9UAAAAC/loader.gif" alt="loader" style="width:100%" />
+            </div>
+        </div>
+    </div>
+</div>
+    
+}
+
+
+<div class="modal fade" id="ModalXl" tabindex="-1" aria-labelledby="Modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl">
+        <div class="modal-content form-content">
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-danger text-start" id="danger" tabindex="-1" aria-labelledby="danger" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel120">@Localizer.Get("Error")</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger" role="alert">
+                    <div class="alert-body">
+                        @Localizer.Get("Something Error!")
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade text-start modal-success" id="success" tabindex="-1" aria-labelledby="success" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel110">@Localizer.Get("Success") </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-success" role="alert">
+                    <div class="alert-body">
+                        @Localizer.Get("Well Done!")
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">@Localizer.Get("Ok")</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: Modals-->

@@ -57,6 +57,11 @@ namespace CoreServices.Logic
             return await _repository.AppAbout.FindById(id, trackChanges);
         }
 
+        public async Task<AppAbout> FindAppAbout(bool trackChanges)
+        {
+            return await _repository.AppAbout.Find(trackChanges);
+        }
+
         public void CreateAppAbout(AppAbout AppAbout)
         {
             _repository.AppAbout.Create(AppAbout);

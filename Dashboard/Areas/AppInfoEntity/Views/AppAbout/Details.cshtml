@@ -1,0 +1,187 @@
+﻿@model AppAboutDto
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = Localizer.Get("AppAbout");
+
+    var accessLevel = (DashboardAccessLevelModel)ViewData[ViewDataConstants.AccessLevel];
+}
+
+<!-- BEGIN: Content-->
+<div class="app-content content ">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row">
+            <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h2 class="content-header-title float-start mb-0">@ViewData["Title"]</h2>
+                        <div class="breadcrumb-wrapper">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="/Home/Index">@Localizer.Get("Home")</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    @ViewData["Title"]
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-body">
+            <section id="multiple-column-form">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form class="form" asp-action="#">
+                                    <input type="hidden" asp-for="Id" />
+
+                                    <div asp-validation-summary="All" class="text-danger">@ViewData["Error"]</div>
+
+                                    <div class="row">
+
+                                        <div class="col-md-12 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("AboutCompany")} {Localizer.Get("App")}")</label>
+                                                @Html.Raw(Model.AboutCompany)
+                                            </div>
+                                        </div>
+
+
+                                          <div class="col-md-12 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("AboutApp")}")</label>
+                                                @Html.Raw(Model.AboutApp)
+                                            </div>
+                                        </div>
+
+                                          <div class="col-md-12 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("TermsAndConditions")}")</label>
+                                                @Html.Raw(Model.TermsAndConditions)
+                                            </div>
+                                        </div>
+
+                                          <div class="col-md-12 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("QuestionsAndAnswer")}")</label>
+                                                @Html.Raw(Model.QuestionsAndAnswer)
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("GameRules")}")</label>
+                                                @Html.Raw(Model.GameRules)
+                                            </div>
+                                        </div>
+
+                                         <div class="col-md-12 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("Subscriptions")}")</label>
+                                                @Html.Raw(Model.Subscriptions)
+                                            </div>
+                                        </div>
+
+                                         <div class="col-md-12 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("Prizes")}")</label>
+                                                @Html.Raw(Model.Prizes)
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("Phone")}") :</label>
+                                                @Model.Phone
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("WhatsApp")}") :</label>
+                                                @Model.WhatsApp
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("EmailAddress")}") :</label>
+                                                @Model.EmailAddress
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("TwitterUrl")}") :</label>
+                                                @if(!string.IsNullOrEmpty(Model.TwitterUrl)){
+                                                    <a href="@Model.TwitterUrl" target="_blank">@Model.TwitterUrl</a>
+                                                }
+                                                else{
+                                                    <span>-</span>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("FacebookUrl")}") :</label>
+                                                @if (!string.IsNullOrEmpty(Model.FacebookUrl))
+                                                {
+                                                    <a href="@Model.FacebookUrl" target="_blank">@Model.FacebookUrl</a>
+                                                }
+                                                else
+                                                {
+                                                    <span>-</span>
+                                                }
+                                            </div>
+                                        </div>
+                                          <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("InstagramUrl")}") :</label>
+                                                @if (!string.IsNullOrEmpty(Model.InstagramUrl))
+                                                {
+                                                    <a href="@Model.InstagramUrl" target="_blank">@Model.InstagramUrl</a>
+                                                }
+                                                else{
+                                                    <span>-</span>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("SnapChatUrl")}") :</label>
+                                                @if (!string.IsNullOrEmpty(Model.SnapChatUrl))
+                                                {
+                                                    <a href="@Model.SnapChatUrl" target="_blank">@Model.SnapChatUrl</a>
+                                                }
+                                                else
+                                                {
+                                                    <span>-</span>
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <hr />
+
+                                        @if (accessLevel.CreateAccess || accessLevel.EditAccess)
+                                        {
+                                            <div class="col-12">
+                                                <a asp-action="CreateOrEdit" class="btn btn-primary"> @Localizer.Get("Edit") </a>
+                                            </div>
+                                        }
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+</div>
+<!-- END: Content-->

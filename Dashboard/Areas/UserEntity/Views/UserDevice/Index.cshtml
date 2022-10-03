@@ -1,0 +1,147 @@
+﻿@model UserDeviceFilter
+@{
+    ViewData["Title"] = Localizer.Get("Devices");
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.useDatatable = true;
+    ViewBag.useModels = true;
+
+    var row = new UserDeviceDto();
+    ViewBag.emptyLayout = ViewData["ProfileLayOut"]!=null ? (bool)ViewData["ProfileLayOut"] : false;
+}
+
+@if (!ViewBag.emptyLayout)
+{
+    <!-- BEGIN: Content-->
+    <div class="app-content content ">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper container-xxl p-0">
+            <div class="content-header row">
+                <div class="content-header-left col-md-9 col-12 mb-2">
+                    <div class="row breadcrumbs-top">
+                        <div class="col-12">
+                            <h2 class="content-header-title float-start mb-0">@ViewData["Title"]</h2>
+                            <div class="breadcrumb-wrapper">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a href="#">@Localizer.Get("Dashboard")</a>
+                                    </li>
+                                    <li class="breadcrumb-item active">
+                                        @ViewData["Title"]
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-body">
+                <section id="ajax-datatable">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header border-bottom">
+                                    <h4 class="card-title"> @ViewData["Title"]</h4>
+                                </div>
+
+                                <div class="card-datatable">
+                                    <table class="datatables datatables-ajax table table-responsive table">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => row.Id)
+                                                </th>
+                                                <th>@Html.DisplayNameFor(model => row.NotificationToken)</th>
+                                                <th>@Html.DisplayNameFor(model => row.DeviceType)</th>
+                                                <th>@Html.DisplayNameFor(model => row.AppVersion)</th>
+                                                <th>@Html.DisplayNameFor(model => row.DeviceVersion)</th>
+                                                <th>@Html.DisplayNameFor(model => row.DeviceModel)</th>
+                                                <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => row.Id)
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+    </div>
+    <!-- END: Content-->
+}
+else
+{
+    <section id="ajax-datatable">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header border-bottom">
+                        <h4 class="card-title"> @ViewData["Title"]</h4>
+                    </div>
+
+                    <div class="card-datatable">
+                        <table class="datatables datatables-ajax table table-responsive table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => row.Id)
+                                    </th>
+                                    <th>@Html.DisplayNameFor(model => row.NotificationToken)</th>
+                                    <th>@Html.DisplayNameFor(model => row.DeviceType)</th>
+                                    <th>@Html.DisplayNameFor(model => row.AppVersion)</th>
+                                    <th>@Html.DisplayNameFor(model => row.DeviceVersion)</th>
+                                    <th>@Html.DisplayNameFor(model => row.DeviceModel)</th>
+                                    <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => row.Id)
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+@section scripts{
+<script>
+    $(function () {
+        var dt_ajax_table = $('.datatables');
+        if (dt_ajax_table.length) {
+            var dt_ajax = dt_ajax_table.dataTable({
+                // Ajax Filter
+                ajax: {
+                    url: '@Url.Action("LoadTable")',
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: function (data) {
+                        data.Id = @Model.Id;
+                        data.Fk_User = @Model.Fk_User;
+                        return JSON.stringify(data);
+                    }
+                },
+                // Columns Setups
+                columns: [
+                   {data:"id"},
+                   {data:"notificationToken"},
+                   {data:"deviceType"},
+                   {data:"appVersion"},
+                   {data:"deviceVersion"},
+                   {data:"deviceModel"},
+                   {data:"createdAt"},
+                   {data:"id"},
+                ]
+            });
+        }
+    });
+</script>
+}

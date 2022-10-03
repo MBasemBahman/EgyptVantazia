@@ -1,0 +1,55 @@
+﻿@model UserDto
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.emptyLayout = true;
+}
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-xl-6 col-12">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.Name):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.Name</dd>
+
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.PhoneNumber):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.PhoneNumber</dd>
+
+                   
+                </dl>
+            </div>
+            <div class="col-xl-6 col-12">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.UserName):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.UserName</dd>
+
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.EmailAddress):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.EmailAddress</dd>
+                </dl>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-6 col-12">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.CreatedAt):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.CreatedAt</dd>
+
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.LastModifiedAt):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.LastModifiedAt</dd>
+                </dl>
+            </div>
+            <div class="col-xl-6 col-12">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.CreatedBy):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.CreatedBy</dd>
+
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.LastModifiedBy):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.LastModifiedBy</dd>
+                </dl>
+            </div>
+        </div>
+      
+    </div>
+</div>
+
+

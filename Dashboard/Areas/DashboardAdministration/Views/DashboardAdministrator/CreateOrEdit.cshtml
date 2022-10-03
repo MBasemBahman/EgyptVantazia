@@ -1,0 +1,113 @@
+﻿@model DashboardAdministratorCreateOrEditModelDto
+@{
+    ViewData["Title"] = $"{Localizer.Get("CreateOrEdit")} {Localizer.Get("DashboardAdministrator")}";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.useForm = true;
+
+}
+<!-- BEGIN: Content-->
+<div class="app-content content ">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row">
+            <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h2 class="content-header-title float-start mb-0">@ViewData["Title"]</h2>
+                        <div class="breadcrumb-wrapper">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="/DashboardAdministration/DashboardAdministrator/Index">@Localizer.Get("DashboardAdministrators")</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    @ViewData["Title"]
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-body">
+            <section id="multiple-column-form">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form class="form" asp-action="CreateOrEdit">
+                                    <div asp-validation-summary="All" class="text-danger">@ViewData["Error"]</div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="User.Name" class="form-label"></label>
+                                                <input asp-for="User.Name" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("Name"))" />
+                                                <span asp-validation-for="User.Name" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="User.UserName" class="form-label"></label>
+                                                <input asp-for="User.UserName" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("UserName"))" />
+                                                <span asp-validation-for="User.UserName" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="User.Password" class="form-label"></label>
+                                                <input asp-for="User.Password" value="@Model.User.Password" class="form-control" />
+                                                <span asp-validation-for="User.Password " class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="User.EmailAddress" class="form-label"></label>
+                                                <input asp-for="User.EmailAddress" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("EmailAddress"))" />
+                                                <span asp-validation-for="User.EmailAddress" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="User.PhoneNumber" class="form-label"></label>
+                                                <input asp-for="User.PhoneNumber" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("PhoneNumber"))" />
+                                                <span asp-validation-for="User.PhoneNumber" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="DashboardAdministrator.JobTitle" class="form-label"></label>
+                                                <input asp-for="DashboardAdministrator.JobTitle" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("JobTitle"))" />
+                                                <span asp-validation-for="DashboardAdministrator.JobTitle" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="DashboardAdministrator.Fk_DashboardAdministrationRole" class="form-label"></label>
+                                                <select asp-for="DashboardAdministrator.Fk_DashboardAdministrationRole" class="select2 form-select" asp-items="@(new SelectList(ViewData["Roles"] as Dictionary<string,string>,"Key","Value"))">
+                                                </select>
+                                                <span asp-validation-for="DashboardAdministrator.Fk_DashboardAdministrationRole" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                  
+                                        <hr />
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary me-1">@Localizer.Get("Submit")</button>
+                                            <button type="reset" class="btn btn-outline-secondary me-1">@Localizer.Get("Reset")</button>
+                                            <a asp-action="Index" class="btn btn-warning"> @Localizer.Get("Back") </a>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+</div>
+<!-- END: Content-->

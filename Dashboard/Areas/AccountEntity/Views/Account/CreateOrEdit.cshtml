@@ -1,0 +1,201 @@
+﻿@model UserAccountCreateOrEditModel
+@{
+    ViewData["Title"] = $"{Localizer.Get("CreateOrEdit")} {Localizer.Get("Account")}";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.useForm = true;
+    ViewBag.useDatePicker = true;
+    ViewBag.useImageUploud = true;
+    bool IsProfile = ViewData["IsProfile"] != null ? (bool)ViewData["IsProfile"] : false;
+    int id = ViewData["id"] != null ? (int)ViewData["id"] : 0;
+
+}
+
+<!-- BEGIN: Content-->
+<div class="app-content content ">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row">
+            <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h2 class="content-header-title float-start mb-0">@ViewData["Title"]</h2>
+                        <div class="breadcrumb-wrapper">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    @if (IsProfile)
+                                    {
+                                        <a href="/AccountEntity/Account/Profile/@id">@Localizer.Get("Account Profile")</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="/AccountEntity/Account/Index">@Localizer.Get("Accounts")</a>
+                                    }
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    @ViewData["Title"]
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-body">
+            <section id="multiple-column-form">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form class="form" asp-action="CreateOrEdit" enctype="multipart/form-data">
+                                    <input type="hidden" asp-for="@IsProfile" />
+                                    <div asp-validation-summary="All" class="text-danger">@ViewData["Error"]</div>
+                                    <div class="d-flex">
+                                        <a href="#" class="me-25">
+                                            <img src="@($"{Model.ImageUrl}")" class="uploadedAvatar account-upload-img rounded me-50" height="100" width="100">
+                                        </a>
+                                        <!-- upload and reset button -->
+                                        <div class="d-flex align-items-end mt-75 ms-1">
+                                            <div>
+                                                <label for="account-upload" class="btn btn-sm btn-primary mb-75 me-75 waves-effect waves-float waves-light">@Localizer.Get("Upload Image")</label>
+                                                <input type="file" id="account-upload" class="account-upload" hidden="" name="ImageFile" accept="image/*">
+                                                <button type="button" class="account-reset btn btn-sm btn-outline-secondary mb-75 waves-effect">@Localizer.Get("Reset")</button>
+                                            </div>
+                                        </div>
+                                        <!--/ upload and reset button -->
+                                    </div>
+                                    <br />
+
+                                    <div class="row mb-1">
+
+                                        <div class="col-md-12 col-12 d-none">
+                                            <div class="mb-1">
+                                                <label asp-for="User.Name" class="form-label d-none"></label>
+                                                <input asp-for="User.Name" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("Name"))" />
+                                                <span asp-validation-for="User.Name" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="User.UserName" class="form-label"></label>
+                                                <input asp-for="User.UserName" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("UserName"))" />
+                                                <span asp-validation-for="User.UserName" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="User.Password" class="form-label"></label>
+                                                <input asp-for="User.Password" value="@Model.User.Password" class="form-control" />
+                                                <span asp-validation-for="User.Password " class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="User.EmailAddress" class="form-label"></label>
+                                                <input asp-for="User.EmailAddress" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("EmailAddress"))" />
+                                                <span asp-validation-for="User.EmailAddress" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="User.PhoneNumber" class="form-label"></label>
+                                                <input asp-for="User.PhoneNumber" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("PhoneNumber"))" />
+                                                <span asp-validation-for="User.PhoneNumber" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Account.FirstName" class="form-label"></label>
+                                                <input asp-for="Account.FirstName" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("FirstName"))" />
+                                                <span asp-validation-for="Account.FirstName" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Account.LastName" class="form-label"></label>
+                                                <input asp-for="Account.LastName" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("LastName"))" />
+                                                <span asp-validation-for="Account.LastName" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                 
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Account.Fk_Country" class="form-label"></label>
+                                                <select asp-for="Account.Fk_Country" class="select2 form-select" asp-items="@(new SelectList(ViewData["Countrys"] as Dictionary<string,string>,"Key","Value"))">
+                                                </select>
+                                                <span asp-validation-for="Account.Fk_Country" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Account.Fk_Nationality" class="form-label"></label>
+                                                <select asp-for="Account.Fk_Nationality" class="select2 form-select" asp-items="@(new SelectList(ViewData["Countrys"] as Dictionary<string,string>,"Key","Value"))">
+                                                </select>
+                                                <span asp-validation-for="Account.Fk_Nationality" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                       
+                                    <div class="col-md-12 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Account.Fk_FavouriteTeam" class="form-label"></label>
+                                                <select asp-for="Account.Fk_FavouriteTeam" class="select2 form-select" asp-items="@(new SelectList(ViewData["Teams"] as Dictionary<string,string>,"Key","Value"))">
+                                                </select>
+                                                <span asp-validation-for="Account.Fk_FavouriteTeam" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                       
+                                    
+                                      
+                                        <div class="col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Account.Address" class="form-label"></label>
+                                                <textarea row="5" asp-for="Account.Address" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("Address"))"></textarea>
+                                                <span asp-validation-for="Account.Address" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                       
+                                    </div>
+
+
+
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary me-1">@Localizer.Get("Submit")</button>
+                                            <button type="reset" class="btn btn-outline-secondary me-1">@Localizer.Get("Reset")</button>
+                                            @if (IsProfile)
+                                            {
+                                                <a asp-action="Profile" asp-route-id="@id" class="btn btn-warning"> @Localizer.Get("Back") </a>
+                                            }
+                                            else
+                                            {
+                                                <a asp-action="Index" class="btn btn-warning"> @Localizer.Get("Back") </a>
+                                            }
+
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+</div>
+<!-- END: Content-->
+@section scripts{
+<script>
+    $('form').submit(function () {
+        $("#User_Name").val($("#Account_FirstName").val() + " " + $("#Account_LastName").val());
+    });
+</script>
+}

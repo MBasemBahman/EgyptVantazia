@@ -1,0 +1,43 @@
+﻿@model LogFilter
+@{
+    ViewData["Title"] = Localizer.Get("Advanced Search");
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.emptyLayout = true;
+
+}
+
+
+<div class="collapse" id="AdvancedFilter">
+    <div class="card-header border-bottom">
+        <h4 class="card-title">@Localizer.Get("Advanced Search")</h4>
+    </div>
+
+    <div class="card-body mt-2">
+        <form asp-action="LoadTable" class="filter">
+      
+            <div class="row g-1 mb-md-1">
+                <div class="col-md-6">
+                    <label asp-for="CreatedAtFrom" class="form-label"></label>
+                    <div class="mb-0">
+                        <input type="text" class="form-control dt-date flatpickr-range dt-input flatpickr-input active" data-column="1" placeholder="@Localizer.Get("From Date To Date")" data-column-index="0" name="dt_date" readonly="readonly">
+                        <input type="hidden" class="form-control dt-date start_date dt-input" data-column="1" data-column-index="0" asp-for="CreatedAtFrom">
+                        <input type="hidden" class="form-control dt-date end_date dt-input" asp-for="CreatedAtTo" data-column="1" data-column-index="0">
+                    </div>
+                </div>
+
+            </div>
+            <hr />
+            <br />
+            <div class="row g-1 mb-md-1">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">@Localizer.Get("Search")</button>
+                    <button type="reset" class="btn btn-outline-secondary">@Localizer.Get("Reset")</button>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- END: Content-->
+</div>
+

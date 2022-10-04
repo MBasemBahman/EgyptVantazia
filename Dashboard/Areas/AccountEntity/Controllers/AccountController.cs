@@ -47,17 +47,13 @@ namespace Dashboard.Areas.AccountEntity.Controllers
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
-            string searchBy = dtParameters.Search?.Value.ToLower();
-
             AccountParameters parameters = new()
             {
             };
 
             _ = _mapper.Map(dtParameters, parameters);
 
-            IQueryable<AccountModel> accounts = _unitOfWork.Account.GetAccounts(parameters, otherLang);
-
-            PagedList<AccountModel> data = await _unitOfWork.Account.GetAccountsPaged(accounts, parameters);
+            PagedList<AccountModel> data = await _unitOfWork.Account.GetAccountsPaged(parameters,otherLang);
 
             List<AccountDto> resultDto = _mapper.Map<List<AccountDto>>(data);
 

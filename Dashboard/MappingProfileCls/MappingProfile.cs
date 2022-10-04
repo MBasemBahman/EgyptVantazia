@@ -2,15 +2,18 @@
 using Dashboard.Areas.AppInfoEntity.Models;
 using Dashboard.Areas.DashboardAdministration.Models;
 using Dashboard.Areas.Location.Models;
+using Dashboard.Areas.TeamEntity.Models;
 using Dashboard.Areas.LogEntity.Models;
 using Dashboard.Areas.UserEntity.Models;
 using Entities.CoreServicesModels.AccountModels;
 using Entities.CoreServicesModels.AppInfoModels;
 using Entities.CoreServicesModels.LocationModels;
+using Entities.CoreServicesModels.TeamModels;
 using Entities.CoreServicesModels.LogModels;
 using Entities.CoreServicesModels.UserModels;
 using Entities.DBModels.AccountModels;
 using Entities.DBModels.AppInfoModels;
+using Entities.DBModels.TeamModels;
 using Entities.DBModels.DashboardAdministrationModels;
 using Entities.DBModels.LocationModels;
 using Entities.DBModels.SharedModels;
@@ -181,6 +184,23 @@ namespace Dashboard.MappingProfileCls
             _ = CreateMap<AppAboutCreateOrEditModel, AppAbout>();
 
             _ = CreateMap<AppAboutLangModel, AppAboutLang>();
+            #endregion
+
+            #endregion
+
+            #region Team Models
+
+            #region Team
+            _ = CreateMap<Team, TeamCreateOrEditModel>();
+
+            _ = CreateMap<TeamCreateOrEditModel, Team>()
+                .ForMember(dest => dest.ImageUrl,opt => opt.Ignore())
+                .ForMember(dest => dest.StorageUrl,opt => opt.Ignore());
+
+            _ = CreateMap<TeamModel, TeamDto>();
+
+            _ = CreateMap<TeamFilter, TeamParameters>();
+
             #endregion
 
             #endregion

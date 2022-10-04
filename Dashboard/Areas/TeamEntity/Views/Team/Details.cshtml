@@ -1,4 +1,4 @@
-﻿@model AccountDto
+﻿@model TeamDto
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -16,30 +16,12 @@
                     <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.Name):</dt>
                     <dd class="col-sm-8 mb-1">@Model.Name</dd>
 
-                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.Nationality):</dt>
-                    <dd class="col-sm-8 mb-1">@Model.Nationality.Name</dd>
-
-                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.PhoneNumber):</dt>
-                    <dd class="col-sm-8 mb-1">@Model.PhoneNumber</dd>
-
-                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.FavouriteTeam):</dt>
-                    <dd class="col-sm-8 mb-1">@Model.FavouriteTeam.Name</dd>
-
-
-                 
                 </dl>
             </div>
             <div class="col-xl-6 col-12">
                 <dl class="row mb-0">
-                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.UserName):</dt>
-                    <dd class="col-sm-8 mb-1">@Model.UserName</dd>
-
-                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.Country):</dt>
-                    <dd class="col-sm-8 mb-1">@Model.Country.Name</dd>
-
-
-                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.EmailAddress):</dt>
-                    <dd class="col-sm-8 mb-1">@Model.EmailAddress</dd>
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model._365_TeamId):</dt>
+                    <dd class="col-sm-8 mb-1">@Model._365_TeamId</dd>
 
                    
                 </dl>
@@ -55,8 +37,7 @@
                     <dd class="col-sm-8 mb-1">@Model.LastModifiedAt</dd>
 
 
-                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.LastActive):</dt>
-                    <dd class="col-sm-8 mb-1">@Model.LastActive</dd>
+                   
                 </dl>
             </div>
             <div class="col-xl-6 col-12">
@@ -68,13 +49,6 @@
                     <dd class="col-sm-8 mb-1">@Model.LastModifiedBy</dd>
                 </dl>
             </div>
-        </div>
-        <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start">
-                <span class="badge bg-light-primary">@Html.DisplayNameFor(model => Model.Address)</span>
-            </div>
-            <br />
-            <p>@Model.Address</p>
         </div>
       
     </div>

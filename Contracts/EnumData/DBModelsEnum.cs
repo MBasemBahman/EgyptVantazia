@@ -28,7 +28,8 @@
             Account = 10,
             Country = 11,
             DBLogs = 12,
-            AppAbout = 13
+            AppAbout = 13,
+            Team =  14
         }
     }
 }

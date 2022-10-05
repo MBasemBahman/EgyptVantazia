@@ -38,6 +38,8 @@ namespace API.Extensions
 
         public static void ConfigureScopedService(this IServiceCollection services)
         {
+            _ = services.AddScoped<ServicesHttpClient>();
+            _ = services.AddScoped<_365Utils>();
             _ = services.AddScoped<IAuthenticationManager, AuthenticationManager>();
         }
 

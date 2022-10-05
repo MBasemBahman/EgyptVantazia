@@ -1,4 +1,6 @@
-﻿namespace Services
+﻿using Microsoft.AspNetCore.Http;
+
+namespace Services
 {
     public class FileUploader : IFileUploader
     {

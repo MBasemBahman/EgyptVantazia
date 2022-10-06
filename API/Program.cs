@@ -10,6 +10,7 @@ builder.Configuration.AddJsonFile(config.AppSettings);
 // Add services to the container
 builder.Services.ConfigureRequestsLimit();
 builder.Services.ConfigureCors();
+builder.Services.AddHttpClient();
 builder.Services.ConfigureLoggerService();
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 builder.Services.AddSingleton(provider => new MapperConfiguration(cfg =>

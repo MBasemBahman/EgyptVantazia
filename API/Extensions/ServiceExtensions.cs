@@ -1,5 +1,6 @@
 ﻿using Entities.ServicesModels;
 using Entities.TenantModels;
+using IntegrationWith365;
 using Live;
 
 namespace API.Extensions
@@ -38,6 +39,8 @@ namespace API.Extensions
 
         public static void ConfigureScopedService(this IServiceCollection services)
         {
+            _ = services.AddScoped<ServicesHttpClient>();
+            _ = services.AddScoped<_365Services>();
             _ = services.AddScoped<IAuthenticationManager, AuthenticationManager>();
         }
 

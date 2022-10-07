@@ -29,7 +29,10 @@
             Country = 11,
             DBLogs = 12,
             AppAbout = 13,
-            Team =  14
+            Team =  14,
+            News = 15,
+            NewsAttachment = 16,
+            Sponsor = 17
         }
     }
 }

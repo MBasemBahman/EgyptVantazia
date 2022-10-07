@@ -117,6 +117,33 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="About App" xml:space="preserve">
+    <value>About App</value>
+  </data>
+  <data name="About Company" xml:space="preserve">
+    <value>About Company</value>
+  </data>
+  <data name="AboutApp" xml:space="preserve">
+    <value>About App</value>
+  </data>
+  <data name="AboutCompany" xml:space="preserve">
+    <value>About Company</value>
+  </data>
+  <data name="AboutCompany App" xml:space="preserve">
+    <value>About Company</value>
+  </data>
+  <data name="Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="Account Details" xml:space="preserve">
+    <value>Account Details</value>
+  </data>
+  <data name="Account Profile" xml:space="preserve">
+    <value>Account Profile</value>
+  </data>
+  <data name="Accounts" xml:space="preserve">
+    <value>Accounts</value>
+  </data>
   <data name="Actions" xml:space="preserve">
     <value>Actions</value>
   </data>
@@ -143,6 +170,12 @@
   </data>
   <data name="All Rights Reserved" xml:space="preserve">
     <value>All Rights Reserved</value>
+  </data>
+  <data name="App Info" xml:space="preserve">
+    <value>App Info</value>
+  </data>
+  <data name="AppAbout" xml:space="preserve">
+    <value>AppAbout</value>
   </data>
   <data name="April" xml:space="preserve">
     <value>April</value>
@@ -300,6 +333,12 @@
   <data name="Export Excel" xml:space="preserve">
     <value>Export Excel</value>
   </data>
+  <data name="FacebookUrl" xml:space="preserve">
+    <value>Facebook Url</value>
+  </data>
+  <data name="FavouriteTeam" xml:space="preserve">
+    <value>Favourite Team</value>
+  </data>
   <data name="February" xml:space="preserve">
     <value>February</value>
   </data>
@@ -315,6 +354,9 @@
   <data name="FileUrl" xml:space="preserve">
     <value>File Url</value>
   </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>First Name</value>
+  </data>
   <data name="Friday" xml:space="preserve">
     <value>Friday</value>
   </data>
@@ -326,6 +368,12 @@
   </data>
   <data name="FullName" xml:space="preserve">
     <value>Full Name</value>
+  </data>
+  <data name="GameRules" xml:space="preserve">
+    <value>Game Rules</value>
+  </data>
+  <data name="GameWeak" xml:space="preserve">
+    <value>Game Weak</value>
   </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
@@ -341,6 +389,9 @@
   </data>
   <data name="InEnglish" xml:space="preserve">
     <value>In English</value>
+  </data>
+  <data name="InstagramUrl" xml:space="preserve">
+    <value>Instagram Url</value>
   </data>
   <data name="IsActive" xml:space="preserve">
     <value>IsActive</value>
@@ -366,6 +417,12 @@
   <data name="LastName" xml:space="preserve">
     <value>Last Name</value>
   </data>
+  <data name="LinkUrl" xml:space="preserve">
+    <value>Link Url</value>
+  </data>
+  <data name="Locations" xml:space="preserve">
+    <value>Locations</value>
+  </data>
   <data name="Log" xml:space="preserve">
     <value>Log</value>
   </data>
@@ -377,6 +434,15 @@
   </data>
   <data name="Logs" xml:space="preserve">
     <value>Logs</value>
+  </data>
+  <data name="LongDescription" xml:space="preserve">
+    <value>Long Description</value>
+  </data>
+  <data name="LongDescription Arabic" xml:space="preserve">
+    <value>Long Description Arabic</value>
+  </data>
+  <data name="LongDescription English" xml:space="preserve">
+    <value>Long Description English</value>
   </data>
   <data name="March" xml:space="preserve">
     <value>March</value>
@@ -390,6 +456,18 @@
   <data name="Month" xml:space="preserve">
     <value>Month</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Name Arabic" xml:space="preserve">
+    <value>Name Arabic</value>
+  </data>
+  <data name="Name English" xml:space="preserve">
+    <value>Name English</value>
+  </data>
+  <data name="Nationality" xml:space="preserve">
+    <value>Nationality</value>
+  </data>
   <data name="Navigation" xml:space="preserve">
     <value>Navigation</value>
   </data>
@@ -398,6 +476,21 @@
   </data>
   <data name="NewPassword" xml:space="preserve">
     <value>New Password</value>
+  </data>
+  <data name="News" xml:space="preserve">
+    <value>News</value>
+  </data>
+  <data name="News Details" xml:space="preserve">
+    <value>News Details</value>
+  </data>
+  <data name="News Profile" xml:space="preserve">
+    <value>News Profile</value>
+  </data>
+  <data name="NewsAttachments" xml:space="preserve">
+    <value>News Attachments</value>
+  </data>
+  <data name="NewsTypeEnum" xml:space="preserve">
+    <value>News Type</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
@@ -435,6 +528,12 @@
   <data name="Pdf" xml:space="preserve">
     <value>Pdf</value>
   </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>Phone Number</value>
+  </data>
   <data name="Please sign-in to your account and start the adventure" xml:space="preserve">
     <value>Please sign-in to your account and start the adventure</value>
   </data>
@@ -447,11 +546,23 @@
   <data name="Print" xml:space="preserve">
     <value>Print</value>
   </data>
+  <data name="Prizes" xml:space="preserve">
+    <value>Prizes</value>
+  </data>
   <data name="Profile" xml:space="preserve">
     <value>Profile</value>
   </data>
+  <data name="QuestionsAndAnswer" xml:space="preserve">
+    <value>Questions And Answer</value>
+  </data>
+  <data name="Records" xml:space="preserve">
+    <value>Records</value>
+  </data>
   <data name="Remove" xml:space="preserve">
     <value>Remove</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Reset</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>
@@ -459,8 +570,68 @@
   <data name="Select All" xml:space="preserve">
     <value>Select All</value>
   </data>
+  <data name="ShortDescription" xml:space="preserve">
+    <value>Short Description</value>
+  </data>
+  <data name="ShortDescription Arabic" xml:space="preserve">
+    <value>Short Description Arabic</value>
+  </data>
+  <data name="ShortDescription English" xml:space="preserve">
+    <value>Short Description English</value>
+  </data>
+  <data name="SnapChatUrl" xml:space="preserve">
+    <value>SnapChat Url</value>
+  </data>
+  <data name="Sponsor" xml:space="preserve">
+    <value>Sponsor</value>
+  </data>
+  <data name="Sponsors" xml:space="preserve">
+    <value>Sponsors</value>
+  </data>
+  <data name="SponsorViews" xml:space="preserve">
+    <value>Sponsor Views</value>
+  </data>
+  <data name="SponsorViewsCount" xml:space="preserve">
+    <value>Sponsor Views</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="Subscriptions" xml:space="preserve">
+    <value>Subscriptions</value>
+  </data>
+  <data name="Team" xml:space="preserve">
+    <value>Team</value>
+  </data>
+  <data name="Team Details" xml:space="preserve">
+    <value>Team Details</value>
+  </data>
+  <data name="Team Profile" xml:space="preserve">
+    <value>Team Profile</value>
+  </data>
+  <data name="Teams" xml:space="preserve">
+    <value>Teams</value>
+  </data>
+  <data name="TermsAndConditions" xml:space="preserve">
+    <value>Terms And Conditions</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Title Arabic" xml:space="preserve">
+    <value>Title Arabic</value>
+  </data>
+  <data name="Title English" xml:space="preserve">
+    <value>Title English</value>
+  </data>
   <data name="Tuesday" xml:space="preserve">
     <value>Tuesday</value>
+  </data>
+  <data name="TwitterUrl" xml:space="preserve">
+    <value>Twitter Url</value>
   </data>
   <data name="Upload Attachment" xml:space="preserve">
     <value>Upload Attachment</value>
@@ -515,6 +686,9 @@
   </data>
   <data name="Wednesday" xml:space="preserve">
     <value>Wednesday</value>
+  </data>
+  <data name="WhatsApp" xml:space="preserve">
+    <value>WhatsApp</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>

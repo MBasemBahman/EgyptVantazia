@@ -66,6 +66,12 @@ namespace CoreServices.Logic
             return await _repository.News.FindById(id, trackChanges);
         }
 
+
+        public async Task<string> UploudNewsImage(string rootPath, IFormFile file)
+        {
+            FileUploader uploader = new(rootPath);
+            return await uploader.UploudFile(file, "Uploud/News");
+        }
         public void CreateNews(News News)
         {
             _repository.News.Create(News);

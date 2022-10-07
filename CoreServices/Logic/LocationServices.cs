@@ -22,6 +22,7 @@ namespace CoreServices.Logic
                        .Select(a => new CountryModel
                        {
                            Name = otherLang ? a.CountryLang.Name : a.Name,
+                           ImageUrl = a.StorageUrl + a.ImageUrl,
                            Id = a.Id,
                            CreatedAt = a.CreatedAt,
                            CreatedBy = a.CreatedBy,
@@ -45,6 +46,11 @@ namespace CoreServices.Logic
             return GetCountrys(parameters, otherLang).ToDictionary(a => a.Id.ToString(), a => a.Name);
         }
 
+        public async Task<string> UploudCountryImage(string rootPath, IFormFile file)
+        {
+            FileUploader uploader = new(rootPath);
+            return await uploader.UploudFile(file, "Uploud/Country");
+        }
         public async Task<Country> FindCountrybyId(int id, bool trackChanges)
         {
             return await _repository.Country.FindById(id, trackChanges);

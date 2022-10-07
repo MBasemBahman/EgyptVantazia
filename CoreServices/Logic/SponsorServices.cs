@@ -1,5 +1,6 @@
 ﻿using Entities.CoreServicesModels.SponsorModels;
 using Entities.DBModels.SponsorModels;
+using static Entities.EnumData.LogicEnumData;
 
 namespace CoreServices.Logic
 {
@@ -54,6 +55,18 @@ namespace CoreServices.Logic
             _repository.Sponsor.Create(Sponsor);
         }
 
+
+        public async Task<string> UploudSponsorImage(string rootPath, IFormFile file)
+        {
+            FileUploader uploader = new(rootPath);
+            return await uploader.UploudFile(file, "Uploud/Sponsor");
+        }
+        public void CreateSponsor(Sponsor Sponsor,List<AppViewEnum> views)
+        {
+            Sponsor = AddSponsorViews(Sponsor, views);
+            _repository.Sponsor.Create(Sponsor);
+        }
+
         public async Task DeleteSponsor(int id)
         {
             Sponsor Sponsor = await FindSponsorbyId(id, trackChanges: true);
@@ -85,7 +98,67 @@ namespace CoreServices.Logic
         }
 
 
-       
+        public Sponsor AddSponsorViews(Sponsor entity, List<AppViewEnum> views)
+        {
+            if (views != null && views.Any())
+            {
+                entity.SponsorViews = new List<SponsorView>();
+
+                foreach (AppViewEnum view in views)
+                {
+                    entity.SponsorViews.Add(new SponsorView
+                    {
+                        AppViewEnum = view
+                    });
+                }
+            }
+            return entity;
+        }
+        public void UpdateSponsorViews(int fk_sponsor, List<AppViewEnum> newData)
+        {
+
+            List<AppViewEnum> oldData = GetSponsorViews(new SponsorViewParameters
+            { Fk_Sponsor = fk_sponsor }).Select(a => a.AppViewEnum).ToList();
+
+            List<AppViewEnum> addedData = newData.Except(oldData).ToList();
+            List<AppViewEnum> removedData = oldData.Except(newData).ToList();
+
+            AddSponsorViews(fk_sponsor, addedData);
+            RemoveSponsorViews(fk_sponsor, removedData);
+
+        }
+
+        private void AddSponsorViews(int fk_sponsor, List<AppViewEnum> views)
+        {
+            foreach (AppViewEnum view in views)
+            {
+                SponsorView data = new()
+                {
+                    Fk_Sponsor = fk_sponsor,
+                    AppViewEnum = view,
+                };
+
+                _repository.SponsorView.Create(data);
+            }
+        }
+
+        private void RemoveSponsorViews(int fk_sponspor, List<AppViewEnum> views)
+        {
+            foreach (AppViewEnum view in views)
+            {
+                SponsorView data =
+                    _repository.SponsorView.FindAll(new SponsorViewParameters
+                    {
+                       AppView  = (int)view,
+                        Fk_Sponsor = fk_sponspor
+                    }, trackChanges: false).SingleOrDefault();
+
+                _repository.SponsorView.Delete(data);
+            }
+        }
+
+
+
         #endregion
 
     }

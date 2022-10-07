@@ -8,13 +8,13 @@ namespace Dashboard.Areas.AppInfoEntity.Controllers
 {
     [Area("AppInfoEntity")]
     [Authorize(DashboardViewEnum.AppAbout, AccessLevelEnum.View)]
-    public class AppInfoController : Controller
+    public class AppAboutController : Controller
     {
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
         private readonly UnitOfWork _unitOfWork;
 
-        public AppInfoController(ILoggerManager logger, IMapper mapper,
+        public AppAboutController(ILoggerManager logger, IMapper mapper,
                 UnitOfWork unitOfWork)
         {
             _logger = logger;
@@ -26,13 +26,11 @@ namespace Dashboard.Areas.AppInfoEntity.Controllers
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
-            AppAboutModel model = _unitOfWork.AppInfo.GetAppAbouts(new RequestParameters(),otherLang).FirstOrDefault();
+            AppAboutModel model = _unitOfWork.AppInfo.GetAppAbouts(new RequestParameters(), otherLang).Any() ?
+                _unitOfWork.AppInfo.GetAppAbouts(new RequestParameters(),otherLang).FirstOrDefault()
+                : new AppAboutModel();
 
-            if (model == null)
-            {
-                return View(new AppAboutDto());
-            }
-
+          
             AppAboutDto data = _mapper.Map<AppAboutDto>(model);
 
             ViewData[ViewDataConstants.AccessLevel] = (DashboardAccessLevelModel)Request.HttpContext.Items[ViewDataConstants.AccessLevel];

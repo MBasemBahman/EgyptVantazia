@@ -1,0 +1,41 @@
+﻿@model bool
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.emptyLayout = true;
+}
+
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalScrollableTitle">@Localizer.Get("Delete")</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+@if (!Model)
+{
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12 mb-1">
+                <h5 style="color:red">@Localizer.Get("Not Delete Message")</h5>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">@Localizer.Get("Ok")</button>
+    </div>
+}
+else
+{
+    <form asp-action="Delete" method="post">
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12 mb-1">
+                    <h5>@Localizer.Get("Delete Message")</h5>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">@Localizer.Get("Remove")</button>
+            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">@Localizer.Get("Cancel")</button>
+        </div>
+    </form>
+}
+

@@ -1,4 +1,5 @@
 ﻿using Entities.CoreServicesModels.AccountModels;
+using Entities.CoreServicesModels.LocationModels;
 using Entities.DBModels.AccountModels;
 
 namespace CoreServices.Logic
@@ -33,6 +34,14 @@ namespace CoreServices.Logic
                                   EmailAddress = a.User.EmailAddress,
                                   PhoneNumber = a.User.PhoneNumber,
                                   UserName = a.User.UserName,
+                                  Country = new CountryModel
+                                  {
+                                      Name = otherLang ? a.Country.CountryLang.Name : a.Country.Name
+                                  },
+                                  Nationality = new CountryModel
+                                  {
+                                      Name = otherLang ? a.Nationality.CountryLang.Name : a.Nationality.Name
+                                  },
                                   LastActive = a.User.RefreshTokens.Any()
                                   ? a.User.RefreshTokens.OrderByDescending(b => b.Id).Select(a => a.CreatedAt).FirstOrDefault()
                                   : null,

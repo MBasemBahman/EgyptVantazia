@@ -130,14 +130,14 @@ namespace Entities.CoreServicesModels.AccountModels
         [DisplayName(nameof(Country))]
         public int Fk_Country { get; set; }
 
-        [DisplayName(nameof(Fk_Nationality))]
+        [DisplayName("Nationality")]
         public int Fk_Nationality { get; set; }
 
         [DisplayName(nameof(Address))]
         [DataType(DataType.MultilineText)]
         public string Address { get; set; }
 
-        [DisplayName(nameof(Fk_FavouriteTeam))]
+        [DisplayName("FavouriteTeam")]
         public int Fk_FavouriteTeam { get; set; }
     }
 }

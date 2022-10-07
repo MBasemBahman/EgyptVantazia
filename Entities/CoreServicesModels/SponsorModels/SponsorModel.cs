@@ -31,6 +31,10 @@ namespace Entities.CoreServicesModels.SponsorModels
 
     public class SponsorCreateOrEditModel
     {
+        public SponsorCreateOrEditModel()
+        {
+            SponsorViews = new List<AppViewEnum>();
+        }
         [DisplayName($"{nameof(Name)}{PropertyAttributeConstants.ArLang}")]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }

@@ -4,12 +4,14 @@
     {
         public enum AppViewEnum
         {
-
+            View1 = 1,
+            View2 = 2,
+            View3 = 3
         }
 
         public enum NewsTypeEnum
         {
-
+            Test = 1
         }
 
         public enum TransferTypeEnum

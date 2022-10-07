@@ -6,6 +6,8 @@ namespace Entities.CoreServicesModels.SponsorModels
     public class SponsorViewParameters : RequestParameters
     {
         public int Fk_Sponsor { get; set; }
+        public int AppView { get; set; }
+
 
     }
     public class SponsorViewModel : BaseEntity

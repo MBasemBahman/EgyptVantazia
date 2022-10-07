@@ -57,7 +57,7 @@ namespace Dashboard.Areas.TeamEntity.Controllers
 
             DataTable<TeamDto> dataTableManager = new();
 
-            DataTableResult<TeamDto> dataTableResult = dataTableManager.LoadTable(dtParameters, resultDto, data.MetaData.TotalCount, _unitOfWork.Account.GetAccountsCount());
+            DataTableResult<TeamDto> dataTableResult = dataTableManager.LoadTable(dtParameters, resultDto, data.MetaData.TotalCount, _unitOfWork.Team.GetTeamCount());
 
             return Json(dataTableManager.ReturnTable(dataTableResult));
         }

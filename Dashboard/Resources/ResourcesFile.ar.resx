@@ -531,4 +531,175 @@
   <data name="ar" xml:space="preserve">
     <value />
   </data>
+  <data name="About App" xml:space="preserve">
+    <value>عن التطبيق</value>
+  </data>
+  <data name="About Company" xml:space="preserve">
+    <value>عن الشركة</value>
+  </data>
+  <data name="AboutApp" xml:space="preserve">
+    <value>عن التطبيق</value>
+  </data>
+  <data name="AboutCompany App" xml:space="preserve">
+    <value>عن الشركة</value>
+  </data>
+  <data name="Account" xml:space="preserve">
+    <value>الحساب</value>
+  </data>
+  <data name="Account Details" xml:space="preserve">
+    <value>تفاصيل الحساب</value>
+  </data>
+  <data name="Account Profile" xml:space="preserve">
+    <value>ملف الحساب</value>
+  </data>
+  <data name="Accounts" xml:space="preserve">
+    <value>الحسابات</value>
+  </data>
+  <data name="App Info" xml:space="preserve">
+    <value>بيانات التطبيق</value>
+  </data>
+  <data name="AppAbout" xml:space="preserve">
+    <value>عن التطبيق</value>
+  </data>
+  <data name="FacebookUrl" xml:space="preserve">
+    <value>رابط فيس بوك</value>
+  </data>
+  <data name="FavouriteTeam" xml:space="preserve">
+    <value>الفريق المفضل</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>الاسم الاول</value>
+  </data>
+  <data name="GameRules" xml:space="preserve">
+    <value>قواعد اللعبة</value>
+  </data>
+  <data name="GameWeak" xml:space="preserve">
+    <value>Game Weak</value>
+  </data>
+  <data name="InstagramUrl" xml:space="preserve">
+    <value>رابط انستغرام</value>
+  </data>
+  <data name="LinkUrl" xml:space="preserve">
+    <value>الرابط</value>
+  </data>
+  <data name="Locations" xml:space="preserve">
+    <value>الاماكن</value>
+  </data>
+  <data name="LongDescription" xml:space="preserve">
+    <value>وصف مطول</value>
+  </data>
+  <data name="LongDescription Arabic" xml:space="preserve">
+    <value>وصف مطول بالعربية</value>
+  </data>
+  <data name="LongDescription English" xml:space="preserve">
+    <value>وصف مطول بالانجليزية</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>الاسم</value>
+  </data>
+  <data name="Name Arabic" xml:space="preserve">
+    <value>الاسم بالعربية</value>
+  </data>
+  <data name="Name English" xml:space="preserve">
+    <value>الاسم بالانجليزية</value>
+  </data>
+  <data name="Nationality" xml:space="preserve">
+    <value>الجنسية</value>
+  </data>
+  <data name="News" xml:space="preserve">
+    <value>الاخبار</value>
+  </data>
+  <data name="News Details" xml:space="preserve">
+    <value>تفاصيل الخبر</value>
+  </data>
+  <data name="News Profile" xml:space="preserve">
+    <value>ملف الخبر</value>
+  </data>
+  <data name="NewsAttachments" xml:space="preserve">
+    <value>مرفقات الخبر</value>
+  </data>
+  <data name="NewsTypeEnum" xml:space="preserve">
+    <value>نوع الخبر</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>رقم الهاتف</value>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>رقم الهاتف</value>
+  </data>
+  <data name="Prizes" xml:space="preserve">
+    <value>الجوائز</value>
+  </data>
+  <data name="QuestionsAndAnswer" xml:space="preserve">
+    <value>الاسئلة والاجوبة</value>
+  </data>
+  <data name="Records" xml:space="preserve">
+    <value>سجل</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>إعادة تعيين</value>
+  </data>
+  <data name="ShortDescription" xml:space="preserve">
+    <value>وصف قصير</value>
+  </data>
+  <data name="ShortDescription Arabic" xml:space="preserve">
+    <value>وصف قصير بالعربية</value>
+  </data>
+  <data name="ShortDescription English" xml:space="preserve">
+    <value>وصف قصير بالانجليزية</value>
+  </data>
+  <data name="SnapChatUrl" xml:space="preserve">
+    <value>رابط سناب شات</value>
+  </data>
+  <data name="Sponsor" xml:space="preserve">
+    <value>الراعي</value>
+  </data>
+  <data name="Sponsors" xml:space="preserve">
+    <value>الرعاه</value>
+  </data>
+  <data name="SponsorViews" xml:space="preserve">
+    <value>المشاهدات</value>
+  </data>
+  <data name="SponsorViewsCount" xml:space="preserve">
+    <value>المشاهدات</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>تسجيل</value>
+  </data>
+  <data name="Subscriptions" xml:space="preserve">
+    <value>الاشتراكات</value>
+  </data>
+  <data name="Team" xml:space="preserve">
+    <value>الفريق</value>
+  </data>
+  <data name="Team Details" xml:space="preserve">
+    <value>تفاصيل الفريق</value>
+  </data>
+  <data name="Team Profile" xml:space="preserve">
+    <value>ملف الفريق</value>
+  </data>
+  <data name="Teams" xml:space="preserve">
+    <value>الفرق</value>
+  </data>
+  <data name="TermsAndConditions" xml:space="preserve">
+    <value>الشروط والاحكام</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>العنوان</value>
+  </data>
+  <data name="Title Arabic" xml:space="preserve">
+    <value>العنوان بالعربية</value>
+  </data>
+  <data name="Title English" xml:space="preserve">
+    <value>العنوان بالانجليزية</value>
+  </data>
+  <data name="TwitterUrl" xml:space="preserve">
+    <value>رابط تويتر</value>
+  </data>
+  <data name="WhatsApp" xml:space="preserve">
+    <value>واتس اب</value>
+  </data>
+  <data name="AboutCompany" xml:space="preserve">
+    <value>عن الشركة</value>
+  </data>
 </root>

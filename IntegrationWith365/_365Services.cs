@@ -57,7 +57,7 @@ namespace IntegrationWith365
 
         // مواعيد الماتشات , ونتائج الماتشات
         // aftergame ده الاي دي بتاع الماتش علشان اجيب اللى بعده
-        // aftergame -> 3555948 
+        // aftergame -> 3466192 
         public async Task<GamesReturn> GetGames(_365GamesParameters parameters)
         {
             string uri = GetUri("games", parameters) +

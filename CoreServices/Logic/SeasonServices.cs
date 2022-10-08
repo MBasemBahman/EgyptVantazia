@@ -27,6 +27,7 @@ namespace CoreServices.Logic
                            LastModifiedAt = a.LastModifiedAt,
                            LastModifiedBy = a.LastModifiedBy,
                            _365_SeasonId = a._365_SeasonId,
+                           _365_AfterGameStartId = a._365_AfterGameStartId,
                            Name = otherLang ? a.SeasonLang.Name : a.Name,
                            ImageUrl = a.StorageUrl + a.ImageUrl
                        })

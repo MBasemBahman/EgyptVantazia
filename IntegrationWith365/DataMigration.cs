@@ -1,6 +1,7 @@
 ﻿using CoreServices;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
+using Entities.DBModels.SeasonModels;
 using Entities.DBModels.StandingsModels;
 using Entities.DBModels.TeamModels;
 using IntegrationWith365.Entities.GamesModels;
@@ -231,40 +232,64 @@ namespace IntegrationWith365
             await _unitOfWork.Save();
         }
 
-        public async Task InsertGames()
+        private async Task<List<Games>> GetAllGames()
         {
-            List<TeamModel> teams = _unitOfWork.Team.GetTeams(new TeamParameters
-            {
-            }, otherLang: false).ToList();
-
+            int count = 0;
             SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
 
-            StandingsReturn standings = await _365Services.GetStandings(new _365StandingsParameters
-            {
-                SeasonNum = int.Parse(season._365_SeasonId),
-                IsArabic = true,
-            });
+            List<Games> games = new();
 
-            List<Row> rows = standings.Standings.SelectMany(a => a.Rows).ToList();
+            int _365_AfterGameStartId = int.Parse(season._365_AfterGameStartId);
 
-            foreach (var row in rows)
+            while (_365_AfterGameStartId > 0)
             {
-                _unitOfWork.Standings.CreateStandings(new Standings
+                count++;
+
+                GamesReturn gamesReturn = await _365Services.GetGames(new _365GamesParameters
                 {
-                    Fk_Season = season.Id,
-                    Fk_Team = teams.Where(a => a._365_TeamId == row.Competitor.Id.ToString())
-                                   .Select(a => a.Id)
-                                   .First(),
-                    GamePlayed = row.GamePlayed,
-                    GamesWon = row.GamesWon,
-                    GamesLost = row.GamesLost,
-                    GamesEven = row.GamesEven,
-                    For = row.For,
-                    Against = row.Against,
-                    Ratio = row.Ratio,
-                    Strike = row.Strike,
-                    Position = row.Position,
+                    Aftergame = _365_AfterGameStartId
                 });
+
+                if (gamesReturn.Games != null && gamesReturn.Games.Any())
+                {
+                    _365_AfterGameStartId = gamesReturn.Paging.NextAfterGame;
+                    games.AddRange(gamesReturn.Games);
+                }
+                else
+                {
+                    _365_AfterGameStartId = 0;
+                }
+            }
+
+            return games;
+        }
+
+        public async Task InsertRounds()
+        {
+            SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
+
+            List<GameWeakModel> gameWeaks = _unitOfWork.Season.GetGameWeaks(new GameWeakParameters
+            {
+                Fk_Season = season.Id
+            }, otherLang: false).ToList();
+
+            List<int> rounds = GetAllGames().Result.Select(a => a.RoundNum).Distinct().ToList();
+
+            foreach (var round in rounds)
+            {
+                if (!gameWeaks.Any(a => a._365_GameWeakId == round.ToString()))
+                {
+                    _unitOfWork.Season.CreateGameWeak(new GameWeak
+                    {
+                        Name = round.ToString(),
+                        Fk_Season = season.Id,
+                        _365_GameWeakId = round.ToString(),
+                        GameWeakLang = new GameWeakLang
+                        {
+                            Name = round.ToString()
+                        }
+                    });
+                }
             }
             await _unitOfWork.Save();
         }

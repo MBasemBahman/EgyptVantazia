@@ -2,6 +2,7 @@
 {
     public class GamesReturn
     {
+        public Paging Paging { get; set; }
         public IList<Games> Games { get; set; }
     }
 

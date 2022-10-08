@@ -17,9 +17,6 @@ namespace Entities.CoreServicesModels.SeasonModels
         [DisplayName(nameof(_365_MatchId))]
         public string _365_MatchId { get; set; }
 
-        [DisplayName(nameof(_365_MatchUpId))]
-        public string _365_MatchUpId { get; set; }
-
         [DisplayName(nameof(FromTime))]
         public DateTime? FromTime { get; set; }
 
@@ -61,8 +58,5 @@ namespace Entities.CoreServicesModels.SeasonModels
 
         [DisplayName(nameof(_365_MatchId))]
         public string _365_MatchId { get; set; }
-
-        [DisplayName(nameof(_365_MatchUpId))]
-        public string _365_MatchUpId { get; set; }
     }
 }

@@ -20,6 +20,7 @@ namespace API.Areas.LocationArea.Controllers
 
         [HttpGet]
         [Route(nameof(GetCountries))]
+        [AllowAnonymous]
         public async Task<IEnumerable<CountryModel>> GetCountries(
        [FromQuery] RequestParameters parameters)
         {

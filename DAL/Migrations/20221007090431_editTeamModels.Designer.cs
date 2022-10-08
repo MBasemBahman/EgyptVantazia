@@ -4,6 +4,7 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20221007090431_editTeamModels")]
+    partial class editTeamModels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1973,9 +1975,6 @@ namespace DAL.Migrations
                     b.Property<int>("Fk_Team")
                         .HasColumnType("int");
 
-                    b.Property<int>("For")
-                        .HasColumnType("int");
-
                     b.Property<int>("GamePlayed")
                         .HasColumnType("int");
 
@@ -1996,13 +1995,13 @@ namespace DAL.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Position")
+                    b.Property<int>("Points")
                         .HasColumnType("int");
 
-                    b.Property<double>("Ratio")
-                        .HasColumnType("float");
+                    b.Property<int>("Ratio")
+                        .HasColumnType("int");
 
-                    b.Property<int>("Strike")
+                    b.Property<int>("_365_For")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -2454,7 +2453,7 @@ namespace DAL.Migrations
                             EmailAddress = "user@mail.com",
                             LastModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Developer",
-                            Password = "$2a$11$xEGPuRsFqTuqbCmGjxx2ZuTfleJbmGacfNvpQeXpsFuOEtg5CtS5G",
+                            Password = "$2a$11$FfIkZkJSQLK552mTQhlDsuqA1MKVL8j9GNVRljjyc1Fza/nIVQw4C",
                             UserName = "Developer"
                         });
                 });

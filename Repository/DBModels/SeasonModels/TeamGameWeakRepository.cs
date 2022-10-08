@@ -17,7 +17,6 @@ namespace Repository.DBModels.SeasonModels
                            parameters.Fk_Away,
                            parameters.Fk_GameWeak,
                            parameters._365_MatchId,
-                           parameters._365_MatchUpId,
                            parameters.FromTime,
                            parameters.ToTime);
         }
@@ -38,7 +37,6 @@ namespace Repository.DBModels.SeasonModels
             int Fk_Away,
             int Fk_GameWeak,
             string _365_MatchId,
-            string _365_MatchUpId,
             DateTime? fromTime,
             DateTime? toTime)
         {
@@ -47,7 +45,6 @@ namespace Repository.DBModels.SeasonModels
                                             (Fk_Away == 0 || a.Fk_Away == Fk_Away) &&
                                             (Fk_GameWeak == 0 || a.Fk_GameWeak == Fk_GameWeak) &&
                                             (string.IsNullOrWhiteSpace(_365_MatchId) || a._365_MatchId == _365_MatchId) &&
-                                            (string.IsNullOrWhiteSpace(_365_MatchUpId) || a._365_MatchUpId == _365_MatchUpId) &&
                                             (fromTime == null || a.StartTime >= fromTime) &&
                                             (toTime == null || a.StartTime <= toTime));
 

@@ -16,7 +16,6 @@ namespace Entities.DBModels.SeasonModels
         [DisplayName(nameof(GameWeaks))]
         public IList<GameWeak> GameWeaks { get; set; }
 
-
         [DisplayName(nameof(AccountTeams))]
         public IList<AccountTeam> AccountTeams { get; set; }
 

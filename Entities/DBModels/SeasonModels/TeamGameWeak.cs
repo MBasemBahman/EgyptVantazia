@@ -36,8 +36,5 @@ namespace Entities.DBModels.SeasonModels
 
         [DisplayName(nameof(_365_MatchId))]
         public string _365_MatchId { get; set; }
-
-        [DisplayName(nameof(_365_MatchUpId))]
-        public string _365_MatchUpId { get; set; }
     }
 }

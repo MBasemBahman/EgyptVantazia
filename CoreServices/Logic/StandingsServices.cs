@@ -31,10 +31,9 @@ namespace CoreServices.Logic
                            GamesWon = a.GamesWon,
                            GamesLost = a.GamesLost,
                            GamesEven = a.GamesEven,
-                           _365_For = a._365_For,
+                           For = a.For,
                            Against = a.Against,
                            Ratio = a.Ratio,
-                           Points = a.Points,
                            Fk_Season = a.Fk_Season,
                            Fk_Team = a.Fk_Team,
                            Season = new SeasonModel

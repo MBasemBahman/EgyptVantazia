@@ -10,8 +10,14 @@ namespace Entities.DBModels.TeamModels
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
 
+        [DisplayName($"{nameof(ShortName)}{PropertyAttributeConstants.ArLang}")]
+        public string ShortName { get; set; }
+
         [DisplayName(nameof(_365_PlayerId))]
         public string _365_PlayerId { get; set; }
+
+        [DisplayName(nameof(Age))]
+        public int Age { get; set; }
 
         [DisplayName(nameof(Team))]
         [ForeignKey(nameof(Team))]
@@ -50,5 +56,8 @@ namespace Entities.DBModels.TeamModels
         [DisplayName($"{nameof(Name)}{PropertyAttributeConstants.EnLang}")]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
+
+        [DisplayName($"{nameof(ShortName)}{PropertyAttributeConstants.ArLang}")]
+        public string ShortName { get; set; }
     }
 }

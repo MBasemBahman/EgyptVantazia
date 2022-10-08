@@ -31,16 +31,19 @@ namespace Entities.DBModels.StandingsModels
         [DisplayName(nameof(GamesEven))]
         public int GamesEven { get; set; }
 
-        [DisplayName(nameof(_365_For))]
-        public int _365_For { get; set; }
+        [DisplayName(nameof(For))]
+        public int For { get; set; }
 
         [DisplayName(nameof(Against))]
         public int Against { get; set; }
 
         [DisplayName(nameof(Ratio))]
-        public int Ratio { get; set; }
+        public double Ratio { get; set; }
 
-        [DisplayName(nameof(Points))]
-        public int Points { get; set; }
+        [DisplayName(nameof(Strike))]
+        public int Strike { get; set; }
+
+        [DisplayName(nameof(Position))]
+        public int Position { get; set; }
     }
 }

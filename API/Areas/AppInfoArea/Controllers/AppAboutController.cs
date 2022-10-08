@@ -1,6 +1,8 @@
 ﻿using API.Controllers;
+using CoreServices;
 using Entities.CoreServicesModels.AppInfoModels;
 using IntegrationWith365;
+using IntegrationWith365.Entities.GamesModels;
 
 namespace API.Areas.AppInfoArea.Controllers
 {
@@ -28,30 +30,26 @@ namespace API.Areas.AppInfoArea.Controllers
         [AllowAll]
         public async Task<AppAboutModel> GetAppAbout()
         {
-            await _365Services.GetStandings(new IntegrationWith365.Parameters._365StandingsParameters
-            {
-                SeasonNum = 26,
-                IsArabic = true,
-            });
 
-            await _365Services.GetSquads(new IntegrationWith365.Parameters._365SquadsParameters
-            {
-                Competitors = 8201,
-                IsArabic = true,
-            });
+            var dataMigration = new DataMigration(_unitOfWork, _365Services);
 
-            await _365Services.GetGames(new IntegrationWith365.Parameters._365GamesParameters
-            {
-                Aftergame = 3555948,
-                IsArabic = true,
-            });
+            //await dataMigration.InsertTeams();
+            //await dataMigration.InsertPositions();
+            //await dataMigration.InsertPlayers();
+            //await dataMigration.InsertStandings();
 
-            await _365Services.GetGame(new IntegrationWith365.Parameters._365GameParameters
-            {
-                GameId = 3555923,
-                MatchupId = "8300-8306-552",
-                IsArabic = true,
-            });
+            //await _365Services.GetGames(new IntegrationWith365.Parameters._365GamesParameters
+            //{
+            //    Aftergame = 3555948,
+            //    IsArabic = true,
+            //});
+
+            //await _365Services.GetGame(new IntegrationWith365.Parameters._365GameParameters
+            //{
+            //    GameId = 3555923,
+            //    MatchupId = "8300-8306-552",
+            //    IsArabic = true,
+            //});
 
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 

@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var profileItem = new Team();
     int returnItem = ViewData["returnItem"] != null ? (int)ViewData["returnItem"] : (int)TeamProfileItems.Details;
-    bool ltr = ViewData["otherLang"]!=null ? (bool)ViewData["otherLang"] : false;
+    bool ltr = ViewData["otherLang"] != null ? (bool)ViewData["otherLang"] : false;
     string views = (string)ContextAccessor.HttpContext.Request.Cookies[ViewDataConstants.Views];
 
     List<int> viewList = new List<int>();
@@ -14,117 +14,121 @@
         viewList = views.Split(",").Select(Int32.Parse).ToList();
     }
 
-    
+
 }
 
 @section styles{
-<link rel="stylesheet" type="text/css" href="~/app-assets/css@(ltr?"":"-rtl")/pages/page-profile.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css@(ltr?"":"-rtl")/pages/page-profile.css">
 }
-<div class="app-content content">
-    <div class="content-overlay"></div>
-    <div class="header-navbar-shadow"></div>
-    <div class="content-wrapper container-xxl p-0">
-        <div class="content-header row">
-        </div>
-        <div class="content-body">
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper container-xxl p-0">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
 
-            <div id="user-profile">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card profile-header mb-2">
-                            <!-- profile cover photo -->
-                            <img class="card-img-top" height="400" src="~/coverImg.jpg" alt="cover">
-                            <!--/ profile cover photo -->
-                            <div class="position-relative">
-                                <!-- profile picture -->
-                                <div class="profile-img-container d-flex align-items-center">
-                                    <div class="profile-img">
-                                        <img src="@Model.ImageUrl" class="rounded img-fluid" alt="image">
-                                    </div>
-                                    <!-- profile title -->
-                                    <div class="profile-title ms-3">
-                                        <h2 class="text-dark">@Model.Name</h2>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- tabs pill -->
-                            <div class="profile-header-nav">
-                                <!-- navbar -->
-                                <nav class="navbar navbar-expand-md navbar-light justify-content-end justify-content-md-between w-100">
-                                    <button class="btn btn-icon navbar-toggler waves-effect waves-float waves-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-align-justify font-medium-5"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
-                                    </button>
-
-                                    <!-- collapse -->
-                                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                        <div class="profile-tabs d-flex justify-content-between flex-wrap mt-1 mt-md-0">
-                                            <ul class="nav nav-pills mb-0">
-                                                 <li class="nav-item ">
-                                                        <a id="/TeamEntity/Team/Details/@Model.Id" class="nav-link tab-item  @(returnItem==(int)TeamProfileItems.Details ? "active" : "")">
-                                                            <span class="fw-bold">@Localizer.Get("Team Details")</span>
-                                                    </a>
-                                                </li>
-                                               
-                                            
-
-
-                                            </ul>
-
-                                            <!-- edit button -->
-
-                                                <a href="/TeamEntity/Team/CreateOrEdit/@Model.Id?IsProfile=true" class="btn btn-primary waves-effect waves-float waves-light">
-                                                <span class="fw-bold d-none d-md-block">@Localizer.Get("Edit")</span>
-                                            </a>
+                <div id="user-profile">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card profile-header mb-2">
+                                <!-- profile cover photo -->
+                                <img class="card-img-top" height="400" src="~/coverImg.jpg" alt="cover">
+                                <!--/ profile cover photo -->
+                                <div class="position-relative">
+                                    <!-- profile picture -->
+                                    <div class="profile-img-container d-flex align-items-center">
+                                        <div class="profile-img">
+                                            <img src="@Model.ImageUrl" class="rounded img-fluid" alt="image">
+                                        </div>
+                                        <!-- profile title -->
+                                        <div class="profile-title ms-3">
+                                            <h2 class="text-dark">@Model.Name</h2>
 
                                         </div>
                                     </div>
-                                    <!--/ collapse -->
-                                </nav>
-                                <!--/ navbar -->
+                                </div>
+
+                                <!-- tabs pill -->
+                                <div class="profile-header-nav">
+                                    <!-- navbar -->
+                                    <nav class="navbar navbar-expand-md navbar-light justify-content-end justify-content-md-between w-100">
+                                        <button class="btn btn-icon navbar-toggler waves-effect waves-float waves-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-align-justify font-medium-5"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
+                                        </button>
+
+                                        <!-- collapse -->
+                                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                            <div class="profile-tabs d-flex justify-content-between flex-wrap mt-1 mt-md-0">
+                                                <ul class="nav nav-pills mb-0">
+                                                    <li class="nav-item ">
+                                                        <a id="/TeamEntity/Team/Details/@Model.Id" class="nav-link tab-item  @(returnItem==(int)TeamProfileItems.Details ? "active" : "")">
+                                                            <span class="fw-bold">@Localizer.Get("Team Details")</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item ">
+                                                        <a id="/TeamEntity/Player/Index/?Fk_Team=@Model.Id&ProfileLayOut=true" class="nav-link tab-item   @(returnItem==(int)TeamProfileItems.Player ? "active" : "")">
+                                                            <span class="fw-bold">@Html.DisplayNameFor(model => profileItem.Players)</span>
+                                                        </a>
+                                                    </li>
+
+
+
+                                                </ul>
+
+                                                <!-- edit button -->
+
+                                                <a href="/TeamEntity/Team/CreateOrEdit/@Model.Id?IsProfile=true" class="btn btn-primary waves-effect waves-float waves-light">
+                                                    <span class="fw-bold d-none d-md-block">@Localizer.Get("Edit")</span>
+                                                </a>
+
+                                            </div>
+                                        </div>
+                                        <!--/ collapse -->
+                                    </nav>
+                                    <!--/ navbar -->
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <section id="profile-info">
-                    <div class="row">
+                    <section id="profile-info">
+                        <div class="row">
 
-                        <div class="col-12 order-0 order-md-1">
-                            <div id="d1"></div>
+                            <div class="col-12 order-0 order-md-1">
+                                <div id="d1"></div>
+                            </div>
                         </div>
-                    </div>
-                </section>
-            </div>
+                    </section>
+                </div>
 
+            </div>
         </div>
     </div>
-</div>
 
 
 
-@section scripts{
-<script>
-    $(document).ready(function () {
-        $(".navigation navigation-main ul li .active").each(function () {
-            $(this).removeClass("active");
-        });
+    @section scripts{
+    <script>
+        $(document).ready(function () {
+            $(".navigation navigation-main ul li .active").each(function () {
+                $(this).removeClass("active");
+            });
 
-        $("#d1").load($(".tab-item.active").eq(0).attr("id"));
+            $("#d1").load($(".tab-item.active").eq(0).attr("id"));
             $("#TeamList").addClass("active");
 
-        $(".tab-item").each(function(){
-            $(this).on('click',function(){
-                $("#d1").load($(this).attr('id'));
-                $(".active").each(function(){
-                    $(this).removeClass("active");
-                });
-                $(this).addClass("active");
+            $(".tab-item").each(function () {
+                $(this).on('click', function () {
+                    $("#d1").load($(this).attr('id'));
+                    $(".active").each(function () {
+                        $(this).removeClass("active");
+                    });
+                    $(this).addClass("active");
                     $("#TeamList").addClass("active");
-            });
-        })
+                });
+            })
 
         });
-</script>
+    </script>
 
 }

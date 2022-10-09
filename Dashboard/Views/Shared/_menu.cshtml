@@ -76,6 +76,19 @@
                     </a>
                 </li>
             }
+              @if (viewList.Contains((int)DashboardViewEnum.Player))
+            {
+                <li id="PlayerList" class="@(active ==DashboardViewEnum.Player.ToString()?"active":"") nav-item">
+                    <a class="d-flex align-items-center"
+                   asp-action="Index" asp-area="TeamEntity"
+                   asp-controller="Player">
+                        <i data-feather='dribbble'></i>
+                        <span class="menu-title text-truncate">
+                            @Localizer.Get("Players")
+                        </span>
+                    </a>
+                </li>
+            }
              @if (viewList.Contains((int)DashboardViewEnum.Sponsor))
             {
                 <li id="SponsorList" class="@(active ==DashboardViewEnum.Sponsor.ToString()?"active":"") nav-item">
@@ -174,6 +187,29 @@
                             <li class="@(active == DashboardViewEnum.Country.ToString()?"active":"")">
                                 <a class="d-flex align-items-center" asp-controller="Country" asp-area="Location" asp-action="Index">
                                     <i data-feather='settings'></i><span class="menu-item text-truncate" data-i18n="Second Level">@Localizer.Get("Countries")</span>
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
+                </li>
+            }
+
+                        @if (viewList.Contains((int)DashboardViewEnum.PlayerPosition))
+            {
+                <li class=" nav-item">
+                    <a class="d-flex align-items-center" href="#">
+                        <i data-feather='award'></i><span class="menu-title text-truncate" data-i18n="Menu Levels">@Localizer.Get("Teams Data")</span>
+                    </a>
+                    <ul class="menu-content">
+
+                       
+
+                          @if (viewList.Contains((int)DashboardViewEnum.PlayerPosition))
+                        {
+                            <li class="@(active == DashboardViewEnum.PlayerPosition.ToString()?"active":"")">
+                                <a class="d-flex align-items-center" asp-controller="PlayerPosition" asp-area="TeamEntity" asp-action="Index">
+                                    <i data-feather='settings'></i><span class="menu-item text-truncate" data-i18n="Second Level">@Localizer.Get("PlayerPositions")</span>
                                 </a>
                             </li>
                         }

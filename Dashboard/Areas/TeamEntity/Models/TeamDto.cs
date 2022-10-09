@@ -18,6 +18,7 @@ namespace Dashboard.Areas.TeamEntity.Models
 
     public enum TeamProfileItems
     {
-        Details =1
+        Details =1,
+        Player = 2
     }
 }

@@ -39,6 +39,11 @@ namespace CoreServices.Logic
             return await PagedList<PrivateLeagueModel>.ToPagedList(GetPrivateLeagues(parameters), parameters.PageNumber, parameters.PageSize);
         }
 
+        public Dictionary<string,string> GetPrivateLeagueLookUp(PrivateLeagueParameters parameters)
+        {
+            return GetPrivateLeagues(parameters).ToDictionary(a => a.Id.ToString(), a => a.Name);
+        }
+
         public async Task<PrivateLeague> FindPrivateLeaguebyId(int id, bool trackChanges)
         {
             return await _repository.PrivateLeague.FindById(id, trackChanges);
@@ -86,7 +91,12 @@ namespace CoreServices.Logic
                                ImageUrl = a.Account.StorageUrl + a.Account.ImageUrl,
                                FirstName = a.Account.FirstName,
                                LastName = a.Account.LastName,
-                           }
+                           },
+                           PrivateLeague =new PrivateLeagueModel
+                           {
+                               Name = a.PrivateLeague.Name
+                           },
+                           
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

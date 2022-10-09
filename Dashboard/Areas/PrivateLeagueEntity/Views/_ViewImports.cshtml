@@ -1,0 +1,19 @@
+﻿@using Dashboard;
+@using Contracts;
+@using Microsoft.AspNetCore.Http;
+@using System.Globalization;
+@using Contracts.Constants;
+@using Entities.Constants;
+@using Dashboard.Areas.PrivateLeagueEntity.Models;
+@using Dashboard.Areas.Dashboard.Models;
+@using Entities.DBModels.PrivateLeagueModels;
+@using Entities.CoreServicesModels.PrivateLeagueModels;
+@using static Contracts.EnumData.DashboardModelsEnum;
+@using static Contracts.EnumData.DBModelsEnum;
+@using Entities.CoreServicesModels.DashboardAdministrationModels;
+
+
+@inject IHttpContextAccessor ContextAccessor
+@inject ILocalizationManager Localizer
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

@@ -1,0 +1,116 @@
+﻿@model PlayerDto
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var playerPrice = new PlayerPriceDto();
+    ViewBag.emptyLayout = true;
+}
+
+<div class="card">
+    <div class="card-body">
+      
+        <div class="row">
+
+            <div class="col-xl-6 col-12">
+                <dl class="row mb-0">
+
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.ShortName):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.ShortName</dd>
+
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.Age):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.Age</dd>
+
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.BuyPrice):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.BuyPrice</dd>
+
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.PlayerPosition):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.PlayerPosition.Name</dd>
+
+
+                </dl>
+            </div>
+            <div class="col-xl-6 col-12">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model._365_PlayerId):</dt>
+                    <dd class="col-sm-8 mb-1">@Model._365_PlayerId</dd>
+
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.PlayerNumber):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.PlayerNumber</dd>
+
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.SellPrice):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.SellPrice</dd>
+
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.Team):</dt>
+                    <dd class="col-sm-8 mb-1">
+                        <a href="/TeamEntity/Team/Profile/@Model.Fk_Team" target="_blank">@Model.Team.Name</a>
+                    </dd>
+
+
+
+                   
+                </dl>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+                <span class="badge bg-light-primary">@Html.DisplayNameFor(model => Model.PlayerPrices)</span>
+            </div>
+            <br />
+
+            @if (Model.PlayerPrices != null && Model.PlayerPrices.Any())
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                         <th>@Html.DisplayNameFor(model => playerPrice.Team)</th>
+                            <th>@Html.DisplayNameFor(model => playerPrice.BuyPrice)</th>
+                            <th>@Html.DisplayNameFor(model => playerPrice.SellPrice)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.PlayerPrices)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="/TeamEntity/Team/Profile/@item.Fk_Team" target="_blank">@item.Team.Name</a>
+                                </td>
+                                <td>@item.BuyPrice</td>
+                                <td>@item.SellPrice</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>@Localizer.Get("Not Found")</p>
+
+            }
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-xl-6 col-12">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.CreatedAt):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.CreatedAt</dd>
+
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.LastModifiedAt):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.LastModifiedAt</dd>
+
+
+                   
+                </dl>
+            </div>
+            <div class="col-xl-6 col-12">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.CreatedBy):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.CreatedBy</dd>
+
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.LastModifiedBy):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.LastModifiedBy</dd>
+                </dl>
+            </div>
+        </div>
+      
+    </div>
+</div>

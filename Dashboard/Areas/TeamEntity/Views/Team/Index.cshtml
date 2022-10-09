@@ -136,7 +136,7 @@
                                         + span
                                         + '</div></div>'
                                         + ' <div class= "d-flex flex-column">'
-                                        + '<a href="/AccountEntity/Account/Profile/' + row.id + '" class= "user_name text-truncate">'
+                                        + '<a href="/TeamEntity/Team/Profile/' + row.id + '" class= "user_name text-truncate">'
                                         + '<span class= "fw-bolder">' + data + '</span></a> '
                                         + '<small class= "emp_post text-muted" ></small ></div></div>';
                                 }
@@ -145,7 +145,7 @@
                                         + '<div class="avatar  bg-light-dark  me-1"><span class="avatar-content"></span>' + span + '</div>'
                                         + '</div>'
                                         + ' <div class= "d-flex flex-column">'
-                                        + '<a href="/AccountEntity/Account/Profile/' + row.id + '" class= "user_name text-truncate">'
+                                        + '<a href="/TeamEntity/Team/Profile/' + row.id + '" class= "user_name text-truncate">'
                                         + '<span class= "fw-bolder">' + data + '</span></a> '
                                         + '<small class= "emp_post text-muted" ></small ></div></div>';
                                 }
@@ -174,42 +174,9 @@
         };
 
 
-        function CheckDisplayType(forFilter) {
-            if ($("#ajax-datatable").css('display') != 'none') {
-              
-            }
-            else if ($("#ajax-charts").css('display') != 'none') {
-                LoadCharts();
-            }
-        }
 
         $(document).ready(function() {
             LoadTable();
-            CheckDisplayType();
-
-            $(".displayType").on('click', function() {
-                if ($("#ajax-datatable").css('display') != 'none') {
-                    $("#ajax-datatable").css('display', 'none');
-                    $("#ajax-charts").css('display', '');
-                }
-                else if ($("#ajax-charts").css('display') != 'none') {
-                    $("#ajax-charts").css('display', 'none');
-                    $("#ajax-datatable").css('display', '');
-                }
-                CheckDisplayType();
-            });
-
-                $('body').on('click', '#ExcelBtn', function () {
-                    $.ajax({
-                        url:'@Url.Action("ExportExcel")',
-                        type: "POST",
-                        data:  $('#FilterForm').serialize(),
-                        success: function (result) {
-                               window.open(result, '_blank');
-                            }
-                    });
-                });
-
 
         });
     </script>

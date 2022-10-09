@@ -95,7 +95,7 @@ namespace Dashboard.Areas.SponsorEntity.Controllers
                 model = _mapper.Map<SponsorCreateOrEditModel>(
                                                 await _unitOfWork.Sponsor.FindSponsorbyId(id, trackChanges: false));
 
-                model.SponsorViews = _unitOfWork.Sponsor.GetSponsorViews(new SponsorViewParameters
+                model.SponsorViews =_unitOfWork.Sponsor.GetSponsorViews(new SponsorViewParameters
                 {
                     Fk_Sponsor = id
                 }).ToList().Any() 

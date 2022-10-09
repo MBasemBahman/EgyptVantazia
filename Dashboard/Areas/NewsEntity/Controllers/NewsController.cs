@@ -101,10 +101,21 @@ namespace Dashboard.Areas.NewsEntity.Controllers
             {
                 model = _mapper.Map<NewsCreateOrEditModel>(
                                                 await _unitOfWork.News.FindNewsbyId(id, trackChanges: false));
+            
+              
+            }
+            if(model.Fk_GameWeak != null)
+            {
+                model.Fk_Season = _unitOfWork.Season.GetGameWeakbyId((int)model.Fk_GameWeak, otherLang: false).Fk_Season;
+            }
+            else
+            {
+                model.Fk_Season = _unitOfWork.Season.GetSeasons(new SeasonParameters(), otherLang: false).Any()
+                    ? _unitOfWork.Season.GetSeasons(new SeasonParameters(), otherLang: false).FirstOrDefault().Id
+                    : 0;
             }
 
-
-            SetViewData(IsProfile, id, otherLang);
+            SetViewData(IsProfile, id, otherLang,model.Fk_Season);
             return View(model);
         }
 
@@ -117,7 +128,7 @@ namespace Dashboard.Areas.NewsEntity.Controllers
 
             if (!ModelState.IsValid)
             {
-                SetViewData(IsProfile, id, otherLang);
+                SetViewData(IsProfile, id, otherLang,model.Fk_Season);
 
                 return View(model);
             }
@@ -162,7 +173,7 @@ namespace Dashboard.Areas.NewsEntity.Controllers
                 ViewData[ViewDataConstants.Error] = _logger.LogError(HttpContext.Request, ex).ErrorMessage;
             }
 
-            SetViewData(IsProfile, id, otherLang);
+            SetViewData(IsProfile, id, otherLang,model.Fk_Season);
 
             return View(model);
         }
@@ -186,11 +197,15 @@ namespace Dashboard.Areas.NewsEntity.Controllers
         }
 
         // helper methods
-        private void SetViewData(bool IsProfile, int id, bool otherLang)
+        private void SetViewData(bool IsProfile, int id, bool otherLang,int fk_Season)
         {
             ViewData["IsProfile"] = IsProfile;
             ViewData["id"] = id;
-            ViewData["GameWeak"] = _unitOfWork.Season.GetGameWeakLookUp(new GameWeakParameters(), otherLang);
+            ViewData["GameWeak"] = _unitOfWork.Season.GetGameWeakLookUp(new GameWeakParameters()
+            {
+                Fk_Season = fk_Season
+            }, otherLang);
+            ViewData["Season"] = _unitOfWork.Season.GetSeasonLookUp(new SeasonParameters(), otherLang);
             ViewData["NewsType"] = Enum.GetValues(typeof(NewsTypeEnum))
                .Cast<NewsTypeEnum>()
                .ToDictionary(a => ((int)a).ToString(), a => a.ToString());

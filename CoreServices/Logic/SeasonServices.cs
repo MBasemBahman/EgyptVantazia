@@ -35,6 +35,11 @@ namespace CoreServices.Logic
                        .Sort(parameters.OrderBy);
         }
 
+        public Dictionary<string,string> GetSeasonLookUp(SeasonParameters parameters, bool otherLang)
+        {
+            return GetSeasons(parameters, otherLang).OrderByDescending(a => a._365_SeasonId)
+                                                   .ToDictionary(a => a.Id.ToString(), a => a.Name);
+        }
 
         public async Task<PagedList<SeasonModel>> GetSeasonPaged(
                   SeasonParameters parameters,
@@ -119,7 +124,8 @@ namespace CoreServices.Logic
 
         public Dictionary<string,string> GetGameWeakLookUp(GameWeakParameters parameters,bool otherLang)
         {
-            return GetGameWeaks(parameters, otherLang).ToDictionary(a => a.Id.ToString(), a => a.Name);
+            return GetGameWeaks(parameters, otherLang)
+                .OrderByDescending(a => a._365_GameWeakId).ToDictionary(a => a.Id.ToString(), a => a.Name);
         }
         public void CreateGameWeak(GameWeak GameWeak)
         {

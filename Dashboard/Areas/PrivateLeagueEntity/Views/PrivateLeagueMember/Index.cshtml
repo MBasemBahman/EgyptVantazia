@@ -1,0 +1,186 @@
+﻿@model PrivateLeagueMemberFilter
+@{
+    ViewData["Title"] = Localizer.Get("PrivateLeagueMembers");
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.useDatatable = true;
+    ViewBag.useModels = true;
+    ViewBag.useForm = true;
+    ViewBag.useDatePicker = true;
+    ViewBag.useCharts = true;
+
+
+    var accessLevel = (DashboardAccessLevelModel)ViewData[ViewDataConstants.AccessLevel];
+
+    var row = new PrivateLeagueMemberDto();
+}
+
+<!-- BEGIN: Content-->
+<div class="app-content content ">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row">
+            <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                    <div class="col-6">
+                        <h2 class="content-header-title float-start mb-0">@ViewData["Title"]</h2>
+                        <div class="breadcrumb-wrapper">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="#">@Localizer.Get("Dashboard")</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    @ViewData["Title"]
+                                </li>
+
+                            </ol>
+
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="content-body">
+            <section id="ajax-datatable">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header border-bottom">
+                                <h4 class="card-title"> @ViewData["Title"]</h4>
+
+                            </div>
+                            <p class="m-2 demo-inline-spacing">
+                                <a class="btn btn-primary me-1" data-bs-toggle="collapse" href="#AdvancedFilter" role="button" aria-expanded="false" aria-controls="AdvancedFilter">
+                                    <i data-feather='filter'></i>
+                                    @Localizer.Get("Advanced Search")
+                                </a>
+
+                            </p>
+                            @{
+                                await Html.RenderPartialAsync("../PrivateLeagueMember/Filter", Model, ViewData);
+                            }
+
+                            <div class="card-datatable">
+                                <table class="datatables datatables-ajax table table-responsive table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                @Html.DisplayNameFor(model => row.Id)
+
+                                             
+                                            </th>
+                                            <th>@Html.DisplayNameFor(model => row.Account)</th>
+                                            <th>@Html.DisplayNameFor(model => row.PrivateLeague)</th>
+                                            <th>@Html.DisplayNameFor(model => row.IsAdmin)</th>
+                                            <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => row.Id)
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+</div>
+<!-- END: Content-->
+@section scripts{
+    <script src="~/apis/charts.js"></script>
+    <script>
+        
+        function LoadTable() {
+            var dt_ajax_table = $('.datatables');
+            if (dt_ajax_table.length) {
+                var dt_ajax = dt_ajax_table.dataTable({
+                    // Ajax Filter
+                    ajax: {
+                        url: '@Url.Action("LoadTable")',
+                        type: "POST",
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: function(data) {
+                          data.Fk_PrivateLeague=$("#Fk_PrivateLeague").length > 0 ?$("#Fk_PrivateLeague").val() : @Model.Fk_PrivateLeague
+                            return JSON.stringify(data);
+                        }
+                    },
+                    // Columns Setups
+                    columns: [
+                        { data: "id" },
+                        {
+                            data: "account",
+                            render: function(data, type, row) {
+                                var span = '';
+                                
+                                if (data.imageUrl != null) {
+
+                                    return '<div class="d-flex justify-content-left align-items-center"><div class= "avatar-wrapper" ><div class="avatar me-1">'
+                                        + '<img src="' + data.imageUrl + '"  height="32" width="32">'
+                                        + span
+                                        + '</div></div>'
+                                        + ' <div class= "d-flex flex-column">'
+                                        + '<a href="/AccountEntity/Account/Profile/' + row.fk_Account + '" target="_blank" class= "user_name text-truncate">'
+                                        + '<span class= "fw-bolder">' + data.fullName + '</span></a> '
+                                        + '<small class= "emp_post text-muted" ></small ></div></div>';
+                                }
+                                else {
+                                    return '<div class="d-flex justify-content-left align-items-center"><div class= "avatar-wrapper" >'
+                                        + '<div class="avatar  bg-light-dark  me-1"><span class="avatar-content"></span>' + span + '</div>'
+                                        + '</div>'
+                                        + ' <div class= "d-flex flex-column">'
+                                        + '<a href="/AccountEntity/Account/Profile/' + row.fk_Account + '" target="_blank" class= "user_name text-truncate">'
+                                        + '<span class= "fw-bolder">' + data.fullName + '</span></a> '
+                                        + '<small class= "emp_post text-muted" ></small ></div></div>';
+                                }
+
+
+                            }
+                        },
+                        { data: "privateLeague.name" },
+                        {
+                            data: "isAdmin",
+                            render: function (data, type, row) {
+                                if (data == true) {
+                                    return '<input type="checkbox"  class="form-check-input" checked disabled>';
+                                }
+                                else {
+                                    return '<input type="checkbox"  class="form-check-input" disabled >';
+
+                                }
+                            }
+                        },
+                        { data: "createdAt" },
+                        { data: "id" },
+                    ]
+                });
+                 $("button[type=reset]").on("click", function() {
+                $(".dt-date").each(function() {
+                    $(this).val('');
+                })
+            });
+
+            $('body').on('submit', '.filter', function() {
+                event.preventDefault();
+                  dt_ajax_table.DataTable().draw();
+            });
+
+
+            }
+        };
+
+        $(document).ready(function() {
+            LoadTable();
+
+        });
+    </script>
+}

@@ -25,6 +25,17 @@ namespace Entities.CoreServicesModels.PrivateLeagueModels
         public int MemberCount { get; set; }
     }
 
+    public class PrivateLeagueCreateOrEditModel
+    {
+        [DisplayName($"{nameof(Name)}{PropertyAttributeConstants.ArLang}")]
+        [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
+        public string Name { get; set; }
+
+        [DisplayName(nameof(UniqueCode))]
+        [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
+        public string UniqueCode { get; set; }
+    }
+
     public class PrivateLeagueCreateModel
     {
         [DisplayName(nameof(Name))]

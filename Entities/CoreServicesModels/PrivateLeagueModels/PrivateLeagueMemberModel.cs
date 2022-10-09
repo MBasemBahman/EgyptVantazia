@@ -20,6 +20,9 @@ namespace Entities.CoreServicesModels.PrivateLeagueModels
         [DisplayName(nameof(Account))]
         public AccountModel Account { get; set; }
 
+        [DisplayName(nameof(PrivateLeague))]
+        public PrivateLeagueModel PrivateLeague { get; set; }
+
         public int Fk_PrivateLeague { get; set; }
 
         [DisplayName(nameof(IsAdmin))]

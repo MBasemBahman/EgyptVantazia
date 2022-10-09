@@ -67,6 +67,9 @@ namespace Entities.CoreServicesModels.NewsModels
         [DisplayName(nameof(GameWeak))]
         public int? Fk_GameWeak { get; set; }
 
+        [DisplayName(nameof(Season))]
+        public int Fk_Season { get; set; }
+
         public NewsLangModel NewsLang { get; set; }
 
         [DisplayName(nameof(ImageUrl))]

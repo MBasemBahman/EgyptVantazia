@@ -3,7 +3,7 @@
     [Index(nameof(UniqueCode), IsUnique = true)]
     public class PrivateLeague : AuditEntity
     {
-        [DisplayName($"{nameof(Name)}{PropertyAttributeConstants.ArLang}")]
+        [DisplayName($"{nameof(Name)}")]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
 

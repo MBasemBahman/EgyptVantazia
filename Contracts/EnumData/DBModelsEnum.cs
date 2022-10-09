@@ -32,7 +32,12 @@
             Team =  14,
             News = 15,
             NewsAttachment = 16,
-            Sponsor = 17
+            Sponsor = 17,
+            PlayerPosition = 18,
+            Player =  19,
+            PrivateLeague = 20,
+            PrivateLeagueMember = 21,
+            ScoreType = 22
         }
     }
 }

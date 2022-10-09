@@ -79,6 +79,11 @@ namespace CoreServices.Logic
             FileUploader uploader = new(rootPath);
             uploader.DeleteFile(filePath);
         }
+
+        public Dictionary<string, string> GetTeamLookUp(TeamParameters parameters, bool otherLang)
+        {
+            return GetTeams(parameters, otherLang).ToDictionary(a => a.Id.ToString(), a => a.Name);
+        }
         #endregion
 
         #region Player Position Services
@@ -131,9 +136,19 @@ namespace CoreServices.Logic
             return GetPlayerPositions(new PlayerPositionParameters { Id = id }, otherLang).SingleOrDefault();
         }
 
+        public Dictionary<string,string> GetPlayerPositionLookUp(PlayerPositionParameters parameters,bool otherLang)
+        {
+            return GetPlayerPositions(parameters, otherLang).ToDictionary(a => a.Id.ToString(), a => a.Name);
+        }
         public int GetPlayerPositionCount()
         {
             return _repository.PlayerPosition.Count();
+        }
+
+        public async Task<string> UploudPlayerPositionImage(string rootPath, IFormFile file)
+        {
+            FileUploader uploader = new(rootPath);
+            return await uploader.UploudFile(file, "Uploud/PlayerPosition");
         }
         #endregion
 
@@ -196,7 +211,11 @@ namespace CoreServices.Logic
             Player Player = await FindPlayerbyId(id, trackChanges: true);
             _repository.Player.Delete(Player);
         }
-
+        public async Task<string> UploudPlayerImage(string rootPath, IFormFile file)
+        {
+            FileUploader uploader = new(rootPath);
+            return await uploader.UploudFile(file, "Uploud/Player");
+        }
         public PlayerModel GetPlayerbyId(int id, bool otherLang)
         {
             return GetPlayers(new PlayerParameters { Id = id }, otherLang).SingleOrDefault();
@@ -272,6 +291,65 @@ namespace CoreServices.Logic
         public int GetPlayerPriceCount()
         {
             return _repository.PlayerPrice.Count();
+        }
+
+
+        public Player AddPlayerPrices(Player player, List<PlayerPriceCreateOrEditModel> prices)
+        {
+
+            if (prices != null && prices.Any())
+            {
+                foreach (var price in prices)
+                {
+                    CreatePlayerPrice(new PlayerPrice
+                    {
+                        Fk_Player = player.Id,
+                        Fk_Team = player.Fk_Team,
+                        BuyPrice = price.BuyPrice,
+                        SellPrice = price.SellPrice
+                    });
+                }
+            }
+            return player;
+        }
+
+        public async Task<Player> DeletePlayerPrices(Player player, List<int> pricesIds)
+        {
+            if (pricesIds != null && pricesIds.Any())
+            {
+                foreach (int id in pricesIds)
+                {
+                  await DeletePlayerPrice(id);
+                }
+            }
+
+            return player;
+        }
+
+        public async Task<Player> UpdatePlayerPrices(Player player, List<PlayerPriceCreateOrEditModel> newData)
+        {
+            List<int> oldData = GetPlayerPrices(new PlayerPriceParameters { Fk_Player = player.Id},otherLang:false).Select(a => a.Id).ToList();
+
+            List<int> AddData = newData.Select(a => a.Id).ToList().Except(oldData).ToList();
+
+            List<int> RmvData = oldData.Except(newData.Select(a => a.Id).ToList()).ToList();
+
+            List<PlayerPriceCreateOrEditModel> DataToUpdate = newData.Where(a => oldData.Contains(a.Id)).ToList();
+
+            player = AddPlayerPrices(player, newData.Where(a => AddData.Contains(a.Id)).ToList());
+
+            player = await DeletePlayerPrices(player, RmvData);
+
+            if (DataToUpdate != null && DataToUpdate.Any())
+            {
+                foreach (var data in DataToUpdate)
+                {
+                    PlayerPrice dataDb = await FindPlayerPricebyId(data.Id, trackChanges: true);
+                    dataDb.SellPrice = data.SellPrice;
+                    dataDb.BuyPrice = data.BuyPrice;
+                }
+            }
+            return player;
         }
         #endregion
     }

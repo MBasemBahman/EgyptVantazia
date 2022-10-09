@@ -1,0 +1,315 @@
+﻿@model PlayerCreateOrEditModel
+@{
+    ViewData["Title"] = $"{Localizer.Get("CreateOrEdit")} {Localizer.Get("Player")}";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.useForm = true;
+    ViewBag.useImageUploud = true;
+    ViewBag.userFormRepeater = true;
+    int returnPage = ViewData["returnPage"] != null ? (int)ViewData["returnPage"] : (int)PlayerReturnPage.Index;
+    int id = ViewData["id"] != null ? (int)ViewData["id"] : 0;
+
+}
+
+<!-- BEGIN: Content-->
+<div class="app-content content ">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row">
+            <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h2 class="content-header-title float-start mb-0">@ViewData["Title"]</h2>
+                        <div class="breadcrumb-wrapper">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    @if (returnPage == (int)PlayerReturnPage.PlayerProfile)
+                                    {
+                                        <a href="/TeamEntity/Player/Profile/@id">@Localizer.Get("Player Profile")</a>
+                                    }
+                                    else if (returnPage == (int)PlayerReturnPage.TeamProfile)
+                                    {
+                                        <a href="/TeamEntity/Team/Profile/@Model.Fk_Team">@Localizer.Get("Team Profile")</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="/TeamEntity/Player/Index">@Localizer.Get("Players")</a>
+                                    }
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    @ViewData["Title"]
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-body">
+            <section id="multiple-column-form">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form class="form" asp-action="CreateOrEdit" enctype="multipart/form-data">
+                                    <input type="hidden" asp-for="@returnPage" />
+                                    <div asp-validation-summary="All" class="text-danger">@ViewData["Error"]</div>
+                                    <div class="d-flex">
+                                        <a href="#" class="me-25">
+                                            <img src="@($"{Model.StorageUrl}{Model.ImageUrl}")" class="uploadedAvatar account-upload-img rounded me-50" height="100" width="100">
+                                        </a>
+                                        <!-- upload and reset button -->
+                                        <div class="d-flex align-items-end mt-75 ms-1">
+                                            <div>
+                                                <label for="account-upload" class="btn btn-sm btn-primary mb-75 me-75 waves-effect waves-float waves-light">@Localizer.Get("Upload Image")</label>
+                                                <input type="file" id="account-upload" class="account-upload" hidden="" name="ImageFile" accept="image/*">
+                                                <button type="button" class="account-reset btn btn-sm btn-outline-secondary mb-75 waves-effect">@Localizer.Get("Reset")</button>
+                                            </div>
+                                        </div>
+                                        <!--/ upload and reset button -->
+                                    </div>
+                                    <br />
+
+                                    <div class="row mb-1">
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Name" class="form-label"></label>
+                                                <input asp-for="Name" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Name{PropertyAttributeConstants.ArLang}"))" />
+                                                <span asp-validation-for="Name" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="PlayerLang.Name" class="form-label"></label>
+                                                <input asp-for="PlayerLang.Name" class="form-control" placeholder="@Localizer.Get("Enter")  @(Localizer.Get($"Name{PropertyAttributeConstants.EnLang}"))" />
+                                                <span asp-validation-for="PlayerLang.Name" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="ShortName" class="form-label"></label>
+                                                <input asp-for="ShortName" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"ShortName{PropertyAttributeConstants.ArLang}"))" />
+                                                <span asp-validation-for="ShortName" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="PlayerLang.ShortName" class="form-label"></label>
+                                                <input asp-for="PlayerLang.ShortName" class="form-control" placeholder="@Localizer.Get("Enter")  @(Localizer.Get($"ShortName{PropertyAttributeConstants.EnLang}"))" />
+                                                <span asp-validation-for="PlayerLang.ShortName" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="_365_PlayerId" class="form-label"></label>
+                                                <input asp-for="_365_PlayerId" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"_365_PlayerId"))" />
+                                                <span asp-validation-for="_365_PlayerId" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Age" class="form-label"></label>
+                                                <input asp-for="Age" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Age"))" />
+                                                <span asp-validation-for="Age" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="PlayerNumber" class="form-label"></label>
+                                                <input asp-for="PlayerNumber" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"PlayerNumber"))" />
+                                                <span asp-validation-for="PlayerNumber" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Fk_PlayerPosition" class="form-label"></label>
+                                                <select asp-for="Fk_PlayerPosition" class="select2 form-select" asp-items="@(new SelectList(ViewData["PlayerPosition"] as Dictionary<string,string>,"Key","Value"))">
+                                                </select>
+                                                <span asp-validation-for="Fk_PlayerPosition" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        @if (returnPage == (int)PlayerReturnPage.TeamProfile)
+                                        {
+                                            <input type="hidden" asp-for="Fk_Team">
+                                        }
+                                        else
+                                        {
+
+                                            <div class="col-md-6 col-12">
+                                                <div class="mb-1">
+                                                    <label asp-for="Fk_Team" class="form-label"></label>
+                                                    <select asp-for="Fk_Team" class="select2 form-select" asp-items="@(new SelectList(ViewData["Team"] as Dictionary<string,string>,"Key","Value"))">
+                                                    </select>
+                                                    <span asp-validation-for="Fk_Team" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+
+                                    <div class="row">
+                                        <h3 class="mt-3">@Html.DisplayNameFor(model => model.PlayerPrices)</h3>
+                                        <hr />
+                                        <div class="invoice-repeater">
+                                            <div data-repeater-list="PlayerPrices" class="mb-2">
+                                                @if (Model.PlayerPrices != null && Model.PlayerPrices.Any())
+                                                {
+                                                    @for (int i = 0; i < Model.PlayerPrices.Count; i++)
+                                                    {
+                                                        <div data-repeater-item class="data-repeater mb-2">
+                                                            <div class="row d-flex align-items-end">
+                                                                <input type="hidden" asp-for="PlayerPrices[i].Id" class="price-id">
+
+                                                                <div class="col-md-3 col-12">
+                                                                    <div class="mb-1">
+                                                                        <label class="form-label">@Localizer.Get("Team")</label>
+                                                                        <select disabled asp-for="PlayerPrices[i].Fk_Team" class="select2 form-select player-price-team" asp-items="@(new SelectList(ViewData["Team"] as Dictionary<string,string>,"Key","Value"))">
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-3 col-12">
+                                                                    <div class="mb-1">
+                                                                        <label class="form-label">@Localizer.Get("BuyPrice")</label>
+                                                                        <input asp-for="PlayerPrices[i].BuyPrice" class="form-control" placeholder="@Localizer.Get("Enter") @Localizer.Get("BuyPrice")">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-3 col-12">
+                                                                    <div class="mb-1">
+                                                                        <label class="form-label">@Localizer.Get("SellPrice")</label>
+                                                                        <input asp-for="PlayerPrices[i].SellPrice" class="form-control" placeholder="@Localizer.Get("Enter") @Localizer.Get("SellPrice")">
+                                                                    </div>
+                                                                </div>
+
+
+
+                                                                <div class="col-md-1 col-12 mb-50">
+                                                                    <div class="mb-1">
+                                                                        <button class="remove-btn  btn btn-outline-danger text-nowrap px-1" data-repeater-delete
+                                                                        type="button">
+                                                                            <i data-feather="x" class="me-25"></i>
+                                                                            <span>@Localizer.Get("Remove")</span>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
+                                                else
+                                                {
+
+                                                    <div data-repeater-item class="data-repeater mb-2">
+                                                        <div class="row d-flex align-items-end">
+                                                            <input type="hidden" name=".Id" class="price-id">
+
+                                                            <div class="col-md-3 col-12">
+                                                                <div class="mb-1">
+                                                                    <label class="form-label">@Localizer.Get("Team")</label>
+                                                                    <select disabled name=".Fk_Team" class="select2 form-select player-price-team" asp-items="@(new SelectList(ViewData["Team"] as Dictionary<string,string>,"Key","Value"))">
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3 col-12">
+                                                                <div class="mb-1">
+                                                                    <label class="form-label">@Localizer.Get("BuyPrice")</label>
+                                                                    <input name=".BuyPrice" class="form-control" placeholder="@Localizer.Get("Enter") @Localizer.Get("BuyPrice")">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3 col-12">
+                                                                <div class="mb-1">
+                                                                    <label class="form-label">@Localizer.Get("SellPrice")</label>
+                                                                    <input name=".SellPrice" class="form-control" placeholder="@Localizer.Get("Enter") @Localizer.Get("SellPrice")">
+                                                                </div>
+                                                            </div>
+
+
+
+                                                            <div class="col-md-1 col-12 mb-50">
+                                                                <div class="mb-1">
+                                                                    <button class="remove-btn  btn btn-outline-danger text-nowrap px-1" data-repeater-delete newRepeater
+                                                                        type="button">
+                                                                        <i data-feather="x" class="me-25"></i>
+                                                                        <span>@Localizer.Get("Remove")</span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                }
+                                            </div>
+
+
+                                            <div class="row mb-3">
+                                                <div class="col-12">
+                                                    <hr />
+
+                                                    <button id="add-new-btn-price" class="btn btn-icon btn-success" type="button" data-repeater-create>
+                                                        <i data-feather="plus" class="me-25"></i>
+                                                        <span>@Localizer.Get("Add Prices")</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary me-1">@Localizer.Get("Submit")</button>
+                                            <button type="reset" class="btn btn-outline-secondary me-1">@Localizer.Get("Reset")</button>
+                                            @if (returnPage == (int)PlayerReturnPage.PlayerProfile)
+                                            {
+                                                <a asp-action="Profile" asp-route-id="@id" class="btn btn-warning"> @Localizer.Get("Back") </a>
+                                            }
+                                            else if (returnPage == (int)PlayerReturnPage.TeamProfile)
+                                            {
+                                                <a asp-action="Profile" asp-controller="Team" asp-route-id="@Model.Fk_Team" asp-route-returnItem="@((int)TeamProfileItems.Player)" class="btn btn-warning"> @Localizer.Get("Back") </a>
+                                            }
+                                            else
+                                            {
+                                                <a asp-action="Index" class="btn btn-warning"> @Localizer.Get("Back") </a>
+                                            }
+
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+</div>
+
+@section scripts{
+    <script>
+
+        function resetPriceId() {
+            $(".price-id").last().val('0');
+        }
+
+        $(document).ready(function () {
+            $('button[data-repeater-delete][newRepeater]').each(function () {
+                $(this).click();
+            });
+
+            $("#add-new-btn-price").on('click', function () {
+                setTimeout(resetPriceId, 500)
+                $(".player-price-team").last().val($("#Fk_Team").val());
+
+            });
+        });
+
+    </script>
+}

@@ -118,6 +118,22 @@
                                             </div>
                                         </div>
 
+                                            <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Fk_Season" class="form-label"></label>
+                                                <select asp-for="Fk_Season" class="select2 form-select" asp-items="@(new SelectList(ViewData["Season"] as Dictionary<string,string>,"Key","Value"))">
+                                                </select>
+                                            </div>
+                                        </div>
+                                            <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Fk_GameWeak" class="form-label"></label>
+                                                <select asp-for="Fk_GameWeak" class="select2 form-select" asp-items="@(new SelectList(ViewData["GameWeak"] as Dictionary<string,string>,"Key","Value"))">
+                                               <option value="0">@Localizer.Get("Not Specific")</option>
+                                                </select>
+                                                <span asp-validation-for="Fk_GameWeak" class="text-danger"></span>
+                                            </div>
+                                        </div>
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="NewsTypeEnum" class="form-label"></label>
@@ -128,15 +144,7 @@
                                         </div>
 
 
-                                        <div class="col-md-6 col-12">
-                                            <div class="mb-1">
-                                                <label asp-for="Fk_GameWeak" class="form-label"></label>
-                                                <select asp-for="Fk_GameWeak" class="select2 form-select" asp-items="@(new SelectList(ViewData["GameWeak"] as Dictionary<string,string>,"Key","Value"))">
-                                               <option value="0">@Localizer.Get("Not Specific")</option>
-                                                </select>
-                                                <span asp-validation-for="Fk_GameWeak" class="text-danger"></span>
-                                            </div>
-                                        </div>
+                                    
 
                                     </div>
 
@@ -170,3 +178,16 @@
     </div>
 </div>
 <!-- END: Content-->
+@section scripts
+    {
+    <script src="~/apis/site.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $("#Fk_Season").on("change", function () {
+                getGameWeak($("#Fk_GameWeak"), $(this).val(),false);
+            });
+        });
+    </script>
+}
+

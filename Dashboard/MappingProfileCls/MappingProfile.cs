@@ -217,6 +217,49 @@ namespace Dashboard.MappingProfileCls
 
             #endregion
 
+            #region Player Position
+            _ = CreateMap<PlayerPosition, PlayerPositionCreateOrEditModel>();
+
+            _ = CreateMap<PlayerPositionCreateOrEditModel, PlayerPosition>()
+                .ForMember(dest => dest.ImageUrl, opt => opt.Ignore())
+                .ForMember(dest => dest.StorageUrl, opt => opt.Ignore());
+
+            _ = CreateMap<PlayerPositionModel, PlayerPositionDto>();
+
+            _ = CreateMap<PlayerPositionFilter, PlayerPositionParameters>();
+
+            _ = CreateMap<PlayerPositionLangModel, PlayerPositionLang>();
+
+            _ = CreateMap<PlayerPositionLang, PlayerPositionLangModel>();
+
+            #endregion
+
+
+            #region Player
+            _ = CreateMap<Player, PlayerCreateOrEditModel>()
+                .ForMember(dest => dest.PlayerPrices,opt => opt.Ignore());
+
+            _ = CreateMap<PlayerCreateOrEditModel, Player>()
+                .ForMember(dest => dest.PlayerPrices, opt => opt.Ignore())
+                .ForMember(dest => dest.ImageUrl, opt => opt.Ignore())
+                .ForMember(dest => dest.StorageUrl, opt => opt.Ignore());
+
+            _ = CreateMap<PlayerModel, PlayerDto>();
+
+            _ = CreateMap<PlayerFilter, PlayerParameters>();
+
+            _ = CreateMap<PlayerLangModel, PlayerLang>();
+
+            _ = CreateMap<PlayerLang, PlayerLangModel>();
+
+            #endregion
+
+            #region Player Price
+            CreateMap<PlayerPriceModel, PlayerPriceDto>();
+            CreateMap<PlayerPriceModel, PlayerPriceCreateOrEditModel>();
+            #endregion
+
+
             #endregion
 
             #region News Models

@@ -32,4 +32,18 @@ namespace Entities.CoreServicesModels.TeamModels
         [DisplayName(nameof(SellPrice))]
         public double SellPrice { get; set; }
     }
+
+    public class PlayerPriceCreateOrEditModel
+    {
+        [DisplayName(nameof(BuyPrice))]
+        public double BuyPrice { get; set; }
+
+        [DisplayName(nameof(SellPrice))]
+        public double SellPrice { get; set; }
+
+        public int Id { get; set; }
+
+        [DisplayName(nameof(Team))]
+        public int Fk_Team { get; set; }
+    }
 }

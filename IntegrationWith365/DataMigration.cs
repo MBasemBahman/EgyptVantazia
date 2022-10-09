@@ -252,7 +252,9 @@ namespace IntegrationWith365
 
                 if (gamesReturn.Games != null && gamesReturn.Games.Any())
                 {
-                    _365_AfterGameStartId = gamesReturn.Paging.NextAfterGame;
+                    //_365_AfterGameStartId = gamesReturn.Paging.NextAfterGame;
+                    //_365_AfterGameStartId = gamesReturn.Games.OrderBy(a => a.Id).Select(a => a.Id).First();
+                    //_365_AfterGameStartId = gamesReturn.Games.OrderByDescending(a => a.Id).Select(a => a.Id).First();
                     games.AddRange(gamesReturn.Games);
                 }
                 else

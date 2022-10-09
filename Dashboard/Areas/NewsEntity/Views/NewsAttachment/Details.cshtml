@@ -1,0 +1,50 @@
+﻿@model List<NewsAttachmentDto>
+
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title mb-50">@Localizer.Get("NewsAttachments")</h4>
+    </div>
+    <div class="card-body">
+        <div class="added-cards">
+            @if (Model!=null&&Model.Any())
+            {
+                <div class="added-cards">
+
+                    @foreach (var attachment in Model)
+                    {
+                        <div class="cardMaster rounded border p-2 mb-1" id="@attachment.Id">
+                            <div class="d-flex justify-content-between flex-sm-row flex-column">
+                                <div class="card-information">
+                                    <div class="d-flex align-items-center mb-50">
+                                        <h6 class="mb-0">@attachment.FileName</h6>
+                                    </div>
+                                    <span class="card-number">@attachment.CreatedAt</span>
+                                </div>
+                                <div class="d-flex flex-column text-start text-lg-end">
+                                    <div class="d-flex order-sm-0 order-1 mt-1 mt-sm-0">
+                                        <a href="@attachment.FileUrl" download="@attachment.FileName" class="btn btn-outline-primary a-btn-slide-text me-75" target="_blank">
+                                            @Localizer.Get("Download")
+                                        </a>
+                                        <a id="/NewsEntity/NewsAttachment/Delete/@attachment.Id" href="#" class="btn btn-outline-danger a-btn-slide-text mr-1 deleteAttachmentBtn" target="_blank">
+                                            @Localizer.Get("Remove")
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     
+                    }
+
+                </div>
+            }
+
+            else
+            {
+                <p style="text-align:center">@Localizer.Get("Not Found")</p>
+
+            }
+        </div>
+    </div>
+</div>
+
+

@@ -2,18 +2,27 @@
 using Dashboard.Areas.AppInfoEntity.Models;
 using Dashboard.Areas.DashboardAdministration.Models;
 using Dashboard.Areas.Location.Models;
+using Dashboard.Areas.TeamEntity.Models;
 using Dashboard.Areas.LogEntity.Models;
 using Dashboard.Areas.UserEntity.Models;
+using Dashboard.Areas.NewsEntity.Models;
+using Dashboard.Areas.SponsorEntity.Models;
 using Entities.CoreServicesModels.AccountModels;
 using Entities.CoreServicesModels.AppInfoModels;
+using Entities.CoreServicesModels.SponsorModels;
+using Entities.CoreServicesModels.NewsModels;
 using Entities.CoreServicesModels.LocationModels;
+using Entities.CoreServicesModels.TeamModels;
 using Entities.CoreServicesModels.LogModels;
 using Entities.CoreServicesModels.UserModels;
 using Entities.DBModels.AccountModels;
 using Entities.DBModels.AppInfoModels;
+using Entities.DBModels.TeamModels;
+using Entities.DBModels.NewsModels;
 using Entities.DBModels.DashboardAdministrationModels;
 using Entities.DBModels.LocationModels;
 using Entities.DBModels.SharedModels;
+using Entities.DBModels.SponsorModels;
 using Entities.RequestFeatures;
 
 namespace Dashboard.MappingProfileCls
@@ -159,11 +168,15 @@ namespace Dashboard.MappingProfileCls
 
             _ = CreateMap<Country, CountryCreateOrEditModel>();
 
-            _ = CreateMap<CountryLang, CountryLangModel>();
+           
 
-            _ = CreateMap<CountryCreateOrEditModel, Country>();
+            _ = CreateMap<CountryCreateOrEditModel, Country>()
+                      .ForMember(dest => dest.ImageUrl, opt => opt.Ignore())
+                .ForMember(dest => dest.StorageUrl, opt => opt.Ignore());
 
             _ = CreateMap<CountryLangModel, CountryLang>();
+
+            _ = CreateMap<CountryLang, CountryLangModel>();
             #endregion
 
             #endregion
@@ -181,6 +194,77 @@ namespace Dashboard.MappingProfileCls
             _ = CreateMap<AppAboutCreateOrEditModel, AppAbout>();
 
             _ = CreateMap<AppAboutLangModel, AppAboutLang>();
+            #endregion
+
+            #endregion
+
+            #region Team Models
+
+            #region Team
+            _ = CreateMap<Team, TeamCreateOrEditModel>();
+
+            _ = CreateMap<TeamCreateOrEditModel, Team>()
+                .ForMember(dest => dest.ImageUrl,opt => opt.Ignore())
+                .ForMember(dest => dest.StorageUrl,opt => opt.Ignore());
+
+            _ = CreateMap<TeamModel, TeamDto>();
+
+            _ = CreateMap<TeamFilter, TeamParameters>();
+
+            _ = CreateMap<TeamLangModel, TeamLang>();
+
+            _ = CreateMap<TeamLang, TeamLangModel>();
+
+            #endregion
+
+            #endregion
+
+            #region News Models
+
+            #region News
+            _ = CreateMap<News, NewsCreateOrEditModel>();
+
+            _ = CreateMap<NewsCreateOrEditModel, News>()
+                .ForMember(dest => dest.ImageUrl, opt => opt.Ignore())
+                .ForMember(dest => dest.StorageUrl, opt => opt.Ignore());
+
+            _ = CreateMap<NewsModel, NewsDto>();
+
+            _ = CreateMap<NewsFilter, NewsParameters>();
+
+            _ = CreateMap<NewsLangModel, NewsLang>();
+
+            _ = CreateMap<NewsLang, NewsLangModel>();
+
+            #endregion
+
+            #region News Attachment
+            _ = CreateMap<NewsAttachmentModel, NewsAttachmentDto>();
+
+            _ = CreateMap<NewsAttachmentFilter, NewsAttachmentParameters>();
+            #endregion
+
+            #endregion
+
+            #region Sponsor Models
+
+            #region Sponsor
+            _ = CreateMap<Sponsor, SponsorCreateOrEditModel>()
+                .ForMember(a => a.SponsorViews,opt => opt.Ignore());
+
+            _ = CreateMap<SponsorCreateOrEditModel, Sponsor>()
+                .ForMember(dest => dest.SponsorViews, opt => opt.Ignore())
+                .ForMember(dest => dest.ImageUrl, opt => opt.Ignore())
+                .ForMember(dest => dest.StorageUrl, opt => opt.Ignore());
+
+            _ = CreateMap<SponsorModel, SponsorDto>();
+
+            _ = CreateMap<SponsorFilter, SponsorParameters>();
+
+            _ = CreateMap<SponsorLangModel, SponsorLang>();
+
+            _ = CreateMap<SponsorLang, SponsorLangModel>();
+
             #endregion
 
             #endregion

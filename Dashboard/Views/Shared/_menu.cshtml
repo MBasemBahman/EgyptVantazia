@@ -63,6 +63,45 @@
                     </a>
                 </li>
             }
+             @if (viewList.Contains((int)DashboardViewEnum.Team))
+            {
+                <li id="TeamList" class="@(active ==DashboardViewEnum.Team.ToString()?"active":"") nav-item">
+                    <a class="d-flex align-items-center"
+                   asp-action="Index" asp-area="TeamEntity"
+                   asp-controller="Team">
+                        <i data-feather='award'></i>
+                        <span class="menu-title text-truncate">
+                            @Localizer.Get("Teams")
+                        </span>
+                    </a>
+                </li>
+            }
+             @if (viewList.Contains((int)DashboardViewEnum.Sponsor))
+            {
+                <li id="SponsorList" class="@(active ==DashboardViewEnum.Sponsor.ToString()?"active":"") nav-item">
+                    <a class="d-flex align-items-center"
+                   asp-action="Index" asp-area="SponsorEntity"
+                   asp-controller="Sponsor">
+                        <i data-feather='star'></i>
+                        <span class="menu-title text-truncate">
+                            @Localizer.Get("Sponsors")
+                        </span>
+                    </a>
+                </li>
+            }
+              @if (viewList.Contains((int)DashboardViewEnum.News))
+            {
+                <li id="NewsList" class="@(active ==DashboardViewEnum.News.ToString()?"active":"") nav-item">
+                    <a class="d-flex align-items-center"
+                   asp-action="Index" asp-area="NewsEntity"
+                   asp-controller="News">
+                        <i data-feather='trending-up'></i>
+                        <span class="menu-title text-truncate">
+                            @Localizer.Get("News")
+                        </span>
+                    </a>
+                </li>
+            }
 
             @if (viewList.Contains((int)DashboardViewEnum.User))
             {

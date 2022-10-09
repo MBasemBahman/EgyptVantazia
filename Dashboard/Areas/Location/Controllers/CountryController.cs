@@ -12,15 +12,20 @@ namespace Dashboard.Areas.Location.Controllers
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
         private readonly UnitOfWork _unitOfWork;
+        private readonly LinkGenerator _linkGenerator;
+        private readonly IWebHostEnvironment _environment;
 
         public CountryController(ILoggerManager logger, IMapper mapper,
-                UnitOfWork unitOfWork)
+                UnitOfWork unitOfWork,
+                 LinkGenerator linkGenerator,
+                 IWebHostEnvironment environment)
         {
             _logger = logger;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _linkGenerator = linkGenerator;
+            _environment = environment;
         }
-
         public IActionResult Index(int id)
         {
             CountryFilter filter = new()
@@ -115,7 +120,13 @@ namespace Dashboard.Areas.Location.Controllers
 
                     _ = _mapper.Map(model, dataDb);
                 }
+                IFormFile imageFile = HttpContext.Request.Form.Files["ImageFile"];
 
+                if (imageFile != null)
+                {
+                    dataDb.ImageUrl = await _unitOfWork.Location.UploudCountryImage(_environment.WebRootPath, imageFile);
+                    dataDb.StorageUrl = _linkGenerator.GetUriByAction(HttpContext).GetBaseUri(HttpContext.Request.RouteValues["area"].ToString());
+                }
                 await _unitOfWork.Save();
 
                 return RedirectToAction(nameof(Index));

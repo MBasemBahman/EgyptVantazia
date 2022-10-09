@@ -1,0 +1,10 @@
+﻿@{
+    int Fk_News = (int)ViewData["Fk_News"];
+}
+<div class="card">
+    <div class="card-body">
+        <form asp-action="Uploud" asp-controller="NewsAttachment" asp-area="NewsEntity" asp-route-fk_News="@Fk_News" enctype="multipart/form-data" class="dropzone dropzone-area" id="dpz-multiple-files">
+            <div class="dz-message">@Localizer.Get("Drop files here or click to upload.")</div>
+        </form>
+    </div>
+</div>

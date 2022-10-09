@@ -123,9 +123,6 @@
   <data name="Actions" xml:space="preserve">
     <value>اجراءات</value>
   </data>
-  <data name="Add Files" xml:space="preserve">
-    <value>اضافة ملفات</value>
-  </data>
   <data name="AddNew" xml:space="preserve">
     <value>اضافة جديد</value>
   </data>
@@ -205,7 +202,7 @@
     <value>تعديل بيانات الحساب</value>
   </data>
   <data name="en" xml:space="preserve">
-    <value>en</value>
+    <value>ar</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>خطأ</value>
@@ -240,14 +237,8 @@
   <data name="Logout" xml:space="preserve">
     <value>تسجيل الخروج</value>
   </data>
-  <data name="Main" xml:space="preserve">
-    <value>رئيسي</value>
-  </data>
   <data name="Oops! The request have error." xml:space="preserve">
     <value>عفوا! الطلب به خطأ.</value>
-  </data>
-  <data name="Something Error" xml:space="preserve">
-    <value>خطأ في شيء ما</value>
   </data>
   <data name="March" xml:space="preserve">
     <value>مارس</value>
@@ -285,9 +276,6 @@
   <data name="Pdf" xml:space="preserve">
     <value>Pdf</value>
   </data>
-  <data name="Phone Duplicated" xml:space="preserve">
-    <value>رقم الهاتف مسجل من قبل</value>
-  </data>
   <data name="Preview" xml:space="preserve">
     <value>مشاهدة</value>
   </data>
@@ -297,35 +285,14 @@
   <data name="Profile" xml:space="preserve">
     <value>تفاصيل</value>
   </data>
-  <data name="Records" xml:space="preserve">
-    <value>سجل</value>
-  </data>
   <data name="Remove" xml:space="preserve">
     <value>حذف</value>
-  </data>
-  <data name="Reset" xml:space="preserve">
-    <value>إعادة تعيين</value>
-  </data>
-  <data name="Saturday" xml:space="preserve">
-    <value>السبت</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>بحث</value>
   </data>
   <data name="Select All" xml:space="preserve">
     <value>اختر الكل</value>
-  </data>
-  <data name="September" xml:space="preserve">
-    <value>سبتمبر</value>
-  </data>
-  <data name="Submit" xml:space="preserve">
-    <value>تسجيل</value>
-  </data>
-  <data name="Sunday" xml:space="preserve">
-    <value>الاحد</value>
-  </data>
-  <data name="Thursday" xml:space="preserve">
-    <value>الخميس</value>
   </data>
   <data name="Tuesday" xml:space="preserve">
     <value>الثلاثاء</value>
@@ -345,38 +312,8 @@
   <data name="_Details" xml:space="preserve">
     <value>تفاصيل</value>
   </data>
-  <data name="AccountType" xml:space="preserve">
-    <value>نوع الحساب</value>
-  </data>
   <data name="Advanced Settings" xml:space="preserve">
     <value>اعدادات متقدمة</value>
-  </data>
-  <data name="AndroidMinVersion" xml:space="preserve">
-    <value>اقل اصدار للاندرويد</value>
-  </data>
-  <data name="Answer" xml:space="preserve">
-    <value>الاجابة</value>
-  </data>
-  <data name="Answer Arabic" xml:space="preserve">
-    <value>الاجابة بالعربية</value>
-  </data>
-  <data name="Answer English" xml:space="preserve">
-    <value>الاجابة بالانجليزية</value>
-  </data>
-  <data name="AppSupport" xml:space="preserve">
-    <value>عن التطبيق</value>
-  </data>
-  <data name="AppIntro" xml:space="preserve">
-    <value>مقدمة التطبيق</value>
-  </data>
-  <data name="Content" xml:space="preserve">
-    <value>المحتوى</value>
-  </data>
-  <data name="Content Arabic" xml:space="preserve">
-    <value>المحتوى بالعربية</value>
-  </data>
-  <data name="Content English" xml:space="preserve">
-    <value>المحتوى بالانجليزية</value>
   </data>
   <data name="CreatedAt" xml:space="preserve">
     <value>تاريخ الانشاء</value>
@@ -387,23 +324,8 @@
   <data name="Delete" xml:space="preserve">
     <value>حذف</value>
   </data>
-  <data name="Description Arabic" xml:space="preserve">
-    <value>الوصف بالعربية</value>
-  </data>
-  <data name="Description English" xml:space="preserve">
-    <value>الوصف بالانجليزية</value>
-  </data>
   <data name="Email" xml:space="preserve">
     <value>البريد الالكتروني</value>
-  </data>
-  <data name="FaceBook" xml:space="preserve">
-    <value>رابط فيس بوك</value>
-  </data>
-  <data name="Instagram" xml:space="preserve">
-    <value>رابط انستغرام</value>
-  </data>
-  <data name="IOSMinVersion" xml:space="preserve">
-    <value>اقل اصدار للايفون</value>
   </data>
   <data name="LastModifiedAt" xml:space="preserve">
     <value>تاريخ اخر تعديل</value>
@@ -411,47 +333,8 @@
   <data name="LastModifiedBy" xml:space="preserve">
     <value>اخر تعديل بواسطة</value>
   </data>
-  <data name="Main Data" xml:space="preserve">
-    <value>البيانات الاساسية</value>
-  </data>
-  <data name="Phone" xml:space="preserve">
-    <value>رقم الهاتف</value>
-  </data>
-  <data name="Question" xml:space="preserve">
-    <value>السؤال</value>
-  </data>
-  <data name="Question Arabic" xml:space="preserve">
-    <value>السؤال بالعربية</value>
-  </data>
-  <data name="Question English" xml:space="preserve">
-    <value>السؤال بالانجليزية</value>
-  </data>
-  <data name="QuestionsAndAnswers" xml:space="preserve">
-    <value>أسئلة وأجوبة</value>
-  </data>
-  <data name="SupportUrl" xml:space="preserve">
-    <value>رابط الدعم</value>
-  </data>
-  <data name="TermsAndConditions" xml:space="preserve">
-    <value>الشروط والأحكام</value>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>العنوان</value>
-  </data>
-  <data name="Title Arabic" xml:space="preserve">
-    <value>العنوان بالعربية</value>
-  </data>
-  <data name="Title English" xml:space="preserve">
-    <value>العنوان بالانجليزية</value>
-  </data>
   <data name="WebSite" xml:space="preserve">
     <value>رابط الموقع الالكتروني</value>
-  </data>
-  <data name="WhatsApp" xml:space="preserve">
-    <value>واتساب</value>
-  </data>
-  <data name="Level" xml:space="preserve">
-    <value>Level</value>
   </data>
   <data name="Log" xml:space="preserve">
     <value>Log</value>
@@ -462,176 +345,32 @@
   <data name="Logs" xml:space="preserve">
     <value>Logs</value>
   </data>
-  <data name="StackTrace" xml:space="preserve">
-    <value>Stack Trace</value>
-  </data>
   <data name="{0} is required" xml:space="preserve">
     <value>{0} مطلوب</value>
   </data>
   <data name="{0} not valid" xml:space="preserve">
     <value>{0} غير صحيح</value>
   </data>
-  <data name="About" xml:space="preserve">
-    <value>عن</value>
-  </data>
-  <data name="Account" xml:space="preserve">
-    <value>الحساب</value>
-  </data>
-  <data name="Accounts" xml:space="preserve">
-    <value>الحسابات</value>
-  </data>
-  <data name="AccountsCount" xml:space="preserve">
-    <value>الحسابات</value>
-  </data>
-  <data name="AccountState" xml:space="preserve">
-    <value>حالة الحساب</value>
-  </data>
-  <data name="AccountStates" xml:space="preserve">
-    <value>حالات الحساب</value>
-  </data>
-  <data name="AccountTypes" xml:space="preserve">
-    <value>انواع الحساب</value>
-  </data>
-  <data name="AppVersion" xml:space="preserve">
-    <value>اصدار التطبيق</value>
-  </data>
-  <data name="BeneficiaryRequests" xml:space="preserve">
-    <value>طلبات المستفيدين</value>
-  </data>
-  <data name="BeneficiaryRequestsCount" xml:space="preserve">
-    <value>طلبات المستفيدين</value>
-  </data>
-  <data name="BIO" xml:space="preserve">
-    <value>السيرة الذاتية</value>
-  </data>
-  <data name="BirthDate" xml:space="preserve">
-    <value>تاريخ الميلاد</value>
-  </data>
-  <data name="Chats" xml:space="preserve">
-    <value>المحادثات</value>
-  </data>
   <data name="ColorCode" xml:space="preserve">
     <value>كود اللون</value>
-  </data>
-  <data name="ConnectionId" xml:space="preserve">
-    <value>Connection Id</value>
-  </data>
-  <data name="CreatedByIp" xml:space="preserve">
-    <value>Created By Ip</value>
-  </data>
-  <data name="Culture" xml:space="preserve">
-    <value>لغة التطبيق</value>
-  </data>
-  <data name="DeviceModel" xml:space="preserve">
-    <value>موديل الجهاز</value>
-  </data>
-  <data name="Devices" xml:space="preserve">
-    <value>الاجهزة</value>
-  </data>
-  <data name="DeviceType" xml:space="preserve">
-    <value>نوع الجهاز</value>
-  </data>
-  <data name="DeviceVersion" xml:space="preserve">
-    <value>اصدار الجهاز</value>
   </data>
   <data name="EmailAddress" xml:space="preserve">
     <value>البريد الالكتروني</value>
   </data>
-  <data name="Expires" xml:space="preserve">
-    <value>ينتهي في</value>
-  </data>
-  <data name="FirstName" xml:space="preserve">
-    <value>الاسم الاول</value>
-  </data>
   <data name="FullName" xml:space="preserve">
     <value>الاسم بالكامل</value>
-  </data>
-  <data name="Gender" xml:space="preserve">
-    <value>الجنس</value>
-  </data>
-  <data name="GroupsCount" xml:space="preserve">
-    <value>المجموعات</value>
   </data>
   <data name="IsActive" xml:space="preserve">
     <value>نشط؟</value>
   </data>
-  <data name="IsExpired" xml:space="preserve">
-    <value>منتهي الصلاحية؟</value>
-  </data>
-  <data name="IsOnline" xml:space="preserve">
-    <value>متصل؟</value>
-  </data>
-  <data name="IsRevoked" xml:space="preserve">
-    <value>Is Revoked?</value>
-  </data>
   <data name="LastName" xml:space="preserve">
     <value>الاسم الاخير</value>
-  </data>
-  <data name="Messages" xml:space="preserve">
-    <value>الرسائل</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>الاسم</value>
-  </data>
-  <data name="NationalID" xml:space="preserve">
-    <value>الرقم القومي</value>
-  </data>
-  <data name="NickName" xml:space="preserve">
-    <value>اسم الشهرة</value>
-  </data>
-  <data name="NotificationToken" xml:space="preserve">
-    <value>رمز الاشعار</value>
-  </data>
-  <data name="Offline" xml:space="preserve">
-    <value>غير متصل</value>
   </data>
   <data name="Online" xml:space="preserve">
     <value>متصل</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>كلمة المرور</value>
-  </data>
-  <data name="PhoneNumber" xml:space="preserve">
-    <value>رقم الهاتف</value>
-  </data>
-  <data name="PostCommentReactions" xml:space="preserve">
-    <value>التفاعل على التعليقات</value>
-  </data>
-  <data name="PostComments" xml:space="preserve">
-    <value>التعليقات</value>
-  </data>
-  <data name="PostReactions" xml:space="preserve">
-    <value>التفاعل على المنشورات</value>
-  </data>
-  <data name="Posts" xml:space="preserve">
-    <value>المنشورات</value>
-  </data>
-  <data name="PostsCount" xml:space="preserve">
-    <value>المنشورات</value>
-  </data>
-  <data name="ReasonRevoked" xml:space="preserve">
-    <value>Reason Revoked</value>
-  </data>
-  <data name="RefreshTokens" xml:space="preserve">
-    <value>Refresh Tokens</value>
-  </data>
-  <data name="ReplacedByToken" xml:space="preserve">
-    <value>Replaced By Token</value>
-  </data>
-  <data name="Revoked" xml:space="preserve">
-    <value>Revoked</value>
-  </data>
-  <data name="RevokedByIp" xml:space="preserve">
-    <value>Revoked By Ip</value>
-  </data>
-  <data name="ServiceProviderRequests" xml:space="preserve">
-    <value>طلبات التعاقد</value>
-  </data>
-  <data name="ServiceProviderRequestsCount" xml:space="preserve">
-    <value>طلبات التعاقد</value>
-  </data>
-  <data name="Token" xml:space="preserve">
-    <value>الرمز</value>
   </data>
   <data name="User" xml:space="preserve">
     <value>المستخدم</value>
@@ -641,51 +380,6 @@
   </data>
   <data name="Users" xml:space="preserve">
     <value>المستخدمين</value>
-  </data>
-  <data name="Verifications" xml:space="preserve">
-    <value>عمليات التحقق</value>
-  </data>
-  <data name="Account Data" xml:space="preserve">
-    <value>بيانات الحساب</value>
-  </data>
-  <data name="Name Arabic" xml:space="preserve">
-    <value>الاسم بالعربية</value>
-  </data>
-  <data name="Name English" xml:space="preserve">
-    <value>الاسم بالانجليزية</value>
-  </data>
-  <data name="Post Data" xml:space="preserve">
-    <value>بيانات المنشور</value>
-  </data>
-  <data name="PostState" xml:space="preserve">
-    <value>حالة المنشور</value>
-  </data>
-  <data name="PostStates" xml:space="preserve">
-    <value>حالات المنشور</value>
-  </data>
-  <data name="PostType" xml:space="preserve">
-    <value>نوع المنشور</value>
-  </data>
-  <data name="PostTypes" xml:space="preserve">
-    <value>انواع المنشور</value>
-  </data>
-  <data name="ReactionType" xml:space="preserve">
-    <value>نوع التفاعل</value>
-  </data>
-  <data name="ReactionTypes" xml:space="preserve">
-    <value>انواع التفاعل</value>
-  </data>
-  <data name="Account Profile" xml:space="preserve">
-    <value>ملف الحساب</value>
-  </data>
-  <data name="Add Post Attachments" xml:space="preserve">
-    <value>اضافة مرفقات المنشور</value>
-  </data>
-  <data name="Attachments" xml:space="preserve">
-    <value>المرفقات</value>
-  </data>
-  <data name="CommentText" xml:space="preserve">
-    <value>نص التعليق</value>
   </data>
   <data name="Drop files here or click to upload." xml:space="preserve">
     <value>قم بإسقاط الملفات هنا أو انقر للتحميل.</value>
@@ -702,299 +396,17 @@
   <data name="FileUrl" xml:space="preserve">
     <value>رابط الملف</value>
   </data>
-  <data name="Group" xml:space="preserve">
-    <value>المجموعة</value>
-  </data>
-  <data name="Groups" xml:space="preserve">
-    <value>المجموعات</value>
-  </data>
-  <data name="OldPost" xml:space="preserve">
-    <value>المنشور الاساسي</value>
-  </data>
-  <data name="OldPostComment" xml:space="preserve">
-    <value>التعليق الاساسي</value>
-  </data>
-  <data name="Post" xml:space="preserve">
-    <value>المنشور</value>
-  </data>
-  <data name="Post Details" xml:space="preserve">
-    <value>تفاصيل المنشور</value>
-  </data>
-  <data name="Post Profile" xml:space="preserve">
-    <value>ملف المنشور</value>
-  </data>
-  <data name="PostAttachments" xml:space="preserve">
-    <value>مرفقات المنشور</value>
-  </data>
-  <data name="PostComment" xml:space="preserve">
-    <value>التعليق</value>
-  </data>
-  <data name="PostCommentReaction" xml:space="preserve">
-    <value>التفاعل على التعليق</value>
-  </data>
-  <data name="PostReaction" xml:space="preserve">
-    <value>التفاعل على المنشور</value>
-  </data>
-  <data name="PostStateHistories" xml:space="preserve">
-    <value>سجل حالة المنشور</value>
-  </data>
-  <data name="PostText" xml:space="preserve">
-    <value>نص المنشور</value>
-  </data>
-  <data name="PostTitle" xml:space="preserve">
-    <value>عنوان المنشور</value>
-  </data>
-  <data name="Setup Post Details" xml:space="preserve">
-    <value>اعداد تفاصيل المنشور</value>
-  </data>
-  <data name="SharedPostComments" xml:space="preserve">
-    <value>الردود</value>
-  </data>
-  <data name="SharedPosts" xml:space="preserve">
-    <value>مشاركات المنشور</value>
-  </data>
-  <data name="StorageUrl" xml:space="preserve">
-    <value>رابط التخزين</value>
-  </data>
   <data name="User Profile" xml:space="preserve">
     <value>ملف المستخدم</value>
-  </data>
-  <data name="AttachmentsCount" xml:space="preserve">
-    <value>المرفقات</value>
-  </data>
-  <data name="CommentCount" xml:space="preserve">
-    <value>التعليقات</value>
-  </data>
-  <data name="Note" xml:space="preserve">
-    <value>ملاحظات</value>
-  </data>
-  <data name="ReactionCount" xml:space="preserve">
-    <value>التفاعل</value>
-  </data>
-  <data name="ShareCount" xml:space="preserve">
-    <value>المشاركات</value>
-  </data>
-  <data name="PostCommentsReactionsCount" xml:space="preserve">
-    <value>التفاعل على التعليقات</value>
-  </data>
-  <data name="PostsReactionsCount" xml:space="preserve">
-    <value>التفاعل على المنشورات</value>
-  </data>
-  <data name="StateNote" xml:space="preserve">
-    <value>ملاحظات الحالة</value>
   </data>
   <data name="Address" xml:space="preserve">
     <value>العنوان</value>
   </data>
-  <data name="Address Arabic" xml:space="preserve">
-    <value>العنوان بالعربية</value>
-  </data>
-  <data name="Address English" xml:space="preserve">
-    <value>العنوان بالانجليزية</value>
-  </data>
-  <data name="BeneficiaryType" xml:space="preserve">
-    <value>نوع المستفيد</value>
-  </data>
-  <data name="BeneficiaryTypes" xml:space="preserve">
-    <value>أنواع المستفيدين</value>
-  </data>
-  <data name="Governerate" xml:space="preserve">
-    <value>المحافظة</value>
-  </data>
-  <data name="Governerates" xml:space="preserve">
-    <value>المحافظات</value>
-  </data>
-  <data name="Latitude" xml:space="preserve">
-    <value>خط العرض</value>
-  </data>
-  <data name="Locations" xml:space="preserve">
-    <value>الاماكن</value>
-  </data>
-  <data name="Longitude" xml:space="preserve">
-    <value>خط الطول</value>
-  </data>
-  <data name="Partner" xml:space="preserve">
-    <value>الشريك</value>
-  </data>
-  <data name="Partners" xml:space="preserve">
-    <value>الشركاء</value>
-  </data>
-  <data name="ServiceProvider" xml:space="preserve">
-    <value>مقدم الخجمة</value>
-  </data>
-  <data name="ServiceProviderAuthorities" xml:space="preserve">
-    <value>الجهات</value>
-  </data>
-  <data name="ServiceProviderAuthority" xml:space="preserve">
-    <value>الجهة</value>
-  </data>
-  <data name="ServiceProviderCategories" xml:space="preserve">
-    <value>فئات مقدمي الخدمة</value>
-  </data>
-  <data name="ServiceProviderCategory" xml:space="preserve">
-    <value>الفئة</value>
-  </data>
-  <data name="ServiceProviderClassification" xml:space="preserve">
-    <value>التصنيف</value>
-  </data>
-  <data name="ServiceProviderClassifications" xml:space="preserve">
-    <value>تصنيفات طلبات التعاقد</value>
-  </data>
-  <data name="ServiceProviders" xml:space="preserve">
-    <value>مقدمي الخدمة</value>
-  </data>
-  <data name="ServiceProvidersCount" xml:space="preserve">
-    <value>مقدمي الخدمة</value>
-  </data>
-  <data name="TutorialCategories" xml:space="preserve">
-    <value>فئات البرنامج التعليمي</value>
-  </data>
-  <data name="TutorialCategory" xml:space="preserve">
-    <value>الفئة</value>
-  </data>
-  <data name="TutorialItem" xml:space="preserve">
-    <value>عنصر البرنامج التعليمي</value>
-  </data>
-  <data name="TutorialItems" xml:space="preserve">
-    <value>عناصر البرنامج التعليمي</value>
-  </data>
-  <data name="TutorialItemsCount" xml:space="preserve">
-    <value>عناصر البرنامج التعليمي</value>
-  </data>
-  <data name="UHIA" xml:space="preserve">
-    <value>التأمين الصحي الشامل</value>
-  </data>
   <data name="URL" xml:space="preserve">
     <value>الرابط</value>
   </data>
-  <data name="UseFullinfoItem" xml:space="preserve">
-    <value>عناصر معلومات مفيدة</value>
-  </data>
-  <data name="UseFullinfoItems" xml:space="preserve">
-    <value>عناصر معلومات مفيدة</value>
-  </data>
-  <data name="Applicant Data" xml:space="preserve">
-    <value>بيانات مقدم الطلب</value>
-  </data>
-  <data name="ApplicantJob" xml:space="preserve">
-    <value>الوظيفة</value>
-  </data>
-  <data name="ApplicantName" xml:space="preserve">
-    <value>الاسم</value>
-  </data>
-  <data name="ApplicantNationalNumber" xml:space="preserve">
-    <value>الرقم القومي</value>
-  </data>
-  <data name="Authority Name" xml:space="preserve">
-    <value>اسم الجهة</value>
-  </data>
-  <data name="Beneficiary Data" xml:space="preserve">
-    <value>بيانات المستفيد</value>
-  </data>
-  <data name="BeneficiaryRequest Data" xml:space="preserve">
-    <value>بيانات الطلب</value>
-  </data>
-  <data name="BeneficiaryRequestAttachments" xml:space="preserve">
-    <value>مرفقات الطلب</value>
-  </data>
-  <data name="CommercialRecord" xml:space="preserve">
-    <value>رقم السجل التجاري</value>
-  </data>
-  <data name="Contact Person Data" xml:space="preserve">
-    <value>بيانات مسؤول التواصل</value>
-  </data>
-  <data name="ContactPersonName" xml:space="preserve">
-    <value>الاسم</value>
-  </data>
-  <data name="ContactPersonPhone" xml:space="preserve">
-    <value>رقم الهاتف</value>
-  </data>
-  <data name="Date" xml:space="preserve">
-    <value>تاريخ</value>
-  </data>
-  <data name="Description" xml:space="preserve">
-    <value>وصف</value>
-  </data>
-  <data name="Fax" xml:space="preserve">
-    <value>الفاكس</value>
-  </data>
-  <data name="RefNum" xml:space="preserve">
-    <value>رقم</value>
-  </data>
-  <data name="Request" xml:space="preserve">
-    <value>الطلب</value>
-  </data>
-  <data name="Service Provider Data" xml:space="preserve">
-    <value>بيانات مقدم الخدمة</value>
-  </data>
-  <data name="ServiceProviderRequest Data" xml:space="preserve">
-    <value>بيانات الطلب</value>
-  </data>
-  <data name="ServiceProviderRequestAttachments" xml:space="preserve">
-    <value>مرفقات الطلب</value>
-  </data>
-  <data name="Specialization" xml:space="preserve">
-    <value>التخصص</value>
-  </data>
-  <data name="TaxCardNum" xml:space="preserve">
-    <value>البطاقة الضريبية</value>
-  </data>
-  <data name="Comment Attachment" xml:space="preserve">
-    <value>مرفق التعليق</value>
-  </data>
-  <data name="Comment Details" xml:space="preserve">
-    <value>تفاصيل التعليق</value>
-  </data>
-  <data name="Comments" xml:space="preserve">
-    <value>التعليقات</value>
-  </data>
-  <data name="Reactions" xml:space="preserve">
-    <value>التفاعل</value>
-  </data>
-  <data name="ReplayCount" xml:space="preserve">
-    <value>الردود</value>
-  </data>
   <data name="View Post" xml:space="preserve">
     <value>مشاهدة المنشور</value>
-  </data>
-  <data name="Group Data" xml:space="preserve">
-    <value>بيانات المجموعة</value>
-  </data>
-  <data name="GroupType" xml:space="preserve">
-    <value>نوع المجموعة</value>
-  </data>
-  <data name="GroupTypes" xml:space="preserve">
-    <value>انواع المجموعة</value>
-  </data>
-  <data name="MembersCount" xml:space="preserve">
-    <value>الاعضاء</value>
-  </data>
-  <data name="Group Details" xml:space="preserve">
-    <value>تفاصيل المجموعة</value>
-  </data>
-  <data name="IsAdmin" xml:space="preserve">
-    <value>مدير المجموعة؟</value>
-  </data>
-  <data name="App" xml:space="preserve">
-    <value>التطبيق</value>
-  </data>
-  <data name="AppInfo" xml:space="preserve">
-    <value>بيانات التطبيق</value>
-  </data>
-  <data name="SupportForm" xml:space="preserve">
-    <value>نموذج الدعم</value>
-  </data>
-  <data name="SupportForms" xml:space="preserve">
-    <value>نماذج الدعم</value>
-  </data>
-  <data name="AdministrationRolePremission" xml:space="preserve">
-    <value>Premission</value>
-  </data>
-  <data name="AdministrationRolePremissions" xml:space="preserve">
-    <value>Premissions</value>
-  </data>
-  <data name="AdministratorsCount" xml:space="preserve">
-    <value>Administrators</value>
   </data>
   <data name="CreateAccess" xml:space="preserve">
     <value>Create Access</value>
@@ -1032,9 +444,6 @@
   <data name="EditAccess" xml:space="preserve">
     <value>Edit Access</value>
   </data>
-  <data name="JobTitle" xml:space="preserve">
-    <value>المسمى الوظيفي</value>
-  </data>
   <data name="PremissionsCount" xml:space="preserve">
     <value>Premissions</value>
   </data>
@@ -1044,254 +453,11 @@
   <data name="ViewPath" xml:space="preserve">
     <value>View Path</value>
   </data>
-  <data name="PostCategory" xml:space="preserve">
-    <value>فئة المنشور</value>
-  </data>
-  <data name="PostCategorys" xml:space="preserve">
-    <value>فئات المنشور</value>
-  </data>
-  <data name="PostCategorySelectedCount" xml:space="preserve">
-    <value>فئات المنشور</value>
-  </data>
   <data name="FromDate" xml:space="preserve">
     <value>من تاريخ</value>
   </data>
-  <data name="Request Profile" xml:space="preserve">
-    <value>ملف الطلب</value>
-  </data>
-  <data name="ToDate" xml:space="preserve">
-    <value>الى تاريخ</value>
-  </data>
-  <data name="VacationRequest" xml:space="preserve">
-    <value>طلب الاجازة</value>
-  </data>
-  <data name="VacationRequestAttachments" xml:space="preserve">
-    <value>المرفقات</value>
-  </data>
-  <data name="VacationRequests" xml:space="preserve">
-    <value>طلبات الاجازة</value>
-  </data>
-  <data name="VacationRequestsCount" xml:space="preserve">
-    <value>طلبات الاجازة</value>
-  </data>
-  <data name="VacationState" xml:space="preserve">
-    <value>حالة الطلب</value>
-  </data>
-  <data name="VacationStates" xml:space="preserve">
-    <value>حالات طلب الاجازة</value>
-  </data>
-  <data name="VacationType" xml:space="preserve">
-    <value>نوع الطلب</value>
-  </data>
-  <data name="VacationTypes" xml:space="preserve">
-    <value>انواع طلب الاجازة</value>
-  </data>
-  <data name="PostCategories" xml:space="preserve">
-    <value>فئات المنشور</value>
-  </data>
-  <data name="PostCategorySelected" xml:space="preserve">
-    <value>فئات المنشور</value>
-  </data>
-  <data name="Department" xml:space="preserve">
-    <value>الادارة/القسم</value>
-  </data>
-  <data name="Departments" xml:space="preserve">
-    <value>الادارات/الاقسام</value>
-  </data>
-  <data name="DepartmentsCount" xml:space="preserve">
-    <value>الادارات/الاقسام</value>
-  </data>
-  <data name="Employee" xml:space="preserve">
-    <value>الموظف</value>
-  </data>
-  <data name="Employees" xml:space="preserve">
-    <value>الموظفين</value>
-  </data>
-  <data name="EmployeesCount" xml:space="preserve">
-    <value>الموظفين</value>
-  </data>
-  <data name="Enterprise" xml:space="preserve">
-    <value>المؤسسة</value>
-  </data>
-  <data name="Enterprise Data" xml:space="preserve">
-    <value>بيانات المؤسسة</value>
-  </data>
-  <data name="Enterprise Profile" xml:space="preserve">
-    <value>ملف المؤسسة</value>
-  </data>
-  <data name="Enterprises" xml:space="preserve">
-    <value>المؤسسات</value>
-  </data>
-  <data name="EnterprisesCount" xml:space="preserve">
-    <value>المؤسسات</value>
-  </data>
-  <data name="EnterpriseType" xml:space="preserve">
-    <value>نوع المؤسسة</value>
-  </data>
-  <data name="EnterpriseTypes" xml:space="preserve">
-    <value>أنواع المؤسسات</value>
-  </data>
-  <data name="Evaluation" xml:space="preserve">
-    <value>التقييم</value>
-  </data>
-  <data name="Evaluation Data" xml:space="preserve">
-    <value>بيانات التقييم</value>
-  </data>
-  <data name="EvaluationGuide" xml:space="preserve">
-    <value>دليل التقييم</value>
-  </data>
-  <data name="EvaluationGuide Arabic" xml:space="preserve">
-    <value>دليل التقييم بالعربية</value>
-  </data>
-  <data name="EvaluationGuide English" xml:space="preserve">
-    <value>دليل التقييم بالانجليزية</value>
-  </data>
-  <data name="Evaluations" xml:space="preserve">
-    <value>التقييمات</value>
-  </data>
-  <data name="EvaluationsCount" xml:space="preserve">
-    <value>التقييمات</value>
-  </data>
-  <data name="EvaluationState" xml:space="preserve">
-    <value>حالة التقييم</value>
-  </data>
-  <data name="EvaluationStates" xml:space="preserve">
-    <value>حالات التقييم</value>
-  </data>
-  <data name="EvaluationStatesCount" xml:space="preserve">
-    <value>حالات التقييم</value>
-  </data>
-  <data name="EvaluationType" xml:space="preserve">
-    <value>نوع التقييم</value>
-  </data>
-  <data name="EvaluationTypeItem" xml:space="preserve">
-    <value>المعيار</value>
-  </data>
-  <data name="EvaluationTypeItems" xml:space="preserve">
-    <value>معايير التقييم</value>
-  </data>
-  <data name="EvaluationTypeItemsCount" xml:space="preserve">
-    <value>معايير التقييم</value>
-  </data>
-  <data name="EvaluationTypes" xml:space="preserve">
-    <value>انواع التقييمات</value>
-  </data>
-  <data name="EvaluationTypesCount" xml:space="preserve">
-    <value>أنواع التقييم</value>
-  </data>
-  <data name="IsMain" xml:space="preserve">
-    <value>هل الرئيسي؟</value>
-  </data>
-  <data name="JobTitleDescription" xml:space="preserve">
-    <value>وصف المسمى الوظيفي</value>
-  </data>
-  <data name="JobTitles" xml:space="preserve">
-    <value>المسميات الوظيفية</value>
-  </data>
-  <data name="JobTitlesCount" xml:space="preserve">
-    <value>المسميات الوظيفية</value>
-  </data>
-  <data name="JobType" xml:space="preserve">
-    <value>نوع الوظيفة</value>
-  </data>
-  <data name="JobTypes" xml:space="preserve">
-    <value>أنواع الوظائف</value>
-  </data>
-  <data name="MeasuringMethod" xml:space="preserve">
-    <value>طريقة القياس</value>
-  </data>
-  <data name="MeasuringMethod Arabic" xml:space="preserve">
-    <value>طريقة القياس بالعربية</value>
-  </data>
-  <data name="MeasuringMethod English" xml:space="preserve">
-    <value>طريقة القياس بالانجليزية</value>
-  </data>
-  <data name="Target" xml:space="preserve">
-    <value>المستهدف</value>
-  </data>
-  <data name="TargetType" xml:space="preserve">
-    <value>نوع الهدف</value>
-  </data>
-  <data name="TargetTypes" xml:space="preserve">
-    <value>أنواع الهدف</value>
-  </data>
-  <data name="Weight" xml:space="preserve">
-    <value>الوزن</value>
-  </data>
-  <data name="ChildDepartmentsCount" xml:space="preserve">
-    <value>الادارات</value>
-  </data>
-  <data name="ContractType" xml:space="preserve">
-    <value>نوع التعاقد</value>
-  </data>
-  <data name="ContractTypes" xml:space="preserve">
-    <value>انواع التعاقد</value>
-  </data>
-  <data name="DepartmentType" xml:space="preserve">
-    <value>نوع الاداراة</value>
-  </data>
-  <data name="DepartmentTypes" xml:space="preserve">
-    <value>انواع الادارات</value>
-  </data>
-  <data name="IsSeperated" xml:space="preserve">
-    <value>Is Seperated?</value>
-  </data>
-  <data name="String1" xml:space="preserve">
-    <value />
-  </data>
-  <data name="TopDepartment" xml:space="preserve">
-    <value>الادارة العليا</value>
-  </data>
-  <data name="VacationCount" xml:space="preserve">
-    <value>عدد الاجازات المسموح به</value>
-  </data>
-  <data name="Employee Data" xml:space="preserve">
-    <value>بيانات الموظف</value>
-  </data>
-  <data name="Job Profile" xml:space="preserve">
-    <value>الملف الوظيفي</value>
-  </data>
-  <data name="CalcGrade" xml:space="preserve">
-    <value>مجموع الدرجة</value>
-  </data>
-  <data name="Employee Profile" xml:space="preserve">
-    <value>ملف الموظف</value>
-  </data>
-  <data name="EmployeeMonthlyGrade" xml:space="preserve">
-    <value>الاجمالي</value>
-  </data>
-  <data name="EmployeeVacationBalances" xml:space="preserve">
-    <value>الاجازات</value>
-  </data>
-  <data name="EmployeeVacationType" xml:space="preserve">
-    <value>نوع الاجازة</value>
-  </data>
-  <data name="ExpirationDate" xml:space="preserve">
-    <value>تاريخ الانتهاء</value>
-  </data>
-  <data name="FinalGrade" xml:space="preserve">
-    <value>الدرجة النهائية</value>
-  </data>
-  <data name="Grade" xml:space="preserve">
-    <value>الدرجة</value>
-  </data>
-  <data name="HiringDate" xml:space="preserve">
-    <value>تاريخ التعيين</value>
-  </data>
   <data name="Month" xml:space="preserve">
     <value>شهر</value>
-  </data>
-  <data name="TakenCount" xml:space="preserve">
-    <value>العد المأخوذ</value>
-  </data>
-  <data name="Vacation Count" xml:space="preserve">
-    <value>عدد الاجازات المسموح به</value>
-  </data>
-  <data name="Year" xml:space="preserve">
-    <value>سنة</value>
-  </data>
-  <data name="ExtraordinaryEfforts" xml:space="preserve">
-    <value>جهود غير عادية</value>
   </data>
   <data name="From Date To Date" xml:space="preserve">
     <value>من تاريخ الى تاريخ</value>
@@ -1299,377 +465,20 @@
   <data name="Please sign-in to your account and start the adventure" xml:space="preserve">
     <value>يرجى تسجيل الدخول إلى الحساب الخاص بك</value>
   </data>
-  <data name="Sign in" xml:space="preserve">
-    <value>تسجيل الدخول</value>
-  </data>
-  <data name="Welcome to dashboard" xml:space="preserve">
-    <value>مرحبًا بك في لوحة التحكم</value>
-  </data>
-  <data name="About App Arabic" xml:space="preserve">
-    <value>عن التطبيق بالعربية</value>
-  </data>
-  <data name="About App English" xml:space="preserve">
-    <value>عن التطبيق بالانجليزية</value>
-  </data>
   <data name="ChangePassword" xml:space="preserve">
     <value>تغيير كلمة المرور</value>
   </data>
   <data name="NewPassword" xml:space="preserve">
     <value>كلمة المرور الجديدة</value>
   </data>
-  <data name="OldPassword" xml:space="preserve">
-    <value>كلمة المرور القديمة</value>
-  </data>
-  <data name="Set New Password" xml:space="preserve">
-    <value>تعيين كلمة المرور </value>
-  </data>
   <data name="Your new password must be different from previously used passwords" xml:space="preserve">
     <value>يجب أن تكون كلمة مرورك الجديدة مختلفة عن كلمات المرور المستخدمة سابقًا</value>
-  </data>
-  <data name="Ramadan kareem" xml:space="preserve">
-    <value>رمضان كريم</value>
-  </data>
-  <data name="Requests" xml:space="preserve">
-    <value>الطلبات</value>
-  </data>
-  <data name="Statistics" xml:space="preserve">
-    <value>إحصائيات</value>
-  </data>
-  <data name="Total" xml:space="preserve">
-    <value>إجمالي</value>
-  </data>
-  <data name="Genders" xml:space="preserve">
-    <value>النوع</value>
-  </data>
-  <data name="HaveComments" xml:space="preserve">
-    <value>منشورات لديها تعليقات؟</value>
-  </data>
-  <data name="HaveReactions" xml:space="preserve">
-    <value>منشورات لديها تفاعل؟</value>
-  </data>
-  <data name="IsShared" xml:space="preserve">
-    <value>منشورات لديها مشاركات؟</value>
-  </data>
-  <data name="HasAccount" xml:space="preserve">
-    <value>لديه حساب؟</value>
-  </data>
-  <data name="GovernerateBeneficiaryRequests" xml:space="preserve">
-    <value>طلبات المستفيدين بالمحافظات</value>
-  </data>
-  <data name="GovernerateServiceProviderRequests" xml:space="preserve">
-    <value>طلبات التعاقد بالمحافظات</value>
-  </data>
-  <data name="GovernerateServiceProviders" xml:space="preserve">
-    <value>مقدمي الخدمة بالمحافظات</value>
-  </data>
-  <data name="EnterpriseAccount" xml:space="preserve">
-    <value>Task</value>
-  </data>
-  <data name="EnterpriseAccountCount" xml:space="preserve">
-    <value>Tasks Counts</value>
-  </data>
-  <data name="EnterpriseAccounts" xml:space="preserve">
-    <value>Tasks</value>
-  </data>
-  <data name="EnterpriseRole" xml:space="preserve">
-    <value>Enterprise Role</value>
-  </data>
-  <data name="EnterpriseRoles" xml:space="preserve">
-    <value>Enterprise Roles</value>
-  </data>
-  <data name="EnterpriseRolesCount" xml:space="preserve">
-    <value>Enterprise Roles</value>
-  </data>
-  <data name="EnterpriseScenario" xml:space="preserve">
-    <value>Enterprise Scenario</value>
-  </data>
-  <data name="EnterpriseScenarios" xml:space="preserve">
-    <value>Enterprise Scenarios</value>
-  </data>
-  <data name="EvaluationStateHistories" xml:space="preserve">
-    <value>سجل حالة التقييم</value>
-  </data>
-  <data name="EvaluationStateHistory" xml:space="preserve">
-    <value>سجل حالة التقييم</value>
   </data>
   <data name="Uploud attachment" xml:space="preserve">
     <value>تحميل ملف</value>
   </data>
-  <data name="Amount" xml:space="preserve">
-    <value>القيمة</value>
-  </data>
-  <data name="FinancialClaim" xml:space="preserve">
-    <value>المطالبة المالية</value>
-  </data>
-  <data name="FinancialClaims" xml:space="preserve">
-    <value>المطالبات المالية</value>
-  </data>
-  <data name="InsuranceCoverage" xml:space="preserve">
-    <value>التغطية التأمينية</value>
-  </data>
-  <data name="InsuranceCoverages" xml:space="preserve">
-    <value>التغطية التأمينية</value>
-  </data>
-  <data name="OutstandingDebt" xml:space="preserve">
-    <value>الديون المستحقة</value>
-  </data>
-  <data name="OutstandingDebts" xml:space="preserve">
-    <value>الديون المستحقة</value>
-  </data>
-  <data name="Paid" xml:space="preserve">
-    <value>المدفوع</value>
-  </data>
-  <data name="Used" xml:space="preserve">
-    <value>الرصيد  المستخدم</value>
-  </data>
-  <data name="InsuranceNumber" xml:space="preserve">
-    <value>الرقم التأميني</value>
-  </data>
-  <data name="All Evaluations must have same Date" xml:space="preserve">
-    <value>جميع التقييمات يجب ان تكون بنفس التاريخ</value>
-  </data>
-  <data name="Account Details" xml:space="preserve">
-    <value>تفاصيل الحساب</value>
-  </data>
-  <data name="Employee Details" xml:space="preserve">
-    <value>تفاصيل الموظف</value>
-  </data>
-  <data name="Request Details" xml:space="preserve">
-    <value>تفاصيل الطلب</value>
-  </data>
   <data name="User Details" xml:space="preserve">
     <value>تفاصيل المستخدم</value>
-  </data>
-  <data name="PostTextInDark" xml:space="preserve">
-    <value>نص المنشور في الوضع المظلم</value>
-  </data>
-  <data name="Sector" xml:space="preserve">
-    <value>Sector</value>
-  </data>
-  <data name="Sectors" xml:space="preserve">
-    <value>Sectors</value>
-  </data>
-  <data name="StaffSize" xml:space="preserve">
-    <value>Staff Size</value>
-  </data>
-  <data name="StaffSizes" xml:space="preserve">
-    <value>Staff Sizes</value>
-  </data>
-  <data name="Work Place Data" xml:space="preserve">
-    <value>بيانات مكان العمل</value>
-  </data>
-  <data name="WorkPlacesCount" xml:space="preserve">
-    <value>أماكن العمل</value>
-  </data>
-  <data name="Position" xml:space="preserve">
-    <value>المنصب</value>
-  </data>
-  <data name="Positions" xml:space="preserve">
-    <value>المناصب</value>
-  </data>
-  <data name="ClientName" xml:space="preserve">
-    <value>اسم العميل</value>
-  </data>
-  <data name="DeadLine" xml:space="preserve">
-    <value>اخر ميعاد للتسليم</value>
-  </data>
-  <data name="InvitationCode" xml:space="preserve">
-    <value>كود الدعوة</value>
-  </data>
-  <data name="JobDescription" xml:space="preserve">
-    <value>وصف الوظيفة</value>
-  </data>
-  <data name="ParticipantType" xml:space="preserve">
-    <value>نوع المشارك</value>
-  </data>
-  <data name="ParticipantTypes" xml:space="preserve">
-    <value>أنواع المشاركين</value>
-  </data>
-  <data name="Project" xml:space="preserve">
-    <value>المشروع</value>
-  </data>
-  <data name="Project Details" xml:space="preserve">
-    <value>تفاصيل المشروع</value>
-  </data>
-  <data name="Project Profile" xml:space="preserve">
-    <value>ملف المشروع</value>
-  </data>
-  <data name="Project Task Data" xml:space="preserve">
-    <value>بيانات مهام المشاريع</value>
-  </data>
-  <data name="ProjectCategoriesCount" xml:space="preserve">
-    <value>فئات المشروع</value>
-  </data>
-  <data name="ProjectEmployees" xml:space="preserve">
-    <value>موظفو المشروع</value>
-  </data>
-  <data name="ProjectEmployeesCount" xml:space="preserve">
-    <value>موظفو المشروع</value>
-  </data>
-  <data name="Projects" xml:space="preserve">
-    <value>المشاريع</value>
-  </data>
-  <data name="ProjectsCount" xml:space="preserve">
-    <value>المشاريع</value>
-  </data>
-  <data name="ProjectTask" xml:space="preserve">
-    <value>المهمة</value>
-  </data>
-  <data name="ProjectTasks" xml:space="preserve">
-    <value>المهام</value>
-  </data>
-  <data name="SubTasksCount" xml:space="preserve">
-    <value>المهام الفرعية</value>
-  </data>
-  <data name="Summary" xml:space="preserve">
-    <value>ملخص</value>
-  </data>
-  <data name="Task Details" xml:space="preserve">
-    <value>نفاصيل المهمة</value>
-  </data>
-  <data name="Task Profile" xml:space="preserve">
-    <value>ملف المهمة</value>
-  </data>
-  <data name="TaskAttachments" xml:space="preserve">
-    <value>المرفقات</value>
-  </data>
-  <data name="TaskCategoriesCount" xml:space="preserve">
-    <value>الفئات</value>
-  </data>
-  <data name="TaskCheckItem" xml:space="preserve">
-    <value>العنصر</value>
-  </data>
-  <data name="TaskCheckListsCount" xml:space="preserve">
-    <value>قوائم المهمة</value>
-  </data>
-  <data name="TaskDependentsCount" xml:space="preserve">
-    <value>Dependents Tasks</value>
-  </data>
-  <data name="TaskParticipate" xml:space="preserve">
-    <value>المشارك في المهمة</value>
-  </data>
-  <data name="TaskParticipatesCount" xml:space="preserve">
-    <value>المشاركون في المهمة</value>
-  </data>
-  <data name="TasksCount" xml:space="preserve">
-    <value>المهام</value>
-  </data>
-  <data name="TaskStateHistories" xml:space="preserve">
-    <value>سجل الحالة</value>
-  </data>
-  <data name="TopTask" xml:space="preserve">
-    <value>المهمة الاعلى</value>
-  </data>
-  <data name="TopWorkPlaceDepartment" xml:space="preserve">
-    <value>القسم الأعلى</value>
-  </data>
-  <data name="TopWorkPlacePosition" xml:space="preserve">
-    <value>المنصب الاعلى</value>
-  </data>
-  <data name="WorkPlace" xml:space="preserve">
-    <value>مكان العمل</value>
-  </data>
-  <data name="WorkPlace Details" xml:space="preserve">
-    <value>تفاصيل مكان العمل</value>
-  </data>
-  <data name="WorkPlace Profile" xml:space="preserve">
-    <value>ملف مكان العمل</value>
-  </data>
-  <data name="WorkPlaceCategoriesCount" xml:space="preserve">
-    <value>فئات مكان العمل</value>
-  </data>
-  <data name="WorkPlaceDepartment" xml:space="preserve">
-    <value>القسم</value>
-  </data>
-  <data name="WorkPlaceDepartmentsCount" xml:space="preserve">
-    <value>الاقسام</value>
-  </data>
-  <data name="WorkPlaceEmployee" xml:space="preserve">
-    <value>الموظف</value>
-  </data>
-  <data name="WorkPlaceEmployees" xml:space="preserve">
-    <value>الموظفيين</value>
-  </data>
-  <data name="WorkPlaceEmployeesCount" xml:space="preserve">
-    <value>الموظفين</value>
-  </data>
-  <data name="WorkPlacePosition" xml:space="preserve">
-    <value>المنصب</value>
-  </data>
-  <data name="WorkPlacePositionsCount" xml:space="preserve">
-    <value>المناصب في مكان العمل</value>
-  </data>
-  <data name="WorkPlacePrioritiesCount" xml:space="preserve">
-    <value>أولويات مكان العمل</value>
-  </data>
-  <data name="WorkPlacePriority" xml:space="preserve">
-    <value>الأولوية</value>
-  </data>
-  <data name="WorkPlaces" xml:space="preserve">
-    <value>أماكن العمل</value>
-  </data>
-  <data name="WorkPlaceTaskState" xml:space="preserve">
-    <value>حالة المهمة</value>
-  </data>
-  <data name="WorkPlaceTaskStatesCount" xml:space="preserve">
-    <value>حالات المهام</value>
-  </data>
-  <data name="Notes" xml:space="preserve">
-    <value>ملاحظات</value>
-  </data>
-  <data name="ProjectStateHistories" xml:space="preserve">
-    <value>سجل حالة المشروع</value>
-  </data>
-  <data name="WorkPlaceProjectState" xml:space="preserve">
-    <value>حالة المشروع</value>
-  </data>
-  <data name="WorkPlaceProjectStatesCount" xml:space="preserve">
-    <value>حالات المشاريع</value>
-  </data>
-  <data name="Complaint" xml:space="preserve">
-    <value>الشكوى</value>
-  </data>
-  <data name="Complaint Data" xml:space="preserve">
-    <value>بيانات الشكوى</value>
-  </data>
-  <data name="Complaint Details" xml:space="preserve">
-    <value>بيانات الشكوى</value>
-  </data>
-  <data name="Complaint Profile" xml:space="preserve">
-    <value>ملف الشكوى</value>
-  </data>
-  <data name="ComplaintAttachments" xml:space="preserve">
-    <value>مرفقات الشكوى</value>
-  </data>
-  <data name="ComplaintCategories" xml:space="preserve">
-    <value>فئات الشكاوى</value>
-  </data>
-  <data name="ComplaintCategory" xml:space="preserve">
-    <value>فئة الشكوى</value>
-  </data>
-  <data name="Complaints" xml:space="preserve">
-    <value>الشكاوى</value>
-  </data>
-  <data name="ComplaintsCount" xml:space="preserve">
-    <value>الشكاوى</value>
-  </data>
-  <data name="ComplaintState" xml:space="preserve">
-    <value>حالة الشكوى</value>
-  </data>
-  <data name="ComplaintStates" xml:space="preserve">
-    <value>حالات الشكاوى</value>
-  </data>
-  <data name="AnswerInDark Arabic" xml:space="preserve">
-    <value>الاجابة بالعربية في الوضع المظلم</value>
-  </data>
-  <data name="AnswerInDark English" xml:space="preserve">
-    <value>الاجابة بالانجليزية في الوضع المظلم</value>
-  </data>
-  <data name="ContentInDark Arabic" xml:space="preserve">
-    <value>المحتوى بالعربية في الوضع المظلم</value>
-  </data>
-  <data name="ContentInDark English" xml:space="preserve">
-    <value>المحتوى بالانجليزية في الوضع المظلم</value>
   </data>
   <data name="InArabic" xml:space="preserve">
     <value>بالعربية</value>
@@ -1680,101 +489,14 @@
   <data name="InEnglish" xml:space="preserve">
     <value>بالانجليزية</value>
   </data>
-  <data name="WhoWeAre" xml:space="preserve">
-    <value>من نحن</value>
-  </data>
-  <data name="WhoWeAre Arabic" xml:space="preserve">
-    <value>من نحن بالعربية</value>
-  </data>
-  <data name="WhoWeAre English" xml:space="preserve">
-    <value>من نحن بالانجليزية</value>
-  </data>
-  <data name="WhoWeAreInDark Arabic" xml:space="preserve">
-    <value>من نحن بالعربية في الوضع المظلم</value>
-  </data>
-  <data name="WhoWeAreInDark English" xml:space="preserve">
-    <value>من نحن بالانجليزية في الوضع المظلم</value>
-  </data>
-  <data name="Branch" xml:space="preserve">
-    <value>الفرع</value>
-  </data>
-  <data name="Branchs" xml:space="preserve">
-    <value>الفروع</value>
-  </data>
-  <data name="BranchsCount" xml:space="preserve">
-    <value>الفروع</value>
-  </data>
-  <data name="ComplaintStateHistories" xml:space="preserve">
-    <value>سجل حالة الشكوى</value>
-  </data>
-  <data name="ComplaintText" xml:space="preserve">
-    <value>الشكوى</value>
-  </data>
-  <data name="EDS" xml:space="preserve">
-    <value>نقابة أطباء الاسنان</value>
-  </data>
-  <data name="Service" xml:space="preserve">
-    <value>الخدمة</value>
-  </data>
-  <data name="ServiceCategories" xml:space="preserve">
-    <value>فئات الخدمات</value>
-  </data>
-  <data name="ServiceCategory" xml:space="preserve">
-    <value>فئة الخدمة</value>
-  </data>
-  <data name="Services" xml:space="preserve">
-    <value>الخدمات</value>
-  </data>
-  <data name="ServicesCount" xml:space="preserve">
-    <value>الخدمات</value>
-  </data>
-  <data name="SuggestText" xml:space="preserve">
-    <value>المقترح</value>
-  </data>
-  <data name="JobDegree" xml:space="preserve">
-    <value>الدرجة الوظيفية</value>
-  </data>
-  <data name="JobDegrees" xml:space="preserve">
-    <value>الدرجات الوظيفية</value>
-  </data>
-  <data name="Categories" xml:space="preserve">
-    <value>الفئات</value>
-  </data>
   <data name="New" xml:space="preserve">
     <value>جديد</value>
-  </data>
-  <data name="Priorities" xml:space="preserve">
-    <value>الاولويات</value>
-  </data>
-  <data name="TaskStates" xml:space="preserve">
-    <value>حالات المهام</value>
-  </data>
-  <data name="WorkPlaceTemplate" xml:space="preserve">
-    <value>Template</value>
-  </data>
-  <data name="WorkPlaceTemplates" xml:space="preserve">
-    <value>Templates</value>
   </data>
   <data name="Add" xml:space="preserve">
     <value>إضافة</value>
   </data>
-  <data name="GovernerateBranches" xml:space="preserve">
-    <value>الفروع بالمحافظات</value>
-  </data>
-  <data name="Accounts Loged in" xml:space="preserve">
-    <value>حسابات قامت بتسجيل دخول</value>
-  </data>
-  <data name="Accounts not Loged in" xml:space="preserve">
-    <value>حسابات لم تقم بتسجيل الدخول من قبل</value>
-  </data>
-  <data name="IsLoginBefore" xml:space="preserve">
-    <value>تسجيل الدخول</value>
-  </data>
   <data name="LastActive" xml:space="preserve">
     <value>تاريخ اخر نشاط</value>
-  </data>
-  <data name="Main Account" xml:space="preserve">
-    <value>الحساب الرئيسي</value>
   </data>
   <data name="View Charts" xml:space="preserve">
     <value>عرض الاحصائيات</value>
@@ -1782,215 +504,14 @@
   <data name="View Tables" xml:space="preserve">
     <value>عرض الجدول</value>
   </data>
-  <data name="PostCategoriesCharts" xml:space="preserve">
-    <value>فئات المنشور</value>
-  </data>
-  <data name="InvitationToken" xml:space="preserve">
-    <value>رمز الدعوه</value>
-  </data>
-  <data name="Meeting" xml:space="preserve">
-    <value>الاجتماعات</value>
-  </data>
-  <data name="Meeting Details" xml:space="preserve">
-    <value>تفاصيل الاجتماع</value>
-  </data>
-  <data name="Meeting Profile" xml:space="preserve">
-    <value>ملف الاجتماع</value>
-  </data>
-  <data name="Meetings" xml:space="preserve">
-    <value>الاجتماعات</value>
-  </data>
-  <data name="Meetings Data" xml:space="preserve">
-    <value>بيانات الاجتماع</value>
-  </data>
-  <data name="MeetingsCount" xml:space="preserve">
-    <value>الاجتماعات</value>
-  </data>
-  <data name="MeetingState" xml:space="preserve">
-    <value>حالة الاجتماع</value>
-  </data>
-  <data name="MeetingStates" xml:space="preserve">
-    <value>حالات الاجتماع</value>
-  </data>
-  <data name="MeetingType" xml:space="preserve">
-    <value>نوع الاجتماع</value>
-  </data>
-  <data name="MeetingTypes" xml:space="preserve">
-    <value>انواع الاجتماع</value>
-  </data>
-  <data name="ParticipatesCount" xml:space="preserve">
-    <value>الاعضاء</value>
-  </data>
-  <data name="IsMuted" xml:space="preserve">
-    <value>Is Muted?</value>
-  </data>
-  <data name="IsVideoOff" xml:space="preserve">
-    <value>Is VideoOff?</value>
-  </data>
-  <data name="MeetingParticipates" xml:space="preserve">
-    <value>الاعضاء</value>
-  </data>
   <data name="Export Excel" xml:space="preserve">
     <value>استخراج البيانات</value>
-  </data>
-  <data name="HasJobProfile" xml:space="preserve">
-    <value>لديه ملف وظيفي؟</value>
-  </data>
-  <data name="DayOfWeek" xml:space="preserve">
-    <value>اليوم</value>
-  </data>
-  <data name="Drop" xml:space="preserve">
-    <value>محطة الوصول</value>
-  </data>
-  <data name="DropTime" xml:space="preserve">
-    <value>وقت الوصول</value>
-  </data>
-  <data name="Pickup" xml:space="preserve">
-    <value>محطة الانطلاق</value>
-  </data>
-  <data name="PickupTime" xml:space="preserve">
-    <value>وقت الانطلاق</value>
-  </data>
-  <data name="Shuttle Data" xml:space="preserve">
-    <value>بيانات خطوط النقل</value>
-  </data>
-  <data name="ShuttleAgendaCount" xml:space="preserve">
-    <value>مواعيد خطوط النقل</value>
-  </data>
-  <data name="ShuttleAgendaDropsCount" xml:space="preserve">
-    <value>اماكن الوصول</value>
-  </data>
-  <data name="ShuttleAgendaPickupsCount" xml:space="preserve">
-    <value>اماكن الانطلاق</value>
-  </data>
-  <data name="ShuttleBus" xml:space="preserve">
-    <value>الاتوبيس</value>
-  </data>
-  <data name="ShuttleBuses" xml:space="preserve">
-    <value>الاتوبيسات</value>
-  </data>
-  <data name="ShuttleLocation" xml:space="preserve">
-    <value>المحطة</value>
-  </data>
-  <data name="ShuttleLocations" xml:space="preserve">
-    <value>المحطات</value>
-  </data>
-  <data name="AcademicYear" xml:space="preserve">
-    <value>السنة الأكاديمية</value>
-  </data>
-  <data name="AcademicYears" xml:space="preserve">
-    <value>السنوات الأكاديمية</value>
-  </data>
-  <data name="College" xml:space="preserve">
-    <value>الكلية</value>
-  </data>
-  <data name="College Data" xml:space="preserve">
-    <value>بيانات الكليات</value>
-  </data>
-  <data name="College Details" xml:space="preserve">
-    <value>تفاصيل الكلية</value>
-  </data>
-  <data name="College Profile" xml:space="preserve">
-    <value>ملف الكلية</value>
-  </data>
-  <data name="Colleges" xml:space="preserve">
-    <value>الكليات</value>
-  </data>
-  <data name="CollegeStudyStructure" xml:space="preserve">
-    <value>الهيكل الدراسي</value>
-  </data>
-  <data name="CollegeStudyStructures" xml:space="preserve">
-    <value>الهيكل الدراسي</value>
-  </data>
-  <data name="CollegeStudyStructuresCount" xml:space="preserve">
-    <value>الهيكل الدراسي</value>
-  </data>
-  <data name="CoursesCount" xml:space="preserve">
-    <value>الكورسات</value>
-  </data>
-  <data name="CourseStudyStructuresCount" xml:space="preserve">
-    <value>الهيكل الدراسي</value>
-  </data>
-  <data name="FromYear" xml:space="preserve">
-    <value>من سنة</value>
-  </data>
-  <data name="InstructorsCount" xml:space="preserve">
-    <value>المحاضرين</value>
   </data>
   <data name="Order" xml:space="preserve">
     <value>الترتيب</value>
   </data>
-  <data name="Semester" xml:space="preserve">
-    <value>الفصل الدراسي</value>
-  </data>
-  <data name="Semesters" xml:space="preserve">
-    <value>الفصول الدراسية</value>
-  </data>
-  <data name="StudentsCount" xml:space="preserve">
-    <value>الطلاب</value>
-  </data>
-  <data name="StudyYear" xml:space="preserve">
-    <value>السنة الدراسية</value>
-  </data>
-  <data name="StudyYears" xml:space="preserve">
-    <value>السنوات الدراسية</value>
-  </data>
-  <data name="ToYear" xml:space="preserve">
-    <value>الى سنة</value>
-  </data>
-  <data name="CourseStudentsCount" xml:space="preserve">
-    <value>طلاب الكورس</value>
-  </data>
-  <data name="EnrollDate" xml:space="preserve">
-    <value>تاريخ التسجيل</value>
-  </data>
-  <data name="Student" xml:space="preserve">
-    <value>الطالب</value>
-  </data>
-  <data name="Student Details" xml:space="preserve">
-    <value>تفاصيل الطالب</value>
-  </data>
-  <data name="Student Profile" xml:space="preserve">
-    <value>ملف الطالب</value>
-  </data>
-  <data name="Students" xml:space="preserve">
-    <value>الطلاب</value>
-  </data>
-  <data name="AttendanceCount" xml:space="preserve">
-    <value>عدد الحضور</value>
-  </data>
-  <data name="Course Details" xml:space="preserve">
-    <value>تفاصيل الكورس</value>
-  </data>
-  <data name="Course Profile" xml:space="preserve">
-    <value>ملف الكورس</value>
-  </data>
-  <data name="Duration" xml:space="preserve">
-    <value>المدة</value>
-  </data>
-  <data name="FinalExamDegree" xml:space="preserve">
-    <value>درجة الامتحان النهائي</value>
-  </data>
-  <data name="LessonCount" xml:space="preserve">
-    <value>الدروس</value>
-  </data>
-  <data name="MidTermDegree" xml:space="preserve">
-    <value>درجة الميدتيرم</value>
-  </data>
-  <data name="ShortDescription" xml:space="preserve">
-    <value>وصف مختصر</value>
-  </data>
-  <data name="CourseLesson" xml:space="preserve">
-    <value>الدرس</value>
-  </data>
-  <data name="CourseLessons" xml:space="preserve">
-    <value>الدروس</value>
-  </data>
   <data name="View Attachment" xml:space="preserve">
     <value>مشاهدة المرفق</value>
-  </data>
-  <data name="Attachment" xml:space="preserve">
-    <value>المرفق</value>
   </data>
   <data name="Image" xml:space="preserve">
     <value>الصورة</value>
@@ -1998,334 +519,187 @@
   <data name="Upload Attachment" xml:space="preserve">
     <value>رفع مرفق</value>
   </data>
-  <data name="CourseAttachments" xml:space="preserve">
-    <value>المرفقات</value>
-  </data>
-  <data name="CourseAnnouncement" xml:space="preserve">
-    <value>الاعلان</value>
-  </data>
-  <data name="CourseAnnouncements" xml:space="preserve">
-    <value>الاعلانات</value>
-  </data>
-  <data name="CourseAssignment" xml:space="preserve">
-    <value>المهمة</value>
-  </data>
-  <data name="CourseAssignments" xml:space="preserve">
-    <value>المهام</value>
-  </data>
-  <data name="Instructions" xml:space="preserve">
-    <value>التعليمات</value>
-  </data>
-  <data name="Points" xml:space="preserve">
-    <value>النقاط</value>
-  </data>
-  <data name="CourseAttachment" xml:space="preserve">
-    <value>المرفق</value>
-  </data>
-  <data name="CourseStudyStructure" xml:space="preserve">
-    <value>الهيكل الدراسي</value>
-  </data>
-  <data name="CourseStudyStructures" xml:space="preserve">
-    <value>الهيكل الدراسي</value>
-  </data>
-  <data name="Instructor" xml:space="preserve">
-    <value>المحاضر</value>
-  </data>
-  <data name="Instructors" xml:space="preserve">
-    <value>المحاضرين</value>
-  </data>
-  <data name="CourseStudent" xml:space="preserve">
-    <value>الطالب</value>
-  </data>
-  <data name="CourseStudents" xml:space="preserve">
-    <value>الطلاب</value>
-  </data>
-  <data name="Course" xml:space="preserve">
-    <value>الكورس</value>
-  </data>
-  <data name="Courses" xml:space="preserve">
-    <value>الكورسات</value>
-  </data>
-  <data name="ShuttleAgenda" xml:space="preserve">
-    <value>الميعاد</value>
-  </data>
-  <data name="ShuttleAgendas" xml:space="preserve">
-    <value>مواعيد خطوط النقل</value>
-  </data>
-  <data name="Student Data" xml:space="preserve">
-    <value>تفاصيل الطالب</value>
-  </data>
-  <data name="CourseAssignment Details" xml:space="preserve">
-    <value>تفاصيل</value>
-  </data>
-  <data name="CourseAssignment Profile" xml:space="preserve">
-    <value>ملف المهمة</value>
-  </data>
-  <data name="StudentAssignment" xml:space="preserve">
-    <value>المهمة</value>
-  </data>
-  <data name="StudentAssignments" xml:space="preserve">
-    <value>الطلاب</value>
-  </data>
-  <data name="Clinic" xml:space="preserve">
-    <value>العيادة</value>
-  </data>
-  <data name="Clinic Details" xml:space="preserve">
-    <value>تفاصيل العيادة</value>
-  </data>
-  <data name="Clinic Profile" xml:space="preserve">
-    <value>ملف العيادة</value>
-  </data>
-  <data name="ClinicGalleries" xml:space="preserve">
-    <value>معرض الصور</value>
-  </data>
-  <data name="Clinics" xml:space="preserve">
-    <value>العيادات</value>
-  </data>
-  <data name="Phones" xml:space="preserve">
-    <value>ارقام التليفون</value>
-  </data>
   <data name="Countries" xml:space="preserve">
     <value>الدول</value>
   </data>
   <data name="Country" xml:space="preserve">
     <value>الدولة</value>
   </data>
-  <data name="EmploymentsCount" xml:space="preserve">
-    <value>طلبات التوظيف</value>
+  <data name="All Data" xml:space="preserve">
+    <value>جميع البيانات</value>
   </data>
-  <data name="MaritalStatus" xml:space="preserve">
-    <value>الحالة الإجتماعية</value>
+  <data name="ar" xml:space="preserve">
+    <value />
   </data>
-  <data name="MilitaryStatus" xml:space="preserve">
-    <value>الموقف من التجنيد</value>
+  <data name="About App" xml:space="preserve">
+    <value>عن التطبيق</value>
   </data>
-  <data name="AcademicQualification" xml:space="preserve">
-    <value>المؤهل العلمي</value>
+  <data name="About Company" xml:space="preserve">
+    <value>عن الشركة</value>
   </data>
-  <data name="AcademicQualifications" xml:space="preserve">
-    <value>المؤهلات العلمية</value>
+  <data name="AboutApp" xml:space="preserve">
+    <value>عن التطبيق</value>
   </data>
-  <data name="AppliedJob" xml:space="preserve">
-    <value>الوظيفة المطلوبة</value>
+  <data name="AboutCompany App" xml:space="preserve">
+    <value>عن الشركة</value>
   </data>
-  <data name="City" xml:space="preserve">
-    <value>المدينة</value>
+  <data name="Account" xml:space="preserve">
+    <value>الحساب</value>
   </data>
-  <data name="ContractPeriodType" xml:space="preserve">
-    <value>نوع فترة طلب التجديد</value>
+  <data name="Account Details" xml:space="preserve">
+    <value>تفاصيل الحساب</value>
   </data>
-  <data name="ContractPeriodTypes" xml:space="preserve">
-    <value>أنواع فترة طلب التجديد</value>
+  <data name="Account Profile" xml:space="preserve">
+    <value>ملف الحساب</value>
   </data>
-  <data name="ContractRenew" xml:space="preserve">
-    <value>طلب تجديد التعاقد</value>
+  <data name="Accounts" xml:space="preserve">
+    <value>الحسابات</value>
   </data>
-  <data name="ContractRenew Data" xml:space="preserve">
-    <value>بيانات طلبات التجديد</value>
+  <data name="App Info" xml:space="preserve">
+    <value>بيانات التطبيق</value>
   </data>
-  <data name="ContractRenew Details" xml:space="preserve">
-    <value>بيانات الطلب</value>
+  <data name="AppAbout" xml:space="preserve">
+    <value>عن التطبيق</value>
   </data>
-  <data name="ContractRenew Profile" xml:space="preserve">
-    <value>ملف الطلب</value>
+  <data name="FacebookUrl" xml:space="preserve">
+    <value>رابط فيس بوك</value>
   </data>
-  <data name="ContractRenewAttachments" xml:space="preserve">
-    <value>مرفقات الطلب</value>
+  <data name="FavouriteTeam" xml:space="preserve">
+    <value>الفريق المفضل</value>
   </data>
-  <data name="ContractRenews" xml:space="preserve">
-    <value>طلبات تجديد التعاقد</value>
+  <data name="FirstName" xml:space="preserve">
+    <value>الاسم الاول</value>
   </data>
-  <data name="ContractRenewsCount" xml:space="preserve">
-    <value>طلبات تجديد التعاقد</value>
+  <data name="GameRules" xml:space="preserve">
+    <value>قواعد اللعبة</value>
   </data>
-  <data name="ContractRenewStateHistories" xml:space="preserve">
-    <value>سجل حالة الطلب</value>
+  <data name="GameWeak" xml:space="preserve">
+    <value>Game Weak</value>
   </data>
-  <data name="ContractState" xml:space="preserve">
-    <value>حالة الطلب</value>
+  <data name="InstagramUrl" xml:space="preserve">
+    <value>رابط انستغرام</value>
   </data>
-  <data name="ContractStates" xml:space="preserve">
-    <value>حالات طلب تجديد التعاقد</value>
+  <data name="LinkUrl" xml:space="preserve">
+    <value>الرابط</value>
   </data>
-  <data name="DateOfBirth" xml:space="preserve">
-    <value>تاريخ الميلاد</value>
+  <data name="Locations" xml:space="preserve">
+    <value>الاماكن</value>
   </data>
-  <data name="Degree" xml:space="preserve">
-    <value>الدرجة</value>
+  <data name="LongDescription" xml:space="preserve">
+    <value>وصف مطول</value>
   </data>
-  <data name="Employment" xml:space="preserve">
-    <value>طلب  التوظيف</value>
+  <data name="LongDescription Arabic" xml:space="preserve">
+    <value>وصف مطول بالعربية</value>
   </data>
-  <data name="Employment Data" xml:space="preserve">
-    <value>بيانات طلب التوظيف</value>
+  <data name="LongDescription English" xml:space="preserve">
+    <value>وصف مطول بالانجليزية</value>
   </data>
-  <data name="Employment Details" xml:space="preserve">
-    <value>بيانات الطلب</value>
+  <data name="Name" xml:space="preserve">
+    <value>الاسم</value>
   </data>
-  <data name="Employment Profile" xml:space="preserve">
-    <value>ملف الطب</value>
+  <data name="Name Arabic" xml:space="preserve">
+    <value>الاسم بالعربية</value>
   </data>
-  <data name="EmploymentAttachments" xml:space="preserve">
-    <value>مرفقات الطلب</value>
-  </data>
-  <data name="EmploymentQualification" xml:space="preserve">
-    <value>المؤهلات</value>
-  </data>
-  <data name="EmploymentQualifications" xml:space="preserve">
-    <value>المؤهلات</value>
-  </data>
-  <data name="Employments" xml:space="preserve">
-    <value>طلبات التوظيف</value>
-  </data>
-  <data name="EmploymentState" xml:space="preserve">
-    <value>حالة الطلب</value>
-  </data>
-  <data name="EmploymentStateHistories" xml:space="preserve">
-    <value>سجل حالة الطلب</value>
-  </data>
-  <data name="EmploymentStates" xml:space="preserve">
-    <value>حالات طلب التوظيف</value>
-  </data>
-  <data name="EmploymentTrainings" xml:space="preserve">
-    <value>التدريبات</value>
-  </data>
-  <data name="Hours" xml:space="preserve">
-    <value>عدد الساعات</value>
-  </data>
-  <data name="MajorStudy" xml:space="preserve">
-    <value>دراسات عليا</value>
+  <data name="Name English" xml:space="preserve">
+    <value>الاسم بالانجليزية</value>
   </data>
   <data name="Nationality" xml:space="preserve">
     <value>الجنسية</value>
   </data>
-  <data name="Phone2" xml:space="preserve">
-    <value>رقم الهاتف2</value>
+  <data name="News" xml:space="preserve">
+    <value>الاخبار</value>
   </data>
-  <data name="PlaceOfBirth" xml:space="preserve">
-    <value>مكان الميلاد</value>
+  <data name="News Details" xml:space="preserve">
+    <value>تفاصيل الخبر</value>
   </data>
-  <data name="TrainingProvider" xml:space="preserve">
-    <value>مركز التدريب</value>
+  <data name="News Profile" xml:space="preserve">
+    <value>ملف الخبر</value>
   </data>
-  <data name="StateNotes" xml:space="preserve">
-    <value>ملاحظات حالة الطلب</value>
+  <data name="NewsAttachments" xml:space="preserve">
+    <value>مرفقات الخبر</value>
   </data>
-  <data name="AccountNotificationBlocksCount" xml:space="preserve">
-    <value>Account Notification Blocks</value>
+  <data name="NewsTypeEnum" xml:space="preserve">
+    <value>نوع الخبر</value>
   </data>
-  <data name="AccountSurveyAnswers" xml:space="preserve">
-    <value>اجابات الحسابات على الاستبيان</value>
+  <data name="Phone" xml:space="preserve">
+    <value>رقم الهاتف</value>
   </data>
-  <data name="Add Answers" xml:space="preserve">
-    <value>اضافة اجابات</value>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>رقم الهاتف</value>
   </data>
-  <data name="AnswerText" xml:space="preserve">
-    <value>الاجابة</value>
+  <data name="Prizes" xml:space="preserve">
+    <value>الجوائز</value>
   </data>
-  <data name="Notification Data" xml:space="preserve">
-    <value>بيانات الاشعار</value>
+  <data name="QuestionsAndAnswer" xml:space="preserve">
+    <value>الاسئلة والاجوبة</value>
   </data>
-  <data name="NotificationType" xml:space="preserve">
-    <value>نوع الاشعار</value>
+  <data name="Records" xml:space="preserve">
+    <value>سجل</value>
   </data>
-  <data name="NotificationTypes" xml:space="preserve">
-    <value>انواع الاشعار</value>
+  <data name="Reset" xml:space="preserve">
+    <value>إعادة تعيين</value>
   </data>
-  <data name="SurveyAnswer" xml:space="preserve">
-    <value>الاجابة</value>
+  <data name="ShortDescription" xml:space="preserve">
+    <value>وصف قصير</value>
   </data>
-  <data name="SurveyAnswers" xml:space="preserve">
-    <value>اجابات الاستبيان</value>
+  <data name="ShortDescription Arabic" xml:space="preserve">
+    <value>وصف قصير بالعربية</value>
   </data>
-  <data name="SurveyType" xml:space="preserve">
-    <value>نوع الاستبيان</value>
+  <data name="ShortDescription English" xml:space="preserve">
+    <value>وصف قصير بالانجليزية</value>
   </data>
-  <data name="FromValue" xml:space="preserve">
-    <value>من</value>
+  <data name="SnapChatUrl" xml:space="preserve">
+    <value>رابط سناب شات</value>
   </data>
-  <data name="JobEvaluation" xml:space="preserve">
-    <value>التقييم الوظيفي</value>
+  <data name="Sponsor" xml:space="preserve">
+    <value>الراعي</value>
   </data>
-  <data name="JobEvaluation Data" xml:space="preserve">
-    <value>بيانات التقييم الوظيفي</value>
+  <data name="Sponsors" xml:space="preserve">
+    <value>الرعاه</value>
   </data>
-  <data name="JobEvaluationCount" xml:space="preserve">
-    <value>التقييمات الوظيفية</value>
+  <data name="SponsorViews" xml:space="preserve">
+    <value>المشاهدات</value>
   </data>
-  <data name="JobEvaluations" xml:space="preserve">
-    <value>التقييمات الوظيفية</value>
+  <data name="SponsorViewsCount" xml:space="preserve">
+    <value>المشاهدات</value>
   </data>
-  <data name="JobEvaluationTarget" xml:space="preserve">
-    <value>التقدير</value>
+  <data name="Submit" xml:space="preserve">
+    <value>تسجيل</value>
   </data>
-  <data name="JobEvaluationTargets" xml:space="preserve">
-    <value>تقديرات التقييم</value>
+  <data name="Subscriptions" xml:space="preserve">
+    <value>الاشتراكات</value>
   </data>
-  <data name="JobEvaluationType" xml:space="preserve">
-    <value>نوع التقييم</value>
+  <data name="Team" xml:space="preserve">
+    <value>الفريق</value>
   </data>
-  <data name="JobEvaluationTypes" xml:space="preserve">
-    <value>انواع التقييم</value>
+  <data name="Team Details" xml:space="preserve">
+    <value>تفاصيل الفريق</value>
   </data>
-  <data name="ToValue" xml:space="preserve">
-    <value>الى</value>
+  <data name="Team Profile" xml:space="preserve">
+    <value>ملف الفريق</value>
   </data>
-  <data name="Value" xml:space="preserve">
-    <value>القيمة</value>
+  <data name="Teams" xml:space="preserve">
+    <value>الفرق</value>
   </data>
-  <data name="JobEvaluationValues" xml:space="preserve">
-    <value>عوامل التقييم</value>
+  <data name="TermsAndConditions" xml:space="preserve">
+    <value>الشروط والاحكام</value>
   </data>
-  <data name="No evaluation Target Found" xml:space="preserve">
-    <value>لم يتم العثور على تقدير</value>
+  <data name="Title" xml:space="preserve">
+    <value>العنوان</value>
   </data>
-  <data name="Nationalities" xml:space="preserve">
-    <value>الجنسيات</value>
+  <data name="Title Arabic" xml:space="preserve">
+    <value>العنوان بالعربية</value>
   </data>
-  <data name="All Data" xml:space="preserve">
-    <value>جميع البيانات</value>
+  <data name="Title English" xml:space="preserve">
+    <value>العنوان بالانجليزية</value>
   </data>
-  <data name="Main Data Only" xml:space="preserve">
-    <value>البيانات الاساسية</value>
+  <data name="TwitterUrl" xml:space="preserve">
+    <value>رابط تويتر</value>
   </data>
-  <data name="EmploymentType" xml:space="preserve">
-    <value>نوع الطلب</value>
+  <data name="WhatsApp" xml:space="preserve">
+    <value>واتس اب</value>
   </data>
-  <data name="EmploymentTypes" xml:space="preserve">
-    <value>انواع الطلب</value>
-  </data>
-  <data name="EmploymentGovernerates" xml:space="preserve">
-    <value>المحافظات التي ترغب الانضمام اليها</value>
-  </data>
-  <data name="EmploymentPostgraduate" xml:space="preserve">
-    <value>توظيف الخريجين</value>
-  </data>
-  <data name="EmploymentPostgraduates" xml:space="preserve">
-    <value>توظيف الخريجين</value>
-  </data>
-  <data name="Received date" xml:space="preserve">
-    <value>تاريخ الحصول عليه</value>
-  </data>
-  <data name="Residence" xml:space="preserve">
-    <value>محل الاقامة</value>
-  </data>
-  <data name="CurrentJob" xml:space="preserve">
-    <value>الوظيفة الحالية</value>
-  </data>
-  <data name="CurrentJobPlace" xml:space="preserve">
-    <value>مكان العمل الحالي</value>
-  </data>
-  <data name="Employment Request" xml:space="preserve">
-    <value>طلب التوظيف</value>
-  </data>
-  <data name="Experience" xml:space="preserve">
-    <value>الخبرات</value>
-  </data>
-  <data name="ExperienceYears" xml:space="preserve">
-    <value>سنوات الخبرة</value>
-  </data>
-  <data name="Personal Data" xml:space="preserve">
-    <value>المعلومات الشخصية</value>
+  <data name="AboutCompany" xml:space="preserve">
+    <value>عن الشركة</value>
   </data>
 </root>

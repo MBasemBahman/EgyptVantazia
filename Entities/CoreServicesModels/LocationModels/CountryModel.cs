@@ -1,7 +1,10 @@
 ﻿namespace Entities.CoreServicesModels.LocationModels
 {
-    public class CountryModel : AuditLookUpEntity
+    public class CountryModel : AuditImageEntity, ILookUpEntity
     {
+        [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
+        [DisplayName(nameof(Name))]
+        public string Name { get; set; }
     }
 
     public class CountryCreateOrEditModel
@@ -10,6 +13,13 @@
         [DisplayName($"{nameof(Name)}{PropertyAttributeConstants.ArLang}")]
         public string Name { get; set; }
 
+        [DisplayName(nameof(ImageUrl))]
+        public string ImageUrl { get; set; }
+
+        [DisplayName(nameof(StorageUrl))]
+        [DataType(DataType.Url, ErrorMessage = PropertyAttributeConstants.TypeValidationMsg)]
+        [Url]
+        public string StorageUrl { get; set; }
         public CountryLangModel CountryLang { get; set; }
     }
 

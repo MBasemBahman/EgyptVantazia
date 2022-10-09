@@ -44,14 +44,7 @@
                             <div class="card-header border-bottom">
                                 <h4 class="card-title"> @ViewData["Title"]</h4>
                             </div>
-                              <p class="m-2 demo-inline-spacing">
-                                <a class="btn btn-primary me-1" data-bs-toggle="collapse" href="#AdvancedFilter" role="button" aria-expanded="false" aria-controls="AdvancedFilter">
-                                    <i data-feather='filter'></i>
-                                    @Localizer.Get("Advanced Search")
-                                </a>
-                             
-                            </p>
-                            @{await Html.RenderPartialAsync("../User/Filter", Model,ViewData);}
+                         
                             <div class="card-datatable">
                                 <table class="datatables datatables-ajax table table-responsive table">
                                     <thead>

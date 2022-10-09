@@ -66,6 +66,19 @@ namespace CoreServices.Logic
         {
             return _repository.Team.Count();
         }
+
+
+        public async Task<string> UploudTeamImage(string rootPath, IFormFile file)
+        {
+            FileUploader uploader = new(rootPath);
+            return await uploader.UploudFile(file, "Uploud/Team");
+        }
+
+        public void RemoveTeamImage(string rootPath, string filePath)
+        {
+            FileUploader uploader = new(rootPath);
+            uploader.DeleteFile(filePath);
+        }
         #endregion
 
         #region Player Position Services

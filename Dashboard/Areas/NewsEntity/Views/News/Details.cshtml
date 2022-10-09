@@ -1,0 +1,77 @@
+﻿@model NewsDto
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.emptyLayout = true;
+}
+
+<div class="card">
+    <div class="card-body">
+      
+        <div class="row">
+
+            <div class="col-xl-6 col-12">
+                <dl class="row mb-0">
+
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.Title):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.Title</dd>
+
+
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.GameWeak):</dt>
+                    <dd class="col-sm-8 mb-1">@(Model.GameWeak!=null ? Model.GameWeak.Name : "-")</dd>
+
+                </dl>
+            </div>
+            <div class="col-xl-6 col-12">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.NewsTypeEnum):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.NewsTypeEnum.ToString()</dd>
+
+                   
+                </dl>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+                <span class="badge bg-light-primary">@Html.DisplayNameFor(model => Model.ShortDescription)</span>
+            </div>
+            <br />
+            <p>@Model.ShortDescription</p>
+        </div>
+
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+                <span class="badge bg-light-primary">@Html.DisplayNameFor(model => Model.LongDescription)</span>
+            </div>
+            <br />
+            <p>@Model.LongDescription</p>
+        </div>
+
+
+        <div class="row">
+            <div class="col-xl-6 col-12">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.CreatedAt):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.CreatedAt</dd>
+
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.LastModifiedAt):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.LastModifiedAt</dd>
+
+
+                   
+                </dl>
+            </div>
+            <div class="col-xl-6 col-12">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.CreatedBy):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.CreatedBy</dd>
+
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.LastModifiedBy):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.LastModifiedBy</dd>
+                </dl>
+            </div>
+        </div>
+      
+    </div>
+</div>

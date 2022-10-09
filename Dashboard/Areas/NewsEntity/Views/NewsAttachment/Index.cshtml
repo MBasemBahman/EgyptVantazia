@@ -1,0 +1,42 @@
+﻿@model List<NewsAttachmentDto>
+@{
+    ViewData["Title"] = Localizer.Get("NewsAttachments");
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.useForm = true;
+    bool ProfileLayOut = ViewData["ProfileLayOut"]!=null ? (bool)ViewData["ProfileLayOut"] : false;
+    int Fk_News = ViewData["Fk_News"] != null ? (int)ViewData["Fk_News"] : 0;
+    if (ProfileLayOut)
+    {
+        ViewBag.emptyLayout = true;
+    }
+    ViewBag.useDropzone = true;
+
+    var accessLevel = (DashboardAccessLevelModel)ViewData[ViewDataConstants.AccessLevel];
+}
+
+
+@{
+    await Html.RenderPartialAsync("../NewsAttachment/Details", Model, ViewData);
+}
+@{
+    await Html.RenderPartialAsync("../NewsAttachment/Upload", ViewData);
+}
+
+
+@section scripts{
+<script>
+    $(".deleteAttachmentBtn").each(function () {
+        $(this).on("click", function () {
+            var serviceUrl = $(this).attr('id');
+            $.ajax({
+                type: 'POST',
+                url: serviceUrl,
+                success: function (result) {
+                    var id = serviceUrl.split('/')[4];
+                    $("#" + id).remove();
+                }
+            });
+        });
+    });
+</script>
+}

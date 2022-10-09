@@ -117,6 +117,10 @@ namespace CoreServices.Logic
             return await _repository.GameWeak.FindById(id, trackChanges);
         }
 
+        public Dictionary<string,string> GetGameWeakLookUp(GameWeakParameters parameters,bool otherLang)
+        {
+            return GetGameWeaks(parameters, otherLang).ToDictionary(a => a.Id.ToString(), a => a.Name);
+        }
         public void CreateGameWeak(GameWeak GameWeak)
         {
             _repository.GameWeak.Create(GameWeak);

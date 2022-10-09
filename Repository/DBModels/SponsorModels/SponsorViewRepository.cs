@@ -1,5 +1,6 @@
 ﻿using Entities.CoreServicesModels.SponsorModels;
 using Entities.DBModels.SponsorModels;
+using static Entities.EnumData.LogicEnumData;
 
 namespace Repository.DBModels.SponsorModels
 {
@@ -13,7 +14,8 @@ namespace Repository.DBModels.SponsorModels
         {
             return FindByCondition(a => true, trackChanges)
                    .Filter(parameters.Id,
-                           parameters.Fk_Sponsor);
+                           parameters.Fk_Sponsor,
+                           parameters.AppView);
         }
 
         public async Task<SponsorView> FindById(int id, bool trackChanges)
@@ -44,11 +46,13 @@ namespace Repository.DBModels.SponsorModels
         public static IQueryable<SponsorView> Filter(
             this IQueryable<SponsorView> SponsorViews,
             int id,
-            int Fk_Sponsor
+            int Fk_Sponsor,
+            int appViewEnum
             )
         {
             return SponsorViews.Where(a => (id == 0 || a.Id == id) &&
-                                                   (Fk_Sponsor == 0 || a.Fk_Sponsor == Fk_Sponsor));
+                                                   (Fk_Sponsor == 0 || a.Fk_Sponsor == Fk_Sponsor) &&
+                                                   (appViewEnum == 0 || (int)a.AppViewEnum == appViewEnum));
 
         }
 

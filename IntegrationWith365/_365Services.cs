@@ -28,7 +28,6 @@ namespace IntegrationWith365
         }
 
         // ترتيب الفرق
-        // seasonNum -> 26
         public async Task<StandingsReturn> GetStandings(_365StandingsParameters parameters)
         {
             string uri = GetUri("standings", parameters) +
@@ -43,7 +42,6 @@ namespace IntegrationWith365
         }
 
         // لاعيبه الفرق
-        // competitors -> 8201
         public async Task<SquadReturn> GetSquads(_365SquadsParameters parameters)
         {
             string uri = GetUri("squads", parameters) +
@@ -56,8 +54,6 @@ namespace IntegrationWith365
         }
 
         // مواعيد الماتشات , ونتائج الماتشات
-        // aftergame ده الاي دي بتاع الماتش علشان اجيب اللى بعده
-        // aftergame -> 3466192 
         public async Task<GamesReturn> GetGames(_365GamesParameters parameters)
         {
             string uri = GetUri("games", parameters) +
@@ -72,14 +68,33 @@ namespace IntegrationWith365
             return data;
         }
 
+        // السابقة
+        public async Task<GamesReturn> GetGamesResults(_365Parameters parameters)
+        {
+            string uri = GetUri("games/results", parameters);
+            string content = await _servicesHttp.OnGet(uri);
+
+            GamesReturn data = JsonConvert.DeserializeObject<GamesReturn>(content);
+
+            return data;
+        }
+
+        // القادمة
+        public async Task<GamesReturn> GetGamesFixtures(_365Parameters parameters)
+        {
+            string uri = GetUri("games/fixtures", parameters);
+            string content = await _servicesHttp.OnGet(uri);
+
+            GamesReturn data = JsonConvert.DeserializeObject<GamesReturn>(content);
+
+            return data;
+        }
+
         // بيانات الماتش نفسه
-        // gameId -> 3555923 
-        // matchupId = 8300-8306-552 -> {homeCompetitor id - awayCompetitor id - Competitions}
         public async Task<GameReturn> GetGame(_365GameParameters parameters)
         {
             string uri = GetUri("game", parameters) +
-                         $"{nameof(parameters.GameId)}={parameters.GameId}&" +
-                         $"{nameof(parameters.MatchupId)}={parameters.MatchupId}&";
+                         $"{nameof(parameters.GameId)}={parameters.GameId}&";
             string content = await _servicesHttp.OnGet(uri);
 
             GameReturn data = JsonConvert.DeserializeObject<GameReturn>(content);

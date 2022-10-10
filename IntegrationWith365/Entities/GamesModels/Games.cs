@@ -12,7 +12,9 @@
         public int SeasonNum { get; set; }
         public int RoundNum { get; set; } // gameWeek
         public string StartTime { get; set; }
+        public DateTime StartTimeVal => DateTime.Parse(StartTime);
         public string StatusText { get; set; }
+        public bool IsEnded => StatusText == "انتهت" || StatusText == "Ended";
         public Competitor HomeCompetitor { get; set; }
         public Competitor AwayCompetitor { get; set; }
     }

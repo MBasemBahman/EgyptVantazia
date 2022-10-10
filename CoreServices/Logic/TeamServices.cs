@@ -136,7 +136,7 @@ namespace CoreServices.Logic
             return GetPlayerPositions(new PlayerPositionParameters { Id = id }, otherLang).SingleOrDefault();
         }
 
-        public Dictionary<string,string> GetPlayerPositionLookUp(PlayerPositionParameters parameters,bool otherLang)
+        public Dictionary<string, string> GetPlayerPositionLookUp(PlayerPositionParameters parameters, bool otherLang)
         {
             return GetPlayerPositions(parameters, otherLang).ToDictionary(a => a.Id.ToString(), a => a.Name);
         }
@@ -174,12 +174,14 @@ namespace CoreServices.Logic
                            PlayerPosition = new PlayerPositionModel
                            {
                                Name = otherLang ? a.PlayerPosition.PlayerPositionLang.Name : a.PlayerPosition.Name,
-                               ImageUrl = a.PlayerPosition.StorageUrl + a.PlayerPosition.ImageUrl
+                               ImageUrl = a.PlayerPosition.StorageUrl + a.PlayerPosition.ImageUrl,
+                               _365_PositionId = a.PlayerPosition._365_PositionId
                            },
                            Team = new TeamModel
                            {
                                Name = otherLang ? a.Team.TeamLang.Name : a.Team.Name,
-                               ImageUrl = a.Team.StorageUrl + a.Team.ImageUrl
+                               ImageUrl = a.Team.StorageUrl + a.Team.ImageUrl,
+                               _365_TeamId = a.Team._365_TeamId
                            },
                            BuyPrice = a.PlayerPrices.OrderBy(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault(),
                            SellPrice = a.PlayerPrices.OrderBy(b => b.Id).Select(a => a.SellPrice).FirstOrDefault(),
@@ -247,12 +249,14 @@ namespace CoreServices.Logic
                            Team = new TeamModel
                            {
                                Name = otherLang ? a.Team.TeamLang.Name : a.Team.Name,
-                               ImageUrl = a.Team.StorageUrl + a.Team.ImageUrl
+                               ImageUrl = a.Team.StorageUrl + a.Team.ImageUrl,
+                               _365_TeamId = a.Team._365_TeamId
                            },
                            Player = new PlayerModel
                            {
                                Name = otherLang ? a.Player.PlayerLang.Name : a.Player.Name,
-                               ImageUrl = a.Player.StorageUrl + a.Player.ImageUrl
+                               ImageUrl = a.Player.StorageUrl + a.Player.ImageUrl,
+                               _365_PlayerId = a.Player._365_PlayerId
                            },
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
@@ -319,7 +323,7 @@ namespace CoreServices.Logic
             {
                 foreach (int id in pricesIds)
                 {
-                  await DeletePlayerPrice(id);
+                    await DeletePlayerPrice(id);
                 }
             }
 
@@ -328,7 +332,7 @@ namespace CoreServices.Logic
 
         public async Task<Player> UpdatePlayerPrices(Player player, List<PlayerPriceCreateOrEditModel> newData)
         {
-            List<int> oldData = GetPlayerPrices(new PlayerPriceParameters { Fk_Player = player.Id},otherLang:false).Select(a => a.Id).ToList();
+            List<int> oldData = GetPlayerPrices(new PlayerPriceParameters { Fk_Player = player.Id }, otherLang: false).Select(a => a.Id).ToList();
 
             List<int> AddData = newData.Select(a => a.Id).ToList().Except(oldData).ToList();
 

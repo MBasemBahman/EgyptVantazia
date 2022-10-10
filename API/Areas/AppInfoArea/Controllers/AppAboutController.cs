@@ -38,13 +38,7 @@ namespace API.Areas.AppInfoArea.Controllers
             //await dataMigration.InsertPlayers();
             //await dataMigration.InsertStandings();
             //await dataMigration.InsertRounds();
-
-
-            //await _365Services.GetGames(new IntegrationWith365.Parameters._365GamesParameters
-            //{
-            //    Aftergame = 3555948,
-            //    IsArabic = true,
-            //});
+            await dataMigration.InsertGames();
 
             //await _365Services.GetGame(new IntegrationWith365.Parameters._365GameParameters
             //{

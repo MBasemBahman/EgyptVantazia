@@ -40,11 +40,13 @@ namespace CoreServices.Logic
                            {
                                Name = otherLang ? a.Season.SeasonLang.Name : a.Season.Name,
                                ImageUrl = a.Season.StorageUrl + a.Season.ImageUrl,
+                               _365_SeasonId = a.Season._365_SeasonId
                            },
                            Team = new TeamModel
                            {
                                Name = otherLang ? a.Team.TeamLang.Name : a.Team.Name,
                                ImageUrl = a.Team.StorageUrl + a.Team.ImageUrl,
+                               _365_TeamId = a.Team._365_TeamId
                            }
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)

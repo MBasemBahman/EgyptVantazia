@@ -4,6 +4,7 @@ using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.SeasonModels;
 using Entities.DBModels.StandingsModels;
 using Entities.DBModels.TeamModels;
+using IntegrationWith365.Entities.GameModels;
 using IntegrationWith365.Entities.GamesModels;
 using IntegrationWith365.Entities.SquadsModels;
 using IntegrationWith365.Entities.StandingsModels;
@@ -187,7 +188,7 @@ namespace IntegrationWith365
                 }
             }
 
-            foreach (var player in players)
+            foreach (Player player in players)
             {
                 _unitOfWork.Team.CreatePlayer(player);
             }
@@ -210,7 +211,7 @@ namespace IntegrationWith365
 
             List<Row> rows = standings.Standings.SelectMany(a => a.Rows).ToList();
 
-            foreach (var row in rows)
+            foreach (Row row in rows)
             {
                 _unitOfWork.Standings.CreateStandings(new Standings
                 {
@@ -232,40 +233,6 @@ namespace IntegrationWith365
             await _unitOfWork.Save();
         }
 
-        private async Task<List<Games>> GetAllGames()
-        {
-            int count = 0;
-            SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
-
-            List<Games> games = new();
-
-            int _365_AfterGameStartId = int.Parse(season._365_AfterGameStartId);
-
-            while (_365_AfterGameStartId > 0)
-            {
-                count++;
-
-                GamesReturn gamesReturn = await _365Services.GetGames(new _365GamesParameters
-                {
-                    Aftergame = _365_AfterGameStartId
-                });
-
-                if (gamesReturn.Games != null && gamesReturn.Games.Any())
-                {
-                    //_365_AfterGameStartId = gamesReturn.Paging.NextAfterGame;
-                    //_365_AfterGameStartId = gamesReturn.Games.OrderBy(a => a.Id).Select(a => a.Id).First();
-                    //_365_AfterGameStartId = gamesReturn.Games.OrderByDescending(a => a.Id).Select(a => a.Id).First();
-                    games.AddRange(gamesReturn.Games);
-                }
-                else
-                {
-                    _365_AfterGameStartId = 0;
-                }
-            }
-
-            return games;
-        }
-
         public async Task InsertRounds()
         {
             SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
@@ -275,9 +242,9 @@ namespace IntegrationWith365
                 Fk_Season = season.Id
             }, otherLang: false).ToList();
 
-            List<int> rounds = GetAllGames().Result.Select(a => a.RoundNum).Distinct().ToList();
+            List<int> rounds = GetAllGames().Result.Select(a => a.RoundNum).Distinct().OrderBy(a => a).ToList();
 
-            foreach (var round in rounds)
+            foreach (int round in rounds)
             {
                 if (!gameWeaks.Any(a => a._365_GameWeakId == round.ToString()))
                 {
@@ -295,5 +262,128 @@ namespace IntegrationWith365
             }
             await _unitOfWork.Save();
         }
+
+        public async Task InsertGames()
+        {
+            List<GameWeakModel> gameWeaks = _unitOfWork.Season.GetGameWeaks(new GameWeakParameters
+            {
+            }, otherLang: false).ToList();
+
+            List<TeamModel> teams = _unitOfWork.Team.GetTeams(new TeamParameters
+            {
+            }, otherLang: false).ToList();
+
+            List<Games> games = (await GetAllGames()).OrderBy(a => a.RoundNum).ThenBy(a => a.StartTimeVal).ToList();
+
+            foreach (Games game in games)
+            {
+                int home = teams.Where(a => a._365_TeamId == game.HomeCompetitor.Id.ToString()).Select(a => a.Id).First();
+                int away = teams.Where(a => a._365_TeamId == game.AwayCompetitor.Id.ToString()).Select(a => a.Id).First();
+                int gameWeak = gameWeaks.Where(a => a._365_GameWeakId == game.RoundNum.ToString()).Select(a => a.Id).First();
+
+                _unitOfWork.Season.CreateTeamGameWeak(new TeamGameWeak
+                {
+                    Fk_Away = away,
+                    Fk_Home = home,
+                    Fk_GameWeak = gameWeak,
+                    StartTime = game.StartTimeVal,
+                    IsEnded = game.IsEnded,
+                    _365_MatchId = game.Id.ToString(),
+                    AwayScore = (int)game.AwayCompetitor.Score,
+                    HomeScore = (int)game.HomeCompetitor.Score,
+                });
+            }
+            await _unitOfWork.Save();
+        }
+
+        public async Task InsertGameResult()
+        {
+            List<TeamGameWeakModel> teamGameWeaks = _unitOfWork.Season.GetTeamGameWeaks(new TeamGameWeakParameters
+            {
+            }, otherLang: false).ToList();
+
+            foreach (TeamGameWeakModel teamGameWeak in teamGameWeaks)
+            {
+                GameReturn game = await _365Services.GetGame(new _365GameParameters
+                {
+                    GameId = int.Parse(teamGameWeak._365_MatchId)
+                });
+
+                //if (game.Game != null)
+                //{
+
+
+                //}
+            }
+
+        }
+
+        #region Games
+
+        private async Task<List<Games>> GetAllGames()
+        {
+            List<Games> games = new();
+
+            GamesReturn gamesReturn = await _365Services.GetGamesResults(new _365Parameters());
+
+            if (gamesReturn.Games != null && gamesReturn.Games.Any())
+            {
+                games.AddRange(gamesReturn.Games);
+
+                if (gamesReturn.Paging != null)
+                {
+                    games.AddRange(await GetGames(gamesReturn.Paging.PreviousAfterGame));
+                }
+            }
+
+            gamesReturn = await _365Services.GetGamesFixtures(new _365Parameters());
+
+            if (gamesReturn.Games != null && gamesReturn.Games.Any())
+            {
+                games.AddRange(gamesReturn.Games);
+
+                if (gamesReturn.Paging != null)
+                {
+                    games.AddRange(await GetGames(gamesReturn.Paging.NextAfterGame));
+                }
+            }
+
+            return games;
+        }
+
+        private async Task<List<Games>> GetGames(int _365_AfterGameStartId)
+        {
+            int count = 0;
+
+            List<Games> games = new();
+
+            while (_365_AfterGameStartId > 0)
+            {
+                count++;
+
+                GamesReturn gamesReturn = await _365Services.GetGames(new _365GamesParameters
+                {
+                    Aftergame = _365_AfterGameStartId
+                });
+
+                if (gamesReturn.Games != null && gamesReturn.Games.Any())
+                {
+                    if (gamesReturn.Paging != null)
+                    {
+                        _365_AfterGameStartId = gamesReturn.Paging.PreviousAfterGame == 0 ? gamesReturn.Paging.NextAfterGame : gamesReturn.Paging.PreviousAfterGame;
+                    }
+
+                    games.AddRange(gamesReturn.Games);
+                }
+                else
+                {
+                    _365_AfterGameStartId = 0;
+                }
+            }
+
+            return games;
+        }
+
+        #endregion
     }
 }

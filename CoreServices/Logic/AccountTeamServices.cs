@@ -38,6 +38,7 @@ namespace CoreServices.Logic
                            {
                                Name = otherLang ? a.Season.SeasonLang.Name : a.Season.Name,
                                ImageUrl = a.Season.StorageUrl + a.Season.ImageUrl,
+                               _365_SeasonId = a.Season._365_SeasonId
                            },
                            Account = new AccountModel
                            {
@@ -122,7 +123,8 @@ namespace CoreServices.Logic
                            BenchBoost = a.BenchBoost,
                            GameWeak = new GameWeakModel
                            {
-                               Name = otherLang ? a.GameWeak.GameWeakLang.Name : a.GameWeak.Name
+                               Name = otherLang ? a.GameWeak.GameWeakLang.Name : a.GameWeak.Name,
+                               _365_GameWeakId = a.GameWeak._365_GameWeakId
                            },
                            AccountTeam = new AccountTeamModel
                            {
@@ -187,18 +189,20 @@ namespace CoreServices.Logic
                            TrippleCaptain = a.TrippleCaptain,
                            GameWeak = new GameWeakModel
                            {
-                               Name = otherLang ? a.GameWeak.GameWeakLang.Name : a.GameWeak.Name
+                               Name = otherLang ? a.GameWeak.GameWeakLang.Name : a.GameWeak.Name,
+                               _365_GameWeakId = a.GameWeak._365_GameWeakId
                            },
                            TeamPlayerType = new TeamPlayerTypeModel
                            {
-                               Name = otherLang ? a.TeamPlayerType.TeamPlayerTypeLang.Name : a.TeamPlayerType.Name
+                               Name = otherLang ? a.TeamPlayerType.TeamPlayerTypeLang.Name : a.TeamPlayerType.Name,
                            },
                            AccountTeamPlayer = new AccountTeamPlayerModel
                            {
                                Player = new PlayerModel
                                {
                                    Name = otherLang ? a.AccountTeamPlayer.Player.PlayerLang.Name : a.AccountTeamPlayer.Player.Name,
-                                   ImageUrl = a.AccountTeamPlayer.Player.StorageUrl + a.AccountTeamPlayer.Player.ImageUrl
+                                   ImageUrl = a.AccountTeamPlayer.Player.StorageUrl + a.AccountTeamPlayer.Player.ImageUrl,
+                                   _365_PlayerId = a.AccountTeamPlayer.Player._365_PlayerId
                                },
                                AccountTeam = new AccountTeamModel
                                {
@@ -260,7 +264,8 @@ namespace CoreServices.Logic
                            Player = new PlayerModel
                            {
                                Name = otherLang ? a.Player.PlayerLang.Name : a.Player.Name,
-                               ImageUrl = a.Player.StorageUrl + a.Player.ImageUrl
+                               ImageUrl = a.Player.StorageUrl + a.Player.ImageUrl,
+                               _365_PlayerId = a.Player._365_PlayerId
                            },
                            AccountTeam = new AccountTeamModel
                            {

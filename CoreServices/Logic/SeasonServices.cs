@@ -27,7 +27,6 @@ namespace CoreServices.Logic
                            LastModifiedAt = a.LastModifiedAt,
                            LastModifiedBy = a.LastModifiedBy,
                            _365_SeasonId = a._365_SeasonId,
-                           _365_AfterGameStartId = a._365_AfterGameStartId,
                            Name = otherLang ? a.SeasonLang.Name : a.Name,
                            ImageUrl = a.StorageUrl + a.ImageUrl
                        })
@@ -103,6 +102,7 @@ namespace CoreServices.Logic
                            {
                                Name = otherLang ? a.Season.SeasonLang.Name : a.Season.Name,
                                ImageUrl = a.Season.StorageUrl + a.Season.ImageUrl,
+                               _365_SeasonId = a.Season._365_SeasonId,
                            }
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
@@ -173,15 +173,18 @@ namespace CoreServices.Logic
                            {
                                Name = otherLang ? a.Away.TeamLang.Name : a.Away.Name,
                                ImageUrl = a.Away.StorageUrl + a.Away.ImageUrl,
+                               _365_TeamId = a.Away._365_TeamId
                            },
                            Home = new TeamModel
                            {
                                Name = otherLang ? a.Home.TeamLang.Name : a.Home.Name,
                                ImageUrl = a.Home.StorageUrl + a.Home.ImageUrl,
+                               _365_TeamId = a.Home._365_TeamId
                            },
                            GameWeak = new GameWeakModel
                            {
-                               Name = otherLang ? a.GameWeak.GameWeakLang.Name : a.GameWeak.Name
+                               Name = otherLang ? a.GameWeak.GameWeakLang.Name : a.GameWeak.Name,
+                               _365_GameWeakId = a.GameWeak._365_GameWeakId
                            }
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)

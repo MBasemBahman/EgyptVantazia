@@ -87,12 +87,14 @@ namespace CoreServices.Logic
                            Fk_Player = a.Fk_Player,
                            GameWeak = new GameWeakModel
                            {
-                               Name = otherLang ? a.GameWeak.GameWeakLang.Name : a.GameWeak.Name
+                               Name = otherLang ? a.GameWeak.GameWeakLang.Name : a.GameWeak.Name,
+                               _365_GameWeakId = a.GameWeak._365_GameWeakId
                            },
                            Player = new PlayerModel
                            {
                                Name = otherLang ? a.Player.PlayerLang.Name : a.Player.Name,
-                               ImageUrl = a.Player.StorageUrl + a.Player.ImageUrl
+                               ImageUrl = a.Player.StorageUrl + a.Player.ImageUrl,
+                               _365_PlayerId = a.Player._365_PlayerId
                            },
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
@@ -153,7 +155,8 @@ namespace CoreServices.Logic
                            Value = a.Value,
                            ScoreType = new ScoreTypeModel
                            {
-                               Name = otherLang ? a.ScoreType.ScoreTypeLang.Name : a.ScoreType.Name
+                               Name = otherLang ? a.ScoreType.ScoreTypeLang.Name : a.ScoreType.Name,
+                               _365_TypeId = a.ScoreType._365_TypeId
                            }
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)

@@ -13,9 +13,6 @@ namespace Entities.DBModels.SeasonModels
         [DisplayName(nameof(_365_SeasonId))]
         public string _365_SeasonId { get; set; }
 
-        [DisplayName(nameof(_365_AfterGameStartId))]
-        public string _365_AfterGameStartId { get; set; }
-
         [DisplayName(nameof(GameWeaks))]
         public IList<GameWeak> GameWeaks { get; set; }
 

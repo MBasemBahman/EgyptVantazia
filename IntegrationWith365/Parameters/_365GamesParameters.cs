@@ -6,7 +6,7 @@
 
         public int TimezoneId { get; set; } = 12;
 
-        public int Direction { get; set; } = 1;
+        public int Direction { get; set; } = -1;
 
         public bool Withmainodds { get; set; } = true;
     }

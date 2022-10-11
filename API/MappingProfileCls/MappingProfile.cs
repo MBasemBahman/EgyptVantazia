@@ -1,11 +1,13 @@
 ﻿using API.Areas.PlayerScoreArea.Models;
 using API.Areas.SeasonArea.Models;
+using API.Areas.StandingsArea.Models;
 using API.Areas.TeamArea.Models;
 using API.Areas.UserArea.Models;
 using Entities.CoreServicesModels.PlayerScoreModels;
 using Entities.CoreServicesModels.PlayerTransfersModels;
 using Entities.CoreServicesModels.PrivateLeagueModels;
 using Entities.CoreServicesModels.SeasonModels;
+using Entities.CoreServicesModels.StandingsModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.CoreServicesModels.UserModels;
 using Entities.DBModels.PlayersTransfersModels;
@@ -86,6 +88,10 @@ namespace API.MappingProfileCls
             #endregion
 
             #region AccountTeamModels
+            #endregion
+
+            #region StandingsArea
+            _ = CreateMap<StandingsModel, StandingsDto>();
             #endregion
         }
 

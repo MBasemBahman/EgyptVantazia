@@ -91,7 +91,8 @@ namespace CoreServices.Logic
                        .FindAll(parameters, trackChanges: false)
                        .Select(a => new SponsorViewModel
                        {
-                           AppViewEnum = a.AppViewEnum
+                           AppViewEnum = a.AppViewEnum,
+                           Id = a.Id,
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

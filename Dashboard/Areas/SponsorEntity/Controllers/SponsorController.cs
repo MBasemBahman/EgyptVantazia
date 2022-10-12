@@ -102,7 +102,7 @@ namespace Dashboard.Areas.SponsorEntity.Controllers
                 ? _unitOfWork.Sponsor.GetSponsorViews(new SponsorViewParameters
                 {
                     Fk_Sponsor = id
-                }).ToList().Select(a => a.AppViewEnum).ToList()
+                }).ToList().Select(a =>  a.AppViewEnum ).ToList()
                 : new List<AppViewEnum>();
             }
 

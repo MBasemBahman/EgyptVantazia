@@ -1,9 +1,13 @@
-﻿using CoreServices;
+﻿using Contracts.Extensions;
+using CoreServices;
 using Entities.CoreServicesModels.SeasonModels;
+using Entities.CoreServicesModels.StandingsModels;
 using Entities.CoreServicesModels.TeamModels;
+using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.SeasonModels;
 using Entities.DBModels.StandingsModels;
 using Entities.DBModels.TeamModels;
+using IntegrationWith365.Entities.GameModels;
 using IntegrationWith365.Entities.GamesModels;
 using IntegrationWith365.Entities.SquadsModels;
 using IntegrationWith365.Entities.StandingsModels;
@@ -22,7 +26,9 @@ namespace IntegrationWith365
             _unitOfWork = unitOfWork;
         }
 
-        public async Task InsertTeams()
+        #region Team Models
+
+        public async Task InsertOrEditTeams()
         {
             SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
 
@@ -43,37 +49,34 @@ namespace IntegrationWith365
 
             for (int i = 0; i < competitorsInArabic.Count; i++)
             {
-                _unitOfWork.Team.CreateTeam(new Team
+                if (_unitOfWork.Team.GetTeams(new TeamParameters { _365_TeamId = competitorsInArabic[i].Id.ToString() }, otherLang: false).Any())
                 {
-                    Name = competitorsInArabic[i].Name,
-                    _365_TeamId = competitorsInArabic[i].Id.ToString(),
-                    TeamLang = new TeamLang
+                    Team team = await _unitOfWork.Team.FindTeamby365Id(competitorsInArabic[i].Id.ToString(), trackChanges: true);
+
+                    team.Name = competitorsInArabic[i].Name.IsExisting() ? competitorsInArabic[i].Name : team.Name;
+                    team.TeamLang.Name = competitorsInEnglish[i].Name.IsExisting() ? competitorsInEnglish[i].Name : team.TeamLang.Name;
+                }
+                else
+                {
+                    _unitOfWork.Team.CreateTeam(new Team
                     {
-                        Name = competitorsInEnglish[i].Name
-                    }
-                });
+                        Name = competitorsInArabic[i].Name,
+                        _365_TeamId = competitorsInArabic[i].Id.ToString(),
+                        TeamLang = new TeamLang
+                        {
+                            Name = competitorsInEnglish[i].Name
+                        }
+                    });
+                }
+                await _unitOfWork.Save();
             }
-            await _unitOfWork.Save();
         }
 
-        public async Task InsertPositions()
+        public async Task InsertOrEditPositions()
         {
             List<TeamModel> teams = _unitOfWork.Team.GetTeams(new TeamParameters
             {
             }, otherLang: false).ToList();
-
-            List<PlayerPosition> playerPositions = new()
-            {
-                new PlayerPosition
-                {
-                    Name = "مدرب",
-                    _365_PositionId = "0",
-                    PlayerPositionLang = new PlayerPositionLang
-                    {
-                        Name = "Coach"
-                    }
-                }
-            };
 
             foreach (TeamModel team in teams)
             {
@@ -113,9 +116,16 @@ namespace IntegrationWith365
 
                 for (int i = 0; i < positionsInArabic.Count; i++)
                 {
-                    if (!playerPositions.Any(a => a._365_PositionId == positionsInArabic[i].Id.ToString()))
+                    if (_unitOfWork.Team.GetPlayerPositions(new PlayerPositionParameters { _365_PositionId = positionsInArabic[i].Id.ToString() }, otherLang: false).Any())
                     {
-                        playerPositions.Add(new PlayerPosition
+                        PlayerPosition playerPosition = await _unitOfWork.Team.FindPlayerPositionby365Id(positionsInArabic[i].Id.ToString(), trackChanges: true);
+                        playerPosition.Name = positionsInArabic[i].Name.IsExisting() ? positionsInArabic[i].Name : playerPosition.Name;
+                        playerPosition.PlayerPositionLang.Name = positionsInEnglish[i].Name.IsExisting() ? positionsInEnglish[i].Name : playerPosition.PlayerPositionLang.Name;
+                    }
+                    else if (positionsInArabic[i].Name.IsExisting() &&
+                             positionsInEnglish[i].Name.IsExisting())
+                    {
+                        _unitOfWork.Team.CreatePlayerPosition(new PlayerPosition
                         {
                             Name = positionsInArabic[i].Name,
                             _365_PositionId = positionsInArabic[i].Id.ToString(),
@@ -125,18 +135,24 @@ namespace IntegrationWith365
                             }
                         });
                     }
+                    else
+                    {
+                        _unitOfWork.Team.CreatePlayerPosition(new PlayerPosition
+                        {
+                            Name = "مدرب",
+                            _365_PositionId = positionsInArabic[i].Id.ToString(),
+                            PlayerPositionLang = new PlayerPositionLang
+                            {
+                                Name = "Coach"
+                            }
+                        });
+                    }
+                    await _unitOfWork.Save();
                 }
             }
-
-            foreach (PlayerPosition playerPosition in playerPositions)
-            {
-                _unitOfWork.Team.CreatePlayerPosition(playerPosition);
-            }
-
-            await _unitOfWork.Save();
         }
 
-        public async Task InsertPlayers()
+        public async Task InsertOrEditPlayers()
         {
             List<TeamModel> teams = _unitOfWork.Team.GetTeams(new TeamParameters
             {
@@ -145,8 +161,6 @@ namespace IntegrationWith365
             List<PlayerPositionModel> positions = _unitOfWork.Team.GetPlayerPositions(new PlayerPositionParameters
             {
             }, otherLang: false).ToList();
-
-            List<Player> players = new();
 
             foreach (TeamModel team in teams)
             {
@@ -167,34 +181,53 @@ namespace IntegrationWith365
 
                 for (int i = 0; i < athletesInArabic.Count; i++)
                 {
-                    players.Add(new Player
+                    if (_unitOfWork.Team.GetPlayers(new PlayerParameters { _365_PlayerId = athletesInArabic[i].Id.ToString() }, otherLang: false).Any())
                     {
-                        Name = athletesInArabic[i].Name,
-                        ShortName = athletesInArabic[i].ShortName ?? athletesInEnglish[i].ShortName,
-                        Age = athletesInArabic[i].Age,
-                        PlayerNumber = athletesInArabic[i].JerseyNum.ToString(),
-                        _365_PlayerId = athletesInArabic[i].Id.ToString(),
-                        Fk_Team = team.Id,
-                        Fk_PlayerPosition = positions.Where(a => a._365_PositionId == athletesInArabic[i].Position.Id.ToString())
+                        Player player = await _unitOfWork.Team.FindPlayerby365Id(athletesInArabic[i].Id.ToString(), trackChanges: true);
+
+                        player.Name = athletesInArabic[i].Name.IsExisting() ? athletesInArabic[i].Name : player.Name;
+                        player.ShortName = athletesInArabic[i].ShortName.IsExisting() ? athletesInArabic[i].ShortName : player.ShortName;
+                        player.Age = athletesInArabic[i].Age;
+                        player.PlayerNumber = athletesInArabic[i].JerseyNum.ToString();
+                        player.Fk_PlayerPosition = positions.Where(a => a._365_PositionId == athletesInArabic[i].Position.Id.ToString())
+                                                     .Select(a => a.Id)
+                                                     .First();
+                        player.Fk_Team = team.Id;
+                        player.PlayerLang.Name = athletesInEnglish[i].Name.IsExisting() ? athletesInEnglish[i].Name : player.PlayerLang.Name;
+                        player.PlayerLang.ShortName = athletesInEnglish[i].ShortName.IsExisting() ? athletesInEnglish[i].ShortName : player.PlayerLang.ShortName;
+
+                    }
+                    else
+                    {
+                        _unitOfWork.Team.CreatePlayer(new Player
+                        {
+                            Name = athletesInArabic[i].Name,
+                            ShortName = athletesInArabic[i].ShortName ?? athletesInEnglish[i].ShortName,
+                            Age = athletesInArabic[i].Age,
+                            PlayerNumber = athletesInArabic[i].JerseyNum.ToString(),
+                            _365_PlayerId = athletesInArabic[i].Id.ToString(),
+                            Fk_Team = team.Id,
+                            Fk_PlayerPosition = positions.Where(a => a._365_PositionId == athletesInArabic[i].Position.Id.ToString())
                                                      .Select(a => a.Id)
                                                      .First(),
-                        PlayerLang = new PlayerLang
-                        {
-                            Name = athletesInEnglish[i].Name,
-                            ShortName = athletesInEnglish[i].ShortName ?? athletesInArabic[i].ShortName,
-                        }
-                    });
+                            PlayerLang = new PlayerLang
+                            {
+                                Name = athletesInEnglish[i].Name,
+                                ShortName = athletesInEnglish[i].ShortName ?? athletesInArabic[i].ShortName,
+                            }
+                        });
+                    }
+                    await _unitOfWork.Save();
                 }
             }
 
-            foreach (Player player in players)
-            {
-                _unitOfWork.Team.CreatePlayer(player);
-            }
-            await _unitOfWork.Save();
         }
 
-        public async Task InsertStandings()
+        #endregion
+
+        #region Standings Models
+
+        public async Task InsertOrEditStandings()
         {
             List<TeamModel> teams = _unitOfWork.Team.GetTeams(new TeamParameters
             {
@@ -212,27 +245,51 @@ namespace IntegrationWith365
 
             foreach (Row row in rows)
             {
-                _unitOfWork.Standings.CreateStandings(new Standings
-                {
-                    Fk_Season = season.Id,
-                    Fk_Team = teams.Where(a => a._365_TeamId == row.Competitor.Id.ToString())
+                int fk_Team = teams.Where(a => a._365_TeamId == row.Competitor.Id.ToString())
                                    .Select(a => a.Id)
-                                   .First(),
-                    GamePlayed = row.GamePlayed,
-                    GamesWon = row.GamesWon,
-                    GamesLost = row.GamesLost,
-                    GamesEven = row.GamesEven,
-                    For = row.For,
-                    Against = row.Against,
-                    Ratio = row.Ratio,
-                    Strike = row.Strike,
-                    Position = row.Position,
-                });
+                                   .First();
+
+                if (_unitOfWork.Standings.GetStandings(new StandingsParameters { Fk_Season = season.Id, Fk_Team = fk_Team }, otherLang: false).Any())
+                {
+                    Standings standing = await _unitOfWork.Standings.FindBySeasonAndTeam(season.Id, fk_Team, trackChanges: true);
+
+                    standing.GamePlayed = row.GamePlayed;
+                    standing.GamesWon = row.GamesWon;
+                    standing.GamesLost = row.GamesLost;
+                    standing.GamesEven = row.GamesEven;
+                    standing.For = row.For;
+                    standing.Against = row.Against;
+                    standing.Ratio = row.Ratio;
+                    standing.Strike = row.Strike;
+                    standing.Position = row.Position;
+
+                }
+                else
+                {
+                    _unitOfWork.Standings.CreateStandings(new Standings
+                    {
+                        Fk_Season = season.Id,
+                        Fk_Team = fk_Team,
+                        GamePlayed = row.GamePlayed,
+                        GamesWon = row.GamesWon,
+                        GamesLost = row.GamesLost,
+                        GamesEven = row.GamesEven,
+                        For = row.For,
+                        Against = row.Against,
+                        Ratio = row.Ratio,
+                        Strike = row.Strike,
+                        Position = row.Position,
+                    });
+                }
+                await _unitOfWork.Save();
             }
-            await _unitOfWork.Save();
         }
 
-        public async Task InsertRounds()
+        #endregion
+
+        #region Season Models
+
+        public async Task InsertOrEditRounds()
         {
             SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
 
@@ -245,7 +302,13 @@ namespace IntegrationWith365
 
             foreach (int round in rounds)
             {
-                if (!gameWeaks.Any(a => a._365_GameWeakId == round.ToString()))
+                if (_unitOfWork.Season.GetGameWeaks(new GameWeakParameters { _365_GameWeakId = round.ToString() }, otherLang: false).Any())
+                {
+                    GameWeak gameWeak = await _unitOfWork.Season.FindGameWeakby365Id(round.ToString(), trackChanges: true);
+                    gameWeak.Name = round.ToString();
+                    gameWeak.GameWeakLang.Name = round.ToString();
+                }
+                else
                 {
                     _unitOfWork.Season.CreateGameWeak(new GameWeak
                     {
@@ -258,11 +321,11 @@ namespace IntegrationWith365
                         }
                     });
                 }
+                await _unitOfWork.Save();
             }
-            await _unitOfWork.Save();
         }
 
-        public async Task InsertGames()
+        public async Task InsertOrEditGames()
         {
             List<GameWeakModel> gameWeaks = _unitOfWork.Season.GetGameWeaks(new GameWeakParameters
             {
@@ -276,24 +339,38 @@ namespace IntegrationWith365
 
             foreach (Games game in games)
             {
-                int home = teams.Where(a => a._365_TeamId == game.HomeCompetitor.Id.ToString()).Select(a => a.Id).First();
-                int away = teams.Where(a => a._365_TeamId == game.AwayCompetitor.Id.ToString()).Select(a => a.Id).First();
-                int gameWeak = gameWeaks.Where(a => a._365_GameWeakId == game.RoundNum.ToString()).Select(a => a.Id).First();
-
-                _unitOfWork.Season.CreateTeamGameWeak(new TeamGameWeak
+                if (_unitOfWork.Season.GetTeamGameWeaks(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, otherLang: false).Any())
                 {
-                    Fk_Away = away,
-                    Fk_Home = home,
-                    Fk_GameWeak = gameWeak,
-                    StartTime = game.StartTimeVal,
-                    IsEnded = game.IsEnded,
-                    _365_MatchId = game.Id.ToString(),
-                    AwayScore = (int)game.AwayCompetitor.Score,
-                    HomeScore = (int)game.HomeCompetitor.Score,
-                });
+                    TeamGameWeak teamGameWeak = await _unitOfWork.Season.FindTeamGameWeakby365Id(game.Id.ToString(), trackChanges: true);
+
+                    teamGameWeak.StartTime = game.StartTimeVal;
+                    teamGameWeak.IsEnded = game.IsEnded;
+                    teamGameWeak.AwayScore = (int)game.AwayCompetitor.Score;
+                    teamGameWeak.HomeScore = (int)game.HomeCompetitor.Score;
+                }
+                else
+                {
+                    int home = teams.Where(a => a._365_TeamId == game.HomeCompetitor.Id.ToString()).Select(a => a.Id).First();
+                    int away = teams.Where(a => a._365_TeamId == game.AwayCompetitor.Id.ToString()).Select(a => a.Id).First();
+                    int gameWeak = gameWeaks.Where(a => a._365_GameWeakId == game.RoundNum.ToString()).Select(a => a.Id).First();
+
+                    _unitOfWork.Season.CreateTeamGameWeak(new TeamGameWeak
+                    {
+                        Fk_Away = away,
+                        Fk_Home = home,
+                        Fk_GameWeak = gameWeak,
+                        StartTime = game.StartTimeVal,
+                        IsEnded = game.IsEnded,
+                        _365_MatchId = game.Id.ToString(),
+                        AwayScore = (int)game.AwayCompetitor.Score,
+                        HomeScore = (int)game.HomeCompetitor.Score,
+                    });
+                }
+                await _unitOfWork.Save();
             }
-            await _unitOfWork.Save();
         }
+
+        #endregion
 
         public async Task InsertGameResult()
         {
@@ -303,21 +380,72 @@ namespace IntegrationWith365
 
             foreach (TeamGameWeakModel teamGameWeak in teamGameWeaks)
             {
-                _ = await _365Services.GetGame(new _365GameParameters
+                GameReturn gameReturn = await _365Services.GetGame(new _365GameParameters
                 {
                     GameId = int.Parse(teamGameWeak._365_MatchId)
                 });
 
-                //if (game.Game != null)
-                //{
+                if (gameReturn.Game != null)
+                {
+                    TeamGameWeak match = await _unitOfWork.Season.FindTeamGameWeakbyId(teamGameWeak.Id, trackChanges: true);
+                    match.IsEnded = gameReturn.Game.IsEnded;
+                    match.AwayScore = (int)gameReturn.Game.AwayCompetitor.Score;
+                    match.HomeScore = (int)gameReturn.Game.HomeCompetitor.Score;
+                    await _unitOfWork.Save();
 
+                    if (gameReturn.Game.HomeCompetitor.Lineups.Members.Any())
+                    {
+                        var players = _unitOfWork.Team.GetPlayers(new PlayerParameters
+                        {
+                            Fk_Team = teamGameWeak.Fk_Home
+                        }, otherLang: false).Select(a => new
+                        {
+                            a.Id,
+                            a._365_PlayerId
+                        }).ToList();
 
-                //}
+                        foreach (Member member in gameReturn.Game.HomeCompetitor.Lineups.Members)
+                        {
+                            _unitOfWork.PlayerScore.CreatePlayerGameWeak(new PlayerGameWeak
+                            {
+                                Fk_GameWeak = teamGameWeak.Fk_GameWeak,
+                                Fk_Player = players.Where(a => a._365_PlayerId == member.Id.ToString())
+                                                       .Select(a => a.Id)
+                                                       .First(),
+                                Ranking = member.Ranking,
+                            });
+                        }
+                        await _unitOfWork.Save();
+                    }
+                    if (gameReturn.Game.AwayCompetitor.Lineups.Members.Any())
+                    {
+                        var players = _unitOfWork.Team.GetPlayers(new PlayerParameters
+                        {
+                            Fk_Team = teamGameWeak.Fk_Away
+                        }, otherLang: false).Select(a => new
+                        {
+                            a.Id,
+                            a._365_PlayerId
+                        }).ToList();
+
+                        foreach (Member member in gameReturn.Game.AwayCompetitor.Lineups.Members)
+                        {
+                            _unitOfWork.PlayerScore.CreatePlayerGameWeak(new PlayerGameWeak
+                            {
+                                Fk_GameWeak = teamGameWeak.Fk_GameWeak,
+                                Fk_Player = players.Where(a => a._365_PlayerId == member.Id.ToString())
+                                                       .Select(a => a.Id)
+                                                       .First(),
+                                Ranking = member.Ranking,
+                            });
+                        }
+                        await _unitOfWork.Save();
+                    }
+                }
             }
-
         }
 
-        #region Games
+        #region Games helper method
 
         private async Task<List<Games>> GetAllGames()
         {

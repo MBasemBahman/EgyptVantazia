@@ -27,6 +27,12 @@ namespace Repository.DBModels.SeasonModels
             return await FindByCondition(a => a.Id == id, trackChanges)
                         .SingleOrDefaultAsync();
         }
+
+        public async Task<TeamGameWeak> FindBy365Id(string id, bool trackChanges)
+        {
+            return await FindByCondition(a => a._365_MatchId == id, trackChanges)
+                        .SingleOrDefaultAsync();
+        }
     }
 
     public static class TeamGameWeakRepositoryExtension

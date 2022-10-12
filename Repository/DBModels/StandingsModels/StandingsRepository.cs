@@ -24,6 +24,12 @@ namespace Repository.DBModels.StandingsModels
             return await FindByCondition(a => a.Id == id, trackChanges)
                         .SingleOrDefaultAsync();
         }
+
+        public async Task<Standings> FindBySeasonAndTeam(int fk_Season, int fk_Team, bool trackChanges)
+        {
+            return await FindByCondition(a => a.Fk_Season == fk_Season && a.Fk_Team == fk_Team, trackChanges)
+                        .SingleOrDefaultAsync();
+        }
     }
 
     public static class StandingsRepositoryExtension

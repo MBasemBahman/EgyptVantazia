@@ -30,6 +30,9 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
 
         [DisplayName(nameof(Player))]
         public PlayerModel Player { get; set; }
+
+        [DisplayName(nameof(Ranking))]
+        public double Ranking { get; set; }
     }
 
     public class PlayerGameWeakCreateOrEditModel
@@ -42,6 +45,9 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
 
         [DisplayName(nameof(Player))]
         public int Fk_Player { get; set; }
+
+        [DisplayName(nameof(Ranking))]
+        public double Ranking { get; set; }
 
         [DisplayName(nameof(PlayerGameWeakScores))]
         public List<PlayerGameWeakScoreCreateOrEditModel> PlayerGameWeakScores { get; set; }

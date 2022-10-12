@@ -136,7 +136,6 @@ namespace CoreServices.Logic
 
         public PlayerGameWeak AddPlayerGameWeakScores(PlayerGameWeak player, List<PlayerGameWeakScoreCreateOrEditModel> scores)
         {
-
             if (scores != null && scores.Any())
             {
                 foreach (PlayerGameWeakScoreCreateOrEditModel score in scores)

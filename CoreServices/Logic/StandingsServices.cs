@@ -66,6 +66,11 @@ namespace CoreServices.Logic
             return await _repository.Standings.FindById(id, trackChanges);
         }
 
+        public async Task<Standings> FindBySeasonAndTeam(int fk_Season, int fk_Team, bool trackChanges)
+        {
+            return await _repository.Standings.FindBySeasonAndTeam(fk_Season, fk_Team, trackChanges);
+        }
+
         public void CreateStandings(Standings Standings)
         {
             _repository.Standings.Create(Standings);

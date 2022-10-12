@@ -24,6 +24,13 @@ namespace Repository.DBModels.SeasonModels
                         .SingleOrDefaultAsync();
         }
 
+        public async Task<GameWeak> FindBy365Id(string id, bool trackChanges)
+        {
+            return await FindByCondition(a => a._365_GameWeakId == id, trackChanges)
+                        .Include(a => a.GameWeakLang)
+                        .SingleOrDefaultAsync();
+        }
+
         public new void Create(GameWeak entity)
         {
             entity.GameWeakLang ??= new GameWeakLang

@@ -23,6 +23,20 @@ namespace Repository.DBModels.PlayerScoreModels
             return await FindByCondition(a => a.Id == id, trackChanges)
                         .SingleOrDefaultAsync();
         }
+
+        public new void Create(PlayerGameWeak entity)
+        {
+            if (FindByCondition(a => a.Fk_GameWeak == entity.Fk_GameWeak && a.Fk_Player == entity.Fk_Player, trackChanges: false).Any())
+            {
+                PlayerGameWeak oldEntity = FindByCondition(a => a.Fk_GameWeak == entity.Fk_GameWeak && a.Fk_Player == entity.Fk_Player, trackChanges: false).First();
+
+                oldEntity.Ranking = entity.Ranking;
+            }
+            else
+            {
+                base.Create(entity);
+            }
+        }
     }
 
     public static class PlayerGameWeakRepositoryExtension

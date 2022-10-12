@@ -52,6 +52,12 @@ namespace CoreServices.Logic
             return await _repository.Season.FindById(id, trackChanges);
         }
 
+        public async Task<Season> FindSeasonBy365Id(string id, bool trackChanges)
+        {
+            return await _repository.Season.FindBy365Id(id, trackChanges);
+        }
+
+
         public void CreateSeason(Season Season)
         {
             _repository.Season.Create(Season);
@@ -189,6 +195,11 @@ namespace CoreServices.Logic
             return await _repository.GameWeak.FindById(id, trackChanges);
         }
 
+        public async Task<GameWeak> FindGameWeakby365Id(string id, bool trackChanges)
+        {
+            return await _repository.GameWeak.FindBy365Id(id, trackChanges);
+        }
+
         public List<GameWeak> FindGameWeaks(GameWeakParameters parameters, bool trackChanges)
         {
             return _repository.GameWeak.FindAll(parameters, trackChanges)
@@ -281,6 +292,11 @@ namespace CoreServices.Logic
         public async Task<TeamGameWeak> FindTeamGameWeakbyId(int id, bool trackChanges)
         {
             return await _repository.TeamGameWeak.FindById(id, trackChanges);
+        }
+
+        public async Task<TeamGameWeak> FindTeamGameWeakby365Id(string id, bool trackChanges)
+        {
+            return await _repository.TeamGameWeak.FindBy365Id(id, trackChanges);
         }
 
         public void CreateTeamGameWeak(TeamGameWeak TeamGameWeak)

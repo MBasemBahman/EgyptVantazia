@@ -10,6 +10,9 @@ namespace Entities.CoreServicesModels.TeamModels
 
         [DisplayName(nameof(PlayerPosition))]
         public int Fk_PlayerPosition { get; set; }
+
+        [DisplayName(nameof(_365_PlayerId))]
+        public string _365_PlayerId { get; set; }
     }
     public class PlayerModel : AuditImageEntity
     {

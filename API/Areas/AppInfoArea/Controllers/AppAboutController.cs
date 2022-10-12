@@ -28,7 +28,6 @@ namespace API.Areas.AppInfoArea.Controllers
         [AllowAll]
         public async Task<AppAboutModel> GetAppAbout()
         {
-
             DataMigration dataMigration = new(_unitOfWork, _365Services);
 
             //await dataMigration.InsertTeams();
@@ -36,14 +35,8 @@ namespace API.Areas.AppInfoArea.Controllers
             //await dataMigration.InsertPlayers();
             //await dataMigration.InsertStandings();
             //await dataMigration.InsertRounds();
-            await dataMigration.InsertGames();
-
-            //await _365Services.GetGame(new IntegrationWith365.Parameters._365GameParameters
-            //{
-            //    GameId = 3555923,
-            //    MatchupId = "8300-8306-552",
-            //    IsArabic = true,
-            //});
+            //await dataMigration.InsertGames();
+            //await dataMigration.InsertGameResult();
 
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 

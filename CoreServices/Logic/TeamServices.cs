@@ -46,6 +46,11 @@ namespace CoreServices.Logic
             return await _repository.Team.FindById(id, trackChanges);
         }
 
+        public async Task<Team> FindTeamby365Id(string id, bool trackChanges)
+        {
+            return await _repository.Team.FindBy365Id(id, trackChanges);
+        }
+
         public void CreateTeam(Team Team)
         {
             _repository.Team.Create(Team);
@@ -66,7 +71,6 @@ namespace CoreServices.Logic
         {
             return _repository.Team.Count();
         }
-
 
         public async Task<string> UploudTeamImage(string rootPath, IFormFile file)
         {
@@ -119,6 +123,12 @@ namespace CoreServices.Logic
         {
             return await _repository.PlayerPosition.FindById(id, trackChanges);
         }
+
+        public async Task<PlayerPosition> FindPlayerPositionby365Id(string id, bool trackChanges)
+        {
+            return await _repository.PlayerPosition.FindBy365Id(id, trackChanges);
+        }
+
 
         public void CreatePlayerPosition(PlayerPosition PlayerPosition)
         {
@@ -201,6 +211,11 @@ namespace CoreServices.Logic
         public async Task<Player> FindPlayerbyId(int id, bool trackChanges)
         {
             return await _repository.Player.FindById(id, trackChanges);
+        }
+
+        public async Task<Player> FindPlayerby365Id(string id, bool trackChanges)
+        {
+            return await _repository.Player.FindBy365Id(id, trackChanges);
         }
 
         public void CreatePlayer(Player Player)

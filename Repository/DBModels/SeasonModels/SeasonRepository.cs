@@ -24,6 +24,13 @@ namespace Repository.DBModels.SeasonModels
                         .SingleOrDefaultAsync();
         }
 
+        public async Task<Season> FindBy365Id(string id, bool trackChanges)
+        {
+            return await FindByCondition(a => a._365_SeasonId == id, trackChanges)
+                        .Include(a => a.SeasonLang)
+                        .SingleOrDefaultAsync();
+        }
+
         public new void Create(Season entity)
         {
             entity.SeasonLang ??= new SeasonLang

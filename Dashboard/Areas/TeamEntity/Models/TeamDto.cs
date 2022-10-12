@@ -5,6 +5,7 @@ namespace Dashboard.Areas.TeamEntity.Models
 {
     public class TeamFilter : DtParameters
     {
+        
 
     }
     public class TeamDto : TeamModel
@@ -19,6 +20,8 @@ namespace Dashboard.Areas.TeamEntity.Models
     public enum TeamProfileItems
     {
         Details =1,
-        Player = 2
+        Player = 2,
+        HomeTeamGameWeak = 3,
+        AwayTeamGameWeak = 4
     }
 }

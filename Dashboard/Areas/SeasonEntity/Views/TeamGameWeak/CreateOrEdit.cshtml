@@ -1,0 +1,145 @@
+﻿@model TeamGameWeakCreateOrEditModel
+@{
+    ViewData["Title"] = $"{Localizer.Get("CreateOrEdit")} {Localizer.Get("TeamGameWeak")}";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.useForm = true;
+    ViewBag.useDatePicker = true;
+    int returnPage = ViewData["returnPage"] != null ? (int)ViewData["returnPage"] : (int)TeamGameWeakReturnPage.Index;
+    int id = ViewData["id"] != null ? (int)ViewData["id"] : 0;
+
+}
+
+<!-- BEGIN: Content-->
+<div class="app-content content ">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row">
+            <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h2 class="content-header-title float-start mb-0">@ViewData["Title"]</h2>
+                        <div class="breadcrumb-wrapper">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="/SeasonEntity/TeamGameWeak/Index">@Localizer.Get("TeamGameWeaks")</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    @ViewData["Title"]
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-body">
+            <section id="multiple-column-form">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form class="form" asp-action="CreateOrEdit" enctype="multipart/form-data">
+                                    <input type="hidden" asp-for="@returnPage" />
+                                    <div asp-validation-summary="All" class="text-danger">@ViewData["Error"]</div>
+                                    <br />
+
+                                    <div class="row mb-1">
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label  class="form-label">@Localizer.Get("HomeTeam")</label>
+                                                <select asp-for="Fk_Home" class="select2 form-select" asp-items="@(new SelectList(ViewData["Team"] as Dictionary<string,string>,"Key","Value"))">
+                                                </select>
+                                                <span asp-validation-for="Fk_Home" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@Localizer.Get("AwayTeam")</label>
+                                                <select asp-for="Fk_Away" class="select2 form-select" asp-items="@(new SelectList(ViewData["Team"] as Dictionary<string,string>,"Key","Value"))">
+                                                </select>
+                                                <span asp-validation-for="Fk_Away" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Fk_Season" class="form-label"></label>
+                                                <select asp-for="Fk_Season" class="select2 form-select" asp-items="@(new SelectList(ViewData["Season"] as Dictionary<string,string>,"Key","Value"))">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Fk_GameWeak" class="form-label"></label>
+                                                <select asp-for="Fk_GameWeak" class="select2 form-select" asp-items="@(new SelectList(ViewData["GameWeak"] as Dictionary<string,string>,"Key","Value"))">
+                                                </select>
+                                                <span asp-validation-for="Fk_GameWeak" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="HomeScore" class="form-label"></label>
+                                                <input asp-for="HomeScore" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"HomeScore"))" />
+                                                <span asp-validation-for="HomeScore" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="AwayScore" class="form-label"></label>
+                                                <input asp-for="AwayScore" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"AwayScore"))" />
+                                                <span asp-validation-for="AwayScore" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="StartTime" class="form-label"></label>
+                                                <input type="text" value="@(Model.StartTime.ToString("yyyy-MM-dd"))" id="fp-default" name="StartTime" class="form-control flatpickr-basic flatpickr-input active" placeholder="YYYY-MM-DD" readonly="readonly">
+                                                <span asp-validation-for="StartTime" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="IsEnded" class="form-check-label" for="IsEnded"></label>
+                                                <input asp-for="IsEnded" class="form-check-input" />
+                                                <span asp-validation-for="IsEnded" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary me-1">@Localizer.Get("Submit")</button>
+                                            <button type="reset" class="btn btn-outline-secondary me-1">@Localizer.Get("Reset")</button>
+                                            <a asp-action="Index" class="btn btn-warning"> @Localizer.Get("Back") </a>
+
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+</div>
+@section scripts
+    {
+    <script src="~/apis/site.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $("#Fk_Season").on("change", function () {
+                getGameWeak($("#Fk_GameWeak"), $(this).val(), true);
+            });
+        });
+    </script>
+}

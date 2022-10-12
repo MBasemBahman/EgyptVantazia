@@ -20,6 +20,7 @@ namespace Repository.DBModels.TeamModels
         public async Task<Player> FindById(int id, bool trackChanges)
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
+                        .Include(a => a.PlayerLang)
                         .SingleOrDefaultAsync();
         }
 

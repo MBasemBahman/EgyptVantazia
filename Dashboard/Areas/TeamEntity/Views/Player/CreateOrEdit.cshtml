@@ -166,7 +166,7 @@
                                                                 <div class="col-md-3 col-12">
                                                                     <div class="mb-1">
                                                                         <label class="form-label">@Localizer.Get("Team")</label>
-                                                                        <select disabled asp-for="PlayerPrices[i].Fk_Team" class="select2 form-select player-price-team" asp-items="@(new SelectList(ViewData["Team"] as Dictionary<string,string>,"Key","Value"))">
+                                                                        <select disabled  asp-for="PlayerPrices[i].Fk_Team" class=" form-select player-price-team" asp-items="@(new SelectList(ViewData["Team"] as Dictionary<string,string>,"Key","Value"))">
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -174,14 +174,14 @@
                                                                 <div class="col-md-3 col-12">
                                                                     <div class="mb-1">
                                                                         <label class="form-label">@Localizer.Get("BuyPrice")</label>
-                                                                        <input asp-for="PlayerPrices[i].BuyPrice" class="form-control" placeholder="@Localizer.Get("Enter") @Localizer.Get("BuyPrice")">
+                                                                        <input asp-for="PlayerPrices[i].BuyPrice" class="form-control buy-price" placeholder="@Localizer.Get("Enter") @Localizer.Get("BuyPrice")">
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="col-md-3 col-12">
                                                                     <div class="mb-1">
                                                                         <label class="form-label">@Localizer.Get("SellPrice")</label>
-                                                                        <input asp-for="PlayerPrices[i].SellPrice" class="form-control" placeholder="@Localizer.Get("Enter") @Localizer.Get("SellPrice")">
+                                                                        <input asp-for="PlayerPrices[i].SellPrice" class="form-control sell-price" placeholder="@Localizer.Get("Enter") @Localizer.Get("SellPrice")">
                                                                     </div>
                                                                 </div>
 
@@ -210,21 +210,21 @@
                                                             <div class="col-md-3 col-12">
                                                                 <div class="mb-1">
                                                                     <label class="form-label">@Localizer.Get("Team")</label>
-                                                                    <select disabled name=".Fk_Team" class="select2 form-select player-price-team" asp-items="@(new SelectList(ViewData["Team"] as Dictionary<string,string>,"Key","Value"))">
+                                                                    <select disabled name=".Fk_Team" class=" form-select player-price-team" asp-items="@(new SelectList(ViewData["Team"] as Dictionary<string,string>,"Key","Value"))">
                                                                     </select>
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3 col-12">
                                                                 <div class="mb-1">
                                                                     <label class="form-label">@Localizer.Get("BuyPrice")</label>
-                                                                    <input name=".BuyPrice" class="form-control" placeholder="@Localizer.Get("Enter") @Localizer.Get("BuyPrice")">
+                                                                    <input name=".BuyPrice" class="form-control buy-price" placeholder="@Localizer.Get("Enter") @Localizer.Get("BuyPrice")">
                                                                 </div>
                                                             </div>
 
                                                             <div class="col-md-3 col-12">
                                                                 <div class="mb-1">
                                                                     <label class="form-label">@Localizer.Get("SellPrice")</label>
-                                                                    <input name=".SellPrice" class="form-control" placeholder="@Localizer.Get("Enter") @Localizer.Get("SellPrice")">
+                                                                    <input name=".SellPrice" class="form-control sell-price" placeholder="@Localizer.Get("Enter") @Localizer.Get("SellPrice")">
                                                                 </div>
                                                             </div>
 
@@ -295,8 +295,12 @@
 @section scripts{
     <script>
 
-        function resetPriceId() {
+        function resetRepeaterData() {
             $(".price-id").last().val('0');
+           $(".player-price-team").last().val($("#Fk_Team").val()).change();
+           $(".buy-price").last().val('0');
+           $(".sell-price").last().val('0');
+
         }
 
         $(document).ready(function () {
@@ -305,9 +309,19 @@
             });
 
             $("#add-new-btn-price").on('click', function () {
-                setTimeout(resetPriceId, 500)
-                $(".player-price-team").last().val($("#Fk_Team").val());
+                setTimeout(resetRepeaterData, 500)
+            });
 
+            $("#Fk_Team").on('change',function(){
+                $('.price-id').each(function(){
+                        console.log($(this).val());
+
+                  if($(this).val() == '0'){
+                        var index = $(".price-id").index($(this));
+                        console.log(index);
+                        $(".player-price-team").eq(index).val($("#Fk_Team").val())
+                  }
+                });
             });
         });
 

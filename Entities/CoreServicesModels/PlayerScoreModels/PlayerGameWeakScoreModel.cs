@@ -36,4 +36,20 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
         [DisplayName(nameof(Points))]
         public int Points { get; set; }
     }
+
+    public class PlayerGameWeakScoreCreateOrEditModel
+    {
+       
+        [DisplayName(nameof(ScoreType))]
+        [ForeignKey(nameof(ScoreType))]
+        public int Fk_ScoreType { get; set; }
+
+        [DisplayName(nameof(Value))]
+        public int Value { get; set; }
+
+        [DisplayName(nameof(Points))]
+        public int Points { get; set; }
+
+        public int Id { get; set; }
+    }
 }

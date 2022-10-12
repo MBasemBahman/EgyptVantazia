@@ -31,4 +31,19 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
         [DisplayName(nameof(Player))]
         public PlayerModel Player { get; set; }
     }
+
+    public class PlayerGameWeakCreateOrEditModel
+    {
+        [DisplayName(nameof(GameWeak))]
+        public int Fk_GameWeak { get; set; }
+
+        [DisplayName(nameof(Season))]
+        public int Fk_Season { get; set; }
+
+        [DisplayName(nameof(Player))]
+        public int Fk_Player { get; set; }
+
+        [DisplayName(nameof(PlayerGameWeakScores))]
+        public List<PlayerGameWeakScoreCreateOrEditModel> PlayerGameWeakScores { get; set; }
+    }
 }

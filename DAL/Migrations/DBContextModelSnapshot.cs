@@ -17,7 +17,7 @@ namespace DAL.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.8")
+                .HasAnnotation("ProductVersion", "6.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -648,6 +648,102 @@ namespace DAL.Migrations
                             Fk_DashboardAccessLevel = 1,
                             Fk_DashboardAdministrationRole = 1,
                             Fk_DashboardView = 17
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fk_DashboardAccessLevel = 1,
+                            Fk_DashboardAdministrationRole = 1,
+                            Fk_DashboardView = 18
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fk_DashboardAccessLevel = 1,
+                            Fk_DashboardAdministrationRole = 1,
+                            Fk_DashboardView = 19
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fk_DashboardAccessLevel = 1,
+                            Fk_DashboardAdministrationRole = 1,
+                            Fk_DashboardView = 20
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fk_DashboardAccessLevel = 1,
+                            Fk_DashboardAdministrationRole = 1,
+                            Fk_DashboardView = 21
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fk_DashboardAccessLevel = 1,
+                            Fk_DashboardAdministrationRole = 1,
+                            Fk_DashboardView = 22
+                        },
+                        new
+                        {
+                            Id = 23,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fk_DashboardAccessLevel = 1,
+                            Fk_DashboardAdministrationRole = 1,
+                            Fk_DashboardView = 23
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fk_DashboardAccessLevel = 1,
+                            Fk_DashboardAdministrationRole = 1,
+                            Fk_DashboardView = 24
+                        },
+                        new
+                        {
+                            Id = 25,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fk_DashboardAccessLevel = 1,
+                            Fk_DashboardAdministrationRole = 1,
+                            Fk_DashboardView = 25
+                        },
+                        new
+                        {
+                            Id = 26,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fk_DashboardAccessLevel = 1,
+                            Fk_DashboardAdministrationRole = 1,
+                            Fk_DashboardView = 26
+                        },
+                        new
+                        {
+                            Id = 27,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fk_DashboardAccessLevel = 1,
+                            Fk_DashboardAdministrationRole = 1,
+                            Fk_DashboardView = 27
+                        },
+                        new
+                        {
+                            Id = 28,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fk_DashboardAccessLevel = 1,
+                            Fk_DashboardAdministrationRole = 1,
+                            Fk_DashboardView = 28
+                        },
+                        new
+                        {
+                            Id = 29,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fk_DashboardAccessLevel = 1,
+                            Fk_DashboardAdministrationRole = 1,
+                            Fk_DashboardView = 29
                         });
                 });
 
@@ -1047,6 +1143,90 @@ namespace DAL.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Sponsor",
                             ViewPath = "Sponsor"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "PlayerPosition",
+                            ViewPath = "PlayerPosition"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Player",
+                            ViewPath = "Player"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "PrivateLeague",
+                            ViewPath = "PrivateLeague"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "PrivateLeagueMember",
+                            ViewPath = "PrivateLeagueMember"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "ScoreType",
+                            ViewPath = "ScoreType"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "TeamPlayerType",
+                            ViewPath = "TeamPlayerType"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "PlayerGameWeak",
+                            ViewPath = "PlayerGameWeak"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "PlayerGameWeakScore",
+                            ViewPath = "PlayerGameWeakScore"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Season",
+                            ViewPath = "Season"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "GameWeak",
+                            ViewPath = "GameWeak"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "TeamGameWeak",
+                            ViewPath = "TeamGameWeak"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Standings",
+                            ViewPath = "Standings"
                         });
                 });
 
@@ -1196,6 +1376,90 @@ namespace DAL.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fk_Source = 17,
                             Name = "Sponsor"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fk_Source = 18,
+                            Name = "PlayerPosition"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fk_Source = 19,
+                            Name = "Player"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fk_Source = 20,
+                            Name = "PrivateLeague"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fk_Source = 21,
+                            Name = "PrivateLeagueMember"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fk_Source = 22,
+                            Name = "ScoreType"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fk_Source = 23,
+                            Name = "TeamPlayerType"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fk_Source = 24,
+                            Name = "PlayerGameWeak"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fk_Source = 25,
+                            Name = "PlayerGameWeakScore"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fk_Source = 26,
+                            Name = "Season"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fk_Source = 27,
+                            Name = "GameWeak"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fk_Source = 28,
+                            Name = "TeamGameWeak"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fk_Source = 29,
+                            Name = "Standings"
                         });
                 });
 
@@ -1832,9 +2096,6 @@ namespace DAL.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("StorageUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("_365_AfterGameStartId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("_365_SeasonId")
@@ -2545,7 +2806,7 @@ namespace DAL.Migrations
                             EmailAddress = "user@mail.com",
                             LastModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Developer",
-                            Password = "$2a$11$.BAbheoXcd92wJSio8Nt0.4sK3GMH6aGk5H4VM9DXd5eN4pw9Rgwe",
+                            Password = "$2a$11$p6ldbBMB3Qfd7qpKsJuhc.kce02MjEyJRl1aK0wiVyhcYMOd.2/Mu",
                             UserName = "Developer"
                         });
                 });

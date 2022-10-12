@@ -132,7 +132,7 @@ else
 
                                         @if (accessLevel.CreateAccess)
                                         {
-                                            <a id="create" asp-action="CreateOrEdit">
+                                            <a id="create" asp-action="CreateOrEdit" asp-route-Fk_Team="@Model.Fk_Team">
                                             </a>
                                         }
 

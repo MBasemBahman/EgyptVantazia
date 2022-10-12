@@ -16,6 +16,7 @@ namespace Repository.DBModels.SeasonModels
                            parameters.Fk_Home,
                            parameters.Fk_Away,
                            parameters.Fk_GameWeak,
+                           parameters.Fk_Season,
                            parameters._365_MatchId,
                            parameters.FromTime,
                            parameters.ToTime);
@@ -36,6 +37,7 @@ namespace Repository.DBModels.SeasonModels
             int Fk_Home,
             int Fk_Away,
             int Fk_GameWeak,
+            int fk_Season,
             string _365_MatchId,
             DateTime? fromTime,
             DateTime? toTime)
@@ -43,6 +45,7 @@ namespace Repository.DBModels.SeasonModels
             return TeamGameWeaks.Where(a => (id == 0 || a.Id == id) &&
                                             (Fk_Home == 0 || a.Fk_Home == Fk_Home) &&
                                             (Fk_Away == 0 || a.Fk_Away == Fk_Away) &&
+                                            (fk_Season == 0 || a.GameWeak.Fk_Season == fk_Season) &&
                                             (Fk_GameWeak == 0 || a.Fk_GameWeak == Fk_GameWeak) &&
                                             (string.IsNullOrWhiteSpace(_365_MatchId) || a._365_MatchId == _365_MatchId) &&
                                             (fromTime == null || a.StartTime >= fromTime) &&

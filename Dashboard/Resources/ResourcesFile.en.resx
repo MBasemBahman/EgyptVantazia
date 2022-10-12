@@ -144,11 +144,20 @@
   <data name="Accounts" xml:space="preserve">
     <value>Accounts</value>
   </data>
+  <data name="AccountTeam Data" xml:space="preserve">
+    <value>Account Team Data</value>
+  </data>
   <data name="Actions" xml:space="preserve">
     <value>Actions</value>
   </data>
   <data name="Add" xml:space="preserve">
     <value>Add</value>
+  </data>
+  <data name="Add Game Weak" xml:space="preserve">
+    <value>Add Game Weak</value>
+  </data>
+  <data name="Add Prices" xml:space="preserve">
+    <value>Add Prices</value>
   </data>
   <data name="AddNew" xml:space="preserve">
     <value>AddNew</value>
@@ -161,6 +170,9 @@
   </data>
   <data name="Advanced Settings" xml:space="preserve">
     <value>Advanced Settings</value>
+  </data>
+  <data name="Age" xml:space="preserve">
+    <value>Age</value>
   </data>
   <data name="All" xml:space="preserve">
     <value>All</value>
@@ -186,11 +198,23 @@
   <data name="August" xml:space="preserve">
     <value>August</value>
   </data>
+  <data name="AwayGameWeaks" xml:space="preserve">
+    <value>Away Game Weaks</value>
+  </data>
+  <data name="AwayScore" xml:space="preserve">
+    <value>Away Score</value>
+  </data>
+  <data name="AwayTeam" xml:space="preserve">
+    <value>Away Team</value>
+  </data>
   <data name="Back" xml:space="preserve">
     <value>Back</value>
   </data>
   <data name="Back to home" xml:space="preserve">
     <value>Back to home</value>
+  </data>
+  <data name="BuyPrice" xml:space="preserve">
+    <value>Buy Price</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
@@ -375,8 +399,20 @@
   <data name="GameWeak" xml:space="preserve">
     <value>Game Weak</value>
   </data>
+  <data name="GameWeaks" xml:space="preserve">
+    <value>Game Weaks</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
+  </data>
+  <data name="HomeGameWeaks" xml:space="preserve">
+    <value>Home Game Weaks</value>
+  </data>
+  <data name="HomeScore" xml:space="preserve">
+    <value>Home Score</value>
+  </data>
+  <data name="HomeTeam" xml:space="preserve">
+    <value>Home Team</value>
   </data>
   <data name="Image" xml:space="preserve">
     <value>Image</value>
@@ -395,6 +431,12 @@
   </data>
   <data name="IsActive" xml:space="preserve">
     <value>IsActive</value>
+  </data>
+  <data name="IsAdmin" xml:space="preserve">
+    <value>Is Admin?</value>
+  </data>
+  <data name="IsEnded" xml:space="preserve">
+    <value>Is Ended?</value>
   </data>
   <data name="January" xml:space="preserve">
     <value>January</value>
@@ -534,6 +576,33 @@
   <data name="PhoneNumber" xml:space="preserve">
     <value>Phone Number</value>
   </data>
+  <data name="Player" xml:space="preserve">
+    <value>Player</value>
+  </data>
+  <data name="Player Details" xml:space="preserve">
+    <value>Player Details</value>
+  </data>
+  <data name="Player Profile" xml:space="preserve">
+    <value>Player Profile</value>
+  </data>
+  <data name="PlayerNumber" xml:space="preserve">
+    <value>Player Number</value>
+  </data>
+  <data name="PlayerPosition" xml:space="preserve">
+    <value>Player Position</value>
+  </data>
+  <data name="PlayerPositions" xml:space="preserve">
+    <value>Player Positions</value>
+  </data>
+  <data name="PlayerPrices" xml:space="preserve">
+    <value>Player Prices</value>
+  </data>
+  <data name="Players" xml:space="preserve">
+    <value>Players</value>
+  </data>
+  <data name="PlayerScore Data" xml:space="preserve">
+    <value>Player Score Data</value>
+  </data>
   <data name="Please sign-in to your account and start the adventure" xml:space="preserve">
     <value>Please sign-in to your account and start the adventure</value>
   </data>
@@ -545,6 +614,18 @@
   </data>
   <data name="Print" xml:space="preserve">
     <value>Print</value>
+  </data>
+  <data name="PrivateLeague" xml:space="preserve">
+    <value>Private League</value>
+  </data>
+  <data name="PrivateLeague Data" xml:space="preserve">
+    <value>Private League Data</value>
+  </data>
+  <data name="PrivateLeagueMembers" xml:space="preserve">
+    <value>Private League Members</value>
+  </data>
+  <data name="PrivateLeagues" xml:space="preserve">
+    <value>Private Leagues</value>
   </data>
   <data name="Prizes" xml:space="preserve">
     <value>Prizes</value>
@@ -564,11 +645,32 @@
   <data name="Reset" xml:space="preserve">
     <value>Reset</value>
   </data>
+  <data name="ScoreType" xml:space="preserve">
+    <value>Score Type</value>
+  </data>
+  <data name="ScoreTypes" xml:space="preserve">
+    <value>Score Types</value>
+  </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>
   </data>
+  <data name="Season" xml:space="preserve">
+    <value>Seasons</value>
+  </data>
+  <data name="Season Details" xml:space="preserve">
+    <value>Season Details</value>
+  </data>
+  <data name="Season Profile" xml:space="preserve">
+    <value>Season Profile</value>
+  </data>
+  <data name="Seasons" xml:space="preserve">
+    <value>Seasons</value>
+  </data>
   <data name="Select All" xml:space="preserve">
     <value>Select All</value>
+  </data>
+  <data name="SellPrice" xml:space="preserve">
+    <value>Sell Price</value>
   </data>
   <data name="ShortDescription" xml:space="preserve">
     <value>Short Description</value>
@@ -578,6 +680,12 @@
   </data>
   <data name="ShortDescription English" xml:space="preserve">
     <value>Short Description English</value>
+  </data>
+  <data name="ShortName Arabic" xml:space="preserve">
+    <value>Short Name Arabic</value>
+  </data>
+  <data name="ShortName English" xml:space="preserve">
+    <value>Short Name English</value>
   </data>
   <data name="SnapChatUrl" xml:space="preserve">
     <value>SnapChat Url</value>
@@ -593,6 +701,9 @@
   </data>
   <data name="SponsorViewsCount" xml:space="preserve">
     <value>Sponsor Views</value>
+  </data>
+  <data name="StartTime" xml:space="preserve">
+    <value>Start Time</value>
   </data>
   <data name="String1" xml:space="preserve">
     <value />
@@ -612,8 +723,23 @@
   <data name="Team Profile" xml:space="preserve">
     <value>Team Profile</value>
   </data>
+  <data name="TeamGameWeak" xml:space="preserve">
+    <value>Team Game Weak</value>
+  </data>
+  <data name="TeamGameWeaks" xml:space="preserve">
+    <value>Team Game Weaks</value>
+  </data>
+  <data name="TeamPlayerType" xml:space="preserve">
+    <value>TeamPlayerType</value>
+  </data>
+  <data name="TeamPlayerTypes" xml:space="preserve">
+    <value>Team Player Types</value>
+  </data>
   <data name="Teams" xml:space="preserve">
     <value>Teams</value>
+  </data>
+  <data name="Teams Data" xml:space="preserve">
+    <value>Teams Data</value>
   </data>
   <data name="TermsAndConditions" xml:space="preserve">
     <value>Terms And Conditions</value>
@@ -632,6 +758,9 @@
   </data>
   <data name="TwitterUrl" xml:space="preserve">
     <value>Twitter Url</value>
+  </data>
+  <data name="UniqueCode" xml:space="preserve">
+    <value>Unique Code</value>
   </data>
   <data name="Upload Attachment" xml:space="preserve">
     <value>Upload Attachment</value>
@@ -695,6 +824,12 @@
   </data>
   <data name="Your new password must be different from previously used passwords" xml:space="preserve">
     <value>Your new password must be different from previously used passwords</value>
+  </data>
+  <data name="_365_PlayerId" xml:space="preserve">
+    <value>_365_PlayerId</value>
+  </data>
+  <data name="_365_SeasonId" xml:space="preserve">
+    <value>_365_SeasonId</value>
   </data>
   <data name="_Details" xml:space="preserve">
     <value>Details</value>

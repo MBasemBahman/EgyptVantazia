@@ -11,6 +11,8 @@ namespace Entities.CoreServicesModels.SeasonModels
 
         public int Fk_Away { get; set; }
 
+        public int Fk_Season { get; set; }
+
         [DisplayName(nameof(GameWeak))]
         public int Fk_GameWeak { get; set; }
 
@@ -55,6 +57,40 @@ namespace Entities.CoreServicesModels.SeasonModels
 
         [DisplayName(nameof(StartTime))]
         public string StartTimeString => StartTime.ToShortDateTimeString();
+
+        [DisplayName(nameof(_365_MatchId))]
+        public string _365_MatchId { get; set; }
+
+        [DisplayName(nameof(IsEnded))]
+        public bool IsEnded { get; set; }
+    }
+
+    public class TeamGameWeakCreateOrEditModel
+    {
+        [DisplayName(nameof(Season))]
+        public int Fk_Season { get; set; }
+
+        [DisplayName(nameof(GameWeak))]
+        public int Fk_GameWeak { get; set; }
+
+        [DisplayName("Home")]
+        public int Fk_Home { get; set; }
+
+        [DisplayName("Away")]
+        public int Fk_Away { get; set; }
+
+
+        [DisplayName(nameof(HomeScore))]
+        public int HomeScore { get; set; }
+
+        [DisplayName(nameof(AwayScore))]
+        public int AwayScore { get; set; }
+
+        [DisplayName(nameof(StartTime))]
+        public DateTime StartTime { get; set; }
+
+        [DisplayName(nameof(IsEnded))]
+        public bool IsEnded { get; set; }
 
         [DisplayName(nameof(_365_MatchId))]
         public string _365_MatchId { get; set; }

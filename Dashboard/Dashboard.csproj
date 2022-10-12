@@ -32,6 +32,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\Uploud\Account\" />
     <Folder Include="wwwroot\Uploud\Country\" />
+    <Folder Include="wwwroot\Uploud\Season\" />
     <Folder Include="wwwroot\Uploud\Player\" />
     <Folder Include="wwwroot\Uploud\PlayerPosition\" />
     <Folder Include="wwwroot\Uploud\Sponsor\" />

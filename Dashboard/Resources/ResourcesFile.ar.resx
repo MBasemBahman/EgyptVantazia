@@ -702,4 +702,136 @@
   <data name="AboutCompany" xml:space="preserve">
     <value>عن الشركة</value>
   </data>
+  <data name="AccountTeam Data" xml:space="preserve">
+    <value>بيانات حساب الفريق</value>
+  </data>
+  <data name="Age" xml:space="preserve">
+    <value>السن</value>
+  </data>
+  <data name="IsAdmin" xml:space="preserve">
+    <value>Is Admin?</value>
+  </data>
+  <data name="Player" xml:space="preserve">
+    <value>اللاعب</value>
+  </data>
+  <data name="PlayerPosition" xml:space="preserve">
+    <value>مركز اللاعب</value>
+  </data>
+  <data name="PlayerPositions" xml:space="preserve">
+    <value>مراكز اللاعبين</value>
+  </data>
+  <data name="Players" xml:space="preserve">
+    <value>اللاعبين</value>
+  </data>
+  <data name="PlayerScore Data" xml:space="preserve">
+    <value>بيانات نقاط اللاعب</value>
+  </data>
+  <data name="PrivateLeague" xml:space="preserve">
+    <value>الدوري الخاص</value>
+  </data>
+  <data name="PrivateLeague Data" xml:space="preserve">
+    <value>بيانات الدوري الخاص</value>
+  </data>
+  <data name="PrivateLeagueMembers" xml:space="preserve">
+    <value>اعضاء الدوري الخاص</value>
+  </data>
+  <data name="PrivateLeagues" xml:space="preserve">
+    <value>الدوري الخاص</value>
+  </data>
+  <data name="ScoreType" xml:space="preserve">
+    <value>نوع النتيجة</value>
+  </data>
+  <data name="ScoreTypes" xml:space="preserve">
+    <value>انواع النتيجة</value>
+  </data>
+  <data name="TeamPlayerType" xml:space="preserve">
+    <value>نوع لاعب الفريق</value>
+  </data>
+  <data name="TeamPlayerTypes" xml:space="preserve">
+    <value>انواع لاعبين الفرق</value>
+  </data>
+  <data name="Teams Data" xml:space="preserve">
+    <value>بيانات الفرق</value>
+  </data>
+  <data name="Add Prices" xml:space="preserve">
+    <value>اضافة سعر</value>
+  </data>
+  <data name="BuyPrice" xml:space="preserve">
+    <value>سعر الشراء</value>
+  </data>
+  <data name="PlayerNumber" xml:space="preserve">
+    <value>رقم اللاعب</value>
+  </data>
+  <data name="PlayerPrices" xml:space="preserve">
+    <value>سعر اللاعب</value>
+  </data>
+  <data name="SellPrice" xml:space="preserve">
+    <value>سعر البيع</value>
+  </data>
+  <data name="ShortName Arabic" xml:space="preserve">
+    <value>اسم قصير بالعربية</value>
+  </data>
+  <data name="ShortName English" xml:space="preserve">
+    <value>اسم قصير بالانجليزية</value>
+  </data>
+  <data name="_365_PlayerId" xml:space="preserve">
+    <value>_365_PlayerId</value>
+  </data>
+  <data name="Add Game Weak" xml:space="preserve">
+    <value>Add Game Weak</value>
+  </data>
+  <data name="GameWeaks" xml:space="preserve">
+    <value>Game Weaks</value>
+  </data>
+  <data name="Player Details" xml:space="preserve">
+    <value>Player Details</value>
+  </data>
+  <data name="Player Profile" xml:space="preserve">
+    <value>Player Profile</value>
+  </data>
+  <data name="Season" xml:space="preserve">
+    <value>Seasons</value>
+  </data>
+  <data name="Seasons" xml:space="preserve">
+    <value>Seasons</value>
+  </data>
+  <data name="_365_SeasonId" xml:space="preserve">
+    <value>_365_SeasonId</value>
+  </data>
+  <data name="AwayScore" xml:space="preserve">
+    <value>Away Score</value>
+  </data>
+  <data name="AwayTeam" xml:space="preserve">
+    <value>Away Team</value>
+  </data>
+  <data name="HomeScore" xml:space="preserve">
+    <value>Home Score</value>
+  </data>
+  <data name="HomeTeam" xml:space="preserve">
+    <value>Home Team</value>
+  </data>
+  <data name="IsEnded" xml:space="preserve">
+    <value>Is Ended?</value>
+  </data>
+  <data name="Season Details" xml:space="preserve">
+    <value>Season Details</value>
+  </data>
+  <data name="Season Profile" xml:space="preserve">
+    <value>Season Profile</value>
+  </data>
+  <data name="StartTime" xml:space="preserve">
+    <value>Start Time</value>
+  </data>
+  <data name="TeamGameWeak" xml:space="preserve">
+    <value>Team Game Weak</value>
+  </data>
+  <data name="TeamGameWeaks" xml:space="preserve">
+    <value>Team Game Weaks</value>
+  </data>
+  <data name="AwayGameWeaks" xml:space="preserve">
+    <value>Away Game Weaks</value>
+  </data>
+  <data name="HomeGameWeaks" xml:space="preserve">
+    <value>Home Game Weaks</value>
+  </data>
 </root>

@@ -1,0 +1,92 @@
+﻿@model SeasonDto
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var gameWeak = new GameWeakDto();
+    ViewBag.emptyLayout = true;
+}
+
+<div class="card">
+    <div class="card-body">
+      
+        <div class="row">
+
+            <div class="col-xl-6 col-12">
+                <dl class="row mb-0">
+
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.Name):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.Name</dd>
+
+                  
+
+
+                </dl>
+            </div>
+            <div class="col-xl-6 col-12">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model._365_SeasonId):</dt>
+                    <dd class="col-sm-8 mb-1">@Model._365_SeasonId</dd>
+
+                </dl>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+                <span class="badge bg-light-primary">@Html.DisplayNameFor(model => Model.GameWeaks)</span>
+            </div>
+            <br />
+
+            @if (Model.GameWeaks != null && Model.GameWeaks.Any())
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                         <th>@Html.DisplayNameFor(model => gameWeak.Name)</th>
+                            <th>@Html.DisplayNameFor(model => gameWeak._365_GameWeakId)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.GameWeaks)
+                        {
+                            <tr>
+                              
+                                <td>@item.Name</td>
+                                <td>@item._365_GameWeakId</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>@Localizer.Get("Not Found")</p>
+
+            }
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-xl-6 col-12">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.CreatedAt):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.CreatedAt</dd>
+
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.LastModifiedAt):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.LastModifiedAt</dd>
+
+
+                   
+                </dl>
+            </div>
+            <div class="col-xl-6 col-12">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.CreatedBy):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.CreatedBy</dd>
+
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.LastModifiedBy):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.LastModifiedBy</dd>
+                </dl>
+            </div>
+        </div>
+      
+    </div>
+</div>

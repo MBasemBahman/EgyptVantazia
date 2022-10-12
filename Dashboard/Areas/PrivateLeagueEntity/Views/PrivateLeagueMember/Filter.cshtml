@@ -20,6 +20,7 @@
                     <label asp-for="Fk_PrivateLeague" class="form-label"></label>
                     <div class="mb-0">
                         <select asp-for="Fk_PrivateLeague" class="select2 form-select" asp-items="@(new SelectList(ViewData["PrivateLeague"] as Dictionary<string,string>,"Key","Value"))">
+                       <option value="0">@Localizer.Get("All")</option>
                         </select>
                     </div>
                 </div>

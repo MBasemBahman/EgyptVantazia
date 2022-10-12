@@ -1,6 +1,7 @@
 ﻿using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.SeasonModels;
+using Entities.DBModels.TeamModels;
 
 namespace CoreServices.Logic
 {
@@ -80,6 +81,73 @@ namespace CoreServices.Logic
                    .FirstOrDefault();
         }
 
+        public Season AddSeasonGameWeaks(Season season, List<GameWeakCreateOrEditModel> gameWeaks)
+        {
+
+            if (gameWeaks != null && gameWeaks.Any())
+            {
+                foreach (var gameWeak in gameWeaks)
+                {
+                    CreateGameWeak(new GameWeak
+                    {
+                        Fk_Season = season.Id,
+                        Name = gameWeak.Name,
+                        _365_GameWeakId = gameWeak._365_GameWeakId,
+                       GameWeakLang = new GameWeakLang
+                       {
+                           Name = gameWeak.NameEn
+                       }
+                    });
+                }
+            }
+            return season;
+        }
+
+        public async Task<Season> DeleteSeasonGameWeaks(Season season, List<int> gameWeakIds)
+        {
+            if (gameWeakIds != null && gameWeakIds.Any())
+            {
+                foreach (int id in gameWeakIds)
+                {
+                    await DeleteGameWeak(id);
+                }
+            }
+
+            return season;
+        }
+
+        public async Task<Season> UpdateSeasonGameWeaks(Season season, List<GameWeakCreateOrEditModel> newData)
+        {
+            List<int> oldData = GetGameWeaks(new GameWeakParameters { Fk_Season = season.Id }, otherLang: false).Select(a => a.Id).ToList();
+
+            List<int> AddData = newData.Select(a => a.Id).ToList().Except(oldData).ToList();
+
+            List<int> RmvData = oldData.Except(newData.Select(a => a.Id).ToList()).ToList();
+
+            List<GameWeakCreateOrEditModel> DataToUpdate = newData.Where(a => oldData.Contains(a.Id)).ToList();
+
+            season = AddSeasonGameWeaks(season, newData.Where(a => AddData.Contains(a.Id)).ToList());
+
+            season = await DeleteSeasonGameWeaks(season, RmvData);
+
+            if (DataToUpdate != null && DataToUpdate.Any())
+            {
+                foreach (var data in DataToUpdate)
+                {
+                    GameWeak dataDb = await FindGameWeakbyId(data.Id, trackChanges: true);
+                    dataDb.Name = data.Name;
+                    dataDb._365_GameWeakId = data._365_GameWeakId;
+                    dataDb.GameWeakLang.Name = data.NameEn;
+                }
+            }
+            return season;
+        }
+
+        public async Task<string> UploudSeasonImage(string rootPath, IFormFile file)
+        {
+            FileUploader uploader = new(rootPath);
+            return await uploader.UploudFile(file, "Uploud/Season");
+        }
         #endregion
 
         #region GameWeak Services
@@ -122,6 +190,12 @@ namespace CoreServices.Logic
             return await _repository.GameWeak.FindById(id, trackChanges);
         }
 
+        public List<GameWeak> FindGameWeaks(GameWeakParameters parameters, bool trackChanges)
+        {
+            return  _repository.GameWeak.FindAll(parameters, trackChanges)
+                 .Include(a => a.GameWeakLang).ToList();
+        }
+
         public Dictionary<string,string> GetGameWeakLookUp(GameWeakParameters parameters,bool otherLang)
         {
             return GetGameWeaks(parameters, otherLang)
@@ -158,6 +232,7 @@ namespace CoreServices.Logic
                        .Select(a => new TeamGameWeakModel
                        {
                            Id = a.Id,
+                           IsEnded = a.IsEnded,
                            CreatedAt = a.CreatedAt,
                            CreatedBy = a.CreatedBy,
                            LastModifiedAt = a.LastModifiedAt,
@@ -184,7 +259,12 @@ namespace CoreServices.Logic
                            GameWeak = new GameWeakModel
                            {
                                Name = otherLang ? a.GameWeak.GameWeakLang.Name : a.GameWeak.Name,
-                               _365_GameWeakId = a.GameWeak._365_GameWeakId
+                               _365_GameWeakId = a.GameWeak._365_GameWeakId,
+                               Fk_Season = a.GameWeak.Fk_Season,
+                               Season = new SeasonModel
+                               {
+                                   Name = otherLang?a.GameWeak.Season.SeasonLang.Name : a.GameWeak.Season.Name
+                               }
                            }
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)

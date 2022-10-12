@@ -71,6 +71,16 @@
                                                             <span class="fw-bold">@Html.DisplayNameFor(model => profileItem.Players)</span>
                                                         </a>
                                                     </li>
+                                                    <li class="nav-item ">
+                                                        <a id="/SeasonEntity/TeamGameWeak/Index/?Fk_Home=@Model.Id&ProfileLayOut=true" class="nav-link tab-item   @(returnItem==(int)TeamProfileItems.HomeTeamGameWeak ? "active" : "")">
+                                                            <span class="fw-bold">@Html.DisplayNameFor(model => profileItem.HomeGameWeaks)</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item ">
+                                                        <a id="/SeasonEntity/TeamGameWeak/Index/?Fk_Away=@Model.Id&ProfileLayOut=true" class="nav-link tab-item   @(returnItem==(int)TeamProfileItems.AwayTeamGameWeak ? "active" : "")">
+                                                            <span class="fw-bold">@Html.DisplayNameFor(model => profileItem.AwayGameWeaks)</span>
+                                                        </a>
+                                                    </li>
 
 
 

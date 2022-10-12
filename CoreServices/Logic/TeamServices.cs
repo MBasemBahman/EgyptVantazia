@@ -244,7 +244,7 @@ namespace CoreServices.Logic
                            LastModifiedBy = a.LastModifiedBy,
                            BuyPrice = a.BuyPrice,
                            Fk_Player = a.Fk_Player,
-                           Fk_Team = a.Fk_Player,
+                           Fk_Team = a.Fk_Team,
                            SellPrice = a.SellPrice,
                            Team = new TeamModel
                            {

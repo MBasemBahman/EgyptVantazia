@@ -27,4 +27,20 @@ namespace Entities.CoreServicesModels.SeasonModels
         [DisplayName(nameof(Season))]
         public SeasonModel Season { get; set; }
     }
+
+    public class GameWeakCreateOrEditModel
+    {
+        [DisplayName($"{nameof(Name)}{PropertyAttributeConstants.ArLang}")]
+        [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
+        public string Name { get; set; }
+
+        [DisplayName($"{nameof(Name)}{PropertyAttributeConstants.EnLang}")]
+        [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
+        public string NameEn { get; set; }
+
+        [DisplayName(nameof(_365_GameWeakId))]
+        public string _365_GameWeakId { get; set; }
+
+        public int Id { get; set; }
+    }
 }

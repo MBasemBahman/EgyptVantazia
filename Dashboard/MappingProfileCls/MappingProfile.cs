@@ -7,6 +7,10 @@ using Dashboard.Areas.LogEntity.Models;
 using Dashboard.Areas.UserEntity.Models;
 using Dashboard.Areas.NewsEntity.Models;
 using Dashboard.Areas.SponsorEntity.Models;
+using Dashboard.Areas.SeasonEntity.Models;
+using Dashboard.Areas.AccountTeamEntity.Models;
+using Dashboard.Areas.PrivateLeagueEntity.Models;
+using Dashboard.Areas.PlayerScoreEntity.Models;
 using Entities.CoreServicesModels.AccountModels;
 using Entities.CoreServicesModels.AppInfoModels;
 using Entities.CoreServicesModels.SponsorModels;
@@ -14,15 +18,23 @@ using Entities.CoreServicesModels.NewsModels;
 using Entities.CoreServicesModels.LocationModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.CoreServicesModels.LogModels;
+using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.UserModels;
+using Entities.CoreServicesModels.AccountTeamModels;
+using Entities.CoreServicesModels.PlayerScoreModels;
+using Entities.CoreServicesModels.PrivateLeagueModels;
 using Entities.DBModels.AccountModels;
 using Entities.DBModels.AppInfoModels;
+using Entities.DBModels.SeasonModels;
 using Entities.DBModels.TeamModels;
 using Entities.DBModels.NewsModels;
 using Entities.DBModels.DashboardAdministrationModels;
 using Entities.DBModels.LocationModels;
 using Entities.DBModels.SharedModels;
 using Entities.DBModels.SponsorModels;
+using Entities.DBModels.AccountTeamModels;
+using Entities.DBModels.PlayerScoreModels;
+using Entities.DBModels.PrivateLeagueModels;
 using Entities.RequestFeatures;
 
 namespace Dashboard.MappingProfileCls
@@ -234,7 +246,6 @@ namespace Dashboard.MappingProfileCls
 
             #endregion
 
-
             #region Player
             _ = CreateMap<Player, PlayerCreateOrEditModel>()
                 .ForMember(dest => dest.PlayerPrices,opt => opt.Ignore());
@@ -312,6 +323,105 @@ namespace Dashboard.MappingProfileCls
 
             #endregion
 
+            #region Account Team Models
+
+            #region TeamPlayerType
+            _ = CreateMap<TeamPlayerType, TeamPlayerTypeCreateOrEditModel>();
+
+            _ = CreateMap<TeamPlayerTypeCreateOrEditModel, TeamPlayerType>();
+
+            _ = CreateMap<TeamPlayerTypeModel, TeamPlayerTypeDto>();
+
+            _ = CreateMap<TeamPlayerTypeFilter, RequestParameters>();
+
+            _ = CreateMap<TeamPlayerTypeLangModel, TeamPlayerTypeLang>();
+
+            _ = CreateMap<TeamPlayerTypeLang, TeamPlayerTypeLangModel>();
+
+            #endregion
+
+            #endregion
+
+            #region Private League Models
+
+            #region PrivateLeague
+            _ = CreateMap<PrivateLeague, PrivateLeagueCreateOrEditModel>();
+
+            _ = CreateMap<PrivateLeagueCreateOrEditModel, PrivateLeague>();
+
+            _ = CreateMap<PrivateLeagueModel, PrivateLeagueDto>();
+
+            _ = CreateMap<PrivateLeagueFilter, PrivateLeagueParameters>();
+
+            #endregion
+
+            #region PrivateLeagueMember
+            _ = CreateMap<PrivateLeagueMemberModel, PrivateLeagueMemberDto>();
+
+            _ = CreateMap<PrivateLeagueMemberFilter, PrivateLeagueMemberParameters>();
+
+            #endregion
+
+            #endregion
+
+
+            #region Player Score Models
+
+            #region ScoreType
+            _ = CreateMap<ScoreType, ScoreTypeCreateOrEditModel>();
+
+            _ = CreateMap<ScoreTypeCreateOrEditModel, ScoreType>();
+
+            _ = CreateMap<ScoreTypeModel, ScoreTypeDto>();
+
+            _ = CreateMap<ScoreTypeFilter, ScoreTypeParameters>();
+
+            _ = CreateMap<ScoreTypeLangModel, ScoreTypeLang>();
+
+            _ = CreateMap<ScoreTypeLang, ScoreTypeLangModel>();
+            #endregion
+            #endregion
+
+
+            #region Season Models
+
+            #region Season
+            _ = CreateMap<Season, SeasonCreateOrEditModel>()
+                .ForMember(dest => dest.GameWeaks, opt => opt.Ignore());
+
+            _ = CreateMap<SeasonCreateOrEditModel, Season>()
+                .ForMember(dest => dest.GameWeaks, opt => opt.Ignore())
+                .ForMember(dest => dest.ImageUrl, opt => opt.Ignore())
+                .ForMember(dest => dest.StorageUrl, opt => opt.Ignore());
+
+            _ = CreateMap<SeasonModel, SeasonDto>();
+
+            _ = CreateMap<SeasonFilter, SeasonParameters>();
+
+            _ = CreateMap<SeasonLangModel, SeasonLang>();
+
+            _ = CreateMap<SeasonLang, SeasonLangModel>();
+
+            #endregion
+
+            #region  Game Weak
+            CreateMap<GameWeakModel, GameWeakDto>();
+            CreateMap<GameWeak, GameWeakCreateOrEditModel>()
+                .ForMember(dest => dest.NameEn,opt => opt.MapFrom(src=>src.GameWeakLang.Name));
+            #endregion
+
+
+            #region Team Game Weak
+            _ = CreateMap<TeamGameWeak, TeamGameWeakCreateOrEditModel>();
+
+            _ = CreateMap<TeamGameWeakCreateOrEditModel, TeamGameWeak>();
+
+            _ = CreateMap<TeamGameWeakModel, TeamGameWeakDto>();
+
+            _ = CreateMap<TeamGameWeakFilter, TeamGameWeakParameters>();
+            #endregion
+
+            #endregion
 
         }
     }

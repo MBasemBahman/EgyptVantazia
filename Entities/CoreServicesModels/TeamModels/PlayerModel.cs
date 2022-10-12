@@ -101,7 +101,7 @@ namespace Entities.CoreServicesModels.TeamModels
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
 
-        [DisplayName($"{nameof(ShortName)}{PropertyAttributeConstants.ArLang}")]
+        [DisplayName($"{nameof(ShortName)}{PropertyAttributeConstants.EnLang}")]
         public string ShortName { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
 
     public class ScoreTypeModel : AuditLookUpEntity
     {
-        [DisplayName($"{nameof(Name)}{PropertyAttributeConstants.ArLang}")]
+        [DisplayName($"{nameof(Name)}")]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public new string Name { get; set; }
 

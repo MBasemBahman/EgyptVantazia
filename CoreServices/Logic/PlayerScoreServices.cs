@@ -134,6 +134,65 @@ namespace CoreServices.Logic
         {
             return _repository.PlayerGameWeak.Count();
         }
+
+        public PlayerGameWeak AddPlayerGameWeakScores(PlayerGameWeak player, List<PlayerGameWeakScoreCreateOrEditModel> scores)
+        {
+
+            if (scores != null && scores.Any())
+            {
+                foreach (var score in scores)
+                {
+                    CreatePlayerGameWeakScore(new PlayerGameWeakScore
+                    {
+                        Fk_PlayerGameWeak = player.Id,
+                        Fk_ScoreType = score.Fk_ScoreType,
+                        Value = score.Value,
+                        Points = score.Points
+                    });
+                }
+            }
+            return player;
+        }
+
+        public async Task<PlayerGameWeak> DeletePlayerGameWeakScores(PlayerGameWeak player, List<int> scoreIds)
+        {
+            if (scoreIds != null && scoreIds.Any())
+            {
+                foreach (int id in scoreIds)
+                {
+                    await DeletePlayerGameWeakScore(id);
+                }
+            }
+
+            return player;
+        }
+
+        public async Task<PlayerGameWeak> UpdatePlayerGameWeakScores(PlayerGameWeak player, List<PlayerGameWeakScoreCreateOrEditModel> newData)
+        {
+            List<int> oldData = GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters { Fk_PlayerGameWeak = player.Id }, otherLang: false).Select(a => a.Id).ToList();
+
+            List<int> AddData = newData.Select(a => a.Id).ToList().Except(oldData).ToList();
+
+            List<int> RmvData = oldData.Except(newData.Select(a => a.Id).ToList()).ToList();
+
+            List<PlayerGameWeakScoreCreateOrEditModel> DataToUpdate = newData.Where(a => oldData.Contains(a.Id)).ToList();
+
+            player = AddPlayerGameWeakScores(player, newData.Where(a => AddData.Contains(a.Id)).ToList());
+
+            player = await DeletePlayerGameWeakScores(player, RmvData);
+
+            if (DataToUpdate != null && DataToUpdate.Any())
+            {
+                foreach (var data in DataToUpdate)
+                {
+                    PlayerGameWeakScore dataDb = await FindPlayerGameWeakScorebyId(data.Id, trackChanges: true);
+                    dataDb.Fk_ScoreType = data.Fk_ScoreType;
+                    dataDb.Value = data.Value;
+                    dataDb.Points = data.Points;
+                }
+            }
+            return player;
+        }
         #endregion
 
         #region PlayerGameWeakScore Services

@@ -37,7 +37,14 @@
             Player =  19,
             PrivateLeague = 20,
             PrivateLeagueMember = 21,
-            ScoreType = 22
+            ScoreType = 22,
+            TeamPlayerType = 23,
+            PlayerGameWeak = 24,
+            PlayerGameWeakScore = 25,
+            Season = 26,
+            GameWeak = 27,
+            TeamGameWeak = 28,
+            Standings  = 29
         }
     }
 }

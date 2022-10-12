@@ -102,6 +102,19 @@
                     </a>
                 </li>
             }
+               @if (viewList.Contains((int)DashboardViewEnum.Standings))
+            {
+                <li id="StandingsList" class="@(active ==DashboardViewEnum.Standings.ToString()?"active":"") nav-item">
+                    <a class="d-flex align-items-center"
+                   asp-action="Index" asp-area="StandingsEntity"
+                   asp-controller="Standings">
+                        <i data-feather='file-text'></i>
+                        <span class="menu-title text-truncate">
+                            @Localizer.Get("Standings")
+                        </span>
+                    </a>
+                </li>
+            }
                  @if (viewList.Contains((int)DashboardViewEnum.TeamGameWeak))
             {
                 <li id="TeamGameWeakList" class="@(active ==DashboardViewEnum.TeamGameWeak.ToString()?"active":"") nav-item">

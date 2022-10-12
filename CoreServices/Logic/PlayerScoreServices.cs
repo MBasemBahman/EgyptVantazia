@@ -47,6 +47,10 @@ namespace CoreServices.Logic
             return await _repository.ScoreType.FindById(id, trackChanges);
         }
 
+        public Dictionary<string,string> GetScoreTypesLookUp(ScoreTypeParameters parameters,bool otherLang)
+        {
+            return GetScoreTypes(parameters, otherLang).ToDictionary(a => a.Id.ToString(), a => a.Name);
+        }
         public void CreateScoreType(ScoreType ScoreType)
         {
             _repository.ScoreType.Create(ScoreType);
@@ -84,10 +88,16 @@ namespace CoreServices.Logic
                            LastModifiedBy = a.LastModifiedBy,
                            Fk_GameWeak = a.Fk_GameWeak,
                            Fk_Player = a.Fk_Player,
+                           Ranking = a.Ranking,
                            GameWeak = new GameWeakModel
                            {
                                Name = otherLang ? a.GameWeak.GameWeakLang.Name : a.GameWeak.Name,
-                               _365_GameWeakId = a.GameWeak._365_GameWeakId
+                               _365_GameWeakId = a.GameWeak._365_GameWeakId,
+                               Fk_Season = a.GameWeak.Fk_Season,
+                               Season = new SeasonModel
+                               {
+                                   Name = otherLang ? a.GameWeak.Season.SeasonLang.Name : a.GameWeak.Season.Name
+                               }
                            },
                            Player = new PlayerModel
                            {

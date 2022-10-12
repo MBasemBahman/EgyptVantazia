@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = $"{Localizer.Get("Player Profile")}";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var profileItem = new Team();
+    var profileItem = new Player();
     int returnItem = ViewData["returnItem"] != null ? (int)ViewData["returnItem"] : (int)PlayerProfileItems.Details;
     bool ltr = ViewData["otherLang"]!=null ? (bool)ViewData["otherLang"] : false;
     string views = (string)ContextAccessor.HttpContext.Request.Cookies[ViewDataConstants.Views];
@@ -62,11 +62,15 @@
                                         <div class="profile-tabs d-flex justify-content-between flex-wrap mt-1 mt-md-0">
                                             <ul class="nav nav-pills mb-0">
                                                  <li class="nav-item ">
-                                                        <a id="/TeamEntity/Player/Details/@Model.Id" class="nav-link tab-item  @(returnItem==(int)TeamProfileItems.Details ? "active" : "")">
+                                                        <a id="/TeamEntity/Player/Details/@Model.Id" class="nav-link tab-item  @(returnItem==(int)PlayerProfileItems.Details ? "active" : "")">
                                                             <span class="fw-bold">@Localizer.Get("Player Details")</span>
                                                     </a>
                                                 </li>
-                                               
+                                                    <li class="nav-item ">
+                                                        <a id="/PlayerScoreEntity/PlayerGameWeak/Index/?Fk_Player=@Model.Id&ProfileLayOut=true" class="nav-link tab-item   @(returnItem==(int)PlayerProfileItems.PlayerGameWeak ? "active" : "")">
+                                                            <span class="fw-bold">@Html.DisplayNameFor(model => profileItem.PlayerGameWeaks)</span>
+                                                        </a>
+                                                    </li>
                                             
 
 

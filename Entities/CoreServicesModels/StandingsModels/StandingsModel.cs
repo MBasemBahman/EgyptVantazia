@@ -52,6 +52,12 @@ namespace Entities.CoreServicesModels.StandingsModels
         [DisplayName(nameof(Ratio))]
         public double Ratio { get; set; }
 
+        [DisplayName(nameof(Strike))]
+        public int Strike { get; set; }
+
+        [DisplayName(nameof(Position))]
+        public int Position { get; set; }
+
         [DisplayName(nameof(Points))]
         public int Points { get; set; }
     }

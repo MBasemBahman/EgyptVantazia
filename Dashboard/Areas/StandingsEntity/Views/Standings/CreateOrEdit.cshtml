@@ -1,0 +1,158 @@
+﻿@model StandingsCreateOrEditModel
+@{
+    ViewData["Title"] = $"{Localizer.Get("CreateOrEdit")} {Localizer.Get("Standings")}";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.useForm = true;
+    ViewBag.useDatePicker = true;
+    ViewBag.useImageUploud = true;
+
+}
+
+<!-- BEGIN: Content-->
+<div class="app-content content ">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row">
+            <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h2 class="content-header-title float-start mb-0">@ViewData["Title"]</h2>
+                        <div class="breadcrumb-wrapper">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+
+                                    <a href="/StandingsEntity/Standings/Index">@Localizer.Get("Standings")</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    @ViewData["Title"]
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-body">
+            <section id="multiple-column-form">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form class="form" asp-action="CreateOrEdit" enctype="multipart/form-data">
+                                    <div asp-validation-summary="All" class="text-danger">@ViewData["Error"]</div>
+
+                                    <div class="row mb-1">
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Fk_Team" class="form-label"></label>
+                                                <select asp-for="Fk_Team" class="select2 form-select" asp-items="@(new SelectList(ViewData["Team"] as Dictionary<string,string>,"Key","Value"))">
+                                                </select>
+                                                <span asp-validation-for="Fk_Team" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Fk_Season" class="form-label"></label>
+                                                <select asp-for="Fk_Season" class="select2 form-select" asp-items="@(new SelectList(ViewData["Season"] as Dictionary<string,string>,"Key","Value"))">
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="GamePlayed" class="form-label"></label>
+                                                <input asp-for="GamePlayed" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"GamePlayed"))" />
+                                                <span asp-validation-for="GamePlayed" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="GamesWon" class="form-label"></label>
+                                                <input asp-for="GamesWon" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"GamesWon"))" />
+                                                <span asp-validation-for="GamesWon" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="GamesLost" class="form-label"></label>
+                                                <input asp-for="GamesLost" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"GamesLost"))" />
+                                                <span asp-validation-for="GamesLost" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="GamesEven" class="form-label"></label>
+                                                <input asp-for="GamesEven" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"GamesEven"))" />
+                                                <span asp-validation-for="GamesEven" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="For" class="form-label"></label>
+                                                <input asp-for="For" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"For"))" />
+                                                <span asp-validation-for="For" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Against" class="form-label"></label>
+                                                <input asp-for="Against" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Against"))" />
+                                                <span asp-validation-for="Against" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Ratio" class="form-label"></label>
+                                                <input asp-for="Ratio" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Ratio"))" />
+                                                <span asp-validation-for="Ratio" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Strike" class="form-label"></label>
+                                                <input asp-for="Strike" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Strike"))" />
+                                                <span asp-validation-for="Strike" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Position" class="form-label"></label>
+                                                <input asp-for="Position" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Position"))" />
+                                                <span asp-validation-for="Position" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary me-1">@Localizer.Get("Submit")</button>
+                                            <button type="reset" class="btn btn-outline-secondary me-1">@Localizer.Get("Reset")</button>
+
+                                            <a asp-action="Index" class="btn btn-warning"> @Localizer.Get("Back") </a>
+
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+</div>

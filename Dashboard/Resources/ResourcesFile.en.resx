@@ -159,6 +159,9 @@
   <data name="Add Prices" xml:space="preserve">
     <value>Add Prices</value>
   </data>
+  <data name="Add Score" xml:space="preserve">
+    <value>Add Score</value>
+  </data>
   <data name="AddNew" xml:space="preserve">
     <value>AddNew</value>
   </data>
@@ -170,6 +173,9 @@
   </data>
   <data name="Advanced Settings" xml:space="preserve">
     <value>Advanced Settings</value>
+  </data>
+  <data name="Against" xml:space="preserve">
+    <value>Against</value>
   </data>
   <data name="Age" xml:space="preserve">
     <value>Age</value>
@@ -381,6 +387,9 @@
   <data name="FirstName" xml:space="preserve">
     <value>First Name</value>
   </data>
+  <data name="For" xml:space="preserve">
+    <value>For</value>
+  </data>
   <data name="Friday" xml:space="preserve">
     <value>Friday</value>
   </data>
@@ -393,8 +402,20 @@
   <data name="FullName" xml:space="preserve">
     <value>Full Name</value>
   </data>
+  <data name="GamePlayed" xml:space="preserve">
+    <value>Game Played</value>
+  </data>
   <data name="GameRules" xml:space="preserve">
     <value>Game Rules</value>
+  </data>
+  <data name="GamesEven" xml:space="preserve">
+    <value>Games Even</value>
+  </data>
+  <data name="GamesLost" xml:space="preserve">
+    <value>Games Lost</value>
+  </data>
+  <data name="GamesWon" xml:space="preserve">
+    <value>Games Won</value>
   </data>
   <data name="GameWeak" xml:space="preserve">
     <value>Game Weak</value>
@@ -585,6 +606,15 @@
   <data name="Player Profile" xml:space="preserve">
     <value>Player Profile</value>
   </data>
+  <data name="PlayerGameWeak" xml:space="preserve">
+    <value>Player Game Weak</value>
+  </data>
+  <data name="PlayerGameWeaks" xml:space="preserve">
+    <value>Player Game Weaks</value>
+  </data>
+  <data name="PlayerGameWeakScores" xml:space="preserve">
+    <value>Player Game Weak Scores</value>
+  </data>
   <data name="PlayerNumber" xml:space="preserve">
     <value>Player Number</value>
   </data>
@@ -605,6 +635,12 @@
   </data>
   <data name="Please sign-in to your account and start the adventure" xml:space="preserve">
     <value>Please sign-in to your account and start the adventure</value>
+  </data>
+  <data name="Points" xml:space="preserve">
+    <value>Points</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Position</value>
   </data>
   <data name="PremissionsCount" xml:space="preserve">
     <value>Premissions</value>
@@ -636,6 +672,12 @@
   <data name="QuestionsAndAnswer" xml:space="preserve">
     <value>Questions And Answer</value>
   </data>
+  <data name="Ranking" xml:space="preserve">
+    <value>Ranking</value>
+  </data>
+  <data name="Ratio" xml:space="preserve">
+    <value>Ratio</value>
+  </data>
   <data name="Records" xml:space="preserve">
     <value>Records</value>
   </data>
@@ -655,7 +697,7 @@
     <value>Search</value>
   </data>
   <data name="Season" xml:space="preserve">
-    <value>Seasons</value>
+    <value>Season</value>
   </data>
   <data name="Season Details" xml:space="preserve">
     <value>Season Details</value>
@@ -702,8 +744,14 @@
   <data name="SponsorViewsCount" xml:space="preserve">
     <value>Sponsor Views</value>
   </data>
+  <data name="Standings" xml:space="preserve">
+    <value>Standings</value>
+  </data>
   <data name="StartTime" xml:space="preserve">
     <value>Start Time</value>
+  </data>
+  <data name="Strike" xml:space="preserve">
+    <value>Strike</value>
   </data>
   <data name="String1" xml:space="preserve">
     <value />
@@ -788,6 +836,9 @@
   </data>
   <data name="Users" xml:space="preserve">
     <value>Users</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Value</value>
   </data>
   <data name="View" xml:space="preserve">
     <value>View</value>

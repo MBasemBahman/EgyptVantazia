@@ -834,4 +834,55 @@
   <data name="HomeGameWeaks" xml:space="preserve">
     <value>Home Game Weaks</value>
   </data>
+  <data name="Add Score" xml:space="preserve">
+    <value>Add Score</value>
+  </data>
+  <data name="Against" xml:space="preserve">
+    <value>Against</value>
+  </data>
+  <data name="For" xml:space="preserve">
+    <value>For</value>
+  </data>
+  <data name="GamePlayed" xml:space="preserve">
+    <value>Game Played</value>
+  </data>
+  <data name="GamesEven" xml:space="preserve">
+    <value>Games Even</value>
+  </data>
+  <data name="GamesLost" xml:space="preserve">
+    <value>Games Lost</value>
+  </data>
+  <data name="GamesWon" xml:space="preserve">
+    <value>Games Won</value>
+  </data>
+  <data name="PlayerGameWeak" xml:space="preserve">
+    <value>Player Game Weak</value>
+  </data>
+  <data name="PlayerGameWeaks" xml:space="preserve">
+    <value>Player Game Weaks</value>
+  </data>
+  <data name="PlayerGameWeakScores" xml:space="preserve">
+    <value>Player Game Weak Scores</value>
+  </data>
+  <data name="Points" xml:space="preserve">
+    <value>Points</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="Ranking" xml:space="preserve">
+    <value>Ranking</value>
+  </data>
+  <data name="Ratio" xml:space="preserve">
+    <value>Ratio</value>
+  </data>
+  <data name="Standings" xml:space="preserve">
+    <value>Standings</value>
+  </data>
+  <data name="Strike" xml:space="preserve">
+    <value>Strike</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Value</value>
+  </data>
 </root>

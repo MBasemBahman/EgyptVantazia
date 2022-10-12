@@ -7,6 +7,7 @@ using Dashboard.Areas.LogEntity.Models;
 using Dashboard.Areas.NewsEntity.Models;
 using Dashboard.Areas.PlayerScoreEntity.Models;
 using Dashboard.Areas.PrivateLeagueEntity.Models;
+using Dashboard.Areas.StandingsEntity.Models;
 using Dashboard.Areas.SeasonEntity.Models;
 using Dashboard.Areas.SponsorEntity.Models;
 using Dashboard.Areas.TeamEntity.Models;
@@ -18,6 +19,7 @@ using Entities.CoreServicesModels.LocationModels;
 using Entities.CoreServicesModels.LogModels;
 using Entities.CoreServicesModels.NewsModels;
 using Entities.CoreServicesModels.PlayerScoreModels;
+using Entities.CoreServicesModels.StandingsModels;
 using Entities.CoreServicesModels.PrivateLeagueModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.SponsorModels;
@@ -25,6 +27,7 @@ using Entities.CoreServicesModels.TeamModels;
 using Entities.CoreServicesModels.UserModels;
 using Entities.DBModels.AccountModels;
 using Entities.DBModels.AccountTeamModels;
+using Entities.DBModels.StandingsModels;
 using Entities.DBModels.AppInfoModels;
 using Entities.DBModels.DashboardAdministrationModels;
 using Entities.DBModels.LocationModels;
@@ -379,6 +382,24 @@ namespace Dashboard.MappingProfileCls
 
             _ = CreateMap<ScoreTypeLang, ScoreTypeLangModel>();
             #endregion
+
+            #region PlayerGameWeak
+            _ = CreateMap<PlayerGameWeak, PlayerGameWeakCreateOrEditModel>()
+                .ForMember(dest => dest.PlayerGameWeakScores, opt => opt.Ignore());
+
+            _ = CreateMap<PlayerGameWeakCreateOrEditModel, PlayerGameWeak>()
+                .ForMember(dest => dest.PlayerGameWeakScores, opt => opt.Ignore());
+
+            _ = CreateMap<PlayerGameWeakModel, PlayerGameWeakDto>();
+
+            _ = CreateMap<PlayerGameWeakFilter, PlayerGameWeakParameters>();
+
+            #endregion
+
+            #region  PlayerGameWeakScore
+            _ = CreateMap<PlayerGameWeakScoreModel, PlayerGameWeakScoreDto>();
+            _ = CreateMap<PlayerGameWeakScoreModel, PlayerGameWeakScoreCreateOrEditModel>();
+            #endregion
             #endregion
 
 
@@ -418,6 +439,21 @@ namespace Dashboard.MappingProfileCls
             _ = CreateMap<TeamGameWeakModel, TeamGameWeakDto>();
 
             _ = CreateMap<TeamGameWeakFilter, TeamGameWeakParameters>();
+            #endregion
+
+            #endregion
+
+            #region Standings Models
+
+            #region Standings
+            _ = CreateMap<Standings, StandingsCreateOrEditModel>();
+
+            _ = CreateMap<StandingsCreateOrEditModel, Standings>();
+
+            _ = CreateMap<StandingsModel, StandingsDto>();
+
+            _ = CreateMap<StandingsFilter, StandingsParameters>();
+
             #endregion
 
             #endregion

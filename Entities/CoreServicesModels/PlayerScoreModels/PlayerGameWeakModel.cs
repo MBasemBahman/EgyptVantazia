@@ -37,6 +37,10 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
 
     public class PlayerGameWeakCreateOrEditModel
     {
+        public PlayerGameWeakCreateOrEditModel()
+        {
+            PlayerGameWeakScores = new List<PlayerGameWeakScoreCreateOrEditModel>();
+        }
         [DisplayName(nameof(GameWeak))]
         public int Fk_GameWeak { get; set; }
 

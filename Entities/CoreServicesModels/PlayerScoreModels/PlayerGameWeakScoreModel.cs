@@ -41,7 +41,6 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
     {
 
         [DisplayName(nameof(ScoreType))]
-        [ForeignKey(nameof(ScoreType))]
         public int Fk_ScoreType { get; set; }
 
         [DisplayName(nameof(Value))]

@@ -1,0 +1,124 @@
+﻿@model PlayerGameWeakFilter
+@{
+    ViewData["Title"] = Localizer.Get("PlayerGameWeaks");
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.useDatatable = true;
+    ViewBag.useModels = true;
+    ViewBag.useForm = true;
+    ViewBag.useDatePicker = true;
+    ViewBag.useCharts = true;
+
+
+    var accessLevel = (DashboardAccessLevelModel)ViewData[ViewDataConstants.AccessLevel];
+    ViewBag.emptyLayout = ViewData["ProfileLayOut"] != null ? (bool)ViewData["ProfileLayOut"] : false;
+
+    var row = new PlayerGameWeakDto();
+}
+
+<!-- BEGIN: Content-->
+
+                <section id="ajax-datatable">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header border-bottom">
+                                    <h4 class="card-title"> @ViewData["Title"]</h4>
+
+                                </div>
+
+                                <div class="card-datatable">
+                                    <table class="datatables datatables-ajax table table-responsive table">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => row.Id)
+                                    <a id="details" asp-action="Details">
+                                    </a>
+
+                                    @if (accessLevel.CreateAccess)
+                                    {
+                                        <a id="create" asp-action="CreateOrEdit" asp-route-Fk_Player="@Model.Fk_Player">
+                                        </a>
+                                    }
+
+                                    @if (accessLevel.EditAccess)
+                                    {
+                                        <a id="edit" asp-action="CreateOrEdit">
+                                        </a>
+                                    }
+                                    @if (accessLevel.DeleteAccess)
+                                    {
+                                        <a id="delete" asp-action="Delete">
+                                        </a>
+                                    }
+
+                                                </th>
+                                    <th>@Html.DisplayNameFor(model => row.GameWeak.Season)</th>
+
+                                                <th>@Html.DisplayNameFor(model => row.GameWeak)</th>
+                                                <th>@Html.DisplayNameFor(model => row.Ranking)</th>
+
+                                                <th>
+                                                    @Html.DisplayNameFor(model => row.Id)
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+<!-- END: Content-->
+@section scripts{
+    <script src="~/apis/charts.js"></script>
+    <script>
+
+        function LoadTable() {
+            var dt_ajax_table = $('.datatables');
+            if (dt_ajax_table.length) {
+                var dt_ajax = dt_ajax_table.dataTable({
+                    // Ajax Filter
+                    ajax: {
+                        url: '@Url.Action("LoadTable")',
+                        type: "POST",
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: function (data) {
+                            data.Fk_Player = @Model.Fk_Player;
+                            return JSON.stringify(data);
+                        }
+                    },
+                    // Columns Setups
+                    columns: [
+                        { data: "id" },
+                        { data: "gameWeak.season.name" },
+                        { data: "gameWeak.name" },
+                        { data: "ranking" },
+                        { data: "id" },
+                    ]
+                });
+                $("button[type=reset]").on("click", function () {
+                    $(".dt-date").each(function () {
+                        $(this).val('');
+                    })
+                });
+
+                $('body').on('submit', '.filter', function () {
+                    event.preventDefault();
+                    dt_ajax_table.DataTable().draw();
+                });
+
+
+            }
+        };
+
+
+
+        $(document).ready(function () {
+            LoadTable();
+
+        });
+    </script>
+}

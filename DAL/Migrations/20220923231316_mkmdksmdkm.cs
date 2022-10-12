@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
 
 namespace DAL.Migrations
 {
@@ -8,7 +7,7 @@ namespace DAL.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<double>(
+            _ = migrationBuilder.AlterColumn<double>(
                 name: "SellPrice",
                 table: "PlayerPrices",
                 type: "float",
@@ -16,7 +15,7 @@ namespace DAL.Migrations
                 oldClrType: typeof(int),
                 oldType: "int");
 
-            migrationBuilder.AlterColumn<double>(
+            _ = migrationBuilder.AlterColumn<double>(
                 name: "BuyPrice",
                 table: "PlayerPrices",
                 type: "float",
@@ -24,7 +23,7 @@ namespace DAL.Migrations
                 oldClrType: typeof(int),
                 oldType: "int");
 
-            migrationBuilder.UpdateData(
+            _ = migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 1,
@@ -34,7 +33,7 @@ namespace DAL.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<int>(
+            _ = migrationBuilder.AlterColumn<int>(
                 name: "SellPrice",
                 table: "PlayerPrices",
                 type: "int",
@@ -42,7 +41,7 @@ namespace DAL.Migrations
                 oldClrType: typeof(double),
                 oldType: "float");
 
-            migrationBuilder.AlterColumn<int>(
+            _ = migrationBuilder.AlterColumn<int>(
                 name: "BuyPrice",
                 table: "PlayerPrices",
                 type: "int",
@@ -50,7 +49,7 @@ namespace DAL.Migrations
                 oldClrType: typeof(double),
                 oldType: "float");
 
-            migrationBuilder.UpdateData(
+            _ = migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 1,

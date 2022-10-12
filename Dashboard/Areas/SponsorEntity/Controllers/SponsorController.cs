@@ -1,9 +1,7 @@
 ﻿using Dashboard.Areas.SponsorEntity.Models;
-using Dashboard.Areas.Dashboard.Models;
 using Entities.CoreServicesModels.SponsorModels;
-using Entities.DBModels.AccountModels;
-using Entities.RequestFeatures;
 using Entities.DBModels.SponsorModels;
+using Entities.RequestFeatures;
 using static Entities.EnumData.LogicEnumData;
 
 namespace Dashboard.Areas.SponsorEntity.Controllers
@@ -32,7 +30,7 @@ namespace Dashboard.Areas.SponsorEntity.Controllers
 
         public IActionResult Index()
         {
-            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             SponsorFilter filter = new();
 
@@ -75,7 +73,7 @@ namespace Dashboard.Areas.SponsorEntity.Controllers
                                                            }, otherLang).FirstOrDefault());
 
 
-        
+
 
             return View(data);
         }
@@ -95,14 +93,14 @@ namespace Dashboard.Areas.SponsorEntity.Controllers
                 model = _mapper.Map<SponsorCreateOrEditModel>(
                                                 await _unitOfWork.Sponsor.FindSponsorbyId(id, trackChanges: false));
 
-                model.SponsorViews =_unitOfWork.Sponsor.GetSponsorViews(new SponsorViewParameters
+                model.SponsorViews = _unitOfWork.Sponsor.GetSponsorViews(new SponsorViewParameters
                 {
                     Fk_Sponsor = id
-                }).ToList().Any() 
+                }).ToList().Any()
                 ? _unitOfWork.Sponsor.GetSponsorViews(new SponsorViewParameters
                 {
                     Fk_Sponsor = id
-                }).ToList().Select(a =>  a.AppViewEnum ).ToList()
+                }).ToList().Select(a => a.AppViewEnum).ToList()
                 : new List<AppViewEnum>();
             }
 
@@ -135,7 +133,7 @@ namespace Dashboard.Areas.SponsorEntity.Controllers
 
                     dataDB.CreatedBy = auth.UserName;
 
-                    _unitOfWork.Sponsor.CreateSponsor(dataDB,model.SponsorViews);
+                    _unitOfWork.Sponsor.CreateSponsor(dataDB, model.SponsorViews);
 
                 }
                 else
@@ -160,14 +158,14 @@ namespace Dashboard.Areas.SponsorEntity.Controllers
 
                 await _unitOfWork.Save();
 
-                return (IActionResult)RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
                 ViewData[ViewDataConstants.Error] = _logger.LogError(HttpContext.Request, ex).ErrorMessage;
             }
 
-            SetViewData( otherLang);
+            SetViewData(otherLang);
 
             return View(model);
         }

@@ -1,8 +1,7 @@
 ﻿using Dashboard.Areas.AccountTeamEntity.Models;
-using Dashboard.Areas.Dashboard.Models;
 using Entities.CoreServicesModels.AccountTeamModels;
-using Entities.RequestFeatures;
 using Entities.DBModels.AccountTeamModels;
+using Entities.RequestFeatures;
 
 namespace Dashboard.Areas.AccountTeamEntity.Controllers
 {
@@ -123,7 +122,7 @@ namespace Dashboard.Areas.AccountTeamEntity.Controllers
 
                 await _unitOfWork.Save();
 
-                return (IActionResult)RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {

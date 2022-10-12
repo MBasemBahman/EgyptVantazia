@@ -14,7 +14,7 @@
         public string StartTime { get; set; }
         public DateTime StartTimeVal => DateTime.Parse(StartTime);
         public string StatusText { get; set; }
-        public bool IsEnded => StatusText == "انتهت" || StatusText == "Ended";
+        public bool IsEnded => StatusText is "انتهت" or "Ended";
         public Competitor HomeCompetitor { get; set; }
         public Competitor AwayCompetitor { get; set; }
     }

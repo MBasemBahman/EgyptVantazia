@@ -1,5 +1,4 @@
-﻿using Entities.DBModels.PlayerScoreModels;
-using Entities.RequestFeatures;
+﻿using Entities.RequestFeatures;
 
 namespace Entities.CoreServicesModels.PlayerScoreModels
 {
@@ -27,7 +26,7 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
     {
         [DisplayName($"{nameof(Name)}{PropertyAttributeConstants.ArLang}")]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
-        public  string Name { get; set; }
+        public string Name { get; set; }
 
         [DisplayName(nameof(Description))]
         [DataType(DataType.MultilineText)]

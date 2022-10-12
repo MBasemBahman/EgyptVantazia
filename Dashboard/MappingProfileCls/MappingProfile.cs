@@ -1,40 +1,39 @@
 ﻿using Dashboard.Areas.AccountEntity.Models;
+using Dashboard.Areas.AccountTeamEntity.Models;
 using Dashboard.Areas.AppInfoEntity.Models;
 using Dashboard.Areas.DashboardAdministration.Models;
 using Dashboard.Areas.Location.Models;
-using Dashboard.Areas.TeamEntity.Models;
 using Dashboard.Areas.LogEntity.Models;
-using Dashboard.Areas.UserEntity.Models;
 using Dashboard.Areas.NewsEntity.Models;
-using Dashboard.Areas.SponsorEntity.Models;
-using Dashboard.Areas.SeasonEntity.Models;
-using Dashboard.Areas.AccountTeamEntity.Models;
-using Dashboard.Areas.PrivateLeagueEntity.Models;
 using Dashboard.Areas.PlayerScoreEntity.Models;
+using Dashboard.Areas.PrivateLeagueEntity.Models;
+using Dashboard.Areas.SeasonEntity.Models;
+using Dashboard.Areas.SponsorEntity.Models;
+using Dashboard.Areas.TeamEntity.Models;
+using Dashboard.Areas.UserEntity.Models;
 using Entities.CoreServicesModels.AccountModels;
-using Entities.CoreServicesModels.AppInfoModels;
-using Entities.CoreServicesModels.SponsorModels;
-using Entities.CoreServicesModels.NewsModels;
-using Entities.CoreServicesModels.LocationModels;
-using Entities.CoreServicesModels.TeamModels;
-using Entities.CoreServicesModels.LogModels;
-using Entities.CoreServicesModels.SeasonModels;
-using Entities.CoreServicesModels.UserModels;
 using Entities.CoreServicesModels.AccountTeamModels;
+using Entities.CoreServicesModels.AppInfoModels;
+using Entities.CoreServicesModels.LocationModels;
+using Entities.CoreServicesModels.LogModels;
+using Entities.CoreServicesModels.NewsModels;
 using Entities.CoreServicesModels.PlayerScoreModels;
 using Entities.CoreServicesModels.PrivateLeagueModels;
+using Entities.CoreServicesModels.SeasonModels;
+using Entities.CoreServicesModels.SponsorModels;
+using Entities.CoreServicesModels.TeamModels;
+using Entities.CoreServicesModels.UserModels;
 using Entities.DBModels.AccountModels;
+using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.AppInfoModels;
-using Entities.DBModels.SeasonModels;
-using Entities.DBModels.TeamModels;
-using Entities.DBModels.NewsModels;
 using Entities.DBModels.DashboardAdministrationModels;
 using Entities.DBModels.LocationModels;
-using Entities.DBModels.SharedModels;
-using Entities.DBModels.SponsorModels;
-using Entities.DBModels.AccountTeamModels;
+using Entities.DBModels.NewsModels;
 using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.PrivateLeagueModels;
+using Entities.DBModels.SeasonModels;
+using Entities.DBModels.SponsorModels;
+using Entities.DBModels.TeamModels;
 using Entities.RequestFeatures;
 
 namespace Dashboard.MappingProfileCls
@@ -180,7 +179,7 @@ namespace Dashboard.MappingProfileCls
 
             _ = CreateMap<Country, CountryCreateOrEditModel>();
 
-           
+
 
             _ = CreateMap<CountryCreateOrEditModel, Country>()
                       .ForMember(dest => dest.ImageUrl, opt => opt.Ignore())
@@ -216,8 +215,8 @@ namespace Dashboard.MappingProfileCls
             _ = CreateMap<Team, TeamCreateOrEditModel>();
 
             _ = CreateMap<TeamCreateOrEditModel, Team>()
-                .ForMember(dest => dest.ImageUrl,opt => opt.Ignore())
-                .ForMember(dest => dest.StorageUrl,opt => opt.Ignore());
+                .ForMember(dest => dest.ImageUrl, opt => opt.Ignore())
+                .ForMember(dest => dest.StorageUrl, opt => opt.Ignore());
 
             _ = CreateMap<TeamModel, TeamDto>();
 
@@ -248,7 +247,7 @@ namespace Dashboard.MappingProfileCls
 
             #region Player
             _ = CreateMap<Player, PlayerCreateOrEditModel>()
-                .ForMember(dest => dest.PlayerPrices,opt => opt.Ignore());
+                .ForMember(dest => dest.PlayerPrices, opt => opt.Ignore());
 
             _ = CreateMap<PlayerCreateOrEditModel, Player>()
                 .ForMember(dest => dest.PlayerPrices, opt => opt.Ignore())
@@ -266,8 +265,8 @@ namespace Dashboard.MappingProfileCls
             #endregion
 
             #region Player Price
-            CreateMap<PlayerPriceModel, PlayerPriceDto>();
-            CreateMap<PlayerPriceModel, PlayerPriceCreateOrEditModel>();
+            _ = CreateMap<PlayerPriceModel, PlayerPriceDto>();
+            _ = CreateMap<PlayerPriceModel, PlayerPriceCreateOrEditModel>();
             #endregion
 
 
@@ -304,7 +303,7 @@ namespace Dashboard.MappingProfileCls
 
             #region Sponsor
             _ = CreateMap<Sponsor, SponsorCreateOrEditModel>()
-                .ForMember(a => a.SponsorViews,opt => opt.Ignore());
+                .ForMember(a => a.SponsorViews, opt => opt.Ignore());
 
             _ = CreateMap<SponsorCreateOrEditModel, Sponsor>()
                 .ForMember(dest => dest.SponsorViews, opt => opt.Ignore())
@@ -405,9 +404,9 @@ namespace Dashboard.MappingProfileCls
             #endregion
 
             #region  Game Weak
-            CreateMap<GameWeakModel, GameWeakDto>();
-            CreateMap<GameWeak, GameWeakCreateOrEditModel>()
-                .ForMember(dest => dest.NameEn,opt => opt.MapFrom(src=>src.GameWeakLang.Name));
+            _ = CreateMap<GameWeakModel, GameWeakDto>();
+            _ = CreateMap<GameWeak, GameWeakCreateOrEditModel>()
+                .ForMember(dest => dest.NameEn, opt => opt.MapFrom(src => src.GameWeakLang.Name));
             #endregion
 
 

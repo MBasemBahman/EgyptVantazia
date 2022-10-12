@@ -303,7 +303,7 @@ namespace CoreServices.Logic
 
             if (prices != null && prices.Any())
             {
-                foreach (var price in prices)
+                foreach (PlayerPriceCreateOrEditModel price in prices)
                 {
                     CreatePlayerPrice(new PlayerPrice
                     {
@@ -346,7 +346,7 @@ namespace CoreServices.Logic
 
             if (DataToUpdate != null && DataToUpdate.Any())
             {
-                foreach (var data in DataToUpdate)
+                foreach (PlayerPriceCreateOrEditModel data in DataToUpdate)
                 {
                     PlayerPrice dataDb = await FindPlayerPricebyId(data.Id, trackChanges: true);
                     dataDb.SellPrice = data.SellPrice;

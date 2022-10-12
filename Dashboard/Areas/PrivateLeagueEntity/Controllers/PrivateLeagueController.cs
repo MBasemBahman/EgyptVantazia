@@ -1,10 +1,7 @@
-﻿using Dashboard.Areas.NewsEntity.Models;
-using Dashboard.Areas.PrivateLeagueEntity.Models;
-using Entities.CoreServicesModels.NewsModels;
+﻿using Dashboard.Areas.PrivateLeagueEntity.Models;
 using Entities.CoreServicesModels.PrivateLeagueModels;
 using Entities.DBModels.PrivateLeagueModels;
 using Entities.RequestFeatures;
-using static Entities.EnumData.LogicEnumData;
 namespace Dashboard.Areas.PrivateLeagueEntity.Controllers
 {
     [Area("PrivateLeagueEntity")]
@@ -31,7 +28,7 @@ namespace Dashboard.Areas.PrivateLeagueEntity.Controllers
 
         public IActionResult Index()
         {
-            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             PrivateLeagueFilter filter = new();
 
@@ -118,10 +115,10 @@ namespace Dashboard.Areas.PrivateLeagueEntity.Controllers
                     dataDB.LastModifiedBy = auth.UserName;
                 }
 
-             
+
                 await _unitOfWork.Save();
 
-                return (IActionResult)RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {

@@ -1,11 +1,8 @@
 ﻿using API.Controllers;
 using Entities.CoreServicesModels.AccountTeamModels;
-using Entities.CoreServicesModels.PrivateLeagueModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.AccountTeamModels;
-using Entities.DBModels.PrivateLeagueModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Repository;
 
 namespace API.Areas.AccountTeamArea.Controllers
 {
@@ -64,12 +61,7 @@ namespace API.Areas.AccountTeamArea.Controllers
 
             AccountTeamModel currentTeam = _unitOfWork.AccountTeam.GetCurrentTeam(auth.Fk_Account, currentSeason.Id);
 
-            if (currentTeam == null)
-            {
-                throw new Exception("Please create your team!");
-            }
-
-            return currentTeam;
+            return currentTeam ?? throw new Exception("Please create your team!");
         }
 
         [HttpPost]

@@ -36,7 +36,7 @@
             string FinalString;
             int Pos1 = STR.IndexOf(FirstString) + FirstString.Length;
             int Pos2 = STR.IndexOf(LastString);
-            FinalString = STR.Substring(Pos1, Pos2 - Pos1);
+            FinalString = STR[Pos1..Pos2];
             return FinalString;
         }
     }

@@ -1,5 +1,4 @@
 ﻿using Entities.CoreServicesModels.PlayerScoreModels;
-using Entities.CoreServicesModels.SeasonModels;
 namespace CoreServices.Extensions
 {
     public static class PlayerScoreSearchExtension

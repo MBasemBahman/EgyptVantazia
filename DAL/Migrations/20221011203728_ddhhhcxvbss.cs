@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
 
 namespace DAL.Migrations
 {
@@ -8,11 +7,11 @@ namespace DAL.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "_365_AfterGameStartId",
                 table: "Seasons");
 
-            migrationBuilder.InsertData(
+            _ = migrationBuilder.InsertData(
                 table: "DashboardViews",
                 columns: new[] { "Id", "Name", "ViewPath" },
                 values: new object[,]
@@ -31,14 +30,14 @@ namespace DAL.Migrations
                     { 29, "Standings", "Standings" }
                 });
 
-            migrationBuilder.UpdateData(
+            _ = migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Password",
                 value: "$2a$11$p6ldbBMB3Qfd7qpKsJuhc.kce02MjEyJRl1aK0wiVyhcYMOd.2/Mu");
 
-            migrationBuilder.InsertData(
+            _ = migrationBuilder.InsertData(
                 table: "AdministrationRolePremissions",
                 columns: new[] { "Id", "Fk_DashboardAccessLevel", "Fk_DashboardAdministrationRole", "Fk_DashboardView" },
                 values: new object[,]
@@ -57,7 +56,7 @@ namespace DAL.Migrations
                     { 29, 1, 1, 29 }
                 });
 
-            migrationBuilder.InsertData(
+            _ = migrationBuilder.InsertData(
                 table: "DashboardViewLang",
                 columns: new[] { "Id", "Fk_Source", "Name" },
                 values: new object[,]
@@ -79,193 +78,193 @@ namespace DAL.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "AdministrationRolePremissions",
                 keyColumn: "Id",
                 keyValue: 18);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "AdministrationRolePremissions",
                 keyColumn: "Id",
                 keyValue: 19);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "AdministrationRolePremissions",
                 keyColumn: "Id",
                 keyValue: 20);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "AdministrationRolePremissions",
                 keyColumn: "Id",
                 keyValue: 21);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "AdministrationRolePremissions",
                 keyColumn: "Id",
                 keyValue: 22);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "AdministrationRolePremissions",
                 keyColumn: "Id",
                 keyValue: 23);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "AdministrationRolePremissions",
                 keyColumn: "Id",
                 keyValue: 24);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "AdministrationRolePremissions",
                 keyColumn: "Id",
                 keyValue: 25);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "AdministrationRolePremissions",
                 keyColumn: "Id",
                 keyValue: 26);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "AdministrationRolePremissions",
                 keyColumn: "Id",
                 keyValue: 27);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "AdministrationRolePremissions",
                 keyColumn: "Id",
                 keyValue: 28);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "AdministrationRolePremissions",
                 keyColumn: "Id",
                 keyValue: 29);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViewLang",
                 keyColumn: "Id",
                 keyValue: 18);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViewLang",
                 keyColumn: "Id",
                 keyValue: 19);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViewLang",
                 keyColumn: "Id",
                 keyValue: 20);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViewLang",
                 keyColumn: "Id",
                 keyValue: 21);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViewLang",
                 keyColumn: "Id",
                 keyValue: 22);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViewLang",
                 keyColumn: "Id",
                 keyValue: 23);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViewLang",
                 keyColumn: "Id",
                 keyValue: 24);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViewLang",
                 keyColumn: "Id",
                 keyValue: 25);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViewLang",
                 keyColumn: "Id",
                 keyValue: 26);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViewLang",
                 keyColumn: "Id",
                 keyValue: 27);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViewLang",
                 keyColumn: "Id",
                 keyValue: 28);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViewLang",
                 keyColumn: "Id",
                 keyValue: 29);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViews",
                 keyColumn: "Id",
                 keyValue: 18);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViews",
                 keyColumn: "Id",
                 keyValue: 19);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViews",
                 keyColumn: "Id",
                 keyValue: 20);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViews",
                 keyColumn: "Id",
                 keyValue: 21);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViews",
                 keyColumn: "Id",
                 keyValue: 22);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViews",
                 keyColumn: "Id",
                 keyValue: 23);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViews",
                 keyColumn: "Id",
                 keyValue: 24);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViews",
                 keyColumn: "Id",
                 keyValue: 25);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViews",
                 keyColumn: "Id",
                 keyValue: 26);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViews",
                 keyColumn: "Id",
                 keyValue: 27);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViews",
                 keyColumn: "Id",
                 keyValue: 28);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViews",
                 keyColumn: "Id",
                 keyValue: 29);
 
-            migrationBuilder.AddColumn<string>(
+            _ = migrationBuilder.AddColumn<string>(
                 name: "_365_AfterGameStartId",
                 table: "Seasons",
                 type: "nvarchar(max)",
                 nullable: true);
 
-            migrationBuilder.UpdateData(
+            _ = migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 1,

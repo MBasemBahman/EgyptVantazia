@@ -1,10 +1,9 @@
 ﻿using Dashboard.Areas.SeasonEntity.Models;
-using Dashboard.Areas.Dashboard.Models;
-using Entities.CoreServicesModels.SeasonModels;
-using Entities.RequestFeatures;
-using Entities.DBModels.SeasonModels;
 using Entities.CoreServicesModels.AccountTeamModels;
+using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.StandingsModels;
+using Entities.DBModels.SeasonModels;
+using Entities.RequestFeatures;
 
 namespace Dashboard.Areas.SeasonEntity.Controllers
 {
@@ -32,7 +31,7 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
 
         public IActionResult Index()
         {
-            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             SeasonFilter filter = new();
 
@@ -71,7 +70,7 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
                                                            .GetSeasonbyId(id, otherLang));
 
             data.GameWeaks = _mapper.Map<List<GameWeakDto>>(
-                _unitOfWork.Season.GetGameWeaks(new GameWeakParameters { Fk_Season = id },otherLang )
+                _unitOfWork.Season.GetGameWeaks(new GameWeakParameters { Fk_Season = id }, otherLang)
                 );
 
             return View(data);
@@ -110,7 +109,7 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
                     _unitOfWork.Season.FindGameWeaks(new GameWeakParameters { Fk_Season = id }, trackChanges: false)
                     );
             }
-          
+
             SetViewData(returnPage, id, otherLang);
             return View(model);
         }
@@ -166,12 +165,9 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
                 await _unitOfWork.Save();
 
 
-                if (returnPage == (int)SeasonReturnPage.SeasonProfile)
-                {
-                    return RedirectToAction(nameof(Profile), new { id });
-                }
-               
-                return (IActionResult)RedirectToAction(nameof(Index));
+                return returnPage == (int)SeasonReturnPage.SeasonProfile
+                    ? RedirectToAction(nameof(Profile), new { id })
+                    : (IActionResult)RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
@@ -191,11 +187,11 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
             return View(data != null && !_unitOfWork.AccountTeam.GetAccountTeams(new AccountTeamParameters
             {
                 Fk_Season = id
-            },otherLang:false).Any() &&
+            }, otherLang: false).Any() &&
             !_unitOfWork.Standings.GetStandings(new StandingsParameters
             {
                 Fk_Season = id
-            },otherLang:false).Any());
+            }, otherLang: false).Any());
         }
 
         [HttpPost, ActionName("Delete")]
@@ -213,7 +209,7 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
         {
             ViewData["returnPage"] = returnPage;
             ViewData["id"] = id;
-         
+
 
         }
 

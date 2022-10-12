@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
 
 namespace DAL.Migrations
 {
@@ -8,20 +7,20 @@ namespace DAL.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
+            _ = migrationBuilder.AddColumn<int>(
                 name: "Age",
                 table: "Players",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
 
-            migrationBuilder.AddColumn<string>(
+            _ = migrationBuilder.AddColumn<string>(
                 name: "ShortName",
                 table: "Players",
                 type: "nvarchar(max)",
                 nullable: true);
 
-            migrationBuilder.AddColumn<string>(
+            _ = migrationBuilder.AddColumn<string>(
                 name: "ShortName",
                 table: "PlayerLang",
                 type: "nvarchar(max)",
@@ -38,7 +37,7 @@ namespace DAL.Migrations
             //        { 13, "AppAbout", "AppAbout" }
             //    });
 
-            migrationBuilder.UpdateData(
+            _ = migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 1,
@@ -70,79 +69,79 @@ namespace DAL.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "AdministrationRolePremissions",
                 keyColumn: "Id",
                 keyValue: 10);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "AdministrationRolePremissions",
                 keyColumn: "Id",
                 keyValue: 11);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "AdministrationRolePremissions",
                 keyColumn: "Id",
                 keyValue: 12);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "AdministrationRolePremissions",
                 keyColumn: "Id",
                 keyValue: 13);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViewLang",
                 keyColumn: "Id",
                 keyValue: 10);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViewLang",
                 keyColumn: "Id",
                 keyValue: 11);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViewLang",
                 keyColumn: "Id",
                 keyValue: 12);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViewLang",
                 keyColumn: "Id",
                 keyValue: 13);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViews",
                 keyColumn: "Id",
                 keyValue: 10);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViews",
                 keyColumn: "Id",
                 keyValue: 11);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViews",
                 keyColumn: "Id",
                 keyValue: 12);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViews",
                 keyColumn: "Id",
                 keyValue: 13);
 
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "Age",
                 table: "Players");
 
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "ShortName",
                 table: "Players");
 
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "ShortName",
                 table: "PlayerLang");
 
-            migrationBuilder.UpdateData(
+            _ = migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 1,

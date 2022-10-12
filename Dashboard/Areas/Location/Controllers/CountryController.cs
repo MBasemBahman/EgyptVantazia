@@ -144,7 +144,7 @@ namespace Dashboard.Areas.Location.Controllers
         {
             Country data = await _unitOfWork.Location.FindCountrybyId(id, trackChanges: false);
 
-            return View(data!=null);
+            return View(data != null);
         }
 
         [HttpPost, ActionName("Delete")]

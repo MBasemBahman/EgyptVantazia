@@ -1,6 +1,4 @@
-﻿using Dashboard.Areas.AccountEntity.Models;
-using Entities.CoreServicesModels.AccountModels;
-using Entities.CoreServicesModels.PrivateLeagueModels;
+﻿using Entities.CoreServicesModels.PrivateLeagueModels;
 using System.ComponentModel;
 
 namespace Dashboard.Areas.PrivateLeagueEntity.Models

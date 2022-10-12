@@ -61,7 +61,7 @@ namespace CoreServices.Logic
             FileUploader uploader = new(rootPath);
             return await uploader.UploudFile(file, "Uploud/Sponsor");
         }
-        public void CreateSponsor(Sponsor Sponsor,List<AppViewEnum> views)
+        public void CreateSponsor(Sponsor Sponsor, List<AppViewEnum> views)
         {
             Sponsor = AddSponsorViews(Sponsor, views);
             _repository.Sponsor.Create(Sponsor);
@@ -150,7 +150,7 @@ namespace CoreServices.Logic
                 SponsorView data =
                     _repository.SponsorView.FindAll(new SponsorViewParameters
                     {
-                       AppView  = (int)view,
+                        AppView = (int)view,
                         Fk_Sponsor = fk_sponspor
                     }, trackChanges: false).SingleOrDefault();
 

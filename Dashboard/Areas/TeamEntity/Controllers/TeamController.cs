@@ -1,9 +1,7 @@
 ﻿using Dashboard.Areas.TeamEntity.Models;
-using Dashboard.Areas.Dashboard.Models;
 using Entities.CoreServicesModels.TeamModels;
-using Entities.DBModels.AccountModels;
-using Entities.RequestFeatures;
 using Entities.DBModels.TeamModels;
+using Entities.RequestFeatures;
 
 namespace Dashboard.Areas.TeamEntity.Controllers
 {
@@ -31,7 +29,7 @@ namespace Dashboard.Areas.TeamEntity.Controllers
 
         public IActionResult Index()
         {
-            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             TeamFilter filter = new();
 
@@ -188,7 +186,7 @@ namespace Dashboard.Areas.TeamEntity.Controllers
         {
             ViewData["IsProfile"] = IsProfile;
             ViewData["id"] = id;
-           
+
         }
 
 

@@ -40,7 +40,7 @@ namespace Dashboard.Extensions
             {
                 _ = services.AddDbContext<DbContext, DBContext>(options => options.UseSqlServer(configuration.GetConnectionString("sqlConnection")));
             }
-            
+
         }
 
         public static void ConfigureRepositoryManager(this IServiceCollection services)

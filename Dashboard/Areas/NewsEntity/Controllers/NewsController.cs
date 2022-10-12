@@ -1,9 +1,8 @@
 ﻿using Dashboard.Areas.NewsEntity.Models;
-using Dashboard.Areas.Dashboard.Models;
 using Entities.CoreServicesModels.NewsModels;
-using Entities.RequestFeatures;
-using Entities.DBModels.NewsModels;
 using Entities.CoreServicesModels.SeasonModels;
+using Entities.DBModels.NewsModels;
+using Entities.RequestFeatures;
 using static Entities.EnumData.LogicEnumData;
 
 namespace Dashboard.Areas.NewsEntity.Controllers
@@ -32,7 +31,7 @@ namespace Dashboard.Areas.NewsEntity.Controllers
 
         public IActionResult Index()
         {
-            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             NewsFilter filter = new();
 
@@ -101,21 +100,16 @@ namespace Dashboard.Areas.NewsEntity.Controllers
             {
                 model = _mapper.Map<NewsCreateOrEditModel>(
                                                 await _unitOfWork.News.FindNewsbyId(id, trackChanges: false));
-            
-              
+
+
             }
-            if(model.Fk_GameWeak != null)
-            {
-                model.Fk_Season = _unitOfWork.Season.GetGameWeakbyId((int)model.Fk_GameWeak, otherLang: false).Fk_Season;
-            }
-            else
-            {
-                model.Fk_Season = _unitOfWork.Season.GetSeasons(new SeasonParameters(), otherLang: false).Any()
+            model.Fk_Season = model.Fk_GameWeak != null
+                ? _unitOfWork.Season.GetGameWeakbyId((int)model.Fk_GameWeak, otherLang: false).Fk_Season
+                : _unitOfWork.Season.GetSeasons(new SeasonParameters(), otherLang: false).Any()
                     ? _unitOfWork.Season.GetSeasons(new SeasonParameters(), otherLang: false).FirstOrDefault().Id
                     : 0;
-            }
 
-            SetViewData(IsProfile, id, otherLang,model.Fk_Season);
+            SetViewData(IsProfile, id, otherLang, model.Fk_Season);
             return View(model);
         }
 
@@ -128,7 +122,7 @@ namespace Dashboard.Areas.NewsEntity.Controllers
 
             if (!ModelState.IsValid)
             {
-                SetViewData(IsProfile, id, otherLang,model.Fk_Season);
+                SetViewData(IsProfile, id, otherLang, model.Fk_Season);
 
                 return View(model);
             }
@@ -173,7 +167,7 @@ namespace Dashboard.Areas.NewsEntity.Controllers
                 ViewData[ViewDataConstants.Error] = _logger.LogError(HttpContext.Request, ex).ErrorMessage;
             }
 
-            SetViewData(IsProfile, id, otherLang,model.Fk_Season);
+            SetViewData(IsProfile, id, otherLang, model.Fk_Season);
 
             return View(model);
         }
@@ -197,7 +191,7 @@ namespace Dashboard.Areas.NewsEntity.Controllers
         }
 
         // helper methods
-        private void SetViewData(bool IsProfile, int id, bool otherLang,int fk_Season)
+        private void SetViewData(bool IsProfile, int id, bool otherLang, int fk_Season)
         {
             ViewData["IsProfile"] = IsProfile;
             ViewData["id"] = id;

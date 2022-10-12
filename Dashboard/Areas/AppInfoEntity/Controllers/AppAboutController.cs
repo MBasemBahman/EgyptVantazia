@@ -1,5 +1,4 @@
-﻿using CoreServices;
-using Dashboard.Areas.AppInfoEntity.Models;
+﻿using Dashboard.Areas.AppInfoEntity.Models;
 using Entities.CoreServicesModels.AppInfoModels;
 using Entities.DBModels.AppInfoModels;
 using Entities.RequestFeatures;
@@ -27,10 +26,10 @@ namespace Dashboard.Areas.AppInfoEntity.Controllers
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             AppAboutModel model = _unitOfWork.AppInfo.GetAppAbouts(new RequestParameters(), otherLang).Any() ?
-                _unitOfWork.AppInfo.GetAppAbouts(new RequestParameters(),otherLang).FirstOrDefault()
+                _unitOfWork.AppInfo.GetAppAbouts(new RequestParameters(), otherLang).FirstOrDefault()
                 : new AppAboutModel();
 
-          
+
             AppAboutDto data = _mapper.Map<AppAboutDto>(model);
 
             ViewData[ViewDataConstants.AccessLevel] = (DashboardAccessLevelModel)Request.HttpContext.Items[ViewDataConstants.AccessLevel];

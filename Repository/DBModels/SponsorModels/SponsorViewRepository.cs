@@ -1,6 +1,5 @@
 ﻿using Entities.CoreServicesModels.SponsorModels;
 using Entities.DBModels.SponsorModels;
-using static Entities.EnumData.LogicEnumData;
 
 namespace Repository.DBModels.SponsorModels
 {

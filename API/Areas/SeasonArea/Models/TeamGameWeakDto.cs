@@ -11,6 +11,6 @@ namespace API.Areas.SeasonArea.Models
 
         [SwaggerIgnore]
         [DisplayName(nameof(_365_MatchUpId))]
-        public new string _365_MatchUpId { get; set; }
+        public string _365_MatchUpId { get; set; }
     }
 }

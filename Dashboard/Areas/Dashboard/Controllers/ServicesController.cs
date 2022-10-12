@@ -1,5 +1,4 @@
 ﻿using Entities.CoreServicesModels.SeasonModels;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Dashboard.Areas.Dashboard.Controllers
 {

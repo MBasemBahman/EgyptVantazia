@@ -188,7 +188,7 @@
             };
             Response.Cookies.Append(AdminCookiesDataConstants.Role, Admin.Fk_DashboardAdministrationRole.ToString(), option);
 
-          
+
         }
 
         private void RemoveCookies()

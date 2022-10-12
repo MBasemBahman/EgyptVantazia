@@ -1,7 +1,5 @@
 ﻿using Entities.CoreServicesModels.PrivateLeagueModels;
-using Entities.DBModels.NewsModels;
 using Entities.DBModels.PrivateLeagueModels;
-using Entities.RequestFeatures;
 using Services;
 
 namespace Repository.DBModels.PrivateLeagueModels
@@ -29,7 +27,7 @@ namespace Repository.DBModels.PrivateLeagueModels
 
         public new void Create(PrivateLeague entity)
         {
-            string uniqueCode = RandomGenerator.GenerateString(2) + RandomGenerator.GenerateInteger(2,00, 99).ToString() + RandomGenerator.GenerateString(2);
+            string uniqueCode = RandomGenerator.GenerateString(2) + RandomGenerator.GenerateInteger(2, 00, 99).ToString() + RandomGenerator.GenerateString(2);
             while (FindByCondition(a => a.UniqueCode == uniqueCode, trackChanges: false).Any())
             {
                 uniqueCode = RandomGenerator.GenerateString(10);

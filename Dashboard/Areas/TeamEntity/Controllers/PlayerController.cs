@@ -1,9 +1,7 @@
 ﻿using Dashboard.Areas.TeamEntity.Models;
-using Dashboard.Areas.Dashboard.Models;
 using Entities.CoreServicesModels.TeamModels;
-using Entities.DBModels.AccountModels;
-using Entities.RequestFeatures;
 using Entities.DBModels.TeamModels;
+using Entities.RequestFeatures;
 
 namespace Dashboard.Areas.TeamEntity.Controllers
 {
@@ -29,9 +27,9 @@ namespace Dashboard.Areas.TeamEntity.Controllers
             _environment = environment;
         }
 
-        public IActionResult Index(int Fk_Team, bool ProfileLayOut = false )
+        public IActionResult Index(int Fk_Team, bool ProfileLayOut = false)
         {
-            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             PlayerFilter filter = new()
             {
@@ -74,7 +72,7 @@ namespace Dashboard.Areas.TeamEntity.Controllers
                                                            .GetPlayerbyId(id, otherLang));
 
             data.PlayerPrices = _mapper.Map<List<PlayerPriceDto>>(
-                _unitOfWork.Team.GetPlayerPrices(new PlayerPriceParameters { Fk_Player = id},otherLang)
+                _unitOfWork.Team.GetPlayerPrices(new PlayerPriceParameters { Fk_Player = id }, otherLang)
                 );
 
             return View(data);
@@ -95,7 +93,7 @@ namespace Dashboard.Areas.TeamEntity.Controllers
         }
 
         [Authorize(DashboardViewEnum.Player, AccessLevelEnum.CreateOrEdit)]
-        public async Task<IActionResult> CreateOrEdit(int id = 0,int Fk_Team = 0, int returnPage = (int)PlayerReturnPage.Index)
+        public async Task<IActionResult> CreateOrEdit(int id = 0, int Fk_Team = 0, int returnPage = (int)PlayerReturnPage.Index)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
@@ -110,10 +108,10 @@ namespace Dashboard.Areas.TeamEntity.Controllers
                                                 await _unitOfWork.Team.FindPlayerbyId(id, trackChanges: false));
 
                 model.PlayerPrices = _mapper.Map<List<PlayerPriceCreateOrEditModel>>(
-                    _unitOfWork.Team.GetPlayerPrices(new PlayerPriceParameters { Fk_Player = id},otherLang:false)
+                    _unitOfWork.Team.GetPlayerPrices(new PlayerPriceParameters { Fk_Player = id }, otherLang: false)
                     );
             }
-            if(Fk_Team > 0)
+            if (Fk_Team > 0)
             {
                 model.Fk_Team = Fk_Team;
                 returnPage = (int)PlayerReturnPage.TeamProfile;
@@ -177,12 +175,12 @@ namespace Dashboard.Areas.TeamEntity.Controllers
                 {
                     return RedirectToAction(nameof(Profile), new { id });
                 }
-                else if(returnPage == (int)PlayerReturnPage.TeamProfile)
+                else if (returnPage == (int)PlayerReturnPage.TeamProfile)
                 {
-                    return RedirectToAction(nameof(Profile),"Team", new { id  = model.Fk_Team, returnItem  = (int)TeamProfileItems.Player});
+                    return RedirectToAction(nameof(Profile), "Team", new { id = model.Fk_Team, returnItem = (int)TeamProfileItems.Player });
 
                 }
-                return (IActionResult)RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {

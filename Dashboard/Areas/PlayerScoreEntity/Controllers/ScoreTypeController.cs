@@ -1,8 +1,7 @@
 ﻿using Dashboard.Areas.PlayerScoreEntity.Models;
-using Dashboard.Areas.Dashboard.Models;
 using Entities.CoreServicesModels.PlayerScoreModels;
-using Entities.RequestFeatures;
 using Entities.DBModels.PlayerScoreModels;
+using Entities.RequestFeatures;
 
 namespace Dashboard.Areas.PlayerScoreEntity.Controllers
 {
@@ -120,10 +119,10 @@ namespace Dashboard.Areas.PlayerScoreEntity.Controllers
                     dataDB.LastModifiedBy = auth.UserName;
                 }
 
-               
+
                 await _unitOfWork.Save();
 
-                return (IActionResult)RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {

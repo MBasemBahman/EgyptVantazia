@@ -1,5 +1,5 @@
-﻿using Entities.CoreServicesModels.SeasonModels;
-using Dashboard.Areas.TeamEntity.Models;
+﻿using Dashboard.Areas.TeamEntity.Models;
+using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.SeasonModels;
 using System.ComponentModel;
 
@@ -29,7 +29,7 @@ namespace Dashboard.Areas.SeasonEntity.Models
         [DisplayName(nameof(Home))]
         public new TeamDto Home { get; set; }
 
-       
+
         [DisplayName(nameof(Away))]
         public new TeamDto Away { get; set; }
 

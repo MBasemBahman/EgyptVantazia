@@ -1,9 +1,6 @@
-﻿using API.Areas.PlayerScoreArea.Models;
-using API.Controllers;
+﻿using API.Controllers;
 using Entities.CoreServicesModels.AccountTeamModels;
-using Entities.CoreServicesModels.PlayerScoreModels;
 using Entities.CoreServicesModels.PlayerTransfersModels;
-using Entities.CoreServicesModels.PrivateLeagueModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.PlayersTransfersModels;
 

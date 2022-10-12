@@ -1,6 +1,4 @@
-﻿using Entities.DBModels.AccountTeamModels;
-
-namespace Entities.CoreServicesModels.AccountTeamModels
+﻿namespace Entities.CoreServicesModels.AccountTeamModels
 {
     public class TeamPlayerTypeModel : AuditLookUpEntity
     {

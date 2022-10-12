@@ -1,7 +1,6 @@
 ﻿using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.SeasonModels;
-using Entities.DBModels.TeamModels;
 
 namespace CoreServices.Logic
 {
@@ -35,7 +34,7 @@ namespace CoreServices.Logic
                        .Sort(parameters.OrderBy);
         }
 
-        public Dictionary<string,string> GetSeasonLookUp(SeasonParameters parameters, bool otherLang)
+        public Dictionary<string, string> GetSeasonLookUp(SeasonParameters parameters, bool otherLang)
         {
             return GetSeasons(parameters, otherLang).OrderByDescending(a => a._365_SeasonId)
                                                    .ToDictionary(a => a.Id.ToString(), a => a.Name);
@@ -86,17 +85,17 @@ namespace CoreServices.Logic
 
             if (gameWeaks != null && gameWeaks.Any())
             {
-                foreach (var gameWeak in gameWeaks)
+                foreach (GameWeakCreateOrEditModel gameWeak in gameWeaks)
                 {
                     CreateGameWeak(new GameWeak
                     {
                         Fk_Season = season.Id,
                         Name = gameWeak.Name,
                         _365_GameWeakId = gameWeak._365_GameWeakId,
-                       GameWeakLang = new GameWeakLang
-                       {
-                           Name = gameWeak.NameEn
-                       }
+                        GameWeakLang = new GameWeakLang
+                        {
+                            Name = gameWeak.NameEn
+                        }
                     });
                 }
             }
@@ -132,7 +131,7 @@ namespace CoreServices.Logic
 
             if (DataToUpdate != null && DataToUpdate.Any())
             {
-                foreach (var data in DataToUpdate)
+                foreach (GameWeakCreateOrEditModel data in DataToUpdate)
                 {
                     GameWeak dataDb = await FindGameWeakbyId(data.Id, trackChanges: true);
                     dataDb.Name = data.Name;
@@ -192,11 +191,11 @@ namespace CoreServices.Logic
 
         public List<GameWeak> FindGameWeaks(GameWeakParameters parameters, bool trackChanges)
         {
-            return  _repository.GameWeak.FindAll(parameters, trackChanges)
+            return _repository.GameWeak.FindAll(parameters, trackChanges)
                  .Include(a => a.GameWeakLang).ToList();
         }
 
-        public Dictionary<string,string> GetGameWeakLookUp(GameWeakParameters parameters,bool otherLang)
+        public Dictionary<string, string> GetGameWeakLookUp(GameWeakParameters parameters, bool otherLang)
         {
             return GetGameWeaks(parameters, otherLang)
                 .OrderByDescending(a => a._365_GameWeakId).ToDictionary(a => a.Id.ToString(), a => a.Name);
@@ -263,7 +262,7 @@ namespace CoreServices.Logic
                                Fk_Season = a.GameWeak.Fk_Season,
                                Season = new SeasonModel
                                {
-                                   Name = otherLang?a.GameWeak.Season.SeasonLang.Name : a.GameWeak.Season.Name
+                                   Name = otherLang ? a.GameWeak.Season.SeasonLang.Name : a.GameWeak.Season.Name
                                }
                            }
                        })

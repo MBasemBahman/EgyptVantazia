@@ -29,12 +29,12 @@
             Country = 11,
             DBLogs = 12,
             AppAbout = 13,
-            Team =  14,
+            Team = 14,
             News = 15,
             NewsAttachment = 16,
             Sponsor = 17,
             PlayerPosition = 18,
-            Player =  19,
+            Player = 19,
             PrivateLeague = 20,
             PrivateLeagueMember = 21,
             ScoreType = 22,
@@ -44,7 +44,7 @@
             Season = 26,
             GameWeak = 27,
             TeamGameWeak = 28,
-            Standings  = 29
+            Standings = 29
         }
     }
 }

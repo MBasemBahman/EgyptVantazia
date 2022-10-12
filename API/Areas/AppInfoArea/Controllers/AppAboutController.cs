@@ -1,8 +1,6 @@
 ﻿using API.Controllers;
-using CoreServices;
 using Entities.CoreServicesModels.AppInfoModels;
 using IntegrationWith365;
-using IntegrationWith365.Entities.GamesModels;
 
 namespace API.Areas.AppInfoArea.Controllers
 {
@@ -31,7 +29,7 @@ namespace API.Areas.AppInfoArea.Controllers
         public async Task<AppAboutModel> GetAppAbout()
         {
 
-            var dataMigration = new DataMigration(_unitOfWork, _365Services);
+            DataMigration dataMigration = new(_unitOfWork, _365Services);
 
             //await dataMigration.InsertTeams();
             //await dataMigration.InsertPositions();

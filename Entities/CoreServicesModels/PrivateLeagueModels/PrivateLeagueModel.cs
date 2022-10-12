@@ -31,7 +31,7 @@ namespace Entities.CoreServicesModels.PrivateLeagueModels
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
 
-      
+
     }
 
     public class PrivateLeagueCreateModel

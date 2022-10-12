@@ -1,7 +1,4 @@
-﻿using Entities.DBModels.AccountTeamModels;
-using Entities.DBModels.PlayerScoreModels;
-using Entities.DBModels.PlayersTransfersModels;
-using Entities.DBModels.TeamModels;
+﻿using Entities.DBModels.TeamModels;
 using Entities.RequestFeatures;
 
 namespace Entities.CoreServicesModels.TeamModels

@@ -1,5 +1,4 @@
 ﻿using Dashboard.Areas.AccountEntity.Models;
-using Dashboard.Areas.Dashboard.Models;
 using Entities.CoreServicesModels.AccountModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.CoreServicesModels.UserModels;
@@ -35,7 +34,7 @@ namespace Dashboard.Areas.AccountEntity.Controllers
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             AccountFilter filter = new();
-           
+
             ViewData[ViewDataConstants.AccessLevel] = (DashboardAccessLevelModel)Request.HttpContext.Items[ViewDataConstants.AccessLevel];
             SetViewData(IsProfile: false, id: 0, otherLang);
 
@@ -53,7 +52,7 @@ namespace Dashboard.Areas.AccountEntity.Controllers
 
             _ = _mapper.Map(dtParameters, parameters);
 
-            PagedList<AccountModel> data = await _unitOfWork.Account.GetAccountsPaged(parameters,otherLang);
+            PagedList<AccountModel> data = await _unitOfWork.Account.GetAccountsPaged(parameters, otherLang);
 
             List<AccountDto> resultDto = _mapper.Map<List<AccountDto>>(data);
 
@@ -203,7 +202,7 @@ namespace Dashboard.Areas.AccountEntity.Controllers
             ViewData["id"] = id;
             ViewData["Countrys"] = _unitOfWork.Location.GetCountrysLookUp(new RequestParameters(), otherLang);
             ViewData["Teams"] = _unitOfWork.Team.GetTeams(new TeamParameters(), otherLang)
-                .ToDictionary(a => a.Id.ToString(),a => a.Name);
+                .ToDictionary(a => a.Id.ToString(), a => a.Name);
         }
 
 

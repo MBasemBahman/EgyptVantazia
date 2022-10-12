@@ -1,11 +1,6 @@
 ﻿using Dashboard.Areas.NewsEntity.Models;
-using Dashboard.Areas.Dashboard.Models;
 using Entities.CoreServicesModels.NewsModels;
-using Entities.RequestFeatures;
-using Entities.DBModels.TeamModels;
 using Entities.DBModels.NewsModels;
-using Entities.CoreServicesModels.SeasonModels;
-using static Entities.EnumData.LogicEnumData;
 
 namespace Dashboard.Areas.NewsEntity.Controllers
 {
@@ -52,7 +47,7 @@ namespace Dashboard.Areas.NewsEntity.Controllers
             IFormFile file = HttpContext.Request.Form.Files["file"];
             if (file != null)
             {
-                NewsAttachment attachment = new NewsAttachment
+                NewsAttachment attachment = new()
                 {
                     FileUrl = await _unitOfWork.News.UploudFile(_environment.WebRootPath, file),
                     StorageUrl = _linkGenerator.GetUriByAction(HttpContext).GetBaseUri(HttpContext.Request.RouteValues["area"].ToString()),

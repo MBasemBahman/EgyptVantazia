@@ -1,7 +1,5 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
 
 namespace DAL.Migrations
 {
@@ -9,7 +7,7 @@ namespace DAL.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "AppAbout",
                 columns: table => new
                 {
@@ -36,10 +34,10 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AppAbout", x => x.Id);
+                    _ = table.PrimaryKey("PK_AppAbout", x => x.Id);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "Countries",
                 columns: table => new
                 {
@@ -55,10 +53,10 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Countries", x => x.Id);
+                    _ = table.PrimaryKey("PK_Countries", x => x.Id);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "DashboardAccessLevels",
                 columns: table => new
                 {
@@ -73,10 +71,10 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DashboardAccessLevels", x => x.Id);
+                    _ = table.PrimaryKey("PK_DashboardAccessLevels", x => x.Id);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "DashboardAdministrationRoles",
                 columns: table => new
                 {
@@ -87,10 +85,10 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DashboardAdministrationRoles", x => x.Id);
+                    _ = table.PrimaryKey("PK_DashboardAdministrationRoles", x => x.Id);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "DashboardViews",
                 columns: table => new
                 {
@@ -102,10 +100,10 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DashboardViews", x => x.Id);
+                    _ = table.PrimaryKey("PK_DashboardViews", x => x.Id);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "Logs",
                 columns: table => new
                 {
@@ -119,10 +117,10 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Logs", x => x.Id);
+                    _ = table.PrimaryKey("PK_Logs", x => x.Id);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "PlayerPositions",
                 columns: table => new
                 {
@@ -139,10 +137,10 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PlayerPositions", x => x.Id);
+                    _ = table.PrimaryKey("PK_PlayerPositions", x => x.Id);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "PrivateLeagues",
                 columns: table => new
                 {
@@ -157,10 +155,10 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PrivateLeagues", x => x.Id);
+                    _ = table.PrimaryKey("PK_PrivateLeagues", x => x.Id);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "ScoreTypes",
                 columns: table => new
                 {
@@ -176,10 +174,10 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ScoreTypes", x => x.Id);
+                    _ = table.PrimaryKey("PK_ScoreTypes", x => x.Id);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "Seasons",
                 columns: table => new
                 {
@@ -196,10 +194,10 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Seasons", x => x.Id);
+                    _ = table.PrimaryKey("PK_Seasons", x => x.Id);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "Sponsors",
                 columns: table => new
                 {
@@ -216,10 +214,10 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sponsors", x => x.Id);
+                    _ = table.PrimaryKey("PK_Sponsors", x => x.Id);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "TeamPlayerTypes",
                 columns: table => new
                 {
@@ -233,10 +231,10 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TeamPlayerTypes", x => x.Id);
+                    _ = table.PrimaryKey("PK_TeamPlayerTypes", x => x.Id);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "Teams",
                 columns: table => new
                 {
@@ -253,10 +251,10 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Teams", x => x.Id);
+                    _ = table.PrimaryKey("PK_Teams", x => x.Id);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -275,10 +273,10 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    _ = table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "AppAboutLang",
                 columns: table => new
                 {
@@ -296,8 +294,8 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AppAboutLang", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_AppAboutLang", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_AppAboutLang_AppAbout_Fk_Source",
                         column: x => x.Fk_Source,
                         principalTable: "AppAbout",
@@ -305,7 +303,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "CountryLang",
                 columns: table => new
                 {
@@ -317,8 +315,8 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CountryLang", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_CountryLang", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_CountryLang_Countries_Fk_Source",
                         column: x => x.Fk_Source,
                         principalTable: "Countries",
@@ -326,7 +324,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "DashboardAccessLevelLang",
                 columns: table => new
                 {
@@ -338,8 +336,8 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DashboardAccessLevelLang", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_DashboardAccessLevelLang", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_DashboardAccessLevelLang_DashboardAccessLevels_Fk_Source",
                         column: x => x.Fk_Source,
                         principalTable: "DashboardAccessLevels",
@@ -347,7 +345,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "DashboardAdministrationRoleLang",
                 columns: table => new
                 {
@@ -359,8 +357,8 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DashboardAdministrationRoleLang", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_DashboardAdministrationRoleLang", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_DashboardAdministrationRoleLang_DashboardAdministrationRoles_Fk_Source",
                         column: x => x.Fk_Source,
                         principalTable: "DashboardAdministrationRoles",
@@ -368,7 +366,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "AdministrationRolePremissions",
                 columns: table => new
                 {
@@ -381,20 +379,20 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AdministrationRolePremissions", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_AdministrationRolePremissions", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_AdministrationRolePremissions_DashboardAccessLevels_Fk_DashboardAccessLevel",
                         column: x => x.Fk_DashboardAccessLevel,
                         principalTable: "DashboardAccessLevels",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
+                    _ = table.ForeignKey(
                         name: "FK_AdministrationRolePremissions_DashboardAdministrationRoles_Fk_DashboardAdministrationRole",
                         column: x => x.Fk_DashboardAdministrationRole,
                         principalTable: "DashboardAdministrationRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
+                    _ = table.ForeignKey(
                         name: "FK_AdministrationRolePremissions_DashboardViews_Fk_DashboardView",
                         column: x => x.Fk_DashboardView,
                         principalTable: "DashboardViews",
@@ -402,7 +400,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "DashboardViewLang",
                 columns: table => new
                 {
@@ -414,8 +412,8 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DashboardViewLang", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_DashboardViewLang", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_DashboardViewLang_DashboardViews_Fk_Source",
                         column: x => x.Fk_Source,
                         principalTable: "DashboardViews",
@@ -423,7 +421,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "PlayerPositionLang",
                 columns: table => new
                 {
@@ -435,8 +433,8 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PlayerPositionLang", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_PlayerPositionLang", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_PlayerPositionLang_PlayerPositions_Fk_Source",
                         column: x => x.Fk_Source,
                         principalTable: "PlayerPositions",
@@ -444,7 +442,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "ScoreTypeLang",
                 columns: table => new
                 {
@@ -456,8 +454,8 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ScoreTypeLang", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_ScoreTypeLang", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_ScoreTypeLang_ScoreTypes_Fk_Source",
                         column: x => x.Fk_Source,
                         principalTable: "ScoreTypes",
@@ -465,7 +463,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "GameWeaks",
                 columns: table => new
                 {
@@ -481,8 +479,8 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GameWeaks", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_GameWeaks", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_GameWeaks_Seasons_Fk_Season",
                         column: x => x.Fk_Season,
                         principalTable: "Seasons",
@@ -490,7 +488,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "SeasonLang",
                 columns: table => new
                 {
@@ -502,8 +500,8 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SeasonLang", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_SeasonLang", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_SeasonLang_Seasons_Fk_Source",
                         column: x => x.Fk_Source,
                         principalTable: "Seasons",
@@ -511,7 +509,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "SponsorLang",
                 columns: table => new
                 {
@@ -523,8 +521,8 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SponsorLang", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_SponsorLang", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_SponsorLang_Sponsors_Fk_Source",
                         column: x => x.Fk_Source,
                         principalTable: "Sponsors",
@@ -532,7 +530,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "SponsorViews",
                 columns: table => new
                 {
@@ -544,8 +542,8 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SponsorViews", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_SponsorViews", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_SponsorViews_Sponsors_Fk_Sponsor",
                         column: x => x.Fk_Sponsor,
                         principalTable: "Sponsors",
@@ -553,7 +551,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "TeamPlayerTypeLang",
                 columns: table => new
                 {
@@ -565,8 +563,8 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TeamPlayerTypeLang", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_TeamPlayerTypeLang", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_TeamPlayerTypeLang_TeamPlayerTypes_Fk_Source",
                         column: x => x.Fk_Source,
                         principalTable: "TeamPlayerTypes",
@@ -574,7 +572,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "Players",
                 columns: table => new
                 {
@@ -594,14 +592,14 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Players", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_Players", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_Players_PlayerPositions_Fk_PlayerPosition",
                         column: x => x.Fk_PlayerPosition,
                         principalTable: "PlayerPositions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
+                    _ = table.ForeignKey(
                         name: "FK_Players_Teams_Fk_Team",
                         column: x => x.Fk_Team,
                         principalTable: "Teams",
@@ -609,7 +607,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "Standings",
                 columns: table => new
                 {
@@ -632,14 +630,14 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Standings", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_Standings", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_Standings_Seasons_Fk_Season",
                         column: x => x.Fk_Season,
                         principalTable: "Seasons",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
+                    _ = table.ForeignKey(
                         name: "FK_Standings_Teams_Fk_Team",
                         column: x => x.Fk_Team,
                         principalTable: "Teams",
@@ -647,7 +645,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "TeamLang",
                 columns: table => new
                 {
@@ -659,8 +657,8 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TeamLang", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_TeamLang", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_TeamLang_Teams_Fk_Source",
                         column: x => x.Fk_Source,
                         principalTable: "Teams",
@@ -668,7 +666,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "Accounts",
                 columns: table => new
                 {
@@ -691,26 +689,26 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Accounts", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_Accounts", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_Accounts_Countries_Fk_Country",
                         column: x => x.Fk_Country,
                         principalTable: "Countries",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
+                    _ = table.ForeignKey(
                         name: "FK_Accounts_Countries_Fk_Nationality",
                         column: x => x.Fk_Nationality,
                         principalTable: "Countries",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
+                    _ = table.ForeignKey(
                         name: "FK_Accounts_Teams_Fk_FavouriteTeam",
                         column: x => x.Fk_FavouriteTeam,
                         principalTable: "Teams",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
+                    _ = table.ForeignKey(
                         name: "FK_Accounts_Users_Fk_User",
                         column: x => x.Fk_User,
                         principalTable: "Users",
@@ -718,7 +716,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "DashboardAdministrators",
                 columns: table => new
                 {
@@ -734,14 +732,14 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DashboardAdministrators", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_DashboardAdministrators", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_DashboardAdministrators_DashboardAdministrationRoles_Fk_DashboardAdministrationRole",
                         column: x => x.Fk_DashboardAdministrationRole,
                         principalTable: "DashboardAdministrationRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
+                    _ = table.ForeignKey(
                         name: "FK_DashboardAdministrators_Users_Fk_User",
                         column: x => x.Fk_User,
                         principalTable: "Users",
@@ -749,7 +747,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "Devices",
                 columns: table => new
                 {
@@ -765,8 +763,8 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Devices", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_Devices", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_Devices_Users_Fk_User",
                         column: x => x.Fk_User,
                         principalTable: "Users",
@@ -774,7 +772,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "RefreshTokens",
                 columns: table => new
                 {
@@ -792,8 +790,8 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RefreshTokens", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_RefreshTokens", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_RefreshTokens_Users_Fk_User",
                         column: x => x.Fk_User,
                         principalTable: "Users",
@@ -801,7 +799,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "Verifications",
                 columns: table => new
                 {
@@ -816,8 +814,8 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Verifications", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_Verifications", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_Verifications_Users_Fk_User",
                         column: x => x.Fk_User,
                         principalTable: "Users",
@@ -825,7 +823,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "GameWeakLang",
                 columns: table => new
                 {
@@ -837,8 +835,8 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GameWeakLang", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_GameWeakLang", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_GameWeakLang_GameWeaks_Fk_Source",
                         column: x => x.Fk_Source,
                         principalTable: "GameWeaks",
@@ -846,7 +844,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "News",
                 columns: table => new
                 {
@@ -866,15 +864,15 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_News", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_News", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_News_GameWeaks_Fk_GameWeak",
                         column: x => x.Fk_GameWeak,
                         principalTable: "GameWeaks",
                         principalColumn: "Id");
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "TeamGameWeaks",
                 columns: table => new
                 {
@@ -895,20 +893,20 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TeamGameWeaks", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_TeamGameWeaks", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_TeamGameWeaks_GameWeaks_Fk_GameWeak",
                         column: x => x.Fk_GameWeak,
                         principalTable: "GameWeaks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
+                    _ = table.ForeignKey(
                         name: "FK_TeamGameWeaks_Teams_Fk_Away",
                         column: x => x.Fk_Away,
                         principalTable: "Teams",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
+                    _ = table.ForeignKey(
                         name: "FK_TeamGameWeaks_Teams_Fk_Home",
                         column: x => x.Fk_Home,
                         principalTable: "Teams",
@@ -916,7 +914,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "PlayerGameWeaks",
                 columns: table => new
                 {
@@ -931,14 +929,14 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PlayerGameWeaks", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_PlayerGameWeaks", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_PlayerGameWeaks_GameWeaks_Fk_GameWeak",
                         column: x => x.Fk_GameWeak,
                         principalTable: "GameWeaks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
+                    _ = table.ForeignKey(
                         name: "FK_PlayerGameWeaks_Players_Fk_Player",
                         column: x => x.Fk_Player,
                         principalTable: "Players",
@@ -946,7 +944,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "PlayerLang",
                 columns: table => new
                 {
@@ -958,8 +956,8 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PlayerLang", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_PlayerLang", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_PlayerLang_Players_Fk_Source",
                         column: x => x.Fk_Source,
                         principalTable: "Players",
@@ -967,7 +965,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "PlayerPrices",
                 columns: table => new
                 {
@@ -984,14 +982,14 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PlayerPrices", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_PlayerPrices", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_PlayerPrices_Players_Fk_Player",
                         column: x => x.Fk_Player,
                         principalTable: "Players",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
+                    _ = table.ForeignKey(
                         name: "FK_PlayerPrices_Teams_Fk_Team",
                         column: x => x.Fk_Team,
                         principalTable: "Teams",
@@ -999,7 +997,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "AccountTeams",
                 columns: table => new
                 {
@@ -1019,14 +1017,14 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AccountTeams", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_AccountTeams", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_AccountTeams_Accounts_Fk_Account",
                         column: x => x.Fk_Account,
                         principalTable: "Accounts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
+                    _ = table.ForeignKey(
                         name: "FK_AccountTeams_Seasons_Fk_Season",
                         column: x => x.Fk_Season,
                         principalTable: "Seasons",
@@ -1034,7 +1032,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "PrivateLeagueMembers",
                 columns: table => new
                 {
@@ -1050,14 +1048,14 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PrivateLeagueMembers", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_PrivateLeagueMembers", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_PrivateLeagueMembers_Accounts_Fk_Account",
                         column: x => x.Fk_Account,
                         principalTable: "Accounts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
+                    _ = table.ForeignKey(
                         name: "FK_PrivateLeagueMembers_PrivateLeagues_Fk_PrivateLeague",
                         column: x => x.Fk_PrivateLeague,
                         principalTable: "PrivateLeagues",
@@ -1065,7 +1063,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "NewsAttachments",
                 columns: table => new
                 {
@@ -1081,8 +1079,8 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NewsAttachments", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_NewsAttachments", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_NewsAttachments_News_Fk_News",
                         column: x => x.Fk_News,
                         principalTable: "News",
@@ -1090,7 +1088,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "NewsLang",
                 columns: table => new
                 {
@@ -1104,8 +1102,8 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NewsLang", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_NewsLang", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_NewsLang_News_Fk_Source",
                         column: x => x.Fk_Source,
                         principalTable: "News",
@@ -1113,7 +1111,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "PlayerGameWeakScores",
                 columns: table => new
                 {
@@ -1130,14 +1128,14 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PlayerGameWeakScores", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_PlayerGameWeakScores", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_PlayerGameWeakScores_PlayerGameWeaks_Fk_PlayerGameWeak",
                         column: x => x.Fk_PlayerGameWeak,
                         principalTable: "PlayerGameWeaks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
+                    _ = table.ForeignKey(
                         name: "FK_PlayerGameWeakScores_ScoreTypes_Fk_ScoreType",
                         column: x => x.Fk_ScoreType,
                         principalTable: "ScoreTypes",
@@ -1145,7 +1143,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "AccountTeamGameWeaks",
                 columns: table => new
                 {
@@ -1164,14 +1162,14 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AccountTeamGameWeaks", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_AccountTeamGameWeaks", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_AccountTeamGameWeaks_AccountTeams_Fk_AccountTeam",
                         column: x => x.Fk_AccountTeam,
                         principalTable: "AccountTeams",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
+                    _ = table.ForeignKey(
                         name: "FK_AccountTeamGameWeaks_GameWeaks_Fk_GameWeak",
                         column: x => x.Fk_GameWeak,
                         principalTable: "GameWeaks",
@@ -1179,7 +1177,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "AccountTeamPlayers",
                 columns: table => new
                 {
@@ -1191,14 +1189,14 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AccountTeamPlayers", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_AccountTeamPlayers", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_AccountTeamPlayers_AccountTeams_Fk_AccountTeam",
                         column: x => x.Fk_AccountTeam,
                         principalTable: "AccountTeams",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
+                    _ = table.ForeignKey(
                         name: "FK_AccountTeamPlayers_Players_Fk_Player",
                         column: x => x.Fk_Player,
                         principalTable: "Players",
@@ -1206,7 +1204,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "PlayerTransfers",
                 columns: table => new
                 {
@@ -1225,20 +1223,20 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PlayerTransfers", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_PlayerTransfers", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_PlayerTransfers_AccountTeams_Fk_AccountTeam",
                         column: x => x.Fk_AccountTeam,
                         principalTable: "AccountTeams",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
+                    _ = table.ForeignKey(
                         name: "FK_PlayerTransfers_GameWeaks_Fk_GameWeak",
                         column: x => x.Fk_GameWeak,
                         principalTable: "GameWeaks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
+                    _ = table.ForeignKey(
                         name: "FK_PlayerTransfers_Players_Fk_Player",
                         column: x => x.Fk_Player,
                         principalTable: "Players",
@@ -1246,7 +1244,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "AccountTeamPlayerGameWeaks",
                 columns: table => new
                 {
@@ -1263,20 +1261,20 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AccountTeamPlayerGameWeaks", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_AccountTeamPlayerGameWeaks", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_AccountTeamPlayerGameWeaks_AccountTeamPlayers_Fk_AccountTeamPlayer",
                         column: x => x.Fk_AccountTeamPlayer,
                         principalTable: "AccountTeamPlayers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
+                    _ = table.ForeignKey(
                         name: "FK_AccountTeamPlayerGameWeaks_GameWeaks_Fk_GameWeak",
                         column: x => x.Fk_GameWeak,
                         principalTable: "GameWeaks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
+                    _ = table.ForeignKey(
                         name: "FK_AccountTeamPlayerGameWeaks_TeamPlayerTypes_Fk_TeamPlayerType",
                         column: x => x.Fk_TeamPlayerType,
                         principalTable: "TeamPlayerTypes",
@@ -1284,12 +1282,12 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
+            _ = migrationBuilder.InsertData(
                 table: "AppAbout",
                 columns: new[] { "Id", "AboutApp", "AboutCompany", "EmailAddress", "FacebookUrl", "GameRules", "InstagramUrl", "LastModifiedBy", "Phone", "Prizes", "QuestionsAndAnswer", "SnapChatUrl", "Subscriptions", "TermsAndConditions", "TwitterUrl", "WhatsApp" },
                 values: new object[] { 1, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null });
 
-            migrationBuilder.InsertData(
+            _ = migrationBuilder.InsertData(
                 table: "DashboardAccessLevels",
                 columns: new[] { "Id", "CreateAccess", "DeleteAccess", "EditAccess", "Name", "ViewAccess" },
                 values: new object[,]
@@ -1299,12 +1297,12 @@ namespace DAL.Migrations
                     { 3, false, false, false, "Viewer", true }
                 });
 
-            migrationBuilder.InsertData(
+            _ = migrationBuilder.InsertData(
                 table: "DashboardAdministrationRoles",
                 columns: new[] { "Id", "Name" },
                 values: new object[] { 1, "Developer" });
 
-            migrationBuilder.InsertData(
+            _ = migrationBuilder.InsertData(
                 table: "DashboardViews",
                 columns: new[] { "Id", "Name", "ViewPath" },
                 values: new object[,]
@@ -1320,12 +1318,12 @@ namespace DAL.Migrations
                     { 9, "Verification", "Verification" }
                 });
 
-            migrationBuilder.InsertData(
+            _ = migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Culture", "EmailAddress", "LastModifiedBy", "Name", "Password", "PhoneNumber", "UserName" },
                 values: new object[] { 1, null, "user@mail.com", null, "Developer", "$2a$11$NFGeYgTeYOfMBTaIGZonS.MFGSsBtyPFnONi3ITTQB/3BhEqv.bXi", null, "Developer" });
 
-            migrationBuilder.InsertData(
+            _ = migrationBuilder.InsertData(
                 table: "AdministrationRolePremissions",
                 columns: new[] { "Id", "Fk_DashboardAccessLevel", "Fk_DashboardAdministrationRole", "Fk_DashboardView" },
                 values: new object[,]
@@ -1341,12 +1339,12 @@ namespace DAL.Migrations
                     { 9, 1, 1, 9 }
                 });
 
-            migrationBuilder.InsertData(
+            _ = migrationBuilder.InsertData(
                 table: "AppAboutLang",
                 columns: new[] { "Id", "AboutApp", "AboutCompany", "Fk_Source", "GameRules", "Prizes", "QuestionsAndAnswer", "Subscriptions", "TermsAndConditions" },
                 values: new object[] { 1, null, null, 1, null, null, null, null, null });
 
-            migrationBuilder.InsertData(
+            _ = migrationBuilder.InsertData(
                 table: "DashboardAccessLevelLang",
                 columns: new[] { "Id", "Fk_Source", "Name" },
                 values: new object[,]
@@ -1356,17 +1354,17 @@ namespace DAL.Migrations
                     { 3, 3, "Viewer" }
                 });
 
-            migrationBuilder.InsertData(
+            _ = migrationBuilder.InsertData(
                 table: "DashboardAdministrationRoleLang",
                 columns: new[] { "Id", "Fk_Source", "Name" },
                 values: new object[] { 1, 1, "Developer" });
 
-            migrationBuilder.InsertData(
+            _ = migrationBuilder.InsertData(
                 table: "DashboardAdministrators",
                 columns: new[] { "Id", "Fk_DashboardAdministrationRole", "Fk_User", "JobTitle", "LastModifiedBy" },
                 values: new object[] { 1, 1, 1, "Developer", null });
 
-            migrationBuilder.InsertData(
+            _ = migrationBuilder.InsertData(
                 table: "DashboardViewLang",
                 columns: new[] { "Id", "Fk_Source", "Name" },
                 values: new object[,]
@@ -1382,411 +1380,411 @@ namespace DAL.Migrations
                     { 9, 9, "Verification" }
                 });
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_Accounts_Fk_Country",
                 table: "Accounts",
                 column: "Fk_Country");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_Accounts_Fk_FavouriteTeam",
                 table: "Accounts",
                 column: "Fk_FavouriteTeam");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_Accounts_Fk_Nationality",
                 table: "Accounts",
                 column: "Fk_Nationality");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_Accounts_Fk_User",
                 table: "Accounts",
                 column: "Fk_User",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_AccountTeamGameWeaks_Fk_AccountTeam_Fk_GameWeak",
                 table: "AccountTeamGameWeaks",
                 columns: new[] { "Fk_AccountTeam", "Fk_GameWeak" },
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_AccountTeamGameWeaks_Fk_GameWeak",
                 table: "AccountTeamGameWeaks",
                 column: "Fk_GameWeak");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_AccountTeamPlayerGameWeaks_Fk_AccountTeamPlayer",
                 table: "AccountTeamPlayerGameWeaks",
                 column: "Fk_AccountTeamPlayer");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_AccountTeamPlayerGameWeaks_Fk_GameWeak_Fk_TeamPlayerType_Fk_AccountTeamPlayer",
                 table: "AccountTeamPlayerGameWeaks",
                 columns: new[] { "Fk_GameWeak", "Fk_TeamPlayerType", "Fk_AccountTeamPlayer" },
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_AccountTeamPlayerGameWeaks_Fk_TeamPlayerType",
                 table: "AccountTeamPlayerGameWeaks",
                 column: "Fk_TeamPlayerType");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_AccountTeamPlayers_Fk_AccountTeam",
                 table: "AccountTeamPlayers",
                 column: "Fk_AccountTeam");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_AccountTeamPlayers_Fk_Player_Fk_AccountTeam",
                 table: "AccountTeamPlayers",
                 columns: new[] { "Fk_Player", "Fk_AccountTeam" },
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_AccountTeams_Fk_Account_Fk_Season",
                 table: "AccountTeams",
                 columns: new[] { "Fk_Account", "Fk_Season" },
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_AccountTeams_Fk_Season",
                 table: "AccountTeams",
                 column: "Fk_Season");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_AdministrationRolePremissions_Fk_DashboardAccessLevel",
                 table: "AdministrationRolePremissions",
                 column: "Fk_DashboardAccessLevel");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_AdministrationRolePremissions_Fk_DashboardAdministrationRole_Fk_DashboardView",
                 table: "AdministrationRolePremissions",
                 columns: new[] { "Fk_DashboardAdministrationRole", "Fk_DashboardView" },
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_AdministrationRolePremissions_Fk_DashboardView",
                 table: "AdministrationRolePremissions",
                 column: "Fk_DashboardView");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_AppAboutLang_Fk_Source",
                 table: "AppAboutLang",
                 column: "Fk_Source",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_Countries_Name",
                 table: "Countries",
                 column: "Name",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_CountryLang_Fk_Source",
                 table: "CountryLang",
                 column: "Fk_Source",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_DashboardAccessLevelLang_Fk_Source",
                 table: "DashboardAccessLevelLang",
                 column: "Fk_Source",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_DashboardAccessLevels_Name",
                 table: "DashboardAccessLevels",
                 column: "Name",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_DashboardAdministrationRoleLang_Fk_Source",
                 table: "DashboardAdministrationRoleLang",
                 column: "Fk_Source",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_DashboardAdministrationRoles_Name",
                 table: "DashboardAdministrationRoles",
                 column: "Name",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_DashboardAdministrators_Fk_DashboardAdministrationRole",
                 table: "DashboardAdministrators",
                 column: "Fk_DashboardAdministrationRole");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_DashboardAdministrators_Fk_User",
                 table: "DashboardAdministrators",
                 column: "Fk_User",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_DashboardViewLang_Fk_Source",
                 table: "DashboardViewLang",
                 column: "Fk_Source",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_DashboardViews_Name",
                 table: "DashboardViews",
                 column: "Name",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_DashboardViews_ViewPath",
                 table: "DashboardViews",
                 column: "ViewPath",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_Devices_Fk_User",
                 table: "Devices",
                 column: "Fk_User");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_Devices_NotificationToken",
                 table: "Devices",
                 column: "NotificationToken",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_GameWeakLang_Fk_Source",
                 table: "GameWeakLang",
                 column: "Fk_Source",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_GameWeaks_Fk_Season_Name",
                 table: "GameWeaks",
                 columns: new[] { "Fk_Season", "Name" },
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_News_Fk_GameWeak",
                 table: "News",
                 column: "Fk_GameWeak");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_NewsAttachments_Fk_News",
                 table: "NewsAttachments",
                 column: "Fk_News");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_NewsLang_Fk_Source",
                 table: "NewsLang",
                 column: "Fk_Source",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_PlayerGameWeaks_Fk_GameWeak_Fk_Player",
                 table: "PlayerGameWeaks",
                 columns: new[] { "Fk_GameWeak", "Fk_Player" },
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_PlayerGameWeaks_Fk_Player",
                 table: "PlayerGameWeaks",
                 column: "Fk_Player");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_PlayerGameWeakScores_Fk_PlayerGameWeak_Fk_ScoreType",
                 table: "PlayerGameWeakScores",
                 columns: new[] { "Fk_PlayerGameWeak", "Fk_ScoreType" },
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_PlayerGameWeakScores_Fk_ScoreType",
                 table: "PlayerGameWeakScores",
                 column: "Fk_ScoreType");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_PlayerLang_Fk_Source",
                 table: "PlayerLang",
                 column: "Fk_Source",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_PlayerPositionLang_Fk_Source",
                 table: "PlayerPositionLang",
                 column: "Fk_Source",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_PlayerPositions_Name",
                 table: "PlayerPositions",
                 column: "Name",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_PlayerPrices_Fk_Player",
                 table: "PlayerPrices",
                 column: "Fk_Player");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_PlayerPrices_Fk_Team",
                 table: "PlayerPrices",
                 column: "Fk_Team");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_Players_Fk_PlayerPosition",
                 table: "Players",
                 column: "Fk_PlayerPosition");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_Players_Fk_Team",
                 table: "Players",
                 column: "Fk_Team");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_PlayerTransfers_Fk_AccountTeam",
                 table: "PlayerTransfers",
                 column: "Fk_AccountTeam");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_PlayerTransfers_Fk_GameWeak",
                 table: "PlayerTransfers",
                 column: "Fk_GameWeak");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_PlayerTransfers_Fk_Player",
                 table: "PlayerTransfers",
                 column: "Fk_Player");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_PrivateLeagueMembers_Fk_Account_Fk_PrivateLeague",
                 table: "PrivateLeagueMembers",
                 columns: new[] { "Fk_Account", "Fk_PrivateLeague" },
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_PrivateLeagueMembers_Fk_PrivateLeague",
                 table: "PrivateLeagueMembers",
                 column: "Fk_PrivateLeague");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_PrivateLeagues_UniqueCode",
                 table: "PrivateLeagues",
                 column: "UniqueCode",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_RefreshTokens_Fk_User",
                 table: "RefreshTokens",
                 column: "Fk_User");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_RefreshTokens_Token",
                 table: "RefreshTokens",
                 column: "Token",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_ScoreTypeLang_Fk_Source",
                 table: "ScoreTypeLang",
                 column: "Fk_Source",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_ScoreTypes_Name",
                 table: "ScoreTypes",
                 column: "Name",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_SeasonLang_Fk_Source",
                 table: "SeasonLang",
                 column: "Fk_Source",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_Seasons_Name",
                 table: "Seasons",
                 column: "Name",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_SponsorLang_Fk_Source",
                 table: "SponsorLang",
                 column: "Fk_Source",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_Sponsors_Name",
                 table: "Sponsors",
                 column: "Name",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_SponsorViews_Fk_Sponsor_AppViewEnum",
                 table: "SponsorViews",
                 columns: new[] { "Fk_Sponsor", "AppViewEnum" },
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_Standings_Fk_Season_Fk_Team",
                 table: "Standings",
                 columns: new[] { "Fk_Season", "Fk_Team" },
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_Standings_Fk_Team",
                 table: "Standings",
                 column: "Fk_Team");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_TeamGameWeaks_Fk_Away_Fk_Home_Fk_GameWeak",
                 table: "TeamGameWeaks",
                 columns: new[] { "Fk_Away", "Fk_Home", "Fk_GameWeak" },
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_TeamGameWeaks_Fk_GameWeak",
                 table: "TeamGameWeaks",
                 column: "Fk_GameWeak");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_TeamGameWeaks_Fk_Home",
                 table: "TeamGameWeaks",
                 column: "Fk_Home");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_TeamLang_Fk_Source",
                 table: "TeamLang",
                 column: "Fk_Source",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_TeamPlayerTypeLang_Fk_Source",
                 table: "TeamPlayerTypeLang",
                 column: "Fk_Source",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_TeamPlayerTypes_Name",
                 table: "TeamPlayerTypes",
                 column: "Name",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_Teams_Name",
                 table: "Teams",
                 column: "Name",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_Users_UserName",
                 table: "Users",
                 column: "UserName",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_Verifications_Code",
                 table: "Verifications",
                 column: "Code",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_Verifications_Fk_User",
                 table: "Verifications",
                 column: "Fk_User");
@@ -1794,154 +1792,154 @@ namespace DAL.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "AccountTeamGameWeaks");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "AccountTeamPlayerGameWeaks");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "AdministrationRolePremissions");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "AppAboutLang");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "CountryLang");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "DashboardAccessLevelLang");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "DashboardAdministrationRoleLang");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "DashboardAdministrators");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "DashboardViewLang");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "Devices");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "GameWeakLang");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "Logs");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "NewsAttachments");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "NewsLang");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "PlayerGameWeakScores");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "PlayerLang");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "PlayerPositionLang");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "PlayerPrices");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "PlayerTransfers");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "PrivateLeagueMembers");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "RefreshTokens");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "ScoreTypeLang");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "SeasonLang");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "SponsorLang");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "SponsorViews");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "Standings");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "TeamGameWeaks");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "TeamLang");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "TeamPlayerTypeLang");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "Verifications");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "AccountTeamPlayers");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "AppAbout");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "DashboardAccessLevels");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "DashboardAdministrationRoles");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "DashboardViews");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "News");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "PlayerGameWeaks");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "PrivateLeagues");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "ScoreTypes");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "Sponsors");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "TeamPlayerTypes");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "AccountTeams");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "GameWeaks");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "Players");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "Accounts");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "Seasons");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "PlayerPositions");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "Countries");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "Teams");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "Users");
         }
     }

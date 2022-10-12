@@ -2,7 +2,6 @@
 using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.AccountTeamModels;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace API.Areas.AccountTeamArea.Controllers
 {
@@ -39,7 +38,7 @@ namespace API.Areas.AccountTeamArea.Controllers
         [Route(nameof(Create))]
         public async Task<bool> Create([FromForm] AccountTeamPlayerCreateModel model)
         {
-            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
             SeasonModel currentSeason = _unitOfWork.Season.GetCurrentSeason();
@@ -57,7 +56,7 @@ namespace API.Areas.AccountTeamArea.Controllers
 
             if (model.Fk_Players != null && model.Fk_Players.Any())
             {
-                foreach (var fk_Player in model.Fk_Players)
+                foreach (int fk_Player in model.Fk_Players)
                 {
                     _unitOfWork.AccountTeam.CreateAccountTeamPlayer(new AccountTeamPlayer
                     {

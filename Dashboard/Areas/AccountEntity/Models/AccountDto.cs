@@ -1,5 +1,4 @@
-﻿using Dashboard.Areas.Dashboard.Models;
-using Dashboard.Areas.Location.Models;
+﻿using Dashboard.Areas.Location.Models;
 using Entities.CoreServicesModels.AccountModels;
 using Entities.CoreServicesModels.UserModels;
 using System.ComponentModel;

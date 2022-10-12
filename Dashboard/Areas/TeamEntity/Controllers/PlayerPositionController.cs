@@ -1,9 +1,7 @@
 ﻿using Dashboard.Areas.TeamEntity.Models;
-using Dashboard.Areas.Dashboard.Models;
 using Entities.CoreServicesModels.TeamModels;
-using Entities.DBModels.AccountModels;
-using Entities.RequestFeatures;
 using Entities.DBModels.TeamModels;
+using Entities.RequestFeatures;
 
 namespace Dashboard.Areas.TeamEntity.Controllers
 {
@@ -31,7 +29,7 @@ namespace Dashboard.Areas.TeamEntity.Controllers
 
         public IActionResult Index()
         {
-            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             PlayerPositionFilter filter = new();
 
@@ -72,7 +70,7 @@ namespace Dashboard.Areas.TeamEntity.Controllers
             return View(data);
         }
 
-     
+
         [Authorize(DashboardViewEnum.PlayerPosition, AccessLevelEnum.CreateOrEdit)]
         public async Task<IActionResult> CreateOrEdit(int id = 0)
         {
@@ -133,7 +131,7 @@ namespace Dashboard.Areas.TeamEntity.Controllers
 
                 await _unitOfWork.Save();
 
-                return (IActionResult)RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
@@ -151,7 +149,7 @@ namespace Dashboard.Areas.TeamEntity.Controllers
             return View(data != null && !_unitOfWork.Team.GetPlayers(new PlayerParameters
             {
                 Fk_PlayerPosition = id
-            },otherLang:false).Any());
+            }, otherLang: false).Any());
         }
 
         [HttpPost, ActionName("Delete")]

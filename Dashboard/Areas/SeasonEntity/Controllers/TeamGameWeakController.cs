@@ -1,11 +1,8 @@
 ﻿using Dashboard.Areas.SeasonEntity.Models;
-using Dashboard.Areas.Dashboard.Models;
 using Entities.CoreServicesModels.SeasonModels;
-using Entities.RequestFeatures;
-using Entities.DBModels.SeasonModels;
-using Entities.CoreServicesModels.AccountTeamModels;
-using Entities.CoreServicesModels.StandingsModels;
 using Entities.CoreServicesModels.TeamModels;
+using Entities.DBModels.SeasonModels;
+using Entities.RequestFeatures;
 
 namespace Dashboard.Areas.SeasonEntity.Controllers
 {
@@ -31,9 +28,9 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
             _environment = environment;
         }
 
-        public IActionResult Index(int Fk_Away,int Fk_Home,int Fk_Season, bool ProfileLayOut = false)
+        public IActionResult Index(int Fk_Away, int Fk_Home, int Fk_Season, bool ProfileLayOut = false)
         {
-            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             TeamGameWeakFilter filter = new()
             {
@@ -93,24 +90,19 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
                 model = _mapper.Map<TeamGameWeakCreateOrEditModel>(
                                                 await _unitOfWork.Season.FindTeamGameWeakbyId(id, trackChanges: false));
 
-              
+
             }
             else
             {
                 model.StartTime = DateTime.UtcNow;
             }
-            if (model.Fk_GameWeak > 0)
-            {
-                model.Fk_Season = _unitOfWork.Season.GetGameWeakbyId(model.Fk_GameWeak, otherLang: false).Fk_Season;
-            }
-            else
-            {
-                model.Fk_Season = _unitOfWork.Season.GetSeasons(new SeasonParameters(), otherLang: false).Any()
+            model.Fk_Season = model.Fk_GameWeak > 0
+                ? _unitOfWork.Season.GetGameWeakbyId(model.Fk_GameWeak, otherLang: false).Fk_Season
+                : _unitOfWork.Season.GetSeasons(new SeasonParameters(), otherLang: false).Any()
                     ? _unitOfWork.Season.GetSeasons(new SeasonParameters(), otherLang: false).FirstOrDefault().Id
                     : 0;
-            }
 
-            SetViewData(returnPage, id,model.Fk_Season, otherLang);
+            SetViewData(returnPage, id, model.Fk_Season, otherLang);
             return View(model);
         }
 
@@ -123,7 +115,7 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
 
             if (!ModelState.IsValid)
             {
-                SetViewData(returnPage, id,model.Fk_Season, otherLang);
+                SetViewData(returnPage, id, model.Fk_Season, otherLang);
 
                 return View(model);
             }
@@ -150,20 +142,15 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
                     dataDB.LastModifiedBy = auth.UserName;
                 }
 
-             
+
 
                 await _unitOfWork.Save();
 
-                if (returnPage == (int)TeamGameWeakReturnPage.SeasonProfile)
-                {
-                    return Redirect($"/SeasonEntity/Season/Profile/{model.Fk_Season}");
-                }
-                if (returnPage == (int)TeamGameWeakReturnPage.TeamProfile)
-                {
-                    return Redirect($"/TeamEntity/Team/Profile/{model.Fk_Home}");
-                }
-
-                return (IActionResult)RedirectToAction(nameof(Index));
+                return returnPage == (int)TeamGameWeakReturnPage.SeasonProfile
+                    ? Redirect($"/SeasonEntity/Season/Profile/{model.Fk_Season}")
+                    : returnPage == (int)TeamGameWeakReturnPage.TeamProfile
+                    ? Redirect($"/TeamEntity/Team/Profile/{model.Fk_Home}")
+                    : RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
@@ -194,7 +181,7 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
         }
 
         // helper methods
-        private void SetViewData(int returnPage, int id,int fk_Season, bool otherLang)
+        private void SetViewData(int returnPage, int id, int fk_Season, bool otherLang)
         {
             ViewData["returnPage"] = returnPage;
             ViewData["id"] = id;

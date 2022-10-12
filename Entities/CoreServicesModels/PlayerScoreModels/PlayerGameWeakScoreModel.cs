@@ -39,7 +39,7 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
 
     public class PlayerGameWeakScoreCreateOrEditModel
     {
-       
+
         [DisplayName(nameof(ScoreType))]
         [ForeignKey(nameof(ScoreType))]
         public int Fk_ScoreType { get; set; }

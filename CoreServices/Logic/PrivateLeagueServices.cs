@@ -39,7 +39,7 @@ namespace CoreServices.Logic
             return await PagedList<PrivateLeagueModel>.ToPagedList(GetPrivateLeagues(parameters), parameters.PageNumber, parameters.PageSize);
         }
 
-        public Dictionary<string,string> GetPrivateLeagueLookUp(PrivateLeagueParameters parameters)
+        public Dictionary<string, string> GetPrivateLeagueLookUp(PrivateLeagueParameters parameters)
         {
             return GetPrivateLeagues(parameters).ToDictionary(a => a.Id.ToString(), a => a.Name);
         }
@@ -92,11 +92,11 @@ namespace CoreServices.Logic
                                FirstName = a.Account.FirstName,
                                LastName = a.Account.LastName,
                            },
-                           PrivateLeague =new PrivateLeagueModel
+                           PrivateLeague = new PrivateLeagueModel
                            {
                                Name = a.PrivateLeague.Name
                            },
-                           
+
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

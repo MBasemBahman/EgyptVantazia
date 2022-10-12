@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
 
 namespace DAL.Migrations
 {
@@ -8,17 +7,17 @@ namespace DAL.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
+            _ = migrationBuilder.RenameColumn(
                 name: "_365_For",
                 table: "Standings",
                 newName: "Strike");
 
-            migrationBuilder.RenameColumn(
+            _ = migrationBuilder.RenameColumn(
                 name: "Points",
                 table: "Standings",
                 newName: "Position");
 
-            migrationBuilder.AlterColumn<double>(
+            _ = migrationBuilder.AlterColumn<double>(
                 name: "Ratio",
                 table: "Standings",
                 type: "float",
@@ -26,14 +25,14 @@ namespace DAL.Migrations
                 oldClrType: typeof(int),
                 oldType: "int");
 
-            migrationBuilder.AddColumn<int>(
+            _ = migrationBuilder.AddColumn<int>(
                 name: "For",
                 table: "Standings",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
 
-            migrationBuilder.UpdateData(
+            _ = migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 1,
@@ -43,21 +42,21 @@ namespace DAL.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "For",
                 table: "Standings");
 
-            migrationBuilder.RenameColumn(
+            _ = migrationBuilder.RenameColumn(
                 name: "Strike",
                 table: "Standings",
                 newName: "_365_For");
 
-            migrationBuilder.RenameColumn(
+            _ = migrationBuilder.RenameColumn(
                 name: "Position",
                 table: "Standings",
                 newName: "Points");
 
-            migrationBuilder.AlterColumn<int>(
+            _ = migrationBuilder.AlterColumn<int>(
                 name: "Ratio",
                 table: "Standings",
                 type: "int",
@@ -65,7 +64,7 @@ namespace DAL.Migrations
                 oldClrType: typeof(double),
                 oldType: "float");
 
-            migrationBuilder.UpdateData(
+            _ = migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 1,

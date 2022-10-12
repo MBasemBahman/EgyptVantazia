@@ -7,6 +7,6 @@ namespace API.Areas.StandingsArea.Models
     {
         [SwaggerIgnore]
         [DisplayName(nameof(_365_For))]
-        public new int _365_For { get; set; }
+        public int _365_For { get; set; }
     }
 }

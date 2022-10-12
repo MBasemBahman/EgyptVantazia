@@ -3,7 +3,6 @@ global using Contracts;
 global using Contracts.Constants;
 global using Contracts.Extensions;
 global using Contracts.Logger;
-global using Contracts.Repository;
 global using Contracts.Services;
 global using CoreServices;
 global using DAL;

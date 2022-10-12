@@ -27,13 +27,13 @@ WebApplication app = builder.Build();
 //Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage();
+    _ = app.UseDeveloperExceptionPage();
 }
 else
 {
-    app.UseExceptionHandler("/Error");
+    _ = app.UseExceptionHandler("/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+    _ = app.UseHsts();
 }
 
 app.UseHttpsRedirection();
@@ -53,7 +53,7 @@ app.UseMiddleware<CultureMiddleware>();
 
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapControllerRoute(
+    _ = endpoints.MapControllerRoute(
         name: "areaRoute",
         pattern: "{area=Dashboard}/{controller=Authentication}/{action=Login}/{id?}"
     );

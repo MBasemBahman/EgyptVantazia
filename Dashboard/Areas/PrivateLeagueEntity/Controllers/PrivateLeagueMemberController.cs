@@ -1,9 +1,6 @@
-﻿using Dashboard.Areas.NewsEntity.Models;
-using Dashboard.Areas.PrivateLeagueEntity.Models;
-using Entities.CoreServicesModels.NewsModels;
+﻿using Dashboard.Areas.PrivateLeagueEntity.Models;
 using Entities.CoreServicesModels.PrivateLeagueModels;
 using Entities.RequestFeatures;
-using static Entities.EnumData.LogicEnumData;
 namespace Dashboard.Areas.PrivateLeagueEntity.Controllers
 {
     [Area("PrivateLeagueEntity")]

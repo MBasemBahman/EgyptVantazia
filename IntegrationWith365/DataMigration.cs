@@ -4,7 +4,6 @@ using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.SeasonModels;
 using Entities.DBModels.StandingsModels;
 using Entities.DBModels.TeamModels;
-using IntegrationWith365.Entities.GameModels;
 using IntegrationWith365.Entities.GamesModels;
 using IntegrationWith365.Entities.SquadsModels;
 using IntegrationWith365.Entities.StandingsModels;
@@ -304,7 +303,7 @@ namespace IntegrationWith365
 
             foreach (TeamGameWeakModel teamGameWeak in teamGameWeaks)
             {
-                GameReturn game = await _365Services.GetGame(new _365GameParameters
+                _ = await _365Services.GetGame(new _365GameParameters
                 {
                     GameId = int.Parse(teamGameWeak._365_MatchId)
                 });

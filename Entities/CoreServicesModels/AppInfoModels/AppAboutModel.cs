@@ -1,6 +1,4 @@
-﻿using Entities.DBModels.AppInfoModels;
-
-namespace Entities.CoreServicesModels.AppInfoModels
+﻿namespace Entities.CoreServicesModels.AppInfoModels
 {
     public class AppAboutModel : AuditEntity
     {

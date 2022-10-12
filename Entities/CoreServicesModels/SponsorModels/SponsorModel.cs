@@ -1,5 +1,4 @@
-﻿using Entities.DBModels.SponsorModels;
-using Entities.RequestFeatures;
+﻿using Entities.RequestFeatures;
 using static Entities.EnumData.LogicEnumData;
 
 namespace Entities.CoreServicesModels.SponsorModels

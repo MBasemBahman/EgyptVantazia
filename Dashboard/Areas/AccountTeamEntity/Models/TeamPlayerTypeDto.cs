@@ -10,7 +10,7 @@ namespace Dashboard.Areas.AccountTeamEntity.Models
     public class TeamPlayerTypeDto : TeamPlayerTypeModel
     {
         [DisplayName(nameof(CreatedAt))]
-        public new  string CreatedAt { get; set; }
+        public new string CreatedAt { get; set; }
 
         [DisplayName(nameof(LastModifiedAt))]
         public new string LastModifiedAt { get; set; }

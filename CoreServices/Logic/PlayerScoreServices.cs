@@ -2,7 +2,6 @@
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayerScoreModels;
-using Entities.DBModels.TeamModels;
 
 namespace CoreServices.Logic
 {
@@ -140,7 +139,7 @@ namespace CoreServices.Logic
 
             if (scores != null && scores.Any())
             {
-                foreach (var score in scores)
+                foreach (PlayerGameWeakScoreCreateOrEditModel score in scores)
                 {
                     CreatePlayerGameWeakScore(new PlayerGameWeakScore
                     {
@@ -183,7 +182,7 @@ namespace CoreServices.Logic
 
             if (DataToUpdate != null && DataToUpdate.Any())
             {
-                foreach (var data in DataToUpdate)
+                foreach (PlayerGameWeakScoreCreateOrEditModel data in DataToUpdate)
                 {
                     PlayerGameWeakScore dataDb = await FindPlayerGameWeakScorebyId(data.Id, trackChanges: true);
                     dataDb.Fk_ScoreType = data.Fk_ScoreType;

@@ -102,7 +102,7 @@ namespace Dashboard.Areas.DashboardAdministration.Controllers
             }
             try
             {
-              
+
                 UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
                 DashboardAdministrator adminDB = new();
                 if (id == 0)
@@ -173,7 +173,7 @@ namespace Dashboard.Areas.DashboardAdministration.Controllers
             ViewData["Roles"] = _unitOfWork.DashboardAdministration.GetRolesLookUp(new DashboardAdministrationRoleRequestParameters()
             { GetDeveloperRole = false }, otherLang);
 
-           
+
         }
     }
 }

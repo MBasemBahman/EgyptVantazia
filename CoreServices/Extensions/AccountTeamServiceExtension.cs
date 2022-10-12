@@ -1,5 +1,4 @@
 ﻿using Entities.CoreServicesModels.AccountTeamModels;
-using Entities.CoreServicesModels.LogModels;
 namespace CoreServices.Extensions
 {
     public static class AccountTeamServiceSearchExtension

@@ -11,9 +11,11 @@ using Dashboard.Areas.StandingsEntity.Models;
 using Dashboard.Areas.SeasonEntity.Models;
 using Dashboard.Areas.SponsorEntity.Models;
 using Dashboard.Areas.TeamEntity.Models;
+using Dashboard.Areas.PlayerTransferEntity.Models;
 using Dashboard.Areas.UserEntity.Models;
-using Entities.CoreServicesModels.AccountModels;
+using Entities.CoreServicesModels.PlayerTransfersModels;
 using Entities.CoreServicesModels.AccountTeamModels;
+using Entities.CoreServicesModels.AccountModels;
 using Entities.CoreServicesModels.AppInfoModels;
 using Entities.CoreServicesModels.LocationModels;
 using Entities.CoreServicesModels.LogModels;
@@ -342,6 +344,25 @@ namespace Dashboard.MappingProfileCls
 
             #endregion
 
+            #region Account Team
+
+            CreateMap<AccountTeamModel, AccountTeamDto>();
+
+            CreateMap<AccountTeamFilter, AccountTeamParameters>();
+            #endregion
+
+            #region Account Team Game Weak
+            CreateMap<AccountTeamGameWeakModel, AccountTeamGameWeakDto>();
+            #endregion
+
+            #region Account Team Player
+            CreateMap<AccountTeamPlayerModel, AccountTeamPlayerDto>();
+            #endregion
+
+            #region Account Team Player Game Weak
+            CreateMap<AccountTeamPlayerGameWeakModel, AccountTeamPlayerGameWeakDto>();
+            #endregion
+
             #endregion
 
             #region Private League Models
@@ -454,6 +475,10 @@ namespace Dashboard.MappingProfileCls
 
             #endregion
 
+            #endregion
+
+            #region Player Transfer Models
+            CreateMap<PlayerTransferModel, PlayerTransferDto>();
             #endregion
 
         }

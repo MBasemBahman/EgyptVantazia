@@ -790,7 +790,7 @@
     <value>الملف الشخصي للاعب</value>
   </data>
   <data name="Season" xml:space="preserve">
-    <value>المواسم</value>
+    <value>الموسم</value>
   </data>
   <data name="Seasons" xml:space="preserve">
     <value>المواسم</value>
@@ -911,5 +911,59 @@
   </data>
   <data name="_365_GameWeakId" xml:space="preserve">
     <value>Integration Id</value>
+  </data>
+  <data name="AccountFullName" xml:space="preserve">
+    <value>اسم الحساب بالكامل</value>
+  </data>
+  <data name="AccountTeam" xml:space="preserve">
+    <value>Account Team</value>
+  </data>
+  <data name="AccountTeamGameWeaks" xml:space="preserve">
+    <value>Account Team Game Weaks</value>
+  </data>
+  <data name="AccountTeamPlayer" xml:space="preserve">
+    <value>Account Team Player</value>
+  </data>
+  <data name="AccountTeamPlayerGameWeaks" xml:space="preserve">
+    <value>Account Team Player Game Weaks</value>
+  </data>
+  <data name="AccountTeamPlayers" xml:space="preserve">
+    <value>Account Team Players</value>
+  </data>
+  <data name="AccountTeams" xml:space="preserve">
+    <value>Account Teams</value>
+  </data>
+  <data name="AccountUserName" xml:space="preserve">
+    <value>اسم المستخدم</value>
+  </data>
+  <data name="BenchBoost" xml:space="preserve">
+    <value>Bench Boost</value>
+  </data>
+  <data name="Click to View" xml:space="preserve">
+    <value>اضغط للمشاهدة</value>
+  </data>
+  <data name="Cost" xml:space="preserve">
+    <value>Cost</value>
+  </data>
+  <data name="FreeHit" xml:space="preserve">
+    <value>Free Hit</value>
+  </data>
+  <data name="IsFree" xml:space="preserve">
+    <value>Is Free?</value>
+  </data>
+  <data name="PlayerTransfers" xml:space="preserve">
+    <value>Player Transfers</value>
+  </data>
+  <data name="TotalMoney" xml:space="preserve">
+    <value>Total Money</value>
+  </data>
+  <data name="TotalPoints" xml:space="preserve">
+    <value>Total Points</value>
+  </data>
+  <data name="TransferTypeEnum" xml:space="preserve">
+    <value>Transfer Type</value>
+  </data>
+  <data name="WildCard" xml:space="preserve">
+    <value>Wild Card</value>
   </data>
 </root>

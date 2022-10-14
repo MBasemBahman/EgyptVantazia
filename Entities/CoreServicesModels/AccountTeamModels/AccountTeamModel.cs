@@ -10,6 +10,16 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public int Fk_Account { get; set; }
         public int Fk_Season { get; set; }
 
+        public DateTime? CreatedAtFrom { get; set; }
+
+        public DateTime? CreatedAtTo { get; set; }
+
+        [DisplayName(nameof(AccountFullName))]
+        public string AccountFullName { get; set; }
+
+        [DisplayName(nameof(AccountUserName))]
+        public string AccountUserName { get; set; }
+
     }
 
     public class AccountTeamModel : AuditImageEntity

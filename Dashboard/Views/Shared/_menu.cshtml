@@ -63,6 +63,20 @@
                     </a>
                 </li>
             }
+            
+            @if (viewList.Contains((int)DashboardViewEnum.AccountTeam))
+            {
+                <li id="AccountTeamList" class="@(active ==DashboardViewEnum.AccountTeam.ToString()?"active":"") nav-item">
+                    <a class="d-flex align-items-center"
+                       asp-action="Index" asp-area="AccountTeamEntity"
+                       asp-controller="AccountTeam">
+                        <i data-feather='users'></i>
+                        <span class="menu-title text-truncate">
+                            @Localizer.Get("AccountTeams")
+                        </span>
+                    </a>
+                </li>
+            }
 
 
 

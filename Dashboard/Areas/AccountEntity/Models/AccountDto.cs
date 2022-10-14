@@ -46,7 +46,8 @@ namespace Dashboard.Areas.AccountEntity.Models
 
     public enum AccountProfileItems
     {
-        Details = 1
+        Details = 1,
+        AccountTeam = 2
     }
 
 }

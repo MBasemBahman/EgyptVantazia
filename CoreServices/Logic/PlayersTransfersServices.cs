@@ -36,13 +36,23 @@ namespace CoreServices.Logic
                            GameWeak = new GameWeakModel
                            {
                                Name = otherLang ? a.GameWeak.GameWeakLang.Name : a.GameWeak.Name,
-                               _365_GameWeakId = a.GameWeak._365_GameWeakId
+                               _365_GameWeakId = a.GameWeak._365_GameWeakId,
+                               Fk_Season = a.GameWeak.Fk_Season,
+                               Season = new SeasonModel
+                               {
+                                   Name = otherLang?a.GameWeak.Season.SeasonLang.Name : a.GameWeak.Season.Name
+                               }
                            },
                            Player = new PlayerModel
                            {
                                Name = otherLang ? a.Player.PlayerLang.Name : a.Player.Name,
                                ImageUrl = a.Player.StorageUrl + a.Player.ImageUrl,
                                _365_PlayerId = a.Player._365_PlayerId,
+                               Fk_Team = a.Player.Fk_Team,
+                               Team = new TeamModel
+                               {
+                                   Name = otherLang?a.Player.Team.TeamLang.Name :a.Player.Team.Name
+                               }
                            },
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)

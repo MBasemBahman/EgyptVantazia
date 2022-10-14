@@ -141,14 +141,38 @@
   <data name="Account Profile" xml:space="preserve">
     <value>Account Profile</value>
   </data>
+  <data name="AccountFullName" xml:space="preserve">
+    <value>Account Full Name</value>
+  </data>
   <data name="Accounts" xml:space="preserve">
     <value>Accounts</value>
   </data>
   <data name="AccountsCount" xml:space="preserve">
     <value>Accounts</value>
   </data>
+  <data name="AccountTeam" xml:space="preserve">
+    <value>Account Team</value>
+  </data>
   <data name="AccountTeam Data" xml:space="preserve">
     <value>Account Team Data</value>
+  </data>
+  <data name="AccountTeamGameWeaks" xml:space="preserve">
+    <value>Account Team Game Weaks</value>
+  </data>
+  <data name="AccountTeamPlayer" xml:space="preserve">
+    <value>Account Team Player</value>
+  </data>
+  <data name="AccountTeamPlayerGameWeaks" xml:space="preserve">
+    <value>Account Team Player Game Weaks</value>
+  </data>
+  <data name="AccountTeamPlayers" xml:space="preserve">
+    <value>Account Team Players</value>
+  </data>
+  <data name="AccountTeams" xml:space="preserve">
+    <value>Account Teams</value>
+  </data>
+  <data name="AccountUserName" xml:space="preserve">
+    <value>User Name</value>
   </data>
   <data name="Actions" xml:space="preserve">
     <value>Actions</value>
@@ -222,6 +246,9 @@
   <data name="Back to home" xml:space="preserve">
     <value>Back to home</value>
   </data>
+  <data name="BenchBoost" xml:space="preserve">
+    <value>Bench Boost</value>
+  </data>
   <data name="BuyPrice" xml:space="preserve">
     <value>Buy Price</value>
   </data>
@@ -246,6 +273,9 @@
   <data name="ChooseFile" xml:space="preserve">
     <value>Choose File</value>
   </data>
+  <data name="Click to View" xml:space="preserve">
+    <value>Click to View</value>
+  </data>
   <data name="ColorCode" xml:space="preserve">
     <value>Color Code</value>
   </data>
@@ -254,6 +284,9 @@
   </data>
   <data name="COPYRIGHT" xml:space="preserve">
     <value>COPYRIGHT</value>
+  </data>
+  <data name="Cost" xml:space="preserve">
+    <value>Cost</value>
   </data>
   <data name="Countries" xml:space="preserve">
     <value>Countries</value>
@@ -393,6 +426,9 @@
   <data name="For" xml:space="preserve">
     <value>For</value>
   </data>
+  <data name="FreeHit" xml:space="preserve">
+    <value>Free Hit</value>
+  </data>
   <data name="Friday" xml:space="preserve">
     <value>Friday</value>
   </data>
@@ -461,6 +497,9 @@
   </data>
   <data name="IsEnded" xml:space="preserve">
     <value>Is Ended?</value>
+  </data>
+  <data name="IsFree" xml:space="preserve">
+    <value>Is Free?</value>
   </data>
   <data name="January" xml:space="preserve">
     <value>January</value>
@@ -645,6 +684,9 @@
   <data name="PlayersCount" xml:space="preserve">
     <value>Players</value>
   </data>
+  <data name="PlayerTransfers" xml:space="preserve">
+    <value>Player Transfers</value>
+  </data>
   <data name="Please sign-in to your account and start the adventure" xml:space="preserve">
     <value>Please sign-in to your account and start the adventure</value>
   </data>
@@ -819,6 +861,15 @@
   <data name="Title English" xml:space="preserve">
     <value>Title English</value>
   </data>
+  <data name="TotalMoney" xml:space="preserve">
+    <value>Total Money</value>
+  </data>
+  <data name="TotalPoints" xml:space="preserve">
+    <value>Total Points</value>
+  </data>
+  <data name="TransferTypeEnum" xml:space="preserve">
+    <value>Transfer Type</value>
+  </data>
   <data name="Tuesday" xml:space="preserve">
     <value>Tuesday</value>
   </data>
@@ -887,6 +938,9 @@
   </data>
   <data name="WhatsApp" xml:space="preserve">
     <value>WhatsApp</value>
+  </data>
+  <data name="WildCard" xml:space="preserve">
+    <value>Wild Card</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>

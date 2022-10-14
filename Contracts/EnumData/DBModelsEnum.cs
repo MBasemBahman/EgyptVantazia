@@ -44,7 +44,8 @@
             Season = 26,
             GameWeak = 27,
             TeamGameWeak = 28,
-            Standings = 29
+            Standings = 29,
+            AccountTeam = 30
         }
     }
 }

@@ -1,0 +1,50 @@
+﻿@model AccountTeamPlayerDto
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.emptyLayout = true;
+    var accountTeamPlayerGameWeak = new AccountTeamPlayerGameWeakDto();
+
+}
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalScrollableTitle">@Localizer.Get("AccountTeamPlayer")</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+    
+    <div class="row">
+        <div class="col-xl-12 col-12">
+            @if (Model.AccountTeamPlayerGameWeaks != null && Model.AccountTeamPlayerGameWeaks.Any())
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => accountTeamPlayerGameWeak.GameWeak.Season)</th>
+                            <th>@Html.DisplayNameFor(model => accountTeamPlayerGameWeak.GameWeak)</th>
+                            <th>@Html.DisplayNameFor(model => accountTeamPlayerGameWeak.TeamPlayerType)</th>
+                            <th>@Html.DisplayNameFor(model => accountTeamPlayerGameWeak.TrippleCaptain)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var gameWeak in Model.AccountTeamPlayerGameWeaks)
+                        {
+                            <tr>
+                                <td>@gameWeak.GameWeak.Season.Name</td>
+                                <td>@gameWeak.GameWeak.Name</td>
+                                <td>@gameWeak.TeamPlayerType.Name</td>
+                                <td>@(gameWeak.TrippleCaptain ? Localizer.Get("Yes") : Localizer.Get("No"))</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p class="text-center">@Localizer.Get("Not Found")</p>
+            }
+        </div>
+      
+    </div>
+  
+</div>
+

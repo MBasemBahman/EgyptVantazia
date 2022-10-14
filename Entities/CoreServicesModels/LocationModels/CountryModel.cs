@@ -5,6 +5,12 @@
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         [DisplayName(nameof(Name))]
         public string Name { get; set; }
+
+        [DisplayName(nameof(AccountsCount))]
+        public int AccountsCount { get; set; }
+
+        [DisplayName(nameof(NationalitiesCount))]
+        public int NationalitiesCount { get; set; }
     }
 
     public class CountryCreateOrEditModel

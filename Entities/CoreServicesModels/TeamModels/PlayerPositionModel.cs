@@ -14,6 +14,9 @@ namespace Entities.CoreServicesModels.TeamModels
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
 
+        [DisplayName(nameof(PlayersCount))]
+        public int PlayersCount { get; set; }
+
         [DisplayName(nameof(_365_PositionId))]
         public string _365_PositionId { get; set; }
     }

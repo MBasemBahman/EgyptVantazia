@@ -144,6 +144,9 @@
   <data name="Accounts" xml:space="preserve">
     <value>Accounts</value>
   </data>
+  <data name="AccountsCount" xml:space="preserve">
+    <value>Accounts</value>
+  </data>
   <data name="AccountTeam Data" xml:space="preserve">
     <value>Account Team Data</value>
   </data>
@@ -528,6 +531,9 @@
   <data name="Name English" xml:space="preserve">
     <value>Name English</value>
   </data>
+  <data name="NationalitiesCount" xml:space="preserve">
+    <value>Nationalities</value>
+  </data>
   <data name="Nationality" xml:space="preserve">
     <value>Nationality</value>
   </data>
@@ -633,6 +639,9 @@
   <data name="PlayerScore Data" xml:space="preserve">
     <value>Player Score Data</value>
   </data>
+  <data name="PlayersCount" xml:space="preserve">
+    <value>Players</value>
+  </data>
   <data name="Please sign-in to your account and start the adventure" xml:space="preserve">
     <value>Please sign-in to your account and start the adventure</value>
   </data>
@@ -723,6 +732,9 @@
   <data name="ShortDescription English" xml:space="preserve">
     <value>Short Description English</value>
   </data>
+  <data name="ShortName" xml:space="preserve">
+    <value>Short Name</value>
+  </data>
   <data name="ShortName Arabic" xml:space="preserve">
     <value>Short Name Arabic</value>
   </data>
@@ -754,6 +766,9 @@
     <value>Strike</value>
   </data>
   <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="String2" xml:space="preserve">
     <value />
   </data>
   <data name="Submit" xml:space="preserve">
@@ -877,10 +892,19 @@
     <value>Your new password must be different from previously used passwords</value>
   </data>
   <data name="_365_PlayerId" xml:space="preserve">
-    <value>_365_PlayerId</value>
+    <value>Integration Id</value>
+  </data>
+  <data name="_365_PositionId" xml:space="preserve">
+    <value>Integration Id</value>
   </data>
   <data name="_365_SeasonId" xml:space="preserve">
-    <value>_365_SeasonId</value>
+    <value>Integration Id</value>
+  </data>
+  <data name="_365_TeamId" xml:space="preserve">
+    <value>Integration Id</value>
+  </data>
+  <data name="_365_TypeId" xml:space="preserve">
+    <value>Integration Id</value>
   </data>
   <data name="_Details" xml:space="preserve">
     <value>Details</value>

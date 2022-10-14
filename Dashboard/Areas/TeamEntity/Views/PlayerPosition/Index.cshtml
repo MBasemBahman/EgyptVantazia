@@ -84,6 +84,8 @@
 
                                             </th>
                                             <th>@Html.DisplayNameFor(model => row.Name)</th>
+                                            <th>@Html.DisplayNameFor(model => row.PlayersCount)</th>
+                                            <th>@Html.DisplayNameFor(model => row._365_PositionId)</th>
                                             <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
                                             <th>
                                                 @Html.DisplayNameFor(model => row.Id)
@@ -153,7 +155,8 @@
 
                             }
                         },
-                      
+                        { data: "playersCount" },
+                        { data: "_365_PositionId" },
                         { data: "createdAt" },
                         { data: "id" },
                     ]

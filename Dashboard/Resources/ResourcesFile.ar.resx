@@ -202,7 +202,7 @@
     <value>تعديل بيانات الحساب</value>
   </data>
   <data name="en" xml:space="preserve">
-    <value>ar</value>
+    <value>en</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>خطأ</value>
@@ -409,46 +409,46 @@
     <value>مشاهدة المنشور</value>
   </data>
   <data name="CreateAccess" xml:space="preserve">
-    <value>Create Access</value>
+    <value>صلاحبة الإنشاء</value>
   </data>
   <data name="DashboardAccessLevel" xml:space="preserve">
-    <value>Access Level</value>
+    <value>مستوي الوصل</value>
   </data>
   <data name="DashboardAccessLevels" xml:space="preserve">
-    <value>Access Levels</value>
+    <value>مستويات الوصول</value>
   </data>
   <data name="DashboardAdministration" xml:space="preserve">
-    <value>Dashboard Administration</value>
+    <value>إدارة لوحة التحكم</value>
   </data>
   <data name="DashboardAdministrationRole" xml:space="preserve">
-    <value>Role</value>
+    <value>دور تحكم</value>
   </data>
   <data name="DashboardAdministrationRoles" xml:space="preserve">
-    <value>Roles</value>
+    <value>أدوار التحكم</value>
   </data>
   <data name="DashboardAdministrator" xml:space="preserve">
-    <value>Administrator</value>
+    <value>مدير</value>
   </data>
   <data name="DashboardAdministrators" xml:space="preserve">
-    <value>Administrators</value>
+    <value>المسؤولين</value>
   </data>
   <data name="DashboardView" xml:space="preserve">
-    <value>View</value>
+    <value>صفحة</value>
   </data>
   <data name="DashboardViews" xml:space="preserve">
-    <value>Views</value>
+    <value>صفحات</value>
   </data>
   <data name="DeleteAccess" xml:space="preserve">
-    <value>Delete Access</value>
+    <value>صلاحية الحذف</value>
   </data>
   <data name="EditAccess" xml:space="preserve">
-    <value>Edit Access</value>
+    <value>صلاحية التعديل</value>
   </data>
   <data name="PremissionsCount" xml:space="preserve">
-    <value>Premissions</value>
+    <value>صلاحيات</value>
   </data>
   <data name="ViewAccess" xml:space="preserve">
-    <value>View Access</value>
+    <value>صلاحية المشاهدة</value>
   </data>
   <data name="ViewPath" xml:space="preserve">
     <value>View Path</value>
@@ -529,7 +529,7 @@
     <value>جميع البيانات</value>
   </data>
   <data name="ar" xml:space="preserve">
-    <value />
+    <value>en</value>
   </data>
   <data name="About App" xml:space="preserve">
     <value>عن التطبيق</value>
@@ -574,7 +574,7 @@
     <value>قواعد اللعبة</value>
   </data>
   <data name="GameWeak" xml:space="preserve">
-    <value>Game Weak</value>
+    <value>الأسبوع</value>
   </data>
   <data name="InstagramUrl" xml:space="preserve">
     <value>رابط انستغرام</value>
@@ -709,7 +709,7 @@
     <value>السن</value>
   </data>
   <data name="IsAdmin" xml:space="preserve">
-    <value>Is Admin?</value>
+    <value>مدير</value>
   </data>
   <data name="Player" xml:space="preserve">
     <value>اللاعب</value>
@@ -775,114 +775,135 @@
     <value>اسم قصير بالانجليزية</value>
   </data>
   <data name="_365_PlayerId" xml:space="preserve">
-    <value>_365_PlayerId</value>
+    <value>Integration Id</value>
   </data>
   <data name="Add Game Weak" xml:space="preserve">
-    <value>Add Game Weak</value>
+    <value>أضافة أسبوع</value>
   </data>
   <data name="GameWeaks" xml:space="preserve">
-    <value>Game Weaks</value>
+    <value>الأسابيع</value>
   </data>
   <data name="Player Details" xml:space="preserve">
-    <value>Player Details</value>
+    <value>تفاصيل اللاعب</value>
   </data>
   <data name="Player Profile" xml:space="preserve">
-    <value>Player Profile</value>
+    <value>الملف الشخصي للاعب</value>
   </data>
   <data name="Season" xml:space="preserve">
-    <value>Seasons</value>
+    <value>المواسم</value>
   </data>
   <data name="Seasons" xml:space="preserve">
-    <value>Seasons</value>
+    <value>المواسم</value>
   </data>
   <data name="_365_SeasonId" xml:space="preserve">
-    <value>_365_SeasonId</value>
+    <value>Integration Id</value>
   </data>
   <data name="AwayScore" xml:space="preserve">
-    <value>Away Score</value>
+    <value>نتيجة الفريق الضيف</value>
   </data>
   <data name="AwayTeam" xml:space="preserve">
-    <value>Away Team</value>
+    <value>الفريق الضيف</value>
   </data>
   <data name="HomeScore" xml:space="preserve">
-    <value>Home Score</value>
+    <value>نتيجة المستضيف</value>
   </data>
   <data name="HomeTeam" xml:space="preserve">
-    <value>Home Team</value>
+    <value>الفريق المستضيف</value>
   </data>
   <data name="IsEnded" xml:space="preserve">
-    <value>Is Ended?</value>
+    <value>أنتهي</value>
   </data>
   <data name="Season Details" xml:space="preserve">
-    <value>Season Details</value>
+    <value>تفاصيل الموسم</value>
   </data>
   <data name="Season Profile" xml:space="preserve">
-    <value>Season Profile</value>
+    <value>ملف الموسم</value>
   </data>
   <data name="StartTime" xml:space="preserve">
-    <value>Start Time</value>
+    <value>وقت البداية</value>
   </data>
   <data name="TeamGameWeak" xml:space="preserve">
-    <value>Team Game Weak</value>
+    <value>أسبوع الفريق</value>
   </data>
   <data name="TeamGameWeaks" xml:space="preserve">
-    <value>Team Game Weaks</value>
+    <value>أسابيع الفريق</value>
   </data>
   <data name="AwayGameWeaks" xml:space="preserve">
-    <value>Away Game Weaks</value>
+    <value>اسابيع الفريق الضيف</value>
   </data>
   <data name="HomeGameWeaks" xml:space="preserve">
-    <value>Home Game Weaks</value>
+    <value>أسابيع المستضيف</value>
   </data>
   <data name="Add Score" xml:space="preserve">
-    <value>Add Score</value>
+    <value>أضافة نتيجة</value>
   </data>
   <data name="Against" xml:space="preserve">
-    <value>Against</value>
+    <value>ضد</value>
   </data>
   <data name="For" xml:space="preserve">
     <value>For</value>
   </data>
   <data name="GamePlayed" xml:space="preserve">
-    <value>Game Played</value>
+    <value>عدد الماتشات</value>
   </data>
   <data name="GamesEven" xml:space="preserve">
-    <value>Games Even</value>
+    <value>التعادل</value>
   </data>
   <data name="GamesLost" xml:space="preserve">
-    <value>Games Lost</value>
+    <value>الخسارة</value>
   </data>
   <data name="GamesWon" xml:space="preserve">
-    <value>Games Won</value>
+    <value>المكسب</value>
   </data>
   <data name="PlayerGameWeak" xml:space="preserve">
-    <value>Player Game Weak</value>
+    <value>أسبوع للاعب</value>
   </data>
   <data name="PlayerGameWeaks" xml:space="preserve">
-    <value>Player Game Weaks</value>
+    <value>أسابيع اللاعب</value>
   </data>
   <data name="PlayerGameWeakScores" xml:space="preserve">
-    <value>Player Game Weak Scores</value>
+    <value>نتائج أسابيع الاعبون</value>
   </data>
   <data name="Points" xml:space="preserve">
-    <value>Points</value>
+    <value>النقط</value>
   </data>
   <data name="Position" xml:space="preserve">
-    <value>Position</value>
+    <value>الموقع</value>
   </data>
   <data name="Ranking" xml:space="preserve">
-    <value>Ranking</value>
+    <value>الترتيب</value>
   </data>
   <data name="Ratio" xml:space="preserve">
-    <value>Ratio</value>
+    <value>النسبة</value>
   </data>
   <data name="Standings" xml:space="preserve">
-    <value>Standings</value>
+    <value>ترتيب الدوري</value>
   </data>
   <data name="Strike" xml:space="preserve">
     <value>Strike</value>
   </data>
   <data name="Value" xml:space="preserve">
-    <value>Value</value>
+    <value>القيمة</value>
+  </data>
+  <data name="AccountsCount" xml:space="preserve">
+    <value>الحسابات</value>
+  </data>
+  <data name="NationalitiesCount" xml:space="preserve">
+    <value>الجنسية</value>
+  </data>
+  <data name="PlayersCount" xml:space="preserve">
+    <value>اللاعبون</value>
+  </data>
+  <data name="_365_PositionId" xml:space="preserve">
+    <value>Integration Id</value>
+  </data>
+  <data name="_365_TypeId" xml:space="preserve">
+    <value>Integration Id</value>
+  </data>
+  <data name="_365_TeamId" xml:space="preserve">
+    <value>Integration Id</value>
+  </data>
+  <data name="ShortName" xml:space="preserve">
+    <value>أسم قصير</value>
   </data>
 </root>

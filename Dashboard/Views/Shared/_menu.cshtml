@@ -39,9 +39,9 @@
             {
                 <li class="@(active ==DashboardViewEnum.Home.ToString()?"active":"") nav-item">
                     <a class="d-flex align-items-center"
-                   asp-action="Index"
-                   asp-controller="Home"
-                   asp-area="Dashboard">
+                       asp-action="Index"
+                       asp-controller="Home"
+                       asp-area="Dashboard">
                         <i data-feather="home"></i>
                         <span class="menu-title text-truncate" data-i18n="Home">
                             @Localizer.Get("Home")
@@ -54,8 +54,8 @@
             {
                 <li id="AccountList" class="@(active ==DashboardViewEnum.Account.ToString()?"active":"") nav-item">
                     <a class="d-flex align-items-center"
-                   asp-action="Index" asp-area="AccountEntity"
-                   asp-controller="Account">
+                       asp-action="Index" asp-area="AccountEntity"
+                       asp-controller="Account">
                         <i data-feather='users'></i>
                         <span class="menu-title text-truncate">
                             @Localizer.Get("Accounts")
@@ -63,103 +63,29 @@
                     </a>
                 </li>
             }
-            @if (viewList.Contains((int)DashboardViewEnum.Team))
+
+
+
+            @if (viewList.Contains((int)DashboardViewEnum.PrivateLeague))
             {
-                <li id="TeamList" class="@(active ==DashboardViewEnum.Team.ToString()?"active":"") nav-item">
+                <li id="NewsList" class="@(active ==DashboardViewEnum.PrivateLeague.ToString()?"active":"") nav-item">
                     <a class="d-flex align-items-center"
-                   asp-action="Index" asp-area="TeamEntity"
-                   asp-controller="Team">
-                        <i data-feather='award'></i>
+                       asp-action="Index" asp-area="PrivateLeagueEntity"
+                       asp-controller="PrivateLeague">
+                        <i data-feather='trending-up'></i>
                         <span class="menu-title text-truncate">
-                            @Localizer.Get("Teams")
+                            @Localizer.Get("PrivateLeagues")
                         </span>
                     </a>
                 </li>
             }
-            @if (viewList.Contains((int)DashboardViewEnum.Player))
-            {
-                <li id="PlayerList" class="@(active ==DashboardViewEnum.Player.ToString()?"active":"") nav-item">
-                    <a class="d-flex align-items-center"
-                   asp-action="Index" asp-area="TeamEntity"
-                   asp-controller="Player">
-                        <i data-feather='dribbble'></i>
-                        <span class="menu-title text-truncate">
-                            @Localizer.Get("Players")
-                        </span>
-                    </a>
-                </li>
-            }
-               @if (viewList.Contains((int)DashboardViewEnum.Season))
-            {
-                <li id="SeasonList" class="@(active ==DashboardViewEnum.Season.ToString()?"active":"") nav-item">
-                    <a class="d-flex align-items-center"
-                   asp-action="Index" asp-area="SeasonEntity"
-                   asp-controller="Season">
-                        <i data-feather='calendar'></i>
-                        <span class="menu-title text-truncate">
-                            @Localizer.Get("Seasons")
-                        </span>
-                    </a>
-                </li>
-            }
-               @if (viewList.Contains((int)DashboardViewEnum.Standings))
-            {
-                <li id="StandingsList" class="@(active ==DashboardViewEnum.Standings.ToString()?"active":"") nav-item">
-                    <a class="d-flex align-items-center"
-                   asp-action="Index" asp-area="StandingsEntity"
-                   asp-controller="Standings">
-                        <i data-feather='file-text'></i>
-                        <span class="menu-title text-truncate">
-                            @Localizer.Get("Standings")
-                        </span>
-                    </a>
-                </li>
-            }
-                 @if (viewList.Contains((int)DashboardViewEnum.TeamGameWeak))
-            {
-                <li id="TeamGameWeakList" class="@(active ==DashboardViewEnum.TeamGameWeak.ToString()?"active":"") nav-item">
-                    <a class="d-flex align-items-center"
-                   asp-action="Index" asp-area="SeasonEntity"
-                   asp-controller="TeamGameWeak">
-                        <i data-feather='flag'></i>
-                        <span class="menu-title text-truncate">
-                            @Localizer.Get("TeamGameWeaks")
-                        </span>
-                    </a>
-                </li>
-            }
-            @if (viewList.Contains((int)DashboardViewEnum.PrivateLeagueMember))
-            {
-                <li id="PrivateLeagueMemberList" class="@(active ==DashboardViewEnum.PrivateLeagueMember.ToString()?"active":"") nav-item">
-                    <a class="d-flex align-items-center"
-                   asp-action="Index" asp-area="PrivateLeagueEntity"
-                   asp-controller="PrivateLeagueMember">
-                        <i data-feather='shield'></i>
-                        <span class="menu-title text-truncate">
-                            @Localizer.Get("PrivateLeagueMembers")
-                        </span>
-                    </a>
-                </li>
-            }
-            @if (viewList.Contains((int)DashboardViewEnum.Sponsor))
-            {
-                <li id="SponsorList" class="@(active ==DashboardViewEnum.Sponsor.ToString()?"active":"") nav-item">
-                    <a class="d-flex align-items-center"
-                   asp-action="Index" asp-area="SponsorEntity"
-                   asp-controller="Sponsor">
-                        <i data-feather='star'></i>
-                        <span class="menu-title text-truncate">
-                            @Localizer.Get("Sponsors")
-                        </span>
-                    </a>
-                </li>
-            }
+
             @if (viewList.Contains((int)DashboardViewEnum.News))
             {
                 <li id="NewsList" class="@(active ==DashboardViewEnum.News.ToString()?"active":"") nav-item">
                     <a class="d-flex align-items-center"
-                   asp-action="Index" asp-area="NewsEntity"
-                   asp-controller="News">
+                       asp-action="Index" asp-area="NewsEntity"
+                       asp-controller="News">
                         <i data-feather='trending-up'></i>
                         <span class="menu-title text-truncate">
                             @Localizer.Get("News")
@@ -168,12 +94,98 @@
                 </li>
             }
 
+            @if (viewList.Contains((int)DashboardViewEnum.Sponsor))
+            {
+                <li id="SponsorList" class="@(active ==DashboardViewEnum.Sponsor.ToString()?"active":"") nav-item">
+                    <a class="d-flex align-items-center"
+                       asp-action="Index" asp-area="SponsorEntity"
+                       asp-controller="Sponsor">
+                        <i data-feather='star'></i>
+                        <span class="menu-title text-truncate">
+                            @Localizer.Get("Sponsors")
+                        </span>
+                    </a>
+                </li>
+            }
+
+            @if (viewList.Contains((int)DashboardViewEnum.Standings))
+            {
+                <li id="StandingsList" class="@(active ==DashboardViewEnum.Standings.ToString()?"active":"") nav-item">
+                    <a class="d-flex align-items-center"
+                       asp-action="Index" asp-area="StandingsEntity"
+                       asp-controller="Standings">
+                        <i data-feather='file-text'></i>
+                        <span class="menu-title text-truncate">
+                            @Localizer.Get("Standings")
+                        </span>
+                    </a>
+                </li>
+            }
+
+            @if (viewList.Contains((int)DashboardViewEnum.Season))
+            {
+                <li id="SeasonList" class="@(active ==DashboardViewEnum.Season.ToString()?"active":"") nav-item">
+                    <a class="d-flex align-items-center"
+                       asp-action="Index" asp-area="SeasonEntity"
+                       asp-controller="Season">
+                        <i data-feather='calendar'></i>
+                        <span class="menu-title text-truncate">
+                            @Localizer.Get("Seasons")
+                        </span>
+                    </a>
+                </li>
+            }
+
+            @if (viewList.Contains((int)DashboardViewEnum.Team))
+            {
+                <li id="TeamList" class="@(active ==DashboardViewEnum.Team.ToString()?"active":"") nav-item">
+                    <a class="d-flex align-items-center"
+                       asp-action="Index" asp-area="TeamEntity"
+                       asp-controller="Team">
+                        <i data-feather='award'></i>
+                        <span class="menu-title text-truncate">
+                            @Localizer.Get("Teams")
+                        </span>
+                    </a>
+                </li>
+            }
+
+            @if (viewList.Contains((int)DashboardViewEnum.Player))
+            {
+                <li id="PlayerList" class="@(active ==DashboardViewEnum.Player.ToString()?"active":"") nav-item">
+                    <a class="d-flex align-items-center"
+                       asp-action="Index" asp-area="TeamEntity"
+                       asp-controller="Player">
+                        <i data-feather='dribbble'></i>
+                        <span class="menu-title text-truncate">
+                            @Localizer.Get("Players")
+                        </span>
+                    </a>
+                </li>
+            }
+
+            @if (viewList.Contains((int)DashboardViewEnum.TeamGameWeak))
+            {
+                <li id="TeamGameWeakList" class="@(active ==DashboardViewEnum.TeamGameWeak.ToString()?"active":"") nav-item">
+                    <a class="d-flex align-items-center"
+                       asp-action="Index" asp-area="SeasonEntity"
+                       asp-controller="TeamGameWeak">
+                        <i data-feather='flag'></i>
+                        <span class="menu-title text-truncate">
+                            @Localizer.Get("TeamGameWeaks")
+                        </span>
+                    </a>
+                </li>
+            }
+
+
+
             @if (viewList.Contains((int)DashboardViewEnum.User))
             {
                 <li id="UserList" class="@(active == DashboardViewEnum.User.ToString()?"active":"") nav-item">
                     <a class="d-flex align-items-center"
-                   asp-action="Index" asp-area="UserEntity"
-                   asp-controller="User">
+                       asp-action="Index" asp-area="UserEntity"
+                       asp-controller="User">
                         <i data-feather='log-in'></i>
                         <span class="menu-title text-truncate">
                             @Localizer.Get("Users")
@@ -186,8 +198,8 @@
             {
                 <li class="@(active ==DashboardViewEnum.DBLogs.ToString()?"active":"") nav-item">
                     <a class="d-flex align-items-center"
-                   asp-action="Index" asp-area="LogEntity"
-                   asp-controller="DBLogs">
+                       asp-action="Index" asp-area="LogEntity"
+                       asp-controller="DBLogs">
                         <i data-feather='x-circle'></i>
                         <span class="menu-title text-truncate">
                             @Localizer.Get("Logs")
@@ -200,6 +212,85 @@
                 <span data-i18n="User Interface">@Localizer.Get("Advanced Settings")</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
             </li>
+
+            @if (viewList.Contains((int)DashboardViewEnum.PlayerPosition))
+            {
+                <li class=" nav-item">
+                    <a class="d-flex align-items-center" href="#">
+                        <i data-feather='award'></i><span class="menu-title text-truncate" data-i18n="Menu Levels">@Localizer.Get("Teams Data")</span>
+                    </a>
+                    <ul class="menu-content">
+                        @if (viewList.Contains((int)DashboardViewEnum.PlayerPosition))
+                        {
+                            <li class="@(active == DashboardViewEnum.PlayerPosition.ToString()?"active":"")">
+                                <a class="d-flex align-items-center" asp-controller="PlayerPosition" asp-area="TeamEntity" asp-action="Index">
+                                    <i data-feather='settings'></i><span class="menu-item text-truncate" data-i18n="Second Level">@Localizer.Get("PlayerPositions")</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </li>
+            }
+
+            @if (viewList.Contains((int)DashboardViewEnum.TeamPlayerType))
+            {
+                <li class=" nav-item">
+                    <a class="d-flex align-items-center" href="#">
+                        <i data-feather='flag'></i><span class="menu-title text-truncate" data-i18n="Menu Levels">@Localizer.Get("AccountTeam Data")</span>
+                    </a>
+                    <ul class="menu-content">
+                        @if (viewList.Contains((int)DashboardViewEnum.TeamPlayerType))
+                        {
+                            <li class="@(active == DashboardViewEnum.TeamPlayerType.ToString()?"active":"")">
+                                <a class="d-flex align-items-center" asp-controller="TeamPlayerType" asp-area="AccountTeamEntity" asp-action="Index">
+                                    <i data-feather='settings'></i><span class="menu-item text-truncate" data-i18n="Second Level">@Localizer.Get("TeamPlayerTypes")</span>
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
+                </li>
+            }
+
+            @if (viewList.Contains((int)DashboardViewEnum.ScoreType))
+            {
+                <li class=" nav-item">
+                    <a class="d-flex align-items-center" href="#">
+                        <i data-feather='flag'></i><span class="menu-title text-truncate" data-i18n="Menu Levels">@Localizer.Get("PlayerScore Data")</span>
+                    </a>
+                    <ul class="menu-content">
+                        @if (viewList.Contains((int)DashboardViewEnum.ScoreType))
+                        {
+                            <li class="@(active == DashboardViewEnum.ScoreType.ToString()?"active":"")">
+                                <a class="d-flex align-items-center" asp-controller="ScoreType" asp-area="PlayerScoreEntity" asp-action="Index">
+                                    <i data-feather='settings'></i><span class="menu-item text-truncate" data-i18n="Second Level">@Localizer.Get("ScoreTypes")</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </li>
+            }
+
+            @if (viewList.Contains((int)DashboardViewEnum.Country))
+            {
+                <li class=" nav-item">
+                    <a class="d-flex align-items-center" href="#">
+                        <i data-feather='map-pin'></i><span class="menu-title text-truncate" data-i18n="Menu Levels">@Localizer.Get("Locations")</span>
+                    </a>
+                    <ul class="menu-content">
+                        @if (viewList.Contains((int)DashboardViewEnum.Country))
+                        {
+                            <li class="@(active == DashboardViewEnum.Country.ToString()?"active":"")">
+                                <a class="d-flex align-items-center" asp-controller="Country" asp-area="Location" asp-action="Index">
+                                    <i data-feather='settings'></i><span class="menu-item text-truncate" data-i18n="Second Level">@Localizer.Get("Countries")</span>
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
+                </li>
+            }
+
             @if (viewList.Contains((int)DashboardViewEnum.AppAbout))
             {
                 <li class=" nav-item">
@@ -223,122 +314,6 @@
                 </li>
             }
 
-
-            @if (viewList.Contains((int)DashboardViewEnum.Country))
-            {
-                <li class=" nav-item">
-                    <a class="d-flex align-items-center" href="#">
-                        <i data-feather='map-pin'></i><span class="menu-title text-truncate" data-i18n="Menu Levels">@Localizer.Get("Locations")</span>
-                    </a>
-                    <ul class="menu-content">
-
-
-
-                        @if (viewList.Contains((int)DashboardViewEnum.Country))
-                        {
-                            <li class="@(active == DashboardViewEnum.Country.ToString()?"active":"")">
-                                <a class="d-flex align-items-center" asp-controller="Country" asp-area="Location" asp-action="Index">
-                                    <i data-feather='settings'></i><span class="menu-item text-truncate" data-i18n="Second Level">@Localizer.Get("Countries")</span>
-                                </a>
-                            </li>
-                        }
-
-                    </ul>
-                </li>
-            }
-
-            @if (viewList.Contains((int)DashboardViewEnum.PlayerPosition))
-            {
-                <li class=" nav-item">
-                    <a class="d-flex align-items-center" href="#">
-                        <i data-feather='award'></i><span class="menu-title text-truncate" data-i18n="Menu Levels">@Localizer.Get("Teams Data")</span>
-                    </a>
-                    <ul class="menu-content">
-
-
-
-                        @if (viewList.Contains((int)DashboardViewEnum.PlayerPosition))
-                        {
-                            <li class="@(active == DashboardViewEnum.PlayerPosition.ToString()?"active":"")">
-                                <a class="d-flex align-items-center" asp-controller="PlayerPosition" asp-area="TeamEntity" asp-action="Index">
-                                    <i data-feather='settings'></i><span class="menu-item text-truncate" data-i18n="Second Level">@Localizer.Get("PlayerPositions")</span>
-                                </a>
-                            </li>
-                        }
-
-                    </ul>
-                </li>
-            }
-
-            @if (viewList.Contains((int)DashboardViewEnum.PrivateLeague))
-            {
-                <li class=" nav-item">
-                    <a class="d-flex align-items-center" href="#">
-                      <i data-feather='shield'></i><span class="menu-title text-truncate" data-i18n="Menu Levels">@Localizer.Get("PrivateLeague Data")</span>
-                    </a>
-                    <ul class="menu-content">
-
-
-
-                        @if (viewList.Contains((int)DashboardViewEnum.PrivateLeague))
-                        {
-                            <li class="@(active == DashboardViewEnum.PrivateLeague.ToString()?"active":"")">
-                                <a class="d-flex align-items-center" asp-controller="PrivateLeague" asp-area="PrivateLeagueEntity" asp-action="Index">
-                                    <i data-feather='settings'></i><span class="menu-item text-truncate" data-i18n="Second Level">@Localizer.Get("PrivateLeagues")</span>
-                                </a>
-                            </li>
-                        }
-
-                    </ul>
-                </li>
-            }
-
-            @if (viewList.Contains((int)DashboardViewEnum.TeamPlayerType))
-            {
-                <li class=" nav-item">
-                    <a class="d-flex align-items-center" href="#">
-                        <i data-feather='flag'></i><span class="menu-title text-truncate" data-i18n="Menu Levels">@Localizer.Get("AccountTeam Data")</span>
-                    </a>
-                    <ul class="menu-content">
-
-
-
-                        @if (viewList.Contains((int)DashboardViewEnum.TeamPlayerType))
-                        {
-                            <li class="@(active == DashboardViewEnum.TeamPlayerType.ToString()?"active":"")">
-                                <a class="d-flex align-items-center" asp-controller="TeamPlayerType" asp-area="AccountTeamEntity" asp-action="Index">
-                                    <i data-feather='settings'></i><span class="menu-item text-truncate" data-i18n="Second Level">@Localizer.Get("TeamPlayerTypes")</span>
-                                </a>
-                            </li>
-                        }
-
-                    </ul>
-                </li>
-            }
-
-                        @if (viewList.Contains((int)DashboardViewEnum.ScoreType))
-            {
-                <li class=" nav-item">
-                    <a class="d-flex align-items-center" href="#">
-                        <i data-feather='flag'></i><span class="menu-title text-truncate" data-i18n="Menu Levels">@Localizer.Get("PlayerScore Data")</span>
-                    </a>
-                    <ul class="menu-content">
-
-
-
-                        @if (viewList.Contains((int)DashboardViewEnum.ScoreType))
-                        {
-                            <li class="@(active == DashboardViewEnum.ScoreType.ToString()?"active":"")">
-                                <a class="d-flex align-items-center" asp-controller="ScoreType" asp-area="PlayerScoreEntity" asp-action="Index">
-                                    <i data-feather='settings'></i><span class="menu-item text-truncate" data-i18n="Second Level">@Localizer.Get("ScoreTypes")</span>
-                                </a>
-                            </li>
-                        }
-
-                    </ul>
-                </li>
-            }
-
             @if (viewList.Contains((int)DashboardViewEnum.DashboardAdministrator))
             {
                 <li class=" navigation-header">
@@ -352,8 +327,8 @@
 
                     <li class="@(active ==DashboardViewEnum.DashboardAdministrator.ToString()?"active":"") nav-item">
                         <a class="d-flex align-items-center"
-                   asp-action="Index" asp-area="DashboardAdministration"
-                   asp-controller="DashboardAdministrator">
+                           asp-action="Index" asp-area="DashboardAdministration"
+                           asp-controller="DashboardAdministrator">
                             <i data-feather='shield'></i>
                             <span class="menu-title text-truncate">
                                 @Localizer.Get("DashboardAdministrators")
@@ -367,8 +342,8 @@
 
                     <li class="@(active ==DashboardViewEnum.DashboardAccessLevel.ToString()?"active":"") nav-item">
                         <a class="d-flex align-items-center"
-                   asp-action="Index" asp-area="DashboardAdministration"
-                   asp-controller="DashboardAccessLevel">
+                           asp-action="Index" asp-area="DashboardAdministration"
+                           asp-controller="DashboardAccessLevel">
                             <i data-feather='key'></i>
                             <span class="menu-title text-truncate">
                                 @Localizer.Get("DashboardAccessLevels")
@@ -382,8 +357,8 @@
 
                     <li class="@(active ==DashboardViewEnum.DashboardView.ToString()?"active":"") nav-item">
                         <a class="d-flex align-items-center"
-                   asp-action="Index" asp-area="DashboardAdministration"
-                   asp-controller="DashboardView">
+                           asp-action="Index" asp-area="DashboardAdministration"
+                           asp-controller="DashboardView">
                             <i data-feather='grid'></i>
                             <span class="menu-title text-truncate">
                                 @Localizer.Get("DashboardViews")
@@ -397,8 +372,8 @@
 
                     <li class="@(active ==DashboardViewEnum.DashboardAdministrationRole.ToString()?"active":"") nav-item">
                         <a class="d-flex align-items-center"
-                   asp-action="Index" asp-area="DashboardAdministration"
-                   asp-controller="DashboardAdministrationRole">
+                           asp-action="Index" asp-area="DashboardAdministration"
+                           asp-controller="DashboardAdministrationRole">
                             <i data-feather='settings'></i>
                             <span class="menu-title text-truncate">
                                 @Localizer.Get("DashboardAdministrationRoles")

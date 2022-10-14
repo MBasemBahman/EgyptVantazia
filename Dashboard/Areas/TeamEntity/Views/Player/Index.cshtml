@@ -84,12 +84,14 @@
                                                         <a id="delete" asp-action="Delete">
                                                         </a>
                                                     }
-
                                                 </th>
                                                 <th>@Html.DisplayNameFor(model => row.Name)</th>
-                                                <th>@Html.DisplayNameFor(model => row.Team)</th>
-                                                <th>@Html.DisplayNameFor(model => row.PlayerPosition)</th>
+                                                <th>@Html.DisplayNameFor(model => row.ShortName)</th>
+                                                <th>@Html.DisplayNameFor(model => row.PlayerNumber)</th>
                                                 <th>@Html.DisplayNameFor(model => row.Age)</th>
+                                                <th>@Html.DisplayNameFor(model => row.Team)</th>
+                                                <th>@Html.DisplayNameFor(model => row._365_PlayerId)</th>
+                                                <th>@Html.DisplayNameFor(model => row.PlayerPosition)</th>
                                                 <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
                                                 <th>
                                                     @Html.DisplayNameFor(model => row.Id)
@@ -149,9 +151,12 @@ else
 
                                     </th>
                                     <th>@Html.DisplayNameFor(model => row.Name)</th>
-                                    <th>@Html.DisplayNameFor(model => row.Team)</th>
-                                    <th>@Html.DisplayNameFor(model => row.PlayerPosition)</th>
+                                    <th>@Html.DisplayNameFor(model => row.ShortName)</th>
+                                    <th>@Html.DisplayNameFor(model => row.PlayerNumber)</th>
                                     <th>@Html.DisplayNameFor(model => row.Age)</th>
+                                    <th>@Html.DisplayNameFor(model => row.Team)</th>
+                                    <th>@Html.DisplayNameFor(model => row._365_PlayerId)</th>
+                                    <th>@Html.DisplayNameFor(model => row.PlayerPosition)</th>
                                     <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
                                     <th>
                                         @Html.DisplayNameFor(model => row.Id)
@@ -218,6 +223,10 @@ else
 
                             }
                         },
+                        { data: "age" },
+                        { data: "shortName" },
+                        { data: "playerNumber" },
+                        { data: "age" },
                         {
                             data: "team",
                             render: function (data, type, row) {
@@ -247,7 +256,6 @@ else
 
                             }
                         },
-
                         {
                             data: "playerPosition",
                             render: function (data, type, row) {
@@ -277,8 +285,6 @@ else
 
                             }
                         },
-
-                        { data: "age" },
                         { data: "createdAt" },
                         { data: "id" },
                     ]

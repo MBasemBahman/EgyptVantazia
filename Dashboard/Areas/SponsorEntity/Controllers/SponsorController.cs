@@ -104,6 +104,12 @@ namespace Dashboard.Areas.SponsorEntity.Controllers
                 : new List<AppViewEnum>();
             }
 
+            if (model.ImageUrl.IsNullOrEmpty())
+            {
+                model.ImageUrl = "deals.png";
+                model.StorageUrl = _linkGenerator.GetUriByAction(HttpContext).GetBaseUri(HttpContext.Request.RouteValues["area"].ToString());
+            }
+
 
             SetViewData(otherLang);
             return View(model);

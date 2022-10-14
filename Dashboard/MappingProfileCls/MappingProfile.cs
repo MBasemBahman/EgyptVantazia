@@ -366,7 +366,6 @@ namespace Dashboard.MappingProfileCls
 
             #endregion
 
-
             #region Player Score Models
 
             #region ScoreType
@@ -401,7 +400,6 @@ namespace Dashboard.MappingProfileCls
             _ = CreateMap<PlayerGameWeakScoreModel, PlayerGameWeakScoreCreateOrEditModel>();
             #endregion
             #endregion
-
 
             #region Season Models
 
@@ -501,5 +499,4 @@ namespace Dashboard.MappingProfileCls
             return !string.IsNullOrEmpty(source) ? source.Split(',').ToList() : null;
         }
     }
-
 }

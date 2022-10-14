@@ -105,7 +105,8 @@ namespace CoreServices.Logic
                            LastModifiedBy = a.LastModifiedBy,
                            Name = otherLang ? a.PlayerPositionLang.Name : a.Name,
                            ImageUrl = a.StorageUrl + a.ImageUrl,
-                           _365_PositionId = a._365_PositionId
+                           _365_PositionId = a._365_PositionId,
+                           PlayersCount = a.Players.Count()
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

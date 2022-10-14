@@ -100,6 +100,11 @@ namespace Dashboard.Areas.TeamEntity.Controllers
                                                 await _unitOfWork.Team.FindTeambyId(id, trackChanges: false));
             }
 
+            if (model.ImageUrl.IsNullOrEmpty())
+            {
+                model.ImageUrl = "banner.png";
+                model.StorageUrl = _linkGenerator.GetUriByAction(HttpContext).GetBaseUri(HttpContext.Request.RouteValues["area"].ToString());
+            }
 
             SetViewData(IsProfile, id, otherLang);
             return View(model);

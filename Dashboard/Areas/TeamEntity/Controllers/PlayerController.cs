@@ -116,6 +116,13 @@ namespace Dashboard.Areas.TeamEntity.Controllers
                 model.Fk_Team = Fk_Team;
                 returnPage = (int)PlayerReturnPage.TeamProfile;
             }
+
+            if (model.ImageUrl.IsNullOrEmpty())
+            {
+                model.ImageUrl = "football-player.png";
+                model.StorageUrl = _linkGenerator.GetUriByAction(HttpContext).GetBaseUri(HttpContext.Request.RouteValues["area"].ToString());
+            }
+
             SetViewData(returnPage, id, otherLang);
             return View(model);
         }

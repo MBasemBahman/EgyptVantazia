@@ -76,13 +76,19 @@ namespace Dashboard.Areas.TeamEntity.Controllers
         {
             PlayerPositionCreateOrEditModel model = new()
             {
-                PlayerPositionLang = new()
+                PlayerPositionLang = new(),
             };
 
             if (id > 0)
             {
                 model = _mapper.Map<PlayerPositionCreateOrEditModel>(
                                                 await _unitOfWork.Team.FindPlayerPositionbyId(id, trackChanges: false));
+            }
+
+            if (model.ImageUrl.IsNullOrEmpty())
+            {
+                model.ImageUrl = "football-team.png";
+                model.StorageUrl = _linkGenerator.GetUriByAction(HttpContext).GetBaseUri(HttpContext.Request.RouteValues["area"].ToString());
             }
 
             return View(model);

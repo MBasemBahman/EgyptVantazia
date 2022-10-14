@@ -76,13 +76,19 @@ namespace Dashboard.Areas.Location.Controllers
         {
             CountryCreateOrEditModel model = new()
             {
-                CountryLang = new()
+                CountryLang = new(),
             };
 
             if (id > 0)
             {
                 model = _mapper.Map<CountryCreateOrEditModel>(
                                                 await _unitOfWork.Location.FindCountrybyId(id, trackChanges: false));
+            }
+
+            if (model.ImageUrl.IsNullOrEmpty())
+            {
+                model.ImageUrl = "countries.png";
+                model.StorageUrl = _linkGenerator.GetUriByAction(HttpContext).GetBaseUri(HttpContext.Request.RouteValues["area"].ToString());
             }
 
             return View(model);

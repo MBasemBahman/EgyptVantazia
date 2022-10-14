@@ -15,6 +15,8 @@ namespace Entities.CoreServicesModels.AccountModels
 
         public string AccountUserName { get; set; }
 
+        public string AccountFullName { get; set; }
+
         public string Email { get; set; }
 
         [DisplayName(nameof(CreatedAtFrom))]

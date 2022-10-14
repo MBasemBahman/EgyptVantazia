@@ -54,6 +54,17 @@
                                 <h4 class="card-title"> @ViewData["Title"]</h4>
 
                             </div>
+                            <p class="m-2 demo-inline-spacing">
+                                <a class="btn btn-primary me-1" data-bs-toggle="collapse" href="#AdvancedFilter" role="button" aria-expanded="false" aria-controls="AdvancedFilter">
+                                    <i data-feather='filter'></i>
+                                    @Localizer.Get("Advanced Search")
+                                </a>
+
+                            </p>
+                            @{
+                                await Html.RenderPartialAsync("../News/Filter", Model, ViewData);
+                            }
+
                        
                             <div class="card-datatable">
                                 <table class="datatables datatables-ajax table table-responsive table">
@@ -104,6 +115,15 @@
 <!-- END: Content-->
 @section scripts{
     <script src="~/apis/charts.js"></script>
+    <script src="~/apis/site.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $("#Fk_Season").on("change", function () {
+                getGameWeak($("#Fk_GameWeak"), $(this).val(), false);
+            });
+        });
+    </script>
     <script>
         
         function LoadTable() {
@@ -117,7 +137,12 @@
                         contentType: "application/json",
                         dataType: "json",
                         data: function(data) {
-                          
+                            data.Fk_Season = $("#Fk_Season").length > 0 ? $("#Fk_Season").val() : @Model.Fk_Season;
+                            data.Fk_GameWeak = $("#Fk_GameWeak").length > 0 ? $("#Fk_GameWeak").val() : @Model.Fk_GameWeak;
+                            data.NewsTypeEnum = $("#NewsTypeEnum").length > 0 ? $("#NewsTypeEnum").val() : '@Model.NewsTypeEnum';
+                            data.CreatedAtFrom = $("#CreatedAtFrom").length > 0 ? $("#CreatedAtFrom").val() : '@Model.CreatedAtFrom';
+                            data.CreatedAtTo = $("#CreatedAtTo").length > 0 ? $("#CreatedAtTo").val() : '@Model.CreatedAtTo';
+
                             return JSON.stringify(data);
                         }
                     },

@@ -31,11 +31,12 @@ namespace Dashboard.Areas.NewsEntity.Controllers
 
         public IActionResult Index()
         {
-            _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             NewsFilter filter = new();
 
             ViewData[ViewDataConstants.AccessLevel] = (DashboardAccessLevelModel)Request.HttpContext.Items[ViewDataConstants.AccessLevel];
+            SetViewData(IsProfile: false, id: 0, otherLang, fk_Season: 0);
             return View(filter);
         }
 

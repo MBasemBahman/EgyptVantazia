@@ -13,6 +13,11 @@ namespace Entities.CoreServicesModels.StandingsModels
         public int Fk_Team { get; set; }
 
         public int _365_For { get; set; }
+
+        [DisplayName("CreatedAt")]
+        public DateTime? CreatedAtFrom { get; set; }
+
+        public DateTime? CreatedAtTo { get; set; }
     }
 
     public class StandingsModel : AuditEntity

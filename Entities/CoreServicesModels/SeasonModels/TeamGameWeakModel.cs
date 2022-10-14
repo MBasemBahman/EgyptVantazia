@@ -24,6 +24,9 @@ namespace Entities.CoreServicesModels.SeasonModels
 
         [DisplayName(nameof(ToTime))]
         public DateTime? ToTime { get; set; }
+
+        [DisplayName(nameof(IsEnded))]
+        public bool? IsEnded { get; set; }
     }
 
     public class TeamGameWeakModel : AuditEntity

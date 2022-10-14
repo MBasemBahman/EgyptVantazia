@@ -17,6 +17,7 @@ namespace Entities.CoreServicesModels.UserModels
 
         public DateTime? CreatedAtTo { get; set; }
 
+
     }
 
     public class UserModel : AuditEntity

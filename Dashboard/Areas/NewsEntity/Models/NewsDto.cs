@@ -1,6 +1,7 @@
 ﻿using Entities.CoreServicesModels.NewsModels;
 using Entities.DBModels.SeasonModels;
 using System.ComponentModel;
+using static Entities.EnumData.LogicEnumData;
 
 namespace Dashboard.Areas.NewsEntity.Models
 {
@@ -9,9 +10,20 @@ namespace Dashboard.Areas.NewsEntity.Models
         public int Id { get; set; }
 
         [DisplayName(nameof(GameWeak))]
-        public int? Fk_GameWeak { get; set; }
+        public int Fk_GameWeak { get; set; }
+
+        [DisplayName(nameof(Season))]
+        public int Fk_Season { get; set; }
+
+        [DisplayName(nameof(NewsTypeEnum))]
+        public NewsTypeEnum NewsTypeEnum { get; set; }
 
         public bool GetAttachments { get; set; } = false;
+
+        [DisplayName("CreatedAt")]
+        public DateTime? CreatedAtFrom { get; set; }
+
+        public DateTime? CreatedAtTo { get; set; }
     }
     public class NewsDto : NewsModel
     {

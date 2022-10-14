@@ -7,15 +7,29 @@ namespace Dashboard.Areas.SeasonEntity.Models
 {
     public class TeamGameWeakFilter : DtParameters
     {
-        public int Id { get; set; }
+        [DisplayName("HomeTeam")]
         public int Fk_Home { get; set; }
 
+        [DisplayName("AwayTeam")]
         public int Fk_Away { get; set; }
 
+        [DisplayName(nameof(Season))]
         public int Fk_Season { get; set; }
 
         [DisplayName(nameof(GameWeak))]
         public int Fk_GameWeak { get; set; }
+
+        [DisplayName(nameof(_365_MatchId))]
+        public string _365_MatchId { get; set; }
+
+        [DisplayName("StartTime")]
+        public DateTime? FromTime { get; set; }
+
+        [DisplayName(nameof(ToTime))]
+        public DateTime? ToTime { get; set; }
+
+        [DisplayName(nameof(IsEnded))]
+        public bool? IsEnded { get; set; }
     }
 
     public class TeamGameWeakDto : TeamGameWeakModel

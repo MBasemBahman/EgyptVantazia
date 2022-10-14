@@ -54,7 +54,17 @@
                                 <h4 class="card-title"> @ViewData["Title"]</h4>
 
                             </div>
-                       
+                            <p class="m-2 demo-inline-spacing">
+                                <a class="btn btn-primary me-1" data-bs-toggle="collapse" href="#AdvancedFilter" role="button" aria-expanded="false" aria-controls="AdvancedFilter">
+                                    <i data-feather='filter'></i>
+                                    @Localizer.Get("Advanced Search")
+                                </a>
+
+                            </p>
+                            @{
+                                await Html.RenderPartialAsync("../Standings/Filter", Model, ViewData);
+                            }
+
                             <div class="card-datatable">
                                 <table class="datatables datatables-ajax table table-responsive table">
                                     <thead>
@@ -123,7 +133,11 @@
                         contentType: "application/json",
                         dataType: "json",
                         data: function(data) {
-                          
+                            data.Fk_Season = $("#Fk_Season").length > 0 ? $("#Fk_Season").val() : @Model.Fk_Season;
+                            data.Fk_Team = $("#Fk_Team").length > 0 ? $("#Fk_Team").val() : @Model.Fk_Team;
+                            data.CreatedAtFrom = $("#CreatedAtFrom").length > 0 ? $("#CreatedAtFrom").val() : '@Model.CreatedAtFrom';
+                            data.CreatedAtTo = $("#CreatedAtTo").length > 0 ? $("#CreatedAtTo").val() : '@Model.CreatedAtTo';
+
                             return JSON.stringify(data);
                         }
                     },

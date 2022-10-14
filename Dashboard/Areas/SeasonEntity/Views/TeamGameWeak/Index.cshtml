@@ -57,6 +57,16 @@
                                     <h4 class="card-title"> @ViewData["Title"]</h4>
 
                                 </div>
+                                    <p class="m-2 demo-inline-spacing">
+                                <a class="btn btn-primary me-1" data-bs-toggle="collapse" href="#AdvancedFilter" role="button" aria-expanded="false" aria-controls="AdvancedFilter">
+                                    <i data-feather='filter'></i>
+                                    @Localizer.Get("Advanced Search")
+                                </a>
+
+                            </p>
+                            @{
+                                await Html.RenderPartialAsync("../TeamGameWeak/Filter", Model, ViewData);
+                            }
 
                                 <div class="card-datatable">
                                     <table class="datatables datatables-ajax table table-responsive table">
@@ -158,6 +168,15 @@ else
 <!-- END: Content-->
 @section scripts{
     <script src="~/apis/charts.js"></script>
+    <script src="~/apis/site.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $("#Fk_Season").on("change", function () {
+                getGameWeak($("#Fk_GameWeak"), $(this).val(), false);
+            });
+        });
+    </script>
     <script>
 
         function LoadTable() {
@@ -171,9 +190,14 @@ else
                         contentType: "application/json",
                         dataType: "json",
                         data: function (data) {
-                            data.Fk_Away = @Model.Fk_Away;
-                            data.Fk_Home = @Model.Fk_Home;
-                            data.Fk_Season = @Model.Fk_Season;
+                           data.Fk_Season = $("#Fk_Season").length > 0 ? $("#Fk_Season").val() : @Model.Fk_Season;
+                            data.Fk_GameWeak = $("#Fk_GameWeak").length > 0 ? $("#Fk_GameWeak").val() : @Model.Fk_GameWeak;
+                            data.Fk_Away = $("#Fk_Away").length > 0 ? $("#Fk_Away").val() : @Model.Fk_Away;
+                            data.Fk_Home = $("#Fk_Home").length > 0 ? $("#Fk_Home").val() : @Model.Fk_Home;
+                            data.FromTime = $("#FromTime").length > 0 ? $("#FromTime").val() : '@Model.FromTime';
+                            data.ToTime = $("#ToTime").length > 0 ? $("#ToTime").val() : '@Model.ToTime';
+                            data.IsEnded = $("#IsEnded").length > 0 ? $("#IsEnded").val() : '@Model.IsEnded';
+
                             return JSON.stringify(data);
                         }
                     },

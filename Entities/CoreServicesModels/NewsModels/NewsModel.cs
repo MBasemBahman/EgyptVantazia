@@ -8,9 +8,20 @@ namespace Entities.CoreServicesModels.NewsModels
     public class NewsParameters : RequestParameters
     {
         [DisplayName(nameof(GameWeak))]
-        public int? Fk_GameWeak { get; set; }
+        public int Fk_GameWeak { get; set; }
+
+        [DisplayName(nameof(Season))]
+        public int Fk_Season { get; set; }
 
         public bool GetAttachments { get; set; } = false;
+
+        [DisplayName(nameof(NewsTypeEnum))]
+        public NewsTypeEnum NewsTypeEnum { get; set; }
+
+        [DisplayName("CreatedAt")]
+        public DateTime? CreatedAtFrom { get; set; }
+
+        public DateTime? CreatedAtTo { get; set; }
     }
     public class NewsModel : AuditImageEntity
     {

@@ -1,11 +1,20 @@
 ﻿using Entities.CoreServicesModels.TeamModels;
+using Entities.DBModels.TeamModels;
 using System.ComponentModel;
 namespace Dashboard.Areas.TeamEntity.Models
 {
     public class PlayerFilter : DtParameters
     {
         public int Id { get; set; }
+        [DisplayName(nameof(Team))]
         public int Fk_Team { get; set; }
+
+        [DisplayName(nameof(PlayerPosition))]
+        public int Fk_PlayerPosition { get; set; }
+        [DisplayName("CreatedAt")]
+        public DateTime? CreatedAtFrom { get; set; }
+
+        public DateTime? CreatedAtTo { get; set; }
     }
     public class PlayerDto : PlayerModel
     {

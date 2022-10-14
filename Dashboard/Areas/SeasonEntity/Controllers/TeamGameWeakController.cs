@@ -30,7 +30,7 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
 
         public IActionResult Index(int Fk_Away, int Fk_Home, int Fk_Season, bool ProfileLayOut = false)
         {
-            _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             TeamGameWeakFilter filter = new()
             {
@@ -41,6 +41,7 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
 
             ViewData["ProfileLayOut"] = ProfileLayOut;
             ViewData[ViewDataConstants.AccessLevel] = (DashboardAccessLevelModel)Request.HttpContext.Items[ViewDataConstants.AccessLevel];
+            SetViewData(returnPage: 0, id: 0, fk_Season: 0, otherLang);
             return View(filter);
         }
 

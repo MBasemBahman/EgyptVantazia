@@ -1,4 +1,4 @@
-﻿using Dashboard.Areas.Location.Models;
+﻿ using Dashboard.Areas.Location.Models;
 using Entities.CoreServicesModels.AccountModels;
 using Entities.CoreServicesModels.UserModels;
 using System.ComponentModel;
@@ -29,6 +29,37 @@ namespace Dashboard.Areas.AccountEntity.Models
 
     public class AccountFilter : DtParameters
     {
+        public int Fk_User { get; set; }
+
+        public string UserName { get; set; }
+
+        [DisplayName(nameof(Phone))]
+        public string Phone { get; set; }
+
+        [DisplayName("UserName")]
+        public string AccountUserName { get; set; }
+
+        [DisplayName("FullName")]
+        public string AccountFullName { get; set; }
+
+        [DisplayName(nameof(Email))]
+        public string Email { get; set; }
+
+        [DisplayName("CreatedAt")]
+        public DateTime? CreatedAtFrom { get; set; } = null;
+
+        [DisplayName(nameof(CreatedAtTo))]
+        public DateTime? CreatedAtTo { get; set; } = null;
+
+        [DisplayName("Country")]
+        public int Fk_Country { get; set; }
+
+        [DisplayName("Nationality")]
+        public int Fk_Nationality { get; set; }
+
+
+        [DisplayName("FavouriteTeam")]
+        public int Fk_FavouriteTeam { get; set; }
     }
 
     public class UserAccountCreateOrEditModel

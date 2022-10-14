@@ -54,6 +54,17 @@
                                 <h4 class="card-title"> @ViewData["Title"]</h4>
 
                             </div>
+                            <p class="m-2 demo-inline-spacing">
+                                <a class="btn btn-primary me-1" data-bs-toggle="collapse" href="#AdvancedFilter" role="button" aria-expanded="false" aria-controls="AdvancedFilter">
+                                    <i data-feather='filter'></i>
+                                    @Localizer.Get("Advanced Search")
+                                </a>
+
+                            </p>
+                            @{
+                                await Html.RenderPartialAsync("../Account/Filter", Model, ViewData);
+                            }
+
                        
                             <div class="card-datatable">
                                 <table class="datatables datatables-ajax table table-responsive table">
@@ -122,6 +133,15 @@
                         contentType: "application/json",
                         dataType: "json",
                         data: function(data) {
+                          data.Fk_Country = $("#Fk_Country").length >  0 ?$("#Fk_Country").val() : @Model.Fk_Country;
+                            data.Fk_Nationality = $("#Fk_Nationality").length > 0 ? $("#Fk_Nationality").val() : @Model.Fk_Nationality;
+                            data.Fk_FavouriteTeam = $("#Fk_Country").length > 0 ? $("#Fk_FavouriteTeam").val() : @Model.Fk_FavouriteTeam;
+                            data.AccountUserName = $("#AccountUserName").length > 0 ? $("#AccountUserName").val() : '@Model.AccountUserName';
+                            data.AccountFullName = $("#AccountFullName").length > 0 ? $("#AccountFullName").val() : '@Model.AccountFullName';
+                            data.Email = $("#Email").length > 0 ? $("#Email").val() : '@Model.Email';
+                            data.Phone = $("#Phone").length > 0 ? $("#Phone").val() : '@Model.Phone';
+                            data.CreatedAtFrom = $("#CreatedAtFrom").length > 0 ? $("#CreatedAtFrom").val() : '@Model.CreatedAtFrom';
+                            data.CreatedAtTo = $("#CreatedAtTo").length > 0 ? $("#CreatedAtTo").val() : '@Model.CreatedAtTo';
                           
                             return JSON.stringify(data);
                         }

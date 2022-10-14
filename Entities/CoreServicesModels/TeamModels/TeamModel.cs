@@ -6,6 +6,12 @@ namespace Entities.CoreServicesModels.TeamModels
     {
         [DisplayName(nameof(_365_TeamId))]
         public string _365_TeamId { get; set; }
+
+
+        [DisplayName("CreatedAt")]
+        public DateTime? CreatedAtFrom { get; set; }
+
+        public DateTime? CreatedAtTo { get; set; }
     }
 
     public class TeamModel : AuditImageEntity

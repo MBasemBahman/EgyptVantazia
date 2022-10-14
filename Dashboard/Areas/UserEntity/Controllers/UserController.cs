@@ -25,12 +25,7 @@ namespace Dashboard.Areas.UserEntity.Controllers
             UserFilter filter = new()
             {
                 Id = id,
-                Fk_Enterprise = Request.Cookies[AdminCookiesDataConstants.Enterprise] != null
-                ? int.Parse(Request.Cookies[AdminCookiesDataConstants.Enterprise]) : Fk_Enterprise,
-                Fk_EnterpriseType = Request.Cookies[AdminCookiesDataConstants.EnterpriseType] != null
-                ? int.Parse(Request.Cookies[AdminCookiesDataConstants.EnterpriseType]) : Fk_EnterpriseType,
-                Fk_Governerate = Request.Cookies[AdminCookiesDataConstants.Governerate] != null
-                ? int.Parse(Request.Cookies[AdminCookiesDataConstants.Governerate]) : Fk_Governerate
+             
             };
 
             ViewData[ViewDataConstants.AccessLevel] = (DashboardAccessLevelModel)Request.HttpContext.Items[ViewDataConstants.AccessLevel];

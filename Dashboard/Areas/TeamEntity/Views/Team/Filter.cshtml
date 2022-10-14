@@ -1,4 +1,4 @@
-﻿@model UserFilter
+﻿@model TeamFilter
 @{
     ViewData["Title"] = Localizer.Get("Advanced Search");
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -14,9 +14,9 @@
 
     <div class="card-body mt-2">
         <form asp-action="LoadTable" class="filter">
-      
-            <div class="row g-1 mb-md-1">
+           
 
+            <div class="row g-1 mb-md-1">
                
                 <div class="col-md-6">
                     <label asp-for="CreatedAtFrom" class="form-label"></label>

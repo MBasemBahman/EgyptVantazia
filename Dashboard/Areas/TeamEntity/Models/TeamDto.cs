@@ -5,7 +5,10 @@ namespace Dashboard.Areas.TeamEntity.Models
 {
     public class TeamFilter : DtParameters
     {
+        [DisplayName("CreatedAt")]
+        public DateTime? CreatedAtFrom { get; set; }
 
+        public DateTime? CreatedAtTo { get; set; }
 
     }
     public class TeamDto : TeamModel

@@ -33,11 +33,12 @@ namespace Dashboard.Areas.StandingsEntity.Controllers
 
         public IActionResult Index()
         {
-            _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             StandingsFilter filter = new();
 
             ViewData[ViewDataConstants.AccessLevel] = (DashboardAccessLevelModel)Request.HttpContext.Items[ViewDataConstants.AccessLevel];
+            SetViewData(otherLang);
             return View(filter);
         }
 

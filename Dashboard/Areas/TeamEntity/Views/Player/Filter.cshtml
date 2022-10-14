@@ -1,4 +1,4 @@
-﻿@model UserFilter
+﻿@model PlayerFilter
 @{
     ViewData["Title"] = Localizer.Get("Advanced Search");
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -14,9 +14,28 @@
 
     <div class="card-body mt-2">
         <form asp-action="LoadTable" class="filter">
-      
+           
             <div class="row g-1 mb-md-1">
+                <div class="col-md-6 col-12">
+                    <div class="mb-1">
+                        <label asp-for="Fk_Team" class="form-label"></label>
+                        <select asp-for="Fk_Team" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["Team"] as Dictionary<string,string>,"Key","Value"))">
+                            <option value="0">@Localizer.Get("All")</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    <div class="mb-1">
+                        <label asp-for="Fk_PlayerPosition" class="form-label"></label>
+                        <select asp-for="Fk_PlayerPosition" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["PlayerPosition"] as Dictionary<string,string>,"Key","Value"))">
+                            <option value="0">@Localizer.Get("All")</option>
+                        </select>
+                    </div>
+                </div>
+             
+            </div>
 
+            <div class="row g-1 mb-md-1">
                
                 <div class="col-md-6">
                     <label asp-for="CreatedAtFrom" class="form-label"></label>

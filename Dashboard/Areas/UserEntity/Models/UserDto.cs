@@ -37,10 +37,5 @@ namespace Dashboard.Areas.UserEntity.Models
 
         public DateTime? CreatedAtTo { get; set; }
 
-        public int Fk_Enterprise { get; set; }
-
-        public int Fk_EnterpriseType { get; set; }
-
-        public int Fk_Governerate { get; set; }
     }
 }

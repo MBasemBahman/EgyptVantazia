@@ -16,7 +16,9 @@ namespace Repository.DBModels.TeamModels
         {
             return FindByCondition(a => true, trackChanges)
                    .Filter(parameters.Id,
-                           parameters._365_TeamId);
+                           parameters._365_TeamId,
+                           parameters.CreatedAtFrom,
+                           parameters.CreatedAtTo);
         }
 
         public async Task<Team> FindById(int id, bool trackChanges)
@@ -48,10 +50,14 @@ namespace Repository.DBModels.TeamModels
         public static IQueryable<Team> Filter(
             this IQueryable<Team> Teams,
             int id,
-            string _365_TeamId)
+            string _365_TeamId,
+            DateTime? createdAtFrom,
+            DateTime? createdAtTo)
         {
             return Teams.Where(a => (id == 0 || a.Id == id) &&
-                                    (string.IsNullOrWhiteSpace(_365_TeamId) || a._365_TeamId == _365_TeamId));
+                                    (string.IsNullOrWhiteSpace(_365_TeamId) || a._365_TeamId == _365_TeamId)&&
+                                    (createdAtFrom == null || a.CreatedAt >= createdAtFrom) &&
+                                    (createdAtTo == null || a.CreatedAt <= createdAtTo));
         }
 
     }

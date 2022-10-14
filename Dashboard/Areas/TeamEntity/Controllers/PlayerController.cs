@@ -29,7 +29,7 @@ namespace Dashboard.Areas.TeamEntity.Controllers
 
         public IActionResult Index(int Fk_Team, bool ProfileLayOut = false)
         {
-            _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             PlayerFilter filter = new()
             {
@@ -38,6 +38,7 @@ namespace Dashboard.Areas.TeamEntity.Controllers
 
             ViewData["ProfileLayOut"] = ProfileLayOut;
             ViewData[ViewDataConstants.AccessLevel] = (DashboardAccessLevelModel)Request.HttpContext.Items[ViewDataConstants.AccessLevel];
+            SetViewData(returnPage: 0, id: 0, otherLang);
             return View(filter);
         }
 

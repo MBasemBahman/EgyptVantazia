@@ -516,6 +516,9 @@
   <data name="May" xml:space="preserve">
     <value>May</value>
   </data>
+  <data name="MemberCount" xml:space="preserve">
+    <value>Members</value>
+  </data>
   <data name="Monday" xml:space="preserve">
     <value>Monday</value>
   </data>
@@ -890,6 +893,9 @@
   </data>
   <data name="Your new password must be different from previously used passwords" xml:space="preserve">
     <value>Your new password must be different from previously used passwords</value>
+  </data>
+  <data name="_365_GameWeakId" xml:space="preserve">
+    <value>Integration Id</value>
   </data>
   <data name="_365_PlayerId" xml:space="preserve">
     <value>Integration Id</value>

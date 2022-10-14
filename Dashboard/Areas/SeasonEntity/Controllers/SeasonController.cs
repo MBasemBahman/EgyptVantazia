@@ -110,6 +110,12 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
                     );
             }
 
+            if (model.ImageUrl.IsNullOrEmpty())
+            {
+                model.ImageUrl = "calendar-date.png";
+                model.StorageUrl = _linkGenerator.GetUriByAction(HttpContext).GetBaseUri(HttpContext.Request.RouteValues["area"].ToString());
+            }
+
             SetViewData(returnPage, id, otherLang);
             return View(model);
         }

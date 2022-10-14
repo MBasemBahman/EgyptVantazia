@@ -109,6 +109,12 @@ namespace Dashboard.Areas.NewsEntity.Controllers
                     ? _unitOfWork.Season.GetSeasons(new SeasonParameters(), otherLang: false).FirstOrDefault().Id
                     : 0;
 
+            if (model.ImageUrl.IsNullOrEmpty())
+            {
+                model.ImageUrl = "news.png";
+                model.StorageUrl = _linkGenerator.GetUriByAction(HttpContext).GetBaseUri(HttpContext.Request.RouteValues["area"].ToString());
+            }
+
             SetViewData(IsProfile, id, otherLang, model.Fk_Season);
             return View(model);
         }

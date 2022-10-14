@@ -5,6 +5,7 @@
     ViewBag.useForm = true;
     ViewBag.useDatePicker = true;
     ViewBag.useImageUploud = true;
+    ViewBag.useSummernote = true;
     bool IsProfile = ViewData["IsProfile"] != null ? (bool)ViewData["IsProfile"] : false;
     int id = ViewData["id"] != null ? (int)ViewData["id"] : 0;
 
@@ -89,14 +90,14 @@
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="ShortDescription" class="form-label"></label>
-                                                <textarea rows="3" asp-for="ShortDescription" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"ShortDescription{PropertyAttributeConstants.ArLang}"))"></textarea>
+                                                <textarea rows="2" asp-for="ShortDescription" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"ShortDescription{PropertyAttributeConstants.ArLang}"))"></textarea>
                                                 <span asp-validation-for="ShortDescription" class="text-danger"></span>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="NewsLang.ShortDescription" class="form-label"></label>
-                                                <textarea rows="3" asp-for="NewsLang.ShortDescription" class="form-control" placeholder="@Localizer.Get("Enter")  @(Localizer.Get($"ShortDescription{PropertyAttributeConstants.EnLang}"))"></textarea>
+                                                <textarea rows="2" asp-for="NewsLang.ShortDescription" class="form-control" placeholder="@Localizer.Get("Enter")  @(Localizer.Get($"ShortDescription{PropertyAttributeConstants.EnLang}"))"></textarea>
                                                 <span asp-validation-for="NewsLang.ShortDescription" class="text-danger"></span>
                                             </div>
                                         </div>
@@ -106,14 +107,14 @@
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="LongDescription" class="form-label"></label>
-                                                <textarea rows="5" asp-for="LongDescription" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"LongDescription{PropertyAttributeConstants.ArLang}"))"></textarea>
+                                                <textarea rows="5" asp-for="LongDescription" class="form-control summernote" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"LongDescription{PropertyAttributeConstants.ArLang}"))"></textarea>
                                                 <span asp-validation-for="LongDescription" class="text-danger"></span>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="NewsLang.LongDescription" class="form-label"></label>
-                                                <textarea rows="5" asp-for="NewsLang.LongDescription" class="form-control" placeholder="@Localizer.Get("Enter")  @(Localizer.Get($"LongDescription{PropertyAttributeConstants.EnLang}"))"></textarea>
+                                                <textarea rows="5" asp-for="NewsLang.LongDescription" class="form-control summernote" placeholder="@Localizer.Get("Enter")  @(Localizer.Get($"LongDescription{PropertyAttributeConstants.EnLang}"))"></textarea>
                                                 <span asp-validation-for="NewsLang.LongDescription" class="text-danger"></span>
                                             </div>
                                         </div>

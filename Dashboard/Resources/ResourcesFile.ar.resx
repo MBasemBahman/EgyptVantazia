@@ -906,4 +906,10 @@
   <data name="ShortName" xml:space="preserve">
     <value>أسم قصير</value>
   </data>
+  <data name="MemberCount" xml:space="preserve">
+    <value>الأعضاء</value>
+  </data>
+  <data name="_365_GameWeakId" xml:space="preserve">
+    <value>Integration Id</value>
+  </data>
 </root>

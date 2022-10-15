@@ -3,6 +3,7 @@ using API.Areas.SeasonArea.Models;
 using API.Areas.StandingsArea.Models;
 using API.Areas.TeamArea.Models;
 using API.Areas.UserArea.Models;
+using Entities.CoreServicesModels.AccountModels;
 using Entities.CoreServicesModels.PlayerScoreModels;
 using Entities.CoreServicesModels.PlayerTransfersModels;
 using Entities.CoreServicesModels.PrivateLeagueModels;
@@ -10,6 +11,7 @@ using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.StandingsModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.CoreServicesModels.UserModels;
+using Entities.DBModels.AccountModels;
 using Entities.DBModels.PlayersTransfersModels;
 using Entities.DBModels.PrivateLeagueModels;
 
@@ -40,6 +42,8 @@ namespace API.MappingProfileCls
             #region AuthenticationModels
 
             _ = CreateMap<UserForRegistrationDto, User>();
+
+            _ = CreateMap<AccountCreateModel, Account>();
 
             _ = CreateMap<UserAuthenticatedDto, UserDto>();
 

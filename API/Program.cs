@@ -36,7 +36,7 @@ builder.Services.AddControllers(opt =>
     opt.Filters.Add(typeof(GlobalModelStateValidatorAttribute));
 });
 //builder.Services.ConfigureFirebase(config.AppSettings);
-//builder.Services.ConfigureEmailSender(builder.Configuration);
+builder.Services.ConfigureEmailSender(builder.Configuration);
 
 WebApplication app = builder.Build();
 

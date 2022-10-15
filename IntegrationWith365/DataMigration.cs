@@ -374,14 +374,121 @@ namespace IntegrationWith365
 
         #endregion
 
-        public async Task InsertGameResult()
+        public async Task InsertStates()
         {
             List<TeamGameWeakModel> teamGameWeaks = _unitOfWork.Season.GetTeamGameWeaks(new TeamGameWeakParameters
             {
             }, otherLang: false).ToList();
 
-            int success = 0;
-            int fail = 0;
+            List<Stat> statsInArabic = new();
+            List<Stat> statsInEnglish = new();
+
+            foreach (TeamGameWeakModel teamGameWeak in teamGameWeaks)
+            {
+                GameReturn gameReturnInArabic = await _365Services.GetGame(new _365GameParameters
+                {
+                    GameId = int.Parse(teamGameWeak._365_MatchId),
+                    IsArabic = true
+                });
+
+                GameReturn gameReturnInEnglish = await _365Services.GetGame(new _365GameParameters
+                {
+                    GameId = int.Parse(teamGameWeak._365_MatchId),
+                });
+
+                if (gameReturnInArabic.Game != null)
+                {
+                    statsInArabic.AddRange(gameReturnInArabic.Game
+                                                             .HomeCompetitor
+                                                             .Lineups
+                                                             .Members
+                                                             .Where(a => a.Stats != null && a.Stats.Any())
+                                                             .SelectMany(a => a.Stats)
+                                                             .GroupBy(a => new Stat
+                                                             {
+                                                                 Type = a.Type,
+                                                                 Name = a.Name,
+                                                             })
+                                                             .Select(a => a.Key)
+                                                             .ToList());
+
+                    statsInArabic.AddRange(gameReturnInArabic.Game
+                                                            .AwayCompetitor
+                                                            .Lineups
+                                                            .Members
+                                                            .Where(a => a.Stats != null && a.Stats.Any())
+                                                            .SelectMany(a => a.Stats)
+                                                            .GroupBy(a => new Stat
+                                                            {
+                                                                Type = a.Type,
+                                                                Name = a.Name,
+                                                            })
+                                                            .Select(a => a.Key)
+                                                            .ToList());
+
+                    statsInArabic = statsInArabic.GroupBy(a => new Stat
+                    {
+                        Type = a.Type,
+                        Name = a.Name,
+                    }).Select(a => a.Key).ToList();
+                }
+                if (gameReturnInEnglish.Game != null)
+                {
+                    statsInEnglish.AddRange(gameReturnInEnglish.Game
+                                                             .HomeCompetitor
+                                                             .Lineups
+                                                             .Members
+                                                             .Where(a => a.Stats != null && a.Stats.Any())
+                                                             .SelectMany(a => a.Stats)
+                                                              .GroupBy(a => new Stat
+                                                              {
+                                                                  Type = a.Type,
+                                                                  Name = a.Name,
+                                                              })
+                                                             .Select(a => a.Key)
+                                                             .ToList());
+
+                    statsInEnglish.AddRange(gameReturnInEnglish.Game
+                                                            .AwayCompetitor
+                                                            .Lineups
+                                                            .Members
+                                                            .Where(a => a.Stats != null && a.Stats.Any())
+                                                            .SelectMany(a => a.Stats)
+                                                            .GroupBy(a => new Stat
+                                                            {
+                                                                Type = a.Type,
+                                                                Name = a.Name,
+                                                            })
+                                                            .Select(a => a.Key)
+                                                            .ToList());
+
+                    statsInEnglish = statsInEnglish.GroupBy(a => new Stat
+                    {
+                        Type = a.Type,
+                        Name = a.Name,
+                    }).Select(a => a.Key).ToList();
+                }
+            }
+            for (int i = 0; i < statsInArabic.Count; i++)
+            {
+                _unitOfWork.PlayerScore.CreateScoreType(new ScoreType
+                {
+                    Name = statsInArabic[i].Name,
+                    _365_TypeId = statsInArabic[i].Type.ToString(),
+                    ScoreTypeLang = new ScoreTypeLang
+                    {
+                        Name = statsInEnglish[i].Name,
+                    }
+                });
+            }
+            await _unitOfWork.Save();
+        }
+
+        public async Task InsertGameResult()
+        {
+            List<TeamGameWeakModel> teamGameWeaks = _unitOfWork.Season.GetTeamGameWeaks(new TeamGameWeakParameters
+            {
+            }, otherLang: false).ToList();
 
             foreach (TeamGameWeakModel teamGameWeak in teamGameWeaks)
             {
@@ -397,12 +504,10 @@ namespace IntegrationWith365
                     var playersQuary = _unitOfWork.Team.GetPlayers(new PlayerParameters
                     {
                         _365_PlayerIds = allMembers.Select(a => a.AthleteId.ToString()).ToList(),
-                        Fk_TeamGameWeak_Ignored = teamGameWeak.Id
                     }, otherLang: false);
 
                     if (playersQuary.Any())
                     {
-                        success++;
                         var players = playersQuary.Select(a => new
                         {
                             a.Id,
@@ -435,10 +540,6 @@ namespace IntegrationWith365
                             }
                         }
                         await _unitOfWork.Save();
-                    }
-                    else
-                    {
-                        fail++;
                     }
                 }
             }

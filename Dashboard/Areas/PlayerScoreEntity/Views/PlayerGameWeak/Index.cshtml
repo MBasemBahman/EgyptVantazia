@@ -17,21 +17,21 @@
 
 <!-- BEGIN: Content-->
 
-                <section id="ajax-datatable">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-header border-bottom">
-                                    <h4 class="card-title"> @ViewData["Title"]</h4>
+<section id="ajax-datatable">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header border-bottom">
+                    <h4 class="card-title"> @ViewData["Title"]</h4>
 
-                                </div>
+                </div>
 
-                                <div class="card-datatable">
-                                    <table class="datatables datatables-ajax table table-responsive table">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    @Html.DisplayNameFor(model => row.Id)
+                <div class="card-datatable">
+                    <table class="datatables datatables-ajax table table-responsive table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => row.Id)
                                     <a id="details" asp-action="Details">
                                     </a>
 
@@ -52,23 +52,23 @@
                                         </a>
                                     }
 
-                                                </th>
-                                    <th>@Html.DisplayNameFor(model => row.GameWeak.Season)</th>
+                                </th>
+                                <th>@*@Html.DisplayNameFor(model => row.GameWeak.Season)*@</th>
 
-                                                <th>@Html.DisplayNameFor(model => row.GameWeak)</th>
-                                                <th>@Html.DisplayNameFor(model => row.Ranking)</th>
+                                <th>@*@Html.DisplayNameFor(model => row.GameWeak)*@</th>
+                                <th>@Html.DisplayNameFor(model => row.Ranking)</th>
 
-                                                <th>
-                                                    @Html.DisplayNameFor(model => row.Id)
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                                <th>
+                                    @Html.DisplayNameFor(model => row.Id)
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- END: Content-->
 @section scripts{

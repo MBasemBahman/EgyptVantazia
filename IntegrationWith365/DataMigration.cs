@@ -397,7 +397,7 @@ namespace IntegrationWith365
                     var playersQuary = _unitOfWork.Team.GetPlayers(new PlayerParameters
                     {
                         _365_PlayerIds = allMembers.Select(a => a.AthleteId.ToString()).ToList(),
-                        Fk_GameWeak_Ignored = teamGameWeak.Fk_GameWeak
+                        Fk_TeamGameWeak_Ignored = teamGameWeak.Id
                     }, otherLang: false);
 
                     if (playersQuary.Any())
@@ -426,15 +426,12 @@ namespace IntegrationWith365
 
                             if (fk_Player > 0 && memberResult != null)
                             {
-                                if (_unitOfWork.PlayerScore.GetPlayerGameWeaks(new PlayerGameWeakParameters { Fk_GameWeak = teamGameWeak.Fk_GameWeak, Fk_Player = fk_Player }, false).Any())
+                                _unitOfWork.PlayerScore.CreatePlayerGameWeak(new PlayerGameWeak
                                 {
-                                    _unitOfWork.PlayerScore.CreatePlayerGameWeak(new PlayerGameWeak
-                                    {
-                                        Fk_GameWeak = teamGameWeak.Fk_GameWeak,
-                                        Fk_Player = fk_Player,
-                                        Ranking = memberResult.Ranking,
-                                    });
-                                }
+                                    Fk_TeamGameWeak = teamGameWeak.Id,
+                                    Fk_Player = fk_Player,
+                                    Ranking = memberResult.Ranking,
+                                });
                             }
                         }
                         await _unitOfWork.Save();

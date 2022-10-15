@@ -41,7 +41,7 @@ namespace Repository.DBModels.PlayerScoreModels
             return PlayerGameWeakScores.Where(a => (id == 0 || a.Id == id) &&
                                                    (Fk_PlayerGameWeak == 0 || a.Fk_PlayerGameWeak == Fk_PlayerGameWeak) &&
                                                    (Fk_Player == 0 || a.PlayerGameWeak.Fk_Player == Fk_Player) &&
-                                                   (Fk_GameWeak == 0 || a.PlayerGameWeak.Fk_GameWeak == Fk_GameWeak) &&
+                                                   (Fk_GameWeak == 0 || a.PlayerGameWeak.TeamGameWeak.Fk_GameWeak == Fk_GameWeak) &&
                                                    (Fk_ScoreType == 0 || a.Fk_ScoreType == Fk_ScoreType));
 
         }

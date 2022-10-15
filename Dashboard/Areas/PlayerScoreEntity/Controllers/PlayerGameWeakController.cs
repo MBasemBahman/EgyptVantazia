@@ -100,15 +100,15 @@ namespace Dashboard.Areas.PlayerScoreEntity.Controllers
                 { Fk_PlayerGameWeak = id }, otherLang)
                 );
             }
-           if(Fk_Player > 0)
+            if (Fk_Player > 0)
             {
                 model.Fk_Player = Fk_Player;
             }
-            model.Fk_Season = model.Fk_GameWeak > 0
-                ? _unitOfWork.Season.GetGameWeakbyId(model.Fk_GameWeak, otherLang: false).Fk_Season
-                : _unitOfWork.Season.GetSeasons(new SeasonParameters(), otherLang: false).Any()
-                    ? _unitOfWork.Season.GetSeasons(new SeasonParameters(), otherLang: false).FirstOrDefault().Id
-                    : 0;
+            //model.Fk_Season = model.Fk_GameWeak > 0
+            //    ? _unitOfWork.Season.GetGameWeakbyId(model.Fk_GameWeak, otherLang: false).Fk_Season
+            //    : _unitOfWork.Season.GetSeasons(new SeasonParameters(), otherLang: false).Any()
+            //        ? _unitOfWork.Season.GetSeasons(new SeasonParameters(), otherLang: false).FirstOrDefault().Id
+            //        : 0;
 
             SetViewData(model.Fk_Season, otherLang);
             return View(model);
@@ -123,7 +123,7 @@ namespace Dashboard.Areas.PlayerScoreEntity.Controllers
 
             if (!ModelState.IsValid)
             {
-                SetViewData( model.Fk_Season, otherLang);
+                SetViewData(model.Fk_Season, otherLang);
 
                 return View(model);
             }
@@ -158,7 +158,7 @@ namespace Dashboard.Areas.PlayerScoreEntity.Controllers
 
                 await _unitOfWork.Save();
 
-                return Redirect($"/TeamEntity/Player/Profile/{model.Fk_Player}?returnItem={(int)PlayerProfileItems.PlayerGameWeak}") ;
+                return Redirect($"/TeamEntity/Player/Profile/{model.Fk_Player}?returnItem={(int)PlayerProfileItems.PlayerGameWeak}");
             }
             catch (Exception ex)
             {
@@ -191,7 +191,7 @@ namespace Dashboard.Areas.PlayerScoreEntity.Controllers
         // helper methods
         private void SetViewData(int fk_Season, bool otherLang)
         {
-            
+
             ViewData["GameWeak"] = _unitOfWork.Season.GetGameWeakLookUp(new GameWeakParameters()
             {
                 Fk_Season = fk_Season

@@ -8,8 +8,8 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
 {
     public class PlayerGameWeakParameters : RequestParameters
     {
-        [DisplayName(nameof(GameWeak))]
-        public int Fk_GameWeak { get; set; }
+        [DisplayName(nameof(TeamGameWeak))]
+        public int Fk_TeamGameWeak { get; set; }
 
         [DisplayName(nameof(Player))]
         public int Fk_Player { get; set; }
@@ -17,12 +17,12 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
 
     public class PlayerGameWeakModel : AuditEntity
     {
-        [DisplayName(nameof(GameWeak))]
-        [ForeignKey(nameof(GameWeak))]
-        public int Fk_GameWeak { get; set; }
+        [DisplayName(nameof(TeamGameWeak))]
+        [ForeignKey(nameof(TeamGameWeak))]
+        public int Fk_TeamGameWeak { get; set; }
 
-        [DisplayName(nameof(GameWeak))]
-        public GameWeakModel GameWeak { get; set; }
+        [DisplayName(nameof(TeamGameWeak))]
+        public TeamGameWeakModel TeamGameWeak { get; set; }
 
         [DisplayName(nameof(Player))]
         [ForeignKey(nameof(Player))]
@@ -41,8 +41,8 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
         {
             PlayerGameWeakScores = new List<PlayerGameWeakScoreCreateOrEditModel>();
         }
-        [DisplayName(nameof(GameWeak))]
-        public int Fk_GameWeak { get; set; }
+        [DisplayName(nameof(TeamGameWeak))]
+        public int Fk_TeamGameWeak { get; set; }
 
         [DisplayName(nameof(Season))]
         public int Fk_Season { get; set; }

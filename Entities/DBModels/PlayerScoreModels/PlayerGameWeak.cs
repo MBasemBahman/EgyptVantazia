@@ -5,12 +5,12 @@ namespace Entities.DBModels.PlayerScoreModels
 {
     public class PlayerGameWeak : AuditEntity
     {
-        [DisplayName(nameof(GameWeak))]
-        [ForeignKey(nameof(GameWeak))]
-        public int Fk_GameWeak { get; set; }
+        [DisplayName(nameof(TeamGameWeak))]
+        [ForeignKey(nameof(TeamGameWeak))]
+        public int Fk_TeamGameWeak { get; set; }
 
-        [DisplayName(nameof(GameWeak))]
-        public GameWeak GameWeak { get; set; }
+        [DisplayName(nameof(TeamGameWeak))]
+        public TeamGameWeak TeamGameWeak { get; set; }
 
         [DisplayName(nameof(Player))]
         [ForeignKey(nameof(Player))]

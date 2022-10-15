@@ -6,7 +6,7 @@ namespace ModelBuilderConfig.Configurations.PlayerScoreModels
     {
         public void Configure(EntityTypeBuilder<PlayerGameWeak> builder)
         {
-            _ = builder.HasIndex(a => new { a.Fk_GameWeak, a.Fk_Player }).IsUnique();
+            _ = builder.HasIndex(a => new { a.Fk_TeamGameWeak, a.Fk_Player }).IsUnique();
         }
     }
 }

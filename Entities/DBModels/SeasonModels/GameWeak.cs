@@ -27,9 +27,6 @@ namespace Entities.DBModels.SeasonModels
         [DisplayName(nameof(News))]
         public IList<News> News { get; set; }
 
-        [DisplayName(nameof(PlayerGameWeaks))]
-        public IList<PlayerGameWeak> PlayerGameWeaks { get; set; }
-
         [DisplayName(nameof(AccountTeamGameWeaks))]
         public IList<AccountTeamGameWeak> AccountTeamGameWeaks { get; set; }
 

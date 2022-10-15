@@ -1,4 +1,5 @@
-﻿using Entities.DBModels.TeamModels;
+﻿using Entities.DBModels.PlayerScoreModels;
+using Entities.DBModels.TeamModels;
 
 namespace Entities.DBModels.SeasonModels
 {
@@ -39,5 +40,8 @@ namespace Entities.DBModels.SeasonModels
 
         [DisplayName(nameof(_365_MatchId))]
         public string _365_MatchId { get; set; }
+
+        [DisplayName(nameof(PlayerGameWeaks))]
+        public IList<PlayerGameWeak> PlayerGameWeaks { get; set; }
     }
 }

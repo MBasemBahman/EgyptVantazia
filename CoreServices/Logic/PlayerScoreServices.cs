@@ -47,7 +47,7 @@ namespace CoreServices.Logic
             return await _repository.ScoreType.FindById(id, trackChanges);
         }
 
-        public Dictionary<string,string> GetScoreTypesLookUp(ScoreTypeParameters parameters,bool otherLang)
+        public Dictionary<string, string> GetScoreTypesLookUp(ScoreTypeParameters parameters, bool otherLang)
         {
             return GetScoreTypes(parameters, otherLang).ToDictionary(a => a.Id.ToString(), a => a.Name);
         }
@@ -86,17 +86,30 @@ namespace CoreServices.Logic
                            CreatedBy = a.CreatedBy,
                            LastModifiedAt = a.LastModifiedAt,
                            LastModifiedBy = a.LastModifiedBy,
-                           Fk_GameWeak = a.Fk_GameWeak,
+                           Fk_TeamGameWeak = a.Fk_TeamGameWeak,
                            Fk_Player = a.Fk_Player,
                            Ranking = a.Ranking,
-                           GameWeak = new GameWeakModel
+                           TeamGameWeak = new TeamGameWeakModel
                            {
-                               Name = otherLang ? a.GameWeak.GameWeakLang.Name : a.GameWeak.Name,
-                               _365_GameWeakId = a.GameWeak._365_GameWeakId,
-                               Fk_Season = a.GameWeak.Fk_Season,
-                               Season = new SeasonModel
+                               Fk_Away = a.TeamGameWeak.Fk_Away,
+                               Fk_Home = a.TeamGameWeak.Fk_Home,
+                               Fk_GameWeak = a.TeamGameWeak.Fk_GameWeak,
+                               Away = new TeamModel
                                {
-                                   Name = otherLang ? a.GameWeak.Season.SeasonLang.Name : a.GameWeak.Season.Name
+                                   Name = otherLang ? a.TeamGameWeak.Away.TeamLang.Name : a.TeamGameWeak.Away.Name
+                               },
+                               Home = new TeamModel
+                               {
+                                   Name = otherLang ? a.TeamGameWeak.Home.TeamLang.Name : a.TeamGameWeak.Home.Name
+                               },
+                               GameWeak = new GameWeakModel
+                               {
+                                   Name = otherLang ? a.TeamGameWeak.GameWeak.GameWeakLang.Name : a.TeamGameWeak.GameWeak.Name,
+                                   _365_GameWeakId = a.TeamGameWeak.GameWeak._365_GameWeakId,
+                                   Season = new SeasonModel
+                                   {
+                                       Name = otherLang ? a.TeamGameWeak.GameWeak.Season.SeasonLang.Name : a.TeamGameWeak.GameWeak.Season.SeasonLang.Name,
+                                   }
                                }
                            },
                            Player = new PlayerModel

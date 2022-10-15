@@ -19,10 +19,9 @@ namespace Dashboard.Areas.PlayerScoreEntity.Models
         [DisplayName(nameof(LastModifiedAt))]
         public new string LastModifiedAt { get; set; }
 
-        [DisplayName(nameof(GameWeak))]
-        public new GameWeakDto GameWeak { get; set; }
+        [DisplayName(nameof(TeamGameWeak))]
+        public new TeamGameWeakDto TeamGameWeak { get; set; }
 
-  
         [DisplayName(nameof(Player))]
         public new PlayerDto Player { get; set; }
 

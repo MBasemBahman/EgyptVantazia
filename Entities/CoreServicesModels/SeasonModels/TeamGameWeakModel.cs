@@ -82,7 +82,6 @@ namespace Entities.CoreServicesModels.SeasonModels
         [DisplayName("Away")]
         public int Fk_Away { get; set; }
 
-
         [DisplayName(nameof(HomeScore))]
         public int HomeScore { get; set; }
 

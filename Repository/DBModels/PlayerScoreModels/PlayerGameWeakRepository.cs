@@ -14,7 +14,7 @@ namespace Repository.DBModels.PlayerScoreModels
         {
             return FindByCondition(a => true, trackChanges)
                    .Filter(parameters.Id,
-                           parameters.Fk_GameWeak,
+                           parameters.Fk_TeamGameWeak,
                            parameters.Fk_Player);
         }
 
@@ -26,9 +26,9 @@ namespace Repository.DBModels.PlayerScoreModels
 
         public new void Create(PlayerGameWeak entity)
         {
-            if (FindByCondition(a => a.Fk_GameWeak == entity.Fk_GameWeak && a.Fk_Player == entity.Fk_Player, trackChanges: false).Any())
+            if (FindByCondition(a => a.Fk_TeamGameWeak == entity.Fk_TeamGameWeak && a.Fk_Player == entity.Fk_Player, trackChanges: false).Any())
             {
-                PlayerGameWeak oldEntity = FindByCondition(a => a.Fk_GameWeak == entity.Fk_GameWeak && a.Fk_Player == entity.Fk_Player, trackChanges: false).First();
+                PlayerGameWeak oldEntity = FindByCondition(a => a.Fk_TeamGameWeak == entity.Fk_TeamGameWeak && a.Fk_Player == entity.Fk_Player, trackChanges: false).First();
 
                 oldEntity.Ranking = entity.Ranking;
             }
@@ -44,11 +44,11 @@ namespace Repository.DBModels.PlayerScoreModels
         public static IQueryable<PlayerGameWeak> Filter(
             this IQueryable<PlayerGameWeak> PlayerGameWeaks,
             int id,
-            int Fk_GameWeak,
+            int Fk_TeamGameWeak,
             int Fk_Player)
         {
             return PlayerGameWeaks.Where(a => (id == 0 || a.Id == id) &&
-                                              (Fk_GameWeak == 0 || a.Fk_GameWeak == Fk_GameWeak) &&
+                                              (Fk_TeamGameWeak == 0 || a.Fk_TeamGameWeak == Fk_TeamGameWeak) &&
                                               (Fk_Player == 0 || a.Fk_Player == Fk_Player));
 
 

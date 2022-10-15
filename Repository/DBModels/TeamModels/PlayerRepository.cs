@@ -17,7 +17,7 @@ namespace Repository.DBModels.TeamModels
                            parameters.Fk_PlayerPosition,
                            parameters._365_PlayerId,
                            parameters.CreatedAtFrom,
-                           parameters.CreatedAtTo);
+                           parameters.CreatedAtTo,
                            parameters._365_PlayerIds,
                            parameters.Fk_GameWeak_Ignored);
         }
@@ -55,7 +55,7 @@ namespace Repository.DBModels.TeamModels
             int Fk_PlayerPosition,
             string _365_PlayerId,
             DateTime? createdAtFrom,
-            DateTime? createdAtTo)
+            DateTime? createdAtTo,
             List<string> _365_PlayerIds,
             int fk_GameWeak_Ignored)
 

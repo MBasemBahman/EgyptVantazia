@@ -80,33 +80,6 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        [Route(nameof(ResetUser))]
-        [AllowAnonymous]
-        public async Task<bool> ResetUser(
-           [FromBody] UserForResetDto model)
-        {
-            model.UserName = RegexService.GetUserName(model.UserName);
-
-            User user = await _unitOfWork.User.FindByUserName(model.UserName, trackChanges: true);
-
-            if (user == null)
-            {
-                throw new Exception("Not Found!");
-            }
-
-            user.Verifications = new List<Verification>
-            {
-                _unitOfWork.User.GenerateVerification(IpAddress(),_appSettings.VerificationTTL)
-            };
-
-            await SendVerification(user.EmailAddress, user.Verifications.Single().Code);
-
-            await _unitOfWork.Save();
-
-            return true;
-        }
-
-        [HttpPost]
         [Route(nameof(VerificateUser))]
         [AllowAnonymous]
         public async Task<bool> VerificateUser(

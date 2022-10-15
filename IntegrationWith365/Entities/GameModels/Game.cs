@@ -13,6 +13,8 @@ namespace IntegrationWith365.Entities.GameModels
 
         public bool IsEnded => StatusText is "انتهت" or "Ended";
 
+        public List<GameMember> Members { get; set; }
+
         public Competitor HomeCompetitor { get; set; }
 
         public Competitor AwayCompetitor { get; set; }

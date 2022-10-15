@@ -14,11 +14,14 @@ namespace Entities.CoreServicesModels.TeamModels
         [DisplayName(nameof(_365_PlayerId))]
         public string _365_PlayerId { get; set; }
 
-
         [DisplayName("CreatedAt")]
         public DateTime? CreatedAtFrom { get; set; }
 
         public DateTime? CreatedAtTo { get; set; }
+        
+        public List<string> _365_PlayerIds { get; set; }
+
+        public int Fk_GameWeak_Ignored { get; set; }
     }
     public class PlayerModel : AuditImageEntity
     {

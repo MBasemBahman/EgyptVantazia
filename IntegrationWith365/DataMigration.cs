@@ -1,5 +1,6 @@
 ﻿using Contracts.Extensions;
 using CoreServices;
+using Entities.CoreServicesModels.PlayerScoreModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.StandingsModels;
 using Entities.CoreServicesModels.TeamModels;
@@ -12,6 +13,7 @@ using IntegrationWith365.Entities.GamesModels;
 using IntegrationWith365.Entities.SquadsModels;
 using IntegrationWith365.Entities.StandingsModels;
 using IntegrationWith365.Parameters;
+using System.Linq;
 
 namespace IntegrationWith365
 {
@@ -378,6 +380,9 @@ namespace IntegrationWith365
             {
             }, otherLang: false).ToList();
 
+            int success = 0;
+            int fail = 0;
+
             foreach (TeamGameWeakModel teamGameWeak in teamGameWeaks)
             {
                 GameReturn gameReturn = await _365Services.GetGame(new _365GameParameters
@@ -387,59 +392,56 @@ namespace IntegrationWith365
 
                 if (gameReturn.Game != null)
                 {
-                    TeamGameWeak match = await _unitOfWork.Season.FindTeamGameWeakbyId(teamGameWeak.Id, trackChanges: true);
-                    match.IsEnded = gameReturn.Game.IsEnded;
-                    match.AwayScore = (int)gameReturn.Game.AwayCompetitor.Score;
-                    match.HomeScore = (int)gameReturn.Game.HomeCompetitor.Score;
-                    await _unitOfWork.Save();
+                    List<GameMember> allMembers = gameReturn.Game.Members;
 
-                    if (gameReturn.Game.HomeCompetitor.Lineups.Members.Any())
+                    var playersQuary = _unitOfWork.Team.GetPlayers(new PlayerParameters
                     {
-                        var players = _unitOfWork.Team.GetPlayers(new PlayerParameters
-                        {
-                            Fk_Team = teamGameWeak.Fk_Home
-                        }, otherLang: false).Select(a => new
+                        _365_PlayerIds = allMembers.Select(a => a.AthleteId.ToString()).ToList(),
+                        Fk_GameWeak_Ignored = teamGameWeak.Fk_GameWeak
+                    }, otherLang: false);
+
+                    if (playersQuary.Any())
+                    {
+                        success++;
+                        var players = playersQuary.Select(a => new
                         {
                             a.Id,
-                            a._365_PlayerId
+                            a._365_PlayerId,
                         }).ToList();
 
-                        foreach (Member member in gameReturn.Game.HomeCompetitor.Lineups.Members)
+                        TeamGameWeak match = await _unitOfWork.Season.FindTeamGameWeakbyId(teamGameWeak.Id, trackChanges: true);
+                        match.IsEnded = gameReturn.Game.IsEnded;
+                        match.AwayScore = (int)gameReturn.Game.AwayCompetitor.Score;
+                        match.HomeScore = (int)gameReturn.Game.HomeCompetitor.Score;
+                        await _unitOfWork.Save();
+
+                        List<Member> allMembersResults = new();
+                        allMembersResults.AddRange(gameReturn.Game.HomeCompetitor.Lineups.Members);
+                        allMembersResults.AddRange(gameReturn.Game.AwayCompetitor.Lineups.Members);
+
+                        foreach (GameMember member in allMembers)
                         {
-                            _unitOfWork.PlayerScore.CreatePlayerGameWeak(new PlayerGameWeak
+                            int fk_Player = players.Where(a => a._365_PlayerId == member.AthleteId.ToString()).Select(a => a.Id).FirstOrDefault();
+                            Member memberResult = allMembersResults.Where(a => a.Id == member.Id).FirstOrDefault();
+
+                            if (fk_Player > 0 && memberResult != null)
                             {
-                                Fk_GameWeak = teamGameWeak.Fk_GameWeak,
-                                Fk_Player = players.Where(a => a._365_PlayerId == member.Id.ToString())
-                                                       .Select(a => a.Id)
-                                                       .First(),
-                                Ranking = member.Ranking,
-                            });
+                                if (_unitOfWork.PlayerScore.GetPlayerGameWeaks(new PlayerGameWeakParameters { Fk_GameWeak = teamGameWeak.Fk_GameWeak, Fk_Player = fk_Player }, false).Any())
+                                {
+                                    _unitOfWork.PlayerScore.CreatePlayerGameWeak(new PlayerGameWeak
+                                    {
+                                        Fk_GameWeak = teamGameWeak.Fk_GameWeak,
+                                        Fk_Player = fk_Player,
+                                        Ranking = memberResult.Ranking,
+                                    });
+                                }
+                            }
                         }
                         await _unitOfWork.Save();
                     }
-                    if (gameReturn.Game.AwayCompetitor.Lineups.Members.Any())
+                    else
                     {
-                        var players = _unitOfWork.Team.GetPlayers(new PlayerParameters
-                        {
-                            Fk_Team = teamGameWeak.Fk_Away
-                        }, otherLang: false).Select(a => new
-                        {
-                            a.Id,
-                            a._365_PlayerId
-                        }).ToList();
-
-                        foreach (Member member in gameReturn.Game.AwayCompetitor.Lineups.Members)
-                        {
-                            _unitOfWork.PlayerScore.CreatePlayerGameWeak(new PlayerGameWeak
-                            {
-                                Fk_GameWeak = teamGameWeak.Fk_GameWeak,
-                                Fk_Player = players.Where(a => a._365_PlayerId == member.Id.ToString())
-                                                       .Select(a => a.Id)
-                                                       .First(),
-                                Ranking = member.Ranking,
-                            });
-                        }
-                        await _unitOfWork.Save();
+                        fail++;
                     }
                 }
             }

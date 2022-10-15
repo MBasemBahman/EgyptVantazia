@@ -13,7 +13,6 @@ using IntegrationWith365.Entities.GamesModels;
 using IntegrationWith365.Entities.SquadsModels;
 using IntegrationWith365.Entities.StandingsModels;
 using IntegrationWith365.Parameters;
-using System.Linq;
 
 namespace IntegrationWith365
 {
@@ -491,6 +490,8 @@ namespace IntegrationWith365
             {
             }, otherLang: false).ToList();
 
+            List<ScoreTypeModel> scoreTypes = _unitOfWork.PlayerScore.GetScoreTypes(new ScoreTypeParameters(), false).ToList();
+
             foreach (TeamGameWeakModel teamGameWeak in teamGameWeaks)
             {
                 GameReturn gameReturn = await _365Services.GetGame(new _365GameParameters
@@ -502,7 +503,7 @@ namespace IntegrationWith365
                 {
                     List<GameMember> allMembers = gameReturn.Game.Members;
 
-                    var playersQuary = _unitOfWork.Team.GetPlayers(new PlayerParameters
+                    IQueryable<PlayerModel> playersQuary = _unitOfWork.Team.GetPlayers(new PlayerParameters
                     {
                         _365_PlayerIds = allMembers.Select(a => a.AthleteId.ToString()).ToList(),
                     }, otherLang: false);
@@ -532,12 +533,42 @@ namespace IntegrationWith365
 
                             if (fk_Player > 0 && memberResult != null)
                             {
-                                _unitOfWork.PlayerScore.CreatePlayerGameWeak(new PlayerGameWeak
+                                if (_unitOfWork.PlayerScore.GetPlayerGameWeaks(new PlayerGameWeakParameters { Fk_TeamGameWeak = teamGameWeak.Id, Fk_Player = fk_Player }, false).Any())
                                 {
-                                    Fk_TeamGameWeak = teamGameWeak.Id,
-                                    Fk_Player = fk_Player,
-                                    Ranking = memberResult.Ranking,
-                                });
+                                    var fk_TeamGameWeak = _unitOfWork.PlayerScore.GetPlayerGameWeaks(new PlayerGameWeakParameters { Fk_TeamGameWeak = teamGameWeak.Id, Fk_Player = fk_Player }, false).Select(a => a.Id).First();
+                                    foreach (var Stat in memberResult.Stats)
+                                    {
+                                        _unitOfWork.PlayerScore.CreatePlayerGameWeakScore(new PlayerGameWeakScore
+                                        {
+                                            Fk_PlayerGameWeak = fk_TeamGameWeak,
+                                            Fk_ScoreType = scoreTypes.Where(a => a._365_TypeId == Stat.Type.ToString()).Select(a => a.Id).First(),
+                                            Value = Stat.Value,
+                                        });
+                                    }
+                                }
+                                else
+                                {
+                                    PlayerGameWeak playerGameWeak = new()
+                                    {
+                                        Fk_TeamGameWeak = teamGameWeak.Id,
+                                        Fk_Player = fk_Player,
+                                        Ranking = memberResult.Ranking
+                                    };
+                                    if (memberResult.Stats != null && memberResult.Stats.Any())
+                                    {
+                                        playerGameWeak.PlayerGameWeakScores = new List<PlayerGameWeakScore>();
+
+                                        foreach (var Stat in memberResult.Stats)
+                                        {
+                                            playerGameWeak.PlayerGameWeakScores.Add(new PlayerGameWeakScore
+                                            {
+                                                Fk_ScoreType = scoreTypes.Where(a => a._365_TypeId == Stat.Type.ToString()).Select(a => a.Id).First(),
+                                                Value = Stat.Value,
+                                            });
+                                        }
+                                    }
+                                    _unitOfWork.PlayerScore.CreatePlayerGameWeak(playerGameWeak);
+                                }
                             }
                         }
                         await _unitOfWork.Save();

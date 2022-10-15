@@ -17,7 +17,7 @@
         public ScoreType ScoreType { get; set; }
 
         [DisplayName(nameof(Value))]
-        public int Value { get; set; }
+        public string Value { get; set; }
 
         [DisplayName(nameof(Points))]
         public int Points { get; set; }

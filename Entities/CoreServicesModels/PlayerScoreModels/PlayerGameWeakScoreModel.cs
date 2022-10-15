@@ -31,7 +31,7 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
         public ScoreTypeModel ScoreType { get; set; }
 
         [DisplayName(nameof(Value))]
-        public int Value { get; set; }
+        public string Value { get; set; }
 
         [DisplayName(nameof(Points))]
         public int Points { get; set; }
@@ -44,7 +44,7 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
         public int Fk_ScoreType { get; set; }
 
         [DisplayName(nameof(Value))]
-        public int Value { get; set; }
+        public string Value { get; set; }
 
         [DisplayName(nameof(Points))]
         public int Points { get; set; }

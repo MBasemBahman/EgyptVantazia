@@ -95,7 +95,7 @@ namespace Repository.DBModels.AccountModels
                                        (fk_Accounts == null || !fk_Accounts.Any() || fk_Accounts.Contains(a.Id)) &&
                                        (fk_User == 0 || a.Fk_User == fk_User) &&
                                        (string.IsNullOrWhiteSpace(accountUserName) || a.User.UserName.ToLower().Contains(accountUserName)) &&
-                                       (string.IsNullOrWhiteSpace(accountFullName) || a.FirstName.ToLower().Contains(accountFullName)||a.LastName.ToLower().Contains(accountFullName)) &&
+                                       (string.IsNullOrWhiteSpace(accountFullName) || a.FullName.ToLower().Contains(accountFullName)) &&
                                        (string.IsNullOrWhiteSpace(phone) || a.User.PhoneNumber.ToLower().Contains(phone)) &&
                                        (string.IsNullOrWhiteSpace(email) || a.User.EmailAddress.ToLower().Contains(email)) &&
                                        (string.IsNullOrEmpty(UserName) || a.User.UserName.ToLower() == UserName.ToLower()) &&

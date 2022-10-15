@@ -380,11 +380,11 @@ namespace IntegrationWith365
             {
             }, otherLang: false).ToList();
 
-            List<Stat> statsInArabic = new();
-            List<Stat> statsInEnglish = new();
-
             foreach (TeamGameWeakModel teamGameWeak in teamGameWeaks)
             {
+                List<Stat> statsInArabic = new();
+                List<Stat> statsInEnglish = new();
+
                 GameReturn gameReturnInArabic = await _365Services.GetGame(new _365GameParameters
                 {
                     GameId = int.Parse(teamGameWeak._365_MatchId),
@@ -468,20 +468,21 @@ namespace IntegrationWith365
                         Name = a.Name,
                     }).Select(a => a.Key).ToList();
                 }
-            }
-            for (int i = 0; i < statsInArabic.Count; i++)
-            {
-                _unitOfWork.PlayerScore.CreateScoreType(new ScoreType
+
+                for (int i = 0; i < statsInArabic.Count; i++)
                 {
-                    Name = statsInArabic[i].Name,
-                    _365_TypeId = statsInArabic[i].Type.ToString(),
-                    ScoreTypeLang = new ScoreTypeLang
+                    _unitOfWork.PlayerScore.CreateScoreType(new ScoreType
                     {
-                        Name = statsInEnglish[i].Name,
-                    }
-                });
+                        Name = statsInArabic[i].Name,
+                        _365_TypeId = statsInArabic[i].Type.ToString(),
+                        ScoreTypeLang = new ScoreTypeLang
+                        {
+                            Name = statsInEnglish[i].Name,
+                        }
+                    });
+                    await _unitOfWork.Save();
+                }
             }
-            await _unitOfWork.Save();
         }
 
         public async Task InsertGameResult()

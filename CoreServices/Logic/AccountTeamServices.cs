@@ -43,8 +43,7 @@ namespace CoreServices.Logic
                            Account = new AccountModel
                            {
                                ImageUrl = a.Account.StorageUrl + a.Account.ImageUrl,
-                               FirstName = a.Account.FirstName,
-                               LastName = a.Account.LastName,
+                               FullName = a.Account.FullName,
                            },
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)

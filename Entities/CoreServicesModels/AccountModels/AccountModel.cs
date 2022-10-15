@@ -42,11 +42,8 @@ namespace Entities.CoreServicesModels.AccountModels
 
     public class AccountModel : AuditImageEntity
     {
-        [DisplayName(nameof(FirstName))]
-        public string FirstName { get; set; }
-
-        [DisplayName(nameof(LastName))]
-        public string LastName { get; set; }
+        [DisplayName(nameof(FullName))]
+        public string FullName { get; set; }
 
         [DisplayName(nameof(Name))]
         public string Name { get; set; }
@@ -96,11 +93,8 @@ namespace Entities.CoreServicesModels.AccountModels
 
     public class AccountEditModel
     {
-        [DisplayName(nameof(FirstName))]
-        public string FirstName { get; set; }
-
-        [DisplayName(nameof(LastName))]
-        public string LastName { get; set; }
+        [DisplayName(nameof(FullName))]
+        public string FullName { get; set; }
 
         [DataType(DataType.PhoneNumber)]
         [Phone]
@@ -123,11 +117,8 @@ namespace Entities.CoreServicesModels.AccountModels
 
     public class AccountCreateModel
     {
-        [DisplayName(nameof(FirstName))]
-        public string FirstName { get; set; }
-
-        [DisplayName(nameof(LastName))]
-        public string LastName { get; set; }
+        [DisplayName(nameof(FullName))]
+        public string FullName { get; set; }
 
         [DisplayName(nameof(Country))]
         public int Fk_Country { get; set; }

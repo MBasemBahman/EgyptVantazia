@@ -25,11 +25,14 @@ namespace Repository.DBModels.PlayerScoreModels
 
         public new void Create(ScoreType entity)
         {
-            entity.ScoreTypeLang ??= new ScoreTypeLang
+            if (!FindByCondition(a => a.Name == entity.Name, trackChanges: false).Any())
             {
-                Name = entity.Name,
-            };
-            base.Create(entity);
+                entity.ScoreTypeLang ??= new ScoreTypeLang
+                {
+                    Name = entity.Name,
+                };
+                base.Create(entity);
+            }
         }
     }
 

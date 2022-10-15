@@ -44,10 +44,10 @@ namespace Repository.DBModels.AccountTeamModels
         {
             return AccountTeams.Where(a => (id == 0 || a.Id == id) &&
                                            (Fk_Account == 0 || a.Fk_Account == Fk_Account) &&
-                                           (CreatedAtFrom == null || a.CreatedAt >= CreatedAtFrom)&&
-                                           (CreatedAtTo == null || a.CreatedAt <=CreatedAtTo) &&
+                                           (CreatedAtFrom == null || a.CreatedAt >= CreatedAtFrom) &&
+                                           (CreatedAtTo == null || a.CreatedAt <= CreatedAtTo) &&
                                            (string.IsNullOrWhiteSpace(AccountUserName) || a.Account.User.UserName.ToLower().Contains(AccountUserName)) &&
-                                           (string.IsNullOrWhiteSpace(AccountFullName) || a.Account.FirstName.ToLower().Contains(AccountFullName)||a.Account.LastName.ToLower().Contains(AccountFullName)) &&
+                                           (string.IsNullOrWhiteSpace(AccountFullName) || a.Account.FullName.ToLower().Contains(AccountFullName)) &&
                                            (Fk_Season == 0 || a.Fk_Season == Fk_Season));
         }
 

@@ -8,7 +8,7 @@ namespace Dashboard.Areas.AccountEntity.Models
     public class AccountDto : AccountModel
     {
         [DisplayName(nameof(FullName))]
-        public string FullName { get; set; }
+        public new string FullName { get; set; }
 
         [DisplayName(nameof(CreatedAt))]
         public new string CreatedAt { get; set; }

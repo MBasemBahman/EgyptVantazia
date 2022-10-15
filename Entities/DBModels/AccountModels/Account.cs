@@ -15,13 +15,9 @@ namespace Entities.DBModels.AccountModels
         [DisplayName(nameof(User))]
         public User User { get; set; }
 
-        [DisplayName(nameof(FirstName))]
+        [DisplayName(nameof(FullName))]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
-        public string FirstName { get; set; }
-
-        [DisplayName(nameof(LastName))]
-        [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
-        public string LastName { get; set; }
+        public string FullName { get; set; }
 
         [DataType(DataType.PhoneNumber)]
         [Phone]

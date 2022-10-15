@@ -22,7 +22,6 @@ namespace Entities.DBModels.UserModels
         [DataType(DataType.EmailAddress)]
         [EmailAddress]
         [DisplayName(nameof(EmailAddress))]
-        [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string EmailAddress { get; set; }
 
         [DataType(DataType.PhoneNumber)]

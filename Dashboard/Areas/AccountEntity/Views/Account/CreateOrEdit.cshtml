@@ -108,22 +108,13 @@
 
                                     <hr />
                                     <div class="row">
-                                        <div class="col-md-6 col-12">
+                                        <div class="col-md-12">
                                             <div class="mb-1">
-                                                <label asp-for="Account.FirstName" class="form-label"></label>
-                                                <input asp-for="Account.FirstName" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("FirstName"))" />
-                                                <span asp-validation-for="Account.FirstName" class="text-danger"></span>
+                                                <label asp-for="Account.FullName" class="form-label"></label>
+                                                <input asp-for="Account.FullName" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("FirstName"))" />
+                                                <span asp-validation-for="Account.FullName" class="text-danger"></span>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-12">
-                                            <div class="mb-1">
-                                                <label asp-for="Account.LastName" class="form-label"></label>
-                                                <input asp-for="Account.LastName" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("LastName"))" />
-                                                <span asp-validation-for="Account.LastName" class="text-danger"></span>
-                                            </div>
-                                        </div>
-                                        
-                                 
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="Account.Fk_Country" class="form-label"></label>

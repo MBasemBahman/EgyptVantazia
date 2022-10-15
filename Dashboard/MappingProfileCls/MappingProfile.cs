@@ -83,8 +83,7 @@ namespace Dashboard.MappingProfileCls
 
             _ = CreateMap<AccountCreateModel, Account>();
 
-            _ = CreateMap<AccountModel, AccountDto>()
-                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"));
+            _ = CreateMap<AccountModel, AccountDto>();
 
             _ = CreateMap<AccountFilter, AccountParameters>();
 

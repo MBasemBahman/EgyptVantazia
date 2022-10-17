@@ -27,6 +27,11 @@ namespace API.Areas.PlayerScoreArea.Controllers
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
+            if (parameters.IncludeBestPlayer && parameters.Fk_Season == 0)
+            {
+                parameters.Fk_Season = _unitOfWork.Season.GetCurrentSeason().Id;
+            }
+
             PagedList<ScoreTypeModel> data = await _unitOfWork.PlayerScore.GetScoreTypePaged(parameters, otherLang);
 
             SetPagination(data.MetaData, parameters);

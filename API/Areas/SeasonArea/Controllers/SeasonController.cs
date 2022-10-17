@@ -49,5 +49,18 @@ namespace API.Areas.SeasonArea.Controllers
 
             return dataDto;
         }
+
+        [HttpGet]
+        [Route(nameof(GetCurrentSeason))]
+        public SeasonDto GetCurrentSeason()
+        {
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
+            SeasonModel data = _unitOfWork.Season.GetCurrentSeason(otherLang);
+
+            SeasonDto dataDto = _mapper.Map<SeasonDto>(data);
+
+            return dataDto;
+        }
     }
 }

@@ -45,6 +45,21 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         [DisplayName(nameof(TotalMoney))]
         public int TotalMoney { get; set; }
+
+        public int CurrentGameWeakPoints { get; set; }
+
+        public int Position { get; set; }
+
+        public int TransferCount { get; set; }
+
+        public int FreeTransferCount { get; set; }
+
+        public int TotalTeamPrice { get; set; }
+
+        public int AveragePoints { get; set; }
+
+        public int MaxPoints { get; set; }
+
     }
 
     public class AccountTeamCreateModel

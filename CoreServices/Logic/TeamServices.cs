@@ -106,7 +106,7 @@ namespace CoreServices.Logic
                            Name = otherLang ? a.PlayerPositionLang.Name : a.Name,
                            ImageUrl = a.StorageUrl + a.ImageUrl,
                            _365_PositionId = a._365_PositionId,
-                           PlayersCount = a.Players.Count()
+                           PlayersCount = a.Players.Count
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);
@@ -195,8 +195,22 @@ namespace CoreServices.Logic
                                ImageUrl = a.Team.StorageUrl + a.Team.ImageUrl,
                                _365_TeamId = a.Team._365_TeamId
                            },
-                           BuyPrice = a.PlayerPrices.OrderBy(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault(),
-                           SellPrice = a.PlayerPrices.OrderBy(b => b.Id).Select(a => a.SellPrice).FirstOrDefault(),
+                           BuyPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault(),
+                           SellPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.SellPrice).FirstOrDefault(),
+                           ScorePoints = parameters.IncludeScore ?
+                                        a.PlayerGameWeaks
+                                         .SelectMany(b => b.PlayerGameWeakScores)
+                                         .Where(b => (parameters.Fk_ScoreType == 0 || b.Fk_ScoreType == parameters.Fk_ScoreType) &&
+                                                     (parameters.Fk_Season == 0 || b.PlayerGameWeak.TeamGameWeak.GameWeak.Fk_Season == parameters.Fk_ScoreType) &&
+                                                     (parameters.Fk_GameWeak == 0 || b.PlayerGameWeak.TeamGameWeak.Fk_GameWeak == parameters.Fk_GameWeak))
+                                         .Select(b => b.Points).Sum() : 0,
+                           ScoreValues = parameters.IncludeScore ?
+                                        a.PlayerGameWeaks
+                                         .SelectMany(b => b.PlayerGameWeakScores)
+                                         .Where(b => (parameters.Fk_ScoreType == 0 || b.Fk_ScoreType == parameters.Fk_ScoreType) &&
+                                                     (parameters.Fk_Season == 0 || b.PlayerGameWeak.TeamGameWeak.GameWeak.Fk_Season == parameters.Fk_ScoreType) &&
+                                                     (parameters.Fk_GameWeak == 0 || b.PlayerGameWeak.TeamGameWeak.Fk_GameWeak == parameters.Fk_GameWeak))
+                                         .Select(b => b.FinalValue).Sum() : 0,
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

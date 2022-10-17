@@ -21,6 +21,14 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
         public int? FinalValueFrom { get; set; }
 
         public int? FinalValueTo { get; set; }
+
+        public int? PointsFrom { get; set; }
+
+        public int? PointsTo { get; set; }
+
+        public bool CheckCleanSheet { get; set; }
+
+        public bool CheckReceiveGoals { get; set; }
     }
 
     public class PlayerGameWeakScoreModel : AuditEntity

@@ -276,9 +276,15 @@ namespace CoreServices.Logic
                                ImageUrl = a.Player.StorageUrl + a.Player.ImageUrl,
                                _365_PlayerId = a.Player._365_PlayerId,
                                Fk_Team = a.Player.Fk_Team,
+                               Fk_PlayerPosition = a.Player.Fk_PlayerPosition,
+                               PlayerPosition = new PlayerPositionModel
+                               {
+                                   Name = otherLang ? a.Player.PlayerPosition.PlayerPositionLang.Name : a.Player.PlayerPosition.Name,
+                                   ImageUrl = a.Player.PlayerPosition.StorageUrl + a.Player.PlayerPosition.ImageUrl,
+                               },
                                Team = new TeamModel
                                {
-                                   Name =otherLang?a.Player.Team.TeamLang.Name : a.Player.Team.Name
+                                   Name = otherLang ? a.Player.Team.TeamLang.Name : a.Player.Team.Name
                                }
                            },
                            AccountTeam = new AccountTeamModel

@@ -1,4 +1,5 @@
-﻿using Dashboard.Areas.AccountEntity.Models;
+﻿using System.Data.Common;
+using Dashboard.Areas.AccountEntity.Models;
 using Entities.CoreServicesModels.AccountModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.CoreServicesModels.UserModels;
@@ -48,6 +49,7 @@ namespace Dashboard.Areas.AccountEntity.Controllers
 
             AccountParameters parameters = new()
             {
+                SearchColumns = "Id,UserName,FullName"
             };
 
             _ = _mapper.Map(dtParameters, parameters);

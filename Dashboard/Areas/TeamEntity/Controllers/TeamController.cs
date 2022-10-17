@@ -96,11 +96,11 @@ namespace Dashboard.Areas.TeamEntity.Controllers
 
             if (id > 0)
             {
-                model = _mapper.Map<TeamCreateOrEditModel>(
-                                                await _unitOfWork.Team.FindTeambyId(id, trackChanges: false));
+                var teamDB = await _unitOfWork.Team.FindTeambyId(id, trackChanges: false);
+                model = _mapper.Map<TeamCreateOrEditModel>(teamDB);
             }
 
-            if (model.ImageUrl.IsNullOrEmpty())
+            if (string.IsNullOrEmpty(model.ImageUrl))
             {
                 model.ImageUrl = "banner.png";
                 model.StorageUrl = _linkGenerator.GetUriByAction(HttpContext).GetBaseUri(HttpContext.Request.RouteValues["area"].ToString());

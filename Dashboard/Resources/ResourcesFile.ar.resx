@@ -966,4 +966,7 @@
   <data name="WildCard" xml:space="preserve">
     <value>Wild Card</value>
   </data>
+  <data name="Account Teams" xml:space="preserve">
+    <value>فرق الاعضاء ( الحسابات )</value>
+  </data>
 </root>

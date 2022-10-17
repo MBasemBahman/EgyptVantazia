@@ -18,7 +18,17 @@ namespace Services
         {
             byte[] randomBytes = GenerateBytes(length);
 
-            int random = Math.Abs(BitConverter.ToInt32(randomBytes, 0));
+            int integerNumber;
+            if (length > 3)
+            {
+                integerNumber = BitConverter.ToInt32(randomBytes, 0);
+            }
+            else
+            {
+                integerNumber = BitConverter.ToInt16(randomBytes, 0);
+            }
+            
+            int random = Math.Abs(integerNumber);
             return Convert.ToInt32((random % (maxVal - minVal + 1)) + minVal);
         }
 

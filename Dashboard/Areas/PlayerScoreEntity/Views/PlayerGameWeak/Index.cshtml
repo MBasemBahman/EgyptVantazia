@@ -53,9 +53,9 @@
                                     }
 
                                 </th>
-                                <th>@*@Html.DisplayNameFor(model => row.GameWeak.Season)*@</th>
-
-                                <th>@*@Html.DisplayNameFor(model => row.GameWeak)*@</th>
+                                @* <th>@Html.DisplayNameFor(model => row.GameWeak.Season)</th> *@
+                                
+                                @* <th>@Html.DisplayNameFor(model => row.GameWeak)</th> *@
                                 <th>@Html.DisplayNameFor(model => row.Ranking)</th>
 
                                 <th>
@@ -93,8 +93,8 @@
                     // Columns Setups
                     columns: [
                         { data: "id" },
-                        { data: "gameWeak.season.name" },
-                        { data: "gameWeak.name" },
+                        // { data: "gameWeak.season.name" },
+                        // { data: "gameWeak.name" },
                         { data: "ranking" },
                         { data: "id" },
                     ]

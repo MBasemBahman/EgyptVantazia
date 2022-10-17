@@ -182,6 +182,7 @@ namespace CoreServices.Logic
                            Fk_PlayerPosition = a.Fk_PlayerPosition,
                            Fk_Team = a.Fk_Team,
                            PlayerNumber = a.PlayerNumber,
+                           ShortName = a.ShortName,
                            PlayerPosition = new PlayerPositionModel
                            {
                                Name = otherLang ? a.PlayerPosition.PlayerPositionLang.Name : a.PlayerPosition.Name,

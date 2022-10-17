@@ -1,6 +1,6 @@
 ﻿@model AccountTeamFilter
 @{
-    ViewData["Title"] = Localizer.Get("AccountTeams");
+    ViewData["Title"] = Localizer.Get("Account Teams");
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.useDatatable = true;
     ViewBag.useModels = true;
@@ -203,6 +203,7 @@ else
 
                         {
                             data: "account",
+                            orderable: false,
                             render: function (data, type, row) {
                                 var span = '';
 

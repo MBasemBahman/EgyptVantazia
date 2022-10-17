@@ -98,6 +98,7 @@
                                                 </th>
                                                 <th>@Localizer.Get("HomeTeam")</th>
                                                 <th>@Localizer.Get("AwayTeam")</th>
+                                                <th>@Html.DisplayNameFor(model => row._365_MatchId)</th>
                                                 <th>@Html.DisplayNameFor(model => row.GameWeak.Season)</th>
                                                 <th>@Html.DisplayNameFor(model => row.GameWeak)</th>
                                                 <th>@Html.DisplayNameFor(model => row.HomeScore)</th>
@@ -145,8 +146,8 @@ else
                                                 </th>
                                                 <th>@Localizer.Get("HomeTeam")</th>
                                                 <th>@Localizer.Get("AwayTeam")</th>
-                                    <th>@Html.DisplayNameFor(model => row.GameWeak.Season)</th>
-
+                                                <th>@Html.DisplayNameFor(model => row._365_MatchId)</th>
+                                                <th>@Html.DisplayNameFor(model => row.GameWeak.Season)</th>
                                                 <th>@Html.DisplayNameFor(model => row.GameWeak)</th>
                                                 <th>@Html.DisplayNameFor(model => row.HomeScore)</th>
                                                 <th>@Html.DisplayNameFor(model => row.AwayScore)</th>
@@ -206,6 +207,7 @@ else
                         { data: "id" },
                         {
                             data: "home",
+                            orderable: false,
                             render: function (data, type, row) {
                                 var span = '';
 
@@ -235,6 +237,7 @@ else
                         },
                         {
                             data: "away",
+                            orderable: false,
                             render: function (data, type, row) {
                                 var span = '';
 
@@ -264,13 +267,15 @@ else
                         },
 
 
-                        { data: "gameWeak.season.name" },
-                        { data: "gameWeak.name" },
-                        { data: "homeScore" },
-                        { data: "awayScore" },
-                        { data: "startTime" },
+                        { data: "gameWeak.season.name", orderable: false, },
+                        { data: "_365_MatchId", orderable: false, },
+                        { data: "gameWeak.name", orderable: false, },
+                        { data: "homeScore", orderable: false, },
+                        { data: "awayScore", orderable: false, },
+                        { data: "startTime", orderable: false, },
                         {
                             data: "isEnded",
+                            orderable: false,
                             render: function (data) {
                                 if (data == true) {
                                     return '<input type="checkbox"  class="form-check-input" checked disabled>';

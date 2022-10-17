@@ -95,7 +95,6 @@
                                                     }
                                                 </th>
                                                 <th>@Html.DisplayNameFor(model => row.Name)</th>
-                                                <th>@Html.DisplayNameFor(model => row.ShortName)</th>
                                                 <th>@Html.DisplayNameFor(model => row.PlayerNumber)</th>
                                                 <th>@Html.DisplayNameFor(model => row.Age)</th>
                                                 <th>@Html.DisplayNameFor(model => row.Team)</th>
@@ -160,7 +159,6 @@ else
 
                                     </th>
                                     <th>@Html.DisplayNameFor(model => row.Name)</th>
-                                    <th>@Html.DisplayNameFor(model => row.ShortName)</th>
                                     <th>@Html.DisplayNameFor(model => row.PlayerNumber)</th>
                                     <th>@Html.DisplayNameFor(model => row.Age)</th>
                                     <th>@Html.DisplayNameFor(model => row.Team)</th>
@@ -236,12 +234,11 @@ else
 
                             }
                         },
-                        { data: "age" },
-                        { data: "shortName" },
                         { data: "playerNumber" },
-                        { data: "age" },
+                        { data: "age", orderable: false },
                         {
                             data: "team",
+                            orderable: false,
                             render: function (data, type, row) {
                                 var span = '';
 
@@ -269,8 +266,10 @@ else
 
                             }
                         },
+                        { data: "_365_PlayerId" },
                         {
                             data: "playerPosition",
+                            orderable: false,
                             render: function (data, type, row) {
                                 var span = '';
 

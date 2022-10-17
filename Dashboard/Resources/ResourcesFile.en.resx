@@ -975,4 +975,7 @@
   <data name="{0} not valid" xml:space="preserve">
     <value>{0} not valid</value>
   </data>
+  <data name="Account Teams" xml:space="preserve">
+    <value>Account Teams</value>
+  </data>
 </root>

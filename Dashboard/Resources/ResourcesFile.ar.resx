@@ -955,10 +955,10 @@
     <value>Player Transfers</value>
   </data>
   <data name="TotalMoney" xml:space="preserve">
-    <value>Total Money</value>
+    <value>اجمالي النقود</value>
   </data>
   <data name="TotalPoints" xml:space="preserve">
-    <value>Total Points</value>
+    <value>اجمالي النقاط</value>
   </data>
   <data name="TransferTypeEnum" xml:space="preserve">
     <value>Transfer Type</value>

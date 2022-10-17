@@ -79,9 +79,9 @@ namespace CoreServices.Logic
             return _repository.Season.Count();
         }
 
-        public SeasonModel GetCurrentSeason()
+        public SeasonModel GetCurrentSeason(bool otherLang = false)
         {
-            return GetSeasons(new SeasonParameters { IsCurrent = true }, otherLang: false)
+            return GetSeasons(new SeasonParameters { IsCurrent = true }, otherLang: otherLang)
                    .OrderByDescending(a => a.Id)
                    .FirstOrDefault();
         }
@@ -183,9 +183,9 @@ namespace CoreServices.Logic
                        .Sort(parameters.OrderBy);
         }
 
-        public GameWeakModel GetCurrentGameWeak()
+        public GameWeakModel GetCurrentGameWeak(bool otherLang = false)
         {
-            return GetGameWeaks(new GameWeakParameters { IsCurrent = true }, otherLang: false)
+            return GetGameWeaks(new GameWeakParameters { IsCurrent = true }, otherLang: otherLang)
                    .OrderByDescending(a => a.Id)
                    .FirstOrDefault();
         }

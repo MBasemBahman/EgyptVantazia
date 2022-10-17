@@ -27,6 +27,11 @@ namespace API.Areas.TeamArea.Controllers
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
+            if (parameters.IncludeScore && parameters.Fk_Season == 0)
+            {
+                parameters.Fk_Season = _unitOfWork.Season.GetCurrentSeason().Id;
+            }
+
             PagedList<PlayerModel> data = await _unitOfWork.Team.GetPlayerPaged(parameters, otherLang);
 
             SetPagination(data.MetaData, parameters);

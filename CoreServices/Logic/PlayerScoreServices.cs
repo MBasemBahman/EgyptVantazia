@@ -20,19 +20,61 @@ namespace CoreServices.Logic
         {
             return _repository.ScoreType
                        .FindAll(parameters, trackChanges: false)
-                       .Select(a => new ScoreTypeModel
+                       .Select(x => new ScoreTypeModel
                        {
-                           Id = a.Id,
-                           CreatedAt = a.CreatedAt,
-                           CreatedBy = a.CreatedBy,
-                           LastModifiedAt = a.LastModifiedAt,
-                           LastModifiedBy = a.LastModifiedBy,
-                           Name = otherLang ? a.ScoreTypeLang.Name : a.Name,
-                           _365_TypeId = a._365_TypeId,
-                           Description = a.Description,
-                           HavePoints = a.HavePoints,
-                           IsEvent = a.IsEvent,
-                           _365_EventTypeId = a._365_EventTypeId
+                           Id = x.Id,
+                           CreatedAt = x.CreatedAt,
+                           CreatedBy = x.CreatedBy,
+                           LastModifiedAt = x.LastModifiedAt,
+                           LastModifiedBy = x.LastModifiedBy,
+                           Name = otherLang ? x.ScoreTypeLang.Name : x.Name,
+                           _365_TypeId = x._365_TypeId,
+                           Description = x.Description,
+                           HavePoints = x.HavePoints,
+                           IsEvent = x.IsEvent,
+                           _365_EventTypeId = x._365_EventTypeId,
+                           BestPlayer = parameters.IncludeBestPlayer ?
+                                        x.PlayerGameWeakScores
+                                         .Where(a => (parameters.Fk_Season == 0 || a.PlayerGameWeak.TeamGameWeak.GameWeak.Fk_Season == parameters.Fk_Season) &&
+                                                     (parameters.Fk_GameWeak == 0 || a.PlayerGameWeak.TeamGameWeak.Fk_GameWeak == parameters.Fk_GameWeak))
+                                         .OrderByDescending(b => b.Points)
+                                         .Select(b => b.PlayerGameWeak.Player)
+                                         .Select(a => new PlayerModel
+                                         {
+                                             Id = a.Id,
+                                             Name = otherLang ? a.PlayerLang.Name : a.Name,
+                                             ImageUrl = a.StorageUrl + a.ImageUrl,
+                                             Fk_PlayerPosition = a.Fk_PlayerPosition,
+                                             Fk_Team = a.Fk_Team,
+                                             PlayerNumber = a.PlayerNumber,
+                                             PlayerPosition = new PlayerPositionModel
+                                             {
+                                                 Name = otherLang ? a.PlayerPosition.PlayerPositionLang.Name : a.PlayerPosition.Name,
+                                                 ImageUrl = a.PlayerPosition.StorageUrl + a.PlayerPosition.ImageUrl,
+                                                 _365_PositionId = a.PlayerPosition._365_PositionId
+                                             },
+                                             Team = new TeamModel
+                                             {
+                                                 Name = otherLang ? a.Team.TeamLang.Name : a.Team.Name,
+                                                 ImageUrl = a.Team.StorageUrl + a.Team.ImageUrl,
+                                                 _365_TeamId = a.Team._365_TeamId
+                                             },
+                                             BuyPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault(),
+                                             SellPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.SellPrice).FirstOrDefault(),
+                                             ScorePoints = a.PlayerGameWeaks
+                                                            .SelectMany(b => b.PlayerGameWeakScores)
+                                                            .Where(b => b.Fk_ScoreType == x.Id &&
+                                                                        (parameters.Fk_Season == 0 || b.PlayerGameWeak.TeamGameWeak.GameWeak.Fk_Season == parameters.Fk_Season) &&
+                                                                        (parameters.Fk_GameWeak == 0 || b.PlayerGameWeak.TeamGameWeak.Fk_GameWeak == parameters.Fk_GameWeak))
+                                                            .Select(b => b.Points).Sum(),
+                                             ScoreValues = a.PlayerGameWeaks
+                                                            .SelectMany(b => b.PlayerGameWeakScores)
+                                                            .Where(b => b.Fk_ScoreType == x.Id &&
+                                                                        (parameters.Fk_Season == 0 || b.PlayerGameWeak.TeamGameWeak.GameWeak.Fk_Season == parameters.Fk_Season) &&
+                                                                        (parameters.Fk_GameWeak == 0 || b.PlayerGameWeak.TeamGameWeak.Fk_GameWeak == parameters.Fk_GameWeak))
+                                                            .Select(b => b.FinalValue).Sum()
+                                         })
+                                         .FirstOrDefault() : null
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

@@ -1,4 +1,5 @@
-﻿using Entities.RequestFeatures;
+﻿using Entities.CoreServicesModels.TeamModels;
+using Entities.RequestFeatures;
 
 namespace Entities.CoreServicesModels.PlayerScoreModels
 {
@@ -12,6 +13,12 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
 
         [DisplayName(nameof(IsEvent))]
         public bool? IsEvent { get; set; }
+
+        public bool IncludeBestPlayer { get; set; }
+
+        public int Fk_Season { get; set; }
+
+        public int Fk_GameWeak { get; set; }
     }
 
     public class ScoreTypeModel : AuditLookUpEntity
@@ -35,6 +42,8 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
 
         [DisplayName(nameof(IsEvent))]
         public bool IsEvent { get; set; }
+
+        public PlayerModel BestPlayer { get; set; }
     }
 
     public class ScoreTypeCreateOrEditModel

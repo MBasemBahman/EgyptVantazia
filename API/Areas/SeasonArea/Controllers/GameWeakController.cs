@@ -1,6 +1,7 @@
 ﻿using API.Areas.SeasonArea.Models;
 using API.Controllers;
 using Entities.CoreServicesModels.SeasonModels;
+using Entities.DBModels.SeasonModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace API.Areas.SeasonArea.Controllers
@@ -44,6 +45,19 @@ namespace API.Areas.SeasonArea.Controllers
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             GameWeakModel data = _unitOfWork.Season.GetGameWeakbyId(id, otherLang);
+
+            GameWeakDto dataDto = _mapper.Map<GameWeakDto>(data);
+
+            return dataDto;
+        }
+
+        [HttpGet]
+        [Route(nameof(GetCurrentSeason))]
+        public GameWeakDto GetCurrentSeason()
+        {
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
+            GameWeakModel data = _unitOfWork.Season.GetCurrentGameWeak(otherLang);
 
             GameWeakDto dataDto = _mapper.Map<GameWeakDto>(data);
 

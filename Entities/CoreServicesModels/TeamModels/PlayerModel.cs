@@ -18,11 +18,20 @@ namespace Entities.CoreServicesModels.TeamModels
         public DateTime? CreatedAtFrom { get; set; }
 
         public DateTime? CreatedAtTo { get; set; }
-        
+
         public List<string> _365_PlayerIds { get; set; }
 
         public int Fk_TeamGameWeak_Ignored { get; set; }
+
+        public int Fk_ScoreType { get; set; }
+
+        public bool IncludeScore { get; set; }
+
+        public int Fk_Season { get; set; }
+
+        public int Fk_GameWeak { get; set; }
     }
+
     public class PlayerModel : AuditImageEntity
     {
         [DisplayName(nameof(Name))]
@@ -57,6 +66,10 @@ namespace Entities.CoreServicesModels.TeamModels
 
         [DisplayName(nameof(SellPrice))]
         public double SellPrice { get; set; }
+
+        public int ScorePoints { get; set; }
+
+        public int ScoreValues { get; set; }
     }
 
     public class PlayerCreateOrEditModel

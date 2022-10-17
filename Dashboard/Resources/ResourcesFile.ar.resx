@@ -871,7 +871,7 @@
     <value>الموقع</value>
   </data>
   <data name="Ranking" xml:space="preserve">
-    <value>الترتيب</value>
+    <value>التقييم</value>
   </data>
   <data name="Ratio" xml:space="preserve">
     <value>النسبة</value>
@@ -892,7 +892,7 @@
     <value>الجنسية</value>
   </data>
   <data name="PlayersCount" xml:space="preserve">
-    <value>اللاعبون</value>
+    <value>عدد اللاعبون</value>
   </data>
   <data name="_365_PositionId" xml:space="preserve">
     <value>Integration Id</value>
@@ -971,5 +971,56 @@
   </data>
   <data name="IsCurrent" xml:space="preserve">
     <value>الحالي</value>
+  </data>
+  <data name="Week Number" xml:space="preserve">
+    <value>رقم الاسبوع</value>
+  </data>
+  <data name="Devices" xml:space="preserve">
+    <value>الاجهزة</value>
+  </data>
+  <data name="Verifications" xml:space="preserve">
+    <value>عمليات التحقق</value>
+  </data>
+  <data name="RefreshTokens" xml:space="preserve">
+    <value>تحديث تسجيل الدخول</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>الكود</value>
+  </data>
+  <data name="Expires" xml:space="preserve">
+    <value>موعد الانتهاء</value>
+  </data>
+  <data name="IsVerified" xml:space="preserve">
+    <value>متحقق منه</value>
+  </data>
+  <data name="IsExpired" xml:space="preserve">
+    <value>منتهي</value>
+  </data>
+  <data name="CreatedByIp" xml:space="preserve">
+    <value>تم انشاؤه بواسطة</value>
+  </data>
+  <data name="NotificationCode" xml:space="preserve">
+    <value>كود الملاحظة</value>
+  </data>
+  <data name="DeviceType" xml:space="preserve">
+    <value>نوع الجهاز</value>
+  </data>
+  <data name="AppVersion" xml:space="preserve">
+    <value>نسخة التطبيق</value>
+  </data>
+  <data name="DeviceVersion" xml:space="preserve">
+    <value>نسخة الجهاز</value>
+  </data>
+  <data name="DeviceModel" xml:space="preserve">
+    <value>موديل الجهاز</value>
+  </data>
+  <data name="Token" xml:space="preserve">
+    <value>التوكين</value>
+  </data>
+  <data name="Revoked" xml:space="preserve">
+    <value>فسخ</value>
+  </data>
+  <data name="NotificationToken" xml:space="preserve">
+    <value>توكين الملاحظات</value>
   </data>
 </root>

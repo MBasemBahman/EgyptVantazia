@@ -19,7 +19,7 @@
 
                 <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.MemberCount):</dt>
                 <dd class="col-sm-8 mb-1">
-                    <a href="/PrivateLeagueEntity/PrivateLeagueMember/?Fk_PrivateLeague=@Model.Id" target="_blank">
+                    <a asp-action="Index" asp-controller="PrivateLeagueMember" asp-area="PrivateLeagueEntity" asp-route-Fk_PrivateLeague="@Model.Id" target="_blank">
                         @Model.MemberCount</a>
                 </dd>
 

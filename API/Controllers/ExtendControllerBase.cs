@@ -2,7 +2,6 @@
 {
     [Authorize]
     [ApiController]
-    [AllowAll]
     public class ExtendControllerBase : ControllerBase
     {
         protected readonly ILoggerManager _logger;

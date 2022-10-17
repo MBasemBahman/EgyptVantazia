@@ -58,7 +58,6 @@ namespace CoreServices.Logic
             return await _repository.Season.FindBy365Id(id, trackChanges);
         }
 
-
         public void CreateSeason(Season Season)
         {
             _repository.Season.Create(Season);
@@ -82,8 +81,8 @@ namespace CoreServices.Logic
 
         public SeasonModel GetCurrentSeason()
         {
-            return GetSeasons(new SeasonParameters(), otherLang: false)
-                   .OrderByDescending(x => x.Id)
+            return GetSeasons(new SeasonParameters { IsCurrent = true }, otherLang: false)
+                   .OrderByDescending(a => a.Id)
                    .FirstOrDefault();
         }
 
@@ -184,6 +183,12 @@ namespace CoreServices.Logic
                        .Sort(parameters.OrderBy);
         }
 
+        public GameWeakModel GetCurrentGameWeak()
+        {
+            return GetGameWeaks(new GameWeakParameters { IsCurrent = true }, otherLang: false)
+                   .OrderByDescending(a => a.Id)
+                   .FirstOrDefault();
+        }
 
         public async Task<PagedList<GameWeakModel>> GetGameWeakPaged(
                   GameWeakParameters parameters,

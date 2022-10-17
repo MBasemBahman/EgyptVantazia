@@ -29,7 +29,7 @@ $(function () {
   // Multiple Files
   multipleFiles.dropzone({
     paramName: 'file', // The name that will be used to transfer the file
-    maxFilesize: 10, // MB
+      maxFilesize: 50, // MB
     clickable: true
   });
 

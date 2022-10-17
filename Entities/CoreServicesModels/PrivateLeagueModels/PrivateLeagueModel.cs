@@ -23,6 +23,8 @@ namespace Entities.CoreServicesModels.PrivateLeagueModels
 
         [DisplayName(nameof(MemberCount))]
         public int MemberCount { get; set; }
+
+        public int MyPosition { get; set; }
     }
 
     public class PrivateLeagueCreateOrEditModel

@@ -14,6 +14,7 @@ namespace Repository.DBModels.PlayerScoreModels
             return FindByCondition(a => true, trackChanges)
                    .Filter(parameters.Id,
                            parameters._365_TypeId,
+                           parameters.Ids,
                            parameters.IsEvent,
                            parameters.HavePoints);
         }
@@ -44,11 +45,13 @@ namespace Repository.DBModels.PlayerScoreModels
             this IQueryable<ScoreType> ScoreTypes,
             int id,
             string _365_TypeId,
+            List<int> ids,
             bool? isEvent,
             bool? havePoints)
         {
             return ScoreTypes.Where(a => (id == 0 || a.Id == id) &&
                                          (string.IsNullOrWhiteSpace(_365_TypeId) || a._365_TypeId == _365_TypeId) &&
+                                         (ids == null || !ids.Any() || ids.Contains(a.Id)) &&
                                          (isEvent == null || a.IsEvent == isEvent) &&
                                          (havePoints == null || a.HavePoints == havePoints));
         }

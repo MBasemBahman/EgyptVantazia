@@ -5,6 +5,8 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
 {
     public class ScoreTypeParameters : RequestParameters
     {
+        public List<int> Ids { get; set; }
+
         [DisplayName(nameof(_365_TypeId))]
         public string _365_TypeId { get; set; }
 

@@ -51,8 +51,10 @@ namespace Dashboard.Areas.NewsEntity.Controllers
                 {
                     FileUrl = await _unitOfWork.News.UploudFile(_environment.WebRootPath, file),
                     StorageUrl = _linkGenerator.GetUriByAction(HttpContext).GetBaseUri(HttpContext.Request.RouteValues["area"].ToString()),
-                    Fk_News = fk_News
-
+                    Fk_News = fk_News,
+                    FileLength = file.Length,
+                    FileName = file.FileName,
+                    FileType = file.ContentType,
                 };
                 _unitOfWork.News.CreateNewsAttachment(attachment);
                 await _unitOfWork.Save();

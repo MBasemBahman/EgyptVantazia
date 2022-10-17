@@ -60,6 +60,8 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         public int MaxPoints { get; set; }
 
+        public int PlayersCount { get; set; }
+
     }
 
     public class AccountTeamCreateModel

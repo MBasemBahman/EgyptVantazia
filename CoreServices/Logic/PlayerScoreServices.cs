@@ -43,7 +43,7 @@ namespace CoreServices.Logic
                                          {
                                              Id = a.Id,
                                              Name = otherLang ? a.PlayerLang.Name : a.Name,
-                                             ImageUrl = a.StorageUrl + a.ImageUrl,
+                                             ImageUrl = !string.IsNullOrEmpty(a.ImageUrl) ? a.StorageUrl + a.ImageUrl : a.Team.StorageUrl + a.Team.ImageUrl,
                                              Fk_PlayerPosition = a.Fk_PlayerPosition,
                                              Fk_Team = a.Fk_Team,
                                              PlayerNumber = a.PlayerNumber,
@@ -161,7 +161,7 @@ namespace CoreServices.Logic
                            Player = new PlayerModel
                            {
                                Name = otherLang ? a.Player.PlayerLang.Name : a.Player.Name,
-                               ImageUrl = a.Player.StorageUrl + a.Player.ImageUrl,
+                               ImageUrl = !string.IsNullOrEmpty(a.Player.ImageUrl) ? a.Player.StorageUrl + a.Player.ImageUrl : a.Player.Team.StorageUrl + a.Player.Team.ImageUrl,
                                _365_PlayerId = a.Player._365_PlayerId
                            },
                        })

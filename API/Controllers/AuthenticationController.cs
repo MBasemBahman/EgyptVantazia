@@ -58,6 +58,9 @@ namespace API.Controllers
             model.User.UserName = RegexService.GetUserName(model.User.UserName);
 
             User user = _mapper.Map<User>(model.User);
+
+            model.Account.FullName = model.Account.FullName.IsExisting() ? model.Account.FullName : model.User.Name;
+
             Account account = _mapper.Map<Account>(model.Account);
 
             user.Account = account;

@@ -37,7 +37,7 @@ namespace API.Areas.AppInfoArea.Controllers
             //await dataMigration.InsertRounds();
             //await dataMigration.InsertGames();
             //await dataMigration.InsertStates();
-            await dataMigration.InsertGameResult();
+            //await dataMigration.InsertGameResult();
 
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 

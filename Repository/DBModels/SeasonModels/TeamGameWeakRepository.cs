@@ -20,7 +20,9 @@ namespace Repository.DBModels.SeasonModels
                            parameters._365_MatchId,
                            parameters.FromTime,
                            parameters.ToTime,
-                           parameters.IsEnded);
+                           parameters.IsEnded,
+                           parameters.CurrentSeason,
+                           parameters.CurrentGameWeak);
         }
 
         public async Task<TeamGameWeak> FindById(int id, bool trackChanges)
@@ -48,13 +50,17 @@ namespace Repository.DBModels.SeasonModels
             string _365_MatchId,
             DateTime? fromTime,
             DateTime? toTime,
-            bool? IsEnded)
+            bool? IsEnded,
+            bool currentSeason,
+            bool currentGameWeak)
         {
             return TeamGameWeaks.Where(a => (id == 0 || a.Id == id) &&
                                             (IsEnded == null || a.IsEnded == IsEnded) &&
                                             (Fk_Home == 0 || a.Fk_Home == Fk_Home) &&
                                             (Fk_Away == 0 || a.Fk_Away == Fk_Away) &&
                                             (fk_Season == 0 || a.GameWeak.Fk_Season == fk_Season) &&
+                                            (currentSeason == false || a.GameWeak.Season.IsCurrent) &&
+                                            (currentGameWeak == false || a.GameWeak.IsCurrent) &&
                                             (Fk_GameWeak == 0 || a.Fk_GameWeak == Fk_GameWeak) &&
                                             (string.IsNullOrWhiteSpace(_365_MatchId) || a._365_MatchId == _365_MatchId) &&
                                             (fromTime == null || a.StartTime >= fromTime) &&

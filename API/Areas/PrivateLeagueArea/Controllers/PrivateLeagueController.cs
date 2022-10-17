@@ -42,6 +42,21 @@ namespace API.Areas.PrivateLeagueArea.Controllers
             return data;
         }
 
+        [HttpGet]
+        [Route(nameof(GetPrivateLeagueByUniqueCode))]
+        public PrivateLeagueModel GetPrivateLeagueByUniqueCode(
+        [FromQuery, BindRequired] string uniqueCode)
+        {
+            PrivateLeagueModel data = _unitOfWork.PrivateLeague.GetPrivateLeagues(new PrivateLeagueParameters { UniqueCode = uniqueCode }).FirstOrDefault();
+
+            if (data == null)
+            {
+                throw new Exception("الكود غير صحيح!");
+            }
+
+            return data;
+        }
+
         [HttpPost]
         [Route(nameof(Create))]
         public async Task<PrivateLeagueModel> Create([FromBody] PrivateLeagueCreateModel model)
@@ -50,13 +65,13 @@ namespace API.Areas.PrivateLeagueArea.Controllers
 
             PrivateLeague privateLeague = _mapper.Map<PrivateLeague>(model);
             privateLeague.CreatedBy = auth.Name;
-
             privateLeague.PrivateLeagueMembers = new List<PrivateLeagueMember>
             {
                 new PrivateLeagueMember
                 {
                     Fk_Account = auth.Fk_Account,
-                    CreatedBy = auth.Name
+                    CreatedBy = auth.Name,
+                    IsAdmin = true
                 }
             };
 

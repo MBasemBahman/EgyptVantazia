@@ -10,6 +10,9 @@ namespace Entities.CoreServicesModels.SeasonModels
 
         [DisplayName(nameof(_365_GameWeakId))]
         public string _365_GameWeakId { get; set; }
+
+        [DisplayName(nameof(IsCurrent))]
+        public bool? IsCurrent { get; set; }
     }
 
     public class GameWeakModel : AuditEntity
@@ -20,6 +23,9 @@ namespace Entities.CoreServicesModels.SeasonModels
 
         [DisplayName(nameof(_365_GameWeakId))]
         public string _365_GameWeakId { get; set; }
+
+        [DisplayName(nameof(IsCurrent))]
+        public bool IsCurrent { get; set; }
 
         [DisplayName(nameof(Season))]
         public int Fk_Season { get; set; }
@@ -40,6 +46,9 @@ namespace Entities.CoreServicesModels.SeasonModels
 
         [DisplayName(nameof(_365_GameWeakId))]
         public string _365_GameWeakId { get; set; }
+
+        [DisplayName(nameof(IsCurrent))]
+        public bool IsCurrent { get; set; }
 
         public int Id { get; set; }
     }

@@ -96,5 +96,32 @@ namespace API.Areas.PrivateLeagueArea.Controllers
 
             return true;
         }
+
+        [HttpPost]
+        [Route(nameof(JoinPrivateLeague))]
+        public async Task<PrivateLeagueModel> JoinPrivateLeague(
+        [FromQuery, BindRequired] string uniqueCode)
+        {
+            int fk_PrivateLeague = _unitOfWork.PrivateLeague.GetPrivateLeagues(new PrivateLeagueParameters { UniqueCode = uniqueCode })
+                                              .Select(a => a.Id)
+                                               .FirstOrDefault();
+            if (fk_PrivateLeague == 0)
+            {
+                throw new Exception("الكود غير صحيح!");
+            }
+
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            _unitOfWork.PrivateLeague.CreatePrivateLeagueMember(new PrivateLeagueMember
+            {
+                Fk_PrivateLeague = fk_PrivateLeague,
+                Fk_Account = auth.Fk_Account
+            });
+            await _unitOfWork.Save();
+
+            PrivateLeagueModel data = _unitOfWork.PrivateLeague.GetPrivateLeagues(new PrivateLeagueParameters { Id = fk_PrivateLeague }).FirstOrDefault();
+
+            return data;
+        }
     }
 }

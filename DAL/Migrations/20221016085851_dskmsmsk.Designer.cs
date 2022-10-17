@@ -4,6 +4,7 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,13 +12,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20221016085851_dskmsmsk")]
+    partial class dskmsmsk
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.8")
+                .HasAnnotation("ProductVersion", "6.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -1773,17 +1775,11 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("FinalValue")
-                        .HasColumnType("int");
-
                     b.Property<int>("Fk_PlayerGameWeak")
                         .HasColumnType("int");
 
                     b.Property<int>("Fk_ScoreType")
                         .HasColumnType("int");
-
-                    b.Property<double>("GameTime")
-                        .HasColumnType("float");
 
                     b.Property<DateTime>("LastModifiedAt")
                         .ValueGeneratedOnAdd()
@@ -2048,9 +2044,6 @@ namespace DAL.Migrations
                     b.Property<int>("Fk_Season")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsCurrent")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime>("LastModifiedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
@@ -2121,9 +2114,6 @@ namespace DAL.Migrations
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsCurrent")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime>("LastModifiedAt")
                         .ValueGeneratedOnAdd()
@@ -2847,7 +2837,7 @@ namespace DAL.Migrations
                             EmailAddress = "user@mail.com",
                             LastModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Developer",
-                            Password = "$2a$11$0euBoIpNQYm6umDTbADsnuhkTcqdIQZ5J4xaIEtilC3pipeISJca6",
+                            Password = "$2a$11$1eGvaPpOk/MSPRKhYzPEeeTkbUmQQhhfArMUF.ZSkSiULQpvxiwvW",
                             UserName = "Developer"
                         });
                 });

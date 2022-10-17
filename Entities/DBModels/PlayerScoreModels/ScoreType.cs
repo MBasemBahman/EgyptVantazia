@@ -13,6 +13,15 @@
         [DisplayName(nameof(_365_TypeId))]
         public string _365_TypeId { get; set; }
 
+        [DisplayName(nameof(_365_EventTypeId))]
+        public string _365_EventTypeId { get; set; }
+
+        [DisplayName(nameof(HavePoints))]
+        public bool HavePoints { get; set; }
+
+        [DisplayName(nameof(IsEvent))]
+        public bool IsEvent { get; set; }
+
         [DisplayName(nameof(PlayerGameWeakScores))]
         public IList<PlayerGameWeakScore> PlayerGameWeakScores { get; set; }
 

@@ -13,6 +13,7 @@ using IntegrationWith365.Entities.GamesModels;
 using IntegrationWith365.Entities.SquadsModels;
 using IntegrationWith365.Entities.StandingsModels;
 using IntegrationWith365.Parameters;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace IntegrationWith365
 {
@@ -395,88 +396,126 @@ namespace IntegrationWith365
                     GameId = int.Parse(teamGameWeak._365_MatchId),
                 });
 
-                if (gameReturnInArabic.Game != null)
+                //if (gameReturnInArabic.Game != null)
+                //{
+                //    statsInArabic.AddRange(gameReturnInArabic.Game
+                //                                             .HomeCompetitor
+                //                                             .Lineups
+                //                                             .Members
+                //                                             .Where(a => a.Stats != null && a.Stats.Any())
+                //                                             .SelectMany(a => a.Stats)
+                //                                             .GroupBy(a => new Stat
+                //                                             {
+                //                                                 Type = a.Type,
+                //                                                 Name = a.Name,
+                //                                             })
+                //                                             .Select(a => a.Key)
+                //                                             .ToList());
+
+                //    statsInArabic.AddRange(gameReturnInArabic.Game
+                //                                            .AwayCompetitor
+                //                                            .Lineups
+                //                                            .Members
+                //                                            .Where(a => a.Stats != null && a.Stats.Any())
+                //                                            .SelectMany(a => a.Stats)
+                //                                            .GroupBy(a => new Stat
+                //                                            {
+                //                                                Type = a.Type,
+                //                                                Name = a.Name,
+                //                                            })
+                //                                            .Select(a => a.Key)
+                //                                            .ToList());
+
+                //    statsInArabic = statsInArabic.GroupBy(a => new Stat
+                //    {
+                //        Type = a.Type,
+                //        Name = a.Name,
+                //    }).Select(a => a.Key).ToList();
+                //}
+                //if (gameReturnInEnglish.Game != null)
+                //{
+                //    statsInEnglish.AddRange(gameReturnInEnglish.Game
+                //                                             .HomeCompetitor
+                //                                             .Lineups
+                //                                             .Members
+                //                                             .Where(a => a.Stats != null && a.Stats.Any())
+                //                                             .SelectMany(a => a.Stats)
+                //                                              .GroupBy(a => new Stat
+                //                                              {
+                //                                                  Type = a.Type,
+                //                                                  Name = a.Name,
+                //                                              })
+                //                                             .Select(a => a.Key)
+                //                                             .ToList());
+
+                //    statsInEnglish.AddRange(gameReturnInEnglish.Game
+                //                                            .AwayCompetitor
+                //                                            .Lineups
+                //                                            .Members
+                //                                            .Where(a => a.Stats != null && a.Stats.Any())
+                //                                            .SelectMany(a => a.Stats)
+                //                                            .GroupBy(a => new Stat
+                //                                            {
+                //                                                Type = a.Type,
+                //                                                Name = a.Name,
+                //                                            })
+                //                                            .Select(a => a.Key)
+                //                                            .ToList());
+
+                //    statsInEnglish = statsInEnglish.GroupBy(a => new Stat
+                //    {
+                //        Type = a.Type,
+                //        Name = a.Name,
+                //    }).Select(a => a.Key).ToList();
+                //}
+
+                //for (int i = 0; i < statsInArabic.Count; i++)
+                //{
+                //    _unitOfWork.PlayerScore.CreateScoreType(new ScoreType
+                //    {
+                //        Name = statsInArabic[i].Name,
+                //        _365_TypeId = statsInArabic[i].Type.ToString(),
+                //        ScoreTypeLang = new ScoreTypeLang
+                //        {
+                //            Name = statsInEnglish[i].Name,
+                //        }
+                //    });
+                //    await _unitOfWork.Save();
+                //}
+
+                List<EventType> eventsInArabic = new();
+                List<EventType> eventsInEnglish = new();
+
+                if (gameReturnInArabic.Game.Events != null && gameReturnInArabic.Game.Events.Any())
                 {
-                    statsInArabic.AddRange(gameReturnInArabic.Game
-                                                             .HomeCompetitor
-                                                             .Lineups
-                                                             .Members
-                                                             .Where(a => a.Stats != null && a.Stats.Any())
-                                                             .SelectMany(a => a.Stats)
-                                                             .GroupBy(a => new Stat
-                                                             {
-                                                                 Type = a.Type,
-                                                                 Name = a.Name,
-                                                             })
-                                                             .Select(a => a.Key)
+                    eventsInArabic.AddRange(gameReturnInArabic.Game
+                                                             .Events
+                                                             .Where(a => a.EventType != null)
+                                                             .Select(a => a.EventType)
+                                                             .Distinct()
                                                              .ToList());
-
-                    statsInArabic.AddRange(gameReturnInArabic.Game
-                                                            .AwayCompetitor
-                                                            .Lineups
-                                                            .Members
-                                                            .Where(a => a.Stats != null && a.Stats.Any())
-                                                            .SelectMany(a => a.Stats)
-                                                            .GroupBy(a => new Stat
-                                                            {
-                                                                Type = a.Type,
-                                                                Name = a.Name,
-                                                            })
-                                                            .Select(a => a.Key)
-                                                            .ToList());
-
-                    statsInArabic = statsInArabic.GroupBy(a => new Stat
-                    {
-                        Type = a.Type,
-                        Name = a.Name,
-                    }).Select(a => a.Key).ToList();
                 }
-                if (gameReturnInEnglish.Game != null)
+                if (gameReturnInEnglish.Game.Events != null && gameReturnInEnglish.Game.Events.Any())
                 {
-                    statsInEnglish.AddRange(gameReturnInEnglish.Game
-                                                             .HomeCompetitor
-                                                             .Lineups
-                                                             .Members
-                                                             .Where(a => a.Stats != null && a.Stats.Any())
-                                                             .SelectMany(a => a.Stats)
-                                                              .GroupBy(a => new Stat
-                                                              {
-                                                                  Type = a.Type,
-                                                                  Name = a.Name,
-                                                              })
-                                                             .Select(a => a.Key)
+                    eventsInEnglish.AddRange(gameReturnInEnglish.Game
+                                                             .Events
+                                                             .Where(a => a.EventType != null)
+                                                             .Select(a => a.EventType)
+                                                             .Distinct()
                                                              .ToList());
-
-                    statsInEnglish.AddRange(gameReturnInEnglish.Game
-                                                            .AwayCompetitor
-                                                            .Lineups
-                                                            .Members
-                                                            .Where(a => a.Stats != null && a.Stats.Any())
-                                                            .SelectMany(a => a.Stats)
-                                                            .GroupBy(a => new Stat
-                                                            {
-                                                                Type = a.Type,
-                                                                Name = a.Name,
-                                                            })
-                                                            .Select(a => a.Key)
-                                                            .ToList());
-
-                    statsInEnglish = statsInEnglish.GroupBy(a => new Stat
-                    {
-                        Type = a.Type,
-                        Name = a.Name,
-                    }).Select(a => a.Key).ToList();
                 }
 
-                for (int i = 0; i < statsInArabic.Count; i++)
+                for (int i = 0; i < eventsInArabic.Count; i++)
                 {
                     _unitOfWork.PlayerScore.CreateScoreType(new ScoreType
                     {
-                        Name = statsInArabic[i].Name,
-                        _365_TypeId = statsInArabic[i].Type.ToString(),
+                        Name = $"{eventsInArabic[i].Name} - {eventsInArabic[i].SubTypeName}",
+                        _365_TypeId = eventsInArabic[i].SubTypeId.ToString(),
+                        IsEvent = true,
+                        _365_EventTypeId = eventsInArabic[i].Id.ToString(),
                         ScoreTypeLang = new ScoreTypeLang
                         {
-                            Name = statsInEnglish[i].Name,
+                            Name = $"{eventsInEnglish[i].Name} - {eventsInArabic[i].SubTypeName}",
                         }
                     });
                     await _unitOfWork.Save();
@@ -514,6 +553,7 @@ namespace IntegrationWith365
                         {
                             a.Id,
                             a._365_PlayerId,
+                            a.Fk_PlayerPosition
                         }).ToList();
 
                         TeamGameWeak match = await _unitOfWork.Season.FindTeamGameWeakbyId(teamGameWeak.Id, trackChanges: true);
@@ -528,50 +568,71 @@ namespace IntegrationWith365
 
                         foreach (GameMember member in allMembers)
                         {
-                            int fk_Player = players.Where(a => a._365_PlayerId == member.AthleteId.ToString()).Select(a => a.Id).FirstOrDefault();
+                            var player = players.Where(a => a._365_PlayerId == member.AthleteId.ToString()).FirstOrDefault();
                             Member memberResult = allMembersResults.Where(a => a.Id == member.Id).FirstOrDefault();
 
-                            if (fk_Player > 0 && memberResult != null)
+                            List<EventType> eventResult = gameReturn.Game
+                                                                    .Events
+                                                                    .Where(a => a.PlayerId == member.Id)
+                                                                    .GroupBy(a => a.EventType)
+                                                                    .Select(a => new EventType
+                                                                    {
+                                                                        Id = a.Key.Id,
+                                                                        Name = a.Key.Name,
+                                                                        SubTypeId = a.Key.SubTypeId,
+                                                                        SubTypeName = a.Key.SubTypeName,
+                                                                        GameTime = a.First().GameTime,
+                                                                        Value = a.Count()
+                                                                    })
+                                                                    .ToList();
+
+                            if (player != null && memberResult != null)
                             {
-                                if (_unitOfWork.PlayerScore.GetPlayerGameWeaks(new PlayerGameWeakParameters { Fk_TeamGameWeak = teamGameWeak.Id, Fk_Player = fk_Player }, false).Any())
+                                if (!_unitOfWork.PlayerScore.GetPlayerGameWeaks(new PlayerGameWeakParameters { Fk_TeamGameWeak = teamGameWeak.Id, Fk_Player = player.Id }, false).Any())
                                 {
-                                    var fk_TeamGameWeak = _unitOfWork.PlayerScore.GetPlayerGameWeaks(new PlayerGameWeakParameters { Fk_TeamGameWeak = teamGameWeak.Id, Fk_Player = fk_Player }, false).Select(a => a.Id).First();
-                                    foreach (var Stat in memberResult.Stats)
-                                    {
-                                        _unitOfWork.PlayerScore.CreatePlayerGameWeakScore(new PlayerGameWeakScore
-                                        {
-                                            Fk_PlayerGameWeak = fk_TeamGameWeak,
-                                            Fk_ScoreType = scoreTypes.Where(a => a._365_TypeId == Stat.Type.ToString()).Select(a => a.Id).First(),
-                                            Value = Stat.Value,
-                                        });
-                                    }
-                                }
-                                else
-                                {
-                                    PlayerGameWeak playerGameWeak = new()
+                                    PlayerGameWeak playerGame = new()
                                     {
                                         Fk_TeamGameWeak = teamGameWeak.Id,
-                                        Fk_Player = fk_Player,
-                                        Ranking = memberResult.Ranking
+                                        Fk_Player = player.Id,
+                                        Ranking = memberResult.Ranking,
                                     };
-                                    if (memberResult.Stats != null && memberResult.Stats.Any())
-                                    {
-                                        playerGameWeak.PlayerGameWeakScores = new List<PlayerGameWeakScore>();
+                                    _unitOfWork.PlayerScore.CreatePlayerGameWeak(playerGame);
+                                    await _unitOfWork.Save();
+                                }
 
-                                        foreach (var Stat in memberResult.Stats)
+                                PlayerGameWeakModel playerGameWeak = _unitOfWork.PlayerScore.GetPlayerGameWeaks(new PlayerGameWeakParameters { Fk_TeamGameWeak = teamGameWeak.Id, Fk_Player = player.Id }, false).First();
+
+                                if (memberResult.Stats != null && memberResult.Stats.Any())
+                                {
+                                    foreach (Stat Stat in memberResult.Stats)
+                                    {
+                                        PlayerGameWeakScore score = new()
                                         {
-                                            playerGameWeak.PlayerGameWeakScores.Add(new PlayerGameWeakScore
-                                            {
-                                                Fk_ScoreType = scoreTypes.Where(a => a._365_TypeId == Stat.Type.ToString()).Select(a => a.Id).First(),
-                                                Value = Stat.Value,
-                                            });
-                                        }
+                                            Fk_PlayerGameWeak = playerGameWeak.Id,
+                                            Fk_ScoreType = scoreTypes.Where(a => a._365_TypeId == Stat.Type.ToString()).Select(a => a.Id).First(),
+                                            Value = Stat.Value,
+                                        };
+                                        _unitOfWork.PlayerScore.CreatePlayerGameWeakScore(GetPlayerScore(score, playerGameWeak, player.Fk_PlayerPosition));
+                                        await _unitOfWork.Save();
                                     }
-                                    _unitOfWork.PlayerScore.CreatePlayerGameWeak(playerGameWeak);
+                                }
+                                if (eventResult != null && eventResult.Any())
+                                {
+                                    foreach (EventType events in eventResult)
+                                    {
+                                        PlayerGameWeakScore score = new()
+                                        {
+                                            Fk_PlayerGameWeak = playerGameWeak.Id,
+                                            Fk_ScoreType = scoreTypes.Where(a => a.IsEvent = true && a._365_EventTypeId == events.Id.ToString() && a._365_TypeId == events.SubTypeId.ToString()).Select(a => a.Id).First(),
+                                            Value = events.Value.ToString(),
+                                            GameTime = events.GameTime,
+                                        };
+                                        _unitOfWork.PlayerScore.CreatePlayerGameWeakScore(GetPlayerScore(score, playerGameWeak, player.Fk_PlayerPosition));
+                                        await _unitOfWork.Save();
+                                    }
                                 }
                             }
                         }
-                        await _unitOfWork.Save();
                     }
                 }
             }
@@ -641,6 +702,106 @@ namespace IntegrationWith365
             }
 
             return games;
+        }
+
+        #endregion
+
+        #region Score Helper
+
+        private PlayerGameWeakScore GetPlayerScore(PlayerGameWeakScore score, PlayerGameWeakModel playerGame, int fk_PlayerPosition)
+        {
+            if (score.Fk_ScoreType == (int)ScoreTypeEnum.Minutes)
+            {
+                score.FinalValue = score.Value.GetUntilOrEmpty("'").ParseToInt();
+                if (score.FinalValue is > 0 and <= 60)
+                {
+                    score.Points = 1;
+                }
+                else if (score.FinalValue > 60)
+                {
+                    score.Points = 2;
+                }
+            }
+            else if (score.Fk_ScoreType == (int)ScoreTypeEnum.GoalkeeperSaves)
+            {
+                score.FinalValue = score.Value.ParseToInt();
+                score.Points = score.FinalValue / 3 * 1;
+            }
+            else if (score.Fk_ScoreType == (int)ScoreTypeEnum.Goals)
+            {
+                score.FinalValue = score.Value.GetUntilOrEmpty("(").ParseToInt();
+                if (score.FinalValue > 0)
+                {
+                    if (fk_PlayerPosition == (int)PlayerPositionEnum.Attacker)
+                    {
+                        score.Points = score.FinalValue * 4;
+                    }
+                    else if (fk_PlayerPosition == (int)PlayerPositionEnum.Midfielder)
+                    {
+                        score.Points = score.FinalValue * 5;
+                    }
+                    else if (fk_PlayerPosition is ((int)PlayerPositionEnum.Defender) or
+                            ((int)PlayerPositionEnum.Goalkeeper))
+                    {
+                        score.Points = score.FinalValue * 6;
+                    }
+                }
+            }
+            else if (score.Fk_ScoreType == (int)ScoreTypeEnum.Assists)
+            {
+                score.FinalValue = score.Value.ParseToInt();
+                if (score.FinalValue > 0)
+                {
+                    score.Points = score.FinalValue * 3;
+                }
+            }
+            else if (score.Fk_ScoreType == (int)ScoreTypeEnum.PenaltiesSaved)
+            {
+                score.FinalValue = score.Value.GetUntilOrEmpty("/").ParseToInt();
+                score.Points = score.FinalValue * 5;
+            }
+            else if (score.Fk_ScoreType == (int)ScoreTypeEnum.PenaltyMissed)
+            {
+                score.FinalValue = score.Value.ParseToInt();
+                score.Points = score.FinalValue * -2;
+            }
+            else if (score.Fk_ScoreType == (int)ScoreTypeEnum.RedCard)
+            {
+                score.FinalValue = score.Value.ParseToInt();
+                score.Points = score.FinalValue * -3;
+            }
+            else if (score.Fk_ScoreType == (int)ScoreTypeEnum.SecondYellowCard)
+            {
+                score.FinalValue = score.Value.ParseToInt();
+                score.Points = score.FinalValue * -2;
+            }
+            else if (score.Fk_ScoreType == (int)ScoreTypeEnum.YellowCard)
+            {
+                score.FinalValue = score.Value.ParseToInt();
+                score.Points = score.FinalValue * -1;
+            }
+            else if (score.Fk_ScoreType == (int)ScoreTypeEnum.SelfGoal)
+            {
+                score.FinalValue = score.Value.ParseToInt();
+                score.Points = score.FinalValue * -2;
+            }
+            else if (score.Fk_ScoreType == (int)ScoreTypeEnum.CleanSheet)
+            {
+                score.FinalValue = 0;
+                score.Points = 0;
+            }
+            else if (score.Fk_ScoreType == (int)ScoreTypeEnum.ReceiveGoals)
+            {
+                score.FinalValue = 0;
+                score.Points = 0;
+            }
+            else if (score.Fk_ScoreType == (int)ScoreTypeEnum.Ranking)
+            {
+                score.FinalValue = 0;
+                score.Points = 0;
+            }
+
+            return score;
         }
 
         #endregion

@@ -17,6 +17,10 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
         public int Fk_Player { get; set; }
 
         public int Fk_ScoreType { get; set; }
+
+        public int? FinalValueFrom { get; set; }
+
+        public int? FinalValueTo { get; set; }
     }
 
     public class PlayerGameWeakScoreModel : AuditEntity
@@ -33,6 +37,12 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
         [DisplayName(nameof(Value))]
         public string Value { get; set; }
 
+        [DisplayName(nameof(FinalValue))]
+        public int FinalValue { get; set; }
+
+        [DisplayName(nameof(GameTime))]
+        public double GameTime { get; set; }
+
         [DisplayName(nameof(Points))]
         public int Points { get; set; }
     }
@@ -46,8 +56,14 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
         [DisplayName(nameof(Value))]
         public string Value { get; set; }
 
+        [DisplayName(nameof(FinalValue))]
+        public int FinalValue { get; set; }
+
         [DisplayName(nameof(Points))]
         public int Points { get; set; }
+
+        [DisplayName(nameof(GameTime))]
+        public double GameTime { get; set; }
 
         public int Id { get; set; }
     }

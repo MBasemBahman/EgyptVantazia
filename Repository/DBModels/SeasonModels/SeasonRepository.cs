@@ -14,7 +14,8 @@ namespace Repository.DBModels.SeasonModels
         {
             return FindByCondition(a => true, trackChanges)
                    .Filter(parameters.Id,
-                           parameters._365_SeasonId);
+                           parameters._365_SeasonId,
+                           parameters.IsCurrent);
         }
 
         public async Task<Season> FindById(int id, bool trackChanges)
@@ -46,9 +47,11 @@ namespace Repository.DBModels.SeasonModels
         public static IQueryable<Season> Filter(
             this IQueryable<Season> Seasons,
             int id,
-            string _365_SeasonId)
+            string _365_SeasonId,
+            bool? isCurrent)
         {
             return Seasons.Where(a => (id == 0 || a.Id == id) &&
+                                      (isCurrent == null || a.IsCurrent == isCurrent) &&
                                       (string.IsNullOrWhiteSpace(_365_SeasonId) || a._365_SeasonId == _365_SeasonId));
         }
 

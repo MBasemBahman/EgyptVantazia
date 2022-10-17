@@ -47,5 +47,31 @@
             Standings = 29,
             AccountTeam = 30
         }
+
+        public enum ScoreTypeEnum
+        {
+            Minutes = 34,
+            GoalkeeperSaves = 35,
+            Goals = 36,
+            Assists = 37,
+            PenaltiesSaved = 56,
+            PenaltyMissed = 59,
+            YellowCard = 75,
+            SecondYellowCard = 79,
+            RedCard = 80,
+            SelfGoal = 82,
+            CleanSheet = 84, // From My Side
+            ReceiveGoals = 85, // From My Side
+            Ranking = 86 // From My Side
+        }
+
+        public enum PlayerPositionEnum
+        {
+            Attacker = 1,
+            Defender = 2,
+            Goalkeeper = 3,
+            Midfielder = 4,
+            Coach = 5,
+        }
     }
 }

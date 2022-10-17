@@ -11,6 +11,9 @@ namespace Entities.DBModels.SeasonModels
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
 
+        [DisplayName(nameof(IsCurrent))]
+        public bool IsCurrent { get; set; }
+
         [DisplayName(nameof(_365_GameWeakId))]
         public string _365_GameWeakId { get; set; }
 

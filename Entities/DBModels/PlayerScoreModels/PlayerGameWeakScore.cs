@@ -19,7 +19,13 @@
         [DisplayName(nameof(Value))]
         public string Value { get; set; }
 
+        [DisplayName(nameof(FinalValue))]
+        public int FinalValue { get; set; }
+
         [DisplayName(nameof(Points))]
         public int Points { get; set; }
+
+        [DisplayName(nameof(GameTime))]
+        public double GameTime { get; set; }
     }
 }

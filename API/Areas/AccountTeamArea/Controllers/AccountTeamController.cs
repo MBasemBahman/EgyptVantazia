@@ -71,9 +71,12 @@ namespace API.Areas.AccountTeamArea.Controllers
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
+            SeasonModel currentSeason = _unitOfWork.Season.GetCurrentSeason();
+
             AccountTeam accountTeam = _mapper.Map<AccountTeam>(model);
             accountTeam.CreatedBy = auth.Name;
             accountTeam.Fk_Account = auth.Fk_Account;
+            accountTeam.Fk_Season = currentSeason.Id;
 
             if (model.ImageFile != null)
             {

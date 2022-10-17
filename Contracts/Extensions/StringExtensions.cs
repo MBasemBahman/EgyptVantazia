@@ -1,4 +1,6 @@
-﻿namespace Contracts.Extensions
+﻿using static System.Net.Mime.MediaTypeNames;
+
+namespace Contracts.Extensions
 {
     public static class StringExtensions
     {
@@ -31,13 +33,28 @@
             return result;
         }
 
-        public static string Between(this string STR, string FirstString, string LastString)
+        public static string Between(this string value, string firstString, string lastString)
         {
-            string FinalString;
-            int Pos1 = STR.IndexOf(FirstString) + FirstString.Length;
-            int Pos2 = STR.IndexOf(LastString);
-            FinalString = STR[Pos1..Pos2];
-            return FinalString;
+            string finalString;
+            int Pos1 = value.IndexOf(firstString) + firstString.Length;
+            int Pos2 = value.IndexOf(lastString);
+            finalString = value[Pos1..Pos2];
+            return finalString;
+        }
+
+        public static string GetUntilOrEmpty(this string value, string stopAt)
+        {
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                int charLocation = value.IndexOf(stopAt, StringComparison.Ordinal);
+
+                if (charLocation > 0)
+                {
+                    return value[..charLocation];
+                }
+            }
+
+            return string.Empty;
         }
     }
 }

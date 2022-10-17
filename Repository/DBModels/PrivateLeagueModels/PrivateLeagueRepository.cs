@@ -27,13 +27,11 @@ namespace Repository.DBModels.PrivateLeagueModels
 
         public new void Create(PrivateLeague entity)
         {
-            string uniqueCode = RandomGenerator.GenerateString(2) + RandomGenerator.GenerateInteger(2, 00, 99).ToString() + RandomGenerator.GenerateString(2);
-            while (FindByCondition(a => a.UniqueCode == uniqueCode, trackChanges: false).Any())
+            do
             {
-                uniqueCode = RandomGenerator.GenerateString(10);
-            }
+                entity.UniqueCode = RandomGenerator.GenerateString(2) + RandomGenerator.GenerateInteger(2, 00, 99).ToString() + RandomGenerator.GenerateString(2);
+            } while (FindByCondition(a => a.UniqueCode == entity.UniqueCode, trackChanges: false).Any());
 
-            entity.UniqueCode = uniqueCode;
             base.Create(entity);
         }
     }

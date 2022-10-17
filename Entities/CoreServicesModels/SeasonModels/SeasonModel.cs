@@ -6,6 +6,9 @@ namespace Entities.CoreServicesModels.SeasonModels
     {
         [DisplayName(nameof(_365_SeasonId))]
         public string _365_SeasonId { get; set; }
+
+        [DisplayName(nameof(IsCurrent))]
+        public bool? IsCurrent { get; set; }
     }
 
     public class SeasonModel : AuditImageEntity
@@ -16,6 +19,9 @@ namespace Entities.CoreServicesModels.SeasonModels
 
         [DisplayName(nameof(_365_SeasonId))]
         public string _365_SeasonId { get; set; }
+
+        [DisplayName(nameof(IsCurrent))]
+        public bool IsCurrent { get; set; }
     }
     public class SeasonCreateOrEditModel
     {
@@ -26,6 +32,9 @@ namespace Entities.CoreServicesModels.SeasonModels
         [DisplayName($"{nameof(Name)}{PropertyAttributeConstants.ArLang}")]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
+
+        [DisplayName(nameof(IsCurrent))]
+        public bool IsCurrent { get; set; }
 
         [DisplayName(nameof(_365_SeasonId))]
         public string _365_SeasonId { get; set; }

@@ -18,5 +18,7 @@ namespace IntegrationWith365.Entities.GameModels
         public Competitor HomeCompetitor { get; set; }
 
         public Competitor AwayCompetitor { get; set; }
+
+        public List<Event> Events { get; set; }
     }
 }

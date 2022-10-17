@@ -28,7 +28,8 @@ namespace CoreServices.Logic
                            LastModifiedBy = a.LastModifiedBy,
                            _365_SeasonId = a._365_SeasonId,
                            Name = otherLang ? a.SeasonLang.Name : a.Name,
-                           ImageUrl = a.StorageUrl + a.ImageUrl
+                           ImageUrl = a.StorageUrl + a.ImageUrl,
+                           IsCurrent = a.IsCurrent
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);
@@ -176,7 +177,8 @@ namespace CoreServices.Logic
                                Name = otherLang ? a.Season.SeasonLang.Name : a.Season.Name,
                                ImageUrl = a.Season.StorageUrl + a.Season.ImageUrl,
                                _365_SeasonId = a.Season._365_SeasonId,
-                           }
+                           },
+                           IsCurrent = a.IsCurrent
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

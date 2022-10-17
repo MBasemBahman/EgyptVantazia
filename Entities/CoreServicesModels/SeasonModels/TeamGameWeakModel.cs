@@ -27,6 +27,10 @@ namespace Entities.CoreServicesModels.SeasonModels
 
         [DisplayName(nameof(IsEnded))]
         public bool? IsEnded { get; set; }
+
+        public bool CurrentSeason { get; set; }
+
+        public bool CurrentGameWeak { get; set; }
     }
 
     public class TeamGameWeakModel : AuditEntity

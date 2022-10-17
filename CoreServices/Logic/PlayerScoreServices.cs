@@ -28,7 +28,11 @@ namespace CoreServices.Logic
                            LastModifiedAt = a.LastModifiedAt,
                            LastModifiedBy = a.LastModifiedBy,
                            Name = otherLang ? a.ScoreTypeLang.Name : a.Name,
-                           _365_TypeId = a._365_TypeId
+                           _365_TypeId = a._365_TypeId,
+                           Description = a.Description,
+                           HavePoints = a.HavePoints,
+                           IsEvent = a.IsEvent,
+                           _365_EventTypeId = a._365_EventTypeId
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);
@@ -233,6 +237,8 @@ namespace CoreServices.Logic
                            Fk_ScoreType = a.Fk_ScoreType,
                            Points = a.Points,
                            Value = a.Value,
+                           GameTime = a.GameTime,
+                           FinalValue = a.FinalValue,
                            ScoreType = new ScoreTypeModel
                            {
                                Name = otherLang ? a.ScoreType.ScoreTypeLang.Name : a.ScoreType.Name,

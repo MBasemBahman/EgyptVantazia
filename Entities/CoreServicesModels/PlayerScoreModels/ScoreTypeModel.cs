@@ -6,6 +6,12 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
     {
         [DisplayName(nameof(_365_TypeId))]
         public string _365_TypeId { get; set; }
+
+        [DisplayName(nameof(HavePoints))]
+        public bool? HavePoints { get; set; }
+
+        [DisplayName(nameof(IsEvent))]
+        public bool? IsEvent { get; set; }
     }
 
     public class ScoreTypeModel : AuditLookUpEntity
@@ -20,6 +26,15 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
 
         [DisplayName(nameof(_365_TypeId))]
         public string _365_TypeId { get; set; }
+
+        [DisplayName(nameof(_365_EventTypeId))]
+        public string _365_EventTypeId { get; set; }
+
+        [DisplayName(nameof(HavePoints))]
+        public bool HavePoints { get; set; }
+
+        [DisplayName(nameof(IsEvent))]
+        public bool IsEvent { get; set; }
     }
 
     public class ScoreTypeCreateOrEditModel
@@ -34,6 +49,12 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
 
         [DisplayName(nameof(_365_TypeId))]
         public string _365_TypeId { get; set; }
+
+        [DisplayName(nameof(HavePoints))]
+        public bool HavePoints { get; set; }
+
+        [DisplayName(nameof(IsEvent))]
+        public bool IsEvent { get; set; }
 
         public ScoreTypeLangModel ScoreTypeLang { get; set; }
     }

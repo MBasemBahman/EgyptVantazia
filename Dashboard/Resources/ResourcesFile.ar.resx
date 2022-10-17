@@ -969,4 +969,7 @@
   <data name="Account Teams" xml:space="preserve">
     <value>فرق الاعضاء ( الحسابات )</value>
   </data>
+  <data name="IsCurrent" xml:space="preserve">
+    <value>الحالي</value>
+  </data>
 </root>

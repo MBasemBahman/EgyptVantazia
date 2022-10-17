@@ -101,6 +101,15 @@
                                                 <span asp-validation-for="StartTime" class="text-danger"></span>
                                             </div>
                                         </div>
+                                        
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="StartTime" class="form-label"></label>
+                                                <input type="text" value="@(Model.StartTime.ToString("yyyy-MM-dd"))" id="fp-default" name="StartTime" class="form-control flatpickr-basic flatpickr-input active" placeholder="YYYY-MM-DD" readonly="readonly">
+                                                <span asp-validation-for="StartTime" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        
                                         <div class="col-md-12 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="IsEnded" class="form-check-label" for="IsEnded"></label>

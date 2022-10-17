@@ -978,4 +978,7 @@
   <data name="Account Teams" xml:space="preserve">
     <value>Account Teams</value>
   </data>
+  <data name="IsCurrent" xml:space="preserve">
+    <value>Is Current</value>
+  </data>
 </root>

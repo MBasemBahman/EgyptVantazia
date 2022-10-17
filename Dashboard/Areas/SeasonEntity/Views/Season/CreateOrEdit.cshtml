@@ -93,7 +93,18 @@
                                                 <span asp-validation-for="_365_SeasonId" class="text-danger"></span>
                                             </div>
                                         </div>
-                                    
+                                        
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="IsCurrent" class="form-label"></label>
+                                                <select class="form-control" asp-for="IsCurrent">
+                                                    <option value="true">@Localizer.Get("Yes")</option>
+                                                    <option value="false">@Localizer.Get("No")</option>
+                                                </select>
+                                                <span asp-validation-for="IsCurrent" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
                                     </div>
 
                                     <div class="row">
@@ -124,16 +135,22 @@
                                                                     </div>
                                                                 </div>
 
-                                                                 <div class="col-md-3 col-12">
+                                                                <div class="col-md-3 col-12">
                                                                     <div class="mb-1">
                                                                         <label class="form-label">@Localizer.Get("_365_GameWeakId")</label>
                                                                         <input asp-for="GameWeaks[i]._365_GameWeakId" class="form-control gameid365" placeholder="@Localizer.Get("Enter") @Localizer.Get("_365_GameWeakId")">
                                                                     </div>
                                                                 </div>
-
-                                                               
-
-
+                                                                
+                                                                <div class="col-md-2 col-12">
+                                                                    <div class="mb-1">
+                                                                        <label asp-for="GameWeaks[i].IsCurrent" class="form-label"></label>
+                                                                        <select class="form-control" asp-for="GameWeaks[i].IsCurrent">
+                                                                            <option value="true">@Localizer.Get("Yes")</option>
+                                                                            <option value="false">@Localizer.Get("No")</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
 
                                                                 <div class="col-md-1 col-12 mb-50">
                                                                     <div class="mb-1">
@@ -169,12 +186,22 @@
                                                                     </div>
                                                                 </div>
 
-                                                                 <div class="col-md-3 col-12">
-                                                                    <div class="mb-1">
-                                                                        <label class="form-label">@Localizer.Get("_365_GameWeakId")</label>
-                                                                        <input name="._365_GameWeakId" class="form-control gameid365" placeholder="@Localizer.Get("Enter") @Localizer.Get("_365_GameWeakId")">
-                                                                    </div>
+                                                            <div class="col-md-3 col-12">
+                                                                <div class="mb-1">
+                                                                    <label class="form-label">@Localizer.Get("_365_GameWeakId")</label>
+                                                                    <input name="._365_GameWeakId" class="form-control gameid365" placeholder="@Localizer.Get("Enter") @Localizer.Get("_365_GameWeakId")">
                                                                 </div>
+                                                            </div>
+                                                            
+                                                            <div class="col-md-2 col-12">
+                                                                <div class="mb-1">
+                                                                    <label class="form-label">@Localizer.Get("IsCurrent")</label>
+                                                                    <select class="form-control" name=".IsCurrent">
+                                                                        <option value="true">@Localizer.Get("Yes")</option>
+                                                                        <option value="false">@Localizer.Get("No")</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
 
                                                             <div class="col-md-1 col-12 mb-50">
                                                                 <div class="mb-1">

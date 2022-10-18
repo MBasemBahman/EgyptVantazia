@@ -11,7 +11,7 @@
 
         public enum NewsTypeEnum
         {
-            Test = 1
+            Common = 1
         }
 
         public enum TransferTypeEnum

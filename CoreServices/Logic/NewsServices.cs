@@ -107,7 +107,7 @@ namespace CoreServices.Logic
                            FileLength = a.FileLength,
                            FileName = a.FileName,
                            FileType = a.FileType,
-                           FileUrl = a.StorageUrl + a.FileUrl
+                           FileUrl = a.StorageUrl + a.FileUrl,
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

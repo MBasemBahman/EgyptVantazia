@@ -46,7 +46,7 @@ namespace CoreServices.Logic
                            Player = new PlayerModel
                            {
                                Name = otherLang ? a.Player.PlayerLang.Name : a.Player.Name,
-                               ImageUrl = a.Player.StorageUrl + a.Player.ImageUrl,
+                               ImageUrl = !string.IsNullOrEmpty(a.Player.ImageUrl) ? a.Player.StorageUrl + a.Player.ImageUrl : a.Player.Team.StorageUrl + a.Player.Team.ImageUrl,
                                _365_PlayerId = a.Player._365_PlayerId,
                                Fk_Team = a.Player.Fk_Team,
                                Team = new TeamModel

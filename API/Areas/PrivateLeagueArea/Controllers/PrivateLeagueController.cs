@@ -25,6 +25,10 @@ namespace API.Areas.PrivateLeagueArea.Controllers
         public async Task<IEnumerable<PrivateLeagueModel>> GetPrivateLeagues(
         [FromQuery] PrivateLeagueParameters parameters)
         {
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            parameters.Fk_Account = auth.Fk_Account;
+
             PagedList<PrivateLeagueModel> data = await _unitOfWork.PrivateLeague.GetPrivateLeaguePaged(parameters);
 
             SetPagination(data.MetaData, parameters);

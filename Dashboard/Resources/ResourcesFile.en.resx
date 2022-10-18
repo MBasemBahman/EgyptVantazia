@@ -682,7 +682,7 @@
     <value>Player Score Data</value>
   </data>
   <data name="PlayersCount" xml:space="preserve">
-    <value>Players</value>
+    <value>Players Count</value>
   </data>
   <data name="PlayerTransfers" xml:space="preserve">
     <value>Player Transfers</value>
@@ -977,5 +977,59 @@
   </data>
   <data name="Account Teams" xml:space="preserve">
     <value>Account Teams</value>
+  </data>
+  <data name="IsCurrent" xml:space="preserve">
+    <value>Is Current</value>
+  </data>
+  <data name="Week Number" xml:space="preserve">
+    <value>Week Number</value>
+  </data>
+  <data name="Devices" xml:space="preserve">
+    <value>Devices</value>
+  </data>
+  <data name="Verifications" xml:space="preserve">
+    <value>Verifications</value>
+  </data>
+  <data name="RefreshTokens" xml:space="preserve">
+    <value>Refresh Tokens</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="Expires" xml:space="preserve">
+    <value>Expires</value>
+  </data>
+  <data name="IsVerified" xml:space="preserve">
+    <value>Is Verified</value>
+  </data>
+  <data name="IsExpired" xml:space="preserve">
+    <value>Is Expired</value>
+  </data>
+  <data name="CreatedByIp" xml:space="preserve">
+    <value>CreatedByIP</value>
+  </data>
+  <data name="NotificationCode" xml:space="preserve">
+    <value>Notification Code</value>
+  </data>
+  <data name="DeviceType" xml:space="preserve">
+    <value>Device Type</value>
+  </data>
+  <data name="AppVersion" xml:space="preserve">
+    <value>App Version</value>
+  </data>
+  <data name="DeviceVersion" xml:space="preserve">
+    <value>Device Version</value>
+  </data>
+  <data name="DeviceModel" xml:space="preserve">
+    <value>Device Model</value>
+  </data>
+  <data name="Token" xml:space="preserve">
+    <value>Token</value>
+  </data>
+  <data name="Revoked" xml:space="preserve">
+    <value>Revoked</value>
+  </data>
+  <data name="NotificationToken" xml:space="preserve">
+    <value>Notification Token</value>
   </data>
 </root>

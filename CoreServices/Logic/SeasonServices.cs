@@ -143,6 +143,7 @@ namespace CoreServices.Logic
                     dataDb.Name = data.Name;
                     dataDb._365_GameWeakId = data._365_GameWeakId;
                     dataDb.GameWeakLang.Name = data.NameEn;
+                    dataDb.IsCurrent = data.IsCurrent;
                 }
             }
             return season;

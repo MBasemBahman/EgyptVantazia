@@ -145,9 +145,9 @@ else
 
 <!-- END: Content-->
 @section scripts{
+    <script src="~/apis/site.js"></script>
     <script src="~/apis/charts.js"></script>
     <script>
-
         function LoadTable() {
             var dt_ajax_table = $('.datatables');
             if (dt_ajax_table.length) {
@@ -232,7 +232,7 @@ else
                             }
                         },
 
-                        { data: "season.name" },
+                        { data: "season.name", orderable: false, },
                         { data: "totalPoints" },
                         { data: "totalMoney" },
                         { data: "createdAt" },
@@ -258,7 +258,6 @@ else
 
         $(document).ready(function () {
             LoadTable();
-
         });
     </script>
 }

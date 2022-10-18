@@ -1,5 +1,6 @@
 ﻿using Entities.CoreServicesModels.AccountModels;
 using Entities.CoreServicesModels.LocationModels;
+using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountModels;
 
 namespace CoreServices.Logic
@@ -44,6 +45,10 @@ namespace CoreServices.Logic
                                   LastActive = a.User.RefreshTokens.Any()
                                   ? a.User.RefreshTokens.OrderByDescending(b => b.Id).Select(a => a.CreatedAt).FirstOrDefault()
                                   : null,
+                                  FavouriteTeam = new TeamModel
+                                  {
+                                      Name = a.FavouriteTeam.Name
+                                  }
                               })
                               .Search(parameters.SearchColumns, parameters.SearchTerm)
                               .Sort(parameters.OrderBy);

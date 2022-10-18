@@ -12,6 +12,7 @@ using Dashboard.Areas.SeasonEntity.Models;
 using Dashboard.Areas.SponsorEntity.Models;
 using Dashboard.Areas.TeamEntity.Models;
 using Dashboard.Areas.PlayerTransferEntity.Models;
+using Dashboard.Areas.SubscriptionEntity.Models;
 using Dashboard.Areas.UserEntity.Models;
 using Entities.CoreServicesModels.PlayerTransfersModels;
 using Entities.CoreServicesModels.AccountTeamModels;
@@ -25,6 +26,7 @@ using Entities.CoreServicesModels.StandingsModels;
 using Entities.CoreServicesModels.PrivateLeagueModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.SponsorModels;
+using Entities.CoreServicesModels.SubscriptionModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.CoreServicesModels.UserModels;
 using Entities.DBModels.AccountModels;
@@ -38,6 +40,7 @@ using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.PrivateLeagueModels;
 using Entities.DBModels.SeasonModels;
 using Entities.DBModels.SponsorModels;
+using Entities.DBModels.SubscriptionModels;
 using Entities.DBModels.TeamModels;
 using Entities.RequestFeatures;
 
@@ -271,6 +274,11 @@ namespace Dashboard.MappingProfileCls
             #region Player Price
             _ = CreateMap<PlayerPriceModel, PlayerPriceDto>();
             _ = CreateMap<PlayerPriceModel, PlayerPriceCreateOrEditModel>();
+
+            _ = CreateMap<PlayerPrice, PlayerPriceEditModel>();
+            _ = CreateMap<PlayerPriceEditModel, PlayerPrice>()
+                .ForMember(dest => dest.Player, opt => opt.Ignore())
+                .ForMember(dest => dest.Team, opt => opt.Ignore());
             #endregion
 
 
@@ -348,7 +356,18 @@ namespace Dashboard.MappingProfileCls
             CreateMap<AccountTeamModel, AccountTeamDto>();
 
             CreateMap<AccountTeamFilter, AccountTeamParameters>();
+            
+            CreateMap<AccountTeam, AccountTeamCreateOrEditModel>();
+            
+            CreateMap<AccountTeamCreateOrEditModel, AccountTeam>();
+
             #endregion
+            
+
+
+
+
+            
 
             #region Account Team Game Weak
             CreateMap<AccountTeamGameWeakModel, AccountTeamGameWeakDto>();
@@ -479,6 +498,28 @@ namespace Dashboard.MappingProfileCls
 
             #region Player Transfer Models
             CreateMap<PlayerTransferModel, PlayerTransferDto>();
+            #endregion
+            
+            #region Subscription Models
+
+            #region Subscription
+
+            _ = CreateMap<Subscription, SubscriptionCreateOrEditModel>();
+
+            _ = CreateMap<SubscriptionCreateOrEditModel, Subscription>()
+                .ForMember(dest => dest.ImageUrl, opt => opt.Ignore())
+                .ForMember(dest => dest.StorageUrl, opt => opt.Ignore());
+
+            _ = CreateMap<SubscriptionModel, SubscriptionDto>();
+
+            _ = CreateMap<SubscriptionFilter, SubscriptionParameters>();
+
+            _ = CreateMap<SubscriptionLangModel, SubscriptionLang>();
+
+            _ = CreateMap<SubscriptionLang, SubscriptionLangModel>();
+
+            #endregion
+
             #endregion
 
         }

@@ -15,17 +15,25 @@
             <dl class="row mb-0">
 
                 <dt class="col-sm-4 fw-bolder mb-1">@Localizer.Get("HomeTeam"):</dt>
+                
                 <dd class="col-sm-8 mb-1">
                     <a href="/TeamEntity/Team/Profile/@Model.Fk_Home" target="_blank">@Model.Home.Name</a>
 
                 </dd>
+                
                 <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.GameWeak.Season):</dt>
+                
                 <dd class="col-sm-8 mb-1">
                     <a href="/SeasonEntity/Season/Profile/@Model.GameWeak.Fk_Season" target="_blank">@Model.GameWeak.Season.Name</a>
-
                 </dd>
+                
+                <dt class="col-sm-4 mb-1">
+                    <a href="/TeamEntity/Player/Index?Fk_Team=@Model.Fk_Home&Fk_GameWeak=@Model.Fk_GameWeak" target="_blank">@Localizer.Get("Home Players")</a>
+                </dt>
+                
+                <dd class="col-sm-8 mb-1"></dd>
 
-                  <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.HomeScore):</dt>
+                <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.HomeScore):</dt>
                 <dd class="col-sm-8 mb-1">@Model.HomeScore</dd>
 
                 <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.StartTime):</dt>
@@ -39,12 +47,18 @@
 
                 <dt class="col-sm-4 fw-bolder mb-1">@Localizer.Get("AwayTeam"):</dt>
                 <dd class="col-sm-8 mb-1">
-                    <a href="/TeamEntity/Team/Profile/@Model.Fk_Away" target="_blank">@Model.Away.Name</a>
+                    <a href="/TeamEntity/Team/Profile/@Model.Fk_Away&Fk_GameWeak=@Model.Fk_GameWeak" target="_blank">@Model.Away.Name</a>
 
                 </dd>
                 <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.GameWeak):</dt>
                 <dd class="col-sm-8 mb-1">@Model.GameWeak.Name</dd>
 
+                <dt class="col-sm-4 mb-1">
+                    <a href="/TeamEntity/Player/Index?Fk_Team=@Model.Fk_Away" target="_blank">@Localizer.Get("Away Players")</a>
+                </dt>
+                
+                <dd class="col-sm-8 mb-1"></dd>
+                
                 <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.AwayScore):</dt>
                 <dd class="col-sm-8 mb-1">@Model.AwayScore</dd>
 

@@ -17,7 +17,7 @@ namespace DAL.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.8")
+                .HasAnnotation("ProductVersion", "6.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -72,6 +72,9 @@ namespace DAL.Migrations
                     b.Property<string>("PhoneNumberTwo")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("RefCode")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("StorageUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -87,6 +90,43 @@ namespace DAL.Migrations
                         .IsUnique();
 
                     b.ToTable("Accounts");
+                });
+
+            modelBuilder.Entity("Entities.DBModels.AccountModels.AccountSubscription", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Fk_Account")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Fk_Subscription")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsAction")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Fk_Account");
+
+                    b.HasIndex("Fk_Subscription");
+
+                    b.ToTable("AccountSubscriptions");
                 });
 
             modelBuilder.Entity("Entities.DBModels.AccountTeamModels.AccountTeam", b =>
@@ -748,6 +788,14 @@ namespace DAL.Migrations
                             Fk_DashboardAccessLevel = 1,
                             Fk_DashboardAdministrationRole = 1,
                             Fk_DashboardView = 30
+                        },
+                        new
+                        {
+                            Id = 31,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fk_DashboardAccessLevel = 1,
+                            Fk_DashboardAdministrationRole = 1,
+                            Fk_DashboardView = 31
                         });
                 });
 
@@ -1238,6 +1286,13 @@ namespace DAL.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "AccountTeam",
                             ViewPath = "AccountTeam"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Subscription",
+                            ViewPath = "Subscription"
                         });
                 });
 
@@ -1478,6 +1533,13 @@ namespace DAL.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fk_Source = 30,
                             Name = "AccountTeam"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fk_Source = 31,
+                            Name = "Subscription"
                         });
                 });
 
@@ -2257,6 +2319,9 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("ExpireDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -2407,6 +2472,77 @@ namespace DAL.Migrations
                         .IsUnique();
 
                     b.ToTable("Standings");
+                });
+
+            modelBuilder.Entity("Entities.DBModels.SubscriptionModels.Subscription", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("CreatedBy")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LastModifiedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("StorageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Subscriptions");
+                });
+
+            modelBuilder.Entity("Entities.DBModels.SubscriptionModels.SubscriptionLang", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getutcdate()");
+
+                    b.Property<int>("Fk_Source")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Fk_Source")
+                        .IsUnique();
+
+                    b.ToTable("SubscriptionLang");
                 });
 
             modelBuilder.Entity("Entities.DBModels.TeamModels.Player", b =>
@@ -2847,7 +2983,7 @@ namespace DAL.Migrations
                             EmailAddress = "user@mail.com",
                             LastModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Developer",
-                            Password = "$2a$11$0euBoIpNQYm6umDTbADsnuhkTcqdIQZ5J4xaIEtilC3pipeISJca6",
+                            Password = "$2a$11$f7fKVj7ezshNjpCaTNkZcOVMcEFqR55UjAOS08nikR3t0g1tAjjpa",
                             UserName = "Developer"
                         });
                 });
@@ -2925,6 +3061,25 @@ namespace DAL.Migrations
                     b.Navigation("Nationality");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Entities.DBModels.AccountModels.AccountSubscription", b =>
+                {
+                    b.HasOne("Entities.DBModels.AccountModels.Account", "Account")
+                        .WithMany()
+                        .HasForeignKey("Fk_Account")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.DBModels.SubscriptionModels.Subscription", "Subscription")
+                        .WithMany()
+                        .HasForeignKey("Fk_Subscription")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+
+                    b.Navigation("Subscription");
                 });
 
             modelBuilder.Entity("Entities.DBModels.AccountTeamModels.AccountTeam", b =>
@@ -3350,6 +3505,17 @@ namespace DAL.Migrations
                     b.Navigation("Team");
                 });
 
+            modelBuilder.Entity("Entities.DBModels.SubscriptionModels.SubscriptionLang", b =>
+                {
+                    b.HasOne("Entities.DBModels.SubscriptionModels.Subscription", "Source")
+                        .WithOne("SubscriptionLang")
+                        .HasForeignKey("Entities.DBModels.SubscriptionModels.SubscriptionLang", "Fk_Source")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Source");
+                });
+
             modelBuilder.Entity("Entities.DBModels.TeamModels.Player", b =>
                 {
                     b.HasOne("Entities.DBModels.TeamModels.PlayerPosition", "PlayerPosition")
@@ -3579,6 +3745,11 @@ namespace DAL.Migrations
                     b.Navigation("SponsorLang");
 
                     b.Navigation("SponsorViews");
+                });
+
+            modelBuilder.Entity("Entities.DBModels.SubscriptionModels.Subscription", b =>
+                {
+                    b.Navigation("SubscriptionLang");
                 });
 
             modelBuilder.Entity("Entities.DBModels.TeamModels.Player", b =>

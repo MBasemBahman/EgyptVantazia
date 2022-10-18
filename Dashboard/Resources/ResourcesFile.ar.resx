@@ -1023,4 +1023,37 @@
   <data name="NotificationToken" xml:space="preserve">
     <value>توكين الملاحظات</value>
   </data>
+  <data name="Fk_Players" xml:space="preserve">
+    <value>اللاعبين</value>
+  </data>
+  <data name="Home Players" xml:space="preserve">
+    <value>لاعبين الفريق المستضيف</value>
+  </data>
+  <data name="Away Players" xml:space="preserve">
+    <value>لاعبين الفريق الضيف</value>
+  </data>
+  <data name="ExpireDate" xml:space="preserve">
+    <value>تاريخ انتهاء العقد</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>بداية من</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>ينتهي في</value>
+  </data>
+  <data name="Add Subscriptions" xml:space="preserve">
+    <value>اضف اشتراك جديد</value>
+  </data>
+  <data name="Plan" xml:space="preserve">
+    <value>الخطة</value>
+  </data>
+  <data name="IsAction" xml:space="preserve">
+    <value>الحالية</value>
+  </data>
+  <data name="EditSpec" xml:space="preserve">
+    <value>تعديل الجدول</value>
+  </data>
+  <data name="choose one at least" xml:space="preserve">
+    <value>يجب اختيار واحد على الاقل</value>
+  </data>
 </root>

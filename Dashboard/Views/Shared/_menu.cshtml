@@ -207,8 +207,22 @@
                     </a>
                 </li>
             }
+        
+            @if (viewList.Contains((int)DashboardViewEnum.Subscription))
+            {
+                <li id="SubscriptionList" class="@(active == DashboardViewEnum.Subscription.ToString()?"active":"") nav-item">
+                    <a class="d-flex align-items-center"
+                       asp-action="Index" asp-area="SubscriptionEntity"
+                       asp-controller="Subscription">
+                        <i data-feather="dollar-sign"></i>
+                        <span class="menu-title text-truncate">
+                            @Localizer.Get("Subscriptions")
+                        </span>
+                    </a>
+                </li>
+            }
 
-            @if (viewList.Contains((int)DashboardViewEnum.DBLogs))
+        @if (viewList.Contains((int)DashboardViewEnum.DBLogs))
             {
                 <li class="@(active ==DashboardViewEnum.DBLogs.ToString()?"active":"") nav-item">
                     <a class="d-flex align-items-center"

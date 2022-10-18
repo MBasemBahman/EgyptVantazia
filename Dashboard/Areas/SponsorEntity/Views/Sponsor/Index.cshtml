@@ -85,6 +85,7 @@
                                             </th>
                                             <th>@Html.DisplayNameFor(model => row.Name)</th>
                                             <th>@Html.DisplayNameFor(model => row.SponsorViewsCount)</th>
+                                            <th>@Html.DisplayNameFor(model => row.ExpireDate)</th>
                                             <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
                                             <th>
                                                 @Html.DisplayNameFor(model => row.Id)
@@ -155,6 +156,7 @@
                             }
                         },
                       {data:"sponsorViewsCount"},
+                      {data:"expireDate"},
                         { data: "createdAt" },
                         { data: "id" },
                     ]

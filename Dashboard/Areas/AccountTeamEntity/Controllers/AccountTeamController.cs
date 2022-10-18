@@ -3,6 +3,7 @@ using Dashboard.Areas.PlayerTransferEntity.Models;
 using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.PlayerTransfersModels;
 using Entities.CoreServicesModels.SeasonModels;
+using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountTeamModels;
 using Entities.RequestFeatures;
 namespace Dashboard.Areas.AccountTeamEntity.Controllers
@@ -94,7 +95,86 @@ namespace Dashboard.Areas.AccountTeamEntity.Controllers
             return View(data);
         }
 
+        [Authorize(DashboardViewEnum.AccountTeam, AccessLevelEnum.CreateOrEdit)]
+        public async Task<IActionResult> CreateOrEdit(int fk_Account, int id = 0)
+        {
+            AccountTeamCreateOrEditModel model = new()
+            {
+                Fk_Account = fk_Account
+            };
+            
+            if (id > 0)
+            {
+                AccountTeam accountTeamDB = await _unitOfWork.AccountTeam.FindAccountTeambyId(id, trackChanges: false);
+                model = _mapper.Map<AccountTeamCreateOrEditModel>(accountTeamDB);
+                model.ImageUrl = accountTeamDB.StorageUrl + accountTeamDB.ImageUrl;
+            }
 
+            if (model.ImageUrl.IsNullOrEmpty())
+            {
+                model.ImageUrl = "calendar-date.png";
+                model.StorageUrl = _linkGenerator.GetUriByAction(HttpContext).GetBaseUri(HttpContext.Request.RouteValues["area"].ToString());
+            }
+            
+            SetViewData(ProfileLayOut: true);
+            return View(model);
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(DashboardViewEnum.AccountTeam, AccessLevelEnum.CreateOrEdit)]
+        public async Task<IActionResult> CreateOrEdit(int id, AccountTeamCreateOrEditModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                SetViewData(ProfileLayOut: false);
+
+                return View(model);
+            }
+            try
+            {
+
+                UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+                AccountTeam accountTeamDB = new();
+                if (id == 0)
+                {
+                    accountTeamDB = _mapper.Map<AccountTeam>(model);
+
+                    accountTeamDB.CreatedBy = auth.UserName;
+                    
+                    _unitOfWork.AccountTeam.CreateAccountTeam(accountTeamDB);
+
+                }
+                else
+                {
+                    accountTeamDB = await _unitOfWork.AccountTeam.FindAccountTeambyId(id, trackChanges: true);
+
+                    _ = _mapper.Map(model, accountTeamDB);
+
+                    accountTeamDB.LastModifiedBy = auth.UserName;
+                }
+
+                IFormFile imageFile = HttpContext.Request.Form.Files["ImageFile"];
+
+                if (imageFile != null)
+                {
+                    accountTeamDB.ImageUrl = await _unitOfWork.AccountTeam.UploadAccountTeamImage(_environment.WebRootPath, imageFile);
+                    accountTeamDB.StorageUrl = _linkGenerator.GetUriByAction(HttpContext).GetBaseUri(HttpContext.Request.RouteValues["area"].ToString());
+                }
+
+                await _unitOfWork.Save();
+
+                return RedirectToAction("Profile", "Account", new {area = "AccountEntity", id = model.Fk_Account});
+            }
+            catch (Exception ex)
+            {
+                ViewData[ViewDataConstants.Error] = _logger.LogError(HttpContext.Request, ex).ErrorMessage;
+            }
+
+            SetViewData(ProfileLayOut: false);
+
+            return View(model);
+        }
 
         // helper methods
         private void SetViewData(bool ProfileLayOut = false)
@@ -102,6 +182,7 @@ namespace Dashboard.Areas.AccountTeamEntity.Controllers
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             ViewData["Season"] = _unitOfWork.Season.GetSeasonLookUp(new SeasonParameters(), otherLang);
+            ViewData["Player"] = _unitOfWork.Team.GetPlayerLookUp(new PlayerParameters(), otherLang);
             ViewData["ProfileLayOut"] = ProfileLayOut;
         }
 

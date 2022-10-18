@@ -91,6 +91,14 @@
                                                 <span asp-validation-for="SponsorViews" class="text-danger"></span>
                                             </div>
                                         </div>
+                                        
+                                        <div class="col-md-12 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="ExpireDate" class="form-label"></label>
+                                                <input asp-for="ExpireDate" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("ExpireDate"))" />
+                                                <span asp-validation-for="ExpireDate" class="text-danger"></span>
+                                            </div>
+                                        </div>
                                     </div>
 
                               

@@ -50,6 +50,8 @@
                         <th>@Html.DisplayNameFor(model => score.ScoreType)</th>
                         <th>@Html.DisplayNameFor(model => score.Points)</th>
                         <th>@Html.DisplayNameFor(model => score.Value)</th>
+                        <th>@Html.DisplayNameFor(model => score.FinalValue)</th>
+                        <th>@Html.DisplayNameFor(model => score.GameTime)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,6 +62,8 @@
                             <td>@item.ScoreType.Name</td>
                             <td>@item.Points</td>
                             <td>@item.Value</td>
+                            <td>@item.FinalValue</td>
+                            <td>@item.GameTime</td>
                         </tr>
                     }
                 </tbody>

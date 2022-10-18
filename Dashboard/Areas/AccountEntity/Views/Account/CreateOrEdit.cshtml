@@ -5,6 +5,7 @@
     ViewBag.useForm = true;
     ViewBag.useDatePicker = true;
     ViewBag.useImageUploud = true;
+    ViewBag.userFormRepeater = true;
     bool IsProfile = ViewData["IsProfile"] != null ? (bool)ViewData["IsProfile"] : false;
     int id = ViewData["id"] != null ? (int)ViewData["id"] : 0;
 
@@ -150,11 +151,130 @@
                                                 <span asp-validation-for="Account.Address" class="text-danger"></span>
                                             </div>
                                         </div>
-                                       
+
                                     </div>
+                                    <div class="row">
+                                        <h3 class="mt-3">@Localizer.Get("Subscriptions")</h3>
+                                        <hr />
+                                        <div class="invoice-repeater">
+                                            <div data-repeater-list="Subscriptions" class="mb-2">
+                                                @if (Model.Subscriptions != null && Model.Subscriptions.Any())
+                                                {
+                                                    @for (int i = 0; i < Model.Subscriptions.Count; i++)
+                                                    {
+                                                        <div data-repeater-item class="data-repeater mb-2">
+                                                            <div class="row d-flex align-items-end">
+                                                                <div class="col-md-3 col-12">
+                                                                    <div class="mb-1">
+                                                                        <label class="form-label">@Localizer.Get("Plan")</label>
+                                                                        <select  asp-for="Subscriptions[i].Fk_Subscription" class=" form-select player-price-team" asp-items="@(new SelectList(ViewData["Subscription"] as Dictionary<string,string>,"Key","Value"))">
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-3 col-12">
+                                                                    <div class="mb-1">
+                                                                        <label class="form-label">@Localizer.Get("StartDate")</label>
+                                                                        <input type="date" asp-for="Subscriptions[i].StartDate" class="form-control buy-price" placeholder="@Localizer.Get("Enter") @Localizer.Get("StartDate")">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-3 col-12">
+                                                                    <div class="mb-1">
+                                                                        <label class="form-label">@Localizer.Get("EndDate")</label>
+                                                                        <input type="date" asp-for="Subscriptions[i].EndDate" class="form-control sell-price" placeholder="@Localizer.Get("Enter") @Localizer.Get("EndDate")">
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                                <div class="col-md-2 col-12">
+                                                                    <div class="mb-1">
+                                                                        <label class="form-label">@Localizer.Get("IsAction")</label>
+                                                                        <select class="form-control" asp-for="Subscriptions[i].IsAction">
+                                                                            <option value="true">@Localizer.Get("Yes")</option>
+                                                                            <option value="false">@Localizer.Get("No")</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-1 col-12 mb-50">
+                                                                    <div class="mb-1">
+                                                                        <button class="remove-btn  btn btn-outline-danger text-nowrap px-1" data-repeater-delete
+                                                                        type="button">
+                                                                            <i data-feather="x" class="me-25"></i>
+                                                                            <span>@Localizer.Get("Remove")</span>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
+                                                else
+                                                {
+
+                                                    <div data-repeater-item class="data-repeater mb-2">
+                                                        <div class="row d-flex align-items-end">
+                                                            <div class="col-md-3 col-12">
+                                                                <div class="mb-1">
+                                                                    <label for=".Fk_Subscription" class="form-label">@Localizer.Get("Plan")</label>
+                                                                    <select name=".Fk_Subscription" class=" form-select player-price-team" asp-items="@(new SelectList(ViewData["Subscription"] as Dictionary<string,string>,"Key","Value"))">
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3 col-12">
+                                                                <div class="mb-1">
+                                                                    <label class="form-label">@Localizer.Get("StartDate")</label>
+                                                                    <input type="date" name=".StartDate" class="form-control buy-price" placeholder="@Localizer.Get("Enter") @Localizer.Get("StartDate")">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3 col-12">
+                                                                <div class="mb-1">
+                                                                    <label class="form-label">@Localizer.Get("EndDate")</label>
+                                                                    <input type="date" name=".EndDate" class="form-control sell-price" placeholder="@Localizer.Get("Enter") @Localizer.Get("EndDate")">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-2 col-12">
+                                                                <div class="mb-1">
+                                                                    <label class="form-label">@Localizer.Get("IsAction")</label>
+                                                                    <select class="form-control" name=".IsAction">
+                                                                        <option value="true">@Localizer.Get("Yes")</option>
+                                                                        <option value="false">@Localizer.Get("No")</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-1 col-12 mb-50">
+                                                                <div class="mb-1">
+                                                                    <button class="remove-btn  btn btn-outline-danger text-nowrap px-1" data-repeater-delete newRepeater
+                                                                        type="button">
+                                                                        <i data-feather="x" class="me-25"></i>
+                                                                        <span>@Localizer.Get("Remove")</span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                }
+                                            </div>
 
 
+                                            <div class="row mb-3">
+                                                <div class="col-12">
+                                                    <hr />
 
+                                                    <button id="add-new-btn-price" class="btn btn-icon btn-success" type="button" data-repeater-create>
+                                                        <i data-feather="plus" class="me-25"></i>
+                                                        <span>@Localizer.Get("Add Subscriptions")</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
                                     <hr />
                                     <div class="row">
                                         <div class="col-12">
@@ -183,3 +303,15 @@
 
     </div>
 </div>
+
+@section scripts{
+    <script>
+    
+        $(document).ready(function () {
+            $('button[data-repeater-delete][newRepeater]').each(function () {
+                $(this).click();
+            });
+        });
+
+    </script>
+}

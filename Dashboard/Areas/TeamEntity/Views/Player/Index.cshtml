@@ -68,45 +68,51 @@
                                 await Html.RenderPartialAsync("../Player/Filter", Model, ViewData);
                             }
                                 <div class="card-datatable">
-                                    <table class="datatables datatables-ajax table table-responsive table">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    @Html.DisplayNameFor(model => row.Id)
-
-                                                    <a id="profile" asp-action="Profile">
-                                                    </a>
-
-                                                    @if (accessLevel.CreateAccess)
-                                                    {
-                                                        <a id="create" asp-action="CreateOrEdit">
-                                                        </a>
-                                                    }
-
-                                                    @if (accessLevel.EditAccess)
-                                                    {
-                                                        <a id="edit" asp-action="CreateOrEdit">
-                                                        </a>
-                                                    }
-                                                    @if (accessLevel.DeleteAccess)
-                                                    {
-                                                        <a id="delete" asp-action="Delete">
-                                                        </a>
-                                                    }
-                                                </th>
-                                                <th>@Html.DisplayNameFor(model => row.Name)</th>
-                                                <th>@Html.DisplayNameFor(model => row.PlayerNumber)</th>
-                                                <th>@Html.DisplayNameFor(model => row.Age)</th>
-                                                <th>@Html.DisplayNameFor(model => row.Team)</th>
-                                                <th>@Html.DisplayNameFor(model => row._365_PlayerId)</th>
-                                                <th>@Html.DisplayNameFor(model => row.PlayerPosition)</th>
-                                                <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
-                                                <th>
-                                                    @Html.DisplayNameFor(model => row.Id)
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                    </table>
+                                    <form class="playersPricesForm" asp-action="EditPlayersPrices" method="get">
+                                        <table class="datatables datatables-ajax table table-responsive table">
+                                                                                <thead>
+                                                                                <tr>
+                                                                                    <th></th>
+                                                                                    <th>
+                                                                                        @Html.DisplayNameFor(model => row.Id)
+                                        
+                                                                                        <a id="profile" asp-action="Profile">
+                                                                                        </a>
+                                                                                        
+                                                                                        <a id="editSpecific" asp-action="EditPlayersPrices">
+                                                                                        </a>
+                                        
+                                                                                        @if (accessLevel.CreateAccess)
+                                                                                        {
+                                                                                            <a id="create" asp-action="CreateOrEdit">
+                                                                                            </a>
+                                                                                        }
+                                        
+                                                                                        @if (accessLevel.EditAccess)
+                                                                                        {
+                                                                                            <a id="edit" asp-action="CreateOrEdit">
+                                                                                            </a>
+                                                                                        }
+                                                                                        @if (accessLevel.DeleteAccess)
+                                                                                        {
+                                                                                            <a id="delete" asp-action="Delete">
+                                                                                            </a>
+                                                                                        }
+                                                                                    </th>
+                                                                                    <th>@Html.DisplayNameFor(model => row.Name)</th>
+                                                                                    <th>@Html.DisplayNameFor(model => row.PlayerNumber)</th>
+                                                                                    <th>@Html.DisplayNameFor(model => row.Age)</th>
+                                                                                    <th>@Html.DisplayNameFor(model => row.Team)</th>
+                                                                                    <th>@Html.DisplayNameFor(model => row._365_PlayerId)</th>
+                                                                                    <th>@Html.DisplayNameFor(model => row.PlayerPosition)</th>
+                                                                                    <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
+                                                                                    <th>
+                                                                                        @Html.DisplayNameFor(model => row.Id)
+                                                                                    </th>
+                                                                                </tr>
+                                                                                </thead>
+                                                                            </table>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -182,7 +188,6 @@ else
 @section scripts{
     <script src="~/apis/charts.js"></script>
     <script>
-
         function LoadTable() {
             var dt_ajax_table = $('.datatables');
             if (dt_ajax_table.length) {
@@ -195,6 +200,7 @@ else
                         dataType: "json",
                         data: function (data) {
                            data.Fk_Team = $("#Fk_Team").length > 0 ? $("#Fk_Team").val() : @Model.Fk_Team;
+                           data.Fk_GameWeak = $("#Fk_GameWeak").length > 0 ? $("#Fk_GameWeak").val() : @Model.Fk_GameWeak;
                             data.Fk_PlayerPosition = $("#Fk_PlayerPosition").length > 0 ? $("#Fk_PlayerPosition").val() : @Model.Fk_PlayerPosition;
                             data.CreatedAtFrom = $("#CreatedAtFrom").length > 0 ? $("#CreatedAtFrom").val() : '@Model.CreatedAtFrom';
                             data.CreatedAtTo = $("#CreatedAtTo").length > 0 ? $("#CreatedAtTo").val() : '@Model.CreatedAtTo';
@@ -204,6 +210,16 @@ else
                     },
                     // Columns Setups
                     columns: [
+                        {
+                             data: "id",
+                             'targets': 0,
+                             'searchable': false,
+                             'orderable': false,
+                             'className': 'dt-body-center',
+                             'render': function (data, type, full, meta){
+                                 return '<input type="checkbox" name="fk_Players[]" value="' + $('<div/>').text(data).html() + '">';
+                             }
+                        },
                         { data: "id" },
                         {
                             data: "name",
@@ -299,7 +315,8 @@ else
                         },
                         { data: "createdAt" },
                         { data: "id" },
-                    ]
+                    ],
+                    'order': [[1, 'asc']]
                 });
                 $("button[type=reset]").on("click", function () {
                     $(".dt-date").each(function () {
@@ -316,11 +333,23 @@ else
             }
         };
 
-
-
         $(document).ready(function () {
             LoadTable();
+        });
+        
+        $(document).on("click", ".edit-rows", function(e) {
+          e.preventDefault();
+          let fk_Players = $('input[name="fk_Players[]"]:checked').map(function(){return $(this).val();}).get();
 
+          if (fk_Players.length == 0)  {
+              alert('choose one at least');
+          } else {
+            // $(".playersPricesForm").submit();
+            
+            window.location.href = '/TeamEntity/Player/EditPlayersPrices?fk_Players='+fk_Players;
+            
+          }
+          
         });
     </script>
 }

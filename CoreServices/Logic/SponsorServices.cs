@@ -31,7 +31,9 @@ namespace CoreServices.Logic
                            SponsorViewsCount = a.SponsorViews.Count,
                            SponsorViews = parameters.GetViews ? a.SponsorViews
                                                                   .Select(b => b.AppViewEnum)
-                                                                  .ToList() : null
+                                                                  .ToList() : null,
+                           ExpireDate = a.ExpireDate
+                           
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

@@ -12,6 +12,7 @@ using Entities.DBModels.SeasonModels;
 using Entities.DBModels.SharedModels;
 using Entities.DBModels.SponsorModels;
 using Entities.DBModels.StandingsModels;
+using Entities.DBModels.SubscriptionModels;
 using Entities.DBModels.TeamModels;
 using Entities.DBModels.UserModels;
 using Microsoft.EntityFrameworkCore;
@@ -71,6 +72,7 @@ namespace BaseDB
 
         #region AccountModels
         public DbSet<Account> Accounts { get; set; }
+        public DbSet<AccountSubscription> AccountSubscriptions { get; set; }
         #endregion
 
         #region SponsorModels
@@ -125,6 +127,10 @@ namespace BaseDB
         #region StandingsModels
         public DbSet<Standings> Standings { get; set; }
 
+        #endregion
+        
+        #region SubscriptionModels
+        public DbSet<Subscription> Subscriptions { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

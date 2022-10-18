@@ -1,4 +1,7 @@
 ﻿@model List<NewsAttachmentDto>
+@{
+    string[] imageTypes = { "image/jpeg", "image/png", "image/gif"};    
+}
 
 <div class="card">
     <div class="card-header">
@@ -16,7 +19,14 @@
                             <div class="d-flex justify-content-between flex-sm-row flex-column">
                                 <div class="card-information">
                                     <div class="d-flex align-items-center mb-50">
-                                        <h6 class="mb-0">@attachment.FileName</h6>
+                                        @if (imageTypes.Contains(attachment.FileType))
+                                        {
+                                            <img src="@attachment.FileUrl" style="width: 130px;" />
+                                        }
+                                        else
+                                        {
+                                            <h6 class="mb-0">@attachment.FileName</h6>
+                                        }
                                     </div>
                                     <span class="card-number">@attachment.CreatedAt</span>
                                 </div>

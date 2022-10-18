@@ -183,6 +183,7 @@ namespace CoreServices.Logic
                            Fk_Team = a.Fk_Team,
                            PlayerNumber = a.PlayerNumber,
                            ShortName = a.ShortName,
+                           Age = a.Age,
                            PlayerPosition = new PlayerPositionModel
                            {
                                Name = otherLang ? a.PlayerPosition.PlayerPositionLang.Name : a.PlayerPosition.Name,
@@ -224,6 +225,11 @@ namespace CoreServices.Logic
             return await PagedList<PlayerModel>.ToPagedList(GetPlayers(parameters, otherLang), parameters.PageNumber, parameters.PageSize);
         }
 
+        public Dictionary<string, string> GetPlayerLookUp(PlayerParameters parameters, bool otherLang)
+        {
+            return GetPlayers(parameters, otherLang).ToDictionary(a => a.Id.ToString(), a => a.Name);
+        }
+        
         public async Task<Player> FindPlayerbyId(int id, bool trackChanges)
         {
             return await _repository.Player.FindById(id, trackChanges);
@@ -346,6 +352,24 @@ namespace CoreServices.Logic
                 }
             }
             return player;
+        }
+        
+        public void AddPlayersPrices(List<PlayerPrice> prices, string userName)
+        {
+            if (prices != null && prices.Any())
+            {
+                foreach (var price in prices)
+                {
+                    CreatePlayerPrice(new PlayerPrice
+                    {
+                        Fk_Player = price.Fk_Player,
+                        Fk_Team = price.Fk_Team,
+                        BuyPrice = price.BuyPrice,
+                        SellPrice = price.SellPrice,
+                        CreatedBy = userName
+                    });
+                }
+            }
         }
 
         public async Task<Player> DeletePlayerPrices(Player player, List<int> pricesIds)

@@ -37,12 +37,9 @@
                                     </li>
 
                                 </ol>
-
-
+                                
                             </div>
                         </div>
-
-
 
                     </div>
                 </div>
@@ -76,13 +73,18 @@
 
                                                     <a id="profile" asp-action="Profile">
                                                     </a>
+                                                    
+                                                    @if (Model.Fk_Account != 0 && accessLevel.CreateAccess)
+                                                    {
+                                                        <a id="create" asp-action="Profile">
+                                                        </a>
+                                                    }
 
                                                 </th>
-                                                <th>@Html.DisplayNameFor(model => row.Name)</th>
                                                 <th>@Html.DisplayNameFor(model => row.Account)</th>
+                                                <th>@Html.DisplayNameFor(model => row.Name)</th>
                                                 <th>@Html.DisplayNameFor(model => row.Season)</th>
                                                 <th>@Html.DisplayNameFor(model => row.TotalPoints)</th>
-                                                <th>@Html.DisplayNameFor(model => row.TotalMoney)</th>
                                                 <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
                                                 <th>
                                                     @Html.DisplayNameFor(model => row.Id)
@@ -122,12 +124,23 @@ else
                                         <a id="profile" asp-action="Profile">
                                         </a>
 
+                                        @if (Model.Fk_Account != 0 && accessLevel.CreateAccess)
+                                        {
+                                            <a id="create" asp-action="CreateOrEdit" asp-route-fk_Account="@Model.Fk_Account">
+                                            </a>
+                                        }
+                                        
+                                        @if (Model.Fk_Account != 0 && accessLevel.EditAccess)
+                                        {
+                                            <a id="edit" asp-action="CreateOrEdit">
+                                            </a>
+                                        }
+
                                     </th>
-                                    <th>@Html.DisplayNameFor(model => row.Name)</th>
                                     <th>@Html.DisplayNameFor(model => row.Account)</th>
+                                    <th>@Html.DisplayNameFor(model => row.Name)</th>
                                     <th>@Html.DisplayNameFor(model => row.Season)</th>
                                     <th>@Html.DisplayNameFor(model => row.TotalPoints)</th>
-                                    <th>@Html.DisplayNameFor(model => row.TotalMoney)</th>
                                     <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
                                     <th>
                                         @Html.DisplayNameFor(model => row.Id)
@@ -172,36 +185,6 @@ else
                     columns: [
                         { data: "id" },
                         {
-                            data: "name",
-                            render: function (data, type, row) {
-                                var span = '';
-
-                                if (row.imageUrl != null) {
-
-                                    return '<div class="d-flex justify-content-left align-items-center"><div class= "avatar-wrapper" ><div class="avatar me-1">'
-                                        + '<img src="' + row.imageUrl + '"  height="32" width="32">'
-                                        + span
-                                        + '</div></div>'
-                                        + ' <div class= "d-flex flex-column">'
-                                        + '<a href="/AccountTeamEntity/AccountTeam/Profile/' + row.id + '" class= "user_name text-truncate">'
-                                        + '<span class= "fw-bolder">' + data + '</span></a> '
-                                        + '<small class= "emp_post text-muted" ></small ></div></div>';
-                                }
-                                else {
-                                    return '<div class="d-flex justify-content-left align-items-center"><div class= "avatar-wrapper" >'
-                                        + '<div class="avatar  bg-light-dark  me-1"><span class="avatar-content"></span>' + span + '</div>'
-                                        + '</div>'
-                                        + ' <div class= "d-flex flex-column">'
-                                        + '<a href="/AccountTeamEntity/AccountTeam/Profile/' + row.id + '" class= "user_name text-truncate">'
-                                        + '<span class= "fw-bolder">' + data + '</span></a> '
-                                        + '<small class= "emp_post text-muted" ></small ></div></div>';
-                                }
-
-
-                            }
-                        },
-
-                        {
                             data: "account",
                             orderable: false,
                             render: function (data, type, row) {
@@ -231,10 +214,38 @@ else
 
                             }
                         },
+                        {
+                            data: "name",
+                            render: function (data, type, row) {
+                                var span = '';
+
+                                if (row.imageUrl != null) {
+
+                                    return '<div class="d-flex justify-content-left align-items-center"><div class= "avatar-wrapper" ><div class="avatar me-1">'
+                                        + '<img src="' + row.imageUrl + '"  height="32" width="32">'
+                                        + span
+                                        + '</div></div>'
+                                        + ' <div class= "d-flex flex-column">'
+                                        + '<a href="/AccountTeamEntity/AccountTeam/Profile/' + row.id + '" class= "user_name text-truncate">'
+                                        + '<span class= "fw-bolder">' + data + '</span></a> '
+                                        + '<small class= "emp_post text-muted" ></small ></div></div>';
+                                }
+                                else {
+                                    return '<div class="d-flex justify-content-left align-items-center"><div class= "avatar-wrapper" >'
+                                        + '<div class="avatar  bg-light-dark  me-1"><span class="avatar-content"></span>' + span + '</div>'
+                                        + '</div>'
+                                        + ' <div class= "d-flex flex-column">'
+                                        + '<a href="/AccountTeamEntity/AccountTeam/Profile/' + row.id + '" class= "user_name text-truncate">'
+                                        + '<span class= "fw-bolder">' + data + '</span></a> '
+                                        + '<small class= "emp_post text-muted" ></small ></div></div>';
+                                }
+
+
+                            }
+                        },
 
                         { data: "season.name", orderable: false, },
                         { data: "totalPoints" },
-                        { data: "totalMoney" },
                         { data: "createdAt" },
                         { data: "id" },
                     ]

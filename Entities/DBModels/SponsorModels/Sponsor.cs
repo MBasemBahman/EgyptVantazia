@@ -14,8 +14,10 @@
 
         [DisplayName(nameof(SponsorViews))]
         public IList<SponsorView> SponsorViews { get; set; }
-
         public SponsorLang SponsorLang { get; set; }
+
+        [DisplayName(nameof(ExpireDate))]
+        public DateTime? ExpireDate { get; set; }
     }
 
     public class SponsorLang : LangEntity<Sponsor>

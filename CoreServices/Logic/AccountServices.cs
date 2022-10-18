@@ -60,16 +60,52 @@ namespace CoreServices.Logic
         {
             return await PagedList<AccountModel>.ToPagedList(GetAccounts(parameters, otherLang), parameters.PageNumber, parameters.PageSize);
         }
+        
+        public void UpdateAccountSubscriptions(int fk_account, List<AccountSubscriptionModel> subscriptions)
+        {
+            RemoveAccountSubscriptions(fk_account);
+            AddAccountSubscriptions(fk_account, subscriptions);
+        }
 
+        private void AddAccountSubscriptions(int fk_account, List<AccountSubscriptionModel> subscriptions)
+        {
+            foreach (var subscription in subscriptions)
+            {
+                var accountSubscription = new AccountSubscription
+                {
+                    Fk_Account = fk_account,
+                    Fk_Subscription = subscription.Fk_Subscription,
+                    StartDate = subscription.StartDate,
+                    EndDate = subscription.EndDate,
+                    IsAction = subscription.IsAction
+                };
 
+                _repository.AccountSubscription.Create(accountSubscription);
+            }
+        }
+
+        private void RemoveAccountSubscriptions(int fk_account)
+        {
+            var subscriptions = _repository.AccountSubscription.FindAll(new AccountSubscriptionParameters
+            {
+                Fk_Account = fk_account
+            }, trackChanges: false);
+
+            if (!subscriptions.Any()) return;
+
+            foreach (var subscription in subscriptions)
+            {
+                _repository.AccountSubscription.Delete(subscription);
+            }
+        }
+        
         public async Task<PagedList<AccountModel>> GetAccountsPaged(
           IQueryable<AccountModel> data,
          AccountParameters parameters)
         {
             return await PagedList<AccountModel>.ToPagedList(data, parameters.PageNumber, parameters.PageSize);
         }
-
-
+        
         public async Task<Account> FindAccountById(int id, bool trackChanges)
         {
             return await _repository.Account.FindById(id, trackChanges);

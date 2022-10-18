@@ -48,11 +48,17 @@ namespace Entities.DBModels.AccountModels
 
         [DisplayName(nameof(FavouriteTeam))]
         public Team FavouriteTeam { get; set; }
+        
+        [DisplayName(nameof(RefCode))] 
+        public string RefCode { get; set; }
 
         [DisplayName(nameof(AccountTeams))]
         public IList<AccountTeam> AccountTeams { get; set; }
 
         [DisplayName(nameof(PrivateLeagueMembers))]
         public IList<PrivateLeagueMember> PrivateLeagueMembers { get; set; }
+        
+        [DisplayName(nameof(AccountSubscriptions))]
+        public IList<AccountSubscription> AccountSubscriptions { get; set; }
     }
 }

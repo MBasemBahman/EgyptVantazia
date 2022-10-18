@@ -73,6 +73,8 @@ namespace Dashboard.Areas.AccountEntity.Models
 
         public UserCreateModel User { get; set; }
         public string ImageUrl { get; set; }
+
+        public List<AccountSubscriptionModel> Subscriptions { get; set; }
     }
 
     public enum AccountProfileItems

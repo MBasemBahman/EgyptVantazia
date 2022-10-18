@@ -22,7 +22,6 @@ $(function () {
 
 
     if (dt_ajax_table.length) {
-
         $.extend(true, $.fn.dataTable.defaults, {
             "scrollX": true,
             stateSave: true,
@@ -160,6 +159,20 @@ $(function () {
                         setTimeout(function () {
                             $(node).closest('.dt-buttons').removeClass('btn-group').addClass('d-inline-flex');
                         }, 50);
+                    }
+                },
+                {
+                    text: feather.icons['edit'].toSvg({ class: 'me-50 font-small-4' }) + $("#EditSpecLbl").val(),
+                    className: 'edit-rows btn btn-info me-2',
+                    init: function (api, node, config) {
+                        if ($('#editSpecific').attr('href') == undefined) {
+                            $(node).hide();
+                        } else {
+                            $(node).removeClass('btn-secondary');
+                        }
+                    },
+                    action: function (e, dt, button, config) {
+                        
                     }
                 },
                 {

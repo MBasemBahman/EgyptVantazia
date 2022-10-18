@@ -27,13 +27,14 @@ namespace Dashboard.Areas.TeamEntity.Controllers
             _environment = environment;
         }
 
-        public IActionResult Index(int Fk_Team, bool ProfileLayOut = false)
+        public IActionResult Index(int Fk_Team, int Fk_GameWeak, bool ProfileLayOut = false)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             PlayerFilter filter = new()
             {
-                Fk_Team = Fk_Team
+                Fk_Team = Fk_Team,
+                Fk_GameWeak = Fk_GameWeak
             };
 
             ViewData["ProfileLayOut"] = ProfileLayOut;
@@ -217,6 +218,61 @@ namespace Dashboard.Areas.TeamEntity.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+        
+        [Authorize(DashboardViewEnum.Player, AccessLevelEnum.CreateOrEdit)]
+        public async Task<IActionResult> EditPlayersPrices([FromQuery]string fk_Players)
+        {
+            var fk_PlayersIds = fk_Players.Split(",").Select(Int32.Parse).ToList();
+            
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            
+            ViewData["Players"] = _unitOfWork.Team.GetPlayers(new PlayerParameters
+            {
+                Fk_Players = fk_PlayersIds
+            }, otherLang).ToList();
+            
+            return View();
+        }
+        
+        [HttpPost]
+        [Authorize(DashboardViewEnum.Player, AccessLevelEnum.CreateOrEdit)]
+        public async Task<IActionResult> EditPlayersPrices(List<PlayerPriceEditModel> model)
+        {
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            
+            if (!ModelState.IsValid)
+            {
+                ViewData["Players"] = _unitOfWork.Team.GetPlayers(new PlayerParameters
+                {
+                    Fk_Players = model.Select(a => a.Fk_Player).ToList()
+                }, otherLang).ToList();
+                return View(model);
+            }
+            
+            try
+            {
+                UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+                
+                var dataDB = _mapper.Map<List<PlayerPrice>>(model);
+
+                _unitOfWork.Team.AddPlayersPrices(dataDB, auth.UserName);
+
+                await _unitOfWork.Save();
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ViewData[ViewDataConstants.Error] = _logger.LogError(HttpContext.Request, ex).ErrorMessage;
+            }
+            
+            ViewData["Players"] = _unitOfWork.Team.GetPlayers(new PlayerParameters
+            {
+                Fk_Players = model.Select(a => a.Fk_Player).ToList()
+            }, otherLang).ToList();
+            return View();
+        }
+
 
         // helper methods
         private void SetViewData(int returnPage, int id, bool otherLang)
@@ -225,7 +281,6 @@ namespace Dashboard.Areas.TeamEntity.Controllers
             ViewData["id"] = id;
             ViewData["PlayerPosition"] = _unitOfWork.Team.GetPlayerPositionLookUp(new PlayerPositionParameters(), otherLang);
             ViewData["Team"] = _unitOfWork.Team.GetTeamLookUp(new TeamParameters(), otherLang);
-
         }
 
 

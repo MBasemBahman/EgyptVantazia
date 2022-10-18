@@ -46,4 +46,27 @@ namespace Entities.CoreServicesModels.TeamModels
         [DisplayName(nameof(Team))]
         public int Fk_Team { get; set; }
     }
+    
+    public class PlayerPriceEditModel
+    {
+        [DisplayName(nameof(BuyPrice))]
+        [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
+        [Range(0, double.MaxValue)]
+        public double BuyPrice { get; set; }
+
+        [DisplayName(nameof(SellPrice))]
+        [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
+        [Range(0, double.MaxValue)]
+        public double SellPrice { get; set; }
+
+        public int Id { get; set; }
+
+        [DisplayName(nameof(Player))]
+        [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
+        public int Fk_Player { get; set; }
+        
+        [DisplayName(nameof(Team))]
+        [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
+        public int Fk_Team { get; set; }
+    }
 }

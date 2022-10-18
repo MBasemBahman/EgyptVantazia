@@ -220,16 +220,16 @@
                 CheckDisplayType();
             });
 
-                $('body').on('click', '#ExcelBtn', function () {
-                    $.ajax({
-                        url:'@Url.Action("ExportExcel")',
-                        type: "POST",
-                        data:  $('#FilterForm').serialize(),
-                        success: function (result) {
-                               window.open(result, '_blank');
-                            }
-                    });
-                });
+                // $('body').on('click', '#ExcelBtn', function () {
+                //     $.ajax({
+@*              //         url:'@Url.Action("ExportExcel")',                                  *@
+                //         type: "POST",
+                //         data:  $('#FilterForm').serialize(),
+                //         success: function (result) {
+                //                window.open(result, '_blank');
+                //             }
+                //     });
+                // });
 
 
         });

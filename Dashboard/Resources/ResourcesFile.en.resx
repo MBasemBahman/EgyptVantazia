@@ -1032,4 +1032,37 @@
   <data name="NotificationToken" xml:space="preserve">
     <value>Notification Token</value>
   </data>
+  <data name="Fk_Players" xml:space="preserve">
+    <value>Players</value>
+  </data>
+  <data name="Home Players" xml:space="preserve">
+    <value>Home Team Players</value>
+  </data>
+  <data name="Away Players" xml:space="preserve">
+    <value>Away Team Players</value>
+  </data>
+  <data name="ExpireDate" xml:space="preserve">
+    <value>Expire Date</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Start Date</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>End Date</value>
+  </data>
+  <data name="Add Subscriptions" xml:space="preserve">
+    <value>Add New</value>
+  </data>
+  <data name="Plan" xml:space="preserve">
+    <value>Plan</value>
+  </data>
+  <data name="IsAction" xml:space="preserve">
+    <value>In Action</value>
+  </data>
+  <data name="EditSpec" xml:space="preserve">
+    <value>Edit Rows</value>
+  </data>
+  <data name="choose one at least" xml:space="preserve">
+    <value>You Should Choose One At Least</value>
+  </data>
 </root>

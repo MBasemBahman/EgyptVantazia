@@ -8,6 +8,7 @@ namespace CoreServices
         private UserService _userService;
         private LogServices _logServices;
         private AccountServices _accountServices;
+        private AccountSubscriptionServices _accountSubscriptionServices;
         private DashboardAdministrationServices _dashboardAdministrationServices;
         private LocationServices _locationServices;
         private AccountTeamServices _accountTeamServices;
@@ -20,6 +21,7 @@ namespace CoreServices
         private SponsorServices _sponsorServices;
         private StandingsServices _standingsServices;
         private TeamServices _teamServices;
+        private SubscriptionServices _subscriptionServices;
 
         public UnitOfWork(RepositoryManager repository)
         {
@@ -55,6 +57,16 @@ namespace CoreServices
                 return _accountServices;
             }
         }
+        
+        public AccountSubscriptionServices AccountSubscription
+        {
+            get
+            {
+                _accountSubscriptionServices ??= new AccountSubscriptionServices(_repository);
+                return _accountSubscriptionServices;
+            }
+        }
+        
         public DashboardAdministrationServices DashboardAdministration
         {
             get
@@ -149,6 +161,15 @@ namespace CoreServices
             {
                 _teamServices ??= new TeamServices(_repository);
                 return _teamServices;
+            }
+        }
+        
+        public SubscriptionServices Subscription
+        {
+            get
+            {
+                _subscriptionServices ??= new SubscriptionServices(_repository);
+                return _subscriptionServices;
             }
         }
     }

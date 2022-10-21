@@ -105,6 +105,11 @@ namespace Dashboard.Areas.TeamEntity.Controllers
                 model.ImageUrl = "banner.png";
                 model.StorageUrl = _linkGenerator.GetUriByAction(HttpContext).GetBaseUri(HttpContext.Request.RouteValues["area"].ToString());
             }
+            if (string.IsNullOrEmpty(model.ShirtImageUrl))
+            {
+                model.ShirtImageUrl = "banner.png";
+                model.ShirtStorageUrl = _linkGenerator.GetUriByAction(HttpContext).GetBaseUri(HttpContext.Request.RouteValues["area"].ToString());
+            }
 
             SetViewData(IsProfile, id, otherLang);
             return View(model);
@@ -152,6 +157,14 @@ namespace Dashboard.Areas.TeamEntity.Controllers
                 {
                     dataDB.ImageUrl = await _unitOfWork.Team.UploudTeamImage(_environment.WebRootPath, imageFile);
                     dataDB.StorageUrl = _linkGenerator.GetUriByAction(HttpContext).GetBaseUri(HttpContext.Request.RouteValues["area"].ToString());
+                }
+
+                IFormFile shirtImageFile = HttpContext.Request.Form.Files["ShirtImageFile"];
+
+                if (shirtImageFile != null)
+                {
+                    dataDB.ShirtImageUrl = await _unitOfWork.Team.UploudTeamImage(_environment.WebRootPath, shirtImageFile);
+                    dataDB.ShirtStorageUrl = _linkGenerator.GetUriByAction(HttpContext).GetBaseUri(HttpContext.Request.RouteValues["area"].ToString());
                 }
 
                 await _unitOfWork.Save();

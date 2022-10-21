@@ -16,7 +16,7 @@ namespace Entities.DBModels.AccountTeamModels
         public int Fk_TeamPlayerType { get; set; }
 
         [DisplayName(nameof(TeamPlayerType))]
-        public TeamPlayerType TeamPlayerType { get; set; }
+        public TeamPlayerType TeamPlayerType { get; set; } // captian or vice captian
 
         [DisplayName(nameof(GameWeak))]
         [ForeignKey(nameof(GameWeak))]
@@ -25,7 +25,19 @@ namespace Entities.DBModels.AccountTeamModels
         [DisplayName(nameof(GameWeak))]
         public GameWeak GameWeak { get; set; }
 
+        [DisplayName(nameof(IsPrimary))]
+        public bool IsPrimary { get; set; }
+
+        [DisplayName(nameof(IsTransfer))]
+        public bool IsTransfer { get; set; }
+
+        [DisplayName(nameof(Order))]
+        public bool Order { get; set; }
+
         [DisplayName(nameof(TrippleCaptain))]
         public bool TrippleCaptain { get; set; }
+
+        [DisplayName(nameof(Points))]
+        public int Points { get; set; }
     }
 }

@@ -14,6 +14,14 @@ namespace Entities.DBModels.TeamModels
         [DisplayName(nameof(_365_TeamId))]
         public string _365_TeamId { get; set; }
 
+        [DisplayName(nameof(ShirtImageUrl))]
+        public string ShirtImageUrl { get; set; }
+
+        [DisplayName(nameof(ShirtStorageUrl))]
+        [DataType(DataType.Url, ErrorMessage = PropertyAttributeConstants.TypeValidationMsg)]
+        [Url]
+        public string ShirtStorageUrl { get; set; }
+
         [DisplayName(nameof(Players))]
         public IList<Player> Players { get; set; }
 

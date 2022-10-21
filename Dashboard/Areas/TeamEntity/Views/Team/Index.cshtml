@@ -54,7 +54,7 @@
                                 <h4 class="card-title"> @ViewData["Title"]</h4>
 
                             </div>
-                         <p class="m-2 demo-inline-spacing">
+                            <p class="m-2 demo-inline-spacing">
                                 <a class="btn btn-primary me-1" data-bs-toggle="collapse" href="#AdvancedFilter" role="button" aria-expanded="false" aria-controls="AdvancedFilter">
                                     <i data-feather='filter'></i>
                                     @Localizer.Get("Advanced Search")
@@ -115,7 +115,7 @@
 @section scripts{
     <script src="~/apis/charts.js"></script>
     <script>
-        
+
         function LoadTable() {
             var dt_ajax_table = $('.datatables');
             if (dt_ajax_table.length) {
@@ -140,11 +140,15 @@
                             data: "name",
                             render: function(data, type, row) {
                                 var span = '';
-                                
+
                                 if (row.imageUrl != null) {
 
                                     return '<div class="d-flex justify-content-left align-items-center"><div class= "avatar-wrapper" ><div class="avatar me-1">'
                                         + '<img src="' + row.imageUrl + '"  height="32" width="32">'
+                                        + span
+                                        + '</div></div>'
+                                        + '<div class="d-flex justify-content-left align-items-center"><div class= "avatar-wrapper" ><div class="avatar me-1">'
+                                        + '<img src="' + row.shirtImageUrl + '"  height="32" width="32">'
                                         + span
                                         + '</div></div>'
                                         + ' <div class= "d-flex flex-column">'
@@ -161,8 +165,6 @@
                                         + '<span class= "fw-bolder">' + data + '</span></a> '
                                         + '<small class= "emp_post text-muted" ></small ></div></div>';
                                 }
-
-
                             }
                         },
                         { data: "_365_TeamId" },

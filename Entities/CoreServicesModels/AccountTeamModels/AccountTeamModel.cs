@@ -1,8 +1,6 @@
 ﻿using Entities.CoreServicesModels.AccountModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.AccountModels;
-using Entities.DBModels.AccountTeamModels;
-using Entities.DBModels.PlayersTransfersModels;
 using Entities.DBModels.SeasonModels;
 using Entities.RequestFeatures;
 using Microsoft.AspNetCore.Http;
@@ -23,7 +21,6 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         [DisplayName(nameof(AccountUserName))]
         public string AccountUserName { get; set; }
-
     }
 
     public class AccountTeamModel : AuditImageEntity
@@ -66,6 +63,8 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         public int PlayersCount { get; set; }
 
+        [DisplayName(nameof(TotalMoney))]
+        public int FreeTransfer { get; set; }
     }
 
     public class AccountTeamCreateOrEditModel
@@ -95,6 +94,9 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         [DisplayName(nameof(TotalMoney))]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public int TotalMoney { get; set; }
+
+        [DisplayName(nameof(TotalMoney))]
+        public int FreeTransfer { get; set; }
     }
 
     public class AccountTeamCreateModel

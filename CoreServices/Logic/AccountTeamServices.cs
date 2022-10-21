@@ -46,6 +46,7 @@ namespace CoreServices.Logic
                                FullName = a.Account.FullName,
                            },
                            PlayersCount = a.AccountTeamPlayers.Count,
+                           FreeTransfer = a.FreeTransfer
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);
@@ -121,6 +122,9 @@ namespace CoreServices.Logic
                            Fk_AccountTeam = a.Fk_AccountTeam,
                            Fk_GameWeak = a.Fk_GameWeak,
                            BenchBoost = a.BenchBoost,
+                           DoubleGameWeak = a.DoubleGameWeak,
+                           TansfarePoints = a.TansfarePoints,
+                           Top_11 = a.Top_11,
                            GameWeak = new GameWeakModel
                            {
                                Name = otherLang ? a.GameWeak.GameWeakLang.Name : a.GameWeak.Name,
@@ -192,6 +196,10 @@ namespace CoreServices.Logic
                            Fk_GameWeak = a.Fk_GameWeak,
                            Fk_TeamPlayerType = a.Fk_TeamPlayerType,
                            TrippleCaptain = a.TrippleCaptain,
+                           IsPrimary = a.IsPrimary,
+                           IsTransfer = a.IsTransfer,
+                           Order = a.Order,
+                           Points = a.Points,
                            GameWeak = new GameWeakModel
                            {
                                Name = otherLang ? a.GameWeak.GameWeakLang.Name : a.GameWeak.Name,

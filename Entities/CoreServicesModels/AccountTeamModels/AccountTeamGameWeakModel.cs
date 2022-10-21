@@ -39,5 +39,14 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         [DisplayName(nameof(TotalPoints))]
         public int TotalPoints { get; set; }
+
+        [DisplayName(nameof(DoubleGameWeak))]
+        public bool DoubleGameWeak { get; set; }
+
+        [DisplayName(nameof(Top_11))]
+        public bool Top_11 { get; set; }
+
+        [DisplayName(nameof(TansfarePoints))]
+        public int TansfarePoints { get; set; }
     }
 }

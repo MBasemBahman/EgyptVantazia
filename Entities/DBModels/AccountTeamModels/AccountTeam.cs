@@ -30,6 +30,9 @@ namespace Entities.DBModels.AccountTeamModels
         [DisplayName(nameof(TotalMoney))]
         public int TotalMoney { get; set; }
 
+        [DisplayName(nameof(TotalMoney))]
+        public int FreeTransfer { get; set; }
+
         [DisplayName(nameof(AccountTeamPlayers))]
         public IList<AccountTeamPlayer> AccountTeamPlayers { get; set; }
 

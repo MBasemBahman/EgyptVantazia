@@ -28,6 +28,7 @@ namespace CoreServices.Logic
                            _365_TeamId = a._365_TeamId,
                            Name = otherLang ? a.TeamLang.Name : a.Name,
                            ImageUrl = a.StorageUrl + a.ImageUrl,
+                           ShirtImageUrl = a.ShirtStorageUrl + a.ShirtImageUrl
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);
@@ -178,7 +179,7 @@ namespace CoreServices.Logic
                            LastModifiedBy = a.LastModifiedBy,
                            _365_PlayerId = a._365_PlayerId,
                            Name = otherLang ? a.PlayerLang.Name : a.Name,
-                           ImageUrl = !string.IsNullOrEmpty(a.ImageUrl) ? a.StorageUrl + a.ImageUrl : a.Team.StorageUrl + a.Team.ImageUrl,
+                           ImageUrl = !string.IsNullOrEmpty(a.ImageUrl) ? a.StorageUrl + a.ImageUrl : a.Team.ShirtStorageUrl + a.Team.ShirtImageUrl,
                            Fk_PlayerPosition = a.Fk_PlayerPosition,
                            Fk_Team = a.Fk_Team,
                            PlayerNumber = a.PlayerNumber,
@@ -229,7 +230,7 @@ namespace CoreServices.Logic
         {
             return GetPlayers(parameters, otherLang).ToDictionary(a => a.Id.ToString(), a => a.Name);
         }
-        
+
         public async Task<Player> FindPlayerbyId(int id, bool trackChanges)
         {
             return await _repository.Player.FindById(id, trackChanges);
@@ -353,7 +354,7 @@ namespace CoreServices.Logic
             }
             return player;
         }
-        
+
         public void AddPlayersPrices(List<PlayerPrice> prices, string userName)
         {
             if (prices != null && prices.Any())

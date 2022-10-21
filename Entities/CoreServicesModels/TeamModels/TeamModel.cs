@@ -22,6 +22,9 @@ namespace Entities.CoreServicesModels.TeamModels
 
         [DisplayName(nameof(_365_TeamId))]
         public string _365_TeamId { get; set; }
+
+        [DisplayName(nameof(ShirtImageUrl))]
+        public string ShirtImageUrl { get; set; }
     }
 
     public class TeamCreateOrEditModel
@@ -35,6 +38,14 @@ namespace Entities.CoreServicesModels.TeamModels
 
         [DisplayName(nameof(ImageUrl))]
         public string ImageUrl { get; set; }
+
+        [DisplayName(nameof(ShirtImageUrl))]
+        public string ShirtImageUrl { get; set; }
+
+        [DisplayName(nameof(ShirtStorageUrl))]
+        [DataType(DataType.Url, ErrorMessage = PropertyAttributeConstants.TypeValidationMsg)]
+        [Url]
+        public string ShirtStorageUrl { get; set; }
 
         [DisplayName(nameof(StorageUrl))]
         [DataType(DataType.Url, ErrorMessage = PropertyAttributeConstants.TypeValidationMsg)]

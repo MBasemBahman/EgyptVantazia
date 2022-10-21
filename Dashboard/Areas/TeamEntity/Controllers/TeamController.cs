@@ -159,7 +159,7 @@ namespace Dashboard.Areas.TeamEntity.Controllers
                     dataDB.StorageUrl = _linkGenerator.GetUriByAction(HttpContext).GetBaseUri(HttpContext.Request.RouteValues["area"].ToString());
                 }
 
-                IFormFile shirtImageFile = HttpContext.Request.Form.Files["ShirtImageFile"];
+                IFormFile shirtImageFile = HttpContext.Request.Form.Files["ShirtFile"];
 
                 if (shirtImageFile != null)
                 {

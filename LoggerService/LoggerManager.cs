@@ -54,19 +54,19 @@ namespace LoggerService
                 logModel.ContentType = request.ContentType;
                 logModel.QueryString = request.QueryString.Value;
 
-                //if (request.ContentLength > 0)
-                //{
-                //    if (request.HasFormContentType)
-                //    {
-                //        logModel.Body = JsonConvert.SerializeObject(request.Form);
-                //    }
-                //    else
-                //    {
-                //        using StreamReader reader = new(request.Body);
-                //        _ = request.Body.Seek(0, SeekOrigin.Begin);
-                //        logModel.Body = reader.ReadToEnd();
-                //    }
-                //}
+                if (request.ContentLength > 0)
+                {
+                    if (request.HasFormContentType)
+                    {
+                        logModel.Body = JsonConvert.SerializeObject(request.Form);
+                    }
+                    else if (request.Body != null)
+                    {
+                        using StreamReader reader = new(request.Body);
+                        _ = request.Body.Seek(0, SeekOrigin.Begin);
+                        logModel.Body = reader.ReadToEnd();
+                    }
+                }
                 logger.Error(logModel.ToString());
             }
 

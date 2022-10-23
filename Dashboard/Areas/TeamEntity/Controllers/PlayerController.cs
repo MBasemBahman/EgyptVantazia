@@ -220,7 +220,7 @@ namespace Dashboard.Areas.TeamEntity.Controllers
         }
         
         [Authorize(DashboardViewEnum.Player, AccessLevelEnum.CreateOrEdit)]
-        public async Task<IActionResult> EditPlayersPrices([FromQuery]string fk_Players)
+        public IActionResult EditPlayersPrices([FromQuery]string fk_Players)
         {
             var fk_PlayersIds = fk_Players.Split(",").Select(Int32.Parse).ToList();
             

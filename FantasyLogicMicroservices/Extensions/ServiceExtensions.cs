@@ -1,12 +1,11 @@
 ﻿using Entities.ServicesModels;
-using Entities.TenantModels;
 using FantasyLogic;
 using Hangfire;
 using Hangfire.SqlServer;
 using IntegrationWith365;
 using Live;
 
-namespace API.Extensions
+namespace FantasyLogicMicroservices.Extensions
 {
     public static class ServiceExtensions
     {
@@ -105,10 +104,7 @@ namespace API.Extensions
                     Example = new OpenApiString("yyyy-MM-ddThh:mm:ss")
                 });
 
-                foreach (SwaggerModel page in config.SwaggerPages)
-                {
-                    c.SwaggerDoc(page.Name, new OpenApiInfo { Title = page.Title });
-                }
+                c.SwaggerDoc("Season", new OpenApiInfo { Title = "Season" });
 
                 c.OperationFilter<DocsFilter>();
                 c.SchemaFilter<SwaggerSkipPropertyFilter>();
@@ -158,36 +154,6 @@ namespace API.Extensions
                                            .Get<EmailConfiguration>();
             _ = services.AddSingleton(emailConfig);
             _ = services.AddScoped<IEmailSender, EmailSender>();
-        }
-
-        public static void ConfigureRequestsLimit(this IServiceCollection services)
-        {
-            // needed to store rate limit counters and ip rules
-            _ = services.AddMemoryCache();
-
-            _ = services.Configure<IpRateLimitOptions>(options =>
-            {
-                options.EnableEndpointRateLimiting = true;
-                options.StackBlockedRequests = false;
-                options.HttpStatusCode = 429;
-                options.RealIpHeader = "X-Real-IP";
-                options.ClientIdHeader = "X-ClientId";
-                options.GeneralRules = new List<RateLimitRule>
-                {
-                    new RateLimitRule
-                    {
-                        Endpoint = "*",
-                        Period = "1s",
-                        Limit = 100,
-                    }
-                };
-            });
-
-            _ = services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
-            _ = services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
-            _ = services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
-            _ = services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
-            _ = services.AddInMemoryRateLimiting();
         }
 
         public static void ConfigureHangfire(this IServiceCollection services,

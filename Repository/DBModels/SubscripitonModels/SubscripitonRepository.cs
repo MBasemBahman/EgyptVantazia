@@ -1,7 +1,7 @@
 ﻿using Entities.CoreServicesModels.SubscriptionModels;
 using Entities.DBModels.SubscriptionModels;
 
-namespace Repository.DBModels.SubscriptionModels
+namespace Repository.DBModels.SubscripitonModels
 {
     public class SubscriptionRepository : RepositoryBase<Subscription>
     {
@@ -38,7 +38,7 @@ namespace Repository.DBModels.SubscriptionModels
             this IQueryable<Subscription> Subscriptions,
             int id)
         {
-            return Subscriptions.Where(a => (id == 0 || a.Id == id));
+            return Subscriptions.Where(a => id == 0 || a.Id == id);
         }
 
     }

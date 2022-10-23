@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CoreServices\CoreServices.csproj" />
+    <ProjectReference Include="..\Entities\Entities.csproj" />
     <ProjectReference Include="..\IntegrationWith365\IntegrationWith365.csproj" />
   </ItemGroup>
 

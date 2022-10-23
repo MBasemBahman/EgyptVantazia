@@ -6,33 +6,32 @@ namespace FantasyLogic.DataMigration.SeasonData
 {
     public class GameWeakDataHelper
     {
-        private readonly _365Services _365Services;
         private readonly UnitOfWork _unitOfWork;
         private readonly GamesHelper _gamesHelper;
 
         public GameWeakDataHelper(UnitOfWork unitOfWork, _365Services _365Services)
         {
-            this._365Services = _365Services;
             _unitOfWork = unitOfWork;
             _gamesHelper = new GamesHelper(unitOfWork, _365Services);
         }
 
-        public void UpdateGameWeaks()
+        public void UpdateGameWeaks(int delayMinutes)
         {
             SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
 
-            _ = BackgroundJob.Schedule(() => UpdateGameWeaks(season.Id), TimeSpan.FromMinutes(5));
+            _ = BackgroundJob.Schedule(() => UpdateGameWeaks(season.Id, delayMinutes), TimeSpan.FromMinutes(delayMinutes));
         }
 
-        public void UpdateGameWeaks(int fk_season)
+        public void UpdateGameWeaks(int fk_season, int delayMinutes)
         {
             List<int> rounds = _gamesHelper.GetAllGames().Result.Select(a => a.RoundNum).Distinct().OrderBy(a => a).ToList();
 
-            int minutes = 30;
+            delayMinutes *= delayMinutes;
+
             foreach (int round in rounds)
             {
-                _ = BackgroundJob.Schedule(() => UpdateGameWeak(round, fk_season), TimeSpan.FromMinutes(minutes));
-                minutes++;
+                _ = BackgroundJob.Schedule(() => UpdateGameWeak(round, fk_season), TimeSpan.FromMinutes(delayMinutes));
+                delayMinutes++;
             }
         }
 

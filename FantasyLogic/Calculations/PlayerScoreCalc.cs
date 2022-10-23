@@ -2,7 +2,7 @@
 using Entities.DBModels.PlayerScoreModels;
 using static Contracts.EnumData.DBModelsEnum;
 
-namespace FantasyLogic
+namespace FantasyLogic.Calculations
 {
     public class PlayerScoreCalc
     {

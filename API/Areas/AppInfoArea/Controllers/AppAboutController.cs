@@ -1,5 +1,6 @@
 ﻿using API.Controllers;
 using Entities.CoreServicesModels.AppInfoModels;
+using FantasyLogic;
 using IntegrationWith365;
 
 namespace API.Areas.AppInfoArea.Controllers
@@ -10,17 +11,14 @@ namespace API.Areas.AppInfoArea.Controllers
     [Route("[area]/v{version:apiVersion}/[controller]")]
     public class AppAboutController : ExtendControllerBase
     {
-        private readonly _365Services _365Services;
         public AppAboutController(
         ILoggerManager logger,
         IMapper mapper,
         UnitOfWork unitOfWork,
         LinkGenerator linkGenerator,
         IWebHostEnvironment environment,
-        _365Services _365Services,
         IOptions<AppSettings> appSettings) : base(logger, mapper, unitOfWork, linkGenerator, environment, appSettings)
         {
-            this._365Services = _365Services;
         }
 
         [HttpGet]
@@ -28,17 +26,6 @@ namespace API.Areas.AppInfoArea.Controllers
         [AllowAll]
         public async Task<AppAboutModel> GetAppAbout()
         {
-            DataMigration dataMigration = new(_unitOfWork, _365Services);
-
-            //await dataMigration.InsertTeams();
-            //await dataMigration.InsertPositions();
-            //await dataMigration.InsertPlayers();
-            //await dataMigration.InsertStandings();
-            //await dataMigration.InsertRounds();
-            //await dataMigration.InsertGames();
-            //await dataMigration.InsertStates();
-            //await dataMigration.InsertGameResult();
-
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             AppAboutModel data = await _unitOfWork.AppInfo.GetAppAbouts(new RequestParameters(), otherLang).FirstOrDefaultAsync();

@@ -11,7 +11,7 @@ using Repository.DBModels.PrivateLeagueModels;
 using Repository.DBModels.SeasonModels;
 using Repository.DBModels.SponsorModels;
 using Repository.DBModels.StandingsModels;
-using Repository.DBModels.SubscriptionModels;
+using Repository.DBModels.SubscripitonModels;
 using Repository.DBModels.TeamModels;
 
 namespace Repository

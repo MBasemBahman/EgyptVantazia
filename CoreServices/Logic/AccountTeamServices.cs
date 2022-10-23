@@ -294,7 +294,10 @@ namespace CoreServices.Logic
                                Team = new TeamModel
                                {
                                    Name = otherLang ? a.Player.Team.TeamLang.Name : a.Player.Team.Name
-                               }
+                               },
+                               Age = a.Player.Age,
+                               PlayerNumber = a.Player.PlayerNumber,
+                               ShortName = a.Player.ShortName ,
                            },
                            AccountTeam = new AccountTeamModel
                            {

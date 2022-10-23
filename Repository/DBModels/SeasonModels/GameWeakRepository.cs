@@ -1,5 +1,6 @@
 ﻿using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.SeasonModels;
+using Entities.DBModels.TeamModels;
 
 namespace Repository.DBModels.SeasonModels
 {
@@ -34,11 +35,24 @@ namespace Repository.DBModels.SeasonModels
 
         public new void Create(GameWeak entity)
         {
-            entity.GameWeakLang ??= new GameWeakLang
+            if (entity._365_GameWeakId.IsExisting() && FindByCondition(a => a._365_GameWeakId == entity._365_GameWeakId, trackChanges: false).Any())
             {
-                Name = entity.Name,
-            };
-            base.Create(entity);
+                GameWeak oldEntity = FindByCondition(a => a._365_GameWeakId == entity._365_GameWeakId, trackChanges: false)
+                                .Include(a => a.GameWeakLang)
+                                .First();
+
+                oldEntity.Name = entity.Name;
+                oldEntity._365_GameWeakId = entity._365_GameWeakId;
+                oldEntity.GameWeakLang.Name = entity.GameWeakLang.Name;
+            }
+            else
+            {
+                entity.GameWeakLang ??= new GameWeakLang
+                {
+                    Name = entity.Name,
+                };
+                base.Create(entity);
+            }
         }
     }
 

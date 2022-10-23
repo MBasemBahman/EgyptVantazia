@@ -32,11 +32,24 @@ namespace Repository.DBModels.TeamModels
 
         public new void Create(PlayerPosition entity)
         {
-            entity.PlayerPositionLang ??= new PlayerPositionLang
+            if (entity._365_PositionId.IsExisting() && FindByCondition(a => a._365_PositionId == entity._365_PositionId, trackChanges: false).Any())
             {
-                Name = entity.Name,
-            };
-            base.Create(entity);
+                PlayerPosition oldEntity = FindByCondition(a => a._365_PositionId == entity._365_PositionId, trackChanges: false)
+                                .Include(a => a.PlayerPositionLang)
+                                .First();
+
+                oldEntity.Name = entity.Name;
+                oldEntity._365_PositionId = entity._365_PositionId;
+                oldEntity.PlayerPositionLang.Name = entity.PlayerPositionLang.Name;
+            }
+            else
+            {
+                entity.PlayerPositionLang ??= new PlayerPositionLang
+                {
+                    Name = entity.Name,
+                };
+                base.Create(entity);
+            }
         }
     }
 

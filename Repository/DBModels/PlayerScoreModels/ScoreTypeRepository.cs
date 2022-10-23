@@ -1,5 +1,6 @@
 ﻿using Entities.CoreServicesModels.PlayerScoreModels;
 using Entities.DBModels.PlayerScoreModels;
+using Entities.DBModels.TeamModels;
 
 namespace Repository.DBModels.PlayerScoreModels
 {
@@ -28,7 +29,19 @@ namespace Repository.DBModels.PlayerScoreModels
 
         public new void Create(ScoreType entity)
         {
-            if (!FindByCondition(a => a.Name == entity.Name, trackChanges: false).Any())
+            if (FindByCondition(a => a._365_TypeId == entity._365_TypeId && a._365_EventTypeId == entity._365_EventTypeId, trackChanges: false).Any())
+            {
+                ScoreType oldEntity = FindByCondition(a => a._365_TypeId == entity._365_TypeId, trackChanges: false)
+                                .Include(a => a.ScoreTypeLang)
+                                .First();
+
+                oldEntity.Name = entity.Name;
+                oldEntity._365_TypeId = entity._365_TypeId;
+                oldEntity.IsEvent = entity.IsEvent;
+                oldEntity._365_EventTypeId = entity._365_EventTypeId;
+                oldEntity.ScoreTypeLang.Name = entity.ScoreTypeLang.Name;
+            }
+            else
             {
                 entity.ScoreTypeLang ??= new ScoreTypeLang
                 {

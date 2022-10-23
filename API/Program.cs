@@ -1,4 +1,5 @@
 using API.MappingProfileCls;
+using Hangfire;
 
 TenantConfig config = new(TenantEnvironments.Development);
 
@@ -37,6 +38,7 @@ builder.Services.AddControllers(opt =>
 });
 //builder.Services.ConfigureFirebase(config.AppSettings);
 builder.Services.ConfigureEmailSender(builder.Configuration);
+builder.Services.ConfigureHangfire(builder.Configuration);
 
 WebApplication app = builder.Build();
 
@@ -66,6 +68,12 @@ app.UseMiddleware<HeaderMiddleware>();
 app.ConfigureExceptionHandler(logger);
 
 app.UseRouting();
+
+app.UseHangfireDashboard("/schedulejobs", new DashboardOptions
+{
+    AppPath = "",
+    DashboardTitle = "schedule jobs",
+});
 
 app.UseEndpoints(endpoints =>
 {

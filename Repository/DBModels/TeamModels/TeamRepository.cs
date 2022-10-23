@@ -37,11 +37,24 @@ namespace Repository.DBModels.TeamModels
 
         public new void Create(Team entity)
         {
-            entity.TeamLang ??= new TeamLang
+            if (entity._365_TeamId.IsExisting() && FindByCondition(a => a._365_TeamId == entity._365_TeamId, trackChanges: false).Any())
             {
-                Name = entity.Name,
-            };
-            base.Create(entity);
+                Team oldEntity = FindByCondition(a => a._365_TeamId == entity._365_TeamId, trackChanges: false)
+                                .Include(a => a.TeamLang)
+                                .First();
+
+                oldEntity.Name = entity.Name;
+                oldEntity._365_TeamId = entity._365_TeamId;
+                oldEntity.TeamLang.Name = entity.TeamLang.Name;
+            }
+            else
+            {
+                entity.TeamLang ??= new TeamLang
+                {
+                    Name = entity.Name,
+                };
+                base.Create(entity);
+            }
         }
     }
 
@@ -55,7 +68,7 @@ namespace Repository.DBModels.TeamModels
             DateTime? createdAtTo)
         {
             return Teams.Where(a => (id == 0 || a.Id == id) &&
-                                    (string.IsNullOrWhiteSpace(_365_TeamId) || a._365_TeamId == _365_TeamId)&&
+                                    (string.IsNullOrWhiteSpace(_365_TeamId) || a._365_TeamId == _365_TeamId) &&
                                     (createdAtFrom == null || a.CreatedAt >= createdAtFrom) &&
                                     (createdAtTo == null || a.CreatedAt <= createdAtTo));
         }

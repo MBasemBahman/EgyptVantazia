@@ -1,4 +1,5 @@
 ﻿using Entities.CoreServicesModels.StandingsModels;
+using Entities.DBModels.SeasonModels;
 using Entities.DBModels.StandingsModels;
 
 
@@ -32,6 +33,30 @@ namespace Repository.DBModels.StandingsModels
             return await FindByCondition(a => a.Fk_Season == fk_Season && a.Fk_Team == fk_Team, trackChanges)
                         .SingleOrDefaultAsync();
         }
+
+        public new void Create(Standings entity)
+        {
+            if (FindByCondition(a => a.Fk_Season == entity.Fk_Season && a.Fk_Team == entity.Fk_Team, trackChanges: false).Any())
+            {
+                Standings oldEntity = FindByCondition(a => a.Fk_Season == entity.Fk_Season && a.Fk_Team == entity.Fk_Team, trackChanges: false)
+                                .First();
+
+                oldEntity.Fk_Season = entity.Fk_Season;
+                oldEntity.Fk_Team = entity.Fk_Team;
+                oldEntity.GamePlayed = entity.GamePlayed;
+                oldEntity.GamesWon = entity.GamesWon;
+                oldEntity.GamesLost = entity.GamesLost;
+                oldEntity.GamesEven = entity.GamesEven;
+                oldEntity.Against = entity.Against;
+                oldEntity.Ratio = entity.Ratio;
+                oldEntity.Strike = entity.Strike;
+                oldEntity.Position = entity.Position;
+            }
+            else
+            {
+                base.Create(entity);
+            }
+        }
     }
 
     public static class StandingsRepositoryExtension
@@ -49,8 +74,8 @@ namespace Repository.DBModels.StandingsModels
                                          (Fk_Season == 0 || a.Fk_Season == Fk_Season) &&
                                          (Fk_Team == 0 || a.Fk_Team == Fk_Team) &&
                                          (_365_For == 0 || a.For == _365_For) &&
-                                         (createdAtFrom == null || a.CreatedAt >= createdAtFrom)&&
-                                         (createdAtTo == null||a.CreatedAt<=createdAtTo));
+                                         (createdAtFrom == null || a.CreatedAt >= createdAtFrom) &&
+                                         (createdAtTo == null || a.CreatedAt <= createdAtTo));
 
         }
 

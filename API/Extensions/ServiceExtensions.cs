@@ -1,5 +1,7 @@
 ﻿using Entities.ServicesModels;
 using Entities.TenantModels;
+using Hangfire;
+using Hangfire.SqlServer;
 using IntegrationWith365;
 using Live;
 
@@ -183,6 +185,28 @@ namespace API.Extensions
             _ = services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
             _ = services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
             _ = services.AddInMemoryRateLimiting();
+        }
+
+        public static void ConfigureHangfire(this IServiceCollection services,
+           IConfiguration configuration)
+        {
+            _ = services.AddHangfire(config => config
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseSqlServerStorage(configuration.GetConnectionString("HangfireConnection"), new SqlServerStorageOptions
+                {
+                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                    QueuePollInterval = TimeSpan.Zero,
+                    UseRecommendedIsolationLevel = true,
+                    UsePageLocksOnDequeue = true,
+                    DisableGlobalLocks = true
+                }));
+            // Add the processing server as IHostedService
+            _ = services.AddHangfireServer();
+
+            //_ = services.AddScoped<HangfireManager>();
         }
     }
 }

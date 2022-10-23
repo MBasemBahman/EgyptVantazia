@@ -40,11 +40,30 @@ namespace Repository.DBModels.TeamModels
 
         public new void Create(Player entity)
         {
-            entity.PlayerLang ??= new PlayerLang
+            if (entity._365_PlayerId.IsExisting() && FindByCondition(a => a._365_PlayerId == entity._365_PlayerId, trackChanges: false).Any())
             {
-                Name = entity.Name,
-            };
-            base.Create(entity);
+                Player oldEntity = FindByCondition(a => a._365_PlayerId == entity._365_PlayerId, trackChanges: false)
+                                .Include(a => a.PlayerLang)
+                                .First();
+
+                oldEntity.Name = entity.Name;
+                oldEntity._365_PlayerId = entity._365_PlayerId;
+                oldEntity.ShortName = entity.ShortName;
+                oldEntity.Age = entity.Age;
+                oldEntity.PlayerNumber = entity.PlayerNumber;
+                oldEntity.Fk_PlayerPosition = entity.Fk_PlayerPosition;
+                oldEntity.Fk_Team = entity.Fk_Team;
+                oldEntity.PlayerLang.Name = entity.PlayerLang.Name;
+                oldEntity.PlayerLang.ShortName = entity.PlayerLang.ShortName;
+            }
+            else
+            {
+                entity.PlayerLang ??= new PlayerLang
+                {
+                    Name = entity.Name,
+                };
+                base.Create(entity);
+            }
         }
     }
 
@@ -68,7 +87,7 @@ namespace Repository.DBModels.TeamModels
                                       (Fk_Team == 0 || a.Fk_Team == Fk_Team) &&
                                       (Fk_GameWeak == 0 || a.PlayerGameWeaks.Select(a => a.Fk_TeamGameWeak)
                                           .Contains(Fk_GameWeak)) &&
-                                      (createdAtFrom == null || a.CreatedAt >= createdAtFrom)&&
+                                      (createdAtFrom == null || a.CreatedAt >= createdAtFrom) &&
                                       (createdAtTo == null || a.CreatedAt <= createdAtTo) &&
                                       (fk_TeamGameWeak_Ignored == 0 || !a.PlayerGameWeaks.Any(b => b.Fk_TeamGameWeak == fk_TeamGameWeak_Ignored)) &&
                                       (Fk_PlayerPosition == 0 || a.Fk_PlayerPosition == Fk_PlayerPosition) &&

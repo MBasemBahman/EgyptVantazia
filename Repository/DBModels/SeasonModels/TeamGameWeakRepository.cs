@@ -1,5 +1,6 @@
 ﻿using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.SeasonModels;
+using Entities.DBModels.TeamModels;
 
 namespace Repository.DBModels.SeasonModels
 {
@@ -35,6 +36,27 @@ namespace Repository.DBModels.SeasonModels
         {
             return await FindByCondition(a => a._365_MatchId == id, trackChanges)
                         .SingleOrDefaultAsync();
+        }
+
+        public new void Create(TeamGameWeak entity)
+        {
+            if (entity._365_MatchId.IsExisting() && FindByCondition(a => a._365_MatchId == entity._365_MatchId, trackChanges: false).Any())
+            {
+                TeamGameWeak oldEntity = FindByCondition(a => a._365_MatchId == entity._365_MatchId, trackChanges: false).First();
+
+                oldEntity.Fk_Away = entity.Fk_Away;
+                oldEntity.Fk_Home = entity.Fk_Home;
+                oldEntity.Fk_GameWeak = entity.Fk_GameWeak;
+                oldEntity.StartTime = entity.StartTime;
+                oldEntity.IsEnded = entity.IsEnded;
+                oldEntity._365_MatchId = entity._365_MatchId;
+                oldEntity.AwayScore = entity.AwayScore;
+                oldEntity.HomeScore = entity.HomeScore;
+            }
+            else
+            {
+                base.Create(entity);
+            }
         }
     }
 

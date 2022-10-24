@@ -47,9 +47,16 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         [DisplayName(nameof(TotalMoney))]
         public int TotalMoney { get; set; }
 
-        public int CurrentGameWeakPoints { get; set; }
+        [DisplayName(nameof(GlobalRanking))]
+        public double GlobalRanking { get; set; }
 
-        public int Position { get; set; }
+        [DisplayName(nameof(CountryRanking))]
+        public double CountryRanking { get; set; }
+
+        [DisplayName(nameof(FavouriteTeamRanking))]
+        public double FavouriteTeamRanking { get; set; }
+
+        public int CurrentGameWeakPoints { get; set; }
 
         public int TransferCount { get; set; }
 

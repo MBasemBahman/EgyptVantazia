@@ -70,14 +70,26 @@
                                             <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.Season):</dt>
                                             <dd class="col-sm-8 mb-1">
                                                 <a href="/SeasonEntity/Season/Profile/@Model.Fk_Season" target="_blank">@Model.Season.Name</a>
-
                                             </dd>
                                             <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.TotalMoney):</dt>
                                             <dd class="col-sm-8 mb-1">@Model.TotalMoney</dd>
-                                            
+
                                             <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.FreeTransfer):</dt>
                                             <dd class="col-sm-8 mb-1">@Model.FreeTransfer</dd>
+                                        </dl>
+                                    </div>
 
+                                    <div class="col-xl-5 col-12">
+                                        <dl class="row mb-0">
+
+                                            <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.GlobalRanking):</dt>
+                                            <dd class="col-sm-8 mb-1">@Model.GlobalRanking</dd>
+
+                                            <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.CountryRanking):</dt>
+                                            <dd class="col-sm-8 mb-1">@Model.CountryRanking</dd>
+
+                                            <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.FavouriteTeamRanking):</dt>
+                                            <dd class="col-sm-8 mb-1">@Model.FavouriteTeamRanking</dd>
                                         </dl>
                                     </div>
 
@@ -102,7 +114,7 @@
                                                     <th>@Html.DisplayNameFor(model => accountTeamGameWeak.DoubleGameWeak)</th>
                                                     <th>@Html.DisplayNameFor(model => accountTeamGameWeak.Top_11)</th>
                                                     <th>@Html.DisplayNameFor(model => accountTeamGameWeak.TansfarePoints)</th>
-                                                </tr>   
+                                                </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach (var item in Model.AccountTeamGameWeaks)
@@ -160,7 +172,7 @@
                                                                 @Localizer.Get("AccountTeamPlayerGameWeaks")
                                                                 <span class="text-dark">(@Localizer.Get("Click to View"))</span>
                                                             </a>
-                                                          
+
                                                         </td>
                                                     </tr>
                                                 }
@@ -260,13 +272,13 @@
 
 @section scripts {
 
-     <script>
-            $('body').on('click', '.modalbtn', function () {
+    <script>
+        $('body').on('click', '.modalbtn', function () {
             event.preventDefault();
             var href = $(this).attr('href');
             $('.form-content').load(href);
             $("#Modal").modal("show");
         });
-     </script>
+    </script>
 
 }

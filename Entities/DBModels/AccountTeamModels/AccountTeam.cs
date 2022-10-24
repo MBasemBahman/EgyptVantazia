@@ -33,6 +33,15 @@ namespace Entities.DBModels.AccountTeamModels
         [DisplayName(nameof(FreeTransfer))]
         public int FreeTransfer { get; set; }
 
+        [DisplayName(nameof(GlobalRanking))]
+        public double GlobalRanking { get; set; }
+
+        [DisplayName(nameof(CountryRanking))]
+        public double CountryRanking { get; set; }
+
+        [DisplayName(nameof(FavouriteTeamRanking))]
+        public double FavouriteTeamRanking { get; set; }
+
         [DisplayName(nameof(AccountTeamPlayers))]
         public IList<AccountTeamPlayer> AccountTeamPlayers { get; set; }
 

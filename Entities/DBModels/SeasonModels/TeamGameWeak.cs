@@ -38,6 +38,10 @@ namespace Entities.DBModels.SeasonModels
         [DisplayName(nameof(IsEnded))]
         public bool IsEnded { get; set; }
 
+        [DisplayName(nameof(IsDelayed))]
+        [DefaultValue(false)]
+        public bool IsDelayed { get; set; }
+
         [DisplayName(nameof(_365_MatchId))]
         public string _365_MatchId { get; set; }
 

@@ -319,16 +319,17 @@ namespace CoreServices.Logic
             return await _repository.TeamGameWeak.FindBy365Id(id, trackChanges);
         }
 
-        public DateTime GetFirstTeamGameWeakMatchDate()
+        public DateTime? GetFirstTeamGameWeakMatchDate()
         {
             var fk_GameWeak = GetCurrentGameWeak().Id;
             var firstTeamGameWeak = GetTeamGameWeaks(new TeamGameWeakParameters
             {
-                Fk_GameWeak = fk_GameWeak,
-                FromTime = DateTime.UtcNow
+                Fk_GameWeak_Ignored = fk_GameWeak,
+                FromTime = DateTime.UtcNow,
+                IsDelayed = false,
             }, false).OrderBy(a => a.StartTime).FirstOrDefault();
 
-            return firstTeamGameWeak?.StartTime ?? DateTime.MinValue;
+            return firstTeamGameWeak?.StartTime.AddHours(-2) ?? null;
         }
 
         public void CreateTeamGameWeak(TeamGameWeak TeamGameWeak)

@@ -16,6 +16,9 @@ namespace Entities.CoreServicesModels.SeasonModels
         [DisplayName(nameof(GameWeak))]
         public int Fk_GameWeak { get; set; }
 
+        [DisplayName(nameof(GameWeak))]
+        public int Fk_GameWeak_Ignored { get; set; }
+
         [DisplayName(nameof(_365_MatchId))]
         public string _365_MatchId { get; set; }
 
@@ -27,6 +30,9 @@ namespace Entities.CoreServicesModels.SeasonModels
 
         [DisplayName(nameof(IsEnded))]
         public bool? IsEnded { get; set; }
+
+        [DisplayName(nameof(IsDelayed))]
+        public bool? IsDelayed { get; set; }
 
         public bool CurrentSeason { get; set; }
 
@@ -70,6 +76,9 @@ namespace Entities.CoreServicesModels.SeasonModels
 
         [DisplayName(nameof(IsEnded))]
         public bool IsEnded { get; set; }
+
+        [DisplayName(nameof(IsDelayed))]
+        public bool IsDelayed { get; set; }
     }
 
     public class TeamGameWeakCreateOrEditModel
@@ -97,6 +106,9 @@ namespace Entities.CoreServicesModels.SeasonModels
 
         [DisplayName(nameof(IsEnded))]
         public bool IsEnded { get; set; }
+
+        [DisplayName(nameof(IsDelayed))]
+        public bool IsDelayed { get; set; }
 
         [DisplayName(nameof(_365_MatchId))]
         public string _365_MatchId { get; set; }

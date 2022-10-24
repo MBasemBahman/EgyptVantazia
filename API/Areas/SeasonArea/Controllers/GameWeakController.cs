@@ -53,13 +53,10 @@ namespace API.Areas.SeasonArea.Controllers
 
         [HttpGet]
         [Route(nameof(GetNextGameWeakDeadLine))]
-        public DateTime GetNextGameWeakDeadLine()
+        public string GetNextGameWeakDeadLine()
         {
-            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
-
-            GameWeakModel data = _unitOfWork.Season.GetNextGameWeak(otherLang);
-            
-            return _unitOfWork.Season.GetFirstTeamGameWeakMatchDate(data.Id);
+            string dataDto = _mapper.Map<string>(_unitOfWork.Season.GetFirstTeamGameWeakMatchDate());
+            return dataDto;
         }
 
         [HttpGet]

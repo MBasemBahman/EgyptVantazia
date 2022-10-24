@@ -17,11 +17,13 @@ namespace Repository.DBModels.SeasonModels
                            parameters.Fk_Home,
                            parameters.Fk_Away,
                            parameters.Fk_GameWeak,
+                           parameters.Fk_GameWeak_Ignored,
                            parameters.Fk_Season,
                            parameters._365_MatchId,
                            parameters.FromTime,
                            parameters.ToTime,
                            parameters.IsEnded,
+                           parameters.IsDelayed,
                            parameters.CurrentSeason,
                            parameters.CurrentGameWeak);
         }
@@ -65,25 +67,29 @@ namespace Repository.DBModels.SeasonModels
         public static IQueryable<TeamGameWeak> Filter(
             this IQueryable<TeamGameWeak> TeamGameWeaks,
             int id,
-            int Fk_Home,
-            int Fk_Away,
-            int Fk_GameWeak,
+            int fk_Home,
+            int fk_Away,
+            int fk_GameWeak,
+            int fk_GameWeak_Ignored,
             int fk_Season,
             string _365_MatchId,
             DateTime? fromTime,
             DateTime? toTime,
-            bool? IsEnded,
+            bool? isEnded,
+            bool? isDelayed,
             bool currentSeason,
             bool currentGameWeak)
         {
             return TeamGameWeaks.Where(a => (id == 0 || a.Id == id) &&
-                                            (IsEnded == null || a.IsEnded == IsEnded) &&
-                                            (Fk_Home == 0 || a.Fk_Home == Fk_Home) &&
-                                            (Fk_Away == 0 || a.Fk_Away == Fk_Away) &&
+                                            (isEnded == null || a.IsEnded == isEnded) &&
+                                            (isDelayed == null || a.IsDelayed == isDelayed) &&
+                                            (fk_Home == 0 || a.Fk_Home == fk_Home) &&
+                                            (fk_Away == 0 || a.Fk_Away == fk_Away) &&
                                             (fk_Season == 0 || a.GameWeak.Fk_Season == fk_Season) &&
                                             (currentSeason == false || a.GameWeak.Season.IsCurrent) &&
                                             (currentGameWeak == false || a.GameWeak.IsCurrent) &&
-                                            (Fk_GameWeak == 0 || a.Fk_GameWeak == Fk_GameWeak) &&
+                                            (fk_GameWeak == 0 || a.Fk_GameWeak == fk_GameWeak) &&
+                                            (fk_GameWeak_Ignored == 0 || a.Fk_GameWeak != fk_GameWeak_Ignored) &&
                                             (string.IsNullOrWhiteSpace(_365_MatchId) || a._365_MatchId == _365_MatchId) &&
                                             (fromTime == null || a.StartTime >= fromTime) &&
                                             (toTime == null || a.StartTime <= toTime));

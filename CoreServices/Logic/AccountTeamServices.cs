@@ -34,6 +34,9 @@ namespace CoreServices.Logic
                            TotalMoney = a.TotalMoney,
                            TotalPoints = a.TotalPoints,
                            ImageUrl = a.StorageUrl + a.ImageUrl,
+                           CountryRanking = a.CountryRanking,
+                           GlobalRanking = a.GlobalRanking,
+                           FavouriteTeamRanking = a.FavouriteTeamRanking,
                            Season = new SeasonModel
                            {
                                Name = otherLang ? a.Season.SeasonLang.Name : a.Season.Name,
@@ -116,6 +119,7 @@ namespace CoreServices.Logic
                            CreatedBy = a.CreatedBy,
                            LastModifiedAt = a.LastModifiedAt,
                            LastModifiedBy = a.LastModifiedBy,
+                           IsIncreasing = a.TotalPoints > 0,
                            FreeHit = a.FreeHit,
                            TotalPoints = a.TotalPoints,
                            WildCard = a.WildCard,
@@ -124,7 +128,16 @@ namespace CoreServices.Logic
                            BenchBoost = a.BenchBoost,
                            DoubleGameWeak = a.DoubleGameWeak,
                            TansfarePoints = a.TansfarePoints,
+                           TansfareCount = a.AccountTeam.PlayerTransfers.Count(b => b.Fk_GameWeak == parameters.Fk_GameWeak),
                            Top_11 = a.Top_11,
+                           GlobalRanking = a.GlobalRanking,
+                           CountryRanking = a.CountryRanking,
+                           FavouriteTeamRanking = a.FavouriteTeamRanking,
+                           AvailableBenchBoost = !a.BenchBoost,
+                           AvailableDoubleGameWeak = !a.DoubleGameWeak,
+                           AvailableFreeHit = !a.FreeHit,
+                           AvailableTop_11 = !a.Top_11,
+                           AvailableWildCard = !a.WildCard,
                            GameWeak = new GameWeakModel
                            {
                                Name = otherLang ? a.GameWeak.GameWeakLang.Name : a.GameWeak.Name,
@@ -297,7 +310,7 @@ namespace CoreServices.Logic
                                },
                                Age = a.Player.Age,
                                PlayerNumber = a.Player.PlayerNumber,
-                               ShortName = a.Player.ShortName ,
+                               ShortName = a.Player.ShortName,
                            },
                            AccountTeam = new AccountTeamModel
                            {

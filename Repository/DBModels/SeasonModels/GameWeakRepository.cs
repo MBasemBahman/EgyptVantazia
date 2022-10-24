@@ -17,7 +17,6 @@ namespace Repository.DBModels.SeasonModels
                            parameters.Fk_Season,
                            parameters._365_GameWeakId,
                            parameters.IsCurrent,
-                           parameters.IsDelayed,
                            parameters.BiggerThanWeak);
         }
 
@@ -66,14 +65,12 @@ namespace Repository.DBModels.SeasonModels
             int Fk_Season,
             string _365_GameWeakId,
             bool? isCurrent,
-            bool? isDelayed,
             int? biggerThanWeak)
         {
             return GameWeaks.Where(a => (id == 0 || a.Id == id) &&
                                         (Fk_Season == 0 || a.Fk_Season == Fk_Season) &&
                                         (isCurrent == null || a.IsCurrent == isCurrent) &&
                                         (string.IsNullOrWhiteSpace(_365_GameWeakId) || a._365_GameWeakId == _365_GameWeakId) &&
-                                        (isDelayed == null || a.IsDelayed == isDelayed) &&
                                         (biggerThanWeak == null) || a._365_GameWeakId.ParseToInt() > biggerThanWeak);
 
         }

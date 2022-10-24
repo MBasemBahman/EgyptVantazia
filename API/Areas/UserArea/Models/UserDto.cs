@@ -8,6 +8,8 @@ namespace API.Areas.UserArea.Models
         [JsonIgnore]
         public new int Id { get; set; }
 
+        public int Fk_Account { get; set; }
+
         [JsonIgnore]
         public new string LastModifiedAt { get; set; }
 

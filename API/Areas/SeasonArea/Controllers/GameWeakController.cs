@@ -52,16 +52,14 @@ namespace API.Areas.SeasonArea.Controllers
         }
 
         [HttpGet]
-        [Route(nameof(GetNextGameWeak))]
-        public GameWeakDto GetNextGameWeak()
+        [Route(nameof(GetNextGameWeakDeadLine))]
+        public DateTime GetNextGameWeakDeadLine()
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             GameWeakModel data = _unitOfWork.Season.GetNextGameWeak(otherLang);
-
-            GameWeakDto dataDto = _mapper.Map<GameWeakDto>(data);
-
-            return dataDto;
+            
+            return _unitOfWork.Season.GetFirstTeamGameWeakMatchDate(data.Id);
         }
 
         [HttpGet]

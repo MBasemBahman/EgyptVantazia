@@ -196,7 +196,7 @@ namespace CoreServices.Logic
             int nextGameWeakNumber = GetCurrentGameWeak()._365_GameWeakId.ParseToInt() + 1;
             return GetGameWeaks(new GameWeakParameters
                 {
-                    IsDelayed = false, 
+                    IsDelayed = false,
                     BiggerThanWeak = nextGameWeakNumber
                 }, otherLang: otherLang)
                 .OrderBy(a => a._365_GameWeakId)
@@ -317,6 +317,17 @@ namespace CoreServices.Logic
         public async Task<TeamGameWeak> FindTeamGameWeakby365Id(string id, bool trackChanges)
         {
             return await _repository.TeamGameWeak.FindBy365Id(id, trackChanges);
+        }
+
+        public DateTime GetFirstTeamGameWeakMatchDate(int fk_GameWeak)
+        {
+            var firstTeamGameWeak = GetTeamGameWeaks(new TeamGameWeakParameters
+            {
+                Fk_GameWeak = fk_GameWeak
+            }, false).OrderBy(a => a.StartTime)
+                .FirstOrDefault();
+
+            return firstTeamGameWeak?.StartTime ?? DateTime.MinValue;
         }
 
         public void CreateTeamGameWeak(TeamGameWeak TeamGameWeak)

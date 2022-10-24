@@ -74,7 +74,7 @@ namespace Repository.DBModels.SeasonModels
                                         (isCurrent == null || a.IsCurrent == isCurrent) &&
                                         (string.IsNullOrWhiteSpace(_365_GameWeakId) || a._365_GameWeakId == _365_GameWeakId) &&
                                         (isDelayed == null || a.IsDelayed == isDelayed) &&
-                                        (biggerThanWeak == null) && a._365_GameWeakId.ParseToInt() < biggerThanWeak);
+                                        (biggerThanWeak == null) || a._365_GameWeakId.ParseToInt() > biggerThanWeak);
 
         }
 

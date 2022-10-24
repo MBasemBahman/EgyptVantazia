@@ -86,6 +86,7 @@ namespace CoreServices.Logic
                            Fk_Account = a.Fk_Account,
                            Fk_PrivateLeague = a.Fk_PrivateLeague,
                            IsAdmin = a.IsAdmin,
+                           Ranking = a.Ranking,
                            Account = new AccountModel
                            {
                                ImageUrl = a.Account.StorageUrl + a.Account.ImageUrl,

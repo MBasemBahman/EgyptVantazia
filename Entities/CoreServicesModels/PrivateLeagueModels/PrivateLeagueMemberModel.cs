@@ -27,6 +27,9 @@ namespace Entities.CoreServicesModels.PrivateLeagueModels
 
         [DisplayName(nameof(IsAdmin))]
         public bool IsAdmin { get; set; }
+
+        [DisplayName(nameof(Ranking))]
+        public double Ranking { get; set; }
     }
 
     public class PrivateLeagueMemberCreateModel

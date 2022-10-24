@@ -18,6 +18,9 @@ namespace Entities.DBModels.PrivateLeagueModels
         [DisplayName(nameof(PrivateLeague))]
         public PrivateLeague PrivateLeague { get; set; }
 
+        [DisplayName(nameof(Ranking))]
+        public double Ranking { get; set; }
+
         [DisplayName(nameof(IsAdmin))]
         public bool IsAdmin { get; set; }
     }

@@ -195,10 +195,10 @@ namespace CoreServices.Logic
         {
             int nextGameWeakNumber = GetCurrentGameWeak()._365_GameWeakId.ParseToInt() + 1;
             return GetGameWeaks(new GameWeakParameters
-                {
-                    IsDelayed = false, 
-                    BiggerThanWeak = nextGameWeakNumber
-                }, otherLang: otherLang)
+            {
+                IsDelayed = false,
+                BiggerThanWeak = nextGameWeakNumber
+            }, otherLang: otherLang)
                 .OrderBy(a => a._365_GameWeakId)
                 .FirstOrDefault();
         }

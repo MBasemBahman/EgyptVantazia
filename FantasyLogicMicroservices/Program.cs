@@ -65,6 +65,7 @@ app.UseHangfireDashboard("/schedulejobs", new DashboardOptions
 {
     AppPath = "",
     DashboardTitle = "schedule jobs",
+    Authorization = new[] { new HangfireAuthorizationFilter() }
 });
 
 app.UseEndpoints(endpoints =>

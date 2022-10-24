@@ -15,32 +15,30 @@ namespace FantasyLogic.DataMigration.TeamData
             _unitOfWork = unitOfWork;
         }
 
-        public void UpdatePositions()
+        public void RunUpdatePositions(int delayMinutes)
         {
             List<string> teams = _unitOfWork.Team.GetTeams(new TeamParameters
             {
             }, otherLang: false).Select(a => a._365_TeamId).ToList();
 
-            int minutes = 30;
             foreach (string _365_TeamId in teams)
             {
-                _ = BackgroundJob.Schedule(() => UpdatePositions(_365_TeamId), TimeSpan.FromMinutes(minutes));
-                minutes += 10;
+                _ = BackgroundJob.Schedule(() => UpdateTeamPositions(_365_TeamId.ParseToInt(), delayMinutes), TimeSpan.FromMinutes(delayMinutes));
+                
             }
         }
 
-        public async Task UpdatePositions(string _365_TeamId)
+        public async Task UpdateTeamPositions(int _365_TeamId, int delayMinutes)
         {
-            int _365_TeamIdVal = _365_TeamId.ParseToInt();
             SquadReturn squadsInArabic = await _365Services.GetSquads(new _365SquadsParameters
             {
-                Competitors = _365_TeamIdVal,
+                Competitors = _365_TeamId,
                 IsArabic = true,
             });
 
             SquadReturn squadsInEnglish = await _365Services.GetSquads(new _365SquadsParameters
             {
-                Competitors = _365_TeamIdVal,
+                Competitors = _365_TeamId,
                 IsArabic = false,
             });
 
@@ -65,11 +63,10 @@ namespace FantasyLogic.DataMigration.TeamData
                                                         Name = a.Select(a => a.Name).First()
                                                     })
                                                     .ToList();
-            int minutes = 30;
             for (int i = 0; i < positionsInArabic.Count; i++)
             {
-                _ = BackgroundJob.Schedule(() => UpdatePosition(positionsInArabic[i], positionsInEnglish[i]), TimeSpan.FromMinutes(minutes));
-                minutes++;
+                _ = BackgroundJob.Schedule(() => UpdatePosition(positionsInArabic[i], positionsInEnglish[i]), TimeSpan.FromMinutes(delayMinutes));
+                
             }
         }
 

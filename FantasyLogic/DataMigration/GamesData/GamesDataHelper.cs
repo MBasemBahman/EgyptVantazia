@@ -19,7 +19,7 @@ namespace FantasyLogic.DataMigration.GamesData
             _gamesHelper = new GamesHelper(unitOfWork, _365Services);
         }
 
-        public void UpdateGames()
+        public void RunUpdateGames(int delayMinutes)
         {
             List<TeamDto> teams = _unitOfWork.Team.GetTeams(new TeamParameters
             {
@@ -29,6 +29,11 @@ namespace FantasyLogic.DataMigration.GamesData
                 _365_TeamId = a._365_TeamId
             }).ToList();
 
+            _ = BackgroundJob.Schedule(() => UpdateGames(teams, delayMinutes), TimeSpan.FromMinutes(delayMinutes));
+        }
+
+        public void UpdateGames(List<TeamDto> teams, int delayMinutes)
+        {
             List<GameWeakDto> gameWeaks = _unitOfWork.Season.GetGameWeaks(new GameWeakParameters
             {
             }, otherLang: false).Select(a => new GameWeakDto
@@ -37,27 +42,21 @@ namespace FantasyLogic.DataMigration.GamesData
                 _365_GameWeakId = a._365_GameWeakId
             }).ToList();
 
-            _ = BackgroundJob.Schedule(() => UpdateGames(teams, gameWeaks), TimeSpan.FromMinutes(5));
-        }
-
-        public void UpdateGames(List<TeamDto> teams, List<GameWeakDto> gameWeaks)
-        {
             List<Games> games = _gamesHelper.GetAllGames().Result.OrderBy(a => a.RoundNum).ThenBy(a => a.StartTimeVal).ToList();
 
-            int minutes = 30;
             foreach (Games game in games)
             {
                 int fk_Home = teams.Where(a => a._365_TeamId == game.HomeCompetitor.Id.ToString()).Select(a => a.Id).FirstOrDefault();
                 int fk_Away = teams.Where(a => a._365_TeamId == game.AwayCompetitor.Id.ToString()).Select(a => a.Id).FirstOrDefault();
                 int fk_GameWeak = gameWeaks.Where(a => a._365_GameWeakId == game.RoundNum.ToString()).Select(a => a.Id).FirstOrDefault();
 
-                _ = BackgroundJob.Schedule(() => UpdateGames(game, fk_Home, fk_Away, fk_GameWeak), TimeSpan.FromMinutes(minutes));
+                _ = BackgroundJob.Schedule(() => UpdateGame(game, fk_Home, fk_Away, fk_GameWeak), TimeSpan.FromMinutes(delayMinutes));
 
-                minutes++;
+                
             }
         }
 
-        public async Task UpdateGames(Games game, int fk_Home, int fk_Away, int fk_GameWeak)
+        public async Task UpdateGame(Games game, int fk_Home, int fk_Away, int fk_GameWeak)
         {
             _unitOfWork.Season.CreateTeamGameWeak(new TeamGameWeak
             {

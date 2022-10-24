@@ -16,7 +16,7 @@ namespace FantasyLogic.DataMigration.StandingsData
             _unitOfWork = unitOfWork;
         }
 
-        public async Task UpdateStandings()
+        public void RunUpdateStandings(int delayMinutes)
         {
             List<TeamDto> teams = _unitOfWork.Team.GetTeams(new TeamParameters
             {
@@ -28,24 +28,28 @@ namespace FantasyLogic.DataMigration.StandingsData
 
             SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
 
+            _ = BackgroundJob.Schedule(() => UpdateSeasonStandings(teams, season._365_SeasonId.ParseToInt(), season.Id, delayMinutes), TimeSpan.FromMinutes(delayMinutes));
+        }
+
+        public async Task UpdateSeasonStandings(List<TeamDto> teams, int _365_SeasonId, int fk_Season, int delayMinutes)
+        {
             StandingsReturn standings = await _365Services.GetStandings(new _365StandingsParameters
             {
-                SeasonNum = season._365_SeasonId.ParseToInt(),
+                SeasonNum = _365_SeasonId,
                 IsArabic = true,
             });
 
             List<Row> rows = standings.Standings.SelectMany(a => a.Rows).ToList();
 
-            int minutes = 30;
             foreach (Row row in rows)
             {
                 int fk_Team = teams.Where(a => a._365_TeamId == row.Competitor.Id.ToString())
                                    .Select(a => a.Id)
                                    .FirstOrDefault();
 
-                _ = BackgroundJob.Schedule(() => UpdateStanding(row, season.Id, fk_Team), TimeSpan.FromMinutes(minutes));
+                _ = BackgroundJob.Schedule(() => UpdateStanding(row, fk_Season, fk_Team), TimeSpan.FromMinutes(delayMinutes));
 
-                minutes++;
+                
             }
         }
 

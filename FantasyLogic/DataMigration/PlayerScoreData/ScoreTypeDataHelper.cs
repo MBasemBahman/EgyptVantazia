@@ -16,21 +16,20 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             _unitOfWork = unitOfWork;
         }
 
-        public void UpdateStates()
+        public void RunUpdateStates(int delayMinutes)
         {
             List<string> teamGameWeaks = _unitOfWork.Season.GetTeamGameWeaks(new TeamGameWeakParameters
             {
             }, otherLang: false).Select(a => a._365_MatchId).ToList();
 
-            int minutes = 30;
             foreach (string _365_MatchId in teamGameWeaks)
             {
-                _ = BackgroundJob.Schedule(() => UpdateStates(_365_MatchId.ParseToInt()), TimeSpan.FromMinutes(minutes));
-                minutes++;
+                _ = BackgroundJob.Schedule(() => UpdateMatchStates(_365_MatchId.ParseToInt(), delayMinutes), TimeSpan.FromMinutes(delayMinutes));
+                
             }
         }
 
-        public async Task UpdateStates(int _365_MatchId)
+        public async Task UpdateMatchStates(int _365_MatchId, int delayMinutes)
         {
             GameReturn gameReturnInArabic = await _365Services.GetGame(new _365GameParameters
             {
@@ -43,11 +42,11 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 GameId = _365_MatchId,
             });
 
-            UpdateStats(gameReturnInArabic.Game, gameReturnInEnglish.Game);
-            UpdateEvents(gameReturnInArabic.Game, gameReturnInEnglish.Game);
+            UpdateStats(gameReturnInArabic.Game, gameReturnInEnglish.Game, delayMinutes);
+            UpdateEvents(gameReturnInArabic.Game, gameReturnInEnglish.Game, delayMinutes);
         }
 
-        public void UpdateStats(Game gameInArabic, Game gameInEnglish)
+        public void UpdateStats(Game gameInArabic, Game gameInEnglish, int delayMinutes)
         {
             List<Stat> statsInArabic = new();
             List<Stat> statsInEnglish = new();
@@ -121,11 +120,10 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 }).Select(a => a.Key).ToList();
             }
 
-            int minutes = 30;
             for (int i = 0; i < statsInArabic.Count; i++)
             {
-                _ = BackgroundJob.Schedule(() => UpdateStat(statsInArabic[i], statsInEnglish[i]), TimeSpan.FromMinutes(minutes));
-                minutes++;
+                _ = BackgroundJob.Schedule(() => UpdateStat(statsInArabic[i], statsInEnglish[i]), TimeSpan.FromMinutes(delayMinutes));
+                
             }
         }
 
@@ -143,7 +141,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             await _unitOfWork.Save();
         }
 
-        public void UpdateEvents(Game gameInArabic, Game gameInEnglish)
+        public void UpdateEvents(Game gameInArabic, Game gameInEnglish, int delayMinutes)
         {
             List<EventType> eventsInArabic = new();
             List<EventType> eventsInEnglish = new();
@@ -165,11 +163,10 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                                       .ToList());
             }
 
-            int minutes = 30;
             for (int i = 0; i < eventsInArabic.Count; i++)
             {
-                _ = BackgroundJob.Schedule(() => UpdateEvent(eventsInArabic[i], eventsInEnglish[i]), TimeSpan.FromMinutes(minutes));
-                minutes++;
+                _ = BackgroundJob.Schedule(() => UpdateEvent(eventsInArabic[i], eventsInEnglish[i]), TimeSpan.FromMinutes(delayMinutes));
+                
             }
         }
 

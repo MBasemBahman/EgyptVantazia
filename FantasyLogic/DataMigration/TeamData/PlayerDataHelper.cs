@@ -15,12 +15,17 @@ namespace FantasyLogic.DataMigration.TeamData
             _unitOfWork = unitOfWork;
         }
 
-        public void UpdatePlayers()
+        public void RunUpdatePlayers(int delayMinutes)
         {
             List<TeamModel> teams = _unitOfWork.Team.GetTeams(new TeamParameters
             {
             }, otherLang: false).ToList();
 
+            _ = BackgroundJob.Schedule(() => UpdateTeamsPlayers(teams, delayMinutes), TimeSpan.FromMinutes(delayMinutes));
+        }
+
+        public void UpdateTeamsPlayers(List<TeamModel> teams, int delayMinutes)
+        {
             List<PlayerPositionDto> positions = _unitOfWork.Team.GetPlayerPositions(new PlayerPositionParameters
             {
             }, otherLang: false).Select(a => new PlayerPositionDto
@@ -29,15 +34,14 @@ namespace FantasyLogic.DataMigration.TeamData
                 _365_PositionId = a._365_PositionId
             }).ToList();
 
-            int minutes = 30;
             foreach (TeamModel team in teams)
             {
-                _ = BackgroundJob.Schedule(() => UpdatePlayers(team, positions), TimeSpan.FromMinutes(minutes));
-                minutes += 10;
+                _ = BackgroundJob.Schedule(() => UpdatePlayers(team, positions, delayMinutes), TimeSpan.FromMinutes(delayMinutes));
+                
             }
         }
 
-        public async Task UpdatePlayers(TeamModel team, List<PlayerPositionDto> positions)
+        public async Task UpdatePlayers(TeamModel team, List<PlayerPositionDto> positions, int delayMinutes)
         {
             int _365_TeamId = team._365_TeamId.ParseToInt();
 
@@ -56,15 +60,14 @@ namespace FantasyLogic.DataMigration.TeamData
             List<Athlete> athletesInArabic = squadsInArabic.Squads.SelectMany(a => a.Athletes).ToList();
             List<Athlete> athletesInEnglish = squadsInEnglish.Squads.SelectMany(a => a.Athletes).ToList();
 
-            int minutes = 30;
             for (int i = 0; i < athletesInArabic.Count; i++)
             {
                 int fk_PlayerPosition = positions.Where(a => a._365_PositionId == athletesInArabic[i].Position.Id.ToString())
                                                  .Select(a => a.Id)
                                                  .FirstOrDefault();
 
-                _ = BackgroundJob.Schedule(() => UpdatePlayer(athletesInArabic[i], athletesInEnglish[i], team.Id, fk_PlayerPosition), TimeSpan.FromMinutes(minutes));
-                minutes++;
+                _ = BackgroundJob.Schedule(() => UpdatePlayer(athletesInArabic[i], athletesInEnglish[i], team.Id, fk_PlayerPosition), TimeSpan.FromMinutes(delayMinutes));
+                
             }
         }
 

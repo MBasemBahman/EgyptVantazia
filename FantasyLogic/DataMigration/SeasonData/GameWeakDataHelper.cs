@@ -15,23 +15,21 @@ namespace FantasyLogic.DataMigration.SeasonData
             _gamesHelper = new GamesHelper(unitOfWork, _365Services);
         }
 
-        public void UpdateGameWeaks(int delayMinutes)
+        public void RunUpdateGameWeaks(int delayMinutes)
         {
             SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
 
-            _ = BackgroundJob.Schedule(() => UpdateGameWeaks(season.Id, delayMinutes), TimeSpan.FromMinutes(delayMinutes));
+            _ = BackgroundJob.Schedule(() => UpdateSeasonGameWeaks(season.Id, delayMinutes), TimeSpan.FromMinutes(delayMinutes));
         }
 
-        public void UpdateGameWeaks(int fk_season, int delayMinutes)
+        public void UpdateSeasonGameWeaks(int fk_season, int delayMinutes)
         {
             List<int> rounds = _gamesHelper.GetAllGames().Result.Select(a => a.RoundNum).Distinct().OrderBy(a => a).ToList();
-
-            delayMinutes *= delayMinutes;
 
             foreach (int round in rounds)
             {
                 _ = BackgroundJob.Schedule(() => UpdateGameWeak(round, fk_season), TimeSpan.FromMinutes(delayMinutes));
-                delayMinutes++;
+                
             }
         }
 

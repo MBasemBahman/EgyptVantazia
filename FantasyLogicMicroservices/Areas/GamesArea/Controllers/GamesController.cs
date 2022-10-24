@@ -1,15 +1,15 @@
 ﻿using FantasyLogic;
 using FantasyLogicMicroservices.Controllers;
 
-namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
+namespace FantasyLogicMicroservices.Areas.GamesArea.Controllers
 {
     [ApiVersion("1.0")]
-    [Area("Season")]
-    [ApiExplorerSettings(GroupName = "Season")]
+    [Area("Games")]
+    [ApiExplorerSettings(GroupName = "Games")]
     [Route("[area]/v{version:apiVersion}/[controller]")]
-    public class GameWeakController : ExtendControllerBase
+    public class GamesController : ExtendControllerBase
     {
-        public GameWeakController(
+        public GamesController(
         ILoggerManager logger,
         UnitOfWork unitOfWork,
         LinkGenerator linkGenerator,
@@ -23,7 +23,7 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
         [Route(nameof(UpdateGameWeak))]
         public IActionResult UpdateGameWeak()
         {
-            _fantasyUnitOfWork.GameWeakDataHelper.RunUpdateGameWeaks(1);
+            _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames(1);
 
             return Ok();
         }

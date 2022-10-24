@@ -105,6 +105,9 @@ namespace FantasyLogicMicroservices.Extensions
                 });
 
                 c.SwaggerDoc("Season", new OpenApiInfo { Title = "Season" });
+                c.SwaggerDoc("Standings", new OpenApiInfo { Title = "Standings" });
+                c.SwaggerDoc("Team", new OpenApiInfo { Title = "Team" });
+                c.SwaggerDoc("Games", new OpenApiInfo { Title = "Games" });
 
                 c.OperationFilter<DocsFilter>();
                 c.SchemaFilter<SwaggerSkipPropertyFilter>();
@@ -170,12 +173,10 @@ namespace FantasyLogicMicroservices.Extensions
                     QueuePollInterval = TimeSpan.Zero,
                     UseRecommendedIsolationLevel = true,
                     UsePageLocksOnDequeue = true,
-                    DisableGlobalLocks = true
+                    DisableGlobalLocks = true,
                 }));
             // Add the processing server as IHostedService
             _ = services.AddHangfireServer();
-
-            //_ = services.AddScoped<HangfireManager>();
         }
     }
 }

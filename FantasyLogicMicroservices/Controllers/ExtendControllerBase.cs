@@ -4,7 +4,7 @@ namespace FantasyLogicMicroservices.Controllers
 {
     [Authorize]
     [ApiController]
-    [AllowAll]
+    [AllowAnonymous]
     public class ExtendControllerBase : ControllerBase
     {
         protected readonly ILoggerManager _logger;

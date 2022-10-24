@@ -1071,4 +1071,16 @@
   <data name="IsTransfer" xml:space="preserve">
     <value>منقول</value>
   </data>
+  <data name="GlobalRanking" xml:space="preserve">
+    <value>التصنيف العالمي</value>
+  </data>
+  <data name="CountryRanking" xml:space="preserve">
+    <value>الترتيب المحلي</value>
+  </data>
+  <data name="FavouriteTeamRanking" xml:space="preserve">
+    <value>ترتيب الفريق المفضل</value>
+  </data>
+  <data name="IsDelayed" xml:space="preserve">
+    <value>مؤجل</value>
+  </data>
 </root>

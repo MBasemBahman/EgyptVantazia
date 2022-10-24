@@ -62,6 +62,12 @@
 
                                             <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.TotalPoints):</dt>
                                             <dd class="col-sm-8 mb-1">@Model.TotalPoints</dd>
+                                            
+                                            <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.CountryRanking):</dt>
+                                            <dd class="col-sm-8 mb-1">@Model.CountryRanking</dd>
+                                            
+                                            <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.FavouriteTeamRanking):</dt>
+                                            <dd class="col-sm-8 mb-1">@Model.FavouriteTeamRanking</dd>
 
                                         </dl>
                                     </div>
@@ -76,25 +82,16 @@
 
                                             <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.FreeTransfer):</dt>
                                             <dd class="col-sm-8 mb-1">@Model.FreeTransfer</dd>
-                                        </dl>
-                                    </div>
-
-                                    <div class="col-xl-5 col-12">
-                                        <dl class="row mb-0">
-
+                                            
                                             <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.GlobalRanking):</dt>
                                             <dd class="col-sm-8 mb-1">@Model.GlobalRanking</dd>
-
-                                            <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.CountryRanking):</dt>
-                                            <dd class="col-sm-8 mb-1">@Model.CountryRanking</dd>
-
-                                            <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.FavouriteTeamRanking):</dt>
-                                            <dd class="col-sm-8 mb-1">@Model.FavouriteTeamRanking</dd>
+                                            
+                                            
                                         </dl>
                                     </div>
 
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body" style="overflow-x: auto">
                                     <div class="d-flex justify-content-between align-items-start">
                                         <span class="badge bg-light-primary">@Html.DisplayNameFor(model => Model.AccountTeamGameWeaks)</span>
                                     </div>
@@ -111,6 +108,9 @@
                                                     <th>@Html.DisplayNameFor(model => accountTeamGameWeak.FreeHit)</th>
                                                     <th>@Html.DisplayNameFor(model => accountTeamGameWeak.WildCard)</th>
                                                     <th>@Html.DisplayNameFor(model => accountTeamGameWeak.TotalPoints)</th>
+                                                    <th>@Html.DisplayNameFor(model => accountTeamGameWeak.GlobalRanking)</th>
+                                                    <th>@Html.DisplayNameFor(model => accountTeamGameWeak.CountryRanking)</th>
+                                                    <th>@Html.DisplayNameFor(model => accountTeamGameWeak.FavouriteTeamRanking)</th>
                                                     <th>@Html.DisplayNameFor(model => accountTeamGameWeak.DoubleGameWeak)</th>
                                                     <th>@Html.DisplayNameFor(model => accountTeamGameWeak.Top_11)</th>
                                                     <th>@Html.DisplayNameFor(model => accountTeamGameWeak.TansfarePoints)</th>
@@ -127,6 +127,9 @@
                                                         <td>@(item.FreeHit ? Localizer.Get("Yes") : Localizer.Get("No"))</td>
                                                         <td>@(item.WildCard ? Localizer.Get("Yes") : Localizer.Get("No"))</td>
                                                         <td>@item.TotalPoints</td>
+                                                        <td>@item.GlobalRanking</td>
+                                                        <td>@item.CountryRanking</td>
+                                                        <td>@item.FavouriteTeamRanking</td>
                                                         <td>@item.DoubleGameWeak</td>
                                                         <td>@item.Top_11</td>
                                                         <td>@item.TansfarePoints</td>

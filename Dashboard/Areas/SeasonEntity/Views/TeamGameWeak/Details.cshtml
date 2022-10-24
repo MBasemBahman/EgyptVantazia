@@ -39,6 +39,8 @@
                 <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.StartTime):</dt>
                 <dd class="col-sm-8 mb-1">@Model.StartTime</dd>
 
+                <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.IsDelayed):</dt>
+                <dd class="col-sm-8 mb-1">@(Model.IsDelayed ? Localizer.Get("Yes") : Localizer.Get("No"))</dd>
 
             </dl>
         </div>

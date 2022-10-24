@@ -89,9 +89,7 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
             if (id > 0)
             {
                 model = _mapper.Map<TeamGameWeakCreateOrEditModel>(
-                                                await _unitOfWork.Season.FindTeamGameWeakbyId(id, trackChanges: false));
-
-
+                                                await _unitOfWork.Season.FindTeamGameWeakbyId(id, trackChanges: false));    
             }
             else
             {

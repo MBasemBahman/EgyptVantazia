@@ -274,6 +274,7 @@ namespace CoreServices.Logic
                            HomeScore = a.HomeScore,
                            StartTime = a.StartTime,
                            _365_MatchId = a._365_MatchId,
+                           IsDelayed = a.IsDelayed,
                            Away = new TeamModel
                            {
                                Name = otherLang ? a.Away.TeamLang.Name : a.Away.Name,

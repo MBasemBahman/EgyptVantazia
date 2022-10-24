@@ -1080,4 +1080,16 @@
   <data name="IsTransfer" xml:space="preserve">
     <value>Is Transfer ?</value>
   </data>
+  <data name="GlobalRanking" xml:space="preserve">
+    <value>Global Ranking</value>
+  </data>
+  <data name="CountryRanking" xml:space="preserve">
+    <value>Country Ranking</value>
+  </data>
+  <data name="FavouriteTeamRanking" xml:space="preserve">
+    <value>Favourite Team Ranking</value>
+  </data>
+  <data name="IsDelayed" xml:space="preserve">
+    <value>Is Delayed</value>
+  </data>
 </root>

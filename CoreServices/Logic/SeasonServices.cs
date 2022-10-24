@@ -319,6 +319,18 @@ namespace CoreServices.Logic
             return await _repository.TeamGameWeak.FindBy365Id(id, trackChanges);
         }
 
+        public DateTime GetFirstTeamGameWeakMatchDate()
+        {
+            var fk_GameWeak = GetCurrentGameWeak().Id;
+            var firstTeamGameWeak = GetTeamGameWeaks(new TeamGameWeakParameters
+            {
+                Fk_GameWeak = fk_GameWeak,
+                FromTime = DateTime.UtcNow
+            }, false).OrderBy(a => a.StartTime).FirstOrDefault();
+
+            return firstTeamGameWeak?.StartTime ?? DateTime.MinValue;
+        }
+
         public void CreateTeamGameWeak(TeamGameWeak TeamGameWeak)
         {
             _repository.TeamGameWeak.Create(TeamGameWeak);

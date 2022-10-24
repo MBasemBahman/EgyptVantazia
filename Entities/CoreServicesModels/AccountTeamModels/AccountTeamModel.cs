@@ -63,7 +63,7 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         public int PlayersCount { get; set; }
 
-        [DisplayName(nameof(TotalMoney))]
+        [DisplayName(nameof(FreeTransfer))]
         public int FreeTransfer { get; set; }
     }
 

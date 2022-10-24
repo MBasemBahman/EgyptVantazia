@@ -1056,4 +1056,19 @@
   <data name="choose one at least" xml:space="preserve">
     <value>يجب اختيار واحد على الاقل</value>
   </data>
+  <data name="FreeTransfer" xml:space="preserve">
+    <value>انتقال حر</value>
+  </data>
+  <data name="TransferPoints" xml:space="preserve">
+    <value>نقاط الانتقال</value>
+  </data>
+  <data name="TOP_11" xml:space="preserve">
+    <value>اعلى 11 لاعب</value>
+  </data>
+  <data name="IsPrimary" xml:space="preserve">
+    <value>اساسي</value>
+  </data>
+  <data name="IsTransfer" xml:space="preserve">
+    <value>منقول</value>
+  </data>
 </root>

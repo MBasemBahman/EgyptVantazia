@@ -1065,4 +1065,19 @@
   <data name="choose one at least" xml:space="preserve">
     <value>You Should Choose One At Least</value>
   </data>
+  <data name="FreeTransfer" xml:space="preserve">
+    <value>Free Transfer</value>
+  </data>
+  <data name="TransferPoints" xml:space="preserve">
+    <value>Transfer Points</value>
+  </data>
+  <data name="TOP_11" xml:space="preserve">
+    <value>Top 11</value>
+  </data>
+  <data name="IsPrimary" xml:space="preserve">
+    <value>Is Primary ?</value>
+  </data>
+  <data name="IsTransfer" xml:space="preserve">
+    <value>Is Transfer ?</value>
+  </data>
 </root>

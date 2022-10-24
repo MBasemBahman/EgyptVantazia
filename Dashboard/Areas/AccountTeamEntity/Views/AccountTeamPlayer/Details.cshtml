@@ -23,6 +23,9 @@
                             <th>@Html.DisplayNameFor(model => accountTeamPlayerGameWeak.GameWeak)</th>
                             <th>@Html.DisplayNameFor(model => accountTeamPlayerGameWeak.TeamPlayerType)</th>
                             <th>@Html.DisplayNameFor(model => accountTeamPlayerGameWeak.TrippleCaptain)</th>
+                            <th>@Html.DisplayNameFor(model => accountTeamPlayerGameWeak.IsPrimary)</th>
+                            <th>@Html.DisplayNameFor(model => accountTeamPlayerGameWeak.IsTransfer)</th>
+                            <th>@Html.DisplayNameFor(model => accountTeamPlayerGameWeak.Points)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,6 +36,9 @@
                                 <td>@gameWeak.GameWeak.Name</td>
                                 <td>@gameWeak.TeamPlayerType.Name</td>
                                 <td>@(gameWeak.TrippleCaptain ? Localizer.Get("Yes") : Localizer.Get("No"))</td>
+                                <td>@gameWeak.IsPrimary</td>
+                                <td>@gameWeak.IsTransfer</td>
+                                <td>@gameWeak.Points</td>
                             </tr>
                         }
                     </tbody>

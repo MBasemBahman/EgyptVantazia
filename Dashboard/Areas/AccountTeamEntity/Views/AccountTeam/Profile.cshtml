@@ -74,6 +74,9 @@
                                             </dd>
                                             <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.TotalMoney):</dt>
                                             <dd class="col-sm-8 mb-1">@Model.TotalMoney</dd>
+                                            
+                                            <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.FreeTransfer):</dt>
+                                            <dd class="col-sm-8 mb-1">@Model.FreeTransfer</dd>
 
                                         </dl>
                                     </div>
@@ -96,7 +99,10 @@
                                                     <th>@Html.DisplayNameFor(model => accountTeamGameWeak.FreeHit)</th>
                                                     <th>@Html.DisplayNameFor(model => accountTeamGameWeak.WildCard)</th>
                                                     <th>@Html.DisplayNameFor(model => accountTeamGameWeak.TotalPoints)</th>
-                                                </tr>
+                                                    <th>@Html.DisplayNameFor(model => accountTeamGameWeak.DoubleGameWeak)</th>
+                                                    <th>@Html.DisplayNameFor(model => accountTeamGameWeak.Top_11)</th>
+                                                    <th>@Html.DisplayNameFor(model => accountTeamGameWeak.TansfarePoints)</th>
+                                                </tr>   
                                             </thead>
                                             <tbody>
                                                 @foreach (var item in Model.AccountTeamGameWeaks)
@@ -109,6 +115,9 @@
                                                         <td>@(item.FreeHit ? Localizer.Get("Yes") : Localizer.Get("No"))</td>
                                                         <td>@(item.WildCard ? Localizer.Get("Yes") : Localizer.Get("No"))</td>
                                                         <td>@item.TotalPoints</td>
+                                                        <td>@item.DoubleGameWeak</td>
+                                                        <td>@item.Top_11</td>
+                                                        <td>@item.TansfarePoints</td>
                                                     </tr>
                                                 }
                                             </tbody>

@@ -13,6 +13,12 @@ namespace Entities.CoreServicesModels.SeasonModels
 
         [DisplayName(nameof(IsCurrent))]
         public bool? IsCurrent { get; set; }
+        
+        [DisplayName(nameof(IsDelayed))]
+        public bool? IsDelayed { get; set; }
+        
+        [DisplayName(nameof(BiggerThanWeak))] 
+        public int BiggerThanWeak { get; set; }
     }
 
     public class GameWeakModel : AuditEntity

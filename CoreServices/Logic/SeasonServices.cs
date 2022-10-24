@@ -191,6 +191,18 @@ namespace CoreServices.Logic
                    .FirstOrDefault();
         }
 
+        public GameWeakModel GetNextGameWeak(bool otherLang = false)
+        {
+            int nextGameWeakNumber = GetCurrentGameWeak()._365_GameWeakId.ParseToInt() + 1;
+            return GetGameWeaks(new GameWeakParameters
+                {
+                    IsDelayed = false, 
+                    BiggerThanWeak = nextGameWeakNumber
+                }, otherLang: otherLang)
+                .OrderBy(a => a._365_GameWeakId)
+                .FirstOrDefault();
+        }
+
         public async Task<PagedList<GameWeakModel>> GetGameWeakPaged(
                   GameWeakParameters parameters,
                   bool otherLang)

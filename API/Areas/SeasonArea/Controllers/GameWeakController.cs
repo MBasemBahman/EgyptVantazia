@@ -52,8 +52,21 @@ namespace API.Areas.SeasonArea.Controllers
         }
 
         [HttpGet]
-        [Route(nameof(GetCurrentSeason))]
-        public GameWeakDto GetCurrentSeason()
+        [Route(nameof(GetNextGameWeak))]
+        public GameWeakDto GetNextGameWeak()
+        {
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
+            GameWeakModel data = _unitOfWork.Season.GetNextGameWeak(otherLang);
+
+            GameWeakDto dataDto = _mapper.Map<GameWeakDto>(data);
+
+            return dataDto;
+        }
+
+        [HttpGet]
+        [Route(nameof(GetCurrentGameWeak))]
+        public GameWeakDto GetCurrentGameWeak()
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 

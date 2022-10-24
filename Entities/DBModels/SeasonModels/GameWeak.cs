@@ -13,6 +13,10 @@ namespace Entities.DBModels.SeasonModels
 
         [DisplayName(nameof(IsCurrent))]
         public bool IsCurrent { get; set; }
+        
+        [DisplayName(nameof(IsDelayed))]
+        [DefaultValue(false)]
+        public bool IsDelayed { get; set; }
 
         [DisplayName(nameof(_365_GameWeakId))]
         public string _365_GameWeakId { get; set; }

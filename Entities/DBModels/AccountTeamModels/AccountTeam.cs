@@ -30,7 +30,7 @@ namespace Entities.DBModels.AccountTeamModels
         [DisplayName(nameof(TotalMoney))]
         public int TotalMoney { get; set; }
 
-        [DisplayName(nameof(TotalMoney))]
+        [DisplayName(nameof(FreeTransfer))]
         public int FreeTransfer { get; set; }
 
         [DisplayName(nameof(AccountTeamPlayers))]

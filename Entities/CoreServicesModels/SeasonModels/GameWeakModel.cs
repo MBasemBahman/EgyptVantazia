@@ -13,7 +13,10 @@ namespace Entities.CoreServicesModels.SeasonModels
 
         [DisplayName(nameof(IsCurrent))]
         public bool? IsCurrent { get; set; }
-        
+
+        [DisplayName(nameof(IsCurrent))]
+        public bool? IsCurrentSeason { get; set; }
+
         [DisplayName(nameof(IsDelayed))]
         public bool? IsDelayed { get; set; }
         

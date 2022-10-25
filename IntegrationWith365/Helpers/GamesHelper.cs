@@ -15,7 +15,17 @@ namespace IntegrationWith365.Helpers
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<List<Games>> GetAllGames()
+        public async Task<List<Games>> GetAllGames(int _365_SeasonId)
+        {
+            List<Games> games = new();
+
+            games.AddRange(await GetPrevGames(_365_SeasonId));
+            games.AddRange(await GetNextGames(_365_SeasonId));
+
+            return games;
+        }
+
+        public async Task<List<Games>> GetPrevGames(int _365_SeasonId)
         {
             List<Games> games = new();
 
@@ -31,7 +41,14 @@ namespace IntegrationWith365.Helpers
                 }
             }
 
-            gamesReturn = await _365Services.GetGamesFixtures(new _365Parameters());
+            return games.Where(a => a.SeasonNum == _365_SeasonId && a.IsEnded == true).ToList();
+        }
+
+        public async Task<List<Games>> GetNextGames(int _365_SeasonId)
+        {
+            List<Games> games = new();
+
+            GamesReturn gamesReturn = await _365Services.GetGamesFixtures(new _365Parameters());
 
             if (gamesReturn.Games != null && gamesReturn.Games.Any())
             {
@@ -43,7 +60,17 @@ namespace IntegrationWith365.Helpers
                 }
             }
 
-            return games;
+            return games.Where(a => a.SeasonNum == _365_SeasonId && a.IsEnded == false).ToList();
+        }
+
+        public int GetCurrentRound(int _365_SeasonId)
+        {
+            return GetPrevGames(_365_SeasonId).Result.Select(a => a.RoundNum).OrderByDescending(a => a).FirstOrDefault();
+        }
+
+        public int GetNextRound(int _365_SeasonId)
+        {
+            return GetCurrentRound(_365_SeasonId) + 1;
         }
 
         public async Task<List<Games>> GetGames(int _365_AfterGameStartId)

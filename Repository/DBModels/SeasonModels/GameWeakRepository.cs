@@ -16,7 +16,8 @@ namespace Repository.DBModels.SeasonModels
                    .Filter(parameters.Id,
                            parameters.Fk_Season,
                            parameters._365_GameWeakId,
-                           parameters.IsCurrent);
+                           parameters.IsCurrent,
+                           parameters.IsCurrentSeason);
         }
 
         public async Task<GameWeak> FindById(int id, bool trackChanges)
@@ -26,18 +27,18 @@ namespace Repository.DBModels.SeasonModels
                         .SingleOrDefaultAsync();
         }
 
-        public async Task<GameWeak> FindBy365Id(string id, bool trackChanges)
+        public async Task<GameWeak> FindBy365Id(string id, int fk_Season, bool trackChanges)
         {
-            return await FindByCondition(a => a._365_GameWeakId == id, trackChanges)
+            return await FindByCondition(a => a.Fk_Season == fk_Season && a._365_GameWeakId == id, trackChanges)
                         .Include(a => a.GameWeakLang)
                         .SingleOrDefaultAsync();
         }
 
         public new void Create(GameWeak entity)
         {
-            if (entity._365_GameWeakId.IsExisting() && FindByCondition(a => a._365_GameWeakId == entity._365_GameWeakId, trackChanges: false).Any())
+            if (entity._365_GameWeakId.IsExisting() && FindByCondition(a => a.Fk_Season == entity.Fk_Season && a._365_GameWeakId == entity._365_GameWeakId, trackChanges: false).Any())
             {
-                GameWeak oldEntity = FindByCondition(a => a._365_GameWeakId == entity._365_GameWeakId, trackChanges: false)
+                GameWeak oldEntity = FindByCondition(a => a.Fk_Season == entity.Fk_Season && a._365_GameWeakId == entity._365_GameWeakId, trackChanges: false)
                                 .Include(a => a.GameWeakLang)
                                 .First();
 
@@ -63,11 +64,13 @@ namespace Repository.DBModels.SeasonModels
             int id,
             int Fk_Season,
             string _365_GameWeakId,
-            bool? isCurrent)
+            bool? isCurrent,
+            bool? isCurrentSeason)
         {
             return GameWeaks.Where(a => (id == 0 || a.Id == id) &&
                                         (Fk_Season == 0 || a.Fk_Season == Fk_Season) &&
                                         (isCurrent == null || a.IsCurrent == isCurrent) &&
+                                        (isCurrentSeason == null || a.Season.IsCurrent == isCurrentSeason) &&
                                         (string.IsNullOrWhiteSpace(_365_GameWeakId) || a._365_GameWeakId == _365_GameWeakId));
 
         }

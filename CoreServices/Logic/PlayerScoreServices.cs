@@ -162,7 +162,8 @@ namespace CoreServices.Logic
                            {
                                Name = otherLang ? a.Player.PlayerLang.Name : a.Player.Name,
                                ImageUrl = !string.IsNullOrEmpty(a.Player.ImageUrl) ? a.Player.StorageUrl + a.Player.ImageUrl : a.Player.Team.ShirtStorageUrl + a.Player.Team.ShirtImageUrl,
-                               _365_PlayerId = a.Player._365_PlayerId
+                               _365_PlayerId = a.Player._365_PlayerId,
+                               Fk_PlayerPosition = a.Player.Fk_PlayerPosition
                            },
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
@@ -260,6 +261,18 @@ namespace CoreServices.Logic
             }
             return player;
         }
+
+        public List<int> GetPlayerGameWeakTop(int fk_TeamGameWeak, int topCount)
+        {
+            return _repository.PlayerGameWeak.FindAll(new PlayerGameWeakParameters
+            {
+                Fk_TeamGameWeak = fk_TeamGameWeak
+            }, trackChanges: false).OrderByDescending(a => a.Ranking)
+                                   .Skip(0)
+                                   .Take(topCount)
+                                   .Select(a => a.Fk_Player).ToList();
+        }
+
         #endregion
 
         #region PlayerGameWeakScore Services

@@ -292,6 +292,7 @@ namespace CoreServices.Logic
                            CreatedAt = a.CreatedAt,
                            Fk_AccountTeam = a.Fk_AccountTeam,
                            Fk_Player = a.Fk_Player,
+                           IsPrimary = parameters.IsCurrent ? a.AccountTeamPlayerGameWeaks.Any(b => b.GameWeak.IsCurrent && b.IsPrimary) : parameters.Fk_GameWeak != 0 && a.AccountTeamPlayerGameWeaks.Any(b => b.Fk_GameWeak == parameters.Fk_GameWeak && b.IsPrimary),
                            Player = new PlayerModel
                            {
                                Name = otherLang ? a.Player.PlayerLang.Name : a.Player.Name,

@@ -18,14 +18,17 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
 
         public void RunUpdateStates(int delayMinutes)
         {
+            SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
+
             List<string> teamGameWeaks = _unitOfWork.Season.GetTeamGameWeaks(new TeamGameWeakParameters
             {
+                Fk_Season = season.Id
             }, otherLang: false).Select(a => a._365_MatchId).ToList();
 
             foreach (string _365_MatchId in teamGameWeaks)
             {
                 _ = BackgroundJob.Schedule(() => UpdateMatchStates(_365_MatchId.ParseToInt(), delayMinutes), TimeSpan.FromMinutes(delayMinutes));
-                
+
             }
         }
 
@@ -37,13 +40,17 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 IsArabic = true
             });
 
-            GameReturn gameReturnInEnglish = await _365Services.GetGame(new _365GameParameters
+            if (gameReturnInArabic != null && gameReturnInArabic.Game != null)
             {
-                GameId = _365_MatchId,
-            });
+                GameReturn gameReturnInEnglish = await _365Services.GetGame(new _365GameParameters
+                {
+                    GameId = _365_MatchId,
+                });
 
-            UpdateStats(gameReturnInArabic.Game, gameReturnInEnglish.Game, delayMinutes);
-            UpdateEvents(gameReturnInArabic.Game, gameReturnInEnglish.Game, delayMinutes);
+                UpdateStats(gameReturnInArabic.Game, gameReturnInEnglish.Game, delayMinutes);
+                UpdateEvents(gameReturnInArabic.Game, gameReturnInEnglish.Game, delayMinutes);
+
+            }
         }
 
         public void UpdateStats(Game gameInArabic, Game gameInEnglish, int delayMinutes)
@@ -123,7 +130,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             for (int i = 0; i < statsInArabic.Count; i++)
             {
                 _ = BackgroundJob.Schedule(() => UpdateStat(statsInArabic[i], statsInEnglish[i]), TimeSpan.FromMinutes(delayMinutes));
-                
+
             }
         }
 
@@ -166,7 +173,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             for (int i = 0; i < eventsInArabic.Count; i++)
             {
                 _ = BackgroundJob.Schedule(() => UpdateEvent(eventsInArabic[i], eventsInEnglish[i]), TimeSpan.FromMinutes(delayMinutes));
-                
+
             }
         }
 

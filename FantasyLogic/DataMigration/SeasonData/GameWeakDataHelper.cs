@@ -19,18 +19,19 @@ namespace FantasyLogic.DataMigration.SeasonData
         {
             SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
 
-            _ = BackgroundJob.Schedule(() => UpdateSeasonGameWeaks(season.Id, delayMinutes), TimeSpan.FromMinutes(delayMinutes));
+            _ = BackgroundJob.Schedule(() => UpdateSeasonGameWeaks(season.Id, season._365_SeasonId.ParseToInt(), delayMinutes), TimeSpan.FromMinutes(delayMinutes));
         }
 
-        public void UpdateSeasonGameWeaks(int fk_season, int delayMinutes)
+        public void UpdateSeasonGameWeaks(int fk_season, int _365_SeasonId, int delayMinutes)
         {
-            List<int> rounds = _gamesHelper.GetAllGames().Result.Select(a => a.RoundNum).Distinct().OrderBy(a => a).ToList();
+            List<int> rounds = _gamesHelper.GetAllGames(_365_SeasonId).Result.Select(a => a.RoundNum).Distinct().OrderBy(a => a).ToList();
 
             foreach (int round in rounds)
             {
-                _ = BackgroundJob.Schedule(() => UpdateGameWeak(round, fk_season), TimeSpan.FromMinutes(delayMinutes));
-                
+                _ = BackgroundJob.Schedule(() => UpdateGameWeak(round, _365_SeasonId), TimeSpan.FromMinutes(delayMinutes));
             }
+
+            _ = BackgroundJob.Schedule(() => UpdateCurrentGameWeak(fk_season, _365_SeasonId), TimeSpan.FromMinutes(delayMinutes * rounds.Count));
         }
 
         public async Task UpdateGameWeak(int round, int fk_Season)
@@ -46,6 +47,20 @@ namespace FantasyLogic.DataMigration.SeasonData
                 }
             });
             await _unitOfWork.Save();
+        }
+
+        public async Task UpdateCurrentGameWeak(int fk_Season, int _365_SeasonId)
+        {
+            int round = _gamesHelper.GetCurrentRound(_365_SeasonId);
+            if (round > 0)
+            {
+                GameWeak gameWeak = await _unitOfWork.Season.FindGameWeakby365Id(round.ToString(), fk_Season, trackChanges: true);
+                if (gameWeak != null)
+                {
+                    gameWeak.IsCurrent = true;
+                    await _unitOfWork.Save();
+                }
+            }
         }
     }
 }

@@ -13,7 +13,12 @@ namespace FantasyLogic.Calculations
             _unitOfWork = unitOfWork;
         }
 
-        public PlayerGameWeakScore GetPlayerScore(PlayerGameWeakScore score, int fk_Player, int fk_PlayerGameWeak, int fk_PlayerPosition)
+        public PlayerGameWeakScore GetPlayerScore(
+            PlayerGameWeakScore score,
+            int fk_Player,
+            int fk_PlayerGameWeak,
+            int fk_PlayerPosition,
+            int fk_TeamGameWeak)
         {
             if (score.Fk_ScoreType == (int)ScoreTypeEnum.Minutes)
             {
@@ -131,8 +136,23 @@ namespace FantasyLogic.Calculations
             }
             else if (score.Fk_ScoreType == (int)ScoreTypeEnum.Ranking)
             {
-                score.FinalValue = 0;
-                score.Points = 0;
+                List<int> fk_Players = _unitOfWork.PlayerScore.GetPlayerGameWeakTop(fk_TeamGameWeak, 3);
+                if (fk_Players.Contains(fk_Player))
+                {
+                    score.FinalValue = fk_Players.IndexOf(fk_Player);
+                    if (score.FinalValue == 1)
+                    {
+                        score.Points = 3;
+                    }
+                    else if (score.FinalValue == 2)
+                    {
+                        score.Points = 2;
+                    }
+                    else if (score.FinalValue == 3)
+                    {
+                        score.Points = 1;
+                    }
+                }
             }
 
             return score;

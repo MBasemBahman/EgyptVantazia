@@ -5,9 +5,12 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 {
     public class AccountTeamPlayerParameters : RequestParameters
     {
+        public int Fk_Account{ get; set; }
         public int Fk_AccountTeam { get; set; }
         public int Fk_Player { get; set; }
         public int Fk_Season { get; set; }
+        public int Fk_GameWeak { get; set; }
+        public bool IsCurrent { get; set; }
     }
 
     public class AccountTeamPlayerModel : BaseEntity
@@ -23,6 +26,8 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         [DisplayName(nameof(Player))]
         public PlayerModel Player { get; set; }
+
+        public bool IsPrimary { get; set; }
 
     }
 

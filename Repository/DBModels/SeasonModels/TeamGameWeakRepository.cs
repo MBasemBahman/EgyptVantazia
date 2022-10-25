@@ -42,9 +42,9 @@ namespace Repository.DBModels.SeasonModels
 
         public new void Create(TeamGameWeak entity)
         {
-            if (entity._365_MatchId.IsExisting() && FindByCondition(a => a._365_MatchId == entity._365_MatchId, trackChanges: false).Any())
+            if (entity._365_MatchId.IsExisting() && FindByCondition(a => a.Fk_GameWeak == entity.Fk_GameWeak && a.Fk_Away == entity.Fk_Away && a.Fk_Home == entity.Fk_Home, trackChanges: false).Any())
             {
-                TeamGameWeak oldEntity = FindByCondition(a => a._365_MatchId == entity._365_MatchId, trackChanges: false).First();
+                TeamGameWeak oldEntity = FindByCondition(a => a.Fk_GameWeak == entity.Fk_GameWeak && a.Fk_Away == entity.Fk_Away && a.Fk_Home == entity.Fk_Home, trackChanges: false).First();
 
                 oldEntity.Fk_Away = entity.Fk_Away;
                 oldEntity.Fk_Home = entity.Fk_Home;

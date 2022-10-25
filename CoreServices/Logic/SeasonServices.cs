@@ -186,7 +186,7 @@ namespace CoreServices.Logic
 
         public GameWeakModel GetCurrentGameWeak(bool otherLang = false)
         {
-            return GetGameWeaks(new GameWeakParameters { IsCurrent = true }, otherLang: otherLang)
+            return GetGameWeaks(new GameWeakParameters { IsCurrent = true, IsCurrentSeason = true }, otherLang: otherLang)
                    .OrderByDescending(a => a.Id)
                    .FirstOrDefault();
         }
@@ -215,9 +215,9 @@ namespace CoreServices.Logic
             return await _repository.GameWeak.FindById(id, trackChanges);
         }
 
-        public async Task<GameWeak> FindGameWeakby365Id(string id, bool trackChanges)
+        public async Task<GameWeak> FindGameWeakby365Id(string id, int fk_Season, bool trackChanges)
         {
-            return await _repository.GameWeak.FindBy365Id(id, trackChanges);
+            return await _repository.GameWeak.FindBy365Id(id, fk_Season, trackChanges);
         }
 
         public List<GameWeak> FindGameWeaks(GameWeakParameters parameters, bool trackChanges)

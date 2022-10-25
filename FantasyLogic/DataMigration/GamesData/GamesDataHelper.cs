@@ -34,15 +34,18 @@ namespace FantasyLogic.DataMigration.GamesData
 
         public void UpdateGames(List<TeamDto> teams, int delayMinutes)
         {
+            SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
+
             List<GameWeakDto> gameWeaks = _unitOfWork.Season.GetGameWeaks(new GameWeakParameters
             {
+                Fk_Season = season.Id
             }, otherLang: false).Select(a => new GameWeakDto
             {
                 Id = a.Id,
                 _365_GameWeakId = a._365_GameWeakId
             }).ToList();
 
-            List<Games> games = _gamesHelper.GetAllGames().Result.OrderBy(a => a.RoundNum).ThenBy(a => a.StartTimeVal).ToList();
+            List<Games> games = _gamesHelper.GetAllGames(season._365_SeasonId.ParseToInt()).Result.OrderBy(a => a.RoundNum).ThenBy(a => a.StartTimeVal).ToList();
 
             foreach (Games game in games)
             {
@@ -51,8 +54,6 @@ namespace FantasyLogic.DataMigration.GamesData
                 int fk_GameWeak = gameWeaks.Where(a => a._365_GameWeakId == game.RoundNum.ToString()).Select(a => a.Id).FirstOrDefault();
 
                 _ = BackgroundJob.Schedule(() => UpdateGame(game, fk_Home, fk_Away, fk_GameWeak), TimeSpan.FromMinutes(delayMinutes));
-
-                
             }
         }
 

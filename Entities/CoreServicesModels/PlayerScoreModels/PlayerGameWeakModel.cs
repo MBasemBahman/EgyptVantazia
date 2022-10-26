@@ -13,16 +13,16 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
 
         [DisplayName(nameof(Player))]
         public int Fk_Player { get; set; }
-        
+
         public List<int> Fk_Players { get; set; }
         public List<int> Fk_Teams { get; set; }
-        
+
         public double RateFrom { get; set; }
 
         public double RateTo { get; set; }
-        
+
         public int Fk_Home { get; set; }
-        
+
         public int Fk_Away { get; set; }
     }
 
@@ -44,6 +44,9 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
 
         [DisplayName(nameof(Ranking))]
         public double Ranking { get; set; }
+
+        [DisplayName(nameof(TotalPoints))]
+        public int TotalPoints { get; set; }
     }
 
     public class PlayerGameWeakCreateOrEditModel
@@ -63,6 +66,9 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
 
         [DisplayName(nameof(Ranking))]
         public double Ranking { get; set; }
+
+        [DisplayName(nameof(TotalPoints))]
+        public int TotalPoints { get; set; }
 
         [DisplayName(nameof(PlayerGameWeakScores))]
         public List<PlayerGameWeakScoreCreateOrEditModel> PlayerGameWeakScores { get; set; }

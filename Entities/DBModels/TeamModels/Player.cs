@@ -36,6 +36,9 @@ namespace Entities.DBModels.TeamModels
         [DisplayName(nameof(PlayerNumber))]
         public string PlayerNumber { get; set; }
 
+        [DisplayName(nameof(TotalPoints))]
+        public int TotalPoints { get; set; }
+
         [DisplayName(nameof(PlayerGameWeaks))]
         public IList<PlayerGameWeak> PlayerGameWeaks { get; set; }
 

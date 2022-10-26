@@ -3,6 +3,7 @@ using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.SeasonModels;
+using Entities.DBModels.TeamModels;
 using FantasyLogic.Calculations;
 using IntegrationWith365.Entities.GameModels;
 using IntegrationWith365.Entities.GamesModels;
@@ -165,6 +166,9 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 _ = BackgroundJob.Schedule(() => UpdatePlayerStateScore((int)ScoreTypeEnum.ReceiveGoals, "", player.Fk_Player, player.Fk_Team, player.Fk_PlayerPosition, player.Fk_PlayerGameWeak, fk_TeamGameWeak), TimeSpan.FromMinutes(delayMinutes));
                 _ = BackgroundJob.Schedule(() => UpdatePlayerStateScore((int)ScoreTypeEnum.Ranking, "", player.Fk_Player, player.Fk_Team, player.Fk_PlayerPosition, player.Fk_PlayerGameWeak, fk_TeamGameWeak), TimeSpan.FromMinutes(delayMinutes));
 
+                _ = BackgroundJob.Schedule(() => UpdatePlayerGameWeakTotalPoints(fk_TeamGameWeak), TimeSpan.FromMinutes(delayMinutes));
+                _ = BackgroundJob.Schedule(() => UpdatePlayerTotalPoints(player.Fk_Player), TimeSpan.FromMinutes(delayMinutes));
+
             }
         }
 
@@ -251,6 +255,26 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 _unitOfWork.PlayerScore.CreatePlayerGameWeakScore(_playerScoreCalc.GetPlayerScore(score, fk_Player, fk_Team, fk_PlayerGameWeak, fk_PlayerPosition, fk_TeamGameWeak));
                 await _unitOfWork.Save();
             }
+        }
+
+        public async Task UpdatePlayerGameWeakTotalPoints(int fk_PlayerGameWeak)
+        {
+            PlayerGameWeak playerGameWeak = await _unitOfWork.PlayerScore.FindPlayerGameWeakbyId(fk_PlayerGameWeak, trackChanges: true);
+            playerGameWeak.TotalPoints = _unitOfWork.PlayerScore.GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
+            {
+                Fk_PlayerGameWeak = fk_PlayerGameWeak
+            }, otherLang: false).Select(a => a.Points).Sum();
+            await _unitOfWork.Save();
+        }
+
+        public async Task UpdatePlayerTotalPoints(int fk_Player)
+        {
+            Player player = await _unitOfWork.Team.FindPlayerbyId(fk_Player, trackChanges: true);
+            player.TotalPoints = _unitOfWork.PlayerScore.GetPlayerGameWeaks(new PlayerGameWeakParameters
+            {
+                Fk_Player = fk_Player
+            }, otherLang: false).Select(a => a.TotalPoints).Sum();
+            await _unitOfWork.Save();
         }
     }
 

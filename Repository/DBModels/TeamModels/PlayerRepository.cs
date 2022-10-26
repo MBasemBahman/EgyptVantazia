@@ -1,4 +1,5 @@
 ﻿using Entities.CoreServicesModels.TeamModels;
+using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.TeamModels;
 
 namespace Repository.DBModels.TeamModels

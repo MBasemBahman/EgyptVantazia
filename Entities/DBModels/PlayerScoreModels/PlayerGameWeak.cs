@@ -22,6 +22,9 @@ namespace Entities.DBModels.PlayerScoreModels
         [DisplayName(nameof(Ranking))]
         public double Ranking { get; set; }
 
+        [DisplayName(nameof(TotalPoints))]
+        public int TotalPoints { get; set; }
+
         [DisplayName(nameof(PlayerGameWeakScores))]
         public IList<PlayerGameWeakScore> PlayerGameWeakScores { get; set; }
     }

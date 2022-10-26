@@ -15,6 +15,12 @@ namespace Repository.DBModels.PlayerScoreModels
             return FindByCondition(a => true, trackChanges)
                    .Filter(parameters.Id,
                            parameters.Fk_TeamGameWeak,
+                           parameters.Fk_Home,
+                           parameters.Fk_Away,
+                           parameters.Fk_Players,
+                           parameters.Fk_Teams,
+                           parameters.RateFrom,
+                           parameters.RateTo,
                            parameters.Fk_Player);
         }
 
@@ -44,12 +50,26 @@ namespace Repository.DBModels.PlayerScoreModels
         public static IQueryable<PlayerGameWeak> Filter(
             this IQueryable<PlayerGameWeak> PlayerGameWeaks,
             int id,
-            int Fk_TeamGameWeak,
-            int Fk_Player)
+            int fk_TeamGameWeak,
+            int fk_Home,
+            int fk_Away,
+            List<int> fk_Players,
+            List<int> fk_Teams,
+            double rateFrom,
+            double rateTo,
+            int fk_Player)
         {
             return PlayerGameWeaks.Where(a => (id == 0 || a.Id == id) &&
-                                              (Fk_TeamGameWeak == 0 || a.Fk_TeamGameWeak == Fk_TeamGameWeak) &&
-                                              (Fk_Player == 0 || a.Fk_Player == Fk_Player));
+                                              (fk_TeamGameWeak == 0 || a.Fk_TeamGameWeak == fk_TeamGameWeak) &&
+                                              (fk_Home == 0 || a.TeamGameWeak.Fk_Home == fk_Home) && 
+                                              (fk_Away == 0 || a.TeamGameWeak.Fk_Away == fk_Away) && 
+                                              ( fk_Teams == null || !fk_Teams.Any() ||  
+                                                fk_Teams.Contains(a.TeamGameWeak.Fk_Home) || fk_Teams.Contains(a.TeamGameWeak.Fk_Away) ) &&
+                                              ( fk_Players == null || !fk_Players.Any() ||  
+                                                fk_Players.Contains(a.Fk_Player) ) &&
+                                              (rateFrom == 0 || a.Ranking >= rateFrom) && 
+                                              (rateTo == 0 || a.Ranking <= rateTo) && 
+                                              (fk_Player == 0 || a.Fk_Player == fk_Player) );
 
 
         }

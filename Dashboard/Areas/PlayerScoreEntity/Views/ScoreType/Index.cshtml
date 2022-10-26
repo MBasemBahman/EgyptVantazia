@@ -85,7 +85,7 @@
                                             </th>
                                             <th>@Html.DisplayNameFor(model => row.Name)</th>
                                             <th>@Html.DisplayNameFor(model => row._365_TypeId)</th>
-                                            <th>@Localizer.Get("BestPlayer")</th>
+                                            <th>@Html.DisplayNameFor(model => row._365_EventTypeId)</th>
                                             <th>@Html.DisplayNameFor(model => row.HavePoints)</th>
                                             <th>@Html.DisplayNameFor(model => row.IsEvent)</th>
                                             <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
@@ -130,7 +130,16 @@
                         { data: "id" },
                         { data: "name" },
                         { data: "_365_TypeId" },
-                        { data: "bestPlayer.name" },
+                        { 
+                            data: "_365_EventTypeId",
+                            render: function(data) {
+                              if (data != null) {
+                                  return data;
+                              } else {
+                                  return '@Localizer.Get("Not Found")'
+                              }
+                            }
+                        },
                         { 
                             data: "havePoints",
                             render: function(data) {

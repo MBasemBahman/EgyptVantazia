@@ -8,8 +8,15 @@ namespace Dashboard.Areas.PlayerScoreEntity.Models
     public class PlayerGameWeakFilter : DtParameters
     {
         public int Fk_GameWeak { get; set; }
-
+        public List<int> Fk_Players { get; set; }
+        public List<int> Fk_Teams { get; set; }
         public int Fk_Player { get; set; }
+        [DefaultValue(0)]
+        public double RateFrom { get; set; }
+        [DefaultValue(10)]
+        public double RateTo { get; set; }
+        public int Fk_Home { get; set; }
+        public int Fk_Away { get; set; }
     }
     public class PlayerGameWeakDto : PlayerGameWeakModel
     {

@@ -246,6 +246,7 @@ namespace Dashboard.Areas.TeamEntity.Controllers
                 {
                     Fk_Players = model.Select(a => a.Fk_Player).ToList()
                 }, otherLang).ToList();
+                
                 return View(model);
             }
             

@@ -66,6 +66,12 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
 
         [DisplayName(nameof(IsEvent))]
         public bool IsEvent { get; set; }
+        
+        [DisplayName(nameof(_365_EventTypeId))]
+        public string _365_EventTypeId { get; set; }
+        
+        [DisplayName(nameof(Fk_Player))]
+        public int Fk_Player { get; set; }  
 
         public ScoreTypeLangModel ScoreTypeLang { get; set; }
     }

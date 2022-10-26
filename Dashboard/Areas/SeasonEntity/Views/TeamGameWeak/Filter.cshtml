@@ -15,15 +15,22 @@
     <div class="card-body mt-2">
         <form asp-action="LoadTable" class="filter">
                 <div class="row g-1 mb-md-1">
-                <div class="col-md-6 col-12">
-                    <div class="mb-1">
-                        <label asp-for="Fk_Home" class="form-label"></label>
-                        <select asp-for="Fk_Home" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["Team"] as Dictionary<string,string>,"Key","Value"))">
-                            <option value="0">@Localizer.Get("All")</option>
-                        </select>
+                    <div class="col-md-12 col-12">
+                        <div class="mb-1">
+                            <label asp-for="Fk_Teams" class="form-label"></label>
+                            <select asp-for="Fk_Teams" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["Team"] as Dictionary<string,string>,"Key","Value"))">
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6 col-12">
+                    <div class="col-md-6 col-12">
+                        <div class="mb-1">
+                            <label asp-for="Fk_Home" class="form-label"></label>
+                            <select asp-for="Fk_Home" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["Team"] as Dictionary<string,string>,"Key","Value"))">
+                                <option value="0">@Localizer.Get("All")</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
                     <div class="mb-1">
                         <label asp-for="Fk_Away" class="form-label"></label>
                         <select asp-for="Fk_Away" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["Team"] as Dictionary<string,string>,"Key","Value"))">

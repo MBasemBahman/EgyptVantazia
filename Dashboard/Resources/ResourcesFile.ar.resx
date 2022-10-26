@@ -1095,4 +1095,13 @@
   <data name="Description" xml:space="preserve">
     <value>الوصف</value>
   </data>
+  <data name="PlayersGameWeaks" xml:space="preserve">
+    <value>اسابيع اللاعبين</value>
+  </data>
+  <data name="RateFrom" xml:space="preserve">
+    <value>التقييم من</value>
+  </data>
+  <data name="RateTo" xml:space="preserve">
+    <value>الى</value>
+  </data>
 </root>

@@ -140,6 +140,10 @@ namespace CoreServices.Logic
                                Fk_Away = a.TeamGameWeak.Fk_Away,
                                Fk_Home = a.TeamGameWeak.Fk_Home,
                                Fk_GameWeak = a.TeamGameWeak.Fk_GameWeak,
+                               HomeScore = a.TeamGameWeak.HomeScore,
+                               AwayScore = a.TeamGameWeak.AwayScore,
+                               StartTime = a.TeamGameWeak.StartTime,
+                               _365_MatchId = a.TeamGameWeak._365_MatchId,
                                Away = new TeamModel
                                {
                                    Name = otherLang ? a.TeamGameWeak.Away.TeamLang.Name : a.TeamGameWeak.Away.Name
@@ -160,6 +164,7 @@ namespace CoreServices.Logic
                            },
                            Player = new PlayerModel
                            {
+                               Id = a.Fk_Player,
                                Name = otherLang ? a.Player.PlayerLang.Name : a.Player.Name,
                                ImageUrl = !string.IsNullOrEmpty(a.Player.ImageUrl) ? a.Player.StorageUrl + a.Player.ImageUrl : a.Player.Team.ShirtStorageUrl + a.Player.Team.ShirtImageUrl,
                                _365_PlayerId = a.Player._365_PlayerId,

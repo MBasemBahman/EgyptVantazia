@@ -191,7 +191,8 @@ else
                         contentType: "application/json",
                         dataType: "json",
                         data: function (data) {
-                           data.Fk_Season = $("#Fk_Season").length > 0 ? $("#Fk_Season").val() : @Model.Fk_Season;
+                            data.Fk_Teams = $("#Fk_Teams").length > 0 ? $("#Fk_Teams").val() : null;
+                            data.Fk_Season = $("#Fk_Season").length > 0 ? $("#Fk_Season").val() : @Model.Fk_Season;
                             data.Fk_GameWeak = $("#Fk_GameWeak").length > 0 ? $("#Fk_GameWeak").val() : @Model.Fk_GameWeak;
                             data.Fk_Away = $("#Fk_Away").length > 0 ? $("#Fk_Away").val() : @Model.Fk_Away;
                             data.Fk_Home = $("#Fk_Home").length > 0 ? $("#Fk_Home").val() : @Model.Fk_Home;

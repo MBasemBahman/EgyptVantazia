@@ -15,22 +15,42 @@
         <div class="col-xl-7 col-12">
             <dl class="row mb-0">
 
-                @*<dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.GameWeak.Season):</dt>
-                <dd class="col-sm-8 mb-1">
-                    <a href="/SeasonEntity/Season/Profile/@Model.GameWeak.Fk_Season" target="_blank">@Model.GameWeak.Season.Name</a>
-
-                </dd>*@
-
+                <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.Player):</dt>
+                <dd class="col-sm-8 mb-1">@Model.Player.Name</dd>
+                
+                <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.TeamGameWeak.Home):</dt>
+                <dd class="col-sm-8 mb-1">@Model.TeamGameWeak.Home.Name</dd>
+                
+                <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.TeamGameWeak.GameWeak.Season):</dt>
+                <dd class="col-sm-8 mb-1">@Model.TeamGameWeak.GameWeak.Season.Name</dd>
+                
+                <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.TeamGameWeak.GameWeak):</dt>
+                <dd class="col-sm-8 mb-1">@Model.TeamGameWeak.GameWeak.Name</dd>
+                
+                <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.TeamGameWeak.HomeScore):</dt>
+                <dd class="col-sm-8 mb-1">@Model.TeamGameWeak.HomeScore</dd>
+                
+                <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.TeamGameWeak.IsEnded):</dt>
+                <dd class="col-sm-8 mb-1">@(Model.TeamGameWeak.IsEnded ? Localizer.Get("Yes"): Localizer.Get("No"))</dd>
             </dl>
         </div>
         <div class="col-xl-5 col-12">
             <dl class="row mb-0">
-
-                @*<dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.GameWeak):</dt>
-                <dd class="col-sm-8 mb-1">@Model.GameWeak.Name</dd>*@
-
+                
                 <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.Ranking):</dt>
                 <dd class="col-sm-8 mb-1">@Model.Ranking</dd>
+
+                <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.TeamGameWeak.Away):</dt>
+                <dd class="col-sm-8 mb-1">@Model.TeamGameWeak.Away.Name</dd>
+                
+                <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.TeamGameWeak._365_MatchId):</dt>
+                <dd class="col-sm-8 mb-1">@Model.TeamGameWeak._365_MatchId</dd>
+                
+                <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.TeamGameWeak.AwayScore):</dt>
+                <dd class="col-sm-8 mb-1">@Model.TeamGameWeak.AwayScore</dd>
+                
+                <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.TeamGameWeak.StartTime):</dt>
+                <dd class="col-sm-8 mb-1">@Model.TeamGameWeak.StartTime</dd>
 
             </dl>
         </div>

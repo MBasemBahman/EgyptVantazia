@@ -1,7 +1,9 @@
 ﻿using Dashboard.Areas.PlayerScoreEntity.Models;
 using Entities.CoreServicesModels.PlayerScoreModels;
+using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayerScoreModels;
 using Entities.RequestFeatures;
+using Org.BouncyCastle.Ocsp;
 
 namespace Dashboard.Areas.PlayerScoreEntity.Controllers
 {
@@ -84,6 +86,7 @@ namespace Dashboard.Areas.PlayerScoreEntity.Controllers
                                                 await _unitOfWork.PlayerScore.FindScoreTypebyId(id, trackChanges: false));
             }
 
+            SetViewData();
             return View(model);
         }
 
@@ -95,6 +98,7 @@ namespace Dashboard.Areas.PlayerScoreEntity.Controllers
 
             if (!ModelState.IsValid)
             {
+                SetViewData();
                 return View(model);
             }
             try
@@ -130,6 +134,7 @@ namespace Dashboard.Areas.PlayerScoreEntity.Controllers
                 ViewData[ViewDataConstants.Error] = _logger.LogError(HttpContext.Request, ex).ErrorMessage;
             }
 
+            SetViewData();
             return View(model);
         }
 
@@ -155,5 +160,11 @@ namespace Dashboard.Areas.PlayerScoreEntity.Controllers
         }
 
 
+        public void SetViewData()
+        {
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            
+            ViewData["Players"] = _unitOfWork.Team.GetPlayerLookUp(new PlayerParameters(), otherLang);
+        }
     }
 }

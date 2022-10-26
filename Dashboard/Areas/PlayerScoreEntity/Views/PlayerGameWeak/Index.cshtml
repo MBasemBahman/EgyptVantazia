@@ -1,6 +1,6 @@
 ﻿@model PlayerGameWeakFilter
 @{
-    ViewData["Title"] = Localizer.Get("PlayerGameWeaks");
+    ViewData["Title"] = Localizer.Get("PlayersGameWeaks");
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.useDatatable = true;
     ViewBag.useModels = true;
@@ -16,17 +16,124 @@
 }
 
 <!-- BEGIN: Content-->
+@if (!ViewBag.emptyLayout)
+{
+    <div class="app-content content ">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper container-xxl p-0">
+            <div class="content-header row">
+                <div class="content-header-left col-md-9 col-12 mb-2">
+                    <div class="row breadcrumbs-top">
+                        <div class="col-6">
+                            <h2 class="content-header-title float-start mb-0">@ViewData["Title"]</h2>
+                            <div class="breadcrumb-wrapper">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a href="#">@Localizer.Get("Dashboard")</a>
+                                    </li>
+                                    <li class="breadcrumb-item active">
+                                        @ViewData["Title"]
+                                    </li>
 
-<section id="ajax-datatable">
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header border-bottom">
-                    <h4 class="card-title"> @ViewData["Title"]</h4>
+                                </ol>
+
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
                 </div>
-                <div class="card-datatable">
-                    <table class="datatables datatables-ajax table table-responsive table">
-                        <thead>
+            </div>
+
+            <div class="content-body">
+                <section id="ajax-datatable">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header border-bottom">
+                                    <h4 class="card-title"> @ViewData["Title"]</h4>
+                                </div>
+                                
+                                <p class="m-2 demo-inline-spacing">
+                                    <a class="btn btn-primary me-1" data-bs-toggle="collapse" href="#AdvancedFilter" role="button" aria-expanded="false" aria-controls="AdvancedFilter">
+                                        <i data-feather='filter'></i>
+                                        @Localizer.Get("Advanced Search")
+                                    </a>
+    
+                                </p>
+                                @{
+                                    await Html.RenderPartialAsync("../PlayerGameWeak/Filter", Model, ViewData);
+                                }
+                                <div class="card-datatable">
+                                    <table class="datatables datatables-ajax table table-responsive table">
+                                        <thead>
+                                        <tr>
+                                            <th>
+                                                @Html.DisplayNameFor(model => row.Id)
+                                                <a id="details" asp-action="Details">
+                                                </a>
+
+                                                @if (accessLevel.CreateAccess)
+                                                {
+                                                    <a id="create" asp-action="CreateOrEdit" asp-route-Fk_Player="@Model.Fk_Player">
+                                                    </a>
+                                                }
+
+                                                @if (accessLevel.EditAccess)
+                                                {
+                                                    <a id="edit" asp-action="CreateOrEdit">
+                                                    </a>
+                                                }
+                                                @if (accessLevel.DeleteAccess)
+                                                {
+                                                    <a id="delete" asp-action="Delete">
+                                                    </a>
+                                                }
+
+                                            </th>
+                                            <th>@Localizer.Get("Player")</th>
+                                            <th>@Localizer.Get("HomeTeam")</th>
+                                            <th>@Localizer.Get("AwayTeam")</th>
+                                            <th>@Html.DisplayNameFor(model => row.TeamGameWeak.GameWeak.Season)</th>
+                                            <th>@Html.DisplayNameFor(model => row.TeamGameWeak._365_MatchId)</th>
+                                            <th>@Html.DisplayNameFor(model => row.TeamGameWeak.GameWeak)</th>
+                                            <th>@Html.DisplayNameFor(model => row.TeamGameWeak.HomeScore)</th>
+                                            <th>@Html.DisplayNameFor(model => row.TeamGameWeak.AwayScore)</th>
+                                            <th>@Html.DisplayNameFor(model => row.TeamGameWeak.StartTime)</th>
+                                            <th>@Html.DisplayNameFor(model => row.TeamGameWeak.IsEnded)</th>
+                                            <th>@Html.DisplayNameFor(model => row.Ranking)</th>
+
+                                            <th>
+                                                @Html.DisplayNameFor(model => row.Id)
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+    </div>
+}
+else
+{
+    <section id="ajax-datatable">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header border-bottom">
+                        <h4 class="card-title"> @ViewData["Title"]</h4>
+                    </div>
+                    <div class="card-datatable">
+                        <table class="datatables datatables-ajax table table-responsive table">
+                            <thead>
                             <tr>
                                 <th>
                                     @Html.DisplayNameFor(model => row.Id)
@@ -51,68 +158,161 @@
                                     }
 
                                 </th>
-                                @* <th>@Html.DisplayNameFor(model => row.GameWeak.Season)</th> *@
-                                
-                                @* <th>@Html.DisplayNameFor(model => row.GameWeak)</th> *@
+                                <th>@Localizer.Get("HomeTeam")</th>
+                                <th>@Localizer.Get("AwayTeam")</th>
+                                <th>@Html.DisplayNameFor(model => row.TeamGameWeak.GameWeak.Season)</th>
+                                <th>@Html.DisplayNameFor(model => row.TeamGameWeak._365_MatchId)</th>
+                                <th>@Html.DisplayNameFor(model => row.TeamGameWeak.GameWeak)</th>
+                                <th>@Html.DisplayNameFor(model => row.TeamGameWeak.HomeScore)</th>
+                                <th>@Html.DisplayNameFor(model => row.TeamGameWeak.AwayScore)</th>
+                                <th>@Html.DisplayNameFor(model => row.TeamGameWeak.StartTime)</th>
+                                <th>@Html.DisplayNameFor(model => row.TeamGameWeak.IsEnded)</th>
                                 <th>@Html.DisplayNameFor(model => row.Ranking)</th>
 
                                 <th>
                                     @Html.DisplayNameFor(model => row.Id)
                                 </th>
                             </tr>
-                        </thead>
-                    </table>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-
+    </section>
+}
 <!-- END: Content-->
 @section scripts{
     <script src="~/apis/charts.js"></script>
     <script>
 
-        function LoadTable() {
-            var dt_ajax_table = $('.datatables');
-            if (dt_ajax_table.length) {
-                var dt_ajax = dt_ajax_table.dataTable({
-                    // Ajax Filter
-                    ajax: {
-                        url: '@Url.Action("LoadTable")',
-                        type: "POST",
-                        contentType: "application/json",
-                        dataType: "json",
-                        data: function (data) {
-                            data.Fk_Player = @Model.Fk_Player;
-                            return JSON.stringify(data);
+        if ('@ViewBag.emptyLayout' == 'False') {
+            function LoadTable() {
+                                var dt_ajax_table = $('.datatables');
+                                if (dt_ajax_table.length) {
+                                    var dt_ajax = dt_ajax_table.dataTable({
+                                        // Ajax Filter
+                                        ajax: {
+                                            url: '@Url.Action("LoadTable")',
+                                            type: "POST",
+                                            contentType: "application/json",
+                                            dataType: "json",
+                                            data: function (data) {
+                                                data.Fk_Player = @Model.Fk_Player;
+                                                data.Fk_Players = $("#Fk_Players").length > 0 ? $("#Fk_Players").val() : null;
+                                                data.Fk_Teams = $("#Fk_Teams").length > 0 ? $("#Fk_Teams").val() : null;
+                                                data.Fk_Away = $("#Fk_Away").length > 0 ? $("#Fk_Away").val() : @Model.Fk_Away;
+                                                data.Fk_Home = $("#Fk_Home").length > 0 ? $("#Fk_Home").val() : @Model.Fk_Home;
+                                                data.RateFrom = $("#RateFrom").length > 0 ? $("#RateFrom").val() : @Model.RateFrom;
+                                                data.RateTo = $("#RateTo").length > 0 ? $("#RateTo").val() : @Model.RateTo;
+                                                return JSON.stringify(data);
+                                            }
+                                        },
+                                                                        
+                                        // Columns Setups
+                                        columns: [
+                                            { data: "id" },
+                                            { 
+                                                data: "player", 
+                                                orderable: false, 
+                                                render: function(data) {
+                                                    console.log(data);
+                                                  return `<a href="/TeamEntity/Player/Profile/${data.id}">${data.name}</a>`
+                                                }
+                                            },
+                                            { data: "teamGameWeak.home.name", orderable: false },
+                                            { data: "teamGameWeak.away.name", orderable: false },
+                                            { data: "teamGameWeak.gameWeak.season.name", orderable: false },
+                                            { data: "teamGameWeak._365_MatchId", orderable: false },
+                                            { data: "teamGameWeak.gameWeak.name", orderable: false },
+                                            { data: "teamGameWeak.homeScore", orderable: false },
+                                            { data: "teamGameWeak.awayScore", orderable: false },
+                                            { data: "teamGameWeak.startTime", orderable: false },
+                                            { 
+                                                data: "teamGameWeak.isEnded" , orderable: false,
+                                                render: function(data) {
+                                                  if (data) {
+                                                      return '@Localizer.Get("Yes")'
+                                                  } else {
+                                                      return '@Localizer.Get("No")'
+                                                  }
+                                                } 
+                                            },
+                                            { data: "ranking" },
+                                            { data: "id" },
+                                        ]
+                                    });
+                                    $("button[type=reset]").on("click", function () {
+                                        $(".dt-date").each(function () {
+                                            $(this).val('');
+                                        })
+                                    });
+                    
+                                    $('body').on('submit', '.filter', function () {
+                                        event.preventDefault();
+                                        dt_ajax_table.DataTable().draw();
+                                    });
+                    
+                    
+                                }
+                            };
+        } else {
+            function LoadTable() {
+                        var dt_ajax_table = $('.datatables');
+                        if (dt_ajax_table.length) {
+                            var dt_ajax = dt_ajax_table.dataTable({
+                                // Ajax Filter
+                                ajax: {
+                                    url: '@Url.Action("LoadTable")',
+                                    type: "POST",
+                                    contentType: "application/json",
+                                    dataType: "json",
+                                    data: function (data) {
+                                        data.Fk_Player = @Model.Fk_Player;
+                                        return JSON.stringify(data);
+                                    }
+                                },
+                                                                
+                                // Columns Setups
+                                columns: [
+                                    { data: "id" },
+                                    { data: "teamGameWeak.home.name" },
+                                    { data: "teamGameWeak.away.name" },
+                                    { data: "teamGameWeak.gameWeak.season.name" },
+                                    { data: "teamGameWeak._365_MatchId" },
+                                    { data: "teamGameWeak.gameWeak.name" },
+                                    { data: "teamGameWeak.homeScore" },
+                                    { data: "teamGameWeak.awayScore" },
+                                    { data: "teamGameWeak.startTime" },
+                                    { 
+                                        data: "teamGameWeak.isEnded",
+                                        render: function(data) {
+                                          if (data) {
+                                              return '@Localizer.Get("Yes")'
+                                          } else {
+                                              return '@Localizer.Get("No")'
+                                          }
+                                        } 
+                                    },
+                                    { data: "ranking" },
+                                    { data: "id" },
+                                ]
+                            });
+                            $("button[type=reset]").on("click", function () {
+                                $(".dt-date").each(function () {
+                                    $(this).val('');
+                                })
+                            });
+            
+                            $('body').on('submit', '.filter', function () {
+                                event.preventDefault();
+                                dt_ajax_table.DataTable().draw();
+                            });
+            
+            
                         }
-                    },
-                    // Columns Setups
-                    columns: [
-                        { data: "id" },
-                        // { data: "gameWeak.season.name" },
-                        // { data: "gameWeak.name" },
-                        { data: "ranking" },
-                        { data: "id" },
-                    ]
-                });
-                $("button[type=reset]").on("click", function () {
-                    $(".dt-date").each(function () {
-                        $(this).val('');
-                    })
-                });
-
-                $('body').on('submit', '.filter', function () {
-                    event.preventDefault();
-                    dt_ajax_table.DataTable().draw();
-                });
-
-
-            }
-        };
-
-
+                    };    
+        }
 
         $(document).ready(function () {
             LoadTable();

@@ -14,6 +14,7 @@ namespace Repository.DBModels.SeasonModels
         {
             return FindByCondition(a => true, trackChanges)
                    .Filter(parameters.Id,
+                           parameters.Fk_Teams,
                            parameters.Fk_Home,
                            parameters.Fk_Away,
                            parameters.Fk_GameWeak,
@@ -67,6 +68,7 @@ namespace Repository.DBModels.SeasonModels
         public static IQueryable<TeamGameWeak> Filter(
             this IQueryable<TeamGameWeak> TeamGameWeaks,
             int id,
+            List<int> fk_Teams,
             int fk_Home,
             int fk_Away,
             int fk_GameWeak,
@@ -83,6 +85,8 @@ namespace Repository.DBModels.SeasonModels
             return TeamGameWeaks.Where(a => (id == 0 || a.Id == id) &&
                                             (isEnded == null || a.IsEnded == isEnded) &&
                                             (isDelayed == null || a.IsDelayed == isDelayed) &&
+                                            ( fk_Teams == null || !fk_Teams.Any() ||  
+                                              fk_Teams.Contains(a.Fk_Home) || fk_Teams.Contains(a.Fk_Away) ) &&
                                             (fk_Home == 0 || a.Fk_Home == fk_Home) &&
                                             (fk_Away == 0 || a.Fk_Away == fk_Away) &&
                                             (fk_Season == 0 || a.GameWeak.Fk_Season == fk_Season) &&

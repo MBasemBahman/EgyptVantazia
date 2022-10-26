@@ -7,6 +7,7 @@ namespace Entities.CoreServicesModels.SeasonModels
 {
     public class TeamGameWeakParameters : RequestParameters
     {
+        public List<int> Fk_Teams { get; set; }
         public int Fk_Home { get; set; }
 
         public int Fk_Away { get; set; }

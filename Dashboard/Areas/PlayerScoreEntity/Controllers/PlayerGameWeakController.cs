@@ -2,6 +2,7 @@
 using Dashboard.Areas.TeamEntity.Models;
 using Entities.CoreServicesModels.PlayerScoreModels;
 using Entities.CoreServicesModels.SeasonModels;
+using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayerScoreModels;
 using Entities.RequestFeatures;
 
@@ -31,7 +32,7 @@ namespace Dashboard.Areas.PlayerScoreEntity.Controllers
 
         public IActionResult Index(int Fk_Player, bool ProfileLayOut = false)
         {
-            _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             PlayerGameWeakFilter filter = new()
             {
@@ -40,6 +41,10 @@ namespace Dashboard.Areas.PlayerScoreEntity.Controllers
 
             ViewData["ProfileLayOut"] = ProfileLayOut;
             ViewData[ViewDataConstants.AccessLevel] = (DashboardAccessLevelModel)Request.HttpContext.Items[ViewDataConstants.AccessLevel];
+            
+            ViewData["Players"] = _unitOfWork.Team.GetPlayerLookUp(new PlayerParameters(), otherLang);
+            ViewData["Team"] = _unitOfWork.Team.GetTeamLookUp(new TeamParameters(), otherLang);
+            
             return View(filter);
         }
 
@@ -199,7 +204,7 @@ namespace Dashboard.Areas.PlayerScoreEntity.Controllers
             ViewData["Season"] = _unitOfWork.Season.GetSeasonLookUp(new SeasonParameters(), otherLang);
 
             ViewData["ScoreType"] = _unitOfWork.PlayerScore.GetScoreTypesLookUp(new ScoreTypeParameters(), otherLang);
-
+            
 
         }
 

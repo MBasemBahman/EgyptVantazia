@@ -1104,4 +1104,13 @@
   <data name="Description" xml:space="preserve">
     <value>Description</value>
   </data>
+  <data name="PlayersGameWeaks" xml:space="preserve">
+    <value>Players Weaks</value>
+  </data>
+  <data name="RateFrom" xml:space="preserve">
+    <value>Rate From</value>
+  </data>
+  <data name="RateTo" xml:space="preserve">
+    <value>Rate To</value>
+  </data>
 </root>

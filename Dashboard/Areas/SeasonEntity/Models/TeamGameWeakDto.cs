@@ -7,6 +7,9 @@ namespace Dashboard.Areas.SeasonEntity.Models
 {
     public class TeamGameWeakFilter : DtParameters
     {
+        [DisplayName("Team")] 
+        public List<int> Fk_Teams { get; set; } = new ();
+        
         [DisplayName("HomeTeam")]
         public int Fk_Home { get; set; }
 

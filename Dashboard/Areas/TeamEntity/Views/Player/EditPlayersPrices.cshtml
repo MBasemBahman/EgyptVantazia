@@ -60,14 +60,16 @@
                                             <div class="col-md-3 col-12">
                                                 <div class="mb-1">
                                                     <label class="form-label">@Localizer.Get("BuyPrice")</label>
-                                                    <input class="form-control buy-price" asp-for="@Model[i].BuyPrice" placeholder="@Localizer.Get("Enter") @Localizer.Get("BuyPrice")">
+                                                    <input class="form-control buy-price" asp-for="@Model[i].BuyPrice" value="@player.BuyPrice" 
+                                                           placeholder="@Localizer.Get("Enter") @Localizer.Get("BuyPrice")">
                                                 </div>
                                             </div>
 
                                             <div class="col-md-3 col-12">
                                                 <div class="mb-1">
                                                     <label class="form-label">@Localizer.Get("SellPrice")</label>
-                                                    <input class="form-control sell-price" asp-for="@Model[i].SellPrice" placeholder="@Localizer.Get("Enter") @Localizer.Get("SellPrice")">
+                                                    <input class="form-control sell-price" asp-for="@Model[i].SellPrice" value="@player.SellPrice" 
+                                                           placeholder="@Localizer.Get("Enter") @Localizer.Get("SellPrice")">
                                                 </div>
                                             </div>
                                         </div>

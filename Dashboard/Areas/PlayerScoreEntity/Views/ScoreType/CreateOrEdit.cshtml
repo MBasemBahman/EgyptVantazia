@@ -5,7 +5,6 @@
     ViewBag.useForm = true;
     ViewBag.useDatePicker = true;
     ViewBag.useImageUploud = true;
-
 }
 
 <!-- BEGIN: Content-->
@@ -67,8 +66,36 @@
                                                 <span asp-validation-for="_365_TypeId" class="text-danger"></span>
                                             </div>
                                         </div>
+                                        
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="_365_EventTypeId" class="form-label"></label>
+                                                <input asp-for="_365_EventTypeId" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"_365_EventTypeId"))" />
+                                                <span asp-validation-for="_365_EventTypeId" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@Localizer.Get("HavePoints")</label>
+                                                <select class="form-control" asp-for="HavePoints">
+                                                    <option value="true">@Localizer.Get("Yes")</option>
+                                                    <option value="false">@Localizer.Get("No")</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@Localizer.Get("IsEvent")</label>
+                                                <select class="form-control" asp-for="IsEvent">
+                                                    <option value="true">@Localizer.Get("Yes")</option>
+                                                    <option value="false">@Localizer.Get("No")</option>
+                                                </select>
+                                            </div>
+                                        </div>
 
-                                           <div class="col-md-6 col-12">
+                                        <div class="col-md-12 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="Description" class="form-label"></label>
                                                 <textarea rows="5" asp-for="Description" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Description"))" ></textarea>

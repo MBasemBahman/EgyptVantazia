@@ -51,7 +51,7 @@ namespace Repository.DBModels.TeamModels
                 oldEntity.ShortName = entity.ShortName;
                 oldEntity.Age = entity.Age;
                 oldEntity.PlayerNumber = entity.PlayerNumber;
-                oldEntity.Fk_PlayerPosition = entity.Fk_PlayerPosition;
+                //oldEntity.Fk_PlayerPosition = entity.Fk_PlayerPosition;
                 oldEntity.Fk_Team = entity.Fk_Team;
                 oldEntity.PlayerLang.Name = entity.PlayerLang.Name;
                 oldEntity.PlayerLang.ShortName = entity.PlayerLang.ShortName;

@@ -16,6 +16,7 @@ namespace Repository.DBModels.PlayerScoreModels
                    .Filter(parameters.Id,
                            parameters.Fk_PlayerGameWeak,
                            parameters.Fk_TeamGameWeak,
+                           parameters.Fk_TeamIgnored,
                            parameters.Fk_ScoreType,
                            parameters.Fk_ScoreTypes,
                            parameters.Fk_Player,
@@ -59,6 +60,7 @@ namespace Repository.DBModels.PlayerScoreModels
              int id,
              int fk_PlayerGameWeak,
              int fk_TeamGameWeak,
+             int fk_TeamIgnored,
              int fk_ScoreType,
              List<int> fk_ScoreTypes,
              int fk_Player,
@@ -75,6 +77,7 @@ namespace Repository.DBModels.PlayerScoreModels
                                                    (finalValueFrom == null || a.FinalValue >= finalValueFrom) &&
                                                    (finalValueTo == null || a.FinalValue <= finalValueTo) &&
                                                    (fk_PlayerGameWeak == 0 || a.Fk_PlayerGameWeak == fk_PlayerGameWeak) &&
+                                                   (fk_TeamIgnored == 0 || a.PlayerGameWeak.Player.Fk_Team != fk_TeamIgnored) &&
                                                    (fk_TeamGameWeak == 0 || a.PlayerGameWeak.Fk_TeamGameWeak == fk_TeamGameWeak) &&
                                                    (fk_Player == 0 || a.PlayerGameWeak.Fk_Player == fk_Player) &&
                                                    (fk_GameWeak == 0 || a.PlayerGameWeak.TeamGameWeak.Fk_GameWeak == fk_GameWeak) &&
@@ -83,13 +86,13 @@ namespace Repository.DBModels.PlayerScoreModels
                                                    (pointsFrom == null || a.Points >= pointsFrom) &&
                                                    (pointsTo == null || a.Points <= pointsTo) &&
                                                    (checkCleanSheet == false || (a.Fk_ScoreType == (int)ScoreTypeEnum.Minutes &&
-                                                                                 a.Points > 0 &&
+                                                                                 a.Points > 1 &&
                                                                                  ((a.PlayerGameWeak.Player.Fk_Team == a.PlayerGameWeak.TeamGameWeak.Fk_Away &&
                                                                                    a.PlayerGameWeak.TeamGameWeak.HomeScore == 0) ||
                                                                                   (a.PlayerGameWeak.Player.Fk_Team == a.PlayerGameWeak.TeamGameWeak.Fk_Home &&
                                                                                    a.PlayerGameWeak.TeamGameWeak.AwayScore == 0)))) &&
                                                   (checkReceiveGoals == false || (a.Fk_ScoreType == (int)ScoreTypeEnum.Minutes &&
-                                                                                  a.Points > 0 &&
+                                                                                  a.Points > 1 &&
                                                                                   ((a.PlayerGameWeak.Player.Fk_Team == a.PlayerGameWeak.TeamGameWeak.Fk_Away &&
                                                                                     a.PlayerGameWeak.TeamGameWeak.HomeScore > 0) ||
                                                                                    (a.PlayerGameWeak.Player.Fk_Team == a.PlayerGameWeak.TeamGameWeak.Fk_Home &&

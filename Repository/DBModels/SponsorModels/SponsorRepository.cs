@@ -14,7 +14,8 @@ namespace Repository.DBModels.SponsorModels
         {
             return FindByCondition(a => true, trackChanges)
                    .Filter(parameters.Id,
-                           parameters.AppViewEnum);
+                           parameters.AppViewEnum,
+                           parameters.ExpireDateFrom);
         }
 
         public async Task<Sponsor> FindById(int id, bool trackChanges)
@@ -39,10 +40,12 @@ namespace Repository.DBModels.SponsorModels
         public static IQueryable<Sponsor> Filter(
             this IQueryable<Sponsor> Sponsors,
             int id,
-            AppViewEnum? appViewEnum)
+            AppViewEnum? appViewEnum,
+            DateTime? expireDateFrom)
         {
             return Sponsors.Where(a => (id == 0 || a.Id == id) &&
-                                       (appViewEnum == null || a.SponsorViews.Any(b => b.AppViewEnum == appViewEnum)));
+                                       (appViewEnum == null || a.SponsorViews.Any(b => b.AppViewEnum == appViewEnum)) &&
+                                       (expireDateFrom == null || a.ExpireDate == null || a.ExpireDate.Value.Date >= expireDateFrom.Value.Date));
         }
 
     }

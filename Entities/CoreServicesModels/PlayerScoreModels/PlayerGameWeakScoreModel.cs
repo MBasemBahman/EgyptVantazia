@@ -19,6 +19,9 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
         [DisplayName(nameof(Player))]
         public int Fk_Player { get; set; }
 
+        [DisplayName(nameof(Player))]
+        public int Fk_TeamIgnored { get; set; }
+
         public int Fk_ScoreType { get; set; }
 
         public List<int> Fk_ScoreTypes { get; set; }

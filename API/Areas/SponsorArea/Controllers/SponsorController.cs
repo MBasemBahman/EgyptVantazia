@@ -26,6 +26,8 @@ namespace API.Areas.SponsorArea.Controllers
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
+            parameters.ExpireDateFrom = DateTime.UtcNow;
+
             PagedList<SponsorModel> data = await _unitOfWork.Sponsor.GetSponsorPaged(parameters, otherLang);
 
             SetPagination(data.MetaData, parameters);

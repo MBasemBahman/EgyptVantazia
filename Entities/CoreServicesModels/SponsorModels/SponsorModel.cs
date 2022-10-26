@@ -8,6 +8,9 @@ namespace Entities.CoreServicesModels.SponsorModels
         public AppViewEnum? AppViewEnum { get; set; }
 
         public bool GetViews { get; set; } = false;
+
+        [DisplayName(nameof(ExpireDateFrom))]
+        public DateTime? ExpireDateFrom { get; set; }
     }
 
     public class SponsorModel : AuditImageEntity

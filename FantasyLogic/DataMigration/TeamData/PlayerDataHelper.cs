@@ -15,11 +15,9 @@ namespace FantasyLogic.DataMigration.TeamData
             _unitOfWork = unitOfWork;
         }
 
-        public void RunUpdatePlayers(int delayMinutes)
+        public void RunUpdatePlayers(TeamParameters parameters, int delayMinutes)
         {
-            List<TeamModel> teams = _unitOfWork.Team.GetTeams(new TeamParameters
-            {
-            }, otherLang: false).ToList();
+            List<TeamModel> teams = _unitOfWork.Team.GetTeams(parameters, otherLang: false).ToList();
 
             _ = BackgroundJob.Schedule(() => UpdateTeamsPlayers(teams, delayMinutes), TimeSpan.FromMinutes(delayMinutes));
         }

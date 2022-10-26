@@ -1,4 +1,5 @@
-﻿using FantasyLogic;
+﻿using Entities.CoreServicesModels.TeamModels;
+using FantasyLogic;
 using FantasyLogicMicroservices.Controllers;
 
 namespace FantasyLogicMicroservices.Areas.TeamDataArea.Controllers
@@ -21,9 +22,9 @@ namespace FantasyLogicMicroservices.Areas.TeamDataArea.Controllers
 
         [HttpPost]
         [Route(nameof(UpdatePlayers))]
-        public IActionResult UpdatePlayers()
+        public IActionResult UpdatePlayers([FromQuery]TeamParameters parameters)
         {
-            _fantasyUnitOfWork.PlayerDataHelper.RunUpdatePlayers(1);
+            _fantasyUnitOfWork.PlayerDataHelper.RunUpdatePlayers(parameters, 1);
 
             return Ok();
         }

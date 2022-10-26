@@ -59,7 +59,6 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
 
         public async Task UpdateGameResult(TeamGameWeakDto teamGameWeak, List<ScoreTypeDto> scoreTypes, int delayMinutes)
         {
-
             GameReturn gameReturn = await _365Services.GetGame(new _365GameParameters
             {
                 GameId = teamGameWeak._365_MatchId.ParseToInt()
@@ -108,26 +107,27 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                                        a.Fk_Team
                                                    })
                                                    .FirstOrDefault();
+                            if (player != null)
+                            {
+                                Member memberResult = allMembersResults.Where(a => a.Id == member.Id).FirstOrDefault();
 
-                            Member memberResult = allMembersResults.Where(a => a.Id == member.Id).FirstOrDefault();
+                                List<EventType> eventResult = gameReturn.Game
+                                                                        .Events
+                                                                        .Where(a => a.PlayerId == member.Id)
+                                                                        .GroupBy(a => a.EventType)
+                                                                        .Select(a => new EventType
+                                                                        {
+                                                                            Id = a.Key.Id,
+                                                                            Name = a.Key.Name,
+                                                                            SubTypeId = a.Key.SubTypeId,
+                                                                            SubTypeName = a.Key.SubTypeName,
+                                                                            GameTime = a.First().GameTime,
+                                                                            Value = a.Count()
+                                                                        })
+                                                                        .ToList();
 
-                            List<EventType> eventResult = gameReturn.Game
-                                                                    .Events
-                                                                    .Where(a => a.PlayerId == member.Id)
-                                                                    .GroupBy(a => a.EventType)
-                                                                    .Select(a => new EventType
-                                                                    {
-                                                                        Id = a.Key.Id,
-                                                                        Name = a.Key.Name,
-                                                                        SubTypeId = a.Key.SubTypeId,
-                                                                        SubTypeName = a.Key.SubTypeName,
-                                                                        GameTime = a.First().GameTime,
-                                                                        Value = a.Count()
-                                                                    })
-                                                                    .ToList();
-
-                            _ = BackgroundJob.Schedule(() => UpdatePlayerGameResult(player.Id, player.Fk_PlayerPosition, player.Fk_Team, teamGameWeak.Id, memberResult, eventResult, scoreTypes, delayMinutes), TimeSpan.FromMinutes(delayMinutes));
-
+                                _ = BackgroundJob.Schedule(() => UpdatePlayerGameResult(player.Id, player.Fk_PlayerPosition, player.Fk_Team, teamGameWeak.Id, memberResult, eventResult, scoreTypes, delayMinutes), TimeSpan.FromMinutes(delayMinutes));
+                            }
                         }
                     }
 

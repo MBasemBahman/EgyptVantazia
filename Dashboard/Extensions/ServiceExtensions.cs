@@ -38,7 +38,8 @@ namespace Dashboard.Extensions
         {
             if (config.Tenant == TenantEnvironments.Development)
             {
-                _ = services.AddDbContext<DbContext, DBContext>(options => options.UseSqlServer(configuration.GetConnectionString("sqlConnection")));
+                _ = services.AddDbContext<DbContext, DBContext>(options => options.UseSqlServer(configuration.GetConnectionString("sqlConnection"),
+                                                                           options => options.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
             }
 
         }

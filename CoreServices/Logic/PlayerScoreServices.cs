@@ -110,7 +110,7 @@ namespace CoreServices.Logic
 
         public ScoreTypeModel GetScoreTypebyId(int id, bool otherLang)
         {
-            return GetScoreTypes(new ScoreTypeParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetScoreTypes(new ScoreTypeParameters { Id = id, IncludeBestPlayer = true }, otherLang).SingleOrDefault();
         }
 
         public int GetScoreTypeCount()

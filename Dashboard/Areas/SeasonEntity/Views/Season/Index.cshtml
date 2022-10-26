@@ -85,6 +85,7 @@
 
                                                 </th>
                                                 <th>@Html.DisplayNameFor(model => row.Name)</th>
+                                                <th>@Html.DisplayNameFor(model => row.IsCurrent)</th>
                                                 <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
                                                 <th>
                                                     @Html.DisplayNameFor(model => row.Id)
@@ -153,6 +154,16 @@
                                 }
 
 
+                            }
+                        },
+                        {
+                            data: "isCurrent", 
+                            render: function(data) {
+                              if (data) {
+                                 return '@Localizer.Get("Yes")'
+                              } else {
+                                return '@Localizer.Get("No")'
+                              }
                             }
                         },
                         { data: "createdAt" },

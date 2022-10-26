@@ -16,7 +16,12 @@
 
                 <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.Name):</dt>
                 <dd class="col-sm-8 mb-1">@Model.Name</dd>
-
+                
+                <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.Description):</dt>
+                <dd class="col-sm-8 mb-1">@Model.Description</dd>
+                
+                <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.HavePoints):</dt>
+                <dd class="col-sm-8 mb-1">@(Model.HavePoints ? Localizer.Get("Yes") : Localizer.Get("No"))</dd>
 
             </dl>
         </div>
@@ -26,19 +31,16 @@
                 <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model._365_TypeId):</dt>
                 <dd class="col-sm-8 mb-1">@Model._365_TypeId</dd>
 
+                <dt class="col-sm-4 fw-bolder mb-1">@Localizer.Get("BestPlayer"):</dt>
+                <dd class="col-sm-8 mb-1">@Model.BestPlayer.Name</dd>
 
+                <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.IsEvent):</dt>
+                <dd class="col-sm-8 mb-1">@(Model.IsEvent ? Localizer.Get("Yes") : Localizer.Get("No"))</dd>
             </dl>
         </div>
 
     </div>
-     <div class="card-body">
-            <div class="d-flex justify-content-between align-items-start">
-                <span class="badge bg-light-primary">@Html.DisplayNameFor(model => Model.Description)</span>
-            </div>
-            <br />
-            <p>@Model.Description</p>
-        </div>
-
+    
     <hr />
     <div class="row">
         <div class="col-xl-7 col-12">

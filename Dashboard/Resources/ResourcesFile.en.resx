@@ -1092,4 +1092,16 @@
   <data name="IsDelayed" xml:space="preserve">
     <value>Is Delayed</value>
   </data>
+  <data name="BestPlayer" xml:space="preserve">
+    <value>Best Player</value>
+  </data>
+  <data name="HavePoints" xml:space="preserve">
+    <value>Have Points ?</value>
+  </data>
+  <data name="IsEvent" xml:space="preserve">
+    <value>Is Event ?</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
 </root>

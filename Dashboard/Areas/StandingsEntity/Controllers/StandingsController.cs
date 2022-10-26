@@ -49,7 +49,7 @@ namespace Dashboard.Areas.StandingsEntity.Controllers
 
             StandingsParameters parameters = new()
             {
-                SearchColumns = "Id,Team"
+                SearchColumns = "Id,Team,GamesWon,GamesLost,GamesEven,Against",
             };
 
             _ = _mapper.Map(dtParameters, parameters);

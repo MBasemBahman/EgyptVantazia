@@ -101,6 +101,10 @@
                                             <th>@Html.DisplayNameFor(model => row.GamesEven)</th>
                                             <th>@Html.DisplayNameFor(model => row.For)</th>
                                             <th>@Html.DisplayNameFor(model => row.Against)</th>
+                                            <th>@Html.DisplayNameFor(model => row.Position)</th>
+                                            <th>@Html.DisplayNameFor(model => row.Ratio)</th>
+                                            <th>@Html.DisplayNameFor(model => row.Strike)</th>
+                                            <th>@Html.DisplayNameFor(model => row.GamePlayed)</th>
                                             <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
                                             <th>
                                                 @Html.DisplayNameFor(model => row.Id)
@@ -174,13 +178,17 @@
 
                             }
                         },
-                         { data: "points", orderable: false, },
-                         { data: "season.name", orderable: false, },
-                        { data: "gamesWon", orderable: false, },
-                        { data: "gamesLost", orderable: false, },
-                        { data: "gamesEven", orderable: false, },
-                        { data: "for", orderable: false, },
-                        { data: "against", orderable: false, },
+                         { data: "points" },
+                         { data: "season.name" },
+                        { data: "gamesWon" },
+                        { data: "gamesLost" },
+                        { data: "gamesEven" },
+                        { data: "for" },
+                        { data: "against" },
+                        { data: "position" },
+                        { data: "ratio" },
+                        { data: "strike" },
+                        { data: "gamePlayed" },
                         { data: "createdAt" },
                         { data: "id" },
                     ]

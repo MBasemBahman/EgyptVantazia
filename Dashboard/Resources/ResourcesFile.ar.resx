@@ -1083,4 +1083,16 @@
   <data name="IsDelayed" xml:space="preserve">
     <value>مؤجل</value>
   </data>
+  <data name="BestPlayer" xml:space="preserve">
+    <value>افضل لاعب</value>
+  </data>
+  <data name="HavePoints" xml:space="preserve">
+    <value>يوجد نقاط ؟</value>
+  </data>
+  <data name="IsEvent" xml:space="preserve">
+    <value>حدث ؟</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>الوصف</value>
+  </data>
 </root>

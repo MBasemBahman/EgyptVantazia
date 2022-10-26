@@ -37,6 +37,8 @@ namespace CoreServices.Logic
                            Fk_Season = a.Fk_Season,
                            Fk_Team = a.Fk_Team,
                            Points = (a.GamesWon * 3) + a.GamesEven,
+                           Position = a.Position,
+                           Strike = a.Strike,
                            Season = new SeasonModel
                            {
                                Name = otherLang ? a.Season.SeasonLang.Name : a.Season.Name,

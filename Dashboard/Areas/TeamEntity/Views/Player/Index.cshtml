@@ -70,48 +70,48 @@
                                 <div class="card-datatable">
                                     <form class="playersPricesForm" asp-action="EditPlayersPrices" method="get">
                                         <table class="datatables datatables-ajax table table-responsive table">
-                                                                                <thead>
-                                                                                <tr>
-                                                                                    <th></th>
-                                                                                    <th>
-                                                                                        @Html.DisplayNameFor(model => row.Id)
+                                            <thead>
+                                            <tr>
+                                                <th><input type="checkbox" class="selectAllPlayers" value=""></th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => row.Id)
                                         
-                                                                                        <a id="profile" asp-action="Profile">
-                                                                                        </a>
+                                                    <a id="profile" asp-action="Profile">
+                                                    </a>
                                                                                         
-                                                                                        <a id="editSpecific" asp-action="EditPlayersPrices">
-                                                                                        </a>
+                                                    <a id="editSpecific" asp-action="EditPlayersPrices">
+                                                    </a>
                                         
-                                                                                        @if (accessLevel.CreateAccess)
-                                                                                        {
-                                                                                            <a id="create" asp-action="CreateOrEdit">
-                                                                                            </a>
-                                                                                        }
+                                                    @if (accessLevel.CreateAccess)
+                                                    {
+                                                        <a id="create" asp-action="CreateOrEdit">
+                                                        </a>
+                                                    }
                                         
-                                                                                        @if (accessLevel.EditAccess)
-                                                                                        {
-                                                                                            <a id="edit" asp-action="CreateOrEdit">
-                                                                                            </a>
-                                                                                        }
-                                                                                        @if (accessLevel.DeleteAccess)
-                                                                                        {
-                                                                                            <a id="delete" asp-action="Delete">
-                                                                                            </a>
-                                                                                        }
-                                                                                    </th>
-                                                                                    <th>@Html.DisplayNameFor(model => row.Name)</th>
-                                                                                    <th>@Html.DisplayNameFor(model => row.PlayerNumber)</th>
-                                                                                    <th>@Html.DisplayNameFor(model => row.Age)</th>
-                                                                                    <th>@Html.DisplayNameFor(model => row.Team)</th>
-                                                                                    <th>@Html.DisplayNameFor(model => row._365_PlayerId)</th>
-                                                                                    <th>@Html.DisplayNameFor(model => row.PlayerPosition)</th>
-                                                                                    <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
-                                                                                    <th>
-                                                                                        @Html.DisplayNameFor(model => row.Id)
-                                                                                    </th>
-                                                                                </tr>
-                                                                                </thead>
-                                                                            </table>
+                                                    @if (accessLevel.EditAccess)
+                                                    {
+                                                        <a id="edit" asp-action="CreateOrEdit">
+                                                        </a>
+                                                    }
+                                                    @if (accessLevel.DeleteAccess)
+                                                    {
+                                                        <a id="delete" asp-action="Delete">
+                                                        </a>
+                                                    }
+                                                </th>
+                                                <th>@Html.DisplayNameFor(model => row.Name)</th>
+                                                <th>@Html.DisplayNameFor(model => row.PlayerNumber)</th>
+                                                <th>@Html.DisplayNameFor(model => row.Age)</th>
+                                                <th>@Html.DisplayNameFor(model => row.Team)</th>
+                                                <th>@Html.DisplayNameFor(model => row._365_PlayerId)</th>
+                                                <th>@Html.DisplayNameFor(model => row.PlayerPosition)</th>
+                                                <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => row.Id)
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                        </table>
                                     </form>
                                 </div>
                             </div>
@@ -139,42 +139,43 @@ else
                     <div class="card-datatable">
                         <table class="datatables datatables-ajax table table-responsive table">
                             <thead>
-                                <tr>
-                                    <th>
-                                        @Html.DisplayNameFor(model => row.Id)
+                            <tr>
+                                <th><input type="checkbox" class="selectAllPlayers" value=""></th>
+                                <th>
+                                    @Html.DisplayNameFor(model => row.Id)
 
-                                        <a id="profile" asp-action="Profile">
+                                    <a id="profile" asp-action="Profile">
+                                    </a>
+
+                                    @if (accessLevel.CreateAccess)
+                                    {
+                                        <a id="create" asp-action="CreateOrEdit" asp-route-Fk_Team="@Model.Fk_Team">
                                         </a>
+                                    }
 
-                                        @if (accessLevel.CreateAccess)
-                                        {
-                                            <a id="create" asp-action="CreateOrEdit" asp-route-Fk_Team="@Model.Fk_Team">
-                                            </a>
-                                        }
+                                    @if (accessLevel.EditAccess)
+                                    {
+                                        <a id="edit" asp-action="CreateOrEdit">
+                                        </a>
+                                    }
+                                    @if (accessLevel.DeleteAccess)
+                                    {
+                                        <a id="delete" asp-action="Delete">
+                                        </a>
+                                    }
 
-                                        @if (accessLevel.EditAccess)
-                                        {
-                                            <a id="edit" asp-action="CreateOrEdit">
-                                            </a>
-                                        }
-                                        @if (accessLevel.DeleteAccess)
-                                        {
-                                            <a id="delete" asp-action="Delete">
-                                            </a>
-                                        }
-
-                                    </th>
-                                    <th>@Html.DisplayNameFor(model => row.Name)</th>
-                                    <th>@Html.DisplayNameFor(model => row.PlayerNumber)</th>
-                                    <th>@Html.DisplayNameFor(model => row.Age)</th>
-                                    <th>@Html.DisplayNameFor(model => row.Team)</th>
-                                    <th>@Html.DisplayNameFor(model => row._365_PlayerId)</th>
-                                    <th>@Html.DisplayNameFor(model => row.PlayerPosition)</th>
-                                    <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => row.Id)
-                                    </th>
-                                </tr>
+                                </th>
+                                <th>@Html.DisplayNameFor(model => row.Name)</th>
+                                <th>@Html.DisplayNameFor(model => row.PlayerNumber)</th>
+                                <th>@Html.DisplayNameFor(model => row.Age)</th>
+                                <th>@Html.DisplayNameFor(model => row.Team)</th>
+                                <th>@Html.DisplayNameFor(model => row._365_PlayerId)</th>
+                                <th>@Html.DisplayNameFor(model => row.PlayerPosition)</th>
+                                <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
+                                <th>
+                                    @Html.DisplayNameFor(model => row.Id)
+                                </th>
+                            </tr>
                             </thead>
                         </table>
                     </div>
@@ -351,5 +352,9 @@ else
           }
           
         });
+        
+        $(document).on("click", ".selectAllPlayers", function() {
+          $('input:checkbox').prop('checked', this.checked);
+        })
     </script>
 }

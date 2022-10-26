@@ -51,19 +51,22 @@
 
         public enum ScoreTypeEnum
         {
-            Minutes = 34,
-            GoalkeeperSaves = 35,
-            Goals = 36,
-            Assists = 37,
-            PenaltiesSaved = 56,
-            PenaltyMissed = 59,
-            YellowCard = 75,
+            Minutes = 34, // الدقائق
+            GoalkeeperSaves = 35, // تصديات حارس المرمى
+            Goals = 36, // الأهداف
+            Assists = 37, // صناعة
+            PenaltiesSaved = 56, // انقاذ ركلات جزاء
+            PenaltyMissed = 59, // ضربة جزاء ضائعة
+            YellowCard = 75, // بطاقة صفراء
             SecondYellowCard = 79,
-            RedCard = 80,
-            SelfGoal = 82,
-            CleanSheet = 84, // From My Side
-            ReceiveGoals = 85, // From My Side
-            Ranking = 86 // From My Side
+            RedCard = 80, // بطاقة حمراء
+            SelfGoal = 82, // هدف - هدف ذاتي
+            CleanSheet = 84, // From My Side - بدون اهداف
+            ReceiveGoals = 85, // From My Side - تلقي اهداف
+            Ranking = 86, // From My Side - الترتيب
+            Goal = 118, // هدف - هدف
+            Substitution = 119, // Substitution
+            PenaltyKick = 120 // هدف - ركلة جزاء
         }
 
         public enum PlayerPositionEnum

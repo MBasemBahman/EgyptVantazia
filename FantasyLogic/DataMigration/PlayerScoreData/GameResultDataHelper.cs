@@ -34,6 +34,8 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             {
                 Id = a.Id,
                 _365_MatchId = a._365_MatchId,
+                Fk_Away = a.Fk_Away,
+                Fk_Home = a.Fk_Home
             }).ToList();
 
             List<ScoreTypeDto> scoreTypes = _unitOfWork.PlayerScore
@@ -57,12 +59,15 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
 
         public async Task UpdateGameResult(TeamGameWeakDto teamGameWeak, List<ScoreTypeDto> scoreTypes, int delayMinutes)
         {
+
             GameReturn gameReturn = await _365Services.GetGame(new _365GameParameters
             {
                 GameId = teamGameWeak._365_MatchId.ParseToInt()
             });
 
-            if (gameReturn != null && gameReturn.Game != null)
+            if (gameReturn != null && gameReturn.Game != null &&
+                gameReturn.Game.AwayCompetitor != null &&
+                gameReturn.Game.HomeCompetitor != null)
             {
                 TeamGameWeak match = await _unitOfWork.Season.FindTeamGameWeakbyId(teamGameWeak.Id, trackChanges: true);
                 match.IsEnded = gameReturn.Game.IsEnded;
@@ -99,7 +104,8 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                                    .Select(a => new
                                                    {
                                                        a.Id,
-                                                       a.Fk_PlayerPosition
+                                                       a.Fk_PlayerPosition,
+                                                       a.Fk_Team
                                                    })
                                                    .FirstOrDefault();
 
@@ -120,7 +126,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                                                     })
                                                                     .ToList();
 
-                            _ = BackgroundJob.Schedule(() => UpdatePlayerGameResult(player.Id, player.Fk_PlayerPosition, teamGameWeak.Id, memberResult, eventResult, scoreTypes, delayMinutes), TimeSpan.FromMinutes(delayMinutes));
+                            _ = BackgroundJob.Schedule(() => UpdatePlayerGameResult(player.Id, player.Fk_PlayerPosition, player.Fk_Team, teamGameWeak.Id, memberResult, eventResult, scoreTypes, delayMinutes), TimeSpan.FromMinutes(delayMinutes));
 
                         }
                     }
@@ -135,6 +141,16 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
 
         public void UpdateGameFinalResult(int fk_TeamGameWeak, int delayMinutes)
         {
+            List<PlayerGameWeakScoreModel> goals = _unitOfWork.PlayerScore.GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
+            {
+                Fk_TeamGameWeak = fk_TeamGameWeak,
+                Fk_ScoreTypes = new List<int>
+                {
+                    (int)ScoreTypeEnum.Goal,
+                    (int)ScoreTypeEnum.PenaltyKick
+                }
+            }, otherLang: false).OrderBy(a => a.GameTime).ToList();
+
             List<PlayerGameWeakDto> players = _unitOfWork.PlayerScore.GetPlayerGameWeaks(new PlayerGameWeakParameters
             {
                 Fk_TeamGameWeak = fk_TeamGameWeak
@@ -144,18 +160,20 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                     Fk_Player = a.Fk_Player,
                     Fk_PlayerPosition = a.Player.Fk_PlayerPosition,
                     Fk_PlayerGameWeak = a.Id,
+                    Fk_Team = a.Player.Fk_Team
                 }).ToList();
 
             foreach (PlayerGameWeakDto player in players)
             {
-                _ = BackgroundJob.Schedule(() => UpdatePlayerStateScore((int)ScoreTypeEnum.CleanSheet, "", player.Fk_Player, player.Fk_PlayerPosition, player.Fk_PlayerGameWeak, fk_TeamGameWeak), TimeSpan.FromMinutes(delayMinutes));
-                _ = BackgroundJob.Schedule(() => UpdatePlayerStateScore((int)ScoreTypeEnum.ReceiveGoals, "", player.Fk_Player, player.Fk_PlayerPosition, player.Fk_PlayerGameWeak, fk_TeamGameWeak), TimeSpan.FromMinutes(delayMinutes));
-                _ = BackgroundJob.Schedule(() => UpdatePlayerStateScore((int)ScoreTypeEnum.Ranking, "", player.Fk_Player, player.Fk_PlayerPosition, player.Fk_PlayerGameWeak, fk_TeamGameWeak), TimeSpan.FromMinutes(delayMinutes));
+                _ = BackgroundJob.Schedule(() => UpdatePlayerStateScore((int)ScoreTypeEnum.CleanSheet, "", player.Fk_Player, player.Fk_Team, player.Fk_PlayerPosition, player.Fk_PlayerGameWeak, fk_TeamGameWeak, goals), TimeSpan.FromMinutes(delayMinutes));
+                _ = BackgroundJob.Schedule(() => UpdatePlayerStateScore((int)ScoreTypeEnum.ReceiveGoals, "", player.Fk_Player, player.Fk_Team, player.Fk_PlayerPosition, player.Fk_PlayerGameWeak, fk_TeamGameWeak, goals), TimeSpan.FromMinutes(delayMinutes));
+                _ = BackgroundJob.Schedule(() => UpdatePlayerStateScore((int)ScoreTypeEnum.Ranking, "", player.Fk_Player, player.Fk_Team, player.Fk_PlayerPosition, player.Fk_PlayerGameWeak, fk_TeamGameWeak, goals), TimeSpan.FromMinutes(delayMinutes));
             }
         }
 
         public async Task UpdatePlayerGameResult(
             int fk_Player,
+            int fk_Team,
             int fk_PlayerPosition,
             int fk_TeamGameWeak,
             Member memberResult,
@@ -187,7 +205,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                             int fk_ScoreType = scoreTypes.Where(a => a._365_TypeId == Stat.Type.ToString()).Select(a => a.Id).FirstOrDefault();
                             if (fk_ScoreType > 0)
                             {
-                                _ = BackgroundJob.Schedule(() => UpdatePlayerStateScore(fk_ScoreType, Stat.Value, fk_Player, fk_PlayerPosition, fk_PlayerGameWeak, fk_TeamGameWeak), TimeSpan.FromMinutes(delayMinutes));
+                                _ = BackgroundJob.Schedule(() => UpdatePlayerStateScore(fk_ScoreType, Stat.Value, fk_Player, fk_Team, fk_PlayerPosition, fk_PlayerGameWeak, fk_TeamGameWeak, null), TimeSpan.FromMinutes(delayMinutes));
                             }
                         }
                     }
@@ -198,7 +216,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                             int fk_ScoreType = scoreTypes.Where(a => a.IsEvent = true && a._365_EventTypeId == events.Id.ToString() && a._365_TypeId == events.SubTypeId.ToString()).Select(a => a.Id).FirstOrDefault();
                             if (fk_ScoreType > 0)
                             {
-                                _ = BackgroundJob.Schedule(() => UpdatePlayerEventScore(events, fk_ScoreType, fk_Player, fk_PlayerPosition, fk_PlayerGameWeak, fk_TeamGameWeak), TimeSpan.FromMinutes(delayMinutes));
+                                _ = BackgroundJob.Schedule(() => UpdatePlayerEventScore(events, fk_ScoreType, fk_Player, fk_Team, fk_PlayerPosition, fk_PlayerGameWeak, fk_TeamGameWeak), TimeSpan.FromMinutes(delayMinutes));
                             }
                         }
                     }
@@ -206,7 +224,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             }
         }
 
-        public async Task UpdatePlayerStateScore(int fk_ScoreType, string value, int fk_Player, int fk_PlayerPosition, int fk_PlayerGameWeak, int fk_TeamGameWeak)
+        public async Task UpdatePlayerStateScore(int fk_ScoreType, string value, int fk_Player, int fk_Team, int fk_PlayerPosition, int fk_PlayerGameWeak, int fk_TeamGameWeak, List<PlayerGameWeakScoreModel> goals)
         {
             PlayerGameWeakScore score = new()
             {
@@ -215,11 +233,11 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 Value = value,
             };
 
-            _unitOfWork.PlayerScore.CreatePlayerGameWeakScore(_playerScoreCalc.GetPlayerScore(score, fk_Player, fk_PlayerGameWeak, fk_PlayerPosition, fk_TeamGameWeak));
+            _unitOfWork.PlayerScore.CreatePlayerGameWeakScore(_playerScoreCalc.GetPlayerScore(score, fk_Player, fk_Team, fk_PlayerGameWeak, fk_PlayerPosition, fk_TeamGameWeak, goals));
             await _unitOfWork.Save();
         }
 
-        public async Task UpdatePlayerEventScore(EventType events, int fk_ScoreType, int fk_Player, int fk_PlayerPosition, int fk_PlayerGameWeak, int fk_TeamGameWeak)
+        public async Task UpdatePlayerEventScore(EventType events, int fk_ScoreType, int fk_Player, int fk_Team, int fk_PlayerPosition, int fk_PlayerGameWeak, int fk_TeamGameWeak)
         {
             PlayerGameWeakScore score = new()
             {
@@ -228,7 +246,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 Value = events.Value.ToString(),
                 GameTime = events.GameTime,
             };
-            _unitOfWork.PlayerScore.CreatePlayerGameWeakScore(_playerScoreCalc.GetPlayerScore(score, fk_Player, fk_PlayerGameWeak, fk_PlayerPosition, fk_TeamGameWeak));
+            _unitOfWork.PlayerScore.CreatePlayerGameWeakScore(_playerScoreCalc.GetPlayerScore(score, fk_Player, fk_Team, fk_PlayerGameWeak, fk_PlayerPosition, fk_TeamGameWeak, null));
             await _unitOfWork.Save();
         }
     }
@@ -238,6 +256,10 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
         public int Id { get; set; }
 
         public string _365_MatchId { get; set; }
+
+        public int Fk_Away { get; set; }
+
+        public int Fk_Home { get; set; }
     }
 
     public class PlayerGameWeakDto
@@ -245,6 +267,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
         public int Fk_PlayerGameWeak { get; set; }
         public int Fk_PlayerPosition { get; set; }
         public int Fk_Player { get; set; }
+        public int Fk_Team { get; set; }
     }
 
     public class ScoreTypeDto

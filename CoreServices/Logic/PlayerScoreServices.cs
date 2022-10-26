@@ -294,6 +294,7 @@ namespace CoreServices.Logic
                            Value = a.Value,
                            GameTime = a.GameTime,
                            FinalValue = a.FinalValue,
+                           Fk_Team = a.PlayerGameWeak.Player.Fk_Team,
                            ScoreType = new ScoreTypeModel
                            {
                                Name = otherLang ? a.ScoreType.ScoreTypeLang.Name : a.ScoreType.Name,

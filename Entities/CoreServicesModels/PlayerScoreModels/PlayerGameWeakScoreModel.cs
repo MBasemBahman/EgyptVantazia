@@ -10,6 +10,9 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
         [DisplayName(nameof(PlayerGameWeak))]
         public int Fk_PlayerGameWeak { get; set; }
 
+        [DisplayName(nameof(PlayerGameWeak))]
+        public int Fk_TeamGameWeak { get; set; }
+
         [DisplayName(nameof(GameWeak))]
         public int Fk_GameWeak { get; set; }
 
@@ -17,6 +20,8 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
         public int Fk_Player { get; set; }
 
         public int Fk_ScoreType { get; set; }
+
+        public List<int> Fk_ScoreTypes { get; set; }
 
         public int? FinalValueFrom { get; set; }
 
@@ -35,6 +40,8 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
     {
         [DisplayName(nameof(PlayerGameWeak))]
         public int Fk_PlayerGameWeak { get; set; }
+
+        public int Fk_Team { get; set; }
 
         [DisplayName(nameof(ScoreType))]
         public int Fk_ScoreType { get; set; }

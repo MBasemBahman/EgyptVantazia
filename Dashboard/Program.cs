@@ -23,18 +23,19 @@ builder.Services.ConfigureSessionAndCookie();
 
 WebApplication app = builder.Build();
 
+_ = app.UseDeveloperExceptionPage();
 
-//Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    _ = app.UseDeveloperExceptionPage();
-}
-else
-{
-    _ = app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    _ = app.UseHsts();
-}
+////Configure the HTTP request pipeline.
+//if (app.Environment.IsDevelopment())
+//{
+//    _ = app.UseDeveloperExceptionPage();
+//}
+//else
+//{
+//    _ = app.UseExceptionHandler("/Error");
+//    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+//    _ = app.UseHsts();
+//}
 
 app.UseHttpsRedirection();
 app.ConfigureStaticFiles();

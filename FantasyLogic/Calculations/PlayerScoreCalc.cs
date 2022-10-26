@@ -16,10 +16,13 @@ namespace FantasyLogic.Calculations
         public PlayerGameWeakScore GetPlayerScore(
             PlayerGameWeakScore score,
             int fk_Player,
+            int fk_Team,
             int fk_PlayerGameWeak,
             int fk_PlayerPosition,
-            int fk_TeamGameWeak)
+            int fk_TeamGameWeak,
+            List<PlayerGameWeakScoreModel> goals)
         {
+            List<PlayerGameWeakScoreModel> otherGoals = goals != null && goals.Any() ? goals.Where(a => a.Fk_Team != fk_Team).ToList() : null;
             if (score.Fk_ScoreType == (int)ScoreTypeEnum.Minutes)
             {
                 score.FinalValue = score.Value.GetUntilOrEmpty("'").ParseToInt();
@@ -104,20 +107,12 @@ namespace FantasyLogic.Calculations
                     Fk_PlayerGameWeak = fk_PlayerGameWeak
                 }, otherLang: false).Any())
                 {
-                    score.FinalValue = 1;
-                    if (fk_PlayerPosition == (int)PlayerPositionEnum.Midfielder)
-                    {
-                        score.Points = score.FinalValue * 1;
-                    }
-                    else if (fk_PlayerPosition is ((int)PlayerPositionEnum.Defender) or
-                            ((int)PlayerPositionEnum.Goalkeeper))
-                    {
-                        score.Points = score.FinalValue * 4;
-                    }
+                    score = CalcCleanSheet(score, fk_PlayerPosition);
                 }
-
             }
-            else if (score.Fk_ScoreType == (int)ScoreTypeEnum.ReceiveGoals)
+            else if (score.Fk_ScoreType == (int)ScoreTypeEnum.ReceiveGoals &&
+                     (fk_PlayerPosition is ((int)PlayerPositionEnum.Defender) or
+                            ((int)PlayerPositionEnum.Goalkeeper)))
             {
                 if (_unitOfWork.PlayerScore.GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
                 {
@@ -126,11 +121,35 @@ namespace FantasyLogic.Calculations
                     Fk_PlayerGameWeak = fk_PlayerGameWeak
                 }, otherLang: false).Any())
                 {
-                    score.FinalValue = 1;
-                    if (fk_PlayerPosition is ((int)PlayerPositionEnum.Defender) or
-                            ((int)PlayerPositionEnum.Goalkeeper))
+                    score.FinalValue = otherGoals.Count;
+                    bool addPoints = true;
+                    if (_unitOfWork.PlayerScore.GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
+                    {
+                        Fk_Player = fk_Player,
+                        Fk_PlayerGameWeak = fk_PlayerGameWeak,
+                        Fk_ScoreType = (int)ScoreTypeEnum.Substitution
+                    }, otherLang: false).Any())
+                    {
+                        PlayerGameWeakScoreModel substitution = _unitOfWork.PlayerScore.GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
+                        {
+                            Fk_Player = fk_Player,
+                            Fk_PlayerGameWeak = fk_PlayerGameWeak,
+                            Fk_ScoreType = (int)ScoreTypeEnum.Substitution
+                        }, otherLang: false).First();
+
+                        if (substitution.GameTime < otherGoals.First().GameTime)
+                        {
+                            addPoints = false;
+                        }
+                    }
+
+                    if (addPoints)
                     {
                         score.Points = score.FinalValue / 2 * -1;
+                    }
+                    else
+                    {
+                        score = CalcCleanSheet(score, fk_PlayerPosition);
                     }
                 }
             }
@@ -158,5 +177,21 @@ namespace FantasyLogic.Calculations
             return score;
         }
 
+        private PlayerGameWeakScore CalcCleanSheet(PlayerGameWeakScore score, int fk_PlayerPosition)
+        {
+            score.FinalValue = 1;
+            score.Fk_ScoreType = (int)ScoreTypeEnum.CleanSheet;
+            if (fk_PlayerPosition == (int)PlayerPositionEnum.Midfielder)
+            {
+                score.Points = score.FinalValue * 1;
+            }
+            else if (fk_PlayerPosition is ((int)PlayerPositionEnum.Defender) or
+                    ((int)PlayerPositionEnum.Goalkeeper))
+            {
+                score.Points = score.FinalValue * 4;
+            }
+
+            return score;
+        }
     }
 }

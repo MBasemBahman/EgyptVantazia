@@ -279,7 +279,8 @@ namespace CoreServices.Logic
                            {
                                Name = otherLang ? a.Away.TeamLang.Name : a.Away.Name,
                                ImageUrl = a.Away.StorageUrl + a.Away.ImageUrl,
-                               _365_TeamId = a.Away._365_TeamId
+                               _365_TeamId = a.Away._365_TeamId,
+
                            },
                            Home = new TeamModel
                            {

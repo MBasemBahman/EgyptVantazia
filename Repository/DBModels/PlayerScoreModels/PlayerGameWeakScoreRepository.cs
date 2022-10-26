@@ -15,7 +15,9 @@ namespace Repository.DBModels.PlayerScoreModels
             return FindByCondition(a => true, trackChanges)
                    .Filter(parameters.Id,
                            parameters.Fk_PlayerGameWeak,
+                           parameters.Fk_TeamGameWeak,
                            parameters.Fk_ScoreType,
+                           parameters.Fk_ScoreTypes,
                            parameters.Fk_Player,
                            parameters.Fk_GameWeak,
                            parameters.FinalValueFrom,
@@ -56,7 +58,9 @@ namespace Repository.DBModels.PlayerScoreModels
             (this IQueryable<PlayerGameWeakScore> PlayerGameWeakScores,
              int id,
              int fk_PlayerGameWeak,
+             int fk_TeamGameWeak,
              int fk_ScoreType,
+             List<int> fk_ScoreTypes,
              int fk_Player,
              int fk_GameWeak,
              int? finalValueFrom,
@@ -71,9 +75,11 @@ namespace Repository.DBModels.PlayerScoreModels
                                                    (finalValueFrom == null || a.FinalValue >= finalValueFrom) &&
                                                    (finalValueTo == null || a.FinalValue <= finalValueTo) &&
                                                    (fk_PlayerGameWeak == 0 || a.Fk_PlayerGameWeak == fk_PlayerGameWeak) &&
+                                                   (fk_TeamGameWeak == 0 || a.PlayerGameWeak.Fk_TeamGameWeak == fk_TeamGameWeak) &&
                                                    (fk_Player == 0 || a.PlayerGameWeak.Fk_Player == fk_Player) &&
                                                    (fk_GameWeak == 0 || a.PlayerGameWeak.TeamGameWeak.Fk_GameWeak == fk_GameWeak) &&
                                                    (fk_ScoreType == 0 || a.Fk_ScoreType == fk_ScoreType) &&
+                                                   (fk_ScoreTypes == null || !fk_ScoreTypes.Any() || fk_ScoreTypes.Contains(a.Fk_ScoreType)) &&
                                                    (pointsFrom == null || a.Points >= pointsFrom) &&
                                                    (pointsTo == null || a.Points <= pointsTo) &&
                                                    (checkCleanSheet == false || (a.Fk_ScoreType == (int)ScoreTypeEnum.Minutes &&

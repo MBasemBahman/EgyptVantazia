@@ -136,7 +136,7 @@
         {
             CookieOptions option = new()
             {
-                Expires = DateTime.Parse(response.Expires),
+                Expires = DateTime.Parse(response.Expires, CultureInfo.InvariantCulture),
             };
             Response.Cookies.Append(HeadersConstants.AuthorizationToken, response.RefreshToken, option);
         }
@@ -145,7 +145,7 @@
         {
             CookieOptions option = new()
             {
-                Expires = DateTime.Parse(response.Expires),
+                Expires = DateTime.Parse(response.Expires, CultureInfo.InvariantCulture),
             };
             Response.Cookies.Append(HeadersConstants.SetRefresh, response.RefreshToken, option);
         }
@@ -154,7 +154,7 @@
         {
             CookieOptions option = new()
             {
-                Expires = DateTime.Parse(expires),
+                Expires = DateTime.Parse(expires, CultureInfo.InvariantCulture),
             };
 
             Response.Cookies.Append(ViewDataConstants.AccountName, auth.Name, option);
@@ -171,7 +171,7 @@
 
             CookieOptions option = new()
             {
-                Expires = DateTime.Parse(expires),
+                Expires = DateTime.Parse(expires, CultureInfo.InvariantCulture),
             };
             Response.Cookies.Append(ViewDataConstants.Views, listString, option);
         }
@@ -184,7 +184,7 @@
 
             CookieOptions option = new()
             {
-                Expires = DateTime.Parse(expires),
+                Expires = DateTime.Parse(expires, CultureInfo.InvariantCulture),
             };
             Response.Cookies.Append(AdminCookiesDataConstants.Role, Admin.Fk_DashboardAdministrationRole.ToString(), option);
 

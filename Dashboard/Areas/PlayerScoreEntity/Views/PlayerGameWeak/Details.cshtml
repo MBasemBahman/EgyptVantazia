@@ -17,21 +17,24 @@
 
                 <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.Player):</dt>
                 <dd class="col-sm-8 mb-1">@Model.Player.Name</dd>
-                
+
                 <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.TeamGameWeak.Home):</dt>
                 <dd class="col-sm-8 mb-1">@Model.TeamGameWeak.Home.Name</dd>
-                
+
                 <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.TeamGameWeak.GameWeak.Season):</dt>
                 <dd class="col-sm-8 mb-1">@Model.TeamGameWeak.GameWeak.Season.Name</dd>
-                
+
                 <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.TeamGameWeak.GameWeak):</dt>
                 <dd class="col-sm-8 mb-1">@Model.TeamGameWeak.GameWeak.Name</dd>
-                
+
                 <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.TeamGameWeak.HomeScore):</dt>
                 <dd class="col-sm-8 mb-1">@Model.TeamGameWeak.HomeScore</dd>
-                
+
                 <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.TeamGameWeak.IsEnded):</dt>
                 <dd class="col-sm-8 mb-1">@(Model.TeamGameWeak.IsEnded ? Localizer.Get("Yes"): Localizer.Get("No"))</dd>
+
+                <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.Position):</dt>
+                <dd class="col-sm-8 mb-1">@Model.Position</dd>
             </dl>
         </div>
         <div class="col-xl-5 col-12">
@@ -39,9 +42,6 @@
 
                 <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.Ranking):</dt>
                 <dd class="col-sm-8 mb-1">@Model.Ranking</dd>
-
-                <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.TotalPoints):</dt>
-                <dd class="col-sm-8 mb-1">@Model.TotalPoints</dd>
 
                 <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.TeamGameWeak.Away):</dt>
                 <dd class="col-sm-8 mb-1">@Model.TeamGameWeak.Away.Name</dd>
@@ -55,6 +55,8 @@
                 <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.TeamGameWeak.StartTime):</dt>
                 <dd class="col-sm-8 mb-1">@Model.TeamGameWeak.StartTime</dd>
 
+                <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.TotalPoints):</dt>
+                <dd class="col-sm-8 mb-1">@Model.TotalPoints</dd>
             </dl>
         </div>
 

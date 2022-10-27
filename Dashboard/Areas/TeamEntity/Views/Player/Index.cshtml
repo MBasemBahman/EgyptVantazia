@@ -101,6 +101,7 @@
                                                     </th>
                                                     <th>@Html.DisplayNameFor(model => row.Name)</th>
                                                     <th>@Html.DisplayNameFor(model => row.TotalPoints)</th>
+                                                    <th>@Html.DisplayNameFor(model => row.Position)</th>
                                                     <th>@Html.DisplayNameFor(model => row.PlayerNumber)</th>
                                                     <th>@Html.DisplayNameFor(model => row.Age)</th>
                                                     <th>@Html.DisplayNameFor(model => row.Team)</th>
@@ -168,6 +169,7 @@ else
                                     </th>
                                     <th>@Html.DisplayNameFor(model => row.Name)</th>
                                     <th>@Html.DisplayNameFor(model => row.TotalPoints)</th>
+                                    <th>@Html.DisplayNameFor(model => row.Position)</th>
                                     <th>@Html.DisplayNameFor(model => row.PlayerNumber)</th>
                                     <th>@Html.DisplayNameFor(model => row.Age)</th>
                                     <th>@Html.DisplayNameFor(model => row.Team)</th>
@@ -254,6 +256,7 @@ else
                             }
                         },
                         { data: "totalPoints" },
+                        { data: "position" },
                         { data: "playerNumber" },
                         { data: "age", orderable: false },
                         {

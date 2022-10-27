@@ -155,8 +155,6 @@ namespace Dashboard.Areas.PlayerScoreEntity.Controllers
                     dataDB.LastModifiedBy = auth.UserName;
                 }
 
-
-
                 await _unitOfWork.Save();
 
                 dataDB = await _unitOfWork.PlayerScore.UpdatePlayerGameWeakScores(dataDB, model.PlayerGameWeakScores);
@@ -196,18 +194,7 @@ namespace Dashboard.Areas.PlayerScoreEntity.Controllers
         // helper methods
         private void SetViewData(int fk_Season, bool otherLang)
         {
-
-            ViewData["GameWeak"] = _unitOfWork.Season.GetGameWeakLookUp(new GameWeakParameters()
-            {
-                Fk_Season = fk_Season
-            }, otherLang);
-            ViewData["Season"] = _unitOfWork.Season.GetSeasonLookUp(new SeasonParameters(), otherLang);
-
             ViewData["ScoreType"] = _unitOfWork.PlayerScore.GetScoreTypesLookUp(new ScoreTypeParameters(), otherLang);
-
-
         }
-
-
     }
 }

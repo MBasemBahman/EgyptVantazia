@@ -76,12 +76,6 @@
                                                     <a id="details" asp-action="Details">
                                                     </a>
 
-                                                    @if (accessLevel.CreateAccess)
-                                                    {
-                                                        <a id="create" asp-action="CreateOrEdit" asp-route-Fk_Player="@Model.Fk_Player">
-                                                        </a>
-                                                    }
-
                                                     @if (accessLevel.EditAccess)
                                                     {
                                                         <a id="edit" asp-action="CreateOrEdit">
@@ -97,6 +91,7 @@
                                                 <th>@Localizer.Get("Player")</th>
                                                 <th>@Html.DisplayNameFor(model => row.Ranking)</th>
                                                 <th>@Html.DisplayNameFor(model => row.TotalPoints)</th>
+                                                <th>@Html.DisplayNameFor(model => row.Position)</th>
                                                 <th>@Localizer.Get("HomeTeam")</th>
                                                 <th>@Localizer.Get("AwayTeam")</th>
                                                 <th>@Html.DisplayNameFor(model => row.TeamGameWeak.GameWeak.Season)</th>
@@ -141,12 +136,6 @@ else
                                         <a id="details" asp-action="Details">
                                         </a>
 
-                                        @if (accessLevel.CreateAccess)
-                                        {
-                                            <a id="create" asp-action="CreateOrEdit" asp-route-Fk_Player="@Model.Fk_Player">
-                                            </a>
-                                        }
-
                                         @if (accessLevel.EditAccess)
                                         {
                                             <a id="edit" asp-action="CreateOrEdit">
@@ -161,6 +150,7 @@ else
                                     </th>
                                     <th>@Html.DisplayNameFor(model => row.Ranking)</th>
                                     <th>@Html.DisplayNameFor(model => row.TotalPoints)</th>
+                                    <th>@Html.DisplayNameFor(model => row.Position)</th>
                                     <th>@Localizer.Get("HomeTeam")</th>
                                     <th>@Localizer.Get("AwayTeam")</th>
                                     <th>@Html.DisplayNameFor(model => row.TeamGameWeak.GameWeak.Season)</th>
@@ -244,6 +234,7 @@ else
                                             },
                                             { data: "ranking" },
                                             { data: "totalPoints" },
+                                            { data: "position" },
                                             { data: "teamGameWeak.home.name", orderable: false },
                                             { data: "teamGameWeak.away.name", orderable: false },
                                             { data: "teamGameWeak.gameWeak.season.name", orderable: false },
@@ -301,6 +292,7 @@ else
                                     { data: "id" },
                                     { data: "ranking" },
                                     { data: "totalPoints" },
+                                    { data: "position" },
                                     { data: "teamGameWeak.home.name" },
                                     { data: "teamGameWeak.away.name" },
                                     { data: "teamGameWeak.gameWeak.season.name" },

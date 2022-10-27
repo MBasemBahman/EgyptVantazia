@@ -41,25 +41,11 @@
                             <div class="card-body">
                                 <form class="form" asp-action="CreateOrEdit" enctype="multipart/form-data">
                                     <input type="hidden" asp-for="Fk_Player" />
+                                    <input type="hidden" asp-for="Fk_TeamGameWeak" />
                                     <div asp-validation-summary="All" class="text-danger">@ViewData["Error"]</div>
                                     <br />
 
                                     <div class="row mb-1">
-                                        <div class="col-md-4 col-12">
-                                            <div class="mb-1">
-                                                <label asp-for="Fk_Season" class="form-label"></label>
-                                                <select asp-for="Fk_Season" class="select2 form-select" asp-items="@(new SelectList(ViewData["Season"] as Dictionary<string,string>,"Key","Value"))">
-                                                </select>
-                                            </div>
-                                        </div>
-                                        @*<div class="col-md-4 col-12">
-            <div class="mb-1">
-                <label asp-for="Fk_GameWeak" class="form-label"></label>
-                <select asp-for="Fk_GameWeak" class="select2 form-select" asp-items="@(new SelectList(ViewData["GameWeak"] as Dictionary<string,string>,"Key","Value"))">
-                </select>
-                <span asp-validation-for="Fk_GameWeak" class="text-danger"></span>
-            </div>
-        </div>*@
                                         <div class="col-md-4 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="Ranking" class="form-label"></label>
@@ -75,6 +61,13 @@
                                             </div>
                                         </div>
 
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Position" class="form-label"></label>
+                                                <input asp-for="Position" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Position"))" />
+                                                <span asp-validation-for="Position" class="text-danger"></span>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="row">
@@ -84,89 +77,89 @@
                                             <div data-repeater-list="PlayerGameWeakScores" class="mb-2">
                                                 @if (Model.PlayerGameWeakScores != null && Model.PlayerGameWeakScores.Any())
                                                 {
-                                                    @for (int i = 0; i < Model.PlayerGameWeakScores.Count; i++)
+                                                @for (int i = 0; i < Model.PlayerGameWeakScores.Count; i++)
                                                     {
-                                                        <div data-repeater-item class="data-repeater mb-2">
-                                                            <div class="row d-flex align-items-end">
-                                                                <input type="hidden" asp-for="PlayerGameWeakScores[i].Id" class="score-id">
+                                                <div data-repeater-item class="data-repeater mb-2">
+                                                    <div class="row d-flex align-items-end">
+                                                        <input type="hidden" asp-for="PlayerGameWeakScores[i].Id" class="score-id">
 
-                                                                <div class="col-md-3 col-12">
-                                                                    <div class="mb-1">
-                                                                        <label class="form-label">@Localizer.Get("Value")</label>
-                                                                        <input asp-for="PlayerGameWeakScores[i].Value" class="form-control score-value" placeholder="@Localizer.Get("Enter") @Localizer.Get("Value")">
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="col-md-3 col-12">
-                                                                    <div class="mb-1">
-                                                                        <label class="form-label">@Localizer.Get("Points")</label>
-                                                                        <input asp-for="PlayerGameWeakScores[i].Points" class="form-control score-points" placeholder="@Localizer.Get("Enter") @Localizer.Get("Points")">
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="col-md-3 col-12">
-                                                                    <div class="mb-1">
-                                                                        <label class="form-label">@Localizer.Get("ScoreType")</label>
-                                                                        <select asp-for="PlayerGameWeakScores[i].Fk_ScoreType" class="score-type form-select" asp-items="@(new SelectList(ViewData["ScoreType"] as Dictionary<string,string>,"Key","Value"))">
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-1 col-12 mb-50">
-                                                                    <div class="mb-1">
-                                                                        <button class="remove-btn  btn btn-outline-danger text-nowrap px-1" data-repeater-delete
-                                                                        type="button">
-                                                                            <i data-feather="x" class="me-25"></i>
-                                                                            <span>@Localizer.Get("Remove")</span>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
+                                                        <div class="col-md-3 col-12">
+                                                            <div class="mb-1">
+                                                                <label class="form-label">@Localizer.Get("Value")</label>
+                                                                <input asp-for="PlayerGameWeakScores[i].Value" class="form-control score-value" placeholder="@Localizer.Get("Enter") @Localizer.Get("Value")">
                                                             </div>
                                                         </div>
+
+                                                        <div class="col-md-3 col-12">
+                                                            <div class="mb-1">
+                                                                <label class="form-label">@Localizer.Get("Points")</label>
+                                                                <input asp-for="PlayerGameWeakScores[i].Points" class="form-control score-points" placeholder="@Localizer.Get("Enter") @Localizer.Get("Points")">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-3 col-12">
+                                                            <div class="mb-1">
+                                                                <label class="form-label">@Localizer.Get("ScoreType")</label>
+                                                                <select asp-for="PlayerGameWeakScores[i].Fk_ScoreType" class="score-type form-select" asp-items="@(new SelectList(ViewData["ScoreType"] as Dictionary<string,string>,"Key","Value"))">
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-1 col-12 mb-50">
+                                                            <div class="mb-1">
+                                                                <button class="remove-btn  btn btn-outline-danger text-nowrap px-1" data-repeater-delete
+                                                                        type="button">
+                                                                    <i data-feather="x" class="me-25"></i>
+                                                                    <span>@Localizer.Get("Remove")</span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                     }
                                                 }
                                                 else
                                                 {
 
-                                                    <div data-repeater-item class="data-repeater mb-2">
-                                                        <div class="row d-flex align-items-end">
-                                                            <input type="hidden" name=".Id" class="score-id">
+                                                <div data-repeater-item class="data-repeater mb-2">
+                                                    <div class="row d-flex align-items-end">
+                                                        <input type="hidden" name=".Id" class="score-id">
 
 
-                                                            <div class="col-md-3 col-12">
-                                                                <div class="mb-1">
-                                                                    <label class="form-label">@Localizer.Get("Value")</label>
-                                                                    <input name=".Value" class="form-control score-value" placeholder="@Localizer.Get("Enter") @Localizer.Get("Value")">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3 col-12">
-                                                                <div class="mb-1">
-                                                                    <label class="form-label">@Localizer.Get("Points")</label>
-                                                                    <input name=".Points" class="form-control score-points" placeholder="@Localizer.Get("Enter") @Localizer.Get("Points")">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3 col-12">
-                                                                <div class="mb-1">
-                                                                    <label class="form-label">@Localizer.Get("ScoreType")</label>
-                                                                    <select name=".Fk_ScoreType" class="score-type form-select" asp-items="@(new SelectList(ViewData["ScoreType"] as Dictionary<string,string>,"Key","Value"))">
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-
-
-                                                            <div class="col-md-1 col-12 mb-50">
-                                                                <div class="mb-1">
-                                                                    <button class="remove-btn  btn btn-outline-danger text-nowrap px-1" data-repeater-delete newRepeater
-                                                                        type="button">
-                                                                        <i data-feather="x" class="me-25"></i>
-                                                                        <span>@Localizer.Get("Remove")</span>
-                                                                    </button>
-                                                                </div>
+                                                        <div class="col-md-3 col-12">
+                                                            <div class="mb-1">
+                                                                <label class="form-label">@Localizer.Get("Value")</label>
+                                                                <input name=".Value" class="form-control score-value" placeholder="@Localizer.Get("Enter") @Localizer.Get("Value")">
                                                             </div>
                                                         </div>
 
+                                                        <div class="col-md-3 col-12">
+                                                            <div class="mb-1">
+                                                                <label class="form-label">@Localizer.Get("Points")</label>
+                                                                <input name=".Points" class="form-control score-points" placeholder="@Localizer.Get("Enter") @Localizer.Get("Points")">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-3 col-12">
+                                                            <div class="mb-1">
+                                                                <label class="form-label">@Localizer.Get("ScoreType")</label>
+                                                                <select name=".Fk_ScoreType" class="score-type form-select" asp-items="@(new SelectList(ViewData["ScoreType"] as Dictionary<string,string>,"Key","Value"))">
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-md-1 col-12 mb-50">
+                                                            <div class="mb-1">
+                                                                <button class="remove-btn  btn btn-outline-danger text-nowrap px-1" data-repeater-delete newRepeater
+                                                                        type="button">
+                                                                    <i data-feather="x" class="me-25"></i>
+                                                                    <span>@Localizer.Get("Remove")</span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
                                                     </div>
+
+                                                </div>
                                                 }
                                             </div>
 

@@ -21,6 +21,8 @@ namespace Repository.DBModels.PlayerScoreModels
                            parameters.Fk_Teams,
                            parameters.RateFrom,
                            parameters.RateTo,
+                           parameters.PointsFrom,
+                           parameters.PointsTo,
                            parameters.Fk_Player);
         }
 
@@ -57,19 +59,23 @@ namespace Repository.DBModels.PlayerScoreModels
             List<int> fk_Teams,
             double rateFrom,
             double rateTo,
+            int pointsFrom,
+            int pointsTo,
             int fk_Player)
         {
             return PlayerGameWeaks.Where(a => (id == 0 || a.Id == id) &&
                                               (fk_TeamGameWeak == 0 || a.Fk_TeamGameWeak == fk_TeamGameWeak) &&
-                                              (fk_Home == 0 || a.TeamGameWeak.Fk_Home == fk_Home) && 
-                                              (fk_Away == 0 || a.TeamGameWeak.Fk_Away == fk_Away) && 
-                                              ( fk_Teams == null || !fk_Teams.Any() ||  
-                                                fk_Teams.Contains(a.TeamGameWeak.Fk_Home) || fk_Teams.Contains(a.TeamGameWeak.Fk_Away) ) &&
-                                              ( fk_Players == null || !fk_Players.Any() ||  
-                                                fk_Players.Contains(a.Fk_Player) ) &&
-                                              (rateFrom == 0 || a.Ranking >= rateFrom) && 
-                                              (rateTo == 0 || a.Ranking <= rateTo) && 
-                                              (fk_Player == 0 || a.Fk_Player == fk_Player) );
+                                              (fk_Home == 0 || a.TeamGameWeak.Fk_Home == fk_Home) &&
+                                              (fk_Away == 0 || a.TeamGameWeak.Fk_Away == fk_Away) &&
+                                              (fk_Teams == null || !fk_Teams.Any() ||
+                                                fk_Teams.Contains(a.TeamGameWeak.Fk_Home) || fk_Teams.Contains(a.TeamGameWeak.Fk_Away)) &&
+                                              (fk_Players == null || !fk_Players.Any() ||
+                                                fk_Players.Contains(a.Fk_Player)) &&
+                                              (rateFrom == 0 || a.Ranking >= rateFrom) &&
+                                              (rateTo == 0 || a.Ranking <= rateTo) &&
+                                              (pointsFrom == 0 || a.TotalPoints >= pointsFrom) &&
+                                              (pointsTo == 0 || a.TotalPoints <= pointsTo) &&
+                                              (fk_Player == 0 || a.Fk_Player == fk_Player));
 
 
         }

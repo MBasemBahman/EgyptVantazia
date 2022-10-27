@@ -14,7 +14,7 @@
 
     <div class="card-body mt-2">
         <form asp-action="LoadTable" class="filter">
-           
+
             <div class="row g-1 mb-md-1">
                 <div class="col-md-12 col-12">
                     <div class="mb-1">
@@ -23,7 +23,7 @@
                         </select>
                     </div>
                 </div>
-                
+
                 <div class="col-md-12 col-12">
                     <div class="mb-1">
                         <label asp-for="Fk_Teams" class="form-label">@Localizer.Get("Teams")</label>
@@ -40,7 +40,7 @@
                         </select>
                     </div>
                 </div>
-            
+
                 <div class="col-md-6 col-12">
                     <div class="mb-1">
                         <label asp-for="Fk_Away" class="form-label">@Localizer.Get("AwayTeam")</label>
@@ -50,20 +50,37 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="row g-1 mb-md-1">
-               
+
                 <div class="col-md-6 col-12">
                     <div class="mb-1">
                         <label asp-for="RateFrom" class="form-label">@Localizer.Get("RateFrom")</label>
                         <input type="text" class="form-control" asp-for="RateFrom">
                     </div>
                 </div>
-                
+
                 <div class="col-md-6 col-12">
                     <div class="mb-1">
                         <label asp-for="RateTo" class="form-label">@Localizer.Get("RateTo")</label>
                         <input type="text" class="form-control" asp-for="RateTo">
+                    </div>
+                </div>
+
+            </div>
+            <div class="row g-1 mb-md-1">
+
+                <div class="col-md-6 col-12">
+                    <div class="mb-1">
+                        <label asp-for="PointsFrom" class="form-label">@Localizer.Get("PointsFrom")</label>
+                        <input type="text" class="form-control" asp-for="PointsFrom">
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-12">
+                    <div class="mb-1">
+                        <label asp-for="PointsTo" class="form-label">@Localizer.Get("PointsTo")</label>
+                        <input type="text" class="form-control" asp-for="PointsTo">
                     </div>
                 </div>
 

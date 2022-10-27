@@ -20,6 +20,10 @@ namespace Dashboard.Areas.TeamEntity.Models
         public DateTime? CreatedAtFrom { get; set; }
 
         public DateTime? CreatedAtTo { get; set; }
+
+        public int PointsFrom { get; set; }
+        public int PointsTo { get; set; }
+
     }
     public class PlayerDto : PlayerModel
     {

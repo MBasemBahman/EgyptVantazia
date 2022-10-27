@@ -70,46 +70,47 @@
                                 <div class="card-datatable">
                                     <table class="datatables datatables-ajax table table-responsive table">
                                         <thead>
-                                        <tr>
-                                            <th>
-                                                @Html.DisplayNameFor(model => row.Id)
-                                                <a id="details" asp-action="Details">
-                                                </a>
-
-                                                @if (accessLevel.CreateAccess)
-                                                {
-                                                    <a id="create" asp-action="CreateOrEdit" asp-route-Fk_Player="@Model.Fk_Player">
+                                            <tr>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => row.Id)
+                                                    <a id="details" asp-action="Details">
                                                     </a>
-                                                }
 
-                                                @if (accessLevel.EditAccess)
-                                                {
-                                                    <a id="edit" asp-action="CreateOrEdit">
-                                                    </a>
-                                                }
-                                                @if (accessLevel.DeleteAccess)
-                                                {
-                                                    <a id="delete" asp-action="Delete">
-                                                    </a>
-                                                }
+                                                    @if (accessLevel.CreateAccess)
+                                                    {
+                                                        <a id="create" asp-action="CreateOrEdit" asp-route-Fk_Player="@Model.Fk_Player">
+                                                        </a>
+                                                    }
 
-                                            </th>
-                                            <th>@Localizer.Get("Player")</th>
-                                            <th>@Localizer.Get("HomeTeam")</th>
-                                            <th>@Localizer.Get("AwayTeam")</th>
-                                            <th>@Html.DisplayNameFor(model => row.TeamGameWeak.GameWeak.Season)</th>
-                                            <th>@Html.DisplayNameFor(model => row.TeamGameWeak._365_MatchId)</th>
-                                            <th>@Html.DisplayNameFor(model => row.TeamGameWeak.GameWeak)</th>
-                                            <th>@Html.DisplayNameFor(model => row.TeamGameWeak.HomeScore)</th>
-                                            <th>@Html.DisplayNameFor(model => row.TeamGameWeak.AwayScore)</th>
-                                            <th>@Html.DisplayNameFor(model => row.TeamGameWeak.StartTime)</th>
-                                            <th>@Html.DisplayNameFor(model => row.TeamGameWeak.IsEnded)</th>
-                                            <th>@Html.DisplayNameFor(model => row.Ranking)</th>
+                                                    @if (accessLevel.EditAccess)
+                                                    {
+                                                        <a id="edit" asp-action="CreateOrEdit">
+                                                        </a>
+                                                    }
+                                                    @if (accessLevel.DeleteAccess)
+                                                    {
+                                                        <a id="delete" asp-action="Delete">
+                                                        </a>
+                                                    }
 
-                                            <th>
-                                                @Html.DisplayNameFor(model => row.Id)
-                                            </th>
-                                        </tr>
+                                                </th>
+                                                <th>@Localizer.Get("Player")</th>
+                                                <th>@Html.DisplayNameFor(model => row.Ranking)</th>
+                                                <th>@Html.DisplayNameFor(model => row.TotalPoints)</th>
+                                                <th>@Localizer.Get("HomeTeam")</th>
+                                                <th>@Localizer.Get("AwayTeam")</th>
+                                                <th>@Html.DisplayNameFor(model => row.TeamGameWeak.GameWeak.Season)</th>
+                                                <th>@Html.DisplayNameFor(model => row.TeamGameWeak._365_MatchId)</th>
+                                                <th>@Html.DisplayNameFor(model => row.TeamGameWeak.GameWeak)</th>
+                                                <th>@Html.DisplayNameFor(model => row.TeamGameWeak.HomeScore)</th>
+                                                <th>@Html.DisplayNameFor(model => row.TeamGameWeak.AwayScore)</th>
+                                                <th>@Html.DisplayNameFor(model => row.TeamGameWeak.StartTime)</th>
+                                                <th>@Html.DisplayNameFor(model => row.TeamGameWeak.IsEnded)</th>
+
+                                                <th>
+                                                    @Html.DisplayNameFor(model => row.Id)
+                                                </th>
+                                            </tr>
                                         </thead>
                                     </table>
                                 </div>
@@ -134,45 +135,46 @@ else
                     <div class="card-datatable">
                         <table class="datatables datatables-ajax table table-responsive table">
                             <thead>
-                            <tr>
-                                <th>
-                                    @Html.DisplayNameFor(model => row.Id)
-                                    <a id="details" asp-action="Details">
-                                    </a>
-
-                                    @if (accessLevel.CreateAccess)
-                                    {
-                                        <a id="create" asp-action="CreateOrEdit" asp-route-Fk_Player="@Model.Fk_Player">
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => row.Id)
+                                        <a id="details" asp-action="Details">
                                         </a>
-                                    }
 
-                                    @if (accessLevel.EditAccess)
-                                    {
-                                        <a id="edit" asp-action="CreateOrEdit">
-                                        </a>
-                                    }
-                                    @if (accessLevel.DeleteAccess)
-                                    {
-                                        <a id="delete" asp-action="Delete">
-                                        </a>
-                                    }
+                                        @if (accessLevel.CreateAccess)
+                                        {
+                                            <a id="create" asp-action="CreateOrEdit" asp-route-Fk_Player="@Model.Fk_Player">
+                                            </a>
+                                        }
 
-                                </th>
-                                <th>@Localizer.Get("HomeTeam")</th>
-                                <th>@Localizer.Get("AwayTeam")</th>
-                                <th>@Html.DisplayNameFor(model => row.TeamGameWeak.GameWeak.Season)</th>
-                                <th>@Html.DisplayNameFor(model => row.TeamGameWeak._365_MatchId)</th>
-                                <th>@Html.DisplayNameFor(model => row.TeamGameWeak.GameWeak)</th>
-                                <th>@Html.DisplayNameFor(model => row.TeamGameWeak.HomeScore)</th>
-                                <th>@Html.DisplayNameFor(model => row.TeamGameWeak.AwayScore)</th>
-                                <th>@Html.DisplayNameFor(model => row.TeamGameWeak.StartTime)</th>
-                                <th>@Html.DisplayNameFor(model => row.TeamGameWeak.IsEnded)</th>
-                                <th>@Html.DisplayNameFor(model => row.Ranking)</th>
+                                        @if (accessLevel.EditAccess)
+                                        {
+                                            <a id="edit" asp-action="CreateOrEdit">
+                                            </a>
+                                        }
+                                        @if (accessLevel.DeleteAccess)
+                                        {
+                                            <a id="delete" asp-action="Delete">
+                                            </a>
+                                        }
 
-                                <th>
-                                    @Html.DisplayNameFor(model => row.Id)
-                                </th>
-                            </tr>
+                                    </th>
+                                    <th>@Html.DisplayNameFor(model => row.Ranking)</th>
+                                    <th>@Html.DisplayNameFor(model => row.TotalPoints)</th>
+                                    <th>@Localizer.Get("HomeTeam")</th>
+                                    <th>@Localizer.Get("AwayTeam")</th>
+                                    <th>@Html.DisplayNameFor(model => row.TeamGameWeak.GameWeak.Season)</th>
+                                    <th>@Html.DisplayNameFor(model => row.TeamGameWeak._365_MatchId)</th>
+                                    <th>@Html.DisplayNameFor(model => row.TeamGameWeak.GameWeak)</th>
+                                    <th>@Html.DisplayNameFor(model => row.TeamGameWeak.HomeScore)</th>
+                                    <th>@Html.DisplayNameFor(model => row.TeamGameWeak.AwayScore)</th>
+                                    <th>@Html.DisplayNameFor(model => row.TeamGameWeak.StartTime)</th>
+                                    <th>@Html.DisplayNameFor(model => row.TeamGameWeak.IsEnded)</th>
+
+                                    <th>
+                                        @Html.DisplayNameFor(model => row.Id)
+                                    </th>
+                                </tr>
                             </thead>
                         </table>
                     </div>
@@ -212,14 +214,36 @@ else
                                         // Columns Setups
                                         columns: [
                                             { data: "id" },
-                                            { 
-                                                data: "player", 
-                                                orderable: false, 
-                                                render: function(data) {
-                                                    console.log(data);
-                                                  return `<a href="/TeamEntity/Player/Profile/${data.id}">${data.name}</a>`
+                                            {
+                                                data: "player",
+                                                render: function (data, type, row) {
+                                                    var span = '';
+                                                    if (row.imageUrl != null) {
+
+                                                        return '<div class="d-flex justify-content-left align-items-center"><div class= "avatar-wrapper" ><div class="avatar me-1">'
+                                                            + '<img src="' + data.imageUrl + '"  height="32" width="32">'
+                                                            + span
+                                                            + '</div></div>'
+                                                            + ' <div class= "d-flex flex-column">'
+                                                            + '<a href="/TeamEntity/Player/Profile/' + data.id + '" class= "user_name text-truncate">'
+                                                            + '<span class= "fw-bolder">' + data.name + '</span></a> '
+                                                            + '<small class= "emp_post text-muted" ></small ></div></div>';
+                                                    }
+                                                    else {
+                                                        return '<div class="d-flex justify-content-left align-items-center"><div class= "avatar-wrapper" >'
+                                                            + '<div class="avatar  bg-light-dark  me-1"><span class="avatar-content"></span>' + span + '</div>'
+                                                            + '</div>'
+                                                            + ' <div class= "d-flex flex-column">'
+                                                            + '<a href="/TeamEntity/Player/Profile/' + data.id + '" class= "user_name text-truncate">'
+                                                            + '<span class= "fw-bolder">' + data.name + '</span></a> '
+                                                            + '<small class= "emp_post text-muted" ></small ></div></div>';
+                                                    }
+
+
                                                 }
                                             },
+                                            { data: "ranking" },
+                                            { data: "totalPoints" },
                                             { data: "teamGameWeak.home.name", orderable: false },
                                             { data: "teamGameWeak.away.name", orderable: false },
                                             { data: "teamGameWeak.gameWeak.season.name", orderable: false },
@@ -238,7 +262,6 @@ else
                                                   }
                                                 } 
                                             },
-                                            { data: "ranking" },
                                             { data: "id" },
                                         ]
                                     });
@@ -276,6 +299,8 @@ else
                                 // Columns Setups
                                 columns: [
                                     { data: "id" },
+                                    { data: "ranking" },
+                                    { data: "totalPoints" },
                                     { data: "teamGameWeak.home.name" },
                                     { data: "teamGameWeak.away.name" },
                                     { data: "teamGameWeak.gameWeak.season.name" },
@@ -294,7 +319,6 @@ else
                                           }
                                         } 
                                     },
-                                    { data: "ranking" },
                                     { data: "id" },
                                 ]
                             });

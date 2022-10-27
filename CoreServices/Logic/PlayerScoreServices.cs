@@ -60,6 +60,7 @@ namespace CoreServices.Logic
                                                  ImageUrl = a.Team.StorageUrl + a.Team.ImageUrl,
                                                  _365_TeamId = a.Team._365_TeamId
                                              },
+                                             TotalPoints = a.TotalPoints,
                                              BuyPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault(),
                                              SellPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.SellPrice).FirstOrDefault(),
                                              ScorePoints = a.PlayerGameWeaks
@@ -136,6 +137,7 @@ namespace CoreServices.Logic
                            Fk_TeamGameWeak = a.Fk_TeamGameWeak,
                            Fk_Player = a.Fk_Player,
                            Ranking = a.Ranking,
+                           TotalPoints = a.TotalPoints,
                            TeamGameWeak = new TeamGameWeakModel
                            {
                                Fk_Away = a.TeamGameWeak.Fk_Away,

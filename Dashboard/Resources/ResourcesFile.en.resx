@@ -1113,4 +1113,10 @@
   <data name="RateTo" xml:space="preserve">
     <value>Rate To</value>
   </data>
+  <data name="PointsFrom" xml:space="preserve">
+    <value>Points From</value>
+  </data>
+  <data name="PointsTo" xml:space="preserve">
+    <value>Points To</value>
+  </data>
 </root>

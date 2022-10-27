@@ -15,6 +15,10 @@ namespace Dashboard.Areas.PlayerScoreEntity.Models
         public double RateFrom { get; set; }
         [DefaultValue(10)]
         public double RateTo { get; set; }
+
+        public double PointsFrom { get; set; }
+        public double PointsTo { get; set; }
+
         public int Fk_Home { get; set; }
         public int Fk_Away { get; set; }
     }

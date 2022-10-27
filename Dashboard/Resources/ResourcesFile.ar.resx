@@ -1104,4 +1104,10 @@
   <data name="RateTo" xml:space="preserve">
     <value>الى</value>
   </data>
+  <data name="PointsFrom" xml:space="preserve">
+    <value>النقاط من</value>
+  </data>
+  <data name="PointsTo" xml:space="preserve">
+    <value>النقاط إلي</value>
+  </data>
 </root>

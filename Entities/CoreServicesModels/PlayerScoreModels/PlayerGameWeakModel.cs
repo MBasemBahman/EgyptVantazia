@@ -21,6 +21,10 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
 
         public double RateTo { get; set; }
 
+        public int PointsFrom { get; set; }
+
+        public int PointsTo { get; set; }
+
         public int Fk_Home { get; set; }
 
         public int Fk_Away { get; set; }

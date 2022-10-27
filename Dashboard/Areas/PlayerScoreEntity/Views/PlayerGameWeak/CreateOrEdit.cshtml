@@ -53,13 +53,13 @@
                                             </div>
                                         </div>
                                         @*<div class="col-md-4 col-12">
-                                            <div class="mb-1">
-                                                <label asp-for="Fk_GameWeak" class="form-label"></label>
-                                                <select asp-for="Fk_GameWeak" class="select2 form-select" asp-items="@(new SelectList(ViewData["GameWeak"] as Dictionary<string,string>,"Key","Value"))">
-                                                </select>
-                                                <span asp-validation-for="Fk_GameWeak" class="text-danger"></span>
-                                            </div>
-                                        </div>*@
+            <div class="mb-1">
+                <label asp-for="Fk_GameWeak" class="form-label"></label>
+                <select asp-for="Fk_GameWeak" class="select2 form-select" asp-items="@(new SelectList(ViewData["GameWeak"] as Dictionary<string,string>,"Key","Value"))">
+                </select>
+                <span asp-validation-for="Fk_GameWeak" class="text-danger"></span>
+            </div>
+        </div>*@
                                         <div class="col-md-4 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="Ranking" class="form-label"></label>
@@ -67,7 +67,13 @@
                                                 <span asp-validation-for="Ranking" class="text-danger"></span>
                                             </div>
                                         </div>
-
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="TotalPoints" class="form-label"></label>
+                                                <input asp-for="TotalPoints" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Total Points"))" />
+                                                <span asp-validation-for="TotalPoints" class="text-danger"></span>
+                                            </div>
+                                        </div>
 
                                     </div>
 

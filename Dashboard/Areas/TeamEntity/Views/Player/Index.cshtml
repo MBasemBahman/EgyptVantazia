@@ -71,45 +71,46 @@
                                     <form class="playersPricesForm" asp-action="EditPlayersPrices" method="get">
                                         <table class="datatables datatables-ajax table table-responsive table">
                                             <thead>
-                                            <tr>
-                                                <th><input type="checkbox" class="selectAllPlayers" value=""></th>
-                                                <th>
-                                                    @Html.DisplayNameFor(model => row.Id)
-                                        
-                                                    <a id="profile" asp-action="Profile">
-                                                    </a>
-                                                                                        
-                                                    <a id="editSpecific" asp-action="EditPlayersPrices">
-                                                    </a>
-                                        
-                                                    @if (accessLevel.CreateAccess)
-                                                    {
-                                                        <a id="create" asp-action="CreateOrEdit">
+                                                <tr>
+                                                    <th><input type="checkbox" class="selectAllPlayers" value=""></th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => row.Id)
+
+                                                        <a id="profile" asp-action="Profile">
                                                         </a>
-                                                    }
-                                        
-                                                    @if (accessLevel.EditAccess)
-                                                    {
-                                                        <a id="edit" asp-action="CreateOrEdit">
+
+                                                        <a id="editSpecific" asp-action="EditPlayersPrices">
                                                         </a>
-                                                    }
-                                                    @if (accessLevel.DeleteAccess)
-                                                    {
-                                                        <a id="delete" asp-action="Delete">
-                                                        </a>
-                                                    }
-                                                </th>
-                                                <th>@Html.DisplayNameFor(model => row.Name)</th>
-                                                <th>@Html.DisplayNameFor(model => row.PlayerNumber)</th>
-                                                <th>@Html.DisplayNameFor(model => row.Age)</th>
-                                                <th>@Html.DisplayNameFor(model => row.Team)</th>
-                                                <th>@Html.DisplayNameFor(model => row._365_PlayerId)</th>
-                                                <th>@Html.DisplayNameFor(model => row.PlayerPosition)</th>
-                                                <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
-                                                <th>
-                                                    @Html.DisplayNameFor(model => row.Id)
-                                                </th>
-                                            </tr>
+
+                                                        @if (accessLevel.CreateAccess)
+                                                        {
+                                                            <a id="create" asp-action="CreateOrEdit">
+                                                            </a>
+                                                        }
+
+                                                        @if (accessLevel.EditAccess)
+                                                        {
+                                                            <a id="edit" asp-action="CreateOrEdit">
+                                                            </a>
+                                                        }
+                                                        @if (accessLevel.DeleteAccess)
+                                                        {
+                                                            <a id="delete" asp-action="Delete">
+                                                            </a>
+                                                        }
+                                                    </th>
+                                                    <th>@Html.DisplayNameFor(model => row.Name)</th>
+                                                    <th>@Html.DisplayNameFor(model => row.TotalPoints)</th>
+                                                    <th>@Html.DisplayNameFor(model => row.PlayerNumber)</th>
+                                                    <th>@Html.DisplayNameFor(model => row.Age)</th>
+                                                    <th>@Html.DisplayNameFor(model => row.Team)</th>
+                                                    <th>@Html.DisplayNameFor(model => row._365_PlayerId)</th>
+                                                    <th>@Html.DisplayNameFor(model => row.PlayerPosition)</th>
+                                                    <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
+                                                    <th>
+                                                        @Html.DisplayNameFor(model => row.Id)
+                                                    </th>
+                                                </tr>
                                             </thead>
                                         </table>
                                     </form>
@@ -139,43 +140,44 @@ else
                     <div class="card-datatable">
                         <table class="datatables datatables-ajax table table-responsive table">
                             <thead>
-                            <tr>
-                                <th><input type="checkbox" class="selectAllPlayers" value=""></th>
-                                <th>
-                                    @Html.DisplayNameFor(model => row.Id)
+                                <tr>
+                                    <th><input type="checkbox" class="selectAllPlayers" value=""></th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => row.Id)
 
-                                    <a id="profile" asp-action="Profile">
-                                    </a>
-
-                                    @if (accessLevel.CreateAccess)
-                                    {
-                                        <a id="create" asp-action="CreateOrEdit" asp-route-Fk_Team="@Model.Fk_Team">
+                                        <a id="profile" asp-action="Profile">
                                         </a>
-                                    }
 
-                                    @if (accessLevel.EditAccess)
-                                    {
-                                        <a id="edit" asp-action="CreateOrEdit">
-                                        </a>
-                                    }
-                                    @if (accessLevel.DeleteAccess)
-                                    {
-                                        <a id="delete" asp-action="Delete">
-                                        </a>
-                                    }
+                                        @if (accessLevel.CreateAccess)
+                                        {
+                                            <a id="create" asp-action="CreateOrEdit" asp-route-Fk_Team="@Model.Fk_Team">
+                                            </a>
+                                        }
 
-                                </th>
-                                <th>@Html.DisplayNameFor(model => row.Name)</th>
-                                <th>@Html.DisplayNameFor(model => row.PlayerNumber)</th>
-                                <th>@Html.DisplayNameFor(model => row.Age)</th>
-                                <th>@Html.DisplayNameFor(model => row.Team)</th>
-                                <th>@Html.DisplayNameFor(model => row._365_PlayerId)</th>
-                                <th>@Html.DisplayNameFor(model => row.PlayerPosition)</th>
-                                <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
-                                <th>
-                                    @Html.DisplayNameFor(model => row.Id)
-                                </th>
-                            </tr>
+                                        @if (accessLevel.EditAccess)
+                                        {
+                                            <a id="edit" asp-action="CreateOrEdit">
+                                            </a>
+                                        }
+                                        @if (accessLevel.DeleteAccess)
+                                        {
+                                            <a id="delete" asp-action="Delete">
+                                            </a>
+                                        }
+
+                                    </th>
+                                    <th>@Html.DisplayNameFor(model => row.Name)</th>
+                                    <th>@Html.DisplayNameFor(model => row.TotalPoints)</th>
+                                    <th>@Html.DisplayNameFor(model => row.PlayerNumber)</th>
+                                    <th>@Html.DisplayNameFor(model => row.Age)</th>
+                                    <th>@Html.DisplayNameFor(model => row.Team)</th>
+                                    <th>@Html.DisplayNameFor(model => row._365_PlayerId)</th>
+                                    <th>@Html.DisplayNameFor(model => row.PlayerPosition)</th>
+                                    <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => row.Id)
+                                    </th>
+                                </tr>
                             </thead>
                         </table>
                     </div>
@@ -251,6 +253,7 @@ else
 
                             }
                         },
+                        { data: "totalPoints" },
                         { data: "playerNumber" },
                         { data: "age", orderable: false },
                         {

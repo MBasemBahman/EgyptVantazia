@@ -22,7 +22,9 @@ namespace Repository.DBModels.TeamModels
                            parameters.CreatedAtTo,
                            parameters._365_PlayerIds,
                            parameters.Fk_TeamGameWeak_Ignored,
-                           parameters.Fk_Players);
+                           parameters.Fk_Players,
+                           parameters.PointsFrom,
+                           parameters.PointsTo);
         }
 
         public async Task<Player> FindById(int id, bool trackChanges)
@@ -81,10 +83,14 @@ namespace Repository.DBModels.TeamModels
             DateTime? createdAtTo,
             List<string> _365_PlayerIds,
             int fk_TeamGameWeak_Ignored,
-            List<int> fk_Players)
+            List<int> fk_Players,
+            int pointsFrom,
+            int pointsTo)
 
         {
             return Players.Where(a => (id == 0 || a.Id == id) &&
+                                      (pointsFrom == 0 || a.TotalPoints >= pointsFrom) &&
+                                      (pointsTo == 0 || a.TotalPoints <= pointsTo) &&
                                       (Fk_Team == 0 || a.Fk_Team == Fk_Team) &&
                                       (Fk_GameWeak == 0 || a.PlayerGameWeaks.Select(a => a.Fk_TeamGameWeak)
                                           .Contains(Fk_GameWeak)) &&

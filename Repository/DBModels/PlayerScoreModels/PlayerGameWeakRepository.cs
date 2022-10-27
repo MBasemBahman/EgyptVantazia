@@ -45,6 +45,23 @@ namespace Repository.DBModels.PlayerScoreModels
                 base.Create(entity);
             }
         }
+
+        public void UpdatePlayerGameWeakPosition(int fk_TeamGameWeak)
+        {
+            int position = 1;
+
+            List<PlayerGameWeak> players = FindAll(new PlayerGameWeakParameters
+            {
+                Fk_TeamGameWeak = fk_TeamGameWeak
+            }, trackChanges: true)
+                .OrderByDescending(a => a.TotalPoints)
+                .ToList();
+
+            if (players != null && players.Any())
+            {
+                players.ForEach(a => a.Position = position++);
+            }
+        }
     }
 
     public static class PlayerGameWeakRepositoryExtension

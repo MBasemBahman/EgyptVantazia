@@ -51,6 +51,10 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
 
         [DisplayName(nameof(TotalPoints))]
         public int TotalPoints { get; set; }
+
+
+        [DisplayName(nameof(Position))]
+        public int Position { get; set; }
     }
 
     public class PlayerGameWeakCreateOrEditModel
@@ -73,6 +77,9 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
 
         [DisplayName(nameof(TotalPoints))]
         public int TotalPoints { get; set; }
+
+        [DisplayName(nameof(Position))]
+        public int Position { get; set; }
 
         [DisplayName(nameof(PlayerGameWeakScores))]
         public List<PlayerGameWeakScoreCreateOrEditModel> PlayerGameWeakScores { get; set; }

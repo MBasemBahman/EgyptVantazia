@@ -70,6 +70,9 @@ namespace Entities.CoreServicesModels.TeamModels
         [DisplayName(nameof(TotalPoints))]
         public int TotalPoints { get; set; }
 
+        [DisplayName(nameof(Position))]
+        public int Position { get; set; }
+
         [DisplayName(nameof(BuyPrice))]
         public double BuyPrice { get; set; }
 
@@ -102,6 +105,9 @@ namespace Entities.CoreServicesModels.TeamModels
 
         [DisplayName(nameof(TotalPoints))]
         public int TotalPoints { get; set; }
+
+        [DisplayName(nameof(Position))]
+        public int Position { get; set; }
 
         [DisplayName(nameof(Team))]
         [ForeignKey(nameof(Team))]

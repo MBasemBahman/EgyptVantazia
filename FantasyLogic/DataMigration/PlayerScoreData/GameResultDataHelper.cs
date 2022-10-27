@@ -136,7 +136,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
 
                     if (match.IsEnded)
                     {
-                        UpdateGameFinalResult(match.Id, allMembers.Count);
+                        UpdateGameFinalResult(match.Id, delayMinutes + 5);
                     }
                 }
             }
@@ -172,8 +172,17 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 delayMinutes += 5;
                 _ = BackgroundJob.Schedule(() => UpdatePlayerGameWeakTotalPoints(player.Fk_PlayerGameWeak), TimeSpan.FromMinutes(delayMinutes));
                 _ = BackgroundJob.Schedule(() => UpdatePlayerTotalPoints(player.Fk_Player), TimeSpan.FromMinutes(delayMinutes));
-
             }
+
+            delayMinutes += 5;
+            _ = BackgroundJob.Schedule(() => UpdatePlayerGameWeakPosition(fk_TeamGameWeak), TimeSpan.FromMinutes(delayMinutes));
+
+            if (players != null && players.Any())
+            {
+                int fk_Team = players.Select(a => a.Fk_Team).First();
+                _ = BackgroundJob.Schedule(() => UpdatePlayerPosition(fk_Team), TimeSpan.FromMinutes(delayMinutes));
+            }
+
         }
 
         public async Task UpdatePlayerGameResult(
@@ -233,6 +242,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             }
         }
 
+        #region Scores
         public async Task UpdatePlayerStateScore(int fk_ScoreType, string value, int fk_Player, int fk_Team, int fk_PlayerPosition, int fk_PlayerGameWeak, int fk_TeamGameWeak)
         {
             PlayerGameWeakScore score = new()
@@ -260,7 +270,9 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 await _unitOfWork.Save();
             }
         }
+        #endregion
 
+        #region TotalPoints
         public async Task UpdatePlayerGameWeakTotalPoints(int fk_PlayerGameWeak)
         {
             PlayerGameWeak playerGameWeak = await _unitOfWork.PlayerScore.FindPlayerGameWeakbyId(fk_PlayerGameWeak, trackChanges: true);
@@ -280,6 +292,21 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             }, otherLang: false).Select(a => a.Points).Sum();
             await _unitOfWork.Save();
         }
+        #endregion
+
+        #region Position
+        public async Task UpdatePlayerGameWeakPosition(int fk_TeamGameWeak)
+        {
+            _unitOfWork.PlayerScore.UpdatePlayerGameWeakPosition(fk_TeamGameWeak);
+            await _unitOfWork.Save();
+        }
+
+        public async Task UpdatePlayerPosition(int fk_Team)
+        {
+            _unitOfWork.Team.UpdatePlayerPosition(fk_Team);
+            await _unitOfWork.Save();
+        }
+        #endregion
     }
 
     public class TeamGameWeakDto

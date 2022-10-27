@@ -1,4 +1,5 @@
-﻿using Entities.CoreServicesModels.TeamModels;
+﻿using Entities.CoreServicesModels.PlayerScoreModels;
+using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.TeamModels;
 
@@ -66,6 +67,23 @@ namespace Repository.DBModels.TeamModels
                     Name = entity.Name,
                 };
                 base.Create(entity);
+            }
+        }
+
+        public void UpdatePlayerPosition(int fk_Team)
+        {
+            int position = 1;
+
+            List<Player> players = FindAll(new PlayerParameters
+            {
+                Fk_Team = fk_Team
+            }, trackChanges: true)
+                .OrderByDescending(a => a.TotalPoints)
+                .ToList();
+
+            if (players != null && players.Any())
+            {
+                players.ForEach(a => a.Position = position++);
             }
         }
     }

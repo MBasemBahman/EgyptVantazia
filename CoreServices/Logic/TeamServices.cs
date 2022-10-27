@@ -185,6 +185,7 @@ namespace CoreServices.Logic
                            PlayerNumber = a.PlayerNumber,
                            ShortName = a.ShortName,
                            Age = a.Age,
+                           Position = a.Position,
                            PlayerPosition = new PlayerPositionModel
                            {
                                Name = otherLang ? a.PlayerPosition.PlayerPositionLang.Name : a.PlayerPosition.Name,
@@ -264,6 +265,11 @@ namespace CoreServices.Logic
         public int GetPlayerCount()
         {
             return _repository.Player.Count();
+        }
+
+        public void UpdatePlayerPosition(int fk_Team)
+        {
+            _repository.Player.UpdatePlayerPosition(fk_Team);
         }
         #endregion
 

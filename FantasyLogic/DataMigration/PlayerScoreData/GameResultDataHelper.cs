@@ -166,7 +166,11 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 _ = BackgroundJob.Schedule(() => UpdatePlayerStateScore((int)ScoreTypeEnum.ReceiveGoals, "", player.Fk_Player, player.Fk_Team, player.Fk_PlayerPosition, player.Fk_PlayerGameWeak, fk_TeamGameWeak), TimeSpan.FromMinutes(delayMinutes));
                 _ = BackgroundJob.Schedule(() => UpdatePlayerStateScore((int)ScoreTypeEnum.Ranking, "", player.Fk_Player, player.Fk_Team, player.Fk_PlayerPosition, player.Fk_PlayerGameWeak, fk_TeamGameWeak), TimeSpan.FromMinutes(delayMinutes));
 
-                _ = BackgroundJob.Schedule(() => UpdatePlayerGameWeakTotalPoints(fk_TeamGameWeak), TimeSpan.FromMinutes(delayMinutes));
+                //UpdatePlayerGameWeakTotalPoints(player.Fk_PlayerGameWeak).Wait();
+                //UpdatePlayerTotalPoints(player.Fk_Player).Wait();
+
+                delayMinutes += 5;
+                _ = BackgroundJob.Schedule(() => UpdatePlayerGameWeakTotalPoints(player.Fk_PlayerGameWeak), TimeSpan.FromMinutes(delayMinutes));
                 _ = BackgroundJob.Schedule(() => UpdatePlayerTotalPoints(player.Fk_Player), TimeSpan.FromMinutes(delayMinutes));
 
             }
@@ -270,10 +274,10 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
         public async Task UpdatePlayerTotalPoints(int fk_Player)
         {
             Player player = await _unitOfWork.Team.FindPlayerbyId(fk_Player, trackChanges: true);
-            player.TotalPoints = _unitOfWork.PlayerScore.GetPlayerGameWeaks(new PlayerGameWeakParameters
+            player.TotalPoints = _unitOfWork.PlayerScore.GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
             {
                 Fk_Player = fk_Player
-            }, otherLang: false).Select(a => a.TotalPoints).Sum();
+            }, otherLang: false).Select(a => a.Points).Sum();
             await _unitOfWork.Save();
         }
     }

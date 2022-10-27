@@ -45,7 +45,6 @@ namespace FantasyLogic.DataMigration.TeamData
             for (int i = 0; i < competitorsInArabic.Count; i++)
             {
                 _ = BackgroundJob.Schedule(() => UpdateTeam(competitorsInArabic[i], competitorsInEnglish[i]), TimeSpan.FromMinutes(delayMinutes));
-                
             }
         }
 

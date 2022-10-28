@@ -1119,4 +1119,16 @@
   <data name="PointsTo" xml:space="preserve">
     <value>Points To</value>
   </data>
+  <data name="PlayerGameWeak Details" xml:space="preserve">
+    <value>Player Game Weak Details</value>
+  </data>
+  <data name="PlayersGameWeaksScores" xml:space="preserve">
+    <value>Player Game Week Scores</value>
+  </data>
+  <data name="GameTime" xml:space="preserve">
+    <value>Game Time</value>
+  </data>
+  <data name="FinalValue" xml:space="preserve">
+    <value>Final Value</value>
+  </data>
 </root>

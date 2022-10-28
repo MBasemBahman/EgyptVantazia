@@ -41,10 +41,11 @@ namespace Dashboard.Areas.PlayerScoreEntity.Controllers
 
             ViewData["ProfileLayOut"] = ProfileLayOut;
             ViewData[ViewDataConstants.AccessLevel] = (DashboardAccessLevelModel)Request.HttpContext.Items[ViewDataConstants.AccessLevel];
-
+            
             ViewData["Players"] = _unitOfWork.Team.GetPlayerLookUp(new PlayerParameters(), otherLang);
             ViewData["Team"] = _unitOfWork.Team.GetTeamLookUp(new TeamParameters(), otherLang);
-
+            ViewData["Season"] = _unitOfWork.Season.GetSeasonLookUp(new SeasonParameters(), otherLang);
+            ViewData["GameWeak"] = _unitOfWork.Season.GetGameWeakLookUp(new GameWeakParameters(), otherLang);
             return View(filter);
         }
 
@@ -86,6 +87,20 @@ namespace Dashboard.Areas.PlayerScoreEntity.Controllers
             return View(data);
         }
 
+        public IActionResult Profile(int id, int returnItem = (int)PlayerGameWeakProfileItems.Details)
+        {
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
+            PlayerGameWeakDto data = _mapper.Map<PlayerGameWeakDto>(_unitOfWork.PlayerScore
+                .GetPlayerGameWeakbyId(id, otherLang));
+
+            ViewData["returnItem"] = returnItem;
+            ViewData["otherLang"] = otherLang;
+
+
+            return View(data);
+        }
+        
 
         [Authorize(DashboardViewEnum.PlayerGameWeak, AccessLevelEnum.CreateOrEdit)]
         public async Task<IActionResult> CreateOrEdit(int id = 0, int Fk_Player = 0)
@@ -155,6 +170,8 @@ namespace Dashboard.Areas.PlayerScoreEntity.Controllers
                     dataDB.LastModifiedBy = auth.UserName;
                 }
 
+
+
                 await _unitOfWork.Save();
 
                 dataDB = await _unitOfWork.PlayerScore.UpdatePlayerGameWeakScores(dataDB, model.PlayerGameWeakScores);
@@ -194,7 +211,18 @@ namespace Dashboard.Areas.PlayerScoreEntity.Controllers
         // helper methods
         private void SetViewData(int fk_Season, bool otherLang)
         {
+
+            ViewData["GameWeak"] = _unitOfWork.Season.GetGameWeakLookUp(new GameWeakParameters()
+            {
+                Fk_Season = fk_Season
+            }, otherLang);
+            ViewData["Season"] = _unitOfWork.Season.GetSeasonLookUp(new SeasonParameters(), otherLang);
+
             ViewData["ScoreType"] = _unitOfWork.PlayerScore.GetScoreTypesLookUp(new ScoreTypeParameters(), otherLang);
+            
+
         }
+
+
     }
 }

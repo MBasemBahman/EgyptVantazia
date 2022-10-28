@@ -73,7 +73,7 @@
                                             <tr>
                                                 <th>
                                                     @Html.DisplayNameFor(model => row.Id)
-                                                    <a id="details" asp-action="Details">
+                                                    <a id="profile" asp-action="Profile">
                                                     </a>
 
                                                     @if (accessLevel.EditAccess)
@@ -133,7 +133,7 @@ else
                                 <tr>
                                     <th>
                                         @Html.DisplayNameFor(model => row.Id)
-                                        <a id="details" asp-action="Details">
+                                        <a id="Profile" asp-action="Profile">
                                         </a>
 
                                         @if (accessLevel.EditAccess)
@@ -197,6 +197,9 @@ else
                                                 data.Fk_Home = $("#Fk_Home").length > 0 ? $("#Fk_Home").val() : @Model.Fk_Home;
                                                 data.RateFrom = $("#RateFrom").length > 0 ? $("#RateFrom").val() : @Model.RateFrom;
                                                 data.RateTo = $("#RateTo").length > 0 ? $("#RateTo").val() : @Model.RateTo;
+                                                data.Fk_GameWeak = $("#Fk_GameWeak").length > 0 ? $("#Fk_GameWeak").val() : @Model.Fk_GameWeak;
+                                                data.Fk_Season = $("#Fk_Season").length > 0 ? $("#Fk_Season").val() : @Model.Fk_Season;
+                                                data.IsEnded = $("#IsEnded").val();
                                                 return JSON.stringify(data);
                                             }
                                         },

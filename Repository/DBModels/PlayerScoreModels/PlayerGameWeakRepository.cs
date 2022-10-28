@@ -23,7 +23,10 @@ namespace Repository.DBModels.PlayerScoreModels
                            parameters.RateTo,
                            parameters.PointsFrom,
                            parameters.PointsTo,
-                           parameters.Fk_Player);
+                           parameters.Fk_Player,
+                           parameters.Fk_GameWeak,
+                           parameters.Fk_Season,
+                           parameters.IsEnded);
         }
 
         public async Task<PlayerGameWeak> FindById(int id, bool trackChanges)
@@ -45,15 +48,15 @@ namespace Repository.DBModels.PlayerScoreModels
                 base.Create(entity);
             }
         }
-
+        
         public void UpdatePlayerGameWeakPosition(int fk_TeamGameWeak)
         {
             int position = 1;
 
             List<PlayerGameWeak> players = FindAll(new PlayerGameWeakParameters
-            {
-                Fk_TeamGameWeak = fk_TeamGameWeak
-            }, trackChanges: true)
+                {
+                    Fk_TeamGameWeak = fk_TeamGameWeak
+                }, trackChanges: true)
                 .OrderByDescending(a => a.TotalPoints)
                 .ToList();
 
@@ -78,7 +81,10 @@ namespace Repository.DBModels.PlayerScoreModels
             double rateTo,
             int pointsFrom,
             int pointsTo,
-            int fk_Player)
+            int fk_Player,
+            int fk_GameWeak,
+            int fk_Season,
+            bool? isEnded)
         {
             return PlayerGameWeaks.Where(a => (id == 0 || a.Id == id) &&
                                               (fk_TeamGameWeak == 0 || a.Fk_TeamGameWeak == fk_TeamGameWeak) &&
@@ -92,7 +98,10 @@ namespace Repository.DBModels.PlayerScoreModels
                                               (rateTo == 0 || a.Ranking <= rateTo) &&
                                               (pointsFrom == 0 || a.TotalPoints >= pointsFrom) &&
                                               (pointsTo == 0 || a.TotalPoints <= pointsTo) &&
-                                              (fk_Player == 0 || a.Fk_Player == fk_Player));
+                                              (fk_Player == 0 || a.Fk_Player == fk_Player) &&
+                                              (fk_GameWeak == 0 || a.TeamGameWeak.Fk_GameWeak == fk_GameWeak) && 
+                                              (fk_Season == 0 || a.TeamGameWeak.GameWeak.Fk_Season == fk_Season) && 
+                                              (isEnded == null || a.TeamGameWeak.IsEnded == isEnded) );
 
 
         }

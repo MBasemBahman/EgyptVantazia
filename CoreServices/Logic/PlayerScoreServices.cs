@@ -304,6 +304,17 @@ namespace CoreServices.Logic
                            LastModifiedAt = a.LastModifiedAt,
                            LastModifiedBy = a.LastModifiedBy,
                            Fk_PlayerGameWeak = a.Fk_PlayerGameWeak,
+                           PlayerGameWeak = new PlayerGameWeakModel
+                           {
+                             Position  = a.PlayerGameWeak.Position,
+                             Player = new PlayerModel
+                             {
+                                 Id = a.PlayerGameWeak.Player.Id,
+                                 Name = otherLang ? a.PlayerGameWeak.Player.PlayerLang.Name : a.PlayerGameWeak.Player.Name,
+                             },
+                             Ranking = a.PlayerGameWeak.Ranking,
+                             Fk_Player = a.PlayerGameWeak.Fk_Player,
+                           },
                            Fk_ScoreType = a.Fk_ScoreType,
                            Points = a.Points,
                            Value = a.Value,
@@ -313,6 +324,7 @@ namespace CoreServices.Logic
                            ScoreType = new ScoreTypeModel
                            {
                                Name = otherLang ? a.ScoreType.ScoreTypeLang.Name : a.ScoreType.Name,
+                               Description = a.ScoreType.Description,
                                _365_TypeId = a.ScoreType._365_TypeId
                            }
                        })

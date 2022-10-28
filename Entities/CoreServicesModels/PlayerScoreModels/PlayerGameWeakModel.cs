@@ -28,6 +28,10 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
         public int Fk_Home { get; set; }
 
         public int Fk_Away { get; set; }
+        
+        public int Fk_GameWeak { get; set; }
+        public int Fk_Season { get; set; }
+        public bool? IsEnded { get; set; }
     }
 
     public class PlayerGameWeakModel : AuditEntity

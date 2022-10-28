@@ -105,6 +105,20 @@
                     </a>
                 </li>
             }
+        
+            @if (viewList.Contains((int)DashboardViewEnum.PlayerGameWeakScore))
+            {
+                <li id="PlayerGameWeakScoreList" class="@(active ==DashboardViewEnum.PlayerGameWeakScore.ToString()?"active":"") nav-item">
+                    <a class="d-flex align-items-center"
+                       asp-action="Index" asp-area="PlayerScoreEntity"
+                       asp-controller="PlayerGameWeakScore">
+                        <i data-feather='dribbble'></i>
+                        <span class="menu-title text-truncate">
+                            @Localizer.Get("PlayersGameWeaksScores")
+                        </span>
+                    </a>
+                </li>
+            }
 
 
             @if (viewList.Contains((int)DashboardViewEnum.Team))

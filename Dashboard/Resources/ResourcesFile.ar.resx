@@ -1110,4 +1110,16 @@
   <data name="PointsTo" xml:space="preserve">
     <value>النقاط إلي</value>
   </data>
+  <data name="PlayerGameWeak Details" xml:space="preserve">
+    <value>تفاصيل اسبوع اللاعب</value>
+  </data>
+  <data name="PlayersGameWeaksScores" xml:space="preserve">
+    <value>اهداف واحصائيات اللاعبين</value>
+  </data>
+  <data name="GameTime" xml:space="preserve">
+    <value>الوقت المنقضي</value>
+  </data>
+  <data name="FinalValue" xml:space="preserve">
+    <value>القيمة النهائية</value>
+  </data>
 </root>

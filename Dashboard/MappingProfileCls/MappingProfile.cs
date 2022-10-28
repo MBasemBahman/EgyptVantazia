@@ -438,6 +438,8 @@ namespace Dashboard.MappingProfileCls
             #region  PlayerGameWeakScore
             _ = CreateMap<PlayerGameWeakScoreModel, PlayerGameWeakScoreDto>();
             _ = CreateMap<PlayerGameWeakScoreModel, PlayerGameWeakScoreCreateOrEditModel>();
+            
+            _ = CreateMap<PlayerGameWeakScoreFilter, PlayerGameWeakScoreParameters>();
             #endregion
             #endregion
 

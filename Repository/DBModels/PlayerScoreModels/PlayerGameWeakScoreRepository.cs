@@ -26,7 +26,14 @@ namespace Repository.DBModels.PlayerScoreModels
                            parameters.PointsFrom,
                            parameters.PointsTo,
                            parameters.CheckCleanSheet,
-                           parameters.CheckReceiveGoals);
+                           parameters.CheckReceiveGoals,
+                           parameters.Fk_Players,
+                           parameters.Fk_Teams,
+                           parameters.Fk_Season,
+                           parameters.IsEnded,
+                           parameters.RateFrom,
+                           parameters.RateTo);
+            
         }
 
         public async Task<PlayerGameWeakScore> FindById(int id, bool trackChanges)
@@ -70,8 +77,13 @@ namespace Repository.DBModels.PlayerScoreModels
              int? pointsFrom,
              int? pointsTo,
              bool checkCleanSheet,
-             bool checkReceiveGoals)
-
+             bool checkReceiveGoals,
+             List<int> fk_Players, 
+             List<int> fk_Teams, 
+             int fk_Season, 
+             bool? isEnded, 
+             double rateFrom, 
+             double rateTo)
         {
             return PlayerGameWeakScores.Where(a => (id == 0 || a.Id == id) &&
                                                    (finalValueFrom == null || a.FinalValue >= finalValueFrom) &&
@@ -83,20 +95,29 @@ namespace Repository.DBModels.PlayerScoreModels
                                                    (fk_GameWeak == 0 || a.PlayerGameWeak.TeamGameWeak.Fk_GameWeak == fk_GameWeak) &&
                                                    (fk_ScoreType == 0 || a.Fk_ScoreType == fk_ScoreType) &&
                                                    (fk_ScoreTypes == null || !fk_ScoreTypes.Any() || fk_ScoreTypes.Contains(a.Fk_ScoreType)) &&
-                                                   (pointsFrom == null || a.Points >= pointsFrom) &&
-                                                   (pointsTo == null || a.Points <= pointsTo) &&
+                                                  (pointsFrom == null || pointsFrom == 0 || a.Points >= pointsFrom) &&
+                                                  (pointsTo == null || pointsFrom == 0 || a.Points <= pointsTo) &&
+                                                  (rateFrom == 0 || a.PlayerGameWeak.Ranking >= rateFrom) &&
+                                                  (rateTo == 0 || a.PlayerGameWeak.Ranking <= rateTo) &&
                                                    (checkCleanSheet == false || (a.Fk_ScoreType == (int)ScoreTypeEnum.Minutes &&
-                                                                                 a.Points > 1 &&
-                                                                                 ((a.PlayerGameWeak.Player.Fk_Team == a.PlayerGameWeak.TeamGameWeak.Fk_Away &&
-                                                                                   a.PlayerGameWeak.TeamGameWeak.HomeScore == 0) ||
-                                                                                  (a.PlayerGameWeak.Player.Fk_Team == a.PlayerGameWeak.TeamGameWeak.Fk_Home &&
-                                                                                   a.PlayerGameWeak.TeamGameWeak.AwayScore == 0)))) &&
+                                                     a.Points > 1 &&
+                                                     ((a.PlayerGameWeak.Player.Fk_Team == a.PlayerGameWeak.TeamGameWeak.Fk_Away &&
+                                                       a.PlayerGameWeak.TeamGameWeak.HomeScore == 0) ||
+                                                      (a.PlayerGameWeak.Player.Fk_Team == a.PlayerGameWeak.TeamGameWeak.Fk_Home &&
+                                                       a.PlayerGameWeak.TeamGameWeak.AwayScore == 0)))) &&
                                                   (checkReceiveGoals == false || (a.Fk_ScoreType == (int)ScoreTypeEnum.Minutes &&
-                                                                                  a.Points > 1 &&
-                                                                                  ((a.PlayerGameWeak.Player.Fk_Team == a.PlayerGameWeak.TeamGameWeak.Fk_Away &&
-                                                                                    a.PlayerGameWeak.TeamGameWeak.HomeScore > 0) ||
-                                                                                   (a.PlayerGameWeak.Player.Fk_Team == a.PlayerGameWeak.TeamGameWeak.Fk_Home &&
-                                                                                    a.PlayerGameWeak.TeamGameWeak.AwayScore > 0)))));
+                                                      a.Points > 1 &&
+                                                      ((a.PlayerGameWeak.Player.Fk_Team == a.PlayerGameWeak.TeamGameWeak.Fk_Away &&
+                                                        a.PlayerGameWeak.TeamGameWeak.HomeScore > 0) ||
+                                                       (a.PlayerGameWeak.Player.Fk_Team == a.PlayerGameWeak.TeamGameWeak.Fk_Home &&
+                                                        a.PlayerGameWeak.TeamGameWeak.AwayScore > 0)))) &&
+                                                  (fk_Teams == null || !fk_Teams.Any() ||
+                                                   fk_Teams.Contains(a.PlayerGameWeak.TeamGameWeak.Fk_Home) || fk_Teams.Contains(a.PlayerGameWeak.TeamGameWeak.Fk_Away)) &&
+                                                  (fk_Players == null || !fk_Players.Any() ||
+                                                   fk_Players.Contains(a.PlayerGameWeak.Fk_Player)) &&
+                                                  (fk_Season == 0 || a.PlayerGameWeak.TeamGameWeak.GameWeak.Fk_Season == fk_Season) &&
+                                                  (isEnded == null || a.PlayerGameWeak.TeamGameWeak.IsEnded == isEnded) 
+                                                   );
         }
     }
 }

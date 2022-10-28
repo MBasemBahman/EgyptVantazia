@@ -37,12 +37,20 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
         public bool CheckCleanSheet { get; set; }
 
         public bool CheckReceiveGoals { get; set; }
+
+        public List<int> Fk_Players { get; set; }
+        public List<int> Fk_Teams { get; set; }
+        public int Fk_Season { get; set; }
+        public bool? IsEnded { get; set; }
+        public double RateFrom { get; set; }
+        public double RateTo { get; set; }
     }
 
     public class PlayerGameWeakScoreModel : AuditEntity
     {
         [DisplayName(nameof(PlayerGameWeak))]
         public int Fk_PlayerGameWeak { get; set; }
+        public PlayerGameWeakModel PlayerGameWeak { get; set; }
 
         public int Fk_Team { get; set; }
 

@@ -41,12 +41,4 @@
     <Folder Include="wwwroot\Uploud\Team\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <AdditionalFiles Include="Areas\SubscriptionEntity\Views\Subscription\CreateOrEdit.cshtml" />
-    <AdditionalFiles Include="Areas\SubscriptionEntity\Views\Subscription\Delete.cshtml" />
-    <AdditionalFiles Include="Areas\SubscriptionEntity\Views\Subscription\Details.cshtml" />
-    <AdditionalFiles Include="Areas\SubscriptionEntity\Views\Subscription\Index.cshtml" />
-    <AdditionalFiles Include="Areas\SubscriptionEntity\Views\_ViewImports.cshtml" />
-  </ItemGroup>
-
 </Project>

@@ -6,6 +6,7 @@ using Entities.DBModels.LocationModels;
 using Entities.DBModels.LogModels;
 using Entities.DBModels.NewsModels;
 using Entities.DBModels.PlayerScoreModels;
+using Entities.DBModels.PlayerStateModels;
 using Entities.DBModels.PlayersTransfersModels;
 using Entities.DBModels.PrivateLeagueModels;
 using Entities.DBModels.SeasonModels;
@@ -23,6 +24,7 @@ using ModelBuilderConfig.Configurations.AccountTeamModels;
 using ModelBuilderConfig.Configurations.AppInfoModels;
 using ModelBuilderConfig.Configurations.DashboardAdministrationModels;
 using ModelBuilderConfig.Configurations.PlayerScoreModels;
+using ModelBuilderConfig.Configurations.PlayerStateModels;
 using ModelBuilderConfig.Configurations.PrivateLeagueModels;
 using ModelBuilderConfig.Configurations.SeasonModels;
 using ModelBuilderConfig.Configurations.SponsorModels;
@@ -128,9 +130,17 @@ namespace BaseDB
         public DbSet<Standings> Standings { get; set; }
 
         #endregion
-        
+
         #region SubscriptionModels
         public DbSet<Subscription> Subscriptions { get; set; }
+        #endregion
+
+        #region PlayerStateModels
+
+        public DbSet<ScoreState> ScoreStates { get; set; }
+        public DbSet<PlayerSeasonScoreState> PlayerSeasonScoreStates { get; set; }
+        public DbSet<PlayerGameWeakScoreState> PlayerGameWeakScoreStates { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -210,6 +220,16 @@ namespace BaseDB
 
             #region StandingsModels
             _ = modelBuilder.ApplyConfiguration(new StandingsConfiguration());
+            #endregion
+
+            #region PlayerStateModels
+
+            _ = modelBuilder.ApplyConfiguration(new ScoreStateConfiguration());
+            _ = modelBuilder.ApplyConfiguration(new ScoreStateLangConfiguration());
+
+            _ = modelBuilder.ApplyConfiguration(new PlayerGameWeakScoreStateConfiguration());
+            _ = modelBuilder.ApplyConfiguration(new PlayerSeasonScoreStateConfiguration());
+
             #endregion
         }
 

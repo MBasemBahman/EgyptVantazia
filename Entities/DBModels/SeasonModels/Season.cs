@@ -1,4 +1,5 @@
 ﻿using Entities.DBModels.AccountTeamModels;
+using Entities.DBModels.PlayerStateModels;
 using Entities.DBModels.StandingsModels;
 
 namespace Entities.DBModels.SeasonModels
@@ -24,6 +25,9 @@ namespace Entities.DBModels.SeasonModels
 
         [DisplayName(nameof(Standings))]
         public IList<Standings> Standings { get; set; }
+
+        [DisplayName(nameof(PlayerSeasonScoreStates))]
+        public IList<PlayerSeasonScoreState> PlayerSeasonScoreStates { get; set; }
 
         public SeasonLang SeasonLang { get; set; }
     }

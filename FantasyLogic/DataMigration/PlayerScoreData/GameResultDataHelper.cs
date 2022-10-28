@@ -5,6 +5,7 @@ using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.SeasonModels;
 using Entities.DBModels.TeamModels;
 using FantasyLogic.Calculations;
+using FantasyLogic.SharedLogic;
 using IntegrationWith365.Entities.GameModels;
 using IntegrationWith365.Entities.GamesModels;
 using static Contracts.EnumData.DBModelsEnum;
@@ -16,15 +17,17 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
         private readonly _365Services _365Services;
         private readonly UnitOfWork _unitOfWork;
         private readonly PlayerScoreCalc _playerScoreCalc;
+        private readonly GameResultLogic _gameResultLogic;
 
         public GameResultDataHelper(UnitOfWork unitOfWork, _365Services _365Services)
         {
             this._365Services = _365Services;
             _unitOfWork = unitOfWork;
             _playerScoreCalc = new PlayerScoreCalc(unitOfWork);
+            _gameResultLogic = new GameResultLogic(unitOfWork);
         }
 
-        public void RunUpdateGameResult(TeamGameWeakParameters parameters, int delayMinutes)
+        public void RunUpdateGameResult(TeamGameWeakParameters parameters)
         {
             SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
 
@@ -52,14 +55,21 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                                            _365_TypeId = a._365_TypeId
                                                        })
                                                        .ToList();
+            string jobId = null;
             foreach (TeamGameWeakDto teamGameWeak in teamGameWeaks)
             {
-                //UpdateGameResult(teamGameWeak, scoreTypes, delayMinutes).Wait();
-                _ = BackgroundJob.Schedule(() => UpdateGameResult(teamGameWeak, scoreTypes, delayMinutes), TimeSpan.FromMinutes(delayMinutes));
+                if (jobId.IsExisting())
+                {
+                    jobId = BackgroundJob.ContinueJobWith(jobId, () => UpdateGameResult(teamGameWeak, scoreTypes));
+                }
+                else
+                {
+                    jobId = BackgroundJob.Enqueue(() => UpdateGameResult(teamGameWeak, scoreTypes));
+                }
             }
         }
 
-        public async Task UpdateGameResult(TeamGameWeakDto teamGameWeak, List<ScoreTypeDto> scoreTypes, int delayMinutes)
+        public async Task UpdateGameResult(TeamGameWeakDto teamGameWeak, List<ScoreTypeDto> scoreTypes)
         {
             GameReturn gameReturn = await _365Services.GetGame(new _365GameParameters
             {
@@ -85,6 +95,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                         _365_PlayerIds = allMembers.Select(a => a.AthleteId.ToString()).ToList(),
                     }, otherLang: false);
 
+                    string jobId = null;
                     if (playersQuary.Any())
                     {
                         List<PlayerDto> players = playersQuary.Select(a => new PlayerDto
@@ -126,23 +137,20 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                                                             Value = 1
                                                                         })
                                                                         .ToList();
-
-                                //UpdatePlayerGameResult(player.Id, player.Fk_Team, player.Fk_PlayerPosition, teamGameWeak.Id, memberResult, eventResult, scoreTypes, delayMinutes).Wait();
-
-                                _ = BackgroundJob.Schedule(() => UpdatePlayerGameResult(player.Id, player.Fk_Team, player.Fk_PlayerPosition, teamGameWeak.Id, memberResult, eventResult, scoreTypes, delayMinutes), TimeSpan.FromMinutes(delayMinutes));
+                                jobId = await UpdatePlayerGameResult(player.Id, player.Fk_Team, player.Fk_PlayerPosition, teamGameWeak.Id, memberResult, eventResult, scoreTypes, jobId);
                             }
                         }
                     }
 
                     if (match.IsEnded)
                     {
-                        UpdateGameFinalResult(match.Id, delayMinutes + 5);
+                        jobId = UpdateGameFinalResult(match.Id, jobId);
                     }
                 }
             }
         }
 
-        public void UpdateGameFinalResult(int fk_TeamGameWeak, int delayMinutes)
+        public string UpdateGameFinalResult(int fk_TeamGameWeak, string jobId)
         {
             List<PlayerGameWeakDto> players = _unitOfWork.PlayerScore.GetPlayerGameWeaks(new PlayerGameWeakParameters
             {
@@ -158,34 +166,22 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
 
             foreach (PlayerGameWeakDto player in players)
             {
-                //UpdatePlayerStateScore((int)ScoreTypeEnum.CleanSheet, "", player.Fk_Player, player.Fk_Team, player.Fk_PlayerPosition, player.Fk_PlayerGameWeak, fk_TeamGameWeak).Wait();
-                //UpdatePlayerStateScore((int)ScoreTypeEnum.ReceiveGoals, "", player.Fk_Player, player.Fk_Team, player.Fk_PlayerPosition, player.Fk_PlayerGameWeak, fk_TeamGameWeak).Wait();
-                //UpdatePlayerStateScore((int)ScoreTypeEnum.Ranking, "", player.Fk_Player, player.Fk_Team, player.Fk_PlayerPosition, player.Fk_PlayerGameWeak, fk_TeamGameWeak).Wait();
+                jobId = BackgroundJob.ContinueJobWith(jobId, () => _gameResultLogic.UpdatePlayerStateScore((int)ScoreTypeEnum.CleanSheet, "", player.Fk_Player, player.Fk_Team, player.Fk_PlayerPosition, player.Fk_PlayerGameWeak, fk_TeamGameWeak));
+                jobId = BackgroundJob.ContinueJobWith(jobId, () => _gameResultLogic.UpdatePlayerStateScore((int)ScoreTypeEnum.ReceiveGoals, "", player.Fk_Player, player.Fk_Team, player.Fk_PlayerPosition, player.Fk_PlayerGameWeak, fk_TeamGameWeak));
+                jobId = BackgroundJob.ContinueJobWith(jobId, () => _gameResultLogic.UpdatePlayerStateScore((int)ScoreTypeEnum.Ranking, "", player.Fk_Player, player.Fk_Team, player.Fk_PlayerPosition, player.Fk_PlayerGameWeak, fk_TeamGameWeak));
 
-                _ = BackgroundJob.Schedule(() => UpdatePlayerStateScore((int)ScoreTypeEnum.CleanSheet, "", player.Fk_Player, player.Fk_Team, player.Fk_PlayerPosition, player.Fk_PlayerGameWeak, fk_TeamGameWeak), TimeSpan.FromMinutes(delayMinutes));
-                _ = BackgroundJob.Schedule(() => UpdatePlayerStateScore((int)ScoreTypeEnum.ReceiveGoals, "", player.Fk_Player, player.Fk_Team, player.Fk_PlayerPosition, player.Fk_PlayerGameWeak, fk_TeamGameWeak), TimeSpan.FromMinutes(delayMinutes));
-                _ = BackgroundJob.Schedule(() => UpdatePlayerStateScore((int)ScoreTypeEnum.Ranking, "", player.Fk_Player, player.Fk_Team, player.Fk_PlayerPosition, player.Fk_PlayerGameWeak, fk_TeamGameWeak), TimeSpan.FromMinutes(delayMinutes));
-
-                //UpdatePlayerGameWeakTotalPoints(player.Fk_PlayerGameWeak).Wait();
-                //UpdatePlayerTotalPoints(player.Fk_Player).Wait();
-
-                delayMinutes += 5;
-                _ = BackgroundJob.Schedule(() => UpdatePlayerGameWeakTotalPoints(player.Fk_PlayerGameWeak), TimeSpan.FromMinutes(delayMinutes));
-                _ = BackgroundJob.Schedule(() => UpdatePlayerTotalPoints(player.Fk_Player), TimeSpan.FromMinutes(delayMinutes));
+                jobId = BackgroundJob.ContinueJobWith(jobId, () => _gameResultLogic.UpdatePlayerGameWeakTotalPoints(player.Fk_PlayerGameWeak));
+                jobId = BackgroundJob.ContinueJobWith(jobId, () => _gameResultLogic.UpdatePlayerTotalPoints(player.Fk_Player));
             }
 
-            delayMinutes += 5;
-            _ = BackgroundJob.Schedule(() => UpdatePlayerGameWeakPosition(fk_TeamGameWeak), TimeSpan.FromMinutes(delayMinutes));
+            jobId = BackgroundJob.ContinueJobWith(jobId, () => _gameResultLogic.UpdatePlayerGameWeakPosition(fk_TeamGameWeak));
 
-            if (players != null && players.Any())
-            {
-                int fk_Team = players.Select(a => a.Fk_Team).First();
-                _ = BackgroundJob.Schedule(() => UpdatePlayerPosition(fk_Team), TimeSpan.FromMinutes(delayMinutes));
-            }
+            jobId = BackgroundJob.ContinueJobWith(jobId, () => _gameResultLogic.UpdatePlayerPosition());
 
+            return jobId;
         }
 
-        public async Task UpdatePlayerGameResult(
+        public async Task<string> UpdatePlayerGameResult(
             int fk_Player,
             int fk_Team,
             int fk_PlayerPosition,
@@ -193,7 +189,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             Member memberResult,
             List<EventType> eventResult,
             List<ScoreTypeDto> scoreTypes,
-            int delayMinutes)
+            string jobId)
         {
             if (fk_Player > 0 && memberResult != null)
             {
@@ -219,9 +215,14 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                             int fk_ScoreType = scoreTypes.Where(a => a._365_TypeId == Stat.Type.ToString()).Select(a => a.Id).SingleOrDefault();
                             if (fk_ScoreType > 0)
                             {
-                                //UpdatePlayerStateScore(fk_ScoreType, Stat.Value, fk_Player, fk_Team, fk_PlayerPosition, fk_PlayerGameWeak, fk_TeamGameWeak).Wait();
-
-                                _ = BackgroundJob.Schedule(() => UpdatePlayerStateScore(fk_ScoreType, Stat.Value, fk_Player, fk_Team, fk_PlayerPosition, fk_PlayerGameWeak, fk_TeamGameWeak), TimeSpan.FromMinutes(delayMinutes));
+                                if (jobId.IsExisting())
+                                {
+                                    jobId = BackgroundJob.ContinueJobWith(jobId, () => _gameResultLogic.UpdatePlayerStateScore(fk_ScoreType, Stat.Value, fk_Player, fk_Team, fk_PlayerPosition, fk_PlayerGameWeak, fk_TeamGameWeak));
+                                }
+                                else
+                                {
+                                    jobId = BackgroundJob.Enqueue(() => _gameResultLogic.UpdatePlayerStateScore(fk_ScoreType, Stat.Value, fk_Player, fk_Team, fk_PlayerPosition, fk_PlayerGameWeak, fk_TeamGameWeak));
+                                }
                             }
                         }
                     }
@@ -232,81 +233,22 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                             int fk_ScoreType = scoreTypes.Where(a => a._365_TypeId == events.SubTypeId.ToString() && a._365_EventTypeId == events.Id.ToString()).Select(a => a.Id).SingleOrDefault();
                             if (fk_ScoreType > 0)
                             {
-                                //UpdatePlayerEventScore(events, fk_ScoreType, fk_Player, fk_Team, fk_PlayerPosition, fk_PlayerGameWeak, fk_TeamGameWeak).Wait();
-
-                                _ = BackgroundJob.Schedule(() => UpdatePlayerEventScore(events, fk_ScoreType, fk_Player, fk_Team, fk_PlayerPosition, fk_PlayerGameWeak, fk_TeamGameWeak), TimeSpan.FromMinutes(delayMinutes));
+                                if (jobId.IsExisting())
+                                {
+                                    jobId = BackgroundJob.ContinueJobWith(jobId, () => _gameResultLogic.UpdatePlayerEventScore(events, fk_ScoreType, fk_Player, fk_Team, fk_PlayerPosition, fk_PlayerGameWeak, fk_TeamGameWeak));
+                                }
+                                else
+                                {
+                                    jobId = BackgroundJob.Enqueue(() => _gameResultLogic.UpdatePlayerEventScore(events, fk_ScoreType, fk_Player, fk_Team, fk_PlayerPosition, fk_PlayerGameWeak, fk_TeamGameWeak));
+                                }
                             }
                         }
                     }
                 }
             }
-        }
 
-        #region Scores
-        public async Task UpdatePlayerStateScore(int fk_ScoreType, string value, int fk_Player, int fk_Team, int fk_PlayerPosition, int fk_PlayerGameWeak, int fk_TeamGameWeak)
-        {
-            PlayerGameWeakScore score = new()
-            {
-                Fk_PlayerGameWeak = fk_PlayerGameWeak,
-                Fk_ScoreType = fk_ScoreType,
-                Value = value,
-            };
-            _unitOfWork.PlayerScore.CreatePlayerGameWeakScore(_playerScoreCalc.GetPlayerScore(score, fk_Player, fk_Team, fk_PlayerGameWeak, fk_PlayerPosition, fk_TeamGameWeak));
-            await _unitOfWork.Save();
+            return jobId;
         }
-
-        public async Task UpdatePlayerEventScore(EventType events, int fk_ScoreType, int fk_Player, int fk_Team, int fk_PlayerPosition, int fk_PlayerGameWeak, int fk_TeamGameWeak)
-        {
-            if (events.GameTime > 0)
-            {
-                PlayerGameWeakScore score = new()
-                {
-                    Fk_PlayerGameWeak = fk_PlayerGameWeak,
-                    Fk_ScoreType = fk_ScoreType,
-                    Value = events.Value.ToString(),
-                    GameTime = events.GameTime,
-                };
-                _unitOfWork.PlayerScore.CreatePlayerGameWeakScore(_playerScoreCalc.GetPlayerScore(score, fk_Player, fk_Team, fk_PlayerGameWeak, fk_PlayerPosition, fk_TeamGameWeak));
-                await _unitOfWork.Save();
-            }
-        }
-        #endregion
-
-        #region TotalPoints
-        public async Task UpdatePlayerGameWeakTotalPoints(int fk_PlayerGameWeak)
-        {
-            PlayerGameWeak playerGameWeak = await _unitOfWork.PlayerScore.FindPlayerGameWeakbyId(fk_PlayerGameWeak, trackChanges: true);
-            playerGameWeak.TotalPoints = _unitOfWork.PlayerScore.GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
-            {
-                Fk_PlayerGameWeak = fk_PlayerGameWeak
-            }, otherLang: false).Select(a => a.Points).Sum();
-            await _unitOfWork.Save();
-        }
-
-        public async Task UpdatePlayerTotalPoints(int fk_Player)
-        {
-            Player player = await _unitOfWork.Team.FindPlayerbyId(fk_Player, trackChanges: true);
-            player.TotalPoints = _unitOfWork.PlayerScore.GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
-            {
-                Fk_Player = fk_Player
-            }, otherLang: false).Select(a => a.Points).Sum();
-            await _unitOfWork.Save();
-        }
-        #endregion
-
-        #region Position
-        public async Task UpdatePlayerGameWeakPosition(int fk_TeamGameWeak)
-        {
-            _unitOfWork.PlayerScore.UpdatePlayerGameWeakPosition(fk_TeamGameWeak);
-            await _unitOfWork.Save();
-        }
-
-        public async Task UpdatePlayerPosition(int fk_Team)
-        {
-            _unitOfWork.Team.UpdatePlayerPosition(fk_Team);
-            await _unitOfWork.Save();
-        }
-        #endregion
     }
 
     public class TeamGameWeakDto

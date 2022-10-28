@@ -267,9 +267,9 @@ namespace CoreServices.Logic
             return _repository.Player.Count();
         }
 
-        public void UpdatePlayerPosition(int fk_Team)
+        public void UpdatePlayerPosition()
         {
-            _repository.Player.UpdatePlayerPosition(fk_Team);
+            _repository.Player.UpdatePlayerPosition();
         }
         #endregion
 

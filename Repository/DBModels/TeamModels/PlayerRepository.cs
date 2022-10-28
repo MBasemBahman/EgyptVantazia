@@ -70,14 +70,11 @@ namespace Repository.DBModels.TeamModels
             }
         }
 
-        public void UpdatePlayerPosition(int fk_Team)
+        public void UpdatePlayerPosition()
         {
             int position = 1;
 
-            List<Player> players = FindAll(new PlayerParameters
-            {
-                Fk_Team = fk_Team
-            }, trackChanges: true)
+            List<Player> players = FindAll(new PlayerParameters(), trackChanges: true)
                 .OrderByDescending(a => a.TotalPoints)
                 .ToList();
 

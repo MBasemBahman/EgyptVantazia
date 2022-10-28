@@ -1,5 +1,6 @@
 ﻿using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.PlayerScoreModels;
+using Entities.DBModels.PlayerStateModels;
 using Entities.DBModels.PlayersTransfersModels;
 
 namespace Entities.DBModels.TeamModels
@@ -53,6 +54,12 @@ namespace Entities.DBModels.TeamModels
 
         [DisplayName(nameof(PlayerPrices))]
         public IList<PlayerPrice> PlayerPrices { get; set; }
+
+        [DisplayName(nameof(PlayerSeasonScoreStates))]
+        public IList<PlayerSeasonScoreState> PlayerSeasonScoreStates { get; set; }
+
+        [DisplayName(nameof(PlayerGameWeakScoreStates))]
+        public IList<PlayerGameWeakScoreState> PlayerGameWeakScoreStates { get; set; }
 
         public PlayerLang PlayerLang { get; set; }
     }

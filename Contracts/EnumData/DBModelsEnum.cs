@@ -77,5 +77,23 @@
             Midfielder = 4,
             Coach = 5,
         }
+
+        public enum ScoreStateEnum
+        {
+            Total = 1,
+            CleanSheet = 2,
+            Goals = 3,
+            Assists = 4,
+            GoalkeeperSaves = 5,
+            PenaltiesSaved = 6,
+            YellowCard = 7,
+            RedCard = 8,
+            BuyingPrice = 9,
+            SellingPrice = 10,
+            BuyingCount = 11,
+            SellingCount = 12,
+            PlayerSelection = 13,
+            PlayerCaptain = 14
+        }
     }
 }

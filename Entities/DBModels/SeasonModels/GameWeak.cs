@@ -1,6 +1,7 @@
 ﻿using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.NewsModels;
 using Entities.DBModels.PlayerScoreModels;
+using Entities.DBModels.PlayerStateModels;
 using Entities.DBModels.PlayersTransfersModels;
 
 namespace Entities.DBModels.SeasonModels
@@ -13,7 +14,7 @@ namespace Entities.DBModels.SeasonModels
 
         [DisplayName(nameof(IsCurrent))]
         public bool IsCurrent { get; set; }
-        
+
         [DisplayName(nameof(_365_GameWeakId))]
         public string _365_GameWeakId { get; set; }
 
@@ -38,6 +39,9 @@ namespace Entities.DBModels.SeasonModels
 
         [DisplayName(nameof(PlayerTransfers))]
         public IList<PlayerTransfer> PlayerTransfers { get; set; }
+
+        [DisplayName(nameof(PlayerGameWeakScoreStates))]
+        public IList<PlayerGameWeakScoreState> PlayerGameWeakScoreStates { get; set; }
 
         public GameWeakLang GameWeakLang { get; set; }
     }

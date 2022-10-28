@@ -1,6 +1,6 @@
-﻿using Entities.CoreServicesModels.AccountTeamModels;
+﻿using Dashboard.Areas.SeasonEntity.Models;
+using Entities.CoreServicesModels.AccountTeamModels;
 using System.ComponentModel;
-using Dashboard.Areas.SeasonEntity.Models;
 
 namespace Dashboard.Areas.AccountTeamEntity.Models
 {

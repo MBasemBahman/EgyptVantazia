@@ -3,7 +3,6 @@ using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.SeasonModels;
-using Entities.DBModels.TeamModels;
 using FantasyLogic.Calculations;
 using FantasyLogic.SharedLogic;
 using IntegrationWith365.Entities.GameModels;
@@ -58,14 +57,9 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             string jobId = null;
             foreach (TeamGameWeakDto teamGameWeak in teamGameWeaks)
             {
-                if (jobId.IsExisting())
-                {
-                    jobId = BackgroundJob.ContinueJobWith(jobId, () => UpdateGameResult(teamGameWeak, scoreTypes));
-                }
-                else
-                {
-                    jobId = BackgroundJob.Enqueue(() => UpdateGameResult(teamGameWeak, scoreTypes));
-                }
+                jobId = jobId.IsExisting()
+                    ? BackgroundJob.ContinueJobWith(jobId, () => UpdateGameResult(teamGameWeak, scoreTypes))
+                    : BackgroundJob.Enqueue(() => UpdateGameResult(teamGameWeak, scoreTypes));
             }
         }
 
@@ -215,14 +209,9 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                             int fk_ScoreType = scoreTypes.Where(a => a._365_TypeId == Stat.Type.ToString()).Select(a => a.Id).SingleOrDefault();
                             if (fk_ScoreType > 0)
                             {
-                                if (jobId.IsExisting())
-                                {
-                                    jobId = BackgroundJob.ContinueJobWith(jobId, () => _gameResultLogic.UpdatePlayerStateScore(fk_ScoreType, Stat.Value, fk_Player, fk_Team, fk_PlayerPosition, fk_PlayerGameWeak, fk_TeamGameWeak));
-                                }
-                                else
-                                {
-                                    jobId = BackgroundJob.Enqueue(() => _gameResultLogic.UpdatePlayerStateScore(fk_ScoreType, Stat.Value, fk_Player, fk_Team, fk_PlayerPosition, fk_PlayerGameWeak, fk_TeamGameWeak));
-                                }
+                                jobId = jobId.IsExisting()
+                                    ? BackgroundJob.ContinueJobWith(jobId, () => _gameResultLogic.UpdatePlayerStateScore(fk_ScoreType, Stat.Value, fk_Player, fk_Team, fk_PlayerPosition, fk_PlayerGameWeak, fk_TeamGameWeak))
+                                    : BackgroundJob.Enqueue(() => _gameResultLogic.UpdatePlayerStateScore(fk_ScoreType, Stat.Value, fk_Player, fk_Team, fk_PlayerPosition, fk_PlayerGameWeak, fk_TeamGameWeak));
                             }
                         }
                     }
@@ -233,14 +222,9 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                             int fk_ScoreType = scoreTypes.Where(a => a._365_TypeId == events.SubTypeId.ToString() && a._365_EventTypeId == events.Id.ToString()).Select(a => a.Id).SingleOrDefault();
                             if (fk_ScoreType > 0)
                             {
-                                if (jobId.IsExisting())
-                                {
-                                    jobId = BackgroundJob.ContinueJobWith(jobId, () => _gameResultLogic.UpdatePlayerEventScore(events, fk_ScoreType, fk_Player, fk_Team, fk_PlayerPosition, fk_PlayerGameWeak, fk_TeamGameWeak));
-                                }
-                                else
-                                {
-                                    jobId = BackgroundJob.Enqueue(() => _gameResultLogic.UpdatePlayerEventScore(events, fk_ScoreType, fk_Player, fk_Team, fk_PlayerPosition, fk_PlayerGameWeak, fk_TeamGameWeak));
-                                }
+                                jobId = jobId.IsExisting()
+                                    ? BackgroundJob.ContinueJobWith(jobId, () => _gameResultLogic.UpdatePlayerEventScore(events, fk_ScoreType, fk_Player, fk_Team, fk_PlayerPosition, fk_PlayerGameWeak, fk_TeamGameWeak))
+                                    : BackgroundJob.Enqueue(() => _gameResultLogic.UpdatePlayerEventScore(events, fk_ScoreType, fk_Player, fk_Team, fk_PlayerPosition, fk_PlayerGameWeak, fk_TeamGameWeak));
                             }
                         }
                     }

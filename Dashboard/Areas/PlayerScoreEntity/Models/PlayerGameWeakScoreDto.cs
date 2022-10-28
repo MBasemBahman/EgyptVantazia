@@ -22,7 +22,7 @@ namespace Dashboard.Areas.PlayerScoreEntity.Models
         public double RateFrom { get; set; }
         [DefaultValue(10)]
         public double RateTo { get; set; }
-        
+
         public List<int> Fk_ScoreTypes { get; set; }
     }
     public class PlayerGameWeakScoreDto : PlayerGameWeakScoreModel

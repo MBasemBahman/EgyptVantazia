@@ -41,7 +41,7 @@ namespace Dashboard.Areas.PlayerScoreEntity.Controllers
 
             ViewData["ProfileLayOut"] = ProfileLayOut;
             ViewData[ViewDataConstants.AccessLevel] = (DashboardAccessLevelModel)Request.HttpContext.Items[ViewDataConstants.AccessLevel];
-            
+
             ViewData["Players"] = _unitOfWork.Team.GetPlayerLookUp(new PlayerParameters(), otherLang);
             ViewData["Team"] = _unitOfWork.Team.GetTeamLookUp(new TeamParameters(), otherLang);
             ViewData["Season"] = _unitOfWork.Season.GetSeasonLookUp(new SeasonParameters(), otherLang);
@@ -100,7 +100,7 @@ namespace Dashboard.Areas.PlayerScoreEntity.Controllers
 
             return View(data);
         }
-        
+
 
         [Authorize(DashboardViewEnum.PlayerGameWeak, AccessLevelEnum.CreateOrEdit)]
         public async Task<IActionResult> CreateOrEdit(int id = 0, int Fk_Player = 0)
@@ -219,7 +219,7 @@ namespace Dashboard.Areas.PlayerScoreEntity.Controllers
             ViewData["Season"] = _unitOfWork.Season.GetSeasonLookUp(new SeasonParameters(), otherLang);
 
             ViewData["ScoreType"] = _unitOfWork.PlayerScore.GetScoreTypesLookUp(new ScoreTypeParameters(), otherLang);
-            
+
 
         }
 

@@ -60,7 +60,7 @@ namespace CoreServices.Logic
         {
             return await PagedList<AccountModel>.ToPagedList(GetAccounts(parameters, otherLang), parameters.PageNumber, parameters.PageSize);
         }
-        
+
         public void UpdateAccountSubscriptions(int fk_account, List<AccountSubscriptionModel> subscriptions)
         {
             RemoveAccountSubscriptions(fk_account);
@@ -69,9 +69,9 @@ namespace CoreServices.Logic
 
         private void AddAccountSubscriptions(int fk_account, List<AccountSubscriptionModel> subscriptions)
         {
-            foreach (var subscription in subscriptions)
+            foreach (AccountSubscriptionModel subscription in subscriptions)
             {
-                var accountSubscription = new AccountSubscription
+                AccountSubscription accountSubscription = new()
                 {
                     Fk_Account = fk_account,
                     Fk_Subscription = subscription.Fk_Subscription,
@@ -86,26 +86,29 @@ namespace CoreServices.Logic
 
         private void RemoveAccountSubscriptions(int fk_account)
         {
-            var subscriptions = _repository.AccountSubscription.FindAll(new AccountSubscriptionParameters
+            IQueryable<AccountSubscription> subscriptions = _repository.AccountSubscription.FindAll(new AccountSubscriptionParameters
             {
                 Fk_Account = fk_account
             }, trackChanges: false);
 
-            if (!subscriptions.Any()) return;
+            if (!subscriptions.Any())
+            {
+                return;
+            }
 
-            foreach (var subscription in subscriptions)
+            foreach (AccountSubscription subscription in subscriptions)
             {
                 _repository.AccountSubscription.Delete(subscription);
             }
         }
-        
+
         public async Task<PagedList<AccountModel>> GetAccountsPaged(
           IQueryable<AccountModel> data,
          AccountParameters parameters)
         {
             return await PagedList<AccountModel>.ToPagedList(data, parameters.PageNumber, parameters.PageSize);
         }
-        
+
         public async Task<Account> FindAccountById(int id, bool trackChanges)
         {
             return await _repository.Account.FindById(id, trackChanges);

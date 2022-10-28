@@ -45,7 +45,7 @@ namespace Dashboard.Areas.SubscriptionEntity.Controllers
 
             SubscriptionParameters parameters = new()
             {
-                
+
             };
 
             _ = _mapper.Map(dtParameters, parameters);
@@ -89,7 +89,7 @@ namespace Dashboard.Areas.SubscriptionEntity.Controllers
                 model = _mapper.Map<SubscriptionCreateOrEditModel>(
                                                 await _unitOfWork.Subscription.FindSubscriptionById(id, trackChanges: false));
             }
-            
+
             if (model.ImageUrl.IsNullOrEmpty())
             {
                 model.ImageUrl = "calendar-date.png";
@@ -136,7 +136,7 @@ namespace Dashboard.Areas.SubscriptionEntity.Controllers
                     dataDB.LastModifiedBy = auth.UserName;
 
                 }
-                
+
                 IFormFile imageFile = HttpContext.Request.Form.Files["ImageFile"];
 
                 if (imageFile != null)

@@ -57,7 +57,7 @@ namespace CoreServices
                 return _accountServices;
             }
         }
-        
+
         public AccountSubscriptionServices AccountSubscription
         {
             get
@@ -66,7 +66,7 @@ namespace CoreServices
                 return _accountSubscriptionServices;
             }
         }
-        
+
         public DashboardAdministrationServices DashboardAdministration
         {
             get
@@ -163,7 +163,7 @@ namespace CoreServices
                 return _teamServices;
             }
         }
-        
+
         public SubscriptionServices Subscription
         {
             get

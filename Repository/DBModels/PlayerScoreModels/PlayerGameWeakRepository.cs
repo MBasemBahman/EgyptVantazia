@@ -48,15 +48,15 @@ namespace Repository.DBModels.PlayerScoreModels
                 base.Create(entity);
             }
         }
-        
+
         public void UpdatePlayerGameWeakPosition(int fk_TeamGameWeak)
         {
             int position = 1;
 
             List<PlayerGameWeak> players = FindAll(new PlayerGameWeakParameters
-                {
-                    Fk_TeamGameWeak = fk_TeamGameWeak
-                }, trackChanges: true)
+            {
+                Fk_TeamGameWeak = fk_TeamGameWeak
+            }, trackChanges: true)
                 .OrderByDescending(a => a.TotalPoints)
                 .ToList();
 
@@ -99,9 +99,9 @@ namespace Repository.DBModels.PlayerScoreModels
                                               (pointsFrom == 0 || a.TotalPoints >= pointsFrom) &&
                                               (pointsTo == 0 || a.TotalPoints <= pointsTo) &&
                                               (fk_Player == 0 || a.Fk_Player == fk_Player) &&
-                                              (fk_GameWeak == 0 || a.TeamGameWeak.Fk_GameWeak == fk_GameWeak) && 
-                                              (fk_Season == 0 || a.TeamGameWeak.GameWeak.Fk_Season == fk_Season) && 
-                                              (isEnded == null || a.TeamGameWeak.IsEnded == isEnded) );
+                                              (fk_GameWeak == 0 || a.TeamGameWeak.Fk_GameWeak == fk_GameWeak) &&
+                                              (fk_Season == 0 || a.TeamGameWeak.GameWeak.Fk_Season == fk_Season) &&
+                                              (isEnded == null || a.TeamGameWeak.IsEnded == isEnded));
 
 
         }

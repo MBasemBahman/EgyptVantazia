@@ -1,6 +1,5 @@
 ﻿using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.SeasonModels;
-using Entities.DBModels.TeamModels;
 
 namespace Repository.DBModels.SeasonModels
 {
@@ -85,8 +84,8 @@ namespace Repository.DBModels.SeasonModels
             return TeamGameWeaks.Where(a => (id == 0 || a.Id == id) &&
                                             (isEnded == null || a.IsEnded == isEnded) &&
                                             (isDelayed == null || a.IsDelayed == isDelayed) &&
-                                            ( fk_Teams == null || !fk_Teams.Any() ||  
-                                              fk_Teams.Contains(a.Fk_Home) || fk_Teams.Contains(a.Fk_Away) ) &&
+                                            (fk_Teams == null || !fk_Teams.Any() ||
+                                              fk_Teams.Contains(a.Fk_Home) || fk_Teams.Contains(a.Fk_Away)) &&
                                             (fk_Home == 0 || a.Fk_Home == fk_Home) &&
                                             (fk_Away == 0 || a.Fk_Away == fk_Away) &&
                                             (fk_Season == 0 || a.GameWeak.Fk_Season == fk_Season) &&

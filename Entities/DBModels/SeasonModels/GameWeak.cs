@@ -1,6 +1,5 @@
 ﻿using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.NewsModels;
-using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.PlayerStateModels;
 using Entities.DBModels.PlayersTransfersModels;
 

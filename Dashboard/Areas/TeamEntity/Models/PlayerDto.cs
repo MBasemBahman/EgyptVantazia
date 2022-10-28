@@ -1,7 +1,7 @@
 ﻿using Entities.CoreServicesModels.TeamModels;
+using Entities.DBModels.SeasonModels;
 using Entities.DBModels.TeamModels;
 using System.ComponentModel;
-using Entities.DBModels.SeasonModels;
 
 namespace Dashboard.Areas.TeamEntity.Models
 {
@@ -10,7 +10,7 @@ namespace Dashboard.Areas.TeamEntity.Models
         public int Id { get; set; }
         [DisplayName(nameof(Team))]
         public int Fk_Team { get; set; }
-        
+
         [DisplayName(nameof(GameWeak))]
         public int Fk_GameWeak { get; set; }
 

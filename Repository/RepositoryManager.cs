@@ -102,11 +102,11 @@ namespace Repository
         private AccountTeamRepository _accountTeamRepository;
         private TeamPlayerTypeRepository _teamPlayerTypeRepository;
         #endregion
-        
+
         #region SubscriptionModels
         private SubscriptionRepository _subscriptionRepository;
         #endregion
-        
+
         #region AccountSubscription Models
 
         private AccountSubscriptionRepository _accountSubscriptionRepository;
@@ -470,7 +470,7 @@ namespace Repository
             }
         }
         #endregion
-        
+
         #region SubscriptionModels
         public SubscriptionRepository Subscription
         {
@@ -481,7 +481,7 @@ namespace Repository
             }
         }
         #endregion
-        
+
         #region AccountSubscriptionModels
         public AccountSubscriptionRepository AccountSubscription
         {

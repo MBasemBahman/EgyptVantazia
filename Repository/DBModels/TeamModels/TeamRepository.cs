@@ -1,7 +1,5 @@
 ﻿using Entities.CoreServicesModels.TeamModels;
-using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.TeamModels;
-using Entities.RequestFeatures;
 
 
 namespace Repository.DBModels.TeamModels

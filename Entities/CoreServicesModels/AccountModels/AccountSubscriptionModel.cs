@@ -19,12 +19,12 @@ public class AccountSubscriptionModel : BaseEntity
     [ForeignKey(nameof(Subscription))]
     public int Fk_Subscription { get; set; }
 
-    [DisplayName(nameof(StartDate))] 
+    [DisplayName(nameof(StartDate))]
     public DateTime StartDate { get; set; }
-        
-    [DisplayName(nameof(EndDate))] 
+
+    [DisplayName(nameof(EndDate))]
     public DateTime EndDate { get; set; }
-        
-    [DisplayName(nameof(IsAction))] 
+
+    [DisplayName(nameof(IsAction))]
     public bool IsAction { get; set; }
 }

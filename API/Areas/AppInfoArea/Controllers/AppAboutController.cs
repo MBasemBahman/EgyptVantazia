@@ -1,7 +1,5 @@
 ﻿using API.Controllers;
 using Entities.CoreServicesModels.AppInfoModels;
-using FantasyLogic;
-using IntegrationWith365;
 
 namespace API.Areas.AppInfoArea.Controllers
 {

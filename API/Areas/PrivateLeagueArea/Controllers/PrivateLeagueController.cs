@@ -53,12 +53,7 @@ namespace API.Areas.PrivateLeagueArea.Controllers
         {
             PrivateLeagueModel data = _unitOfWork.PrivateLeague.GetPrivateLeagues(new PrivateLeagueParameters { UniqueCode = uniqueCode }).FirstOrDefault();
 
-            if (data == null)
-            {
-                throw new Exception("الكود غير صحيح!");
-            }
-
-            return data;
+            return data ?? throw new Exception("الكود غير صحيح!");
         }
 
         [HttpPost]

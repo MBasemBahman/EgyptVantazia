@@ -365,7 +365,7 @@ namespace CoreServices.Logic
         {
             if (prices != null && prices.Any())
             {
-                foreach (var price in prices)
+                foreach (PlayerPrice price in prices)
                 {
                     CreatePlayerPrice(new PlayerPrice
                     {

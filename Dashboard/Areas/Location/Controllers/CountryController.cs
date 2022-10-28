@@ -59,7 +59,7 @@ namespace Dashboard.Areas.Location.Controllers
 
             return Json(dataTableManager.ReturnTable(dataTableResult));
         }
-        
+
         public IActionResult Details(int id)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];

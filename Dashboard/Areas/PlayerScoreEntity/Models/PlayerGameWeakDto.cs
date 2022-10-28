@@ -41,7 +41,7 @@ namespace Dashboard.Areas.PlayerScoreEntity.Models
         [DisplayName(nameof(PlayerGameWeakScores))]
         public List<PlayerGameWeakScoreDto> PlayerGameWeakScores { get; set; }
     }
-    
+
     public enum PlayerGameWeakProfileItems
     {
         Details = 1,

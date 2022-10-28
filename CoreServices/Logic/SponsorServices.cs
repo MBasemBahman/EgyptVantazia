@@ -33,7 +33,7 @@ namespace CoreServices.Logic
                                                                   .Select(b => b.AppViewEnum)
                                                                   .ToList() : null,
                            ExpireDate = a.ExpireDate
-                           
+
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

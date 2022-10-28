@@ -1,6 +1,4 @@
 ﻿using Entities.CoreServicesModels.AccountModels;
-using Entities.CoreServicesModels.LocationModels;
-using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountModels;
 
 namespace CoreServices.Logic
@@ -49,7 +47,7 @@ namespace CoreServices.Logic
         {
             return await PagedList<AccountSubscriptionModel>.ToPagedList(data, parameters.PageNumber, parameters.PageSize);
         }
-        
+
         public async Task<AccountSubscription> FindAccountSubscriptionById(int id, bool trackChanges)
         {
             return await _repository.AccountSubscription.FindById(id, trackChanges);
@@ -59,7 +57,7 @@ namespace CoreServices.Logic
         {
             return GetAccountSubscriptions(new AccountSubscriptionParameters { Id = id }, otherLang).SingleOrDefault();
         }
-        
+
 
         public void CreateAccountSubscription(AccountSubscription account)
         {
@@ -70,7 +68,7 @@ namespace CoreServices.Logic
         {
             return _repository.AccountSubscription.Count();
         }
-        
+
         #endregion
     }
 }

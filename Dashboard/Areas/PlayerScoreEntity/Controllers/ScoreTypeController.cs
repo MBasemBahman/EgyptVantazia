@@ -3,7 +3,6 @@ using Entities.CoreServicesModels.PlayerScoreModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayerScoreModels;
 using Entities.RequestFeatures;
-using Org.BouncyCastle.Ocsp;
 
 namespace Dashboard.Areas.PlayerScoreEntity.Controllers
 {
@@ -163,7 +162,7 @@ namespace Dashboard.Areas.PlayerScoreEntity.Controllers
         public void SetViewData()
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
-            
+
             ViewData["Players"] = _unitOfWork.Team.GetPlayerLookUp(new PlayerParameters(), otherLang);
         }
     }

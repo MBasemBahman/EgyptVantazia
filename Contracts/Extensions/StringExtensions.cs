@@ -1,6 +1,4 @@
-﻿using static System.Net.Mime.MediaTypeNames;
-
-namespace Contracts.Extensions
+﻿namespace Contracts.Extensions
 {
     public static class StringExtensions
     {

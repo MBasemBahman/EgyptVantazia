@@ -87,10 +87,10 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         [DisplayName(nameof(Name))]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
-        
+
         [DisplayName(nameof(ImageUrl))]
         public string ImageUrl { get; set; }
-        
+
         [DisplayName(nameof(StorageUrl))]
         public string StorageUrl { get; set; }
 

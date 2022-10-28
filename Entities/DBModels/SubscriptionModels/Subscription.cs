@@ -6,7 +6,7 @@
         [DisplayName($"{nameof(Name)}{PropertyAttributeConstants.ArLang}")]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
-        
+
         public SubscriptionLang SubscriptionLang { get; set; }
     }
 

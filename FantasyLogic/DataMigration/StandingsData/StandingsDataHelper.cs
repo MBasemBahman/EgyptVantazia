@@ -49,7 +49,7 @@ namespace FantasyLogic.DataMigration.StandingsData
 
                 _ = BackgroundJob.Schedule(() => UpdateStanding(row, fk_Season, fk_Team), TimeSpan.FromMinutes(delayMinutes));
 
-                
+
             }
         }
 

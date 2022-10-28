@@ -29,7 +29,7 @@ namespace Entities.CoreServicesModels.SponsorModels
 
         [DisplayName(nameof(SponsorViews))]
         public IList<AppViewEnum> SponsorViews { get; set; }
-        
+
         [DisplayName(nameof(ExpireDate))]
         public DateTime? ExpireDate { get; set; }
     }
@@ -61,7 +61,7 @@ namespace Entities.CoreServicesModels.SponsorModels
 
         [DisplayName(nameof(SponsorViews))]
         public List<AppViewEnum> SponsorViews { get; set; }
-        
+
         [DisplayName(nameof(ExpireDate))]
         public DateTime? ExpireDate { get; set; }
     }

@@ -56,7 +56,7 @@ namespace Repository.DBModels.NewsModels
                                                    (NewsTypeEnum == 0 || a.NewsTypeEnum == NewsTypeEnum) &&
                                                    (Fk_Season == 0 || a.GameWeak.Fk_Season == Fk_Season) &&
                                                    (createdAtFrom == null || a.CreatedAt >= createdAtFrom) &&
-                                                   (createdAtTo == null || a.CreatedAt<=createdAtTo));
+                                                   (createdAtTo == null || a.CreatedAt <= createdAtTo));
 
         }
 

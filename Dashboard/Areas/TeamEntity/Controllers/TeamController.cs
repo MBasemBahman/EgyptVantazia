@@ -96,7 +96,7 @@ namespace Dashboard.Areas.TeamEntity.Controllers
 
             if (id > 0)
             {
-                var teamDB = await _unitOfWork.Team.FindTeambyId(id, trackChanges: false);
+                Team teamDB = await _unitOfWork.Team.FindTeambyId(id, trackChanges: false);
                 model = _mapper.Map<TeamCreateOrEditModel>(teamDB);
             }
 

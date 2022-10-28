@@ -3,7 +3,6 @@ using Dashboard.Areas.SeasonEntity.Models;
 using Dashboard.Areas.TeamEntity.Models;
 using Entities.CoreServicesModels.PlayerTransfersModels;
 using System.ComponentModel;
-using static Entities.EnumData.LogicEnumData;
 
 namespace Dashboard.Areas.PlayerTransferEntity.Models
 {

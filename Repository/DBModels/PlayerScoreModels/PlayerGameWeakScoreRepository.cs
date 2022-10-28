@@ -33,7 +33,7 @@ namespace Repository.DBModels.PlayerScoreModels
                            parameters.IsEnded,
                            parameters.RateFrom,
                            parameters.RateTo);
-            
+
         }
 
         public async Task<PlayerGameWeakScore> FindById(int id, bool trackChanges)
@@ -78,11 +78,11 @@ namespace Repository.DBModels.PlayerScoreModels
              int? pointsTo,
              bool checkCleanSheet,
              bool checkReceiveGoals,
-             List<int> fk_Players, 
-             List<int> fk_Teams, 
-             int fk_Season, 
-             bool? isEnded, 
-             double rateFrom, 
+             List<int> fk_Players,
+             List<int> fk_Teams,
+             int fk_Season,
+             bool? isEnded,
+             double rateFrom,
              double rateTo)
         {
             return PlayerGameWeakScores.Where(a => (id == 0 || a.Id == id) &&
@@ -116,7 +116,7 @@ namespace Repository.DBModels.PlayerScoreModels
                                                   (fk_Players == null || !fk_Players.Any() ||
                                                    fk_Players.Contains(a.PlayerGameWeak.Fk_Player)) &&
                                                   (fk_Season == 0 || a.PlayerGameWeak.TeamGameWeak.GameWeak.Fk_Season == fk_Season) &&
-                                                  (isEnded == null || a.PlayerGameWeak.TeamGameWeak.IsEnded == isEnded) 
+                                                  (isEnded == null || a.PlayerGameWeak.TeamGameWeak.IsEnded == isEnded)
                                                    );
         }
     }

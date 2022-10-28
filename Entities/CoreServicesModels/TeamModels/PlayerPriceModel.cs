@@ -46,7 +46,7 @@ namespace Entities.CoreServicesModels.TeamModels
         [DisplayName(nameof(Team))]
         public int Fk_Team { get; set; }
     }
-    
+
     public class PlayerPriceEditModel
     {
         [DisplayName(nameof(BuyPrice))]
@@ -64,7 +64,7 @@ namespace Entities.CoreServicesModels.TeamModels
         [DisplayName(nameof(Player))]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public int Fk_Player { get; set; }
-        
+
         [DisplayName(nameof(Team))]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public int Fk_Team { get; set; }

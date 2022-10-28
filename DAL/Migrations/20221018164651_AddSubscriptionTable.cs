@@ -1,7 +1,5 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
 
 namespace DAL.Migrations
 {
@@ -9,13 +7,13 @@ namespace DAL.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
+            _ = migrationBuilder.AddColumn<string>(
                 name: "RefCode",
                 table: "Accounts",
                 type: "nvarchar(max)",
                 nullable: true);
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "Subscriptions",
                 columns: table => new
                 {
@@ -31,10 +29,10 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Subscriptions", x => x.Id);
+                    _ = table.PrimaryKey("PK_Subscriptions", x => x.Id);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "AccountSubscriptions",
                 columns: table => new
                 {
@@ -49,14 +47,14 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AccountSubscriptions", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_AccountSubscriptions", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_AccountSubscriptions_Accounts_Fk_Account",
                         column: x => x.Fk_Account,
                         principalTable: "Accounts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
+                    _ = table.ForeignKey(
                         name: "FK_AccountSubscriptions_Subscriptions_Fk_Subscription",
                         column: x => x.Fk_Subscription,
                         principalTable: "Subscriptions",
@@ -64,7 +62,7 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "SubscriptionLang",
                 columns: table => new
                 {
@@ -76,8 +74,8 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SubscriptionLang", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_SubscriptionLang", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_SubscriptionLang_Subscriptions_Fk_Source",
                         column: x => x.Fk_Source,
                         principalTable: "Subscriptions",
@@ -85,31 +83,31 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.UpdateData(
+            _ = migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Password",
                 value: "$2a$11$f7fKVj7ezshNjpCaTNkZcOVMcEFqR55UjAOS08nikR3t0g1tAjjpa");
-            
 
-            migrationBuilder.CreateIndex(
+
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_AccountSubscriptions_Fk_Account",
                 table: "AccountSubscriptions",
                 column: "Fk_Account");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_AccountSubscriptions_Fk_Subscription",
                 table: "AccountSubscriptions",
                 column: "Fk_Subscription");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_SubscriptionLang_Fk_Source",
                 table: "SubscriptionLang",
                 column: "Fk_Source",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_Subscriptions_Name",
                 table: "Subscriptions",
                 column: "Name",
@@ -118,20 +116,20 @@ namespace DAL.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "AccountSubscriptions");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "SubscriptionLang");
 
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "Subscriptions");
 
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "RefCode",
                 table: "Accounts");
 
-            migrationBuilder.UpdateData(
+            _ = migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 1,

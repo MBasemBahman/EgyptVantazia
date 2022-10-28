@@ -323,8 +323,8 @@ namespace CoreServices.Logic
 
         public DateTime? GetFirstTeamGameWeakMatchDate()
         {
-            var fk_GameWeak = GetCurrentGameWeak().Id;
-            var firstTeamGameWeak = GetTeamGameWeaks(new TeamGameWeakParameters
+            int fk_GameWeak = GetCurrentGameWeak().Id;
+            TeamGameWeakModel firstTeamGameWeak = GetTeamGameWeaks(new TeamGameWeakParameters
             {
                 Fk_GameWeak_Ignored = fk_GameWeak,
                 FromTime = DateTime.UtcNow,

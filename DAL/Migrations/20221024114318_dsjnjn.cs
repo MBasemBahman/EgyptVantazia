@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
 
 namespace DAL.Migrations
 {
@@ -8,60 +7,60 @@ namespace DAL.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "IsDelayed",
                 table: "GameWeaks");
 
-            migrationBuilder.AddColumn<bool>(
+            _ = migrationBuilder.AddColumn<bool>(
                 name: "IsDelayed",
                 table: "TeamGameWeaks",
                 type: "bit",
                 nullable: false,
                 defaultValue: false);
 
-            migrationBuilder.AddColumn<double>(
+            _ = migrationBuilder.AddColumn<double>(
                 name: "CountryRanking",
                 table: "AccountTeams",
                 type: "float",
                 nullable: false,
                 defaultValue: 0.0);
 
-            migrationBuilder.AddColumn<double>(
+            _ = migrationBuilder.AddColumn<double>(
                 name: "FavouriteTeamRanking",
                 table: "AccountTeams",
                 type: "float",
                 nullable: false,
                 defaultValue: 0.0);
 
-            migrationBuilder.AddColumn<double>(
+            _ = migrationBuilder.AddColumn<double>(
                 name: "GlobalRanking",
                 table: "AccountTeams",
                 type: "float",
                 nullable: false,
                 defaultValue: 0.0);
 
-            migrationBuilder.AddColumn<double>(
+            _ = migrationBuilder.AddColumn<double>(
                 name: "CountryRanking",
                 table: "AccountTeamGameWeaks",
                 type: "float",
                 nullable: false,
                 defaultValue: 0.0);
 
-            migrationBuilder.AddColumn<double>(
+            _ = migrationBuilder.AddColumn<double>(
                 name: "FavouriteTeamRanking",
                 table: "AccountTeamGameWeaks",
                 type: "float",
                 nullable: false,
                 defaultValue: 0.0);
 
-            migrationBuilder.AddColumn<double>(
+            _ = migrationBuilder.AddColumn<double>(
                 name: "GlobalRanking",
                 table: "AccountTeamGameWeaks",
                 type: "float",
                 nullable: false,
                 defaultValue: 0.0);
 
-            migrationBuilder.UpdateData(
+            _ = migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 1,
@@ -71,42 +70,42 @@ namespace DAL.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "IsDelayed",
                 table: "TeamGameWeaks");
 
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "CountryRanking",
                 table: "AccountTeams");
 
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "FavouriteTeamRanking",
                 table: "AccountTeams");
 
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "GlobalRanking",
                 table: "AccountTeams");
 
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "CountryRanking",
                 table: "AccountTeamGameWeaks");
 
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "FavouriteTeamRanking",
                 table: "AccountTeamGameWeaks");
 
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "GlobalRanking",
                 table: "AccountTeamGameWeaks");
 
-            migrationBuilder.AddColumn<bool>(
+            _ = migrationBuilder.AddColumn<bool>(
                 name: "IsDelayed",
                 table: "GameWeaks",
                 type: "bit",
                 nullable: false,
                 defaultValue: false);
 
-            migrationBuilder.UpdateData(
+            _ = migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 1,

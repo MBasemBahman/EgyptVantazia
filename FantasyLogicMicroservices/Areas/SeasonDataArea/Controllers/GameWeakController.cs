@@ -1,9 +1,7 @@
-﻿using CoreServices;
-using Entities.CoreServicesModels.SeasonModels;
+﻿using Entities.CoreServicesModels.SeasonModels;
 using FantasyLogic;
 using FantasyLogicMicroservices.Controllers;
 using Hangfire;
-using IntegrationWith365.Helpers;
 using IntegrationWith365;
 
 namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers

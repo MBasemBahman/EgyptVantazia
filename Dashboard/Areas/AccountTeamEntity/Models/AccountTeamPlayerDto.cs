@@ -1,5 +1,5 @@
-﻿using Entities.CoreServicesModels.AccountTeamModels;
-using Dashboard.Areas.TeamEntity.Models;
+﻿using Dashboard.Areas.TeamEntity.Models;
+using Entities.CoreServicesModels.AccountTeamModels;
 using System.ComponentModel;
 namespace Dashboard.Areas.AccountTeamEntity.Models
 {

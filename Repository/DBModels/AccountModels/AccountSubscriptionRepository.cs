@@ -1,7 +1,5 @@
 ﻿using Entities.CoreServicesModels.AccountModels;
-using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.DBModels.AccountModels;
-using Entities.DBModels.AccountTeamModels;
 
 namespace Repository.DBModels.AccountModels
 {
@@ -24,8 +22,8 @@ namespace Repository.DBModels.AccountModels
             return await FindByCondition(a => a.Id == id, trackChanges)
                         .SingleOrDefaultAsync();
         }
-        
-        
+
+
     }
 
     public static class AccountSubscriptionRepositoryExtension

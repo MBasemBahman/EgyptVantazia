@@ -4,7 +4,7 @@ namespace Entities.CoreServicesModels.SubscriptionModels
 {
     public class SubscriptionParameters : RequestParameters
     {
-        
+
     }
 
     public class SubscriptionModel : AuditImageEntity
@@ -18,15 +18,15 @@ namespace Entities.CoreServicesModels.SubscriptionModels
     {
         public SubscriptionCreateOrEditModel()
         {
-            
+
         }
         [DisplayName($"{nameof(Name)}{PropertyAttributeConstants.ArLang}")]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
-        
+
         [DisplayName(nameof(ImageUrl))]
         public string ImageUrl { get; set; }
-        
+
         [DisplayName(nameof(StorageUrl))]
         public string StorageUrl { get; set; }
 

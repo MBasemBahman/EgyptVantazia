@@ -30,7 +30,7 @@ namespace Entities.CoreServicesModels.TeamModels
         public int Fk_Season { get; set; }
 
         public int Fk_GameWeak { get; set; }
-        
+
         public List<int> Fk_Players { get; set; }
 
         public int PointsFrom { get; set; }

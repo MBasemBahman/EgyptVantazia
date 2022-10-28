@@ -25,7 +25,7 @@ namespace Dashboard.Areas.UserEntity.Controllers
             UserFilter filter = new()
             {
                 Id = id,
-             
+
             };
 
             ViewData[ViewDataConstants.AccessLevel] = (DashboardAccessLevelModel)Request.HttpContext.Items[ViewDataConstants.AccessLevel];

@@ -306,14 +306,14 @@ namespace CoreServices.Logic
                            Fk_PlayerGameWeak = a.Fk_PlayerGameWeak,
                            PlayerGameWeak = new PlayerGameWeakModel
                            {
-                             Position  = a.PlayerGameWeak.Position,
-                             Player = new PlayerModel
-                             {
-                                 Id = a.PlayerGameWeak.Player.Id,
-                                 Name = otherLang ? a.PlayerGameWeak.Player.PlayerLang.Name : a.PlayerGameWeak.Player.Name,
-                             },
-                             Ranking = a.PlayerGameWeak.Ranking,
-                             Fk_Player = a.PlayerGameWeak.Fk_Player,
+                               Position = a.PlayerGameWeak.Position,
+                               Player = new PlayerModel
+                               {
+                                   Id = a.PlayerGameWeak.Player.Id,
+                                   Name = otherLang ? a.PlayerGameWeak.Player.PlayerLang.Name : a.PlayerGameWeak.Player.Name,
+                               },
+                               Ranking = a.PlayerGameWeak.Ranking,
+                               Fk_Player = a.PlayerGameWeak.Fk_Player,
                            },
                            Fk_ScoreType = a.Fk_ScoreType,
                            Points = a.Points,

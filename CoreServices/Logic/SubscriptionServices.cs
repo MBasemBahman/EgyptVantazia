@@ -1,6 +1,5 @@
 ﻿using Entities.CoreServicesModels.SubscriptionModels;
 using Entities.DBModels.SubscriptionModels;
-using static Entities.EnumData.LogicEnumData;
 
 namespace CoreServices.Logic
 {
@@ -45,12 +44,12 @@ namespace CoreServices.Logic
         {
             return GetSubscriptions(parameters, otherLang).ToDictionary(a => a.Id.ToString(), a => a.Name);
         }
-        
+
         public async Task<Subscription> FindSubscriptionById(int id, bool trackChanges)
         {
             return await _repository.Subscription.FindById(id, trackChanges);
         }
-        
+
         public async Task<string> UploadSubscriptionImage(string rootPath, IFormFile file)
         {
             FileUploader uploader = new(rootPath);

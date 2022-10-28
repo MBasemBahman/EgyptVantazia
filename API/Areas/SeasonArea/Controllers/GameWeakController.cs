@@ -1,7 +1,6 @@
 ﻿using API.Areas.SeasonArea.Models;
 using API.Controllers;
 using Entities.CoreServicesModels.SeasonModels;
-using Entities.DBModels.SeasonModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace API.Areas.SeasonArea.Controllers

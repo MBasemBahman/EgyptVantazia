@@ -218,43 +218,43 @@ namespace Dashboard.Areas.TeamEntity.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-        
+
         [Authorize(DashboardViewEnum.Player, AccessLevelEnum.CreateOrEdit)]
-        public IActionResult EditPlayersPrices([FromQuery]string fk_Players)
+        public IActionResult EditPlayersPrices([FromQuery] string fk_Players)
         {
-            var fk_PlayersIds = fk_Players.Split(",").Select(Int32.Parse).ToList();
-            
+            List<int> fk_PlayersIds = fk_Players.Split(",").Select(int.Parse).ToList();
+
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
-            
+
             ViewData["Players"] = _unitOfWork.Team.GetPlayers(new PlayerParameters
             {
                 Fk_Players = fk_PlayersIds
             }, otherLang).ToList();
-            
+
             return View();
         }
-        
+
         [HttpPost]
         [Authorize(DashboardViewEnum.Player, AccessLevelEnum.CreateOrEdit)]
         public async Task<IActionResult> EditPlayersPrices(List<PlayerPriceEditModel> model)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
-            
+
             if (!ModelState.IsValid)
             {
                 ViewData["Players"] = _unitOfWork.Team.GetPlayers(new PlayerParameters
                 {
                     Fk_Players = model.Select(a => a.Fk_Player).ToList()
                 }, otherLang).ToList();
-                
+
                 return View(model);
             }
-            
+
             try
             {
                 UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
-                
-                var dataDB = _mapper.Map<List<PlayerPrice>>(model);
+
+                List<PlayerPrice> dataDB = _mapper.Map<List<PlayerPrice>>(model);
 
                 _unitOfWork.Team.AddPlayersPrices(dataDB, auth.UserName);
 
@@ -266,7 +266,7 @@ namespace Dashboard.Areas.TeamEntity.Controllers
             {
                 ViewData[ViewDataConstants.Error] = _logger.LogError(HttpContext.Request, ex).ErrorMessage;
             }
-            
+
             ViewData["Players"] = _unitOfWork.Team.GetPlayers(new PlayerParameters
             {
                 Fk_Players = model.Select(a => a.Fk_Player).ToList()

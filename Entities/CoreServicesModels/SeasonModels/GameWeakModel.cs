@@ -19,8 +19,8 @@ namespace Entities.CoreServicesModels.SeasonModels
 
         [DisplayName(nameof(IsDelayed))]
         public bool? IsDelayed { get; set; }
-        
-        [DisplayName(nameof(BiggerThanWeak))] 
+
+        [DisplayName(nameof(BiggerThanWeak))]
         public int BiggerThanWeak { get; set; }
     }
 

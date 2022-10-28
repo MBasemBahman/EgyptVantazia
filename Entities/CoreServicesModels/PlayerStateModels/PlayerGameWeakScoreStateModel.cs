@@ -1,9 +1,9 @@
-﻿using Entities.CoreServicesModels.PlayerStateModels;
-using Entities.CoreServicesModels.SeasonModels;
+﻿using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
+using Entities.DBModels.PlayerStateModels;
 using Entities.RequestFeatures;
 
-namespace Entities.DBModels.PlayerStateModels
+namespace Entities.CoreServicesModels.PlayerStateModels
 {
     public class PlayerGameWeakScoreStateParameters : RequestParameters
     {

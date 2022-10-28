@@ -1,8 +1,7 @@
-﻿using Entities.CoreServicesModels.StandingsModels;
-using Dashboard.Areas.SeasonEntity.Models;
+﻿using Dashboard.Areas.SeasonEntity.Models;
 using Dashboard.Areas.TeamEntity.Models;
+using Entities.CoreServicesModels.StandingsModels;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dashboard.Areas.StandingsEntity.Models
 {

@@ -35,7 +35,7 @@ namespace FantasyLogic.DataMigration.TeamData
             foreach (TeamModel team in teams)
             {
                 _ = BackgroundJob.Schedule(() => UpdatePlayers(team, positions, delayMinutes), TimeSpan.FromMinutes(delayMinutes));
-                
+
             }
         }
 
@@ -65,7 +65,7 @@ namespace FantasyLogic.DataMigration.TeamData
                                                  .FirstOrDefault();
 
                 _ = BackgroundJob.Schedule(() => UpdatePlayer(athletesInArabic[i], athletesInEnglish[i], team.Id, fk_PlayerPosition), TimeSpan.FromMinutes(delayMinutes));
-                
+
             }
         }
 

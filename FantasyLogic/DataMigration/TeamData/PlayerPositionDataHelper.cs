@@ -24,7 +24,7 @@ namespace FantasyLogic.DataMigration.TeamData
             foreach (string _365_TeamId in teams)
             {
                 _ = BackgroundJob.Schedule(() => UpdateTeamPositions(_365_TeamId.ParseToInt(), delayMinutes), TimeSpan.FromMinutes(delayMinutes));
-                
+
             }
         }
 
@@ -66,7 +66,7 @@ namespace FantasyLogic.DataMigration.TeamData
             for (int i = 0; i < positionsInArabic.Count; i++)
             {
                 _ = BackgroundJob.Schedule(() => UpdatePosition(positionsInArabic[i], positionsInEnglish[i]), TimeSpan.FromMinutes(delayMinutes));
-                
+
             }
         }
 

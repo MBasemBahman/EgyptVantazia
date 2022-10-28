@@ -77,21 +77,21 @@ namespace Dashboard.Areas.AccountTeamEntity.Controllers
                 (_unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
                 {
                     Fk_AccountTeam = id
-                },otherLang));
+                }, otherLang));
 
             data.PlayerTransfers = _mapper.Map<List<PlayerTransferDto>>
                 (_unitOfWork.PlayerTransfers.GetPlayerTransfers(new PlayerTransferParameters
                 {
                     Fk_AccountTeam = id
-                },otherLang));
+                }, otherLang));
 
             data.AccountTeamPlayers = _mapper.Map<List<AccountTeamPlayerDto>>
                 (_unitOfWork.AccountTeam.GetAccountTeamPlayers(new AccountTeamPlayerParameters
                 {
                     Fk_AccountTeam = id
-                },otherLang));
+                }, otherLang));
 
-         
+
             return View(data);
         }
 
@@ -102,7 +102,7 @@ namespace Dashboard.Areas.AccountTeamEntity.Controllers
             {
                 Fk_Account = fk_Account
             };
-            
+
             if (id > 0)
             {
                 AccountTeam accountTeamDB = await _unitOfWork.AccountTeam.FindAccountTeambyId(id, trackChanges: false);
@@ -115,11 +115,11 @@ namespace Dashboard.Areas.AccountTeamEntity.Controllers
                 model.ImageUrl = "calendar-date.png";
                 model.StorageUrl = _linkGenerator.GetUriByAction(HttpContext).GetBaseUri(HttpContext.Request.RouteValues["area"].ToString());
             }
-            
+
             SetViewData(ProfileLayOut: true);
             return View(model);
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(DashboardViewEnum.AccountTeam, AccessLevelEnum.CreateOrEdit)]
@@ -141,7 +141,7 @@ namespace Dashboard.Areas.AccountTeamEntity.Controllers
                     accountTeamDB = _mapper.Map<AccountTeam>(model);
 
                     accountTeamDB.CreatedBy = auth.UserName;
-                    
+
                     _unitOfWork.AccountTeam.CreateAccountTeam(accountTeamDB);
 
                 }
@@ -164,7 +164,7 @@ namespace Dashboard.Areas.AccountTeamEntity.Controllers
 
                 await _unitOfWork.Save();
 
-                return RedirectToAction("Profile", "Account", new {area = "AccountEntity", id = model.Fk_Account});
+                return RedirectToAction("Profile", "Account", new { area = "AccountEntity", id = model.Fk_Account });
             }
             catch (Exception ex)
             {

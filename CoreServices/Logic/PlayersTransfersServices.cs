@@ -40,7 +40,7 @@ namespace CoreServices.Logic
                                Fk_Season = a.GameWeak.Fk_Season,
                                Season = new SeasonModel
                                {
-                                   Name = otherLang?a.GameWeak.Season.SeasonLang.Name : a.GameWeak.Season.Name
+                                   Name = otherLang ? a.GameWeak.Season.SeasonLang.Name : a.GameWeak.Season.Name
                                }
                            },
                            Player = new PlayerModel
@@ -51,7 +51,7 @@ namespace CoreServices.Logic
                                Fk_Team = a.Player.Fk_Team,
                                Team = new TeamModel
                                {
-                                   Name = otherLang?a.Player.Team.TeamLang.Name :a.Player.Team.Name
+                                   Name = otherLang ? a.Player.Team.TeamLang.Name : a.Player.Team.Name
                                }
                            },
                        })

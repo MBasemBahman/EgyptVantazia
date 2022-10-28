@@ -1,9 +1,4 @@
-﻿using Entities.DBModels.AccountTeamModels;
-using Entities.DBModels.LocationModels;
-using Entities.DBModels.PrivateLeagueModels;
-using Entities.DBModels.SubscriptionModels;
-using Entities.DBModels.TeamModels;
-using Entities.DBModels.UserModels;
+﻿using Entities.DBModels.SubscriptionModels;
 
 namespace Entities.DBModels.AccountModels
 {
@@ -15,21 +10,21 @@ namespace Entities.DBModels.AccountModels
 
         [DisplayName(nameof(Account))]
         public Account Account { get; set; }
-        
+
         [DisplayName(nameof(Subscription))]
         [ForeignKey(nameof(Subscription))]
         public int Fk_Subscription { get; set; }
 
         [DisplayName(nameof(Subscription))]
         public Subscription Subscription { get; set; }
-        
-        [DisplayName(nameof(StartDate))] 
+
+        [DisplayName(nameof(StartDate))]
         public DateTime StartDate { get; set; }
-        
-        [DisplayName(nameof(EndDate))] 
+
+        [DisplayName(nameof(EndDate))]
         public DateTime EndDate { get; set; }
-        
-        [DisplayName(nameof(IsAction))] 
+
+        [DisplayName(nameof(IsAction))]
         public bool IsAction { get; set; }
     }
 }

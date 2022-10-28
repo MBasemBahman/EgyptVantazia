@@ -1,5 +1,4 @@
-﻿using System.Data.Common;
-using Dashboard.Areas.AccountEntity.Models;
+﻿using Dashboard.Areas.AccountEntity.Models;
 using Entities.CoreServicesModels.AccountModels;
 using Entities.CoreServicesModels.SubscriptionModels;
 using Entities.CoreServicesModels.TeamModels;
@@ -105,7 +104,7 @@ namespace Dashboard.Areas.AccountEntity.Controllers
                 model.ImageUrl = accountDB.StorageUrl + accountDB.ImageUrl;
                 model.Subscriptions = _mapper.Map<List<AccountSubscriptionModel>>(_unitOfWork
                     .AccountSubscription.GetAccountSubscriptions(new AccountSubscriptionParameters
-                        {Fk_Account = accountDB.Id}, otherLang).ToList());
+                    { Fk_Account = accountDB.Id }, otherLang).ToList());
             }
 
             SetViewData(IsProfile, id, otherLang);
@@ -172,7 +171,7 @@ namespace Dashboard.Areas.AccountEntity.Controllers
                 await _unitOfWork.Save();
 
                 _unitOfWork.Account.UpdateAccountSubscriptions(accountDB.Id, model.Subscriptions);
-                
+
                 await _unitOfWork.Save();
 
                 return IsProfile ? RedirectToAction(nameof(Profile), new { id }) : (IActionResult)RedirectToAction(nameof(Index));

@@ -6,32 +6,31 @@ using Dashboard.Areas.Location.Models;
 using Dashboard.Areas.LogEntity.Models;
 using Dashboard.Areas.NewsEntity.Models;
 using Dashboard.Areas.PlayerScoreEntity.Models;
+using Dashboard.Areas.PlayerTransferEntity.Models;
 using Dashboard.Areas.PrivateLeagueEntity.Models;
-using Dashboard.Areas.StandingsEntity.Models;
 using Dashboard.Areas.SeasonEntity.Models;
 using Dashboard.Areas.SponsorEntity.Models;
-using Dashboard.Areas.TeamEntity.Models;
-using Dashboard.Areas.PlayerTransferEntity.Models;
+using Dashboard.Areas.StandingsEntity.Models;
 using Dashboard.Areas.SubscriptionEntity.Models;
+using Dashboard.Areas.TeamEntity.Models;
 using Dashboard.Areas.UserEntity.Models;
-using Entities.CoreServicesModels.PlayerTransfersModels;
-using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.AccountModels;
+using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.AppInfoModels;
 using Entities.CoreServicesModels.LocationModels;
 using Entities.CoreServicesModels.LogModels;
 using Entities.CoreServicesModels.NewsModels;
 using Entities.CoreServicesModels.PlayerScoreModels;
-using Entities.CoreServicesModels.StandingsModels;
+using Entities.CoreServicesModels.PlayerTransfersModels;
 using Entities.CoreServicesModels.PrivateLeagueModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.SponsorModels;
+using Entities.CoreServicesModels.StandingsModels;
 using Entities.CoreServicesModels.SubscriptionModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.CoreServicesModels.UserModels;
 using Entities.DBModels.AccountModels;
 using Entities.DBModels.AccountTeamModels;
-using Entities.DBModels.StandingsModels;
 using Entities.DBModels.AppInfoModels;
 using Entities.DBModels.DashboardAdministrationModels;
 using Entities.DBModels.LocationModels;
@@ -40,6 +39,7 @@ using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.PrivateLeagueModels;
 using Entities.DBModels.SeasonModels;
 using Entities.DBModels.SponsorModels;
+using Entities.DBModels.StandingsModels;
 using Entities.DBModels.SubscriptionModels;
 using Entities.DBModels.TeamModels;
 using Entities.RequestFeatures;
@@ -353,32 +353,32 @@ namespace Dashboard.MappingProfileCls
 
             #region Account Team
 
-            CreateMap<AccountTeamModel, AccountTeamDto>();
+            _ = CreateMap<AccountTeamModel, AccountTeamDto>();
 
-            CreateMap<AccountTeamFilter, AccountTeamParameters>();
-            
-            CreateMap<AccountTeam, AccountTeamCreateOrEditModel>();
-            
-            CreateMap<AccountTeamCreateOrEditModel, AccountTeam>();
+            _ = CreateMap<AccountTeamFilter, AccountTeamParameters>();
+
+            _ = CreateMap<AccountTeam, AccountTeamCreateOrEditModel>();
+
+            _ = CreateMap<AccountTeamCreateOrEditModel, AccountTeam>();
 
             #endregion
-            
 
 
 
 
-            
+
+
 
             #region Account Team Game Weak
-            CreateMap<AccountTeamGameWeakModel, AccountTeamGameWeakDto>();
+            _ = CreateMap<AccountTeamGameWeakModel, AccountTeamGameWeakDto>();
             #endregion
 
             #region Account Team Player
-            CreateMap<AccountTeamPlayerModel, AccountTeamPlayerDto>();
+            _ = CreateMap<AccountTeamPlayerModel, AccountTeamPlayerDto>();
             #endregion
 
             #region Account Team Player Game Weak
-            CreateMap<AccountTeamPlayerGameWeakModel, AccountTeamPlayerGameWeakDto>();
+            _ = CreateMap<AccountTeamPlayerGameWeakModel, AccountTeamPlayerGameWeakDto>();
             #endregion
 
             #endregion
@@ -438,7 +438,7 @@ namespace Dashboard.MappingProfileCls
             #region  PlayerGameWeakScore
             _ = CreateMap<PlayerGameWeakScoreModel, PlayerGameWeakScoreDto>();
             _ = CreateMap<PlayerGameWeakScoreModel, PlayerGameWeakScoreCreateOrEditModel>();
-            
+
             _ = CreateMap<PlayerGameWeakScoreFilter, PlayerGameWeakScoreParameters>();
             #endregion
             #endregion
@@ -499,9 +499,9 @@ namespace Dashboard.MappingProfileCls
             #endregion
 
             #region Player Transfer Models
-            CreateMap<PlayerTransferModel, PlayerTransferDto>();
+            _ = CreateMap<PlayerTransferModel, PlayerTransferDto>();
             #endregion
-            
+
             #region Subscription Models
 
             #region Subscription

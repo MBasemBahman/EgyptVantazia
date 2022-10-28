@@ -57,10 +57,10 @@ namespace Repository.DBModels.PlayerStateModels
                                          (ids == null || !ids.Any() || ids.Contains(a.Id)) &&
                                          (fk_GameWeak == 0 || a.PlayerGameWeakScoreStates.Any(b => b.Fk_GameWeak == fk_GameWeak)) &&
                                          (fk_GameWeaks == null || !fk_GameWeaks.Any() ||
-                                         fk_GameWeaks.Any(a.PlayerGameWeakScoreStates.Contains(b => b.Fk_GameWeak))) &&
+                                         a.PlayerGameWeakScoreStates.Any(b => fk_GameWeaks.Contains(b.Fk_GameWeak))) &&
                                          (fk_Season == 0 || a.PlayerSeasonScoreStates.Any(b => b.Fk_Season == fk_Season)) &&
                                          (fk_Seasons == null || !fk_Seasons.Any() ||
-                                         fk_Seasons.Any(a.PlayerSeasonScoreStates.Contains(b =>b.Fk_Season))) );
+                                         a.PlayerSeasonScoreStates.Any(b => fk_Seasons.Contains(b.Fk_Season))));
 
         }
 

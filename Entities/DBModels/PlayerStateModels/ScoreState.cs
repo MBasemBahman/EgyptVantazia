@@ -18,7 +18,7 @@ namespace Entities.DBModels.PlayerStateModels
         [DisplayName(nameof(PlayerGameWeakScoreStates))]
         public IList<PlayerGameWeakScoreState> PlayerGameWeakScoreStates { get; set; }
 
-        public ScoreTypeLang ScoreTypeLang { get; set; }
+        public ScoreStateLang ScoreStateLang { get; set; }
     }
 
     public class ScoreStateLang : LangEntity<ScoreState>

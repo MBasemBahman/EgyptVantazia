@@ -6,6 +6,7 @@ using Repository.DBModels.LocationModels;
 using Repository.DBModels.LogModels;
 using Repository.DBModels.NewsModels;
 using Repository.DBModels.PlayerScoreModels;
+using Repository.DBModels.PlayerStateModels;
 using Repository.DBModels.PlayersTransfersModels;
 using Repository.DBModels.PrivateLeagueModels;
 using Repository.DBModels.SeasonModels;
@@ -110,6 +111,12 @@ namespace Repository
         #region AccountSubscription Models
 
         private AccountSubscriptionRepository _accountSubscriptionRepository;
+        #endregion
+
+        #region PlayerStateModels
+        private PlayerGameWeakScoreStateRepository _playerGameWeakScoreStateRepository;
+        private PlayerSeasonScoreStateRepository _playerSeasonScoreStateRepository;
+        private ScoreStateRepository _scoreStateRepository;
         #endregion
 
 
@@ -489,6 +496,33 @@ namespace Repository
             {
                 _accountSubscriptionRepository ??= new AccountSubscriptionRepository(_dBContext);
                 return _accountSubscriptionRepository;
+            }
+        }
+        #endregion
+
+        #region PlayerStateModels
+        public PlayerGameWeakScoreStateRepository PlayerGameWeakScoreState
+        {
+            get
+            {
+                _playerGameWeakScoreStateRepository ??= new PlayerGameWeakScoreStateRepository(_dBContext);
+                return _playerGameWeakScoreStateRepository;
+            }
+        }
+        public PlayerSeasonScoreStateRepository PlayerSeasonScoreState
+        {
+            get
+            {
+                _playerSeasonScoreStateRepository ??= new PlayerSeasonScoreStateRepository(_dBContext);
+                return _playerSeasonScoreStateRepository;
+            }
+        }
+        public ScoreStateRepository ScoreState
+        {
+            get
+            {
+                _scoreStateRepository ??= new ScoreStateRepository(_dBContext);
+                return _scoreStateRepository;
             }
         }
         #endregion

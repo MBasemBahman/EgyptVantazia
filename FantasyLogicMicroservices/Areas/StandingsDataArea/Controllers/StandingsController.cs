@@ -23,7 +23,7 @@ namespace FantasyLogicMicroservices.Areas.StandingsDataArea.Controllers
         [Route(nameof(UpdateStandings))]
         public IActionResult UpdateStandings()
         {
-            _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings(1);
+            _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings();
 
             return Ok();
         }

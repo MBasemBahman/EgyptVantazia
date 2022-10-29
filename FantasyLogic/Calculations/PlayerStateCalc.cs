@@ -1,6 +1,9 @@
 ﻿using Entities.CoreServicesModels.PlayerScoreModels;
+using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayerStateModels;
+using Entities.DBModels.SeasonModels;
+using Entities.DBModels.TeamModels;
 using static Contracts.EnumData.DBModelsEnum;
 
 namespace FantasyLogic.Calculations
@@ -14,35 +17,55 @@ namespace FantasyLogic.Calculations
             _unitOfWork = unitOfWork;
         }
 
-        public void RunPlayersStateCalculations(int fk_Season, int fk_GameWeak, List<int> scoreStates)
+        #region Calculations
+        public void RunPlayersStateCalculations(GameWeakParameters parameters)
         {
-            List<int> players = _unitOfWork.Team.GetPlayers(new PlayerParameters
-            {
-                Fk_GameWeak = fk_GameWeak
-            }, otherLang: false)
+            SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
+
+            parameters.Fk_Season = season.Id;
+
+            List<int> gameWeaks = _unitOfWork.Season
+                                             .GetGameWeaks(parameters, otherLang: false)
+                                             .Select(a => a.Id).ToList();
+
+            List<int> players = _unitOfWork.Team.GetPlayers(new PlayerParameters(), otherLang: false)
                 .Select(a => a.Id)
                 .ToList();
 
+            _ = BackgroundJob.Enqueue(() => PlayersStateCalculations(players, season.Id, gameWeaks));
+        }
+
+        public void PlayersStateCalculations(List<int> players, int fk_Season, List<int> fk_GameWeaks)
+        {
             string jobId = null;
             foreach (int player in players)
             {
-                _ = PlayerStateCalculations(player, fk_Season, fk_GameWeak, scoreStates, jobId);
+                foreach (int fk_GameWeak in fk_GameWeaks)
+                {
+                    jobId = jobId.IsExisting()
+                        ? BackgroundJob.ContinueJobWith(jobId, () => PlayerStateCalculations(player, 0, fk_GameWeak, jobId))
+                        : BackgroundJob.Enqueue(() => PlayerStateCalculations(player, 0, fk_GameWeak, jobId));
+                }
+
+                jobId = jobId.IsExisting()
+                    ? BackgroundJob.ContinueJobWith(jobId, () => PlayerStateCalculations(player, fk_Season, 0, jobId))
+                    : BackgroundJob.Enqueue(() => PlayerStateCalculations(player, fk_Season, 0, jobId));
             }
         }
 
-        public string PlayerStateCalculations(int fk_Player, int fk_Season, int fk_GameWeak, List<int> scoreStates, string jobId)
+        public string PlayerStateCalculations(int fk_Player, int fk_Season, int fk_GameWeak, string jobId)
         {
-            if (scoreStates == null || !scoreStates.Any())
+            List<int> scoreStates = new()
             {
-                scoreStates.Add((int)ScoreStateEnum.CleanSheet);
-                scoreStates.Add((int)ScoreStateEnum.Goals);
-                scoreStates.Add((int)ScoreStateEnum.Assists);
-                scoreStates.Add((int)ScoreStateEnum.GoalkeeperSaves);
-                scoreStates.Add((int)ScoreStateEnum.PenaltiesSaved);
-                scoreStates.Add((int)ScoreStateEnum.YellowCard);
-                scoreStates.Add((int)ScoreStateEnum.RedCard);
-                scoreStates.Add((int)ScoreStateEnum.YellowCard);
-            }
+                    (int)ScoreStateEnum.CleanSheet,
+                    (int)ScoreStateEnum.Goals,
+                    (int)ScoreStateEnum.Assists,
+                    (int)ScoreStateEnum.GoalkeeperSaves,
+                    (int)ScoreStateEnum.PenaltiesSaved,
+                    (int)ScoreStateEnum.YellowCard,
+                    (int)ScoreStateEnum.RedCard,
+                    (int)ScoreStateEnum.YellowCard
+                };
 
             foreach (int scoreState in scoreStates)
             {
@@ -80,12 +103,12 @@ namespace FantasyLogic.Calculations
                 }
             }
 
-            jobId = PlayerCalculations(fk_Player, fk_Season, fk_GameWeak, jobId);
+            PlayerCalculations(fk_Player, fk_Season, fk_GameWeak);
 
             return jobId;
         }
 
-        public string PlayerCalculations(int fk_Player, int fk_Season, int fk_GameWeak, string jobId)
+        public void PlayerCalculations(int fk_Player, int fk_Season, int fk_GameWeak)
         {
             PlayerCustomStateResult playescore = _unitOfWork.Team.GetPlayerCustomStateResult(fk_Player, fk_Season, fk_GameWeak);
 
@@ -184,32 +207,97 @@ namespace FantasyLogic.Calculations
                 _unitOfWork.Save().Wait();
             }
 
-            PlayerTotalScoreModel totalPlayescore = _unitOfWork.PlayerScore.GetPlayerTotalScores(fk_Player, fk_Season: 0, fk_GameWeak, fk_ScoreTypes: null);
-            _unitOfWork.PlayerState.CreatePlayerGameWeakScoreState(new PlayerGameWeakScoreState
-            {
-                Fk_GameWeak = fk_GameWeak,
-                Fk_Player = fk_Player,
-                Fk_ScoreState = (int)ScoreStateEnum.Total,
-                Points = totalPlayescore.Points,
-                Value = totalPlayescore.FinalValue
-            });
-            _unitOfWork.Save().Wait();
+            PlayerTotalScoreModel totalPlayescore = _unitOfWork.PlayerScore.GetPlayerTotalScores(fk_Player, fk_Season, fk_GameWeak, fk_ScoreTypes: null);
 
-            return jobId;
+            if (totalPlayescore != null)
+            {
+                if (fk_Season > 0)
+                {
+                    _unitOfWork.PlayerState.CreatePlayerSeasonScoreState(new PlayerSeasonScoreState
+                    {
+                        Fk_Season = fk_Season,
+                        Fk_Player = fk_Player,
+                        Fk_ScoreState = (int)ScoreStateEnum.Total,
+                        Points = totalPlayescore.Points,
+                        Value = totalPlayescore.FinalValue
+                    });
+                }
+                else if (fk_GameWeak > 0)
+                {
+                    _unitOfWork.PlayerState.CreatePlayerGameWeakScoreState(new PlayerGameWeakScoreState
+                    {
+                        Fk_GameWeak = fk_GameWeak,
+                        Fk_Player = fk_Player,
+                        Fk_ScoreState = (int)ScoreStateEnum.Total,
+                        Points = totalPlayescore.Points,
+                        Value = totalPlayescore.FinalValue
+                    });
+                }
+                _unitOfWork.Save().Wait();
+            }
         }
+        #endregion
+
+        #region Position
+
+        public void RunPlayersStatePositions(GameWeakParameters parameters)
+        {
+            SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
+
+            parameters.Fk_Season = season.Id;
+
+            List<int> gameWeaks = _unitOfWork.Season
+                                             .GetGameWeaks(parameters, otherLang: false)
+                                             .Select(a => a.Id).ToList();
+
+            List<int> scoreStates = _unitOfWork.PlayerScore
+                                               .GetScoreTypes(new ScoreTypeParameters(), otherLang: false)
+                                               .Select(a => a.Id).ToList();
+
+            string jobId = null;
+            foreach (var gameWeak in gameWeaks)
+            {
+                foreach (var scoreState in scoreStates)
+                {
+                    jobId = jobId.IsExisting()
+                        ? BackgroundJob.ContinueJobWith(jobId, () => UpdatePlayerScoreStatePosition(0, gameWeak, scoreState))
+                        : BackgroundJob.Enqueue(() => UpdatePlayerScoreStatePosition(0, gameWeak, scoreState));
+                }
+            }
+
+            foreach (var scoreState in scoreStates)
+            {
+                jobId = jobId.IsExisting()
+                        ? BackgroundJob.ContinueJobWith(jobId, () => UpdatePlayerScoreStatePosition(season.Id, 0, scoreState))
+                        : BackgroundJob.Enqueue(() => UpdatePlayerScoreStatePosition(season.Id, 0, scoreState));
+            }
+        }
+
+        private void UpdatePlayerScoreStatePosition(int fk_Season, int fk_GameWeak, int scoreState)
+        {
+            if (fk_Season > 0)
+            {
+                _unitOfWork.PlayerState.UpdatePlayerSeasonScoreStatePosition(fk_Season, scoreState);
+            }
+            else if (fk_GameWeak > 0)
+            {
+                _unitOfWork.PlayerState.UpdatePlayerGameWeakScoreStatePosition(fk_GameWeak, scoreState);
+            }
+            _unitOfWork.Save().Wait();
+        }
+
+        #endregion
 
         // Helper
 
         private List<int> GetScoreTypesByScoreState(int scoreState)
         {
-            if (scoreState == (int)ScoreStateEnum.CleanSheet)
-            {
-                return new List<int>
+            return scoreState == (int)ScoreStateEnum.CleanSheet
+                ? new List<int>
                 {
                     (int)ScoreTypeEnum.CleanSheet
-                };
-            }
-            return scoreState == (int)ScoreStateEnum.Goals
+                }
+                : scoreState == (int)ScoreStateEnum.Goals
                 ? new List<int>
                 {
                     (int)ScoreTypeEnum.Goals

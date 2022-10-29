@@ -90,6 +90,11 @@ namespace CoreServices.Logic
             return _repository.PlayerGameWeakScoreState.Count();
         }
 
+        public void UpdatePlayerGameWeakScoreStatePosition(int fk_Season, int fk_ScoreState)
+        {
+            _repository.PlayerGameWeakScoreState.UpdatePlayerGameWeakScoreStatePosition(fk_Season, fk_ScoreState);
+        }
+
         #endregion
 
         #region PlayerSeasonScoreState Services
@@ -166,6 +171,11 @@ namespace CoreServices.Logic
         public int GetPlayerSeasonScoreStateCount()
         {
             return _repository.PlayerSeasonScoreState.Count();
+        }
+
+        public void UpdatePlayerSeasonScoreStatePosition(int fk_Season, int fk_ScoreState)
+        {
+            _repository.PlayerSeasonScoreState.UpdatePlayerSeasonScoreStatePosition(fk_Season, fk_ScoreState);
         }
 
         #endregion

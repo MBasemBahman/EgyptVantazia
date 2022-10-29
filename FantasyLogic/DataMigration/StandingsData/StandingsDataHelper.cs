@@ -50,7 +50,7 @@ namespace FantasyLogic.DataMigration.StandingsData
 
                 jobId = jobId.IsExisting()
                     ? BackgroundJob.ContinueJobWith(jobId, () => UpdateStanding(row, fk_Season, fk_Team))
-                    : BackgroundJob.Enqueue(() => UpdateStanding(row, fk_Season, fk_Team), TimeSpan.FromMinutes(delayMinutes));
+                    : BackgroundJob.Enqueue(() => UpdateStanding(row, fk_Season, fk_Team));
             }
         }
 

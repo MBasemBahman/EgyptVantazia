@@ -52,7 +52,7 @@ namespace Repository.DBModels.PlayerStateModels
             }
         }
 
-        public void UpdatePlayerPosition(int fk_GameWeak, int fk_ScoreState)
+        public void UpdatePlayerGameWeakScoreStatePosition(int fk_GameWeak, int fk_ScoreState)
         {
             List<PlayerGameWeakScoreStateCalcModel> scores = FindAll(new PlayerGameWeakScoreStateParameters
             {

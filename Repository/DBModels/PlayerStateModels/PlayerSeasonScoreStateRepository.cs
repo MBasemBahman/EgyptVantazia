@@ -48,7 +48,7 @@ namespace Repository.DBModels.PlayerStateModels
             }
         }
 
-        public void UpdatePlayerPosition(int fk_Season, int fk_ScoreState)
+        public void UpdatePlayerSeasonScoreStatePosition(int fk_Season, int fk_ScoreState)
         {
             List<PlayerSeasonScoreStateCalcModel> scores = FindByCondition(a => a.Fk_ScoreState == fk_ScoreState &&
                                                                                 a.Fk_Season == fk_Season, trackChanges: true)

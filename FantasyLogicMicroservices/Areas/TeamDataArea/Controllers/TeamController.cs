@@ -23,7 +23,7 @@ namespace FantasyLogicMicroservices.Areas.TeamDataArea.Controllers
         [Route(nameof(UpdateTeams))]
         public IActionResult UpdateTeams()
         {
-            _fantasyUnitOfWork.TeamDataHelper.RunUpdateTeams(1);
+            _fantasyUnitOfWork.TeamDataHelper.RunUpdateTeams();
 
             return Ok();
         }

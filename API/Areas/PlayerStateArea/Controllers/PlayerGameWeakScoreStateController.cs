@@ -1,16 +1,16 @@
 ﻿using API.Controllers;
-using Entities.CoreServicesModels.PlayerScoreModels;
+using Entities.CoreServicesModels.PlayerStateModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace API.Areas.PlayerScoreArea.Controllers
 {
     [ApiVersion("1.0")]
-    [Area("PlayerScore")]
-    [ApiExplorerSettings(GroupName = "PlayerScore")]
+    [Area("PlayerState")]
+    [ApiExplorerSettings(GroupName = "PlayerState")]
     [Route("[area]/v{version:apiVersion}/[controller]")]
-    public class ScoreTypeController : ExtendControllerBase
+    public class PlayerGameWeakScoreStateController : ExtendControllerBase
     {
-        public ScoreTypeController(
+        public PlayerGameWeakScoreStateController(
         ILoggerManager logger,
         IMapper mapper,
         UnitOfWork unitOfWork,
@@ -20,13 +20,13 @@ namespace API.Areas.PlayerScoreArea.Controllers
         { }
 
         [HttpGet]
-        [Route(nameof(GetScoreTypes))]
-        public async Task<IEnumerable<ScoreTypeModel>> GetScoreTypes(
-        [FromQuery] ScoreTypeParameters parameters)
+        [Route(nameof(GetPlayerGameWeakScoreStates))]
+        public async Task<IEnumerable<PlayerGameWeakScoreStateModel>> GetPlayerGameWeakScoreStates(
+        [FromQuery] PlayerGameWeakScoreStateParameters parameters)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
-            
-            PagedList<ScoreTypeModel> data = await _unitOfWork.PlayerScore.GetScoreTypePaged(parameters, otherLang);
+
+            PagedList<PlayerGameWeakScoreStateModel> data = await _unitOfWork.PlayerState.GetPlayerGameWeakScoreStatePaged(parameters, otherLang);
 
             SetPagination(data.MetaData, parameters);
 
@@ -34,13 +34,13 @@ namespace API.Areas.PlayerScoreArea.Controllers
         }
 
         [HttpGet]
-        [Route(nameof(GetScoreTypeById))]
-        public ScoreTypeModel GetScoreTypeById(
+        [Route(nameof(GetPlayerGameWeakScoreStateById))]
+        public PlayerGameWeakScoreStateModel GetPlayerGameWeakScoreStateById(
         [FromQuery, BindRequired] int id)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
-            ScoreTypeModel data = _unitOfWork.PlayerScore.GetScoreTypebyId(id, otherLang);
+            PlayerGameWeakScoreStateModel data = _unitOfWork.PlayerState.GetPlayerGameWeakScoreStatebyId(id, otherLang);
 
             return data;
         }

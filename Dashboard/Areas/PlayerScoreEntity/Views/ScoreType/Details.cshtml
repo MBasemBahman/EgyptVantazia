@@ -31,9 +31,6 @@
                 <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model._365_TypeId):</dt>
                 <dd class="col-sm-8 mb-1">@Model._365_TypeId</dd>
 
-                <dt class="col-sm-4 fw-bolder mb-1">@Localizer.Get("BestPlayer"):</dt>
-                <dd class="col-sm-8 mb-1">@Model.BestPlayer?.Name</dd>
-
                 <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.IsEvent):</dt>
                 <dd class="col-sm-8 mb-1">@(Model.IsEvent ? Localizer.Get("Yes") : Localizer.Get("No"))</dd>
             </dl>

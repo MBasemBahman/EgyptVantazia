@@ -44,7 +44,6 @@ namespace Dashboard.Areas.PlayerScoreEntity.Controllers
             ScoreTypeParameters parameters = new()
             {
                 SearchColumns = "Id,Name",
-                IncludeBestPlayer = true
             };
 
             _ = _mapper.Map(dtParameters, parameters);

@@ -1,11 +1,5 @@
-﻿using Entities.CoreServicesModels.PlayerScoreModels;
-using Entities.CoreServicesModels.PlayerStateModels;
-using Entities.CoreServicesModels.SeasonModels;
-using Entities.CoreServicesModels.TeamModels;
-using Entities.DBModels.PlayerScoreModels;
+﻿using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.DBModels.PlayerStateModels;
-using Entities.RequestFeatures;
-
 namespace Repository.DBModels.PlayerStateModels
 {
     public class PlayerGameWeakScoreStateRepository : RepositoryBase<PlayerGameWeakScoreState>

@@ -33,49 +33,7 @@ namespace CoreServices.Logic
                            Description = x.Description,
                            HavePoints = x.HavePoints,
                            IsEvent = x.IsEvent,
-                           _365_EventTypeId = x._365_EventTypeId,
-                           BestPlayer = parameters.IncludeBestPlayer ?
-                                        x.PlayerGameWeakScores
-                                         .Where(a => (parameters.Fk_Season == 0 || a.PlayerGameWeak.TeamGameWeak.GameWeak.Fk_Season == parameters.Fk_Season) &&
-                                                     (parameters.Fk_GameWeak == 0 || a.PlayerGameWeak.TeamGameWeak.Fk_GameWeak == parameters.Fk_GameWeak))
-                                         .OrderByDescending(b => b.Points)
-                                         .Select(b => b.PlayerGameWeak.Player)
-                                         .Select(a => new PlayerModel
-                                         {
-                                             Id = a.Id,
-                                             Name = otherLang ? a.PlayerLang.Name : a.Name,
-                                             ImageUrl = !string.IsNullOrEmpty(a.ImageUrl) ? a.StorageUrl + a.ImageUrl : a.Team.ShirtStorageUrl + a.Team.ShirtImageUrl,
-                                             Fk_PlayerPosition = a.Fk_PlayerPosition,
-                                             Fk_Team = a.Fk_Team,
-                                             PlayerNumber = a.PlayerNumber,
-                                             PlayerPosition = new PlayerPositionModel
-                                             {
-                                                 Name = otherLang ? a.PlayerPosition.PlayerPositionLang.Name : a.PlayerPosition.Name,
-                                                 ImageUrl = a.PlayerPosition.StorageUrl + a.PlayerPosition.ImageUrl,
-                                                 _365_PositionId = a.PlayerPosition._365_PositionId
-                                             },
-                                             Team = new TeamModel
-                                             {
-                                                 Name = otherLang ? a.Team.TeamLang.Name : a.Team.Name,
-                                                 ImageUrl = a.Team.StorageUrl + a.Team.ImageUrl,
-                                                 _365_TeamId = a.Team._365_TeamId
-                                             },
-                                             BuyPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault(),
-                                             SellPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.SellPrice).FirstOrDefault(),
-                                             ScorePoints = a.PlayerGameWeaks
-                                                            .SelectMany(b => b.PlayerGameWeakScores)
-                                                            .Where(b => b.Fk_ScoreType == x.Id &&
-                                                                        (parameters.Fk_Season == 0 || b.PlayerGameWeak.TeamGameWeak.GameWeak.Fk_Season == parameters.Fk_Season) &&
-                                                                        (parameters.Fk_GameWeak == 0 || b.PlayerGameWeak.TeamGameWeak.Fk_GameWeak == parameters.Fk_GameWeak))
-                                                            .Select(b => b.Points).Sum(),
-                                             ScoreValues = a.PlayerGameWeaks
-                                                            .SelectMany(b => b.PlayerGameWeakScores)
-                                                            .Where(b => b.Fk_ScoreType == x.Id &&
-                                                                        (parameters.Fk_Season == 0 || b.PlayerGameWeak.TeamGameWeak.GameWeak.Fk_Season == parameters.Fk_Season) &&
-                                                                        (parameters.Fk_GameWeak == 0 || b.PlayerGameWeak.TeamGameWeak.Fk_GameWeak == parameters.Fk_GameWeak))
-                                                            .Select(b => b.FinalValue).Sum()
-                                         })
-                                         .FirstOrDefault() : null
+                           _365_EventTypeId = x._365_EventTypeId
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);
@@ -111,7 +69,7 @@ namespace CoreServices.Logic
 
         public ScoreTypeModel GetScoreTypebyId(int id, bool otherLang)
         {
-            return GetScoreTypes(new ScoreTypeParameters { Id = id, IncludeBestPlayer = true }, otherLang).SingleOrDefault();
+            return GetScoreTypes(new ScoreTypeParameters { Id = id }, otherLang).SingleOrDefault();
         }
 
         public int GetScoreTypeCount()

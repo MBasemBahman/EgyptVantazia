@@ -186,15 +186,72 @@ namespace CoreServices.Logic
         {
             return _repository.ScoreState
                        .FindAll(parameters, trackChanges: false)
-                       .Select(a => new ScoreStateModel
+                       .Select(b => new ScoreStateModel
                        {
-                           Id = a.Id,
-                           CreatedAt = a.CreatedAt,
-                           CreatedBy = a.CreatedBy,
-                           LastModifiedAt = a.LastModifiedAt,
-                           LastModifiedBy = a.LastModifiedBy,
-                           Name = otherLang ? a.ScoreStateLang.Name : a.Name,
-                           Description = a.Description,
+                           Id = b.Id,
+                           CreatedAt = b.CreatedAt,
+                           CreatedBy = b.CreatedBy,
+                           LastModifiedAt = b.LastModifiedAt,
+                           LastModifiedBy = b.LastModifiedBy,
+                           Name = otherLang ? b.ScoreStateLang.Name : b.Name,
+                           Description = b.Description,
+                           BestPlayer = parameters.IncludeBestPlayer == false ? null :
+                                        parameters.Fk_Season > 0 ?
+                                        b.PlayerSeasonScoreStates
+                                         .OrderByDescending(a => a.PositionByPoints)
+                                         .Select(a => a.Player)
+                                         .Select(a => new PlayerModel
+                                         {
+                                             Id = a.Id,
+                                             Name = otherLang ? a.PlayerLang.Name : a.Name,
+                                             ImageUrl = !string.IsNullOrEmpty(a.ImageUrl) ? a.StorageUrl + a.ImageUrl : a.Team.ShirtStorageUrl + a.Team.ShirtImageUrl,
+                                             Fk_PlayerPosition = a.Fk_PlayerPosition,
+                                             Fk_Team = a.Fk_Team,
+                                             PlayerNumber = a.PlayerNumber,
+                                             PlayerPosition = new PlayerPositionModel
+                                             {
+                                                 Name = otherLang ? a.PlayerPosition.PlayerPositionLang.Name : a.PlayerPosition.Name,
+                                                 ImageUrl = a.PlayerPosition.StorageUrl + a.PlayerPosition.ImageUrl,
+                                                 _365_PositionId = a.PlayerPosition._365_PositionId
+                                             },
+                                             Team = new TeamModel
+                                             {
+                                                 Name = otherLang ? a.Team.TeamLang.Name : a.Team.Name,
+                                                 ImageUrl = a.Team.StorageUrl + a.Team.ImageUrl,
+                                                 _365_TeamId = a.Team._365_TeamId
+                                             },
+                                             BuyPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault(),
+                                             SellPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.SellPrice).FirstOrDefault(),
+                                         })
+                                         .FirstOrDefault() :
+                                        parameters.Fk_GameWeak > 0 ?
+                                        b.PlayerGameWeakScoreStates
+                                         .OrderByDescending(a => a.PositionByPoints)
+                                         .Select(a => a.Player)
+                                         .Select(a => new PlayerModel
+                                         {
+                                             Id = a.Id,
+                                             Name = otherLang ? a.PlayerLang.Name : a.Name,
+                                             ImageUrl = !string.IsNullOrEmpty(a.ImageUrl) ? a.StorageUrl + a.ImageUrl : a.Team.ShirtStorageUrl + a.Team.ShirtImageUrl,
+                                             Fk_PlayerPosition = a.Fk_PlayerPosition,
+                                             Fk_Team = a.Fk_Team,
+                                             PlayerNumber = a.PlayerNumber,
+                                             PlayerPosition = new PlayerPositionModel
+                                             {
+                                                 Name = otherLang ? a.PlayerPosition.PlayerPositionLang.Name : a.PlayerPosition.Name,
+                                                 ImageUrl = a.PlayerPosition.StorageUrl + a.PlayerPosition.ImageUrl,
+                                                 _365_PositionId = a.PlayerPosition._365_PositionId
+                                             },
+                                             Team = new TeamModel
+                                             {
+                                                 Name = otherLang ? a.Team.TeamLang.Name : a.Team.Name,
+                                                 ImageUrl = a.Team.StorageUrl + a.Team.ImageUrl,
+                                                 _365_TeamId = a.Team._365_TeamId
+                                             },
+                                             BuyPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault(),
+                                             SellPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.SellPrice).FirstOrDefault(),
+                                         })
+                                         .FirstOrDefault() : null
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

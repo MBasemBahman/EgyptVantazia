@@ -35,14 +35,9 @@ namespace FantasyLogic.DataMigration.TeamData
             string jobId = null;
             foreach (TeamModel team in teams)
             {
-                if (jobId.IsExisting())
-                {
-                    jobId = BackgroundJob.ContinueJobWith(jobId, () => UpdatePlayers(team, positions, jobId));
-                }
-                else
-                {
-                    jobId = BackgroundJob.Enqueue(() => UpdatePlayers(team, positions, jobId));
-                }
+                jobId = jobId.IsExisting()
+                    ? BackgroundJob.ContinueJobWith(jobId, () => UpdatePlayers(team, positions, jobId))
+                    : BackgroundJob.Enqueue(() => UpdatePlayers(team, positions, jobId));
             }
         }
 
@@ -70,14 +65,9 @@ namespace FantasyLogic.DataMigration.TeamData
                 int fk_PlayerPosition = positions.Where(a => a._365_PositionId == athletesInArabic[i].Position.Id.ToString())
                                                  .Select(a => a.Id)
                                                  .FirstOrDefault();
-                if (jobId.IsExisting())
-                {
-                    jobId = BackgroundJob.ContinueJobWith(jobId, () => UpdatePlayer(athletesInArabic[i], athletesInEnglish[i], team.Id, fk_PlayerPosition));
-                }
-                else
-                {
-                    jobId = BackgroundJob.Enqueue(() => UpdatePlayer(athletesInArabic[i], athletesInEnglish[i], team.Id, fk_PlayerPosition));
-                }
+                jobId = jobId.IsExisting()
+                    ? BackgroundJob.ContinueJobWith(jobId, () => UpdatePlayer(athletesInArabic[i], athletesInEnglish[i], team.Id, fk_PlayerPosition))
+                    : BackgroundJob.Enqueue(() => UpdatePlayer(athletesInArabic[i], athletesInEnglish[i], team.Id, fk_PlayerPosition));
             }
         }
 

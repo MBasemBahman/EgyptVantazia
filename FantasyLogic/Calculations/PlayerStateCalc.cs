@@ -24,9 +24,9 @@ namespace FantasyLogic.Calculations
                 .ToList();
 
             string jobId = null;
-            foreach (var player in players)
+            foreach (int player in players)
             {
-                PlayerStateCalculations(player, fk_Season, fk_GameWeak, scoreStates, jobId);
+                _ = PlayerStateCalculations(player, fk_Season, fk_GameWeak, scoreStates, jobId);
             }
         }
 
@@ -87,7 +87,7 @@ namespace FantasyLogic.Calculations
 
         public string PlayerCalculations(int fk_Player, int fk_Season, int fk_GameWeak, string jobId)
         {
-            var playescore = _unitOfWork.Team.GetPlayerCustomStateResult(fk_Player, fk_Season, fk_GameWeak);
+            PlayerCustomStateResult playescore = _unitOfWork.Team.GetPlayerCustomStateResult(fk_Player, fk_Season, fk_GameWeak);
 
             if (playescore != null)
             {
@@ -209,21 +209,17 @@ namespace FantasyLogic.Calculations
                     (int)ScoreTypeEnum.CleanSheet
                 };
             }
-            if (scoreState == (int)ScoreStateEnum.Goals)
-            {
-                return new List<int>
+            return scoreState == (int)ScoreStateEnum.Goals
+                ? new List<int>
                 {
                     (int)ScoreTypeEnum.Goals
-                };
-            }
-            if (scoreState == (int)ScoreStateEnum.Assists)
-            {
-                return new List<int>
+                }
+                : scoreState == (int)ScoreStateEnum.Assists
+                ? new List<int>
                 {
                     (int)ScoreTypeEnum.Assists
-                };
-            }
-            return scoreState == (int)ScoreStateEnum.GoalkeeperSaves
+                }
+                : scoreState == (int)ScoreStateEnum.GoalkeeperSaves
                 ? new List<int>
                 {
                     (int)ScoreTypeEnum.GoalkeeperSaves

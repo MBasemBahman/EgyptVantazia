@@ -29,14 +29,9 @@ namespace FantasyLogic.DataMigration.SeasonData
             string jobId = null;
             foreach (int round in rounds)
             {
-                if (jobId.IsExisting())
-                {
-                    jobId = BackgroundJob.ContinueJobWith(jobId, () => UpdateGameWeak(round, _365_SeasonId));
-                }
-                else
-                {
-                    jobId = BackgroundJob.Enqueue(() => UpdateGameWeak(round, _365_SeasonId));
-                }
+                jobId = jobId.IsExisting()
+                    ? BackgroundJob.ContinueJobWith(jobId, () => UpdateGameWeak(round, _365_SeasonId))
+                    : BackgroundJob.Enqueue(() => UpdateGameWeak(round, _365_SeasonId));
             }
 
             _ = BackgroundJob.ContinueJobWith(jobId, () => UpdateCurrentGameWeak(fk_season, _365_SeasonId));

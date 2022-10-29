@@ -48,14 +48,9 @@ namespace FantasyLogic.DataMigration.StandingsData
                                    .Select(a => a.Id)
                                    .FirstOrDefault();
 
-                if (jobId.IsExisting())
-                {
-                    jobId = BackgroundJob.ContinueJobWith(jobId, () => UpdateStanding(row, fk_Season, fk_Team));
-                }
-                else
-                {
-                    jobId = BackgroundJob.Enqueue(() => UpdateStanding(row, fk_Season, fk_Team), TimeSpan.FromMinutes(delayMinutes));
-                }
+                jobId = jobId.IsExisting()
+                    ? BackgroundJob.ContinueJobWith(jobId, () => UpdateStanding(row, fk_Season, fk_Team))
+                    : BackgroundJob.Enqueue(() => UpdateStanding(row, fk_Season, fk_Team), TimeSpan.FromMinutes(delayMinutes));
             }
         }
 

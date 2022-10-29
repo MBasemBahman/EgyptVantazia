@@ -46,14 +46,9 @@ namespace FantasyLogic.DataMigration.TeamData
 
             for (int i = 0; i < competitorsInArabic.Count; i++)
             {
-                if (jobId.IsExisting())
-                {
-                    jobId = BackgroundJob.ContinueJobWith(jobId, () => UpdateTeam(competitorsInArabic[i], competitorsInEnglish[i]));
-                }
-                else
-                {
-                    jobId = BackgroundJob.Enqueue(() => UpdateTeam(competitorsInArabic[i], competitorsInEnglish[i]));
-                }
+                jobId = jobId.IsExisting()
+                    ? BackgroundJob.ContinueJobWith(jobId, () => UpdateTeam(competitorsInArabic[i], competitorsInEnglish[i]))
+                    : BackgroundJob.Enqueue(() => UpdateTeam(competitorsInArabic[i], competitorsInEnglish[i]));
             }
         }
 

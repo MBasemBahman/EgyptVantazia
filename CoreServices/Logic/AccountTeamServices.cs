@@ -295,6 +295,7 @@ namespace CoreServices.Logic
                            IsPrimary = parameters.IsCurrent ? a.AccountTeamPlayerGameWeaks.Any(b => b.GameWeak.IsCurrent && b.IsPrimary) : parameters.Fk_GameWeak != 0 && a.AccountTeamPlayerGameWeaks.Any(b => b.Fk_GameWeak == parameters.Fk_GameWeak && b.IsPrimary),
                            Player = new PlayerModel
                            {
+                               Id = a.Fk_Player,
                                Name = otherLang ? a.Player.PlayerLang.Name : a.Player.Name,
                                ImageUrl = !string.IsNullOrEmpty(a.Player.ImageUrl) ? a.Player.StorageUrl + a.Player.ImageUrl : a.Player.Team.ShirtStorageUrl + a.Player.Team.ShirtImageUrl,
                                _365_PlayerId = a.Player._365_PlayerId,

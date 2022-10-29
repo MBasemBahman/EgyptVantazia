@@ -1,4 +1,5 @@
 ﻿using Entities.CoreServicesModels.PlayerScoreModels;
+using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayerStateModels;
@@ -256,8 +257,8 @@ namespace FantasyLogic.Calculations
                                              .GetGameWeaks(parameters, otherLang: false)
                                              .Select(a => a.Id).ToList();
 
-            List<int> scoreStates = _unitOfWork.PlayerScore
-                                               .GetScoreTypes(new ScoreTypeParameters(), otherLang: false)
+            List<int> scoreStates = _unitOfWork.PlayerState
+                                               .GetScoreStates(new ScoreStateParameters(), otherLang: false)
                                                .Select(a => a.Id).ToList();
 
             string jobId = null;
@@ -265,6 +266,8 @@ namespace FantasyLogic.Calculations
             {
                 foreach (var scoreState in scoreStates)
                 {
+                    //UpdatePlayerScoreStatePosition(0, gameWeak, scoreState);
+
                     jobId = jobId.IsExisting()
                         ? BackgroundJob.ContinueJobWith(jobId, () => UpdatePlayerScoreStatePosition(0, gameWeak, scoreState))
                         : BackgroundJob.Enqueue(() => UpdatePlayerScoreStatePosition(0, gameWeak, scoreState));
@@ -273,13 +276,15 @@ namespace FantasyLogic.Calculations
 
             foreach (var scoreState in scoreStates)
             {
+                //UpdatePlayerScoreStatePosition(season.Id, 0, scoreState);
+
                 jobId = jobId.IsExisting()
                         ? BackgroundJob.ContinueJobWith(jobId, () => UpdatePlayerScoreStatePosition(season.Id, 0, scoreState))
                         : BackgroundJob.Enqueue(() => UpdatePlayerScoreStatePosition(season.Id, 0, scoreState));
             }
         }
 
-        private void UpdatePlayerScoreStatePosition(int fk_Season, int fk_GameWeak, int scoreState)
+        public void UpdatePlayerScoreStatePosition(int fk_Season, int fk_GameWeak, int scoreState)
         {
             if (fk_Season > 0)
             {

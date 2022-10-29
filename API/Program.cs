@@ -38,7 +38,7 @@ builder.Services.AddControllers(opt =>
 });
 //builder.Services.ConfigureFirebase(config.AppSettings);
 builder.Services.ConfigureEmailSender(builder.Configuration);
-builder.Services.ConfigureHangfire(builder.Configuration);
+//builder.Services.ConfigureHangfire(builder.Configuration);
 
 WebApplication app = builder.Build();
 
@@ -69,11 +69,11 @@ app.ConfigureExceptionHandler(logger);
 
 app.UseRouting();
 
-app.UseHangfireDashboard("/schedulejobs", new DashboardOptions
-{
-    AppPath = "",
-    DashboardTitle = "schedule jobs",
-});
+//app.UseHangfireDashboard("/schedulejobs", new DashboardOptions
+//{
+//    AppPath = "",
+//    DashboardTitle = "schedule jobs",
+//});
 
 app.UseEndpoints(endpoints =>
 {

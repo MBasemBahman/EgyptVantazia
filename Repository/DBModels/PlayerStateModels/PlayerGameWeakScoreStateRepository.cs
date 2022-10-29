@@ -54,21 +54,11 @@ namespace Repository.DBModels.PlayerStateModels
 
         public void UpdatePlayerGameWeakScoreStatePosition(int fk_GameWeak, int fk_ScoreState)
         {
-            List<PlayerGameWeakScoreStateCalcModel> scores = FindAll(new PlayerGameWeakScoreStateParameters
+            List<PlayerGameWeakScoreState> scores = FindAll(new PlayerGameWeakScoreStateParameters
             {
                 Fk_GameWeak = fk_GameWeak,
                 Fk_ScoreState = fk_ScoreState
-            }, trackChanges: true)
-                     .Select(a => new PlayerGameWeakScoreStateCalcModel
-                     {
-                         Points = a.Points,
-                         Percent = a.Percent,
-                         Value = a.Value,
-                         PositionByPoints = a.PositionByPoints,
-                         PositionByValue = a.PositionByValue,
-                         PositionByPercent = a.PositionByPercent
-                     })
-                     .ToList();
+            }, trackChanges: true).ToList();
 
             double[] pointsRanks = scores.Select(a => a.Points).Distinct().OrderByDescending(a => a).ToArray();
             double[] valueRanks = scores.Select(a => a.Value).Distinct().OrderByDescending(a => a).ToArray();
@@ -76,9 +66,9 @@ namespace Repository.DBModels.PlayerStateModels
 
             scores.ForEach(a =>
             {
-                a.PositionByPoints = Array.IndexOf(pointsRanks, a) + 1;
-                a.PositionByValue = Array.IndexOf(valueRanks, a) + 1;
-                a.PositionByPercent = Array.IndexOf(percentRanks, a) + 1;
+                a.PositionByPoints = Array.IndexOf(pointsRanks, a.Points) + 1;
+                a.PositionByValue = Array.IndexOf(valueRanks, a.Value) + 1;
+                a.PositionByPercent = Array.IndexOf(percentRanks, a.Percent) + 1;
             });
         }
     }

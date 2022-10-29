@@ -19,7 +19,7 @@ namespace FantasyLogic.DataMigration.GamesData
             _gamesHelper = new GamesHelper(unitOfWork, _365Services);
         }
 
-        public void RunUpdateGames(int delayMinutes)
+        public void RunUpdateGames()
         {
             List<TeamDto> teams = _unitOfWork.Team.GetTeams(new TeamParameters
             {
@@ -29,10 +29,10 @@ namespace FantasyLogic.DataMigration.GamesData
                 _365_TeamId = a._365_TeamId
             }).ToList();
 
-            _ = BackgroundJob.Schedule(() => UpdateGames(teams, delayMinutes), TimeSpan.FromMinutes(delayMinutes));
+            _ = BackgroundJob.Enqueue(() => UpdateGames(teams));
         }
 
-        public void UpdateGames(List<TeamDto> teams, int delayMinutes)
+        public void UpdateGames(List<TeamDto> teams)
         {
             SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
 
@@ -47,13 +47,22 @@ namespace FantasyLogic.DataMigration.GamesData
 
             List<Games> games = _gamesHelper.GetAllGames(season._365_SeasonId.ParseToInt()).Result.OrderBy(a => a.RoundNum).ThenBy(a => a.StartTimeVal).ToList();
 
+            string jobId = null;
+
             foreach (Games game in games)
             {
                 int fk_Home = teams.Where(a => a._365_TeamId == game.HomeCompetitor.Id.ToString()).Select(a => a.Id).FirstOrDefault();
                 int fk_Away = teams.Where(a => a._365_TeamId == game.AwayCompetitor.Id.ToString()).Select(a => a.Id).FirstOrDefault();
                 int fk_GameWeak = gameWeaks.Where(a => a._365_GameWeakId == game.RoundNum.ToString()).Select(a => a.Id).FirstOrDefault();
 
-                _ = BackgroundJob.Schedule(() => UpdateGame(game, fk_Home, fk_Away, fk_GameWeak), TimeSpan.FromMinutes(delayMinutes));
+                if (jobId.IsExisting())
+                {
+                    jobId = BackgroundJob.ContinueJobWith(jobId, () => UpdateGame(game, fk_Home, fk_Away, fk_GameWeak));
+                }
+                else
+                {
+                    jobId = BackgroundJob.Enqueue(() => UpdateGame(game, fk_Home, fk_Away, fk_GameWeak));
+                }
             }
         }
 

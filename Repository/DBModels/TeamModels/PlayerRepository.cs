@@ -85,8 +85,7 @@ namespace Repository.DBModels.TeamModels
         {
             return Players.Where(a => (id == 0 || a.Id == id) &&
                                       (Fk_Team == 0 || a.Fk_Team == Fk_Team) &&
-                                      (Fk_GameWeak == 0 || a.PlayerGameWeaks.Select(a => a.Fk_TeamGameWeak)
-                                          .Contains(Fk_GameWeak)) &&
+                                      (Fk_GameWeak == 0 || a.PlayerGameWeaks.Any(a => a.TeamGameWeak.Fk_GameWeak == Fk_GameWeak)) &&
                                       (createdAtFrom == null || a.CreatedAt >= createdAtFrom) &&
                                       (createdAtTo == null || a.CreatedAt <= createdAtTo) &&
                                       (fk_TeamGameWeak_Ignored == 0 || !a.PlayerGameWeaks.Any(b => b.Fk_TeamGameWeak == fk_TeamGameWeak_Ignored)) &&

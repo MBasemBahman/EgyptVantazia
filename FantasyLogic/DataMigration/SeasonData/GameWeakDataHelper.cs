@@ -15,23 +15,31 @@ namespace FantasyLogic.DataMigration.SeasonData
             _gamesHelper = new GamesHelper(unitOfWork, _365Services);
         }
 
-        public void RunUpdateGameWeaks(int delayMinutes)
+        public void RunUpdateGameWeaks()
         {
             SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
 
-            _ = BackgroundJob.Schedule(() => UpdateSeasonGameWeaks(season.Id, season._365_SeasonId.ParseToInt(), delayMinutes), TimeSpan.FromMinutes(delayMinutes));
+            _ = BackgroundJob.Enqueue(() => UpdateSeasonGameWeaks(season.Id, season._365_SeasonId.ParseToInt()));
         }
 
-        public void UpdateSeasonGameWeaks(int fk_season, int _365_SeasonId, int delayMinutes)
+        public void UpdateSeasonGameWeaks(int fk_season, int _365_SeasonId)
         {
             List<int> rounds = _gamesHelper.GetAllGames(_365_SeasonId).Result.Select(a => a.RoundNum).Distinct().OrderBy(a => a).ToList();
 
+            string jobId = null;
             foreach (int round in rounds)
             {
-                _ = BackgroundJob.Schedule(() => UpdateGameWeak(round, _365_SeasonId), TimeSpan.FromMinutes(delayMinutes));
+                if (jobId.IsExisting())
+                {
+                    jobId = BackgroundJob.ContinueJobWith(jobId, () => UpdateGameWeak(round, _365_SeasonId));
+                }
+                else
+                {
+                    jobId = BackgroundJob.Enqueue(() => UpdateGameWeak(round, _365_SeasonId));
+                }
             }
 
-            _ = BackgroundJob.Schedule(() => UpdateCurrentGameWeak(fk_season, _365_SeasonId), TimeSpan.FromMinutes(delayMinutes * rounds.Count));
+            _ = BackgroundJob.ContinueJobWith(jobId, () => UpdateCurrentGameWeak(fk_season, _365_SeasonId));
         }
 
         public async Task UpdateGameWeak(int round, int fk_Season)

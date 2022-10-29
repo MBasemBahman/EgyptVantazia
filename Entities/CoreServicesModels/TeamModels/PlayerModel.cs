@@ -128,4 +128,14 @@ namespace Entities.CoreServicesModels.TeamModels
         [DisplayName($"{nameof(ShortName)}{PropertyAttributeConstants.EnLang}")]
         public string ShortName { get; set; }
     }
+
+    public class PlayerCustomStateResult
+    {
+        public double BuyingPrice { get; set; }
+        public double SellingPrice { get; set; }
+        public double BuyingCount { get; set; }
+        public double SellingCount { get; set; }
+        public double PlayerSelection { get; set; }
+        public double PlayerCaptain { get; set; }
+    }
 }

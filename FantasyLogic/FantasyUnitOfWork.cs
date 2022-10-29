@@ -1,4 +1,5 @@
-﻿using FantasyLogic.DataMigration.GamesData;
+﻿using FantasyLogic.Calculations;
+using FantasyLogic.DataMigration.GamesData;
 using FantasyLogic.DataMigration.PlayerScoreData;
 using FantasyLogic.DataMigration.SeasonData;
 using FantasyLogic.DataMigration.StandingsData;
@@ -11,25 +12,45 @@ namespace FantasyLogic
         private readonly _365Services _365Services;
         private readonly UnitOfWork _unitOfWork;
 
-        private GameWeakDataHelper _gameWeakDataHelper;
-
-        private StandingsDataHelper _standingsDataHelper;
-
-        private PlayerPositionDataHelper _playerPositionDataHelper;
-        private TeamDataHelper _teamDataHelper;
-        private PlayerDataHelper _playerDataHelper;
-
-        private GamesDataHelper _gamesDataHelper;
-
-        private GameResultDataHelper _gameResultDataHelper;
-        private ScoreTypeDataHelper _scoreTypeDataHelper;
-
         public FantasyUnitOfWork(UnitOfWork unitOfWork, _365Services _365Services)
         {
             this._365Services = _365Services;
             _unitOfWork = unitOfWork;
         }
 
+        #region Private
+        #region SeasonData
+        private GameWeakDataHelper _gameWeakDataHelper;
+        #endregion
+
+        #region StandingsData
+        private StandingsDataHelper _standingsDataHelper;
+        #endregion
+
+        #region TeamData
+        private PlayerPositionDataHelper _playerPositionDataHelper;
+        private TeamDataHelper _teamDataHelper;
+        private PlayerDataHelper _playerDataHelper;
+        #endregion
+
+        #region GamesData
+        private GamesDataHelper _gamesDataHelper;
+        #endregion
+
+        #region PlayerScoreData
+        private GameResultDataHelper _gameResultDataHelper;
+        private ScoreTypeDataHelper _scoreTypeDataHelper;
+        #endregion
+
+        #region PlayerStateCalculations
+        private PlayerStateCalc _PlayerStateCalc;
+        #endregion
+
+        #endregion
+
+        #region Public
+
+        #region SeasonData
         public GameWeakDataHelper GameWeakDataHelper
         {
             get
@@ -39,6 +60,9 @@ namespace FantasyLogic
             }
         }
 
+        #endregion
+
+        #region StandingsData
         public StandingsDataHelper StandingsDataHelper
         {
             get
@@ -47,7 +71,9 @@ namespace FantasyLogic
                 return _standingsDataHelper;
             }
         }
+        #endregion
 
+        #region TeamData
         public PlayerPositionDataHelper PlayerPositionDataHelper
         {
             get
@@ -72,7 +98,9 @@ namespace FantasyLogic
                 return _playerDataHelper;
             }
         }
+        #endregion
 
+        #region GamesData
         public GamesDataHelper GamesDataHelper
         {
             get
@@ -81,6 +109,9 @@ namespace FantasyLogic
                 return _gamesDataHelper;
             }
         }
+        #endregion
+
+        #region PlayerScoreData
         public GameResultDataHelper GameResultDataHelper
         {
             get
@@ -97,6 +128,20 @@ namespace FantasyLogic
                 return _scoreTypeDataHelper;
             }
         }
+        #endregion
+
+        #region PlayerStateCalculations
+        public PlayerStateCalc PlayerStateCalc
+        {
+            get
+            {
+                _PlayerStateCalc ??= new PlayerStateCalc(_unitOfWork);
+                return _PlayerStateCalc;
+            }
+        }
+        #endregion
+
+        #endregion
 
     }
 }

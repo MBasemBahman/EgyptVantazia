@@ -30,7 +30,7 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
         [Route(nameof(UpdateGameWeak))]
         public IActionResult UpdateGameWeak()
         {
-            _fantasyUnitOfWork.GameWeakDataHelper.RunUpdateGameWeaks(1);
+            _fantasyUnitOfWork.GameWeakDataHelper.RunUpdateGameWeaks();
 
             return Ok();
         }

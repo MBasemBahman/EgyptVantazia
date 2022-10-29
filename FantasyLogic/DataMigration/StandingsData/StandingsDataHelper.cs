@@ -16,7 +16,7 @@ namespace FantasyLogic.DataMigration.StandingsData
             _unitOfWork = unitOfWork;
         }
 
-        public void RunUpdateStandings(int delayMinutes)
+        public void RunUpdateStandings()
         {
             List<TeamDto> teams = _unitOfWork.Team.GetTeams(new TeamParameters
             {
@@ -28,10 +28,10 @@ namespace FantasyLogic.DataMigration.StandingsData
 
             SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
 
-            _ = BackgroundJob.Schedule(() => UpdateSeasonStandings(teams, season._365_SeasonId.ParseToInt(), season.Id, delayMinutes), TimeSpan.FromMinutes(delayMinutes));
+            _ = BackgroundJob.Enqueue(() => UpdateSeasonStandings(teams, season._365_SeasonId.ParseToInt(), season.Id));
         }
 
-        public async Task UpdateSeasonStandings(List<TeamDto> teams, int _365_SeasonId, int fk_Season, int delayMinutes)
+        public async Task UpdateSeasonStandings(List<TeamDto> teams, int _365_SeasonId, int fk_Season)
         {
             StandingsReturn standings = await _365Services.GetStandings(new _365StandingsParameters
             {
@@ -41,15 +41,21 @@ namespace FantasyLogic.DataMigration.StandingsData
 
             List<Row> rows = standings.Standings.SelectMany(a => a.Rows).ToList();
 
+            string jobId = null;
             foreach (Row row in rows)
             {
                 int fk_Team = teams.Where(a => a._365_TeamId == row.Competitor.Id.ToString())
                                    .Select(a => a.Id)
                                    .FirstOrDefault();
 
-                _ = BackgroundJob.Schedule(() => UpdateStanding(row, fk_Season, fk_Team), TimeSpan.FromMinutes(delayMinutes));
-
-
+                if (jobId.IsExisting())
+                {
+                    jobId = BackgroundJob.ContinueJobWith(jobId, () => UpdateStanding(row, fk_Season, fk_Team));
+                }
+                else
+                {
+                    jobId = BackgroundJob.Enqueue(() => UpdateStanding(row, fk_Season, fk_Team), TimeSpan.FromMinutes(delayMinutes));
+                }
             }
         }
 

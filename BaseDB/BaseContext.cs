@@ -212,6 +212,9 @@ namespace BaseDB
             _ = modelBuilder.ApplyConfiguration(new AccountTeamGameWeakConfiguration());
             _ = modelBuilder.ApplyConfiguration(new AccountTeamPlayerConfiguration());
             _ = modelBuilder.ApplyConfiguration(new AccountTeamPlayerGameWeakConfiguration());
+            _ = modelBuilder.ApplyConfiguration(new TeamPlayerTypeConfiguration());
+            _ = modelBuilder.ApplyConfiguration(new TeamPlayerTypeLangConfiguration());
+
             #endregion
 
             #region PrivateLeagueModels

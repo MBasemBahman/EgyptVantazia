@@ -24,7 +24,7 @@ namespace FantasyLogicMicroservices.Areas.TeamDataArea.Controllers
         [Route(nameof(UpdatePlayers))]
         public IActionResult UpdatePlayers([FromQuery] TeamParameters parameters)
         {
-            _fantasyUnitOfWork.PlayerDataHelper.RunUpdatePlayers(parameters, 1);
+            _fantasyUnitOfWork.PlayerDataHelper.RunUpdatePlayers(parameters);
 
             return Ok();
         }

@@ -1,14 +1,7 @@
-﻿using Entities.CoreServicesModels.PlayerScoreModels;
-using Entities.CoreServicesModels.PlayerStateModels;
+﻿using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
-using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.PlayerStateModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CoreServices.Logic
 {

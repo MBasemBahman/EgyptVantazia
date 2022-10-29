@@ -16,7 +16,8 @@
 
         public enum TransferTypeEnum
         {
-
+            Buying = 1,
+            Selling = 2
         }
     }
 }

@@ -74,7 +74,7 @@ namespace Repository.DBModels.PlayerScoreModels
                     Points = a.Sum(b => b.Points),
                     FinalValue = a.Sum(b => b.FinalValue)
                 })
-                .Single();
+                .SingleOrDefault();
         }
     }
 }

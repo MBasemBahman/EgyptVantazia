@@ -403,6 +403,11 @@ namespace CoreServices.Logic
         {
             return _repository.PlayerGameWeakScore.Count();
         }
+
+        public PlayerTotalScoreModel GetPlayerTotalScores(int fk_Player, int fk_Season, int fk_GameWeak, List<int> fk_ScoreTypes)
+        {
+            return _repository.PlayerGameWeakScore.GetPlayerTotalScores(fk_Player, fk_Season, fk_GameWeak, fk_ScoreTypes);
+        }
         #endregion
     }
 }

@@ -1,5 +1,8 @@
 ﻿using Entities.CoreServicesModels.TeamModels;
+using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.TeamModels;
+using static Contracts.EnumData.DBModelsEnum;
+using static Entities.EnumData.LogicEnumData;
 
 namespace CoreServices.Logic
 {
@@ -251,11 +254,13 @@ namespace CoreServices.Logic
             Player Player = await FindPlayerbyId(id, trackChanges: true);
             _repository.Player.Delete(Player);
         }
+
         public async Task<string> UploudPlayerImage(string rootPath, IFormFile file)
         {
             FileUploader uploader = new(rootPath);
             return await uploader.UploudFile(file, "Uploud/Player");
         }
+
         public PlayerModel GetPlayerbyId(int id, bool otherLang)
         {
             return GetPlayers(new PlayerParameters { Id = id }, otherLang).SingleOrDefault();
@@ -265,6 +270,46 @@ namespace CoreServices.Logic
         {
             return _repository.Player.Count();
         }
+
+        public PlayerCustomStateResult GetPlayerCustomStateResult(int fk_Player, int fk_Season, int fk_GameWaek)
+        {
+            return _repository.Player.FindAll(new PlayerParameters
+            {
+                Id = fk_Player
+            }, trackChanges: false)
+                .Select(a => new PlayerCustomStateResult
+                {
+                    BuyingCount = a.PlayerTransfers.Count(b => (fk_GameWaek == 0 || b.Fk_GameWeak == fk_GameWaek) &&
+                                                               (fk_GameWaek == 0 || b.GameWeak.Fk_Season == fk_Season) &&
+                                                               b.TransferTypeEnum == TransferTypeEnum.Buying),
+                    SellingCount = a.PlayerTransfers.Count(b => (fk_GameWaek == 0 || b.Fk_GameWeak == fk_GameWaek) &&
+                                                               (fk_GameWaek == 0 || b.GameWeak.Fk_Season == fk_Season) &&
+                                                               b.TransferTypeEnum == TransferTypeEnum.Selling),
+                    BuyingPrice = a.PlayerTransfers.Where(b => (fk_GameWaek == 0 || b.Fk_GameWeak == fk_GameWaek) &&
+                                                               (fk_GameWaek == 0 || b.GameWeak.Fk_Season == fk_Season) &&
+                                                               b.TransferTypeEnum == TransferTypeEnum.Buying)
+                                                   .OrderByDescending(a => a.Id)
+                                                   .Select(a => a.Cost)
+                                                   .FirstOrDefault(),
+                    SellingPrice = a.PlayerTransfers.Where(b => (fk_GameWaek == 0 || b.Fk_GameWeak == fk_GameWaek) &&
+                                                               (fk_GameWaek == 0 || b.GameWeak.Fk_Season == fk_Season) &&
+                                                               b.TransferTypeEnum == TransferTypeEnum.Selling)
+                                                   .OrderByDescending(a => a.Id)
+                                                   .Select(a => a.Cost)
+                                                   .FirstOrDefault(),
+                    PlayerSelection = a.AccountTeamPlayers
+                                       .SelectMany(b => b.AccountTeamPlayerGameWeaks)
+                                       .Count(b => (fk_GameWaek == 0 || b.Fk_GameWeak == fk_GameWaek) &&
+                                                   (fk_GameWaek == 0 || b.GameWeak.Fk_Season == fk_Season)),
+                    PlayerCaptain = a.AccountTeamPlayers
+                                       .SelectMany(b => b.AccountTeamPlayerGameWeaks)
+                                       .Count(b => (fk_GameWaek == 0 || b.Fk_GameWeak == fk_GameWaek) &&
+                                                   (fk_GameWaek == 0 || b.GameWeak.Fk_Season == fk_Season) &&
+                                                   b.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian)
+                })
+                .FirstOrDefault();
+        }
+
         #endregion
 
         #region PlayerPrice Services

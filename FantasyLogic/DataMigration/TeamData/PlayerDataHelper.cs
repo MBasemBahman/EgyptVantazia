@@ -15,14 +15,14 @@ namespace FantasyLogic.DataMigration.TeamData
             _unitOfWork = unitOfWork;
         }
 
-        public void RunUpdatePlayers(TeamParameters parameters, int delayMinutes)
+        public void RunUpdatePlayers(TeamParameters parameters)
         {
             List<TeamModel> teams = _unitOfWork.Team.GetTeams(parameters, otherLang: false).ToList();
 
-            _ = BackgroundJob.Schedule(() => UpdateTeamsPlayers(teams, delayMinutes), TimeSpan.FromMinutes(delayMinutes));
+            _ = BackgroundJob.Enqueue(() => UpdateTeamsPlayers(teams));
         }
 
-        public void UpdateTeamsPlayers(List<TeamModel> teams, int delayMinutes)
+        public void UpdateTeamsPlayers(List<TeamModel> teams)
         {
             List<PlayerPositionDto> positions = _unitOfWork.Team.GetPlayerPositions(new PlayerPositionParameters
             {
@@ -32,14 +32,21 @@ namespace FantasyLogic.DataMigration.TeamData
                 _365_PositionId = a._365_PositionId
             }).ToList();
 
+            string jobId = null;
             foreach (TeamModel team in teams)
             {
-                _ = BackgroundJob.Schedule(() => UpdatePlayers(team, positions, delayMinutes), TimeSpan.FromMinutes(delayMinutes));
-
+                if (jobId.IsExisting())
+                {
+                    jobId = BackgroundJob.ContinueJobWith(jobId, () => UpdatePlayers(team, positions, jobId));
+                }
+                else
+                {
+                    jobId = BackgroundJob.Enqueue(() => UpdatePlayers(team, positions, jobId));
+                }
             }
         }
 
-        public async Task UpdatePlayers(TeamModel team, List<PlayerPositionDto> positions, int delayMinutes)
+        public async Task UpdatePlayers(TeamModel team, List<PlayerPositionDto> positions, string jobId)
         {
             int _365_TeamId = team._365_TeamId.ParseToInt();
 
@@ -63,9 +70,14 @@ namespace FantasyLogic.DataMigration.TeamData
                 int fk_PlayerPosition = positions.Where(a => a._365_PositionId == athletesInArabic[i].Position.Id.ToString())
                                                  .Select(a => a.Id)
                                                  .FirstOrDefault();
-
-                _ = BackgroundJob.Schedule(() => UpdatePlayer(athletesInArabic[i], athletesInEnglish[i], team.Id, fk_PlayerPosition), TimeSpan.FromMinutes(delayMinutes));
-
+                if (jobId.IsExisting())
+                {
+                    jobId = BackgroundJob.ContinueJobWith(jobId, () => UpdatePlayer(athletesInArabic[i], athletesInEnglish[i], team.Id, fk_PlayerPosition));
+                }
+                else
+                {
+                    jobId = BackgroundJob.Enqueue(() => UpdatePlayer(athletesInArabic[i], athletesInEnglish[i], team.Id, fk_PlayerPosition));
+                }
             }
         }
 

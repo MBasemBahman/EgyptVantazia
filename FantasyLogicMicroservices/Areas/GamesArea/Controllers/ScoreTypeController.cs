@@ -21,6 +21,7 @@ namespace FantasyLogicMicroservices.Areas.GamesArea.Controllers
 
         [HttpPost]
         [Route(nameof(UpdateScoreTypes))]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult UpdateScoreTypes()
         {
             _fantasyUnitOfWork.ScoreTypeDataHelper.RunUpdateStates(1);

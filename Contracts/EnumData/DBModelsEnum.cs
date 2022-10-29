@@ -88,12 +88,19 @@
             PenaltiesSaved = 6,
             YellowCard = 7,
             RedCard = 8,
+
             BuyingPrice = 9,
             SellingPrice = 10,
             BuyingCount = 11,
             SellingCount = 12,
             PlayerSelection = 13,
             PlayerCaptain = 14
+        }
+
+        public enum TeamPlayerTypeEnum
+        {
+            Captian = 1,
+            ViceCaptian = 2
         }
     }
 }

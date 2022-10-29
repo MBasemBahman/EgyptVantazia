@@ -21,6 +21,7 @@ namespace FantasyLogicMicroservices.Areas.TeamDataArea.Controllers
 
         [HttpPost]
         [Route(nameof(UpdatePositions))]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult UpdatePositions()
         {
             _fantasyUnitOfWork.PlayerPositionDataHelper.RunUpdatePositions(1);

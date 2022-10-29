@@ -6,6 +6,7 @@ using Dashboard.Areas.Location.Models;
 using Dashboard.Areas.LogEntity.Models;
 using Dashboard.Areas.NewsEntity.Models;
 using Dashboard.Areas.PlayerScoreEntity.Models;
+using Dashboard.Areas.PlayerStateEntity.Models;
 using Dashboard.Areas.PlayerTransferEntity.Models;
 using Dashboard.Areas.PrivateLeagueEntity.Models;
 using Dashboard.Areas.SeasonEntity.Models;
@@ -21,6 +22,7 @@ using Entities.CoreServicesModels.LocationModels;
 using Entities.CoreServicesModels.LogModels;
 using Entities.CoreServicesModels.NewsModels;
 using Entities.CoreServicesModels.PlayerScoreModels;
+using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.PlayerTransfersModels;
 using Entities.CoreServicesModels.PrivateLeagueModels;
 using Entities.CoreServicesModels.SeasonModels;
@@ -36,6 +38,7 @@ using Entities.DBModels.DashboardAdministrationModels;
 using Entities.DBModels.LocationModels;
 using Entities.DBModels.NewsModels;
 using Entities.DBModels.PlayerScoreModels;
+using Entities.DBModels.PlayerStateModels;
 using Entities.DBModels.PrivateLeagueModels;
 using Entities.DBModels.SeasonModels;
 using Entities.DBModels.SponsorModels;
@@ -519,6 +522,47 @@ namespace Dashboard.MappingProfileCls
             _ = CreateMap<SubscriptionLangModel, SubscriptionLang>();
 
             _ = CreateMap<SubscriptionLang, SubscriptionLangModel>();
+
+            #endregion
+
+            #endregion
+
+            #region ScoreState Model
+
+            #region ScoreState
+            _ = CreateMap<ScoreState, ScoreStateCreateOrEditModel>();
+
+            _ = CreateMap<ScoreStateCreateOrEditModel, ScoreState>();
+
+            _ = CreateMap<ScoreStateModel, ScoreStateDto>();
+
+            _ = CreateMap<ScoreStateFilter, ScoreStateParameters>();
+            
+            _ = CreateMap<ScoreStateLangModel, ScoreStateLang>();
+
+            _ = CreateMap<ScoreStateLang, ScoreStateLangModel>();
+
+            #endregion
+            
+            #region PlayerGameWeakScoreState
+            _ = CreateMap<PlayerGameWeakScoreState, PlayerGameWeakScoreStateCreateOrEditModel>();
+
+            _ = CreateMap<PlayerGameWeakScoreStateCreateOrEditModel, PlayerGameWeakScoreState>();
+
+            _ = CreateMap<PlayerGameWeakScoreStateModel, PlayerGameWeakScoreStateDto>();
+
+            _ = CreateMap<PlayerGameWeakScoreStateFilter, PlayerGameWeakScoreStateParameters>();
+
+            #endregion
+            
+            #region PlayerSeasonScoreState
+            _ = CreateMap<PlayerSeasonScoreState, PlayerSeasonScoreStateCreateOrEditModel>();
+
+            _ = CreateMap<PlayerSeasonScoreStateCreateOrEditModel, PlayerSeasonScoreState>();
+
+            _ = CreateMap<PlayerSeasonScoreStateModel, PlayerSeasonScoreStateDto>();
+
+            _ = CreateMap<PlayerSeasonScoreStateFilter, PlayerSeasonScoreStateParameters>();
 
             #endregion
 

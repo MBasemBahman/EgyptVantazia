@@ -26,7 +26,7 @@ namespace Entities.CoreServicesModels.PlayerStateModels
         public PlayerModel BestPlayer { get; set; }
     }
 
-    public class ScoreTypeCreateOrEditModel
+    public class ScoreStateCreateOrEditModel
     {
         [DisplayName($"{nameof(Name)}{PropertyAttributeConstants.ArLang}")]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]

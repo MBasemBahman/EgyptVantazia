@@ -1122,4 +1122,22 @@
   <data name="FinalValue" xml:space="preserve">
     <value>القيمة النهائية</value>
   </data>
+  <data name="ScoreStates" xml:space="preserve">
+    <value>حالات التسجيل</value>
+  </data>
+  <data name="PlayerGameWeakScoreStates" xml:space="preserve">
+    <value>حالات تسجيل اسابيع اللاعبين</value>
+  </data>
+  <data name="PlayerGameWeakScoreState" xml:space="preserve">
+    <value>حالة تسجيل اسابيع اللاعبين</value>
+  </data>
+  <data name="PlayerSeasonScoreStates" xml:space="preserve">
+    <value>حالات تسجيل اللاعبين للموسم</value>
+  </data>
+  <data name="ScoreState" xml:space="preserve">
+    <value>حالة التسجيل</value>
+  </data>
+  <data name="ScoreState Data" xml:space="preserve">
+    <value>بيانات حالات التسجيل</value>
+  </data>
 </root>

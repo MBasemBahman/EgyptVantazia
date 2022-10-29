@@ -5,7 +5,7 @@ namespace Dashboard.Areas.PlayerScoreEntity.Models
 {
     public class ScoreTypeFilter : DtParameters
     {
-
+        public int Id { get; set; }
     }
     public class ScoreTypeDto : ScoreTypeModel
     {

@@ -41,4 +41,11 @@
     <Folder Include="wwwroot\Uploud\Team\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <AdditionalFiles Include="Areas\PlayerStateEntity\Views\ScoreState\CreateOrEdit.cshtml" />
+    <AdditionalFiles Include="Areas\PlayerStateEntity\Views\ScoreState\Delete.cshtml" />
+    <AdditionalFiles Include="Areas\PlayerStateEntity\Views\ScoreState\Details.cshtml" />
+    <AdditionalFiles Include="Areas\PlayerStateEntity\Views\ScoreState\Index.cshtml" />
+  </ItemGroup>
+
 </Project>

@@ -1131,4 +1131,22 @@
   <data name="FinalValue" xml:space="preserve">
     <value>Final Value</value>
   </data>
+  <data name="ScoreStates" xml:space="preserve">
+    <value>Score States</value>
+  </data>
+  <data name="PlayerGameWeakScoreStates" xml:space="preserve">
+    <value>Player GameWeak Score States</value>
+  </data>
+  <data name="PlayerGameWeakScoreState" xml:space="preserve">
+    <value>Player GameWeak Score State</value>
+  </data>
+  <data name="PlayerSeasonScoreStates" xml:space="preserve">
+    <value>Player Season Score States</value>
+  </data>
+  <data name="ScoreState" xml:space="preserve">
+    <value>Score State</value>
+  </data>
+  <data name="ScoreState Data" xml:space="preserve">
+    <value>Score State Data</value>
+  </data>
 </root>

@@ -46,7 +46,10 @@
             TeamGameWeak = 28,
             Standings = 29,
             AccountTeam = 30,
-            Subscription = 31
+            Subscription = 31,
+            ScoreState = 32,
+            PlayerGameWeakScoreState = 33,
+            PlayerSeasonScoreState = 34,
         }
 
         public enum ScoreTypeEnum

@@ -1,6 +1,8 @@
 ﻿using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayerStateModels;
+using Entities.DBModels.SeasonModels;
+using Entities.DBModels.TeamModels;
 using Entities.RequestFeatures;
 
 namespace Entities.CoreServicesModels.PlayerStateModels
@@ -57,11 +59,19 @@ namespace Entities.CoreServicesModels.PlayerStateModels
         public int PositionByPercent { get; set; }
     }
 
-    public class PlayerGameWeakScoreStatCreateOrEditModel
+    public class PlayerGameWeakScoreStateCreateOrEditModel
     {
+        [DisplayName(nameof(Player))]
+        [ForeignKey(nameof(Player))]
+        public int Fk_Player { get; set; }
+        
         [DisplayName(nameof(ScoreState))]
         [ForeignKey(nameof(ScoreState))]
         public int Fk_ScoreState { get; set; }
+        
+        [DisplayName(nameof(GameWeak))]
+        [ForeignKey(nameof(GameWeak))]
+        public int Fk_GameWeak { get; set; }
 
         [DisplayName(nameof(Points))]
         public double Points { get; set; }

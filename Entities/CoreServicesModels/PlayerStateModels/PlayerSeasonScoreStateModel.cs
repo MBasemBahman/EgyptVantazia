@@ -1,6 +1,8 @@
 ﻿using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayerStateModels;
+using Entities.DBModels.SeasonModels;
+using Entities.DBModels.TeamModels;
 using Entities.RequestFeatures;
 
 namespace Entities.CoreServicesModels.PlayerStateModels
@@ -59,6 +61,14 @@ namespace Entities.CoreServicesModels.PlayerStateModels
 
     public class PlayerSeasonScoreStateCreateOrEditModel
     {
+        [DisplayName(nameof(Season))]
+        [ForeignKey(nameof(Season))]
+        public int Fk_Season { get; set; }
+        
+        [DisplayName(nameof(Player))]
+        [ForeignKey(nameof(Player))]
+        public int Fk_Player { get; set; }
+        
         [DisplayName(nameof(ScoreState))]
         [ForeignKey(nameof(ScoreState))]
         public int Fk_ScoreState { get; set; }

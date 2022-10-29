@@ -83,6 +83,51 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        [Route(nameof(CheckNotRegistered))]
+        [AllowAnonymous]
+        public async Task<bool> CheckNotRegistered(
+           [FromBody] UserForResetDto model)
+        {
+            User user = await _unitOfWork.User.FindByUserName(model.UserName, trackChanges: false);
+
+            if (user != null)
+            {
+                throw new Exception("Account already registered!");
+            }
+
+            return true;
+        }
+
+        [HttpPost]
+        [Route(nameof(ResetUser))]
+        [AllowAnonymous]
+        public async Task<string> ResetUser(
+           [FromBody] UserForResetDto model)
+        {
+            model.UserName = RegexService.GetUserName(model.UserName);
+
+            User user = await _unitOfWork.User.FindByUserName(model.UserName, trackChanges: true);
+
+            if (user == null)
+            {
+                throw new Exception("Not Found!");
+            }
+
+            Verification verification = _unitOfWork.User.GenerateVerification(IpAddress(), _appSettings.VerificationTTL);
+
+            user.Verifications = new List<Verification>
+            {
+                verification
+            };
+
+            //await SendVerification(user.EmailAddress, user.Verifications.Single().Code);
+
+            await _unitOfWork.Save();
+
+            return verification.Code;
+        }
+
+        [HttpPost]
         [Route(nameof(VerificateUser))]
         [AllowAnonymous]
         public async Task<bool> VerificateUser(

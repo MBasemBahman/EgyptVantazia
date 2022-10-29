@@ -33,7 +33,7 @@ namespace CoreServices.Logic
                            Description = x.Description,
                            HavePoints = x.HavePoints,
                            IsEvent = x.IsEvent,
-                           _365_EventTypeId = x._365_EventTypeId
+                           _365_EventTypeId = x._365_EventTypeId,
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);
@@ -132,6 +132,22 @@ namespace CoreServices.Logic
                                Fk_PlayerPosition = a.Player.Fk_PlayerPosition,
                                Fk_Team = a.Player.Fk_Team
                            },
+                           PlayerGameWeakScores = parameters.IncludeScore ?
+                                                  a.PlayerGameWeakScores
+                                                   .Select(b => new PlayerGameWeakScoreModel
+                                                   {
+                                                       Id = b.Id,
+                                                       Fk_ScoreType = b.Fk_ScoreType,
+                                                       Points = b.Points,
+                                                       Value = b.Value,
+                                                       GameTime = b.GameTime,
+                                                       FinalValue = b.FinalValue,
+                                                       ScoreType = new ScoreTypeModel
+                                                       {
+                                                           Name = otherLang ? b.ScoreType.ScoreTypeLang.Name : b.ScoreType.Name,
+                                                       },
+                                                   })
+                                                   .ToList() : null
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);
@@ -261,17 +277,6 @@ namespace CoreServices.Logic
                            LastModifiedAt = a.LastModifiedAt,
                            LastModifiedBy = a.LastModifiedBy,
                            Fk_PlayerGameWeak = a.Fk_PlayerGameWeak,
-                           PlayerGameWeak = new PlayerGameWeakModel
-                           {
-                               Position = a.PlayerGameWeak.Position,
-                               Player = new PlayerModel
-                               {
-                                   Id = a.PlayerGameWeak.Player.Id,
-                                   Name = otherLang ? a.PlayerGameWeak.Player.PlayerLang.Name : a.PlayerGameWeak.Player.Name,
-                               },
-                               Ranking = a.PlayerGameWeak.Ranking,
-                               Fk_Player = a.PlayerGameWeak.Fk_Player,
-                           },
                            Fk_ScoreType = a.Fk_ScoreType,
                            Points = a.Points,
                            Value = a.Value,
@@ -283,7 +288,18 @@ namespace CoreServices.Logic
                                Name = otherLang ? a.ScoreType.ScoreTypeLang.Name : a.ScoreType.Name,
                                Description = a.ScoreType.Description,
                                _365_TypeId = a.ScoreType._365_TypeId
-                           }
+                           },
+                           PlayerGameWeak = new PlayerGameWeakModel
+                           {
+                               Position = a.PlayerGameWeak.Position,
+                               Player = new PlayerModel
+                               {
+                                   Id = a.PlayerGameWeak.Player.Id,
+                                   Name = otherLang ? a.PlayerGameWeak.Player.PlayerLang.Name : a.PlayerGameWeak.Player.Name,
+                               },
+                               Ranking = a.PlayerGameWeak.Ranking,
+                               Fk_Player = a.PlayerGameWeak.Fk_Player,
+                           },
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

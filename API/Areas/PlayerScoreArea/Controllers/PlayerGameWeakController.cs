@@ -36,11 +36,16 @@ namespace API.Areas.PlayerScoreArea.Controllers
         [HttpGet]
         [Route(nameof(GetPlayerGameWeakById))]
         public PlayerGameWeakModel GetPlayerGameWeakById(
-        [FromQuery, BindRequired] int id)
+        [FromQuery, BindRequired] int id,
+        [FromQuery] bool includeScore)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
-            PlayerGameWeakModel data = _unitOfWork.PlayerScore.GetPlayerGameWeakbyId(id, otherLang);
+            PlayerGameWeakModel data = _unitOfWork.PlayerScore.GetPlayerGameWeaks(new PlayerGameWeakParameters
+            {
+                Id = id,
+                IncludeScore = includeScore
+            }, otherLang).FirstOrDefault();
 
             return data;
         }

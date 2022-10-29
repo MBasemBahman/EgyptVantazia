@@ -29,7 +29,11 @@ namespace API.Areas.TeamArea.Controllers
 
             if (parameters.IncludeScore && parameters.Fk_Season == 0)
             {
-                parameters.Fk_Season = _unitOfWork.Season.GetCurrentSeason().Id;
+                if (parameters.Fk_GameWeak == 0)
+                {
+                    parameters.Fk_Season = _unitOfWork.Season.GetCurrentSeason().Id;
+                    parameters.Fk_GameWeak = _unitOfWork.Season.GetCurrentGameWeak().Id;
+                }
             }
 
             PagedList<PlayerModel> data = await _unitOfWork.Team.GetPlayerPaged(parameters, otherLang);
@@ -43,12 +47,20 @@ namespace API.Areas.TeamArea.Controllers
 
         [HttpGet]
         [Route(nameof(GetPlayerById))]
-        public PlayerDto GetPlayerById(
-        [FromQuery, BindRequired] int id)
+        public PlayerDto GetPlayerById([FromQuery] PlayerParameters parameters)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
-            PlayerModel data = _unitOfWork.Team.GetPlayerbyId(id, otherLang);
+            if (parameters.IncludeScore && parameters.Fk_Season == 0)
+            {
+                if (parameters.Fk_GameWeak == 0)
+                {
+                    parameters.Fk_Season = _unitOfWork.Season.GetCurrentSeason().Id;
+                    parameters.Fk_GameWeak = _unitOfWork.Season.GetCurrentGameWeak().Id;
+                }
+            }
+
+            PlayerModel data = _unitOfWork.Team.GetPlayers(parameters, otherLang).FirstOrDefault();
 
             PlayerDto dataDto = _mapper.Map<PlayerDto>(data);
 

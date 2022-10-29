@@ -307,7 +307,7 @@ namespace CoreServices.Logic
             string code;
             do
             {
-                code = RandomGenerator.GenerateInteger(length: 4, minVal: 111111, maxVal: 999999).ToString();
+                code = Guid.NewGuid().ToString();
 
             } while (CheckVerificationCodeExisting(code));
 

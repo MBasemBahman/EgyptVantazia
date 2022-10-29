@@ -1,4 +1,5 @@
-﻿using Entities.DBModels.TeamModels;
+﻿using Entities.CoreServicesModels.PlayerStateModels;
+using Entities.DBModels.TeamModels;
 using Entities.RequestFeatures;
 
 namespace Entities.CoreServicesModels.TeamModels
@@ -26,6 +27,10 @@ namespace Entities.CoreServicesModels.TeamModels
         public int Fk_ScoreType { get; set; }
 
         public bool IncludeScore { get; set; }
+
+        public List<int> Fk_ScoreStatesForSeason { get; set; }
+
+        public List<int> Fk_ScoreStatesForGameWeak { get; set; }
 
         public int Fk_Season { get; set; }
 
@@ -70,9 +75,9 @@ namespace Entities.CoreServicesModels.TeamModels
         [DisplayName(nameof(SellPrice))]
         public double SellPrice { get; set; }
 
-        public int ScorePoints { get; set; }
+        public List<PlayerSeasonScoreStateModel> SeasonScoreStates { get; set; }
 
-        public int ScoreValues { get; set; }
+        public List<PlayerGameWeakScoreStateModel> GameWeakScoreStates { get; set; }
     }
 
     public class PlayerCreateOrEditModel

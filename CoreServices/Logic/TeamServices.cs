@@ -1,4 +1,6 @@
-﻿using Entities.CoreServicesModels.TeamModels;
+﻿using Entities.CoreServicesModels.PlayerStateModels;
+using Entities.CoreServicesModels.SeasonModels;
+using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.TeamModels;
 using static Contracts.EnumData.DBModelsEnum;
@@ -202,20 +204,63 @@ namespace CoreServices.Logic
                            },
                            BuyPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault(),
                            SellPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.SellPrice).FirstOrDefault(),
-                           ScorePoints = parameters.IncludeScore ?
-                                        a.PlayerGameWeaks
-                                         .SelectMany(b => b.PlayerGameWeakScores)
-                                         .Where(b => (parameters.Fk_ScoreType == 0 || b.Fk_ScoreType == parameters.Fk_ScoreType) &&
-                                                     (parameters.Fk_Season == 0 || b.PlayerGameWeak.TeamGameWeak.GameWeak.Fk_Season == parameters.Fk_ScoreType) &&
-                                                     (parameters.Fk_GameWeak == 0 || b.PlayerGameWeak.TeamGameWeak.Fk_GameWeak == parameters.Fk_GameWeak))
-                                         .Select(b => b.Points).Sum() : 0,
-                           ScoreValues = parameters.IncludeScore ?
-                                        a.PlayerGameWeaks
-                                         .SelectMany(b => b.PlayerGameWeakScores)
-                                         .Where(b => (parameters.Fk_ScoreType == 0 || b.Fk_ScoreType == parameters.Fk_ScoreType) &&
-                                                     (parameters.Fk_Season == 0 || b.PlayerGameWeak.TeamGameWeak.GameWeak.Fk_Season == parameters.Fk_ScoreType) &&
-                                                     (parameters.Fk_GameWeak == 0 || b.PlayerGameWeak.TeamGameWeak.Fk_GameWeak == parameters.Fk_GameWeak))
-                                         .Select(b => b.FinalValue).Sum() : 0,
+                           SeasonScoreStates = parameters.IncludeScore && parameters.Fk_Season > 0 ?
+                                               a.PlayerSeasonScoreStates
+                                                .Where(b => b.Fk_Season == parameters.Fk_Season &&
+                                                            (parameters.Fk_ScoreStatesForSeason == null ||
+                                                             !parameters.Fk_ScoreStatesForSeason.Any() ||
+                                                             parameters.Fk_ScoreStatesForSeason.Contains(b.Fk_ScoreState)))
+                                                .Select(b => new PlayerSeasonScoreStateModel
+                                                {
+                                                    Id = b.Id,
+                                                    Fk_Player = b.Fk_Player,
+                                                    Points = b.Points,
+                                                    Percent = b.Percent,
+                                                    Value = b.Value,
+                                                    Fk_ScoreState = b.Fk_ScoreState,
+                                                    Fk_Season = b.Fk_Season,
+                                                    PositionByPercent = b.PositionByPercent,
+                                                    PositionByPoints = b.PositionByPoints,
+                                                    PositionByValue = b.PositionByValue,
+                                                    LastModifiedAt = b.LastModifiedAt,
+                                                    ScoreState = new ScoreStateModel
+                                                    {
+                                                        Id = b.Fk_ScoreState,
+                                                        Name = otherLang ? b.ScoreState.ScoreStateLang.Name : b.ScoreState.Name,
+                                                    }
+                                                })
+                                                .ToList() : null,
+                           GameWeakScoreStates = parameters.IncludeScore && parameters.Fk_GameWeak > 0 ?
+                                               a.PlayerGameWeakScoreStates
+                                                .Where(b => b.Fk_GameWeak == parameters.Fk_GameWeak &&
+                                                            (parameters.Fk_ScoreStatesForGameWeak == null ||
+                                                             !parameters.Fk_ScoreStatesForGameWeak.Any() ||
+                                                             parameters.Fk_ScoreStatesForGameWeak.Contains(b.Fk_ScoreState)))
+                                                .Select(b => new PlayerGameWeakScoreStateModel
+                                                {
+                                                    Id = b.Id,
+                                                    Fk_Player = b.Fk_Player,
+                                                    Points = b.Points,
+                                                    Percent = b.Percent,
+                                                    Value = b.Value,
+                                                    Fk_ScoreState = b.Fk_ScoreState,
+                                                    Fk_GameWeak = b.Fk_GameWeak,
+                                                    PositionByPercent = b.PositionByPercent,
+                                                    PositionByPoints = b.PositionByPoints,
+                                                    PositionByValue = b.PositionByValue,
+                                                    LastModifiedAt = b.LastModifiedAt,
+                                                    GameWeak = new GameWeakModel
+                                                    {
+                                                        Id = b.Fk_GameWeak,
+                                                        Name = otherLang ? b.GameWeak.GameWeakLang.Name : b.GameWeak.Name,
+                                                    },
+                                                    ScoreState = new ScoreStateModel
+                                                    {
+                                                        Id = b.Fk_ScoreState,
+                                                        Name = otherLang ? b.ScoreState.ScoreStateLang.Name : b.ScoreState.Name,
+                                                    }
+                                                })
+                                                .ToList() : null
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

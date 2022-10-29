@@ -32,6 +32,8 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
         public int Fk_GameWeak { get; set; }
         public int Fk_Season { get; set; }
         public bool? IsEnded { get; set; }
+
+        public bool IncludeScore { get; set; }
     }
 
     public class PlayerGameWeakModel : AuditEntity
@@ -59,6 +61,8 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
 
         [DisplayName(nameof(Position))]
         public int Position { get; set; }
+
+        public List<PlayerGameWeakScoreModel> PlayerGameWeakScores { get; set; }
     }
 
     public class PlayerGameWeakCreateOrEditModel

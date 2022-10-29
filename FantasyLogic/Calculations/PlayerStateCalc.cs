@@ -32,6 +32,8 @@ namespace FantasyLogic.Calculations
                 .Select(a => a.Id)
                 .ToList();
 
+            //PlayersStateCalculations(players, season.Id, gameWeaks);
+
             _ = BackgroundJob.Enqueue(() => PlayersStateCalculations(players, season.Id, gameWeaks));
         }
 
@@ -42,10 +44,14 @@ namespace FantasyLogic.Calculations
             {
                 foreach (int fk_GameWeak in fk_GameWeaks)
                 {
+                    //PlayerStateCalculations(player, 0, fk_GameWeak, jobId);
+
                     jobId = jobId.IsExisting()
                         ? BackgroundJob.ContinueJobWith(jobId, () => PlayerStateCalculations(player, 0, fk_GameWeak, jobId))
                         : BackgroundJob.Enqueue(() => PlayerStateCalculations(player, 0, fk_GameWeak, jobId));
                 }
+
+                //PlayerStateCalculations(player, fk_Season, 0, jobId);
 
                 jobId = jobId.IsExisting()
                     ? BackgroundJob.ContinueJobWith(jobId, () => PlayerStateCalculations(player, fk_Season, 0, jobId))

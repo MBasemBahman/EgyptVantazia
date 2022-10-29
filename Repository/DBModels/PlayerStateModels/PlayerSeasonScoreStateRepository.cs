@@ -1,8 +1,5 @@
 ﻿using Entities.CoreServicesModels.PlayerStateModels;
-using Entities.CoreServicesModels.SeasonModels;
-using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayerStateModels;
-using Entities.RequestFeatures;
 
 namespace Repository.DBModels.PlayerStateModels
 {
@@ -31,6 +28,52 @@ namespace Repository.DBModels.PlayerStateModels
                         .SingleOrDefaultAsync();
         }
 
+
+        public new void Create(PlayerSeasonScoreState entity)
+        {
+            if (FindByCondition(a => a.Fk_Player == entity.Fk_Player && a.Fk_Season == entity.Fk_Season && a.Fk_ScoreState == entity.Fk_ScoreState, trackChanges: false).Any())
+            {
+                PlayerSeasonScoreState oldEntity = FindByCondition(a => a.Fk_Player == entity.Fk_Player && a.Fk_Season == entity.Fk_Season && a.Fk_ScoreState == entity.Fk_ScoreState, trackChanges: true).First();
+
+                oldEntity.Points = entity.Points;
+                oldEntity.PositionByPoints = entity.PositionByPoints;
+                oldEntity.Value = entity.Value;
+                oldEntity.PositionByValue = entity.PositionByValue;
+                oldEntity.Percent = entity.Percent;
+                oldEntity.PositionByPercent = entity.PositionByPercent;
+            }
+            else
+            {
+                base.Create(entity);
+            }
+        }
+
+        public void UpdatePlayerPosition(int fk_Season, int fk_ScoreState)
+        {
+            List<PlayerSeasonScoreStateCalcModel> scores = FindByCondition(a => a.Fk_ScoreState == fk_ScoreState &&
+                                                                                a.Fk_Season == fk_Season, trackChanges: true)
+                     .Select(a => new PlayerSeasonScoreStateCalcModel
+                     {
+                         Points = a.Points,
+                         Percent = a.Percent,
+                         Value = a.Value,
+                         PositionByPoints = a.PositionByPoints,
+                         PositionByValue = a.PositionByValue,
+                         PositionByPercent = a.PositionByPercent
+                     })
+                     .ToList();
+
+            double[] pointsRanks = scores.Select(a => a.Points).Distinct().OrderByDescending(a => a).ToArray();
+            double[] valueRanks = scores.Select(a => a.Value).Distinct().OrderByDescending(a => a).ToArray();
+            double[] percentRanks = scores.Select(a => a.Percent).Distinct().OrderByDescending(a => a).ToArray();
+
+            scores.ForEach(a =>
+            {
+                a.PositionByPoints = Array.IndexOf(pointsRanks, a) + 1;
+                a.PositionByValue = Array.IndexOf(valueRanks, a) + 1;
+                a.PositionByPercent = Array.IndexOf(percentRanks, a) + 1;
+            });
+        }
     }
 
     public static class PlayerSeasonScoreStateRepositoryExtension
@@ -46,16 +89,15 @@ namespace Repository.DBModels.PlayerStateModels
             List<int> fk_Seasons)
         {
             return PlayerSeasonScoreStates.Where(a => (id == 0 || a.Id == id) &&
-
                                                   (fk_Player == 0 || a.Fk_Player == fk_Player) &&
                                                   (fk_ScoreState == 0 || a.Fk_ScoreState == fk_ScoreState) &&
                                                   (fk_Season == 0 || a.Fk_Season == fk_Season) &&
                                                   (fk_Players == null || !fk_Players.Any() ||
-                                                fk_Players.Contains(a.Fk_Player)) &&
+                                                   fk_Players.Contains(a.Fk_Player)) &&
                                                   (fk_ScoreStates == null || !fk_ScoreStates.Any() ||
-                                                fk_ScoreStates.Contains(a.Fk_ScoreState)) &&
+                                                   fk_ScoreStates.Contains(a.Fk_ScoreState)) &&
                                                   (fk_Seasons == null || !fk_Seasons.Any() ||
-                                                fk_Seasons.Contains(a.Fk_Season)));
+                                                   fk_Seasons.Contains(a.Fk_Season)));
 
 
         }

@@ -1,5 +1,6 @@
 ﻿using Entities.CoreServicesModels.PlayerScoreModels;
 using Entities.DBModels.PlayerScoreModels;
+using static System.Formats.Asn1.AsnWriter;
 
 
 namespace Repository.DBModels.PlayerScoreModels
@@ -39,7 +40,7 @@ namespace Repository.DBModels.PlayerScoreModels
         {
             if (FindByCondition(a => a.Fk_TeamGameWeak == entity.Fk_TeamGameWeak && a.Fk_Player == entity.Fk_Player, trackChanges: false).Any())
             {
-                PlayerGameWeak oldEntity = FindByCondition(a => a.Fk_TeamGameWeak == entity.Fk_TeamGameWeak && a.Fk_Player == entity.Fk_Player, trackChanges: false).First();
+                PlayerGameWeak oldEntity = FindByCondition(a => a.Fk_TeamGameWeak == entity.Fk_TeamGameWeak && a.Fk_Player == entity.Fk_Player, trackChanges: true).First();
 
                 oldEntity.Ranking = entity.Ranking;
             }
@@ -51,8 +52,6 @@ namespace Repository.DBModels.PlayerScoreModels
 
         public void UpdatePlayerGameWeakPosition(int fk_TeamGameWeak)
         {
-            int position = 1;
-
             List<PlayerGameWeak> players = FindAll(new PlayerGameWeakParameters
             {
                 Fk_TeamGameWeak = fk_TeamGameWeak
@@ -60,10 +59,9 @@ namespace Repository.DBModels.PlayerScoreModels
                 .OrderByDescending(a => a.TotalPoints)
                 .ToList();
 
-            if (players != null && players.Any())
-            {
-                players.ForEach(a => a.Position = position++);
-            }
+            int[] ranks = players.Select(a => a.TotalPoints).Distinct().OrderByDescending(a => a).ToArray();
+
+            players.ForEach(a => a.Position = Array.IndexOf(ranks, a) + 1);
         }
     }
 

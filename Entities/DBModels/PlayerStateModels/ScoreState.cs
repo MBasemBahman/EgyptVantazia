@@ -1,6 +1,4 @@
-﻿using Entities.DBModels.PlayerScoreModels;
-
-namespace Entities.DBModels.PlayerStateModels
+﻿namespace Entities.DBModels.PlayerStateModels
 {
     public class ScoreState : AuditLookUpEntity
     {

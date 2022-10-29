@@ -93,4 +93,13 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
 
         public int Id { get; set; }
     }
+
+    public class PlayerTotalScoreModel
+    {
+        [DisplayName(nameof(Points))]
+        public int Points { get; set; }
+
+        [DisplayName(nameof(FinalValue))]
+        public int FinalValue { get; set; }
+    }
 }

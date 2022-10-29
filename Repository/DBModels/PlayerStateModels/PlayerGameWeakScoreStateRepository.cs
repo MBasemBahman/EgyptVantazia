@@ -33,6 +33,54 @@ namespace Repository.DBModels.PlayerStateModels
                         .SingleOrDefaultAsync();
         }
 
+        public new void Create(PlayerGameWeakScoreState entity)
+        {
+            if (FindByCondition(a => a.Fk_Player == entity.Fk_Player && a.Fk_GameWeak == entity.Fk_GameWeak && a.Fk_ScoreState == entity.Fk_ScoreState, trackChanges: false).Any())
+            {
+                PlayerGameWeakScoreState oldEntity = FindByCondition(a => a.Fk_Player == entity.Fk_Player && a.Fk_GameWeak == entity.Fk_GameWeak && a.Fk_ScoreState == entity.Fk_ScoreState, trackChanges: true).First();
+
+                oldEntity.Points = entity.Points;
+                oldEntity.PositionByPoints = entity.PositionByPoints;
+                oldEntity.Value = entity.Value;
+                oldEntity.PositionByValue = entity.PositionByValue;
+                oldEntity.Percent = entity.Percent;
+                oldEntity.PositionByPercent = entity.PositionByPercent;
+            }
+            else
+            {
+                base.Create(entity);
+            }
+        }
+
+        public void UpdatePlayerPosition(int fk_GameWeak, int fk_ScoreState)
+        {
+            List<PlayerGameWeakScoreStateCalcModel> scores = FindAll(new PlayerGameWeakScoreStateParameters
+            {
+                Fk_GameWeak = fk_GameWeak,
+                Fk_ScoreState = fk_ScoreState
+            }, trackChanges: true)
+                     .Select(a => new PlayerGameWeakScoreStateCalcModel
+                     {
+                         Points = a.Points,
+                         Percent = a.Percent,
+                         Value = a.Value,
+                         PositionByPoints = a.PositionByPoints,
+                         PositionByValue = a.PositionByValue,
+                         PositionByPercent = a.PositionByPercent
+                     })
+                     .ToList();
+
+            double[] pointsRanks = scores.Select(a => a.Points).Distinct().OrderByDescending(a => a).ToArray();
+            double[] valueRanks = scores.Select(a => a.Value).Distinct().OrderByDescending(a => a).ToArray();
+            double[] percentRanks = scores.Select(a => a.Percent).Distinct().OrderByDescending(a => a).ToArray();
+
+            scores.ForEach(a =>
+            {
+                a.PositionByPoints = Array.IndexOf(pointsRanks, a) + 1;
+                a.PositionByValue = Array.IndexOf(valueRanks, a) + 1;
+                a.PositionByPercent = Array.IndexOf(percentRanks, a) + 1;
+            });
+        }
     }
 
     public static class PlayerGameWeakScoreStateRepositoryExtension
@@ -52,11 +100,11 @@ namespace Repository.DBModels.PlayerStateModels
                                                   (fk_Player == 0 || a.Fk_Player == fk_Player) &&
                                                   (fk_ScoreState == 0 || a.Fk_ScoreState == fk_ScoreState) &&
                                                   (fk_Players == null || !fk_Players.Any() ||
-                                                fk_Players.Contains(a.Fk_Player)) &&
+                                                   fk_Players.Contains(a.Fk_Player)) &&
                                                   (fk_ScoreStates == null || !fk_ScoreStates.Any() ||
-                                                fk_ScoreStates.Contains(a.Fk_ScoreState)) &&
+                                                   fk_ScoreStates.Contains(a.Fk_ScoreState)) &&
                                                   (fk_GameWeaks == null || !fk_GameWeaks.Any() ||
-                                                fk_GameWeaks.Contains(a.Fk_GameWeak)));
+                                                   fk_GameWeaks.Contains(a.Fk_GameWeak)));
 
 
         }

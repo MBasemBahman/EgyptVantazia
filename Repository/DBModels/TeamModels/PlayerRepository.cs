@@ -21,9 +21,7 @@ namespace Repository.DBModels.TeamModels
                            parameters.CreatedAtTo,
                            parameters._365_PlayerIds,
                            parameters.Fk_TeamGameWeak_Ignored,
-                           parameters.Fk_Players,
-                           parameters.PointsFrom,
-                           parameters.PointsTo);
+                           parameters.Fk_Players);
         }
 
         public async Task<Player> FindById(int id, bool trackChanges)
@@ -44,7 +42,7 @@ namespace Repository.DBModels.TeamModels
         {
             if (entity._365_PlayerId.IsExisting() && FindByCondition(a => a._365_PlayerId == entity._365_PlayerId, trackChanges: false).Any())
             {
-                Player oldEntity = FindByCondition(a => a._365_PlayerId == entity._365_PlayerId, trackChanges: false)
+                Player oldEntity = FindByCondition(a => a._365_PlayerId == entity._365_PlayerId, trackChanges: true)
                                 .Include(a => a.PlayerLang)
                                 .First();
 
@@ -67,20 +65,6 @@ namespace Repository.DBModels.TeamModels
                 base.Create(entity);
             }
         }
-
-        public void UpdatePlayerPosition()
-        {
-            int position = 1;
-
-            List<Player> players = FindAll(new PlayerParameters(), trackChanges: true)
-                .OrderByDescending(a => a.TotalPoints)
-                .ToList();
-
-            if (players != null && players.Any())
-            {
-                players.ForEach(a => a.Position = position++);
-            }
-        }
     }
 
     public static class PlayerRepositoryExtension
@@ -96,14 +80,10 @@ namespace Repository.DBModels.TeamModels
             DateTime? createdAtTo,
             List<string> _365_PlayerIds,
             int fk_TeamGameWeak_Ignored,
-            List<int> fk_Players,
-            int pointsFrom,
-            int pointsTo)
+            List<int> fk_Players)
 
         {
             return Players.Where(a => (id == 0 || a.Id == id) &&
-                                      (pointsFrom == 0 || a.TotalPoints >= pointsFrom) &&
-                                      (pointsTo == 0 || a.TotalPoints <= pointsTo) &&
                                       (Fk_Team == 0 || a.Fk_Team == Fk_Team) &&
                                       (Fk_GameWeak == 0 || a.PlayerGameWeaks.Select(a => a.Fk_TeamGameWeak)
                                           .Contains(Fk_GameWeak)) &&

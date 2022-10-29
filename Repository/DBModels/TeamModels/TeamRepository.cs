@@ -37,7 +37,7 @@ namespace Repository.DBModels.TeamModels
         {
             if (entity._365_TeamId.IsExisting() && FindByCondition(a => a._365_TeamId == entity._365_TeamId, trackChanges: false).Any())
             {
-                Team oldEntity = FindByCondition(a => a._365_TeamId == entity._365_TeamId, trackChanges: false)
+                Team oldEntity = FindByCondition(a => a._365_TeamId == entity._365_TeamId, trackChanges: true)
                                 .Include(a => a.TeamLang)
                                 .First();
 

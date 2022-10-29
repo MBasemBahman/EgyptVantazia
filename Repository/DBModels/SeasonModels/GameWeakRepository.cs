@@ -37,7 +37,7 @@ namespace Repository.DBModels.SeasonModels
         {
             if (entity._365_GameWeakId.IsExisting() && FindByCondition(a => a.Fk_Season == entity.Fk_Season && a._365_GameWeakId == entity._365_GameWeakId, trackChanges: false).Any())
             {
-                GameWeak oldEntity = FindByCondition(a => a.Fk_Season == entity.Fk_Season && a._365_GameWeakId == entity._365_GameWeakId, trackChanges: false)
+                GameWeak oldEntity = FindByCondition(a => a.Fk_Season == entity.Fk_Season && a._365_GameWeakId == entity._365_GameWeakId, trackChanges: true)
                                 .Include(a => a.GameWeakLang)
                                 .First();
 

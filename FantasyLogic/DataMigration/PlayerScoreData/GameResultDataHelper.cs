@@ -165,12 +165,9 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 jobId = BackgroundJob.ContinueJobWith(jobId, () => _gameResultLogic.UpdatePlayerStateScore((int)ScoreTypeEnum.Ranking, "", player.Fk_Player, player.Fk_Team, player.Fk_PlayerPosition, player.Fk_PlayerGameWeak, fk_TeamGameWeak));
 
                 jobId = BackgroundJob.ContinueJobWith(jobId, () => _gameResultLogic.UpdatePlayerGameWeakTotalPoints(player.Fk_PlayerGameWeak));
-                jobId = BackgroundJob.ContinueJobWith(jobId, () => _gameResultLogic.UpdatePlayerTotalPoints(player.Fk_Player));
             }
 
             jobId = BackgroundJob.ContinueJobWith(jobId, () => _gameResultLogic.UpdatePlayerGameWeakPosition(fk_TeamGameWeak));
-
-            jobId = BackgroundJob.ContinueJobWith(jobId, () => _gameResultLogic.UpdatePlayerPosition());
 
             return jobId;
         }

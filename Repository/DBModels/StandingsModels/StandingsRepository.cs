@@ -37,7 +37,7 @@ namespace Repository.DBModels.StandingsModels
         {
             if (FindByCondition(a => a.Fk_Season == entity.Fk_Season && a.Fk_Team == entity.Fk_Team, trackChanges: false).Any())
             {
-                Standings oldEntity = FindByCondition(a => a.Fk_Season == entity.Fk_Season && a.Fk_Team == entity.Fk_Team, trackChanges: false)
+                Standings oldEntity = FindByCondition(a => a.Fk_Season == entity.Fk_Season && a.Fk_Team == entity.Fk_Team, trackChanges: true)
                                 .First();
 
                 oldEntity.Fk_Season = entity.Fk_Season;

@@ -35,24 +35,28 @@ namespace CoreServices.Logic
                            LastModifiedAt = a.LastModifiedAt,
                            LastModifiedBy = a.LastModifiedBy,
                            Fk_Player = a.Fk_Player,
-                           Position = a.Position,
                            Percent = a.Percent,
                            Points = a.Points,
                            Value = a.Value,
+                           Fk_ScoreState = a.Fk_ScoreState,
+                           Fk_GameWeak = a.Fk_GameWeak,
+                           PositionByPercent = a.PositionByPercent,
+                           PositionByPoints = a.PositionByPoints,
+                           PositionByValue = a.PositionByValue,
                            Player = new PlayerModel
                            {
                                Id = a.Fk_Player,
                                Name = otherLang ? a.Player.PlayerLang.Name : a.Player.Name,
                            },
-                           GameWeak=new GameWeakModel
+                           GameWeak = new GameWeakModel
                            {
-                               Id=a.Fk_GameWeak,
-                               Name=otherLang ? a.GameWeak.GameWeakLang.Name : a.GameWeak.Name,
+                               Id = a.Fk_GameWeak,
+                               Name = otherLang ? a.GameWeak.GameWeakLang.Name : a.GameWeak.Name,
                            },
-                           ScoreState=new ScoreStateModel
+                           ScoreState = new ScoreStateModel
                            {
-                               Id=a.Fk_ScoreState,
-                               Name=otherLang? a.ScoreState.ScoreStateLang.Name:a.ScoreState.Name,
+                               Id = a.Fk_ScoreState,
+                               Name = otherLang ? a.ScoreState.ScoreStateLang.Name : a.ScoreState.Name,
                            },
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
@@ -109,24 +113,28 @@ namespace CoreServices.Logic
                            LastModifiedAt = a.LastModifiedAt,
                            LastModifiedBy = a.LastModifiedBy,
                            Fk_Player = a.Fk_Player,
-                           Position = a.Position,
                            Points = a.Points,
-                           Percent=a.Percent,
+                           Percent = a.Percent,
                            Value = a.Value,
+                           Fk_ScoreState = a.Fk_ScoreState,
+                           Fk_Season = a.Fk_Season,
+                           PositionByPercent = a.PositionByPercent,
+                           PositionByPoints = a.PositionByPoints,
+                           PositionByValue = a.PositionByValue,
                            Player = new PlayerModel
                            {
                                Id = a.Fk_Player,
                                Name = otherLang ? a.Player.PlayerLang.Name : a.Player.Name,
                            },
-                           ScoreState=new ScoreStateModel
+                           ScoreState = new ScoreStateModel
                            {
-                               Id=a.Fk_ScoreState,
-                               Name=otherLang ? a.ScoreState.ScoreStateLang.Name : a.ScoreState.Name,
+                               Id = a.Fk_ScoreState,
+                               Name = otherLang ? a.ScoreState.ScoreStateLang.Name : a.ScoreState.Name,
                            },
-                           Season=new SeasonModel
+                           Season = new SeasonModel
                            {
-                               Id=a.Fk_Season,
-                               Name=otherLang ?a.Season.SeasonLang.Name : a.Season.Name,
+                               Id = a.Fk_Season,
+                               Name = otherLang ? a.Season.SeasonLang.Name : a.Season.Name,
                            }
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
@@ -183,7 +191,7 @@ namespace CoreServices.Logic
                            LastModifiedAt = a.LastModifiedAt,
                            LastModifiedBy = a.LastModifiedBy,
                            Name = otherLang ? a.ScoreStateLang.Name : a.Name,
-                           Description=a.Description,
+                           Description = a.Description,
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);
@@ -219,7 +227,7 @@ namespace CoreServices.Logic
 
         public ScoreStateModel GetScoreStatebyId(int id, bool otherLang)
         {
-            return GetScoreStates(new ScoreStateParameters { Id = id}, otherLang).SingleOrDefault();
+            return GetScoreStates(new ScoreStateParameters { Id = id }, otherLang).SingleOrDefault();
         }
 
         public int GetScoreStateCount()

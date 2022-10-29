@@ -57,28 +57,12 @@ namespace FantasyLogic.SharedLogic
             }, otherLang: false).Select(a => a.Points).Sum();
             await _unitOfWork.Save();
         }
-
-        public async Task UpdatePlayerTotalPoints(int fk_Player)
-        {
-            Player player = await _unitOfWork.Team.FindPlayerbyId(fk_Player, trackChanges: true);
-            player.TotalPoints = _unitOfWork.PlayerScore.GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
-            {
-                Fk_Player = fk_Player
-            }, otherLang: false).Select(a => a.Points).Sum();
-            await _unitOfWork.Save();
-        }
         #endregion
 
         #region Position
         public async Task UpdatePlayerGameWeakPosition(int fk_TeamGameWeak)
         {
             _unitOfWork.PlayerScore.UpdatePlayerGameWeakPosition(fk_TeamGameWeak);
-            await _unitOfWork.Save();
-        }
-
-        public async Task UpdatePlayerPosition()
-        {
-            _unitOfWork.Team.UpdatePlayerPosition();
             await _unitOfWork.Save();
         }
         #endregion

@@ -22,12 +22,6 @@
 
                     <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.BuyPrice):</dt>
                     <dd class="col-sm-8 mb-1">@Model.BuyPrice</dd>
-
-                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.PlayerPosition):</dt>
-                    <dd class="col-sm-8 mb-1">@Model.PlayerPosition.Name</dd>
-
-                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.Position):</dt>
-                    <dd class="col-sm-8 mb-1">@Model.Position</dd>
                 </dl>
             </div>
             <div class="col-xl-6 col-12">
@@ -48,10 +42,6 @@
                     <dd class="col-sm-8 mb-1">
                         <a href="/TeamEntity/Team/Profile/@Model.Fk_Team" target="_blank">@Model.Team.Name</a>
                     </dd>
-
-
-                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.TotalPoints):</dt>
-                    <dd class="col-sm-8 mb-1">@Model.TotalPoints</dd>
 
                 </dl>
             </div>

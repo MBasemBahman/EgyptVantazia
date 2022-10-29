@@ -60,7 +60,6 @@ namespace CoreServices.Logic
                                                  ImageUrl = a.Team.StorageUrl + a.Team.ImageUrl,
                                                  _365_TeamId = a.Team._365_TeamId
                                              },
-                                             TotalPoints = a.TotalPoints,
                                              BuyPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault(),
                                              SellPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.SellPrice).FirstOrDefault(),
                                              ScorePoints = a.PlayerGameWeaks

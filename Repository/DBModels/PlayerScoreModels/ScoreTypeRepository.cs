@@ -30,7 +30,7 @@ namespace Repository.DBModels.PlayerScoreModels
         {
             if (FindByCondition(a => a._365_TypeId == entity._365_TypeId && a._365_EventTypeId == entity._365_EventTypeId, trackChanges: false).Any())
             {
-                ScoreType oldEntity = FindByCondition(a => a._365_TypeId == entity._365_TypeId, trackChanges: false)
+                ScoreType oldEntity = FindByCondition(a => a._365_TypeId == entity._365_TypeId, trackChanges: true)
                                 .Include(a => a.ScoreTypeLang)
                                 .First();
 

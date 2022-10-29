@@ -32,9 +32,6 @@ namespace Entities.CoreServicesModels.TeamModels
         public int Fk_GameWeak { get; set; }
 
         public List<int> Fk_Players { get; set; }
-
-        public int PointsFrom { get; set; }
-        public int PointsTo { get; set; }
     }
 
     public class PlayerModel : AuditImageEntity
@@ -67,12 +64,6 @@ namespace Entities.CoreServicesModels.TeamModels
         [DisplayName(nameof(Age))]
         public int Age { get; set; }
 
-        [DisplayName(nameof(TotalPoints))]
-        public int TotalPoints { get; set; }
-
-        [DisplayName(nameof(Position))]
-        public int Position { get; set; }
-
         [DisplayName(nameof(BuyPrice))]
         public double BuyPrice { get; set; }
 
@@ -102,13 +93,6 @@ namespace Entities.CoreServicesModels.TeamModels
 
         [DisplayName(nameof(Age))]
         public int Age { get; set; }
-
-        [DisplayName(nameof(TotalPoints))]
-        public int TotalPoints { get; set; }
-
-        [DisplayName(nameof(Position))]
-        public int Position { get; set; }
-
         [DisplayName(nameof(Team))]
         [ForeignKey(nameof(Team))]
         public int Fk_Team { get; set; }

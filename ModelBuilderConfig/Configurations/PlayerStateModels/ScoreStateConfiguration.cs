@@ -27,8 +27,7 @@ namespace ModelBuilderConfig.Configurations.PlayerStateModels
                 {
                     Id = (int)value,
                     Fk_Source = (int)value,
-                    Name = value.ToString(),
-                    CreatedAt = DateTime.UtcNow
+                    Name = value.ToString()
                 });
             }
         }

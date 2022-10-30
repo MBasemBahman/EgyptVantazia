@@ -308,7 +308,9 @@ namespace CoreServices.Logic
                                },
                                Team = new TeamModel
                                {
-                                   Name = otherLang ? a.Player.Team.TeamLang.Name : a.Player.Team.Name
+                                   Name = otherLang ? a.Player.Team.TeamLang.Name : a.Player.Team.Name,
+                                   ImageUrl = a.Player.Team.StorageUrl + a.Player.Team.ImageUrl,
+                                   ShirtImageUrl = a.Player.Team.StorageUrl + a.Player.Team.ShirtImageUrl,
                                },
                                Age = a.Player.Age,
                                PlayerNumber = a.Player.PlayerNumber,

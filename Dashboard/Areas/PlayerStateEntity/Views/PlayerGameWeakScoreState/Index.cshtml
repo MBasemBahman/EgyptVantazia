@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.useDatatable = true;
     ViewBag.useModels = true;
+    ViewBag.useForm = true;
 
     var accessLevel = (DashboardAccessLevelModel)ViewData[ViewDataConstants.AccessLevel];
 
@@ -45,6 +46,16 @@
                                 <h4 class="card-title"> @ViewData["Title"]</h4>
                             </div>
 
+                            <p class="m-2 demo-inline-spacing">
+                                <a class="btn btn-primary me-1" data-bs-toggle="collapse" href="#AdvancedFilter" role="button" aria-expanded="false" aria-controls="AdvancedFilter">
+                                    <i data-feather='filter'></i>
+                                    @Localizer.Get("Advanced Search")
+                                </a>
+                            </p>
+                            @{
+                                await Html.RenderPartialAsync("../PlayerGameWeakScoreState/Filter", Model, ViewData);
+                            }
+                            
                             <div class="card-datatable">
                                 <table class="datatables datatables-ajax table table-responsive table">
                                     <thead>
@@ -72,9 +83,14 @@
                                                 }
                                             </th>
                                             <th>@Html.DisplayNameFor(model => row.Player)</th>
+                                            <th>@Html.DisplayNameFor(model => row.GameWeak)</th>
+                                            <th>@Html.DisplayNameFor(model => row.ScoreState)</th>
                                             <th>@Html.DisplayNameFor(model => row.Percent)</th>
                                             <th>@Html.DisplayNameFor(model => row.Points)</th>
                                             <th>@Html.DisplayNameFor(model => row.Value)</th>
+                                            <th>@Html.DisplayNameFor(model => row.PositionByPercent)</th>
+                                            <th>@Html.DisplayNameFor(model => row.PositionByPoints)</th>
+                                            <th>@Html.DisplayNameFor(model => row.PositionByValue)</th>
                                             <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
                                             <th>
                                                 @Html.DisplayNameFor(model => row.Id)
@@ -94,33 +110,62 @@
 <!-- END: Content-->
 @section scripts{
     <script>
-    $(function () {
-        var dt_ajax_table = $('.datatables');
-        if (dt_ajax_table.length) {
-            var dt_ajax = dt_ajax_table.dataTable({
-                // Ajax Filter
-                ajax: {
-                    url: '@Url.Action("LoadTable")',
-                    type: "POST",
-                    contentType: "application/json",
-                    dataType: "json",
-                    data: function (data) {
-                        data.Id = @Model.Id;
-                        return JSON.stringify(data);
-                    }
-                },
-                // Columns Setups
-                columns: [
-                   {data:"id"},
-                   { data: "player.name" },
-                   { data: "percent" },
-                   { data: "points" },
-                   { data: "value" },
-                   { data: "createdAt" },
-                   {data:"id"},
-                ]
-            });
+        function LoadTable() {
+            var dt_ajax_table = $('.datatables');
+            if (dt_ajax_table.length) {
+                var dt_ajax = dt_ajax_table.dataTable({
+                    // Ajax Filter
+                    ajax: {
+                        url: '@Url.Action("LoadTable")',
+                        type: "POST",
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: function (data) {
+                            data.Id = @Model.Id;
+                            data.Fk_Players = $("#Fk_Players").length > 0 ? $("#Fk_Players").val() : null;
+                            data.Fk_ScoreStates = $("#Fk_ScoreStates").length > 0 ? $("#Fk_ScoreStates").val() : null;
+                            data.Fk_GameWeak = $("#Fk_GameWeak").length > 0 ? $("#Fk_GameWeak").val() : null;
+                            data.PointsFrom = $("#PointsFrom").length > 0 ? $("#PointsFrom").val() : null;
+                            data.PointsTo = $("#PointsTo").length > 0 ? $("#PointsTo").val() : null;
+                            data.PercentFrom = $("#PercentFrom").length > 0 ? $("#PercentFrom").val() : null;
+                            data.PercentTo = $("#PercentTo").length > 0 ? $("#PercentTo").val() : null;
+                            data.ValueFrom = $("#ValueFrom").length > 0 ? $("#ValueFrom").val() : null;
+                            data.ValueTo = $("#ValueTo").length > 0 ? $("#ValueTo").val() : null;
+                                                         
+                            return JSON.stringify(data);
+                        }
+                    },
+                    // Columns Setups
+                    columns: [
+                       {data:"id"},
+                       { data: "player.name" },
+                       { data: "gameWeak.name" },
+                       { data: "scoreState.name" },
+                       { data: "percent" },
+                       { data: "points" },
+                       { data: "value" },
+                       { data: "positionByPercent" },
+                       { data: "positionByPoints" },
+                       { data: "positionByValue" },
+                       { data: "createdAt" },
+                       {data:"id"},
+                    ]
+                });
+                $("button[type=reset]").on("click", function () {
+                                      $(".dt-date").each(function () {
+                                          $(this).val('');
+                                      })
+                                  });
+                                  
+                $('body').on('submit', '.filter', function () {
+                                      event.preventDefault();
+                                      dt_ajax_table.DataTable().draw();
+                      });
+            }
         }
-    });
+    
+        $(document).ready(function () {
+            LoadTable();
+        });
     </script>
 }

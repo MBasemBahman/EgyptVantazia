@@ -1149,4 +1149,22 @@
   <data name="ScoreState Data" xml:space="preserve">
     <value>Score State Data</value>
   </data>
+  <data name="Percent" xml:space="preserve">
+    <value>Percent</value>
+  </data>
+  <data name="PositionByPoints" xml:space="preserve">
+    <value>Position By Points</value>
+  </data>
+  <data name="PositionByPercent" xml:space="preserve">
+    <value>Position By Percent</value>
+  </data>
+  <data name="PositionByValue" xml:space="preserve">
+    <value>Position By Value</value>
+  </data>
+  <data name="PercentFrom" xml:space="preserve">
+    <value>Percent From</value>
+  </data>
+  <data name="PercentTo" xml:space="preserve">
+    <value>Percent To</value>
+  </data>
 </root>

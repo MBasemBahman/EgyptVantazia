@@ -18,7 +18,11 @@ namespace Repository.DBModels.PlayerStateModels
                            parameters.Fk_Season,
                            parameters.Fk_Players,
                            parameters.Fk_ScoreStates,
-                           parameters.Fk_Seasons);
+                           parameters.Fk_Seasons,
+                           parameters.PointsFrom,
+                           parameters.PointsTo,
+                           parameters.PercentFrom,
+                           parameters.PercentTo);
 
         }
 
@@ -77,7 +81,11 @@ namespace Repository.DBModels.PlayerStateModels
             int fk_Season,
             List<int> fk_Players,
             List<int> fk_ScoreStates,
-            List<int> fk_Seasons)
+            List<int> fk_Seasons,
+            double? pointsFrom,
+            double? pointsTo,
+            double? percentFrom,
+            double? percentTo)
         {
             return PlayerSeasonScoreStates.Where(a => (id == 0 || a.Id == id) &&
                                                   (fk_Player == 0 || a.Fk_Player == fk_Player) &&
@@ -88,7 +96,11 @@ namespace Repository.DBModels.PlayerStateModels
                                                   (fk_ScoreStates == null || !fk_ScoreStates.Any() ||
                                                    fk_ScoreStates.Contains(a.Fk_ScoreState)) &&
                                                   (fk_Seasons == null || !fk_Seasons.Any() ||
-                                                   fk_Seasons.Contains(a.Fk_Season)));
+                                                   fk_Seasons.Contains(a.Fk_Season)) &&
+                                                  (pointsFrom == null || a.Points >= pointsFrom) &&
+                                                  (pointsTo == null || a.Points <= pointsTo) &&
+                                                  (percentFrom == null || a.Percent >= percentFrom) &&
+                                                  (percentTo == null || a.Percent <= percentTo) );
 
 
         }

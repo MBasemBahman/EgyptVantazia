@@ -279,6 +279,7 @@ namespace CoreServices.Logic
                            {
                                Name = otherLang ? a.Away.TeamLang.Name : a.Away.Name,
                                ImageUrl = a.Away.StorageUrl + a.Away.ImageUrl,
+                               ShirtImageUrl = a.Away.ShirtStorageUrl + a.Away.ShirtImageUrl,
                                _365_TeamId = a.Away._365_TeamId,
 
                            },
@@ -286,6 +287,7 @@ namespace CoreServices.Logic
                            {
                                Name = otherLang ? a.Home.TeamLang.Name : a.Home.Name,
                                ImageUrl = a.Home.StorageUrl + a.Home.ImageUrl,
+                               ShirtImageUrl = a.Home.ShirtStorageUrl + a.Home.ShirtImageUrl,
                                _365_TeamId = a.Home._365_TeamId
                            },
                            GameWeak = new GameWeakModel

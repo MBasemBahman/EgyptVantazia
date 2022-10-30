@@ -49,6 +49,7 @@ namespace CoreServices.Logic
                            {
                                Name = otherLang ? a.Team.TeamLang.Name : a.Team.Name,
                                ImageUrl = a.Team.StorageUrl + a.Team.ImageUrl,
+                               ShirtImageUrl = a.Team.ShirtStorageUrl + a.Team.ShirtImageUrl,
                                _365_TeamId = a.Team._365_TeamId
                            }
                        })

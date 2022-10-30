@@ -37,6 +37,7 @@ namespace Dashboard.Areas.PlayerStateEntity.Controllers
 
             ViewData[ViewDataConstants.AccessLevel] = (DashboardAccessLevelModel)Request.HttpContext.Items[ViewDataConstants.AccessLevel];
 
+            SetViewDataValues();
             return View(filter);
         }
         [HttpPost]

@@ -1,5 +1,6 @@
 ﻿using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.DBModels.PlayerStateModels;
+
 namespace Repository.DBModels.PlayerStateModels
 {
     public class PlayerGameWeakScoreStateRepository : RepositoryBase<PlayerGameWeakScoreState>
@@ -17,7 +18,13 @@ namespace Repository.DBModels.PlayerStateModels
                            parameters.Fk_ScoreState,
                            parameters.Fk_Players,
                            parameters.Fk_ScoreStates,
-                           parameters.Fk_GameWeaks);
+                           parameters.Fk_GameWeaks,
+                           parameters.PointsFrom,
+                           parameters.PointsTo,
+                           parameters.PercentFrom,
+                           parameters.PercentTo,
+                           parameters.ValueFrom,
+                           parameters.ValueTo);
 
         }
 
@@ -72,15 +79,21 @@ namespace Repository.DBModels.PlayerStateModels
         public static IQueryable<PlayerGameWeakScoreState> Filter(
             this IQueryable<PlayerGameWeakScoreState> PlayerGameWeakScoreStates,
             int id,
-            int fk_GameWeak,
+            int? fk_GameWeak,
             int fk_Player,
             int fk_ScoreState,
             List<int> fk_Players,
             List<int> fk_ScoreStates,
-            List<int> fk_GameWeaks)
+            List<int> fk_GameWeaks,
+            double? pointsFrom,
+            double? pointsTo,
+            double? percentFrom,
+            double? percentTo,
+            double? valueFrom,
+            double? valueTo)
         {
             return PlayerGameWeakScoreStates.Where(a => (id == 0 || a.Id == id) &&
-                                                  (fk_GameWeak == 0 || a.Fk_GameWeak == fk_GameWeak) &&
+                                                  (fk_GameWeak == null || a.Fk_GameWeak == fk_GameWeak) &&
                                                   (fk_Player == 0 || a.Fk_Player == fk_Player) &&
                                                   (fk_ScoreState == 0 || a.Fk_ScoreState == fk_ScoreState) &&
                                                   (fk_Players == null || !fk_Players.Any() ||
@@ -88,7 +101,13 @@ namespace Repository.DBModels.PlayerStateModels
                                                   (fk_ScoreStates == null || !fk_ScoreStates.Any() ||
                                                    fk_ScoreStates.Contains(a.Fk_ScoreState)) &&
                                                   (fk_GameWeaks == null || !fk_GameWeaks.Any() ||
-                                                   fk_GameWeaks.Contains(a.Fk_GameWeak)));
+                                                   fk_GameWeaks.Contains(a.Fk_GameWeak)) &&
+                                                  (pointsFrom == null || a.Points >= pointsFrom) &&
+                                                  (pointsTo == null || a.Points <= pointsTo) &&
+                                                  (percentFrom == null || a.Percent >= percentFrom) &&
+                                                  (percentTo == null || a.Percent <= percentTo) &&
+                                                  (valueFrom == null || a.Value >= valueFrom) &&
+                                                  (valueTo == null || a.Value <= valueTo) );
 
 
         }

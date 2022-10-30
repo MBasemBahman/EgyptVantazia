@@ -1140,4 +1140,22 @@
   <data name="ScoreState Data" xml:space="preserve">
     <value>بيانات حالات التسجيل</value>
   </data>
+  <data name="Percent" xml:space="preserve">
+    <value>النسبة المئوية</value>
+  </data>
+  <data name="PositionByPoints" xml:space="preserve">
+    <value>الموضع بالنقاط</value>
+  </data>
+  <data name="PositionByPercent" xml:space="preserve">
+    <value>الموضع بالنسبة المئوية</value>
+  </data>
+  <data name="PositionByValue" xml:space="preserve">
+    <value>الموضع بالقيمة</value>
+  </data>
+  <data name="PercentFrom" xml:space="preserve">
+    <value>النسبة المئوية من</value>
+  </data>
+  <data name="PercentTo" xml:space="preserve">
+    <value>الى</value>
+  </data>
 </root>

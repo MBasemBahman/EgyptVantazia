@@ -21,7 +21,10 @@ namespace Entities.CoreServicesModels.SeasonModels
         public bool? IsDelayed { get; set; }
 
         [DisplayName(nameof(BiggerThanWeak))]
-        public int BiggerThanWeak { get; set; }
+        public int? BiggerThanWeak { get; set; }
+
+        [DisplayName(nameof(LowerThanWeak))]
+        public int? LowerThanWeak { get; set; }
     }
 
     public class GameWeakModel : AuditEntity

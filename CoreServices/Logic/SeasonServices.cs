@@ -193,11 +193,23 @@ namespace CoreServices.Logic
 
         public GameWeakModel GetNextGameWeak(bool otherLang = false)
         {
-            int nextGameWeakNumber = GetCurrentGameWeak()._365_GameWeakId.ParseToInt() + 1;
+            int gameWeakNumber = GetCurrentGameWeak()._365_GameWeakId.ParseToInt();
             return GetGameWeaks(new GameWeakParameters
             {
                 IsDelayed = false,
-                BiggerThanWeak = nextGameWeakNumber
+                BiggerThanWeak = gameWeakNumber
+            }, otherLang: otherLang)
+                .OrderBy(a => a._365_GameWeakId)
+                .FirstOrDefault();
+        }
+
+        public GameWeakModel GetPrevGameWeak(bool otherLang = false)
+        {
+            int gameWeakNumber = GetCurrentGameWeak()._365_GameWeakId.ParseToInt();
+            return GetGameWeaks(new GameWeakParameters
+            {
+                IsDelayed = false,
+                LowerThanWeak = gameWeakNumber
             }, otherLang: otherLang)
                 .OrderBy(a => a._365_GameWeakId)
                 .FirstOrDefault();

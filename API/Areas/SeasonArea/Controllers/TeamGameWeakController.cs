@@ -25,6 +25,11 @@ namespace API.Areas.SeasonArea.Controllers
         public async Task<IEnumerable<TeamGameWeakDto>> GetTeamGameWeaks(
         [FromQuery] TeamGameWeakParameters parameters)
         {
+            if (parameters.NextGameWeak)
+            {
+                GameWeakModel gameWeak = _unitOfWork.Season.GetNextGameWeak();
+                parameters.Fk_GameWeak = gameWeak.Id;
+            }
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             PagedList<TeamGameWeakModel> data = await _unitOfWork.Season.GetTeamGameWeakPaged(parameters, otherLang);

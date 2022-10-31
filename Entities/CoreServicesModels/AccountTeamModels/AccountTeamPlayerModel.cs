@@ -10,7 +10,15 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public int Fk_Player { get; set; }
         public int Fk_Season { get; set; }
         public int Fk_GameWeak { get; set; }
+        public int Fk_SeasonForScore { get; set; }
+        public int Fk_GameWeakForScore { get; set; }
+        public int Fk_NextGameWeak { get; set; }
         public bool IsCurrent { get; set; }
+        public bool IncludeNextMatch { get; set; }
+        public bool IncludeScore { get; set; }
+        public List<int> Fk_ScoreStatesForSeason { get; set; }
+
+        public List<int> Fk_ScoreStatesForGameWeak { get; set; }
     }
 
     public class AccountTeamPlayerModel : BaseEntity
@@ -26,14 +34,24 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         [DisplayName(nameof(Player))]
         public PlayerModel Player { get; set; }
-
         public bool IsPrimary { get; set; }
 
+        public IList<TeamModel> NextMatches { get; set; }
+    }
+
+    public class AccountTeamPlayerBulkCreateModel
+    {
+        public List<AccountTeamPlayerCreateModel> Players { get; set; }
     }
 
     public class AccountTeamPlayerCreateModel
     {
-        [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
-        public List<int> Fk_Players { get; set; }
+        public bool IsPrimary { get; set; }
+
+        public int Fk_TeamPlayerType { get; set; }
+
+        public int Fk_Player { get; set; }
+
+        public int Order { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using API.Controllers;
+using CoreServices;
 using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.AccountTeamModels;
@@ -72,11 +73,20 @@ namespace API.Areas.AccountTeamArea.Controllers
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
             SeasonModel currentSeason = _unitOfWork.Season.GetCurrentSeason();
+            GameWeakModel currentGameWeak = _unitOfWork.Season.GetCurrentGameWeak();
 
             AccountTeam accountTeam = _mapper.Map<AccountTeam>(model);
             accountTeam.CreatedBy = auth.Name;
             accountTeam.Fk_Account = auth.Fk_Account;
             accountTeam.Fk_Season = currentSeason.Id;
+            accountTeam.TotalMoney = 100;
+            accountTeam.AccountTeamGameWeaks = new List<AccountTeamGameWeak>
+            {
+                new AccountTeamGameWeak
+                {
+                    Fk_GameWeak = currentGameWeak.Id
+                }
+            };
 
             if (model.ImageFile != null)
             {

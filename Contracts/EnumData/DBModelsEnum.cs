@@ -103,7 +103,8 @@
         public enum TeamPlayerTypeEnum
         {
             Captian = 1,
-            ViceCaptian = 2
+            ViceCaptian = 2,
+            Normal = 3
         }
     }
 }

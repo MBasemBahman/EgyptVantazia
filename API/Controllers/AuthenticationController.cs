@@ -1,4 +1,5 @@
 ﻿using API.Areas.UserArea.Models;
+using Entities.CoreServicesModels.AccountModels;
 using Entities.DBModels.AccountModels;
 using Entities.ServicesModels;
 using BC = BCrypt.Net.BCrypt;
@@ -35,6 +36,42 @@ namespace API.Controllers
             model.UserName = RegexService.GetUserName(model.UserName);
 
             UserAuthenticatedDto auth = await _authManager.Authenticate(model, IpAddress());
+
+            SetToken(auth.TokenResponse);
+            SetRefresh(auth.RefreshTokenResponse);
+
+            UserDto usersDto = _mapper.Map<UserDto>(auth);
+
+            return usersDto;
+        }
+
+        [HttpPost]
+        [Route(nameof(RegisterAnonymouse))]
+        [AllowAnonymous]
+        public async Task<UserDto> RegisterAnonymouse(
+          [FromBody] UserForAnonymouseDto model)
+        {
+            string password = "123456";
+
+            if ((await _unitOfWork.User.FindByUserName(model.UserName, trackChanges: false)) == null)
+            {
+                User user = _mapper.Map<User>(new UserForRegistrationDto
+                {
+                    UserName = model.UserName,
+                    Culture = model.Culture,
+                    EmailAddress = "Anonymouse@mail.com",
+                    Name = "Anonymouse",
+                    Password = password
+                });
+                await _unitOfWork.User.CreateUser(user);
+                await _unitOfWork.Save();
+            }
+
+            UserAuthenticatedDto auth = await _authManager.Authenticate(new UserForAuthenticationDto
+            {
+                UserName = model.UserName,
+                Password = password,
+            }, IpAddress());
 
             SetToken(auth.TokenResponse);
             SetRefresh(auth.RefreshTokenResponse);

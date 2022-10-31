@@ -2,6 +2,8 @@
 using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.PlayerTransfersModels;
 using Entities.CoreServicesModels.SeasonModels;
+using Entities.CoreServicesModels.TeamModels;
+using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.PlayersTransfersModels;
 
 namespace API.Areas.PlayerTransferArea.Controllers
@@ -56,9 +58,22 @@ namespace API.Areas.PlayerTransferArea.Controllers
                 throw new Exception("Please create your team!");
             }
 
+            var price = _unitOfWork.Team.GetPlayers(new PlayerParameters
+            {
+                Id = model.Fk_Player,
+            }, otherLang: false).Select(a => a.BuyPrice).FirstOrDefault();
+
+            AccountTeam accountTeam = await _unitOfWork.AccountTeam.FindAccountTeambyId(currentTeam.Id, trackChanges: true);
+            accountTeam.TotalMoney -= (int)price;
+
             PlayerTransfer playerTransfer = _mapper.Map<PlayerTransfer>(model);
             playerTransfer.CreatedBy = auth.Name;
             playerTransfer.Fk_AccountTeam = currentTeam.Id;
+
+            if (!model.IsFree)
+            {
+                playerTransfer.Cost = (int)price;
+            }
 
             _unitOfWork.PlayerTransfers.CreatePlayerTransfer(playerTransfer);
             await _unitOfWork.Save();

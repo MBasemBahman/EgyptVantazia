@@ -25,6 +25,8 @@ namespace Entities.CoreServicesModels.TeamModels
 
         [DisplayName(nameof(ShirtImageUrl))]
         public string ShirtImageUrl { get; set; }
+
+        public bool IsAwayTeam { get; set; }
     }
 
     public class TeamCreateOrEditModel

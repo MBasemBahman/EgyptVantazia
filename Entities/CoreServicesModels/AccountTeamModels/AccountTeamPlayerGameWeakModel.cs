@@ -44,7 +44,7 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public bool IsTransfer { get; set; }
 
         [DisplayName(nameof(Order))]
-        public bool Order { get; set; }
+        public int Order { get; set; }
 
         [DisplayName(nameof(TrippleCaptain))]
         public bool TrippleCaptain { get; set; }

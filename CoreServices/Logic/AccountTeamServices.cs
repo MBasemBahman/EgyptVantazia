@@ -386,22 +386,30 @@ namespace CoreServices.Logic
                                                 })
                                                 .ToList() : null,
                                NextMatches = parameters.Fk_NextGameWeak == 0 ? null :
-                                         _repository.TeamGameWeak.FindAll(new TeamGameWeakParameters
-                                         {
-                                             Fk_Team = a.Player.Fk_Team,
-                                             Fk_GameWeak = parameters.Fk_NextGameWeak
-                                         }, false)
-                                         .Select(b => new
-                                         {
-                                             Team = b.Fk_Away == a.Player.Fk_Team ? b.Home : b.Away,
-                                             IsAwayTeam = b.Fk_Away == a.Player.Fk_Team
-                                         })
-                                         .Select(b => new TeamModel
-                                         {
-                                             Name = otherLang ? b.Team.TeamLang.Name : b.Team.Name,
-                                             IsAwayTeam = b.IsAwayTeam
-                                         })
-                                         .ToList()
+                               (a.Player
+                                .Team
+                                .AwayGameWeaks
+                                .Any(b => b.Fk_GameWeak == parameters.Fk_NextGameWeak) ?
+                               a.Player
+                                .Team
+                                .AwayGameWeaks
+                                .Where(b => b.Fk_GameWeak == parameters.Fk_NextGameWeak)
+                                .Select(b => new TeamModel
+                                {
+                                    Name = otherLang ? b.Home.TeamLang.Name : b.Home.Name,
+                                    IsAwayTeam = false
+                                })
+                                .ToList() :
+                                a.Player
+                                .Team
+                                .HomeGameWeaks
+                                .Where(b => b.Fk_GameWeak == parameters.Fk_NextGameWeak)
+                                .Select(b => new TeamModel
+                                {
+                                    Name = otherLang ? b.Away.TeamLang.Name : b.Away.Name,
+                                    IsAwayTeam = true
+                                })
+                                .ToList())
                            },
                            AccountTeam = new AccountTeamModel
                            {

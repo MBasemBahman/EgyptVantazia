@@ -103,7 +103,7 @@ namespace Dashboard.Areas.AccountEntity.Controllers
                 model.User = _mapper.Map<UserCreateModel>(await _unitOfWork.User.FindByAccountId(id, trackChanges: false));
                 model.ImageUrl = accountDB.StorageUrl + accountDB.ImageUrl;
                 model.Subscriptions = _mapper.Map<List<AccountSubscriptionModel>>(_unitOfWork
-                    .AccountSubscription.GetAccountSubscriptions(new AccountSubscriptionParameters
+                    .Account.GetAccountSubscriptions(new AccountSubscriptionParameters
                     { Fk_Account = accountDB.Id }, otherLang).ToList());
             }
 

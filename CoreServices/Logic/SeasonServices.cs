@@ -178,7 +178,8 @@ namespace CoreServices.Logic
                                ImageUrl = a.Season.StorageUrl + a.Season.ImageUrl,
                                _365_SeasonId = a.Season._365_SeasonId,
                            },
-                           IsCurrent = a.IsCurrent
+                           IsCurrent = a.IsCurrent,
+                           Order = string.IsNullOrWhiteSpace(a._365_GameWeakId) ? 0 : Convert.ToInt32(a._365_GameWeakId)
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);
@@ -187,7 +188,7 @@ namespace CoreServices.Logic
         public GameWeakModel GetCurrentGameWeak(bool otherLang = false)
         {
             return GetGameWeaks(new GameWeakParameters { IsCurrent = true, IsCurrentSeason = true }, otherLang: otherLang)
-                   .OrderByDescending(a => a.Id)
+                   .OrderByDescending(a => a.Order)
                    .FirstOrDefault();
         }
 
@@ -199,7 +200,7 @@ namespace CoreServices.Logic
                 IsDelayed = false,
                 BiggerThanWeak = gameWeakNumber
             }, otherLang: otherLang)
-                .OrderBy(a => a._365_GameWeakId)
+                .OrderBy(a => a.Order)
                 .FirstOrDefault();
         }
 
@@ -211,7 +212,7 @@ namespace CoreServices.Logic
                 IsDelayed = false,
                 LowerThanWeak = gameWeakNumber
             }, otherLang: otherLang)
-                .OrderBy(a => a._365_GameWeakId)
+                .OrderByDescending(a => a.Order)
                 .FirstOrDefault();
         }
 

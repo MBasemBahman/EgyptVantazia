@@ -60,5 +60,8 @@ namespace Entities.DBModels.AccountModels
 
         [DisplayName(nameof(AccountSubscriptions))]
         public IList<AccountSubscription> AccountSubscriptions { get; set; }
+
+        [DisplayName(nameof(Payments))]
+        public IList<Payment> Payments { get; set; }
     }
 }

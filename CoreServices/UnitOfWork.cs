@@ -8,7 +8,6 @@ namespace CoreServices
         private UserService _userService;
         private LogServices _logServices;
         private AccountServices _accountServices;
-        private AccountSubscriptionServices _accountSubscriptionServices;
         private DashboardAdministrationServices _dashboardAdministrationServices;
         private LocationServices _locationServices;
         private AccountTeamServices _accountTeamServices;
@@ -56,15 +55,6 @@ namespace CoreServices
             {
                 _accountServices ??= new AccountServices(_repository);
                 return _accountServices;
-            }
-        }
-
-        public AccountSubscriptionServices AccountSubscription
-        {
-            get
-            {
-                _accountSubscriptionServices ??= new AccountSubscriptionServices(_repository);
-                return _accountSubscriptionServices;
             }
         }
 

@@ -44,6 +44,8 @@ namespace Entities.CoreServicesModels.SeasonModels
 
         [DisplayName(nameof(Season))]
         public SeasonModel Season { get; set; }
+
+        public int Order { get; set; }
     }
 
     public class GameWeakCreateOrEditModel

@@ -1,4 +1,6 @@
 ﻿using API.Controllers;
+using Entities.CoreServicesModels.AccountModels;
+using Entities.DBModels.AccountModels;
 
 namespace API.Areas.PaymentArea.Controllers
 {
@@ -68,16 +70,55 @@ namespace API.Areas.PaymentArea.Controllers
         [HttpPost]
         [Route(nameof(TransactionProcessedCallback))]
         [AllowAll]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult TransactionProcessedCallback([FromBody] TransactionProcessedCallbackParameters parameters)
         {
             WebhookServices.Send(parameters).Wait();
 
+            if (parameters.Type == "TRANSACTION" && parameters.Obj.Success)
+            {
+                string email = parameters.Obj.Payment_key_claims.Billing_data.Email;
+                string phoneNumber = parameters.Obj.Payment_key_claims.Billing_data.Phone_number;
+
+                int account = _unitOfWork.Account.GetAccounts(new AccountParameters
+                {
+                    Email = email,
+                    Phone = phoneNumber
+                }, otherLang: false).Select(a => a.Id).FirstOrDefault();
+
+                int subscription = _unitOfWork.Subscription
+                                              .GetSubscriptions(new Entities.CoreServicesModels.SubscriptionModels.SubscriptionParameters(), otherLang: false)
+                                              .Select(a => a.Id)
+                                              .FirstOrDefault();
+
+                if (account > 0 && subscription > 0)
+                {
+                    _unitOfWork.Account.CreatePayment(new Payment
+                    {
+                        Amount = parameters.Obj.Amount_cents / 100,
+                        TransactionId = parameters.Obj.Order.Id.ToString(),
+                        Fk_Account = account
+                    });
+
+                    _unitOfWork.Account.CreateAccountSubscription(new AccountSubscription
+                    {
+                        Fk_Account = account,
+                        Fk_Subscription = subscription,
+                        StartDate = DateTime.UtcNow.Date,
+                        EndDate = DateTime.UtcNow.Date.AddYears(1)
+                    });
+
+                    _unitOfWork.Save().Wait();
+                }
+
+            }
             return Ok();
         }
 
         [HttpPost]
         [Route(nameof(TransactionResponseCallback))]
         [AllowAll]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult TransactionResponseCallback([FromBody] TransactionProcessedCallbackParameters parameters)
         {
             WebhookServices.Send(parameters).Wait();

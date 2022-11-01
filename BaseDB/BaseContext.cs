@@ -143,6 +143,10 @@ namespace BaseDB
 
         #endregion
 
+        #region PlayerStateModels
+        public DbSet<Payment> Payments { get; set; }
+        #endregion
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             foreach (IMutableEntityType entityType in modelBuilder.Model.GetEntityTypes()

@@ -34,6 +34,8 @@ namespace Repository
 
         #region AccountModels
         private AccountRepository _accountRepository;
+        private AccountSubscriptionRepository _accountSubscriptionRepository;
+        private PaymentRepository _paymentRepository;
         #endregion
 
         #region AppInfoModels
@@ -106,11 +108,6 @@ namespace Repository
 
         #region SubscriptionModels
         private SubscriptionRepository _subscriptionRepository;
-        #endregion
-
-        #region AccountSubscription Models
-
-        private AccountSubscriptionRepository _accountSubscriptionRepository;
         #endregion
 
         #region PlayerStateModels
@@ -192,6 +189,25 @@ namespace Repository
                 return _accountRepository;
             }
         }
+
+        public AccountSubscriptionRepository AccountSubscription
+        {
+            get
+            {
+                _accountSubscriptionRepository ??= new AccountSubscriptionRepository(_dBContext);
+                return _accountSubscriptionRepository;
+            }
+        }
+
+        public PaymentRepository Payment
+        {
+            get
+            {
+                _paymentRepository ??= new PaymentRepository(_dBContext);
+                return _paymentRepository;
+            }
+        }
+
         #endregion
 
         #region AppInfoModels
@@ -485,17 +501,6 @@ namespace Repository
             {
                 _subscriptionRepository ??= new SubscriptionRepository(_dBContext);
                 return _subscriptionRepository;
-            }
-        }
-        #endregion
-
-        #region AccountSubscriptionModels
-        public AccountSubscriptionRepository AccountSubscription
-        {
-            get
-            {
-                _accountSubscriptionRepository ??= new AccountSubscriptionRepository(_dBContext);
-                return _accountSubscriptionRepository;
             }
         }
         #endregion

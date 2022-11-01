@@ -164,5 +164,107 @@ namespace CoreServices.Logic
 
         }
         #endregion
+
+        #region Account Subscription Services
+
+        public IQueryable<AccountSubscriptionModel> GetAccountSubscriptions(
+            AccountSubscriptionParameters parameters,
+            bool otherLang)
+        {
+            return _repository.AccountSubscription
+                              .FindAll(parameters, trackChanges: false)
+                              .Select(a => new AccountSubscriptionModel
+                              {
+                                  Id = a.Id,
+                                  CreatedAt = a.CreatedAt,
+                                  StartDate = a.StartDate,
+                                  EndDate = a.EndDate,
+                                  IsAction = a.IsAction,
+                                  Fk_Account = a.Fk_Account,
+                                  Fk_Subscription = a.Fk_Subscription
+                              })
+                              .Search(parameters.SearchColumns, parameters.SearchTerm)
+                              .Sort(parameters.OrderBy);
+        }
+
+        public async Task<PagedList<AccountSubscriptionModel>> GetAccountSubscriptionsPaged(
+            AccountSubscriptionParameters parameters,
+            bool otherLang)
+        {
+            return await PagedList<AccountSubscriptionModel>.ToPagedList(GetAccountSubscriptions(parameters, otherLang), parameters.PageNumber, parameters.PageSize);
+        }
+
+        public async Task<AccountSubscription> FindAccountSubscriptionById(int id, bool trackChanges)
+        {
+            return await _repository.AccountSubscription.FindById(id, trackChanges);
+        }
+
+        public AccountSubscriptionModel GetAccountSubscriptionbyId(int id, bool otherLang)
+        {
+            return GetAccountSubscriptions(new AccountSubscriptionParameters { Id = id }, otherLang).SingleOrDefault();
+        }
+
+
+        public void CreateAccountSubscription(AccountSubscription account)
+        {
+            _repository.AccountSubscription.Create(account);
+        }
+
+        public int GetAccountSubscriptionsCount()
+        {
+            return _repository.AccountSubscription.Count();
+        }
+
+        #endregion
+
+        #region Account Subscription Services
+
+        public IQueryable<PaymentModel> GetPayments(
+            PaymentParameters parameters,
+            bool otherLang)
+        {
+            return _repository.Payment
+                              .FindAll(parameters, trackChanges: false)
+                              .Select(a => new PaymentModel
+                              {
+                                  Id = a.Id,
+                                  CreatedAt = a.CreatedAt,
+                                  TransactionId = a.TransactionId,
+                                  Fk_Account = a.Fk_Account,
+                                  Amount = a.Amount
+                              })
+                              .Search(parameters.SearchColumns, parameters.SearchTerm)
+                              .Sort(parameters.OrderBy);
+        }
+
+        public async Task<PagedList<PaymentModel>> GetPaymentsPaged(
+            PaymentParameters parameters,
+            bool otherLang)
+        {
+            return await PagedList<PaymentModel>.ToPagedList(GetPayments(parameters, otherLang), parameters.PageNumber, parameters.PageSize);
+        }
+
+        public async Task<Payment> FindPaymentById(int id, bool trackChanges)
+        {
+            return await _repository.Payment.FindById(id, trackChanges);
+        }
+
+        public PaymentModel GetPaymentbyId(int id, bool otherLang)
+        {
+            return GetPayments(new PaymentParameters { Id = id }, otherLang).SingleOrDefault();
+        }
+
+
+        public void CreatePayment(Payment payment)
+        {
+            _repository.Payment.Create(payment);
+        }
+
+        public int GetPaymentsCount()
+        {
+            return _repository.Payment.Count();
+        }
+
+        #endregion
     }
 }

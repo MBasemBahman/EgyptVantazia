@@ -86,10 +86,6 @@ namespace API.MappingProfileCls
             _ = CreateMap<PrivateLeagueCreateModel, PrivateLeague>();
             #endregion
 
-            #region PlayerTransferModels
-            _ = CreateMap<PlayerTransferCreateModel, PlayerTransfer>();
-            #endregion
-
             #region AccountTeamModels
 
             _ = CreateMap<AccountTeamCreateModel, AccountTeam>();

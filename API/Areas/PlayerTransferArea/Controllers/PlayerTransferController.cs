@@ -5,6 +5,7 @@ using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.PlayersTransfersModels;
+using static Entities.EnumData.LogicEnumData;
 
 namespace API.Areas.PlayerTransferArea.Controllers
 {
@@ -39,46 +40,140 @@ namespace API.Areas.PlayerTransferArea.Controllers
 
         [HttpPost]
         [Route(nameof(Create))]
-        public async Task<PlayerTransferModel> Create([FromBody] PlayerTransferCreateModel model)
+        public async Task<bool> Create([FromBody] PlayerTransferBulkCreateModel model)
         {
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             SeasonModel currentSeason = _unitOfWork.Season.GetCurrentSeason();
-
             if (currentSeason == null)
             {
                 throw new Exception("Season not started yet!");
             }
 
             AccountTeamModel currentTeam = _unitOfWork.AccountTeam.GetCurrentTeam(auth.Fk_Account, currentSeason.Id);
-
             if (currentTeam == null)
             {
                 throw new Exception("Please create your team!");
             }
 
-            var price = _unitOfWork.Team.GetPlayers(new PlayerParameters
+            List<int> fk_Players = new();
+            if (model.SellPlayers != null && model.SellPlayers.Any())
             {
-                Id = model.Fk_Player,
-            }, otherLang: false).Select(a => a.BuyPrice).FirstOrDefault();
-
-            AccountTeam accountTeam = await _unitOfWork.AccountTeam.FindAccountTeambyId(currentTeam.Id, trackChanges: true);
-            accountTeam.TotalMoney -= (int)price;
-
-            PlayerTransfer playerTransfer = _mapper.Map<PlayerTransfer>(model);
-            playerTransfer.CreatedBy = auth.Name;
-            playerTransfer.Fk_AccountTeam = currentTeam.Id;
-
-            if (!model.IsFree)
+                fk_Players.AddRange(model.SellPlayers.Select(a => a.Fk_Player).ToList());
+            }
+            if (model.BuyPlayers != null && model.BuyPlayers.Any())
             {
-                playerTransfer.Cost = (int)price;
+                fk_Players.AddRange(model.BuyPlayers.Select(a => a.Fk_Player).ToList());
             }
 
-            _unitOfWork.PlayerTransfers.CreatePlayerTransfer(playerTransfer);
-            await _unitOfWork.Save();
+            var prices = _unitOfWork.Team.GetPlayers(new PlayerParameters
+            {
+                Fk_Players = fk_Players,
+            }, otherLang: false)
+                   .Select(a => new
+                   {
+                       a.Id,
+                       a.BuyPrice,
+                       a.SellPrice
+                   }).ToList();
 
-            return _unitOfWork.PlayerTransfers.GetPlayerTransferbyId(playerTransfer.Id, otherLang);
+            if (model.SellPlayers != null && model.SellPlayers.Any())
+            {
+                GameWeakModel currentGameWeak = _unitOfWork.Season.GetCurrentGameWeak();
+
+                int totalPrice = 0;
+                foreach (PlayerTransferSellModel player in model.SellPlayers)
+                {
+                    int accountTeamPlayerGameWeakId = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
+                    {
+                        Fk_AccountTeam = currentTeam.Id,
+                        Fk_Player = player.Fk_Player,
+                        Fk_Season = currentSeason.Id,
+                        Fk_GameWeak = currentGameWeak.Id
+                    }, otherLang: false).Select(a => a.Id).FirstOrDefault();
+
+                    if (accountTeamPlayerGameWeakId > 0)
+                    {
+                        AccountTeamPlayerGameWeak accountTeamPlayerGameWeak = await _unitOfWork.AccountTeam.FindAccountTeamPlayerGameWeakbyId(accountTeamPlayerGameWeakId, trackChanges: true);
+                        accountTeamPlayerGameWeak.IsTransfer = true;
+
+                        int price = (int)prices.Where(a => a.Id == player.Fk_Player).Select(a => a.SellPrice).FirstOrDefault();
+                        _unitOfWork.PlayerTransfers.CreatePlayerTransfer(new PlayerTransfer
+                        {
+                            Fk_AccountTeam = currentTeam.Id,
+                            Fk_GameWeak = currentGameWeak.Id,
+                            Fk_Player = player.Fk_Player,
+                            Cost = price,
+                            TransferTypeEnum = TransferTypeEnum.Selling
+                        });
+
+                        totalPrice += price;
+                    }
+                }
+
+                AccountTeam accountTeam = await _unitOfWork.AccountTeam.FindAccountTeambyId(currentTeam.Id, trackChanges: true);
+                accountTeam.TotalMoney += totalPrice;
+
+                _unitOfWork.Save().Wait();
+            }
+            if (model.BuyPlayers != null && model.BuyPlayers.Any())
+            {
+                GameWeakModel nextGameWeak = _unitOfWork.Season.GetNextGameWeak();
+                if (nextGameWeak == null)
+                {
+                    throw new Exception("Game Weak not started yet!");
+                }
+
+                AccountTeamGameWeakModel teamGameWeak = _unitOfWork.AccountTeam.GetTeamGameWeak(auth.Fk_Account, nextGameWeak.Id);
+                if (teamGameWeak == null)
+                {
+                    _unitOfWork.AccountTeam.CreateAccountTeamGameWeak(new AccountTeamGameWeak
+                    {
+                        Fk_AccountTeam = currentTeam.Id,
+                        Fk_GameWeak = nextGameWeak.Id
+                    });
+                }
+
+                int totalPrice = 0;
+                foreach (PlayerTransferBuyModel player in model.BuyPlayers)
+                {
+                    int price = (int)prices.Where(a => a.Id == player.Fk_Player).Select(a => a.BuyPrice).FirstOrDefault();
+                    _unitOfWork.PlayerTransfers.CreatePlayerTransfer(new PlayerTransfer
+                    {
+                        Fk_AccountTeam = currentTeam.Id,
+                        Fk_GameWeak = nextGameWeak.Id,
+                        Fk_Player = player.Fk_Player,
+                        TransferTypeEnum = TransferTypeEnum.Buying,
+                        Cost = price
+                    });
+
+                    _unitOfWork.AccountTeam.CreateAccountTeamPlayer(new AccountTeamPlayer
+                    {
+                        Fk_AccountTeam = currentTeam.Id,
+                        Fk_Player = player.Fk_Player,
+                        AccountTeamPlayerGameWeaks = new List<AccountTeamPlayerGameWeak>
+                        {
+                            new AccountTeamPlayerGameWeak
+                            {
+                                Fk_GameWeak = nextGameWeak.Id,
+                                Fk_TeamPlayerType = player.Fk_TeamPlayerType,
+                                IsPrimary = player.IsPrimary,
+                                Order = player.Order
+                            }
+                        }
+                    });
+
+                    totalPrice += price;
+                }
+                await _unitOfWork.Save();
+
+                AccountTeam accountTeam = await _unitOfWork.AccountTeam.FindAccountTeambyId(currentTeam.Id, trackChanges: true);
+                accountTeam.TotalMoney -= totalPrice;
+                await _unitOfWork.Save();
+            }
+
+            return true;
         }
     }
 }

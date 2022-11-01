@@ -1,5 +1,4 @@
 ﻿using API.Controllers;
-using CoreServices;
 using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
@@ -75,9 +74,9 @@ namespace API.Areas.AccountTeamArea.Controllers
                 throw new Exception("Season not started yet!");
             }
 
-            GameWeakModel currentGameWeak = _unitOfWork.Season.GetCurrentGameWeak();
+            GameWeakModel nextGameWeak = _unitOfWork.Season.GetNextGameWeak();
 
-            if (currentGameWeak == null)
+            if (nextGameWeak == null)
             {
                 throw new Exception("Game Weak not started yet!");
             }
@@ -89,14 +88,14 @@ namespace API.Areas.AccountTeamArea.Controllers
                 throw new Exception("Please create your team!");
             }
 
-            AccountTeamGameWeakModel currentTeamGameWeak = _unitOfWork.AccountTeam.GetCurrentTeamGameWeak(auth.Fk_Account, currentSeason.Id);
+            AccountTeamGameWeakModel teamGameWeak = _unitOfWork.AccountTeam.GetTeamGameWeak(auth.Fk_Account, nextGameWeak.Id);
 
-            if (currentTeamGameWeak == null)
+            if (teamGameWeak == null)
             {
                 _unitOfWork.AccountTeam.CreateAccountTeamGameWeak(new AccountTeamGameWeak
                 {
                     Fk_AccountTeam = currentTeam.Id,
-                    Fk_GameWeak = currentGameWeak.Id
+                    Fk_GameWeak = nextGameWeak.Id
                 });
             }
 
@@ -113,14 +112,13 @@ namespace API.Areas.AccountTeamArea.Controllers
                     }).ToList();
 
                 int totalPrice = 0;
-
                 foreach (AccountTeamPlayerCreateModel player in model.Players)
                 {
                     int price = (int)prices.Where(a => a.Id == player.Fk_Player).Select(a => a.BuyPrice).FirstOrDefault();
                     _unitOfWork.PlayerTransfers.CreatePlayerTransfer(new PlayerTransfer
                     {
                         Fk_AccountTeam = currentTeam.Id,
-                        Fk_GameWeak = currentGameWeak.Id,
+                        Fk_GameWeak = nextGameWeak.Id,
                         Fk_Player = player.Fk_Player,
                         TransferTypeEnum = TransferTypeEnum.Buying,
                         Cost = price
@@ -134,7 +132,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                         {
                             new AccountTeamPlayerGameWeak
                             {
-                                Fk_GameWeak = currentGameWeak.Id,
+                                Fk_GameWeak = nextGameWeak.Id,
                                 Fk_TeamPlayerType = player.Fk_TeamPlayerType,
                                 IsPrimary = player.IsPrimary,
                                 Order = player.Order
@@ -148,9 +146,66 @@ namespace API.Areas.AccountTeamArea.Controllers
 
                 AccountTeam accountTeam = await _unitOfWork.AccountTeam.FindAccountTeambyId(currentTeam.Id, trackChanges: true);
                 accountTeam.TotalMoney -= totalPrice;
-
                 await _unitOfWork.Save();
             }
+            return true;
+        }
+
+
+        [HttpPut]
+        [Route(nameof(Update))]
+        public async Task<bool> Update([FromBody] AccountTeamPlayerBulkUpdateModel model)
+        {
+            _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            SeasonModel currentSeason = _unitOfWork.Season.GetCurrentSeason();
+            if (currentSeason == null)
+            {
+                throw new Exception("Season not started yet!");
+            }
+
+            GameWeakModel nextGameWeak = _unitOfWork.Season.GetNextGameWeak();
+
+            if (nextGameWeak == null)
+            {
+                throw new Exception("Game Weak not started yet!");
+            }
+
+            AccountTeamModel currentTeam = _unitOfWork.AccountTeam.GetCurrentTeam(auth.Fk_Account, currentSeason.Id);
+
+            if (currentTeam == null)
+            {
+                throw new Exception("Please create your team!");
+            }
+
+            AccountTeamGameWeakModel teamGameWeak = _unitOfWork.AccountTeam.GetTeamGameWeak(auth.Fk_Account, nextGameWeak.Id);
+
+            if (teamGameWeak == null)
+            {
+                _unitOfWork.AccountTeam.CreateAccountTeamGameWeak(new AccountTeamGameWeak
+                {
+                    Fk_AccountTeam = currentTeam.Id,
+                    Fk_GameWeak = nextGameWeak.Id
+                });
+            }
+
+            if (model.Players != null && model.Players.Any())
+            {
+                foreach (AccountTeamPlayerUpdateModel player in model.Players)
+                {
+                    _unitOfWork.AccountTeam.CreateAccountTeamPlayerGameWeak(new AccountTeamPlayerGameWeak
+                    {
+                        Fk_GameWeak = nextGameWeak.Id,
+                        Fk_TeamPlayerType = player.Fk_TeamPlayerType,
+                        IsPrimary = player.IsPrimary,
+                        Order = player.Order,
+                        Fk_AccountTeamPlayer = player.Fk_AccountTeamPlayer
+                    });
+                }
+            }
+            await _unitOfWork.Save();
+
             return true;
         }
     }

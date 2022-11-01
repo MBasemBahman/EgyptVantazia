@@ -223,6 +223,24 @@ namespace CoreServices.Logic
                                              },
                                              BuyPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault(),
                                              SellPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.SellPrice).FirstOrDefault(),
+                                             SeasonScoreStates = a.PlayerSeasonScoreStates
+                                                .Where(c => c.Fk_Season == parameters.Fk_Season &&
+                                                           b.Id == c.Fk_ScoreState)
+                                                .Select(c => new PlayerSeasonScoreStateModel
+                                                {
+                                                    Id = c.Id,
+                                                    Fk_Player = c.Fk_Player,
+                                                    Points = c.Points,
+                                                    Percent = c.Percent,
+                                                    Value = c.Value,
+                                                    Fk_ScoreState = c.Fk_ScoreState,
+                                                    Fk_Season = c.Fk_Season,
+                                                    PositionByPercent = c.PositionByPercent,
+                                                    PositionByPoints = c.PositionByPoints,
+                                                    PositionByValue = c.PositionByValue,
+                                                    LastModifiedAt = c.LastModifiedAt,
+                                                })
+                                                .ToList()
                                          })
                                          .FirstOrDefault() :
                                         parameters.Fk_GameWeak > 0 ?
@@ -252,6 +270,24 @@ namespace CoreServices.Logic
                                              },
                                              BuyPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault(),
                                              SellPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.SellPrice).FirstOrDefault(),
+                                             GameWeakScoreStates = a.PlayerGameWeakScoreStates
+                                                .Where(c => c.Fk_GameWeak == parameters.Fk_GameWeak &&
+                                                           b.Id == c.Fk_ScoreState)
+                                                .Select(c => new PlayerGameWeakScoreStateModel
+                                                {
+                                                    Id = c.Id,
+                                                    Fk_Player = c.Fk_Player,
+                                                    Points = c.Points,
+                                                    Percent = c.Percent,
+                                                    Value = c.Value,
+                                                    Fk_ScoreState = c.Fk_ScoreState,
+                                                    Fk_GameWeak = c.Fk_GameWeak,
+                                                    PositionByPercent = c.PositionByPercent,
+                                                    PositionByPoints = c.PositionByPoints,
+                                                    PositionByValue = c.PositionByValue,
+                                                    LastModifiedAt = c.LastModifiedAt,
+                                                })
+                                                .ToList()
                                          })
                                          .FirstOrDefault() : null
                        })

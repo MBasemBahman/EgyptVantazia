@@ -192,7 +192,7 @@ namespace CoreServices.Logic
             return _repository.AccountTeamGameWeak.Count();
         }
 
-        public AccountTeamGameWeakModel GetCurrentTeamGameWeak(int fk_Account, int fk_GameWeak)
+        public AccountTeamGameWeakModel GetTeamGameWeak(int fk_Account, int fk_GameWeak)
         {
             return GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters()
             {
@@ -384,13 +384,8 @@ namespace CoreServices.Logic
                                                         Name = otherLang ? b.ScoreState.ScoreStateLang.Name : b.ScoreState.Name,
                                                     }
                                                 })
-                                                .ToList() : null
-                           },
-                           AccountTeam = new AccountTeamModel
-                           {
-                               Name = a.AccountTeam.Name
-                           },
-                           NextMatches = parameters.Fk_NextGameWeak == 0 ? null :
+                                                .ToList() : null,
+                               NextMatches = parameters.Fk_NextGameWeak == 0 ? null :
                                          _repository.TeamGameWeak.FindAll(new TeamGameWeakParameters
                                          {
                                              Fk_Team = a.Player.Fk_Team,
@@ -407,6 +402,12 @@ namespace CoreServices.Logic
                                              IsAwayTeam = b.IsAwayTeam
                                          })
                                          .ToList()
+                           },
+                           AccountTeam = new AccountTeamModel
+                           {
+                               Name = a.AccountTeam.Name
+                           },
+
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

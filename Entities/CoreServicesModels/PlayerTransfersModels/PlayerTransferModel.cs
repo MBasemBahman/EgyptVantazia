@@ -2,6 +2,7 @@
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.RequestFeatures;
+using System.Collections;
 using static Entities.EnumData.LogicEnumData;
 
 namespace Entities.CoreServicesModels.PlayerTransfersModels
@@ -51,16 +52,27 @@ namespace Entities.CoreServicesModels.PlayerTransfersModels
         public bool IsFree { get; set; }
     }
 
-    public class PlayerTransferCreateModel
+    public class PlayerTransferBulkCreateModel
+    {
+        public IList<PlayerTransferSellModel> SellPlayers { get; set; }
+
+        public IList<PlayerTransferBuyModel> BuyPlayers { get; set; }
+    }
+
+    public class PlayerTransferSellModel
     {
         public int Fk_Player { get; set; }
+    }
 
-        public int Fk_GameWeak { get; set; }
+    public class PlayerTransferBuyModel
+    {
+        public bool IsPrimary { get; set; }
 
-        public TransferTypeEnum TransferTypeEnum { get; set; }
+        public int Fk_TeamPlayerType { get; set; }
 
-        [DisplayName(nameof(Cost))]
-        public int Cost { get; set; }
+        public int Fk_Player { get; set; }
+
+        public int Order { get; set; }
 
         [DisplayName(nameof(IsFree))]
         public bool IsFree { get; set; }

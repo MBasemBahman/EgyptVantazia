@@ -35,13 +35,16 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         [DisplayName(nameof(Player))]
         public PlayerModel Player { get; set; }
         public bool IsPrimary { get; set; }
-
-        public IList<TeamModel> NextMatches { get; set; }
     }
 
     public class AccountTeamPlayerBulkCreateModel
     {
         public List<AccountTeamPlayerCreateModel> Players { get; set; }
+    }
+
+    public class AccountTeamPlayerBulkUpdateModel
+    {
+        public List<AccountTeamPlayerUpdateModel> Players { get; set; }
     }
 
     public class AccountTeamPlayerCreateModel
@@ -51,6 +54,17 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public int Fk_TeamPlayerType { get; set; }
 
         public int Fk_Player { get; set; }
+
+        public int Order { get; set; }
+    }
+
+    public class AccountTeamPlayerUpdateModel
+    {
+        public bool IsPrimary { get; set; }
+
+        public int Fk_TeamPlayerType { get; set; }
+
+        public int Fk_AccountTeamPlayer { get; set; }
 
         public int Order { get; set; }
     }

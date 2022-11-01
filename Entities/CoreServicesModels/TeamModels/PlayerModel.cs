@@ -78,6 +78,8 @@ namespace Entities.CoreServicesModels.TeamModels
         public List<PlayerSeasonScoreStateModel> SeasonScoreStates { get; set; }
 
         public List<PlayerGameWeakScoreStateModel> GameWeakScoreStates { get; set; }
+
+        public IList<TeamModel> NextMatches { get; set; }
     }
 
     public class PlayerCreateOrEditModel

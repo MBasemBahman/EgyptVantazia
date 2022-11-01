@@ -72,8 +72,8 @@ namespace Repository.DBModels.SeasonModels
         {
             return GameWeaks.Where(a => (id == 0 || a.Id == id) &&
                                         (Fk_Season == 0 || a.Fk_Season == Fk_Season) &&
-                                        (biggerThanWeak == null || (!string.IsNullOrEmpty(a._365_GameWeakId) && int.Parse(a._365_GameWeakId) > biggerThanWeak.Value)) &&
-                                        (lowerThanWeak == null || (!string.IsNullOrEmpty(a._365_GameWeakId) && int.Parse(a._365_GameWeakId) < lowerThanWeak.Value)) &&
+                                        (biggerThanWeak == null || (!string.IsNullOrEmpty(a._365_GameWeakId) && Convert.ToInt32(a._365_GameWeakId) > biggerThanWeak.Value)) &&
+                                        (lowerThanWeak == null || (!string.IsNullOrEmpty(a._365_GameWeakId) && Convert.ToInt32(a._365_GameWeakId) < lowerThanWeak.Value)) &&
                                         (isCurrent == null || a.IsCurrent == isCurrent) &&
                                         (isCurrentSeason == null || a.Season.IsCurrent == isCurrentSeason) &&
                                         (string.IsNullOrWhiteSpace(_365_GameWeakId) || a._365_GameWeakId == _365_GameWeakId));

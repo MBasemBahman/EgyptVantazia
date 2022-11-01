@@ -5,6 +5,7 @@ using Hangfire;
 using Hangfire.SqlServer;
 using IntegrationWith365;
 using Live;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace API.Extensions
 {
@@ -212,6 +213,16 @@ namespace API.Extensions
             _ = services.AddHangfireServer();
 
             //_ = services.AddScoped<HangfireManager>();
+        }
+
+        public static void ConfigurePaymob(this IServiceCollection services,
+          IConfiguration configuration)
+        {
+            PaymobConfiguration config = configuration.GetSection("PaymobConfiguration")
+                                          .Get<PaymobConfiguration>();
+
+            _ = services.AddSingleton(config);
+            _ = services.AddScoped<PaymobServices>();
         }
     }
 }

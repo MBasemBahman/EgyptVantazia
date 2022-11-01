@@ -22,6 +22,11 @@
             return !string.IsNullOrWhiteSpace(value);
         }
 
+        public static bool IsEmpty(this string value)
+        {
+            return string.IsNullOrWhiteSpace(value);
+        }
+
         public static int ParseToInt(this string value)
         {
             value = value.SafeLower().SafeTrim();

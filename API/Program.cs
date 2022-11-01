@@ -1,4 +1,5 @@
 using API.MappingProfileCls;
+using Entities.ServicesModels;
 using Hangfire;
 
 TenantConfig config = new(TenantEnvironments.Development);
@@ -14,6 +15,7 @@ builder.Services.ConfigureCors();
 builder.Services.AddHttpClient();
 builder.Services.ConfigureLoggerService();
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
+builder.Services.Configure<PaymobConfiguration>(builder.Configuration.GetSection("PaymobConfiguration"));
 builder.Services.AddSingleton(provider => new MapperConfiguration(cfg =>
 {
     cfg.AddProfile(new MappingProfile(provider.GetService<IOptions<AppSettings>>()));
@@ -38,6 +40,7 @@ builder.Services.AddControllers(opt =>
 });
 //builder.Services.ConfigureFirebase(config.AppSettings);
 builder.Services.ConfigureEmailSender(builder.Configuration);
+builder.Services.ConfigurePaymob(builder.Configuration);
 //builder.Services.ConfigureHangfire(builder.Configuration);
 
 WebApplication app = builder.Build();

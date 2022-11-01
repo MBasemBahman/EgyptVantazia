@@ -22,7 +22,8 @@
             PrivateLeague,
             PlayerTransfer,
             AccountTeam,
-            PlayerState
+            PlayerState,
+            Payment
         }
 
         public enum TenantViews

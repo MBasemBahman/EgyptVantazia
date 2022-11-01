@@ -2,7 +2,7 @@
 using Entities.CoreServicesModels.PlayerStateModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace API.Areas.PlayerScoreArea.Controllers
+namespace API.Areas.PlayerStateArea.Controllers
 {
     [ApiVersion("1.0")]
     [Area("PlayerState")]

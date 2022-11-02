@@ -25,7 +25,7 @@ namespace API.Areas.PlayerScoreArea.Controllers
         [FromQuery] ScoreTypeParameters parameters)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
-            
+
             PagedList<ScoreTypeModel> data = await _unitOfWork.PlayerScore.GetScoreTypePaged(parameters, otherLang);
 
             SetPagination(data.MetaData, parameters);

@@ -5,7 +5,6 @@ using Hangfire;
 using Hangfire.SqlServer;
 using IntegrationWith365;
 using Live;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace API.Extensions
 {

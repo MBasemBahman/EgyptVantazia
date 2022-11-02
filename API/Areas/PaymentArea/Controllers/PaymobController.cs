@@ -39,7 +39,7 @@ namespace API.Areas.PaymentArea.Controllers
                 throw new Exception("Please add email address!");
             }
 
-            int amount_cents = 1; // 1 LE
+            int amount_cents = 100; // 1 LE
 
             string auth_token = await _paymobServices.Authorization();
 

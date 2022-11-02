@@ -1,7 +1,6 @@
 ﻿using API.Areas.TeamArea.Models;
 using API.Controllers;
 using Entities.CoreServicesModels.TeamModels;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace API.Areas.TeamArea.Controllers
 {

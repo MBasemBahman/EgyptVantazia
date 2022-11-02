@@ -23,7 +23,8 @@
             PlayerTransfer,
             AccountTeam,
             PlayerState,
-            Payment
+            Payment,
+            Subscription
         }
 
         public enum TenantViews

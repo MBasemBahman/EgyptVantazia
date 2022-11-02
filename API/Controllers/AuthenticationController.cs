@@ -1,5 +1,4 @@
 ﻿using API.Areas.UserArea.Models;
-using Entities.CoreServicesModels.AccountModels;
 using Entities.DBModels.AccountModels;
 using Entities.ServicesModels;
 using BC = BCrypt.Net.BCrypt;
@@ -127,12 +126,7 @@ namespace API.Controllers
         {
             User user = await _unitOfWork.User.FindByUserName(model.UserName, trackChanges: false);
 
-            if (user != null)
-            {
-                throw new Exception("Account already registered!");
-            }
-
-            return true;
+            return user != null ? throw new Exception("Account already registered!") : true;
         }
 
         [HttpPost]

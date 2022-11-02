@@ -260,41 +260,6 @@ namespace FantasyLogic.Calculations
             List<int> scoreStates = _unitOfWork.PlayerState
                                                .GetScoreStates(new ScoreStateParameters(), otherLang: false)
                                                .Select(a => a.Id).ToList();
-
-            string jobId = null;
-            foreach (var gameWeak in gameWeaks)
-            {
-                foreach (var scoreState in scoreStates)
-                {
-                    //UpdatePlayerScoreStatePosition(0, gameWeak, scoreState);
-
-                    jobId = jobId.IsExisting()
-                        ? BackgroundJob.ContinueJobWith(jobId, () => UpdatePlayerScoreStatePosition(0, gameWeak, scoreState))
-                        : BackgroundJob.Enqueue(() => UpdatePlayerScoreStatePosition(0, gameWeak, scoreState));
-                }
-            }
-
-            foreach (var scoreState in scoreStates)
-            {
-                //UpdatePlayerScoreStatePosition(season.Id, 0, scoreState);
-
-                jobId = jobId.IsExisting()
-                        ? BackgroundJob.ContinueJobWith(jobId, () => UpdatePlayerScoreStatePosition(season.Id, 0, scoreState))
-                        : BackgroundJob.Enqueue(() => UpdatePlayerScoreStatePosition(season.Id, 0, scoreState));
-            }
-        }
-
-        public void UpdatePlayerScoreStatePosition(int fk_Season, int fk_GameWeak, int scoreState)
-        {
-            if (fk_Season > 0)
-            {
-                _unitOfWork.PlayerState.UpdatePlayerSeasonScoreStatePosition(fk_Season, scoreState);
-            }
-            else if (fk_GameWeak > 0)
-            {
-                _unitOfWork.PlayerState.UpdatePlayerGameWeakScoreStatePosition(fk_GameWeak, scoreState);
-            }
-            _unitOfWork.Save().Wait();
         }
 
         #endregion

@@ -40,34 +40,13 @@ namespace Repository.DBModels.PlayerStateModels
                 PlayerSeasonScoreState oldEntity = FindByCondition(a => a.Fk_Player == entity.Fk_Player && a.Fk_Season == entity.Fk_Season && a.Fk_ScoreState == entity.Fk_ScoreState, trackChanges: true).First();
 
                 oldEntity.Points = entity.Points;
-                oldEntity.PositionByPoints = entity.PositionByPoints;
                 oldEntity.Value = entity.Value;
-                oldEntity.PositionByValue = entity.PositionByValue;
                 oldEntity.Percent = entity.Percent;
-                oldEntity.PositionByPercent = entity.PositionByPercent;
             }
             else
             {
                 base.Create(entity);
             }
-        }
-
-        public void UpdatePlayerSeasonScoreStatePosition(int fk_Season, int fk_ScoreState)
-        {
-            List<PlayerSeasonScoreState> scores = FindByCondition(a => a.Fk_ScoreState == fk_ScoreState &&
-                                                                       a.Fk_Season == fk_Season, trackChanges: true)
-                                                  .ToList();
-
-            double[] pointsRanks = scores.Select(a => a.Points).Distinct().OrderByDescending(a => a).ToArray();
-            double[] valueRanks = scores.Select(a => a.Value).Distinct().OrderByDescending(a => a).ToArray();
-            double[] percentRanks = scores.Select(a => a.Percent).Distinct().OrderByDescending(a => a).ToArray();
-
-            scores.ForEach(a =>
-            {
-                a.PositionByPoints = Array.IndexOf(pointsRanks, a.Points) + 1;
-                a.PositionByValue = Array.IndexOf(valueRanks, a.Value) + 1;
-                a.PositionByPercent = Array.IndexOf(percentRanks, a.Percent) + 1;
-            });
         }
     }
 

@@ -4,6 +4,7 @@ using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountTeamModels;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace CoreServices.Logic
 {
@@ -303,7 +304,18 @@ namespace CoreServices.Logic
                            CreatedAt = a.CreatedAt,
                            Fk_AccountTeam = a.Fk_AccountTeam,
                            Fk_Player = a.Fk_Player,
-                           IsPrimary = parameters.IsCurrent ? a.AccountTeamPlayerGameWeaks.Any(b => b.GameWeak.IsCurrent && b.IsPrimary) : parameters.Fk_GameWeak != 0 && a.AccountTeamPlayerGameWeaks.Any(b => b.Fk_GameWeak == parameters.Fk_GameWeak && b.IsPrimary),
+                           IsPrimary = parameters.IsCurrent ?
+                                       a.AccountTeamPlayerGameWeaks.Any(b => b.GameWeak.IsCurrent && b.IsPrimary) :
+                                       parameters.IsNextGameWeak ?
+                                       a.AccountTeamPlayerGameWeaks.Any(b => b.Fk_GameWeak == parameters.Fk_NextGameWeak && b.IsPrimary) :
+                                       parameters.Fk_GameWeak != 0 &&
+                                       a.AccountTeamPlayerGameWeaks.Any(b => b.Fk_GameWeak == parameters.Fk_GameWeak && b.IsPrimary),
+                           IsCaptain = parameters.IsCurrent ?
+                                       a.AccountTeamPlayerGameWeaks.Any(b => b.GameWeak.IsCurrent && b.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian) :
+                                       parameters.IsNextGameWeak ?
+                                       a.AccountTeamPlayerGameWeaks.Any(b => b.Fk_GameWeak == parameters.Fk_NextGameWeak && b.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian) :
+                                       parameters.Fk_GameWeak != 0 &&
+                                       a.AccountTeamPlayerGameWeaks.Any(b => b.Fk_GameWeak == parameters.Fk_GameWeak && b.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian),
                            Player = new PlayerModel
                            {
                                Id = a.Fk_Player,
@@ -343,9 +355,6 @@ namespace CoreServices.Logic
                                                     Value = b.Value,
                                                     Fk_ScoreState = b.Fk_ScoreState,
                                                     Fk_Season = b.Fk_Season,
-                                                    PositionByPercent = b.PositionByPercent,
-                                                    PositionByPoints = b.PositionByPoints,
-                                                    PositionByValue = b.PositionByValue,
                                                     LastModifiedAt = b.LastModifiedAt,
                                                     ScoreState = new ScoreStateModel
                                                     {
@@ -369,9 +378,6 @@ namespace CoreServices.Logic
                                                     Value = b.Value,
                                                     Fk_ScoreState = b.Fk_ScoreState,
                                                     Fk_GameWeak = b.Fk_GameWeak,
-                                                    PositionByPercent = b.PositionByPercent,
-                                                    PositionByPoints = b.PositionByPoints,
-                                                    PositionByValue = b.PositionByValue,
                                                     LastModifiedAt = b.LastModifiedAt,
                                                     GameWeak = new GameWeakModel
                                                     {

@@ -219,9 +219,6 @@ namespace CoreServices.Logic
                                                     Value = b.Value,
                                                     Fk_ScoreState = b.Fk_ScoreState,
                                                     Fk_Season = b.Fk_Season,
-                                                    PositionByPercent = b.PositionByPercent,
-                                                    PositionByPoints = b.PositionByPoints,
-                                                    PositionByValue = b.PositionByValue,
                                                     LastModifiedAt = b.LastModifiedAt,
                                                     ScoreState = new ScoreStateModel
                                                     {
@@ -245,9 +242,6 @@ namespace CoreServices.Logic
                                                     Value = b.Value,
                                                     Fk_ScoreState = b.Fk_ScoreState,
                                                     Fk_GameWeak = b.Fk_GameWeak,
-                                                    PositionByPercent = b.PositionByPercent,
-                                                    PositionByPoints = b.PositionByPoints,
-                                                    PositionByValue = b.PositionByValue,
                                                     LastModifiedAt = b.LastModifiedAt,
                                                     GameWeak = new GameWeakModel
                                                     {

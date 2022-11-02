@@ -33,9 +33,6 @@ namespace CoreServices.Logic
                            Value = a.Value,
                            Fk_ScoreState = a.Fk_ScoreState,
                            Fk_GameWeak = a.Fk_GameWeak,
-                           PositionByPercent = a.PositionByPercent,
-                           PositionByPoints = a.PositionByPoints,
-                           PositionByValue = a.PositionByValue,
                            Player = new PlayerModel
                            {
                                Id = a.Fk_Player,
@@ -90,11 +87,6 @@ namespace CoreServices.Logic
             return _repository.PlayerGameWeakScoreState.Count();
         }
 
-        public void UpdatePlayerGameWeakScoreStatePosition(int fk_Season, int fk_ScoreState)
-        {
-            _repository.PlayerGameWeakScoreState.UpdatePlayerGameWeakScoreStatePosition(fk_Season, fk_ScoreState);
-        }
-
         #endregion
 
         #region PlayerSeasonScoreState Services
@@ -116,9 +108,6 @@ namespace CoreServices.Logic
                            Value = a.Value,
                            Fk_ScoreState = a.Fk_ScoreState,
                            Fk_Season = a.Fk_Season,
-                           PositionByPercent = a.PositionByPercent,
-                           PositionByPoints = a.PositionByPoints,
-                           PositionByValue = a.PositionByValue,
                            Player = new PlayerModel
                            {
                                Id = a.Fk_Player,
@@ -173,11 +162,6 @@ namespace CoreServices.Logic
             return _repository.PlayerSeasonScoreState.Count();
         }
 
-        public void UpdatePlayerSeasonScoreStatePosition(int fk_Season, int fk_ScoreState)
-        {
-            _repository.PlayerSeasonScoreState.UpdatePlayerSeasonScoreStatePosition(fk_Season, fk_ScoreState);
-        }
-
         #endregion
 
         #region ScoreState Services
@@ -198,7 +182,7 @@ namespace CoreServices.Logic
                            BestPlayer = parameters.IncludeBestPlayer == false ? null :
                                         parameters.Fk_Season > 0 ?
                                         b.PlayerSeasonScoreStates
-                                         .OrderByDescending(a => a.PositionByPoints)
+                                         .OrderByDescending(a => a.Points)
                                          .Select(a => a.Player)
                                          .Select(a => new PlayerModel
                                          {
@@ -235,9 +219,6 @@ namespace CoreServices.Logic
                                                     Value = c.Value,
                                                     Fk_ScoreState = c.Fk_ScoreState,
                                                     Fk_Season = c.Fk_Season,
-                                                    PositionByPercent = c.PositionByPercent,
-                                                    PositionByPoints = c.PositionByPoints,
-                                                    PositionByValue = c.PositionByValue,
                                                     LastModifiedAt = c.LastModifiedAt,
                                                 })
                                                 .ToList()
@@ -245,7 +226,7 @@ namespace CoreServices.Logic
                                          .FirstOrDefault() :
                                         parameters.Fk_GameWeak > 0 ?
                                         b.PlayerGameWeakScoreStates
-                                         .OrderByDescending(a => a.PositionByPoints)
+                                         .OrderByDescending(a => a.Points)
                                          .Select(a => a.Player)
                                          .Select(a => new PlayerModel
                                          {
@@ -282,9 +263,6 @@ namespace CoreServices.Logic
                                                     Value = c.Value,
                                                     Fk_ScoreState = c.Fk_ScoreState,
                                                     Fk_GameWeak = c.Fk_GameWeak,
-                                                    PositionByPercent = c.PositionByPercent,
-                                                    PositionByPoints = c.PositionByPoints,
-                                                    PositionByValue = c.PositionByValue,
                                                     LastModifiedAt = c.LastModifiedAt,
                                                 })
                                                 .ToList()

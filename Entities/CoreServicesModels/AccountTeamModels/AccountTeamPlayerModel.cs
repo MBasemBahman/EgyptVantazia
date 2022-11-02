@@ -14,6 +14,7 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public int Fk_GameWeakForScore { get; set; }
         public int Fk_NextGameWeak { get; set; }
         public bool IsCurrent { get; set; }
+        public bool IsNextGameWeak { get; set; }
         public bool IncludeNextMatch { get; set; }
         public bool IncludeScore { get; set; }
         public List<int> Fk_ScoreStatesForSeason { get; set; }
@@ -35,6 +36,7 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         [DisplayName(nameof(Player))]
         public PlayerModel Player { get; set; }
         public bool IsPrimary { get; set; }
+        public bool IsCaptain { get; set; }
     }
 
     public class AccountTeamPlayerBulkCreateModel

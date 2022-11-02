@@ -38,7 +38,10 @@ namespace Repository.DBModels.AccountTeamModels
                 oldEntity.IsPrimary = entity.IsPrimary;
                 oldEntity.Order = entity.Order;
             }
-            base.Create(entity);
+            else
+            {
+                base.Create(entity);
+            }
         }
     }
 

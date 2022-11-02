@@ -33,6 +33,11 @@ namespace API.Areas.AccountTeamArea.Controllers
                 GameWeakModel gameWeak = _unitOfWork.Season.GetNextGameWeak();
                 parameters.Fk_NextGameWeak = gameWeak.Id;
             }
+            if (parameters.IsNextGameWeak && !parameters.IncludeNextMatch)
+            {
+                GameWeakModel gameWeak = _unitOfWork.Season.GetNextGameWeak();
+                parameters.Fk_NextGameWeak = gameWeak.Id;
+            }
 
             if (parameters.IncludeScore && parameters.Fk_SeasonForScore == 0)
             {

@@ -170,102 +170,90 @@ namespace CoreServices.Logic
         {
             return _repository.ScoreState
                        .FindAll(parameters, trackChanges: false)
-                       .Select(b => new ScoreStateModel
+                       .Select(scoreState => new ScoreStateModel
                        {
-                           Id = b.Id,
-                           CreatedAt = b.CreatedAt,
-                           CreatedBy = b.CreatedBy,
-                           LastModifiedAt = b.LastModifiedAt,
-                           LastModifiedBy = b.LastModifiedBy,
-                           Name = otherLang ? b.ScoreStateLang.Name : b.Name,
-                           Description = b.Description,
+                           Id = scoreState.Id,
+                           CreatedAt = scoreState.CreatedAt,
+                           CreatedBy = scoreState.CreatedBy,
+                           LastModifiedAt = scoreState.LastModifiedAt,
+                           LastModifiedBy = scoreState.LastModifiedBy,
+                           Name = otherLang ? scoreState.ScoreStateLang.Name : scoreState.Name,
+                           Description = scoreState.Description,
                            BestPlayer = parameters.IncludeBestPlayer == false ? null :
                                         parameters.Fk_Season > 0 ?
-                                        b.PlayerSeasonScoreStates
+                                        scoreState.PlayerSeasonScoreStates
                                          .OrderByDescending(a => a.Points)
-                                         .Select(a => a.Player)
-                                         .Select(a => new PlayerModel
+                                         .Select(playerScore => new PlayerModel
                                          {
-                                             Id = a.Id,
-                                             Name = otherLang ? a.PlayerLang.Name : a.Name,
-                                             ImageUrl = !string.IsNullOrEmpty(a.ImageUrl) ? a.StorageUrl + a.ImageUrl : a.Team.ShirtStorageUrl + a.Team.ShirtImageUrl,
-                                             Fk_PlayerPosition = a.Fk_PlayerPosition,
-                                             Fk_Team = a.Fk_Team,
-                                             PlayerNumber = a.PlayerNumber,
+                                             Id = playerScore.Player.Id,
+                                             Name = otherLang ? playerScore.Player.PlayerLang.Name : playerScore.Player.Name,
+                                             ImageUrl = !string.IsNullOrEmpty(playerScore.Player.ImageUrl) ? playerScore.Player.StorageUrl + playerScore.Player.ImageUrl : playerScore.Player.Team.ShirtStorageUrl + playerScore.Player.Team.ShirtImageUrl,
+                                             Fk_PlayerPosition = playerScore.Player.Fk_PlayerPosition,
+                                             Fk_Team = playerScore.Player.Fk_Team,
+                                             PlayerNumber = playerScore.Player.PlayerNumber,
                                              PlayerPosition = new PlayerPositionModel
                                              {
-                                                 Name = otherLang ? a.PlayerPosition.PlayerPositionLang.Name : a.PlayerPosition.Name,
-                                                 ImageUrl = a.PlayerPosition.StorageUrl + a.PlayerPosition.ImageUrl,
-                                                 _365_PositionId = a.PlayerPosition._365_PositionId
+                                                 Name = otherLang ? playerScore.Player.PlayerPosition.PlayerPositionLang.Name : playerScore.Player.PlayerPosition.Name,
+                                                 ImageUrl = playerScore.Player.PlayerPosition.StorageUrl + playerScore.Player.PlayerPosition.ImageUrl,
+                                                 _365_PositionId = playerScore.Player.PlayerPosition._365_PositionId
                                              },
                                              Team = new TeamModel
                                              {
-                                                 Name = otherLang ? a.Team.TeamLang.Name : a.Team.Name,
-                                                 ImageUrl = a.Team.StorageUrl + a.Team.ImageUrl,
-                                                 ShirtImageUrl = a.Team.ShirtStorageUrl + a.Team.ShirtImageUrl,
-                                                 _365_TeamId = a.Team._365_TeamId
+                                                 Name = otherLang ? playerScore.Player.Team.TeamLang.Name : playerScore.Player.Team.Name,
+                                                 ImageUrl = playerScore.Player.Team.StorageUrl + playerScore.Player.Team.ImageUrl,
+                                                 ShirtImageUrl = playerScore.Player.Team.ShirtStorageUrl + playerScore.Player.Team.ShirtImageUrl,
+                                                 _365_TeamId = playerScore.Player.Team._365_TeamId
                                              },
-                                             BuyPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault(),
-                                             SellPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.SellPrice).FirstOrDefault(),
-                                             SeasonScoreStates = a.PlayerSeasonScoreStates
-                                                .Where(c => c.Fk_Season == parameters.Fk_Season &&
-                                                            c.Fk_ScoreState == b.Id)
-                                                .Select(c => new PlayerSeasonScoreStateModel
+                                             BuyPrice = playerScore.Player.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault(),
+                                             SellPrice = playerScore.Player.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.SellPrice).FirstOrDefault(),
+                                             SeasonScoreStates = new List<PlayerSeasonScoreStateModel>
+                                             {
+                                                new PlayerSeasonScoreStateModel
                                                 {
-                                                    Id = c.Id,
-                                                    Fk_Player = c.Fk_Player,
-                                                    Points = c.Points,
-                                                    Percent = c.Percent,
-                                                    Value = c.Value,
-                                                    Fk_ScoreState = c.Fk_ScoreState,
-                                                    Fk_Season = c.Fk_Season,
-                                                    LastModifiedAt = c.LastModifiedAt,
-                                                })
-                                                .ToList()
+                                                    Points = playerScore.Points,
+                                                    Percent = playerScore.Percent,
+                                                    Value = playerScore.Value,
+                                                    LastModifiedAt = playerScore.LastModifiedAt,
+                                                }
+                                             }
                                          })
                                          .FirstOrDefault() :
                                         parameters.Fk_GameWeak > 0 ?
-                                        b.PlayerGameWeakScoreStates
+                                        scoreState.PlayerGameWeakScoreStates
                                          .OrderByDescending(a => a.Points)
-                                         .Select(a => a.Player)
-                                         .Select(a => new PlayerModel
+                                         .Select(playerScore => new PlayerModel
                                          {
-                                             Id = a.Id,
-                                             Name = otherLang ? a.PlayerLang.Name : a.Name,
-                                             ImageUrl = !string.IsNullOrEmpty(a.ImageUrl) ? a.StorageUrl + a.ImageUrl : a.Team.ShirtStorageUrl + a.Team.ShirtImageUrl,
-                                             Fk_PlayerPosition = a.Fk_PlayerPosition,
-                                             Fk_Team = a.Fk_Team,
-                                             PlayerNumber = a.PlayerNumber,
+                                             Id = playerScore.Player.Id,
+                                             Name = otherLang ? playerScore.Player.PlayerLang.Name : playerScore.Player.Name,
+                                             ImageUrl = !string.IsNullOrEmpty(playerScore.Player.ImageUrl) ? playerScore.Player.StorageUrl + playerScore.Player.ImageUrl : playerScore.Player.Team.ShirtStorageUrl + playerScore.Player.Team.ShirtImageUrl,
+                                             Fk_PlayerPosition = playerScore.Player.Fk_PlayerPosition,
+                                             Fk_Team = playerScore.Player.Fk_Team,
+                                             PlayerNumber = playerScore.Player.PlayerNumber,
                                              PlayerPosition = new PlayerPositionModel
                                              {
-                                                 Name = otherLang ? a.PlayerPosition.PlayerPositionLang.Name : a.PlayerPosition.Name,
-                                                 ImageUrl = a.PlayerPosition.StorageUrl + a.PlayerPosition.ImageUrl,
-                                                 _365_PositionId = a.PlayerPosition._365_PositionId
+                                                 Name = otherLang ? playerScore.Player.PlayerPosition.PlayerPositionLang.Name : playerScore.Player.PlayerPosition.Name,
+                                                 ImageUrl = playerScore.Player.PlayerPosition.StorageUrl + playerScore.Player.PlayerPosition.ImageUrl,
+                                                 _365_PositionId = playerScore.Player.PlayerPosition._365_PositionId
                                              },
                                              Team = new TeamModel
                                              {
-                                                 Name = otherLang ? a.Team.TeamLang.Name : a.Team.Name,
-                                                 ImageUrl = a.Team.StorageUrl + a.Team.ImageUrl,
-                                                 ShirtImageUrl = a.Team.ShirtStorageUrl + a.Team.ShirtImageUrl,
-                                                 _365_TeamId = a.Team._365_TeamId
+                                                 Name = otherLang ? playerScore.Player.Team.TeamLang.Name : playerScore.Player.Team.Name,
+                                                 ImageUrl = playerScore.Player.Team.StorageUrl + playerScore.Player.Team.ImageUrl,
+                                                 ShirtImageUrl = playerScore.Player.Team.ShirtStorageUrl + playerScore.Player.Team.ShirtImageUrl,
+                                                 _365_TeamId = playerScore.Player.Team._365_TeamId
                                              },
-                                             BuyPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault(),
-                                             SellPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.SellPrice).FirstOrDefault(),
-                                             GameWeakScoreStates = a.PlayerGameWeakScoreStates
-                                                .Where(c => c.Fk_GameWeak == parameters.Fk_GameWeak &&
-                                                           b.Id == c.Fk_ScoreState)
-                                                .Select(c => new PlayerGameWeakScoreStateModel
+                                             BuyPrice = playerScore.Player.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault(),
+                                             SellPrice = playerScore.Player.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.SellPrice).FirstOrDefault(),
+                                             GameWeakScoreStates = new List<PlayerGameWeakScoreStateModel>
+                                             {
+                                                new PlayerGameWeakScoreStateModel
                                                 {
-                                                    Id = c.Id,
-                                                    Fk_Player = c.Fk_Player,
-                                                    Points = c.Points,
-                                                    Percent = c.Percent,
-                                                    Value = c.Value,
-                                                    Fk_ScoreState = c.Fk_ScoreState,
-                                                    Fk_GameWeak = c.Fk_GameWeak,
-                                                    LastModifiedAt = c.LastModifiedAt,
-                                                })
-                                                .ToList()
+                                                    Points = playerScore.Points,
+                                                    Percent = playerScore.Percent,
+                                                    Value = playerScore.Value,
+                                                    LastModifiedAt = playerScore.LastModifiedAt,
+                                                }
+                                             }
                                          })
                                          .FirstOrDefault() : null
                        })

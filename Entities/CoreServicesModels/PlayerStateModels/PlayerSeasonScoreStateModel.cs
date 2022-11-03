@@ -48,20 +48,11 @@ namespace Entities.CoreServicesModels.PlayerStateModels
         [DisplayName(nameof(Points))]
         public double Points { get; set; }
 
-        [DisplayName(nameof(PositionByPoints))]
-        public int PositionByPoints { get; set; }
-
         [DisplayName(nameof(Value))]
         public double Value { get; set; }
 
-        [DisplayName(nameof(PositionByValue))]
-        public int PositionByValue { get; set; }
-
         [DisplayName(nameof(Percent))]
         public double Percent { get; set; }
-
-        [DisplayName(nameof(PositionByPercent))]
-        public int PositionByPercent { get; set; }
     }
 
     public class PlayerSeasonScoreStateCreateOrEditModel
@@ -81,20 +72,12 @@ namespace Entities.CoreServicesModels.PlayerStateModels
         [DisplayName(nameof(Points))]
         public double Points { get; set; }
 
-        [DisplayName(nameof(PositionByPoints))]
-        public int PositionByPoints { get; set; }
 
         [DisplayName(nameof(Value))]
         public double Value { get; set; }
 
-        [DisplayName(nameof(PositionByValue))]
-        public int PositionByValue { get; set; }
-
         [DisplayName(nameof(Percent))]
         public double Percent { get; set; }
-
-        [DisplayName(nameof(PositionByPercent))]
-        public int PositionByPercent { get; set; }
     }
 
     public class PlayerSeasonScoreStateCalcModel
@@ -102,19 +85,10 @@ namespace Entities.CoreServicesModels.PlayerStateModels
         [DisplayName(nameof(Points))]
         public double Points { get; set; }
 
-        [DisplayName(nameof(PositionByPoints))]
-        public int PositionByPoints { get; set; }
-
         [DisplayName(nameof(Value))]
         public double Value { get; set; }
 
-        [DisplayName(nameof(PositionByValue))]
-        public int PositionByValue { get; set; }
-
         [DisplayName(nameof(Percent))]
         public double Percent { get; set; }
-
-        [DisplayName(nameof(PositionByPercent))]
-        public int PositionByPercent { get; set; }
     }
 }

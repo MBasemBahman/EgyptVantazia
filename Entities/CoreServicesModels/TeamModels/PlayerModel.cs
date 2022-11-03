@@ -35,7 +35,11 @@ namespace Entities.CoreServicesModels.TeamModels
 
         public int Fk_Season { get; set; }
 
+        public int Fk_SeasonForScores { get; set; }
+
         public int Fk_GameWeak { get; set; }
+
+        public int Fk_GameWeakForScores { get; set; }
 
         public List<int> Fk_Players { get; set; }
 
@@ -155,5 +159,13 @@ namespace Entities.CoreServicesModels.TeamModels
         public double SellingCount { get; set; }
         public double PlayerSelection { get; set; }
         public double PlayerCaptain { get; set; }
+    }
+
+    public class PlayerModelForRandomTeam
+    {
+        public int Fk_Player { get; set; }
+        public int Fk_PlayerPosition { get; set; }
+        public int Fk_Team { get; set; }
+        public double BuyPrice { get; set; }
     }
 }

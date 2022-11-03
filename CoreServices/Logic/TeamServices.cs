@@ -204,9 +204,9 @@ namespace CoreServices.Logic
                            },
                            BuyPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault(),
                            SellPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.SellPrice).FirstOrDefault(),
-                           SeasonScoreStates = parameters.IncludeScore && parameters.Fk_Season > 0 ?
+                           SeasonScoreStates = parameters.IncludeScore && parameters.Fk_SeasonForScores > 0 ?
                                                a.PlayerSeasonScoreStates
-                                                .Where(b => b.Fk_Season == parameters.Fk_Season &&
+                                                .Where(b => b.Fk_Season == parameters.Fk_SeasonForScores &&
                                                             (parameters.Fk_ScoreStatesForSeason == null ||
                                                              !parameters.Fk_ScoreStatesForSeason.Any() ||
                                                              parameters.Fk_ScoreStatesForSeason.Contains(b.Fk_ScoreState)))
@@ -227,9 +227,9 @@ namespace CoreServices.Logic
                                                     }
                                                 })
                                                 .ToList() : null,
-                           GameWeakScoreStates = parameters.IncludeScore && parameters.Fk_GameWeak > 0 ?
+                           GameWeakScoreStates = parameters.IncludeScore && parameters.Fk_GameWeakForScores > 0 ?
                                                a.PlayerGameWeakScoreStates
-                                                .Where(b => b.Fk_GameWeak == parameters.Fk_GameWeak &&
+                                                .Where(b => b.Fk_GameWeak == parameters.Fk_GameWeakForScores &&
                                                             (parameters.Fk_ScoreStatesForGameWeak == null ||
                                                              !parameters.Fk_ScoreStatesForGameWeak.Any() ||
                                                              parameters.Fk_ScoreStatesForGameWeak.Contains(b.Fk_ScoreState)))
@@ -349,6 +349,14 @@ namespace CoreServices.Logic
                 .FirstOrDefault();
         }
 
+        public List<PlayerModel> GetRandomTeam(int fk_Season, bool otherLang)
+        {
+            var ids = _repository.Player.GetRandomTeam(fk_Season);
+            return GetPlayers(new PlayerParameters
+            {
+                Fk_Players = ids
+            }, otherLang).ToList();
+        }
         #endregion
 
         #region PlayerPrice Services

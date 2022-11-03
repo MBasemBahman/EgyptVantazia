@@ -1,5 +1,6 @@
 ﻿using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.TeamModels;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace Repository.DBModels.TeamModels
 {
@@ -68,6 +69,67 @@ namespace Repository.DBModels.TeamModels
                 };
                 base.Create(entity);
             }
+        }
+
+        public List<int> GetRandomTeam(int fk_Season)
+        {
+            IOrderedQueryable<PlayerModelForRandomTeam> playersQuery = FindByCondition(a => a.PlayerPrices.Any(b => b.BuyPrice > 0) &&
+                                              (a.Team.AwayGameWeaks.Any(b => b.GameWeak.Fk_Season == fk_Season) ||
+                                               a.Team.HomeGameWeaks.Any(b => b.GameWeak.Fk_Season == fk_Season)), trackChanges: false)
+                                                .Select(a => new PlayerModelForRandomTeam
+                                                {
+                                                    Fk_Player = a.Id,
+                                                    Fk_PlayerPosition = a.Fk_PlayerPosition,
+                                                    Fk_Team = a.Fk_Team,
+                                                    BuyPrice = a.PlayerPrices
+                                                                .Where(b => b.BuyPrice > 0)
+                                                                .OrderBy(b => b.Id)
+                                                                .Select(b => b.BuyPrice)
+                                                                .First()
+                                                })
+                                                .OrderBy(_ => Guid.NewGuid());
+
+
+            List<PlayerModelForRandomTeam> players = GetRandomPlayers(playersQuery);
+
+
+            return players.Select(a => a.Fk_Player).ToList();
+        }
+
+        public List<PlayerModelForRandomTeam> GetRandomPlayers(IOrderedQueryable<PlayerModelForRandomTeam> playersQuery)
+        {
+            List<PlayerModelForRandomTeam> playersList = new();
+
+            do
+            {
+                playersList = new();
+
+                playersList.AddRange(GetRandomPlayers(playersQuery, PlayerPositionEnum.Goalkeeper, 2));
+                playersList.AddRange(GetRandomPlayers(playersQuery, PlayerPositionEnum.Defender, 5));
+                playersList.AddRange(GetRandomPlayers(playersQuery, PlayerPositionEnum.Midfielder, 5));
+                playersList.AddRange(GetRandomPlayers(playersQuery, PlayerPositionEnum.Attacker, 3));
+            
+            } while (playersList.GroupBy(a => a.Fk_Team).Any(a => a.Count() > 3) ||
+                     playersList.Select(a => a.BuyPrice).Sum() > 100);
+
+            return playersList;
+        }
+
+        public List<PlayerModelForRandomTeam> GetRandomPlayers(IOrderedQueryable<PlayerModelForRandomTeam> playersQuery, PlayerPositionEnum playerPosition, int count)
+        {
+            List<PlayerModelForRandomTeam> playersList = new();
+
+            do
+            {
+                playersList = new();
+
+                playersList.AddRange(playersQuery.Where(a => a.Fk_PlayerPosition == (int)playerPosition)
+                                                 .Skip(0)
+                                                 .Take(count)
+                                                 .ToList());
+            } while (playersList.GroupBy(a => a.Fk_Team).Any(a => a.Count() > 1));
+
+            return playersList;
         }
     }
 

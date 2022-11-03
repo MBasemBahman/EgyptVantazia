@@ -26,12 +26,12 @@ namespace API.Areas.TeamArea.Controllers
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
-            if (parameters.IncludeScore && parameters.Fk_Season == 0)
+            if (parameters.IncludeScore && parameters.Fk_SeasonForScores == 0)
             {
-                if (parameters.Fk_GameWeak == 0)
+                if (parameters.Fk_GameWeakForScores == 0)
                 {
-                    parameters.Fk_Season = _unitOfWork.Season.GetCurrentSeason().Id;
-                    parameters.Fk_GameWeak = _unitOfWork.Season.GetCurrentGameWeak().Id;
+                    parameters.Fk_SeasonForScores = _unitOfWork.Season.GetCurrentSeason().Id;
+                    parameters.Fk_GameWeakForScores = _unitOfWork.Season.GetCurrentGameWeak().Id;
                 }
             }
 
@@ -62,6 +62,21 @@ namespace API.Areas.TeamArea.Controllers
             PlayerModel data = _unitOfWork.Team.GetPlayers(parameters, otherLang).FirstOrDefault();
 
             PlayerDto dataDto = _mapper.Map<PlayerDto>(data);
+
+            return dataDto;
+        }
+
+        [HttpGet]
+        [Route(nameof(GetRandomTeam))]
+        public IEnumerable<PlayerDto> GetRandomTeam()
+        {
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
+            int fk_Season = _unitOfWork.Season.GetCurrentSeason().Id;
+
+            List<PlayerModel> data = _unitOfWork.Team.GetRandomTeam(fk_Season, otherLang);
+
+            IEnumerable<PlayerDto> dataDto = _mapper.Map<IEnumerable<PlayerDto>>(data);
 
             return dataDto;
         }

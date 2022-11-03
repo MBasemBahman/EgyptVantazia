@@ -35,8 +35,8 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         [DisplayName(nameof(Player))]
         public PlayerModel Player { get; set; }
-        public bool IsPrimary { get; set; }
-        public bool IsCaptain { get; set; }
+
+        public AccountTeamPlayerGameWeakModel AccountTeamPlayerGameWeak { get; set; }
     }
 
     public class AccountTeamPlayerBulkCreateModel

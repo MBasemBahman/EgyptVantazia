@@ -209,7 +209,7 @@ namespace CoreServices.Logic
                                              SellPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.SellPrice).FirstOrDefault(),
                                              SeasonScoreStates = a.PlayerSeasonScoreStates
                                                 .Where(c => c.Fk_Season == parameters.Fk_Season &&
-                                                           b.Id == c.Fk_ScoreState)
+                                                            c.Fk_ScoreState == b.Id)
                                                 .Select(c => new PlayerSeasonScoreStateModel
                                                 {
                                                     Id = c.Id,

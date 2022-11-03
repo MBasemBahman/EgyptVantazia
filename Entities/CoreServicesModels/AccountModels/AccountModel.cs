@@ -132,5 +132,7 @@ namespace Entities.CoreServicesModels.AccountModels
 
         [DisplayName("FavouriteTeam")]
         public int Fk_FavouriteTeam { get; set; }
+
+        public string RefCode { get; set; }
     }
 }

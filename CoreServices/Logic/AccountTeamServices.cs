@@ -304,18 +304,62 @@ namespace CoreServices.Logic
                            CreatedAt = a.CreatedAt,
                            Fk_AccountTeam = a.Fk_AccountTeam,
                            Fk_Player = a.Fk_Player,
-                           IsPrimary = parameters.IsCurrent ?
-                                       a.AccountTeamPlayerGameWeaks.Any(b => b.GameWeak.IsCurrent && b.IsPrimary) :
+                           AccountTeamPlayerGameWeak = parameters.IsCurrent ?
+                                       a.AccountTeamPlayerGameWeaks.Where(b => b.GameWeak.IsCurrent)
+                                       .Select(b => new AccountTeamPlayerGameWeakModel
+                                       {
+                                           Id = b.Id,
+                                           Fk_AccountTeamPlayer = b.Fk_AccountTeamPlayer,
+                                           Fk_GameWeak = b.Fk_GameWeak,
+                                           Fk_TeamPlayerType = b.Fk_TeamPlayerType,
+                                           TrippleCaptain = b.TrippleCaptain,
+                                           IsPrimary = b.IsPrimary,
+                                           IsTransfer = b.IsTransfer,
+                                           Order = b.Order,
+                                           Points = b.Points,
+                                           TeamPlayerType = new TeamPlayerTypeModel
+                                           {
+                                               Name = otherLang ? b.TeamPlayerType.TeamPlayerTypeLang.Name : b.TeamPlayerType.Name,
+                                           }
+                                       })
+                                       .FirstOrDefault() :
                                        parameters.IsNextGameWeak ?
-                                       a.AccountTeamPlayerGameWeaks.Any(b => b.Fk_GameWeak == parameters.Fk_NextGameWeak && b.IsPrimary) :
-                                       parameters.Fk_GameWeak != 0 &&
-                                       a.AccountTeamPlayerGameWeaks.Any(b => b.Fk_GameWeak == parameters.Fk_GameWeak && b.IsPrimary),
-                           IsCaptain = parameters.IsCurrent ?
-                                       a.AccountTeamPlayerGameWeaks.Any(b => b.GameWeak.IsCurrent && b.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian) :
-                                       parameters.IsNextGameWeak ?
-                                       a.AccountTeamPlayerGameWeaks.Any(b => b.Fk_GameWeak == parameters.Fk_NextGameWeak && b.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian) :
-                                       parameters.Fk_GameWeak != 0 &&
-                                       a.AccountTeamPlayerGameWeaks.Any(b => b.Fk_GameWeak == parameters.Fk_GameWeak && b.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian),
+                                       a.AccountTeamPlayerGameWeaks.Where(b => b.Fk_GameWeak == parameters.Fk_NextGameWeak)
+                                       .Select(b => new AccountTeamPlayerGameWeakModel
+                                       {
+                                           Id = b.Id,
+                                           Fk_AccountTeamPlayer = b.Fk_AccountTeamPlayer,
+                                           Fk_GameWeak = b.Fk_GameWeak,
+                                           Fk_TeamPlayerType = b.Fk_TeamPlayerType,
+                                           TrippleCaptain = b.TrippleCaptain,
+                                           IsPrimary = b.IsPrimary,
+                                           IsTransfer = b.IsTransfer,
+                                           Order = b.Order,
+                                           Points = b.Points,
+                                           TeamPlayerType = new TeamPlayerTypeModel
+                                           {
+                                               Name = otherLang ? b.TeamPlayerType.TeamPlayerTypeLang.Name : b.TeamPlayerType.Name,
+                                           }
+                                       })
+                                       .FirstOrDefault() :
+                                       a.AccountTeamPlayerGameWeaks.Where(b => parameters.Fk_GameWeak != 0 && b.Fk_GameWeak == parameters.Fk_GameWeak)
+                                       .Select(b => new AccountTeamPlayerGameWeakModel
+                                       {
+                                           Id = b.Id,
+                                           Fk_AccountTeamPlayer = b.Fk_AccountTeamPlayer,
+                                           Fk_GameWeak = b.Fk_GameWeak,
+                                           Fk_TeamPlayerType = b.Fk_TeamPlayerType,
+                                           TrippleCaptain = b.TrippleCaptain,
+                                           IsPrimary = b.IsPrimary,
+                                           IsTransfer = b.IsTransfer,
+                                           Order = b.Order,
+                                           Points = b.Points,
+                                           TeamPlayerType = new TeamPlayerTypeModel
+                                           {
+                                               Name = otherLang ? b.TeamPlayerType.TeamPlayerTypeLang.Name : b.TeamPlayerType.Name,
+                                           }
+                                       })
+                                       .FirstOrDefault(),
                            Player = new PlayerModel
                            {
                                Id = a.Fk_Player,

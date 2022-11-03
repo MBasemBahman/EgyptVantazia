@@ -1,4 +1,5 @@
 ﻿using Entities.CoreServicesModels.PlayerStateModels;
+using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.TeamModels;
 using Entities.RequestFeatures;
 
@@ -37,6 +38,14 @@ namespace Entities.CoreServicesModels.TeamModels
         public int Fk_GameWeak { get; set; }
 
         public List<int> Fk_Players { get; set; }
+
+        public int? BuyPriceFrom { get; set; }
+
+        public int? BuyPriceTo { get; set; }
+
+        public int? SellPriceFrom { get; set; }
+
+        public int? SellPriceTo { get; set; }
     }
 
     public class PlayerModel : AuditImageEntity
@@ -80,6 +89,8 @@ namespace Entities.CoreServicesModels.TeamModels
         public List<PlayerGameWeakScoreStateModel> GameWeakScoreStates { get; set; }
 
         public IList<TeamModel> NextMatches { get; set; }
+
+        public TeamPlayerType TeamPlayerType { get; set; }
     }
 
     public class PlayerCreateOrEditModel

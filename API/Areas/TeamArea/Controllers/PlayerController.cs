@@ -50,12 +50,12 @@ namespace API.Areas.TeamArea.Controllers
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
-            if (parameters.IncludeScore && parameters.Fk_Season == 0)
+            if (parameters.IncludeScore && parameters.Fk_SeasonForScores == 0)
             {
-                if (parameters.Fk_GameWeak == 0)
+                if (parameters.Fk_GameWeakForScores == 0)
                 {
-                    parameters.Fk_Season = _unitOfWork.Season.GetCurrentSeason().Id;
-                    parameters.Fk_GameWeak = _unitOfWork.Season.GetCurrentGameWeak().Id;
+                    parameters.Fk_SeasonForScores = _unitOfWork.Season.GetCurrentSeason().Id;
+                    parameters.Fk_GameWeakForScores = _unitOfWork.Season.GetCurrentGameWeak().Id;
                 }
             }
 

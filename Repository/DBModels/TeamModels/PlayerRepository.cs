@@ -147,16 +147,16 @@ namespace Repository.DBModels.TeamModels
             List<string> _365_PlayerIds,
             int fk_TeamGameWeak_Ignored,
             List<int> fk_Players,
-            int? buyPriceFrom,
-            int? buyPriceTo,
-            int? sellPriceFrom,
-            int? sellPriceTo)
+            double? buyPriceFrom,
+            double? buyPriceTo,
+            double? sellPriceFrom,
+            double? sellPriceTo)
 
         {
             return Players.Where(a => (id == 0 || a.Id == id) &&
                                       (Fk_Team == 0 || a.Fk_Team == Fk_Team) &&
                                       (buyPriceFrom == null || a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault() >= buyPriceFrom) &&
-                                      (buyPriceTo == null || a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault() <= buyPriceFrom) &&
+                                      (buyPriceTo == null || a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault() <= buyPriceTo) &&
                                       (sellPriceFrom == null || a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.SellPrice).FirstOrDefault() >= sellPriceFrom) &&
                                       (sellPriceTo == null || a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.SellPrice).FirstOrDefault() <= sellPriceTo) &&
                                       (Fk_GameWeak == 0 || a.PlayerGameWeaks.Any(a => a.TeamGameWeak.Fk_GameWeak == Fk_GameWeak)) &&

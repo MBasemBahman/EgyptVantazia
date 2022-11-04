@@ -43,13 +43,13 @@ namespace Entities.CoreServicesModels.TeamModels
 
         public List<int> Fk_Players { get; set; }
 
-        public int? BuyPriceFrom { get; set; }
+        public double? BuyPriceFrom { get; set; }
 
-        public int? BuyPriceTo { get; set; }
+        public double? BuyPriceTo { get; set; }
 
-        public int? SellPriceFrom { get; set; }
+        public double? SellPriceFrom { get; set; }
 
-        public int? SellPriceTo { get; set; }
+        public double? SellPriceTo { get; set; }
     }
 
     public class PlayerModel : AuditImageEntity

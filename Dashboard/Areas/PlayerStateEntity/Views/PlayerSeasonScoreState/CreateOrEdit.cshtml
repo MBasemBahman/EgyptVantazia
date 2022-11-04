@@ -70,30 +70,6 @@
                                         
                                         <div class="col-md-4 col-12">
                                             <div class="mb-1">
-                                                <label asp-for="PositionByPercent" class="form-label"></label>
-                                                <input asp-for="PositionByPercent" class="form-control" placeholder="@Localizer.Get("Enter")  @(Localizer.Get("PositionByPercent"))" />
-                                                <span asp-validation-for="PositionByPercent" class="text-danger"></span>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="col-md-4 col-12">
-                                            <div class="mb-1">
-                                                <label asp-for="PositionByPoints" class="form-label"></label>
-                                                <input asp-for="PositionByPoints" class="form-control" placeholder="@Localizer.Get("Enter")  @(Localizer.Get("PositionByPoints"))" />
-                                                <span asp-validation-for="PositionByPoints" class="text-danger"></span>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="col-md-4 col-12">
-                                            <div class="mb-1">
-                                                <label asp-for="PositionByValue" class="form-label"></label>
-                                                <input asp-for="PositionByValue" class="form-control" placeholder="@Localizer.Get("Enter")  @(Localizer.Get("PositionByValue"))" />
-                                                <span asp-validation-for="PositionByValue" class="text-danger"></span>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="col-md-4 col-12">
-                                            <div class="mb-1">
                                                 <label asp-for="Fk_ScoreState" class="form-label"></label>
                                                 <select asp-for="Fk_ScoreState" class="select2 form-select" asp-items="@(new SelectList(ViewData["ScoreState"] as Dictionary<string,string>,"Key","Value"))">
                                                 </select>

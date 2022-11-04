@@ -2,6 +2,7 @@
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayerStateModels;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace CoreServices.Logic
 {
@@ -182,6 +183,8 @@ namespace CoreServices.Logic
                            BestPlayer = parameters.IncludeBestPlayer == false ? null :
                                         parameters.Fk_Season > 0 ?
                                         scoreState.PlayerSeasonScoreStates
+                                         .Where(a => scoreState.Id != (int)ScoreStateEnum.CleanSheet || 
+                                                     a.Player.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper)
                                          .OrderByDescending(a => a.Points)
                                          .Select(playerScore => new PlayerModel
                                          {
@@ -220,6 +223,8 @@ namespace CoreServices.Logic
                                          .FirstOrDefault() :
                                         parameters.Fk_GameWeak > 0 ?
                                         scoreState.PlayerGameWeakScoreStates
+                                         .Where(a => scoreState.Id != (int)ScoreStateEnum.CleanSheet ||
+                                                     a.Player.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper)
                                          .OrderByDescending(a => a.Points)
                                          .Select(playerScore => new PlayerModel
                                          {

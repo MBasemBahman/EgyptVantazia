@@ -4,6 +4,7 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20221107125835_refCode")]
+    partial class refCode
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,11 +75,7 @@ namespace DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RefCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("RefCodeCount")
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StorageUrl")
                         .HasColumnType("nvarchar(max)");
@@ -91,9 +89,6 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Nationality");
 
                     b.HasIndex("Fk_User")
-                        .IsUnique();
-
-                    b.HasIndex("RefCode")
                         .IsUnique();
 
                     b.ToTable("Accounts");
@@ -144,10 +139,10 @@ namespace DAL.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getutcdate()");
 
-                    b.Property<int>("Fk_Account")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("Fk_Season")
+                    b.Property<int>("Fk_Account")
                         .HasColumnType("int");
 
                     b.Property<int>("Fk_Subscription")
@@ -156,14 +151,14 @@ namespace DAL.Migrations
                     b.Property<bool>("IsAction")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("Fk_Season");
+                    b.HasIndex("Fk_Account");
 
                     b.HasIndex("Fk_Subscription");
-
-                    b.HasIndex("Fk_Account", "Fk_Season", "Fk_Subscription")
-                        .IsUnique();
 
                     b.ToTable("AccountSubscriptions");
                 });
@@ -3601,7 +3596,7 @@ namespace DAL.Migrations
                             EmailAddress = "user@mail.com",
                             LastModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Developer",
-                            Password = "$2a$11$OQ65cVR7HJxryE2Duj06TuOSnacyM0e5nXX0WOOdovtjTpE2Ewe7S",
+                            Password = "$2a$11$aCXmfCoX9W0PaeeP0pIHkujLbS89YdejCEaDALk0HZufed5cY78v.",
                             UserName = "Developer"
                         });
                 });
@@ -3708,12 +3703,6 @@ namespace DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entities.DBModels.SeasonModels.Season", "Season")
-                        .WithMany("AccountSubscriptions")
-                        .HasForeignKey("Fk_Season")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Entities.DBModels.SubscriptionModels.Subscription", "Subscription")
                         .WithMany("AccountSubscriptions")
                         .HasForeignKey("Fk_Subscription")
@@ -3721,8 +3710,6 @@ namespace DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("Account");
-
-                    b.Navigation("Season");
 
                     b.Navigation("Subscription");
                 });
@@ -4466,8 +4453,6 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Entities.DBModels.SeasonModels.Season", b =>
                 {
-                    b.Navigation("AccountSubscriptions");
-
                     b.Navigation("AccountTeams");
 
                     b.Navigation("GameWeaks");

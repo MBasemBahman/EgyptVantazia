@@ -45,6 +45,20 @@ namespace CoreServices.Extensions
 
             return data.Where(expression);
         }
+
+        public static IQueryable<AccountRefCodeModel> Search(this IQueryable<AccountRefCodeModel> data, string searchColumns, string searchTerm)
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm) || string.IsNullOrWhiteSpace(searchColumns))
+            {
+                return data;
+            }
+
+            searchTerm = searchTerm.SafeTrim().SafeLower();
+
+            Expression<Func<AccountRefCodeModel, bool>> expression = SearchQueryBuilder.CreateSearchQuery<AccountRefCodeModel>(searchColumns, searchTerm);
+
+            return data.Where(expression);
+        }
     }
 
     public static class AccountServicesSortExtension
@@ -81,6 +95,18 @@ namespace CoreServices.Extensions
             }
 
             string orderQuery = OrderQueryBuilder.CreateOrderQuery<PaymentModel>(orderByQueryString);
+
+            return data.OrderBy(orderQuery);
+        }
+
+        public static IQueryable<AccountRefCodeModel> Sort(this IQueryable<AccountRefCodeModel> data, string orderByQueryString)
+        {
+            if (string.IsNullOrWhiteSpace(orderByQueryString))
+            {
+                return data.OrderBy(a => a.Id);
+            }
+
+            string orderQuery = OrderQueryBuilder.CreateOrderQuery<AccountRefCodeModel>(orderByQueryString);
 
             return data.OrderBy(orderQuery);
         }

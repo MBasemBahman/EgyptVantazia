@@ -1,4 +1,5 @@
-﻿using Entities.DBModels.AccountModels;
+﻿using Entities.CoreServicesModels.SeasonModels;
+using Entities.DBModels.AccountModels;
 using Entities.DBModels.SubscriptionModels;
 using Entities.RequestFeatures;
 
@@ -8,6 +9,7 @@ public class AccountSubscriptionParameters : RequestParameters
 {
     public int Fk_Account { get; set; }
     public int Fk_Subscription { get; set; }
+    public int Fk_Season { get; set; }
 }
 public class AccountSubscriptionModel : BaseEntity
 {
@@ -19,11 +21,12 @@ public class AccountSubscriptionModel : BaseEntity
     [ForeignKey(nameof(Subscription))]
     public int Fk_Subscription { get; set; }
 
-    [DisplayName(nameof(StartDate))]
-    public DateTime StartDate { get; set; }
+    [DisplayName(nameof(Season))]
+    [ForeignKey(nameof(Season))]
+    public int Fk_Season { get; set; }
 
-    [DisplayName(nameof(EndDate))]
-    public DateTime EndDate { get; set; }
+    [DisplayName(nameof(Season))]
+    public SeasonModel Season { get; set; }
 
     [DisplayName(nameof(IsAction))]
     public bool IsAction { get; set; }

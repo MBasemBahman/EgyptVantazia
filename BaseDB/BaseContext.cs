@@ -195,6 +195,8 @@ namespace BaseDB
 
             #region AccountModels
             _ = modelBuilder.ApplyConfiguration(new AccountConfiguration());
+            _ = modelBuilder.ApplyConfiguration(new AccountSubscriptionConfiguration());
+            _ = modelBuilder.ApplyConfiguration(new AccountRefCodeConfiguration());
             #endregion
 
             #region SponsorModels

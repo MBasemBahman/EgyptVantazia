@@ -1,4 +1,5 @@
-﻿using Entities.DBModels.SubscriptionModels;
+﻿using Entities.DBModels.SeasonModels;
+using Entities.DBModels.SubscriptionModels;
 
 namespace Entities.DBModels.AccountModels
 {
@@ -18,11 +19,12 @@ namespace Entities.DBModels.AccountModels
         [DisplayName(nameof(Subscription))]
         public Subscription Subscription { get; set; }
 
-        [DisplayName(nameof(StartDate))]
-        public DateTime StartDate { get; set; }
+        [DisplayName(nameof(Season))]
+        [ForeignKey(nameof(Season))]
+        public int Fk_Season { get; set; }
 
-        [DisplayName(nameof(EndDate))]
-        public DateTime EndDate { get; set; }
+        [DisplayName(nameof(Season))]
+        public Season Season { get; set; }
 
         [DisplayName(nameof(IsAction))]
         public bool IsAction { get; set; }

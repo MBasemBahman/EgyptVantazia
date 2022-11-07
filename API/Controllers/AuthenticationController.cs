@@ -1,4 +1,5 @@
 ﻿using API.Areas.UserArea.Models;
+using Entities.CoreServicesModels.AccountModels;
 using Entities.DBModels.AccountModels;
 using Entities.ServicesModels;
 using BC = BCrypt.Net.BCrypt;
@@ -99,10 +100,17 @@ namespace API.Controllers
 
             Account account = _mapper.Map<Account>(model.Account);
 
+            do
+            {
+                account.RefCode = RandomGenerator.GenerateString(8);
+            } while (_unitOfWork.Account.GetAccounts(new AccountParameters { RefCode = account.RefCode },otherLang:false).Any());
+
             user.Account = account;
 
             await _unitOfWork.User.CreateUser(user);
             await _unitOfWork.Save();
+
+            await _unitOfWork.Account.CreateAccountRefCode(model.Account.RefCode, user.Account.Id);
 
             UserAuthenticatedDto auth = await _authManager.Authenticate(new UserForAuthenticationDto
             {

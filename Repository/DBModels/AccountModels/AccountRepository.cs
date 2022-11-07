@@ -28,7 +28,8 @@ namespace Repository.DBModels.AccountModels
                            parameters.Email,
                            parameters.Fk_Country,
                            parameters.Fk_Nationality,
-                           parameters.Fk_FavouriteTeam);
+                           parameters.Fk_FavouriteTeam,
+                           parameters.RefCode);
 
         }
 
@@ -82,10 +83,12 @@ namespace Repository.DBModels.AccountModels
             string email,
             int fk_Country,
             int fk_Nationality,
-            int fk_FavouriteTeam)
+            int fk_FavouriteTeam,
+            string refCode)
         {
             return accounts.Where(a => (id == 0 || a.Id == id) &&
                                        (fk_Account_Ignored == 0 || a.Id != fk_Account_Ignored) &&
+                                       (string.IsNullOrWhiteSpace(refCode) || a.RefCode != refCode) &&
 
                                        (fk_Country == 0 || a.Fk_Country == fk_Country) &&
                                        (fk_Nationality == 0 || a.Fk_Nationality == fk_Nationality) &&

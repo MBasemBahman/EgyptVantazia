@@ -35,6 +35,7 @@ namespace Repository
         #region AccountModels
         private AccountRepository _accountRepository;
         private AccountSubscriptionRepository _accountSubscriptionRepository;
+        private AccountRefCodeRepository _accountRefCodeRepository;
         private PaymentRepository _paymentRepository;
         #endregion
 
@@ -196,6 +197,15 @@ namespace Repository
             {
                 _accountSubscriptionRepository ??= new AccountSubscriptionRepository(_dBContext);
                 return _accountSubscriptionRepository;
+            }
+        }
+
+        public AccountRefCodeRepository AccountRefCode
+        {
+            get
+            {
+                _accountRefCodeRepository ??= new AccountRefCodeRepository(_dBContext);
+                return _accountRefCodeRepository;
             }
         }
 

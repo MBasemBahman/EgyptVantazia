@@ -1,4 +1,5 @@
-﻿using Entities.DBModels.AccountTeamModels;
+﻿using Entities.DBModels.AccountModels;
+using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.PlayerStateModels;
 using Entities.DBModels.StandingsModels;
 
@@ -28,6 +29,9 @@ namespace Entities.DBModels.SeasonModels
 
         [DisplayName(nameof(PlayerSeasonScoreStates))]
         public IList<PlayerSeasonScoreState> PlayerSeasonScoreStates { get; set; }
+
+        [DisplayName(nameof(AccountSubscriptions))]
+        public IList<AccountSubscription> AccountSubscriptions { get; set; }
 
         public SeasonLang SeasonLang { get; set; }
     }

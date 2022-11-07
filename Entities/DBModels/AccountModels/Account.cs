@@ -6,6 +6,7 @@ using Entities.DBModels.UserModels;
 
 namespace Entities.DBModels.AccountModels
 {
+    [Index(nameof(RefCode), IsUnique = true)]
     public class Account : AuditImageEntity
     {
         [DisplayName(nameof(User))]
@@ -50,7 +51,11 @@ namespace Entities.DBModels.AccountModels
         public Team FavouriteTeam { get; set; }
 
         [DisplayName(nameof(RefCode))]
+        [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string RefCode { get; set; }
+
+        [DisplayName(nameof(RefCodeCount))]
+        public int RefCodeCount { get; set; }
 
         [DisplayName(nameof(AccountTeams))]
         public IList<AccountTeam> AccountTeams { get; set; }
@@ -63,5 +68,11 @@ namespace Entities.DBModels.AccountModels
 
         [DisplayName(nameof(Payments))]
         public IList<Payment> Payments { get; set; }
+
+        [DisplayName(nameof(NewAccountRefCode))]
+        public AccountRefCode NewAccountRefCode { get; set; }
+
+        [DisplayName(nameof(RefAccountsRefCode))]
+        public IList<AccountRefCode> RefAccountsRefCode { get; set; }
     }
 }

@@ -36,8 +36,14 @@ namespace Entities.CoreServicesModels.AccountModels
         public DateTime? LastActiveTo { get; set; }
 
         public int Fk_Country { get; set; }
+
         public int Fk_Nationality { get; set; }
+
         public int Fk_FavouriteTeam { get; set; }
+
+        public string RefCode { get; set; }
+
+
     }
 
     public class AccountModel : AuditImageEntity
@@ -89,6 +95,12 @@ namespace Entities.CoreServicesModels.AccountModels
 
         [DisplayName(nameof(FavouriteTeam))]
         public TeamModel FavouriteTeam { get; set; }
+
+        [DisplayName(nameof(RefCode))]
+        public string RefCode { get; set; }
+
+        [DisplayName(nameof(RefCodeCount))]
+        public int RefCodeCount { get; set; }
     }
 
     public class AccountEditModel

@@ -1,5 +1,7 @@
 ﻿using Entities.CoreServicesModels.AccountModels;
 using Entities.CoreServicesModels.LocationModels;
+using Entities.CoreServicesModels.SeasonModels;
+using Entities.CoreServicesModels.SubscriptionModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountModels;
 
@@ -34,6 +36,13 @@ namespace CoreServices.Logic
                                   EmailAddress = a.User.EmailAddress,
                                   PhoneNumber = a.User.PhoneNumber,
                                   UserName = a.User.UserName,
+                                  Address = a.Address,
+                                  Fk_Country = a.Fk_Country,
+                                  Fk_FavouriteTeam = a.Fk_FavouriteTeam,
+                                  Fk_Nationality = a.Fk_Nationality,
+                                  PhoneNumberTwo = a.PhoneNumberTwo,
+                                  RefCode = a.RefCode,
+                                  RefCodeCount = a.RefCodeCount,
                                   Country = new CountryModel
                                   {
                                       Name = otherLang ? a.Country.CountryLang.Name : a.Country.Name
@@ -75,8 +84,6 @@ namespace CoreServices.Logic
                 {
                     Fk_Account = fk_account,
                     Fk_Subscription = subscription.Fk_Subscription,
-                    StartDate = subscription.StartDate,
-                    EndDate = subscription.EndDate,
                     IsAction = subscription.IsAction
                 };
 
@@ -165,6 +172,106 @@ namespace CoreServices.Logic
         }
         #endregion
 
+        #region Account RefCode Services
+
+        public IQueryable<AccountRefCodeModel> GetAccountRefCodes(
+            AccountRefCodeParameters parameters)
+        {
+            return _repository.AccountRefCode
+                              .FindAll(parameters, trackChanges: false)
+                              .Select(a => new AccountRefCodeModel
+                              {
+                                  Id = a.Id,
+                                  CreatedAt = a.CreatedAt,
+                                  Fk_NewAccount = a.Fk_NewAccount,
+                                  Fk_RefAccount = a.Fk_RefAccount
+                              })
+                              .Search(parameters.SearchColumns, parameters.SearchTerm)
+                              .Sort(parameters.OrderBy);
+        }
+
+        public async Task<PagedList<AccountRefCodeModel>> GetAccountRefCodesPaged(
+            AccountRefCodeParameters parameters)
+        {
+            return await PagedList<AccountRefCodeModel>.ToPagedList(GetAccountRefCodes(parameters), parameters.PageNumber, parameters.PageSize);
+        }
+
+        public async Task<AccountRefCode> FindAccountRefCodeById(int id, bool trackChanges)
+        {
+            return await _repository.AccountRefCode.FindById(id, trackChanges);
+        }
+
+        public AccountRefCodeModel GetAccountRefCodebyId(int id)
+        {
+            return GetAccountRefCodes(new AccountRefCodeParameters { Id = id }).SingleOrDefault();
+        }
+
+        public void CreateAccountRefCode(AccountRefCode account)
+        {
+            _repository.AccountRefCode.Create(account);
+        }
+
+        public async Task CreateAccountRefCode(string refCode, int fk_NewAccount)
+        {
+            if (refCode.IsExisting() && fk_NewAccount > 0)
+            {
+                var refAccount = GetAccounts(new AccountParameters
+                {
+                    RefCode = refCode
+                }, otherLang: false).Select(a => new
+                {
+                    a.RefCode,
+                    a.RefCodeCount,
+                    a.Id
+                }).FirstOrDefault();
+
+                if (refAccount != null)
+                {
+                    CreateAccountRefCode(new AccountRefCode
+                    {
+                        Fk_NewAccount = fk_NewAccount,
+                        Fk_RefAccount = refAccount.Id
+                    });
+
+                    Account account = await FindAccountById(refAccount.Id, trackChanges: true);
+                    account.RefCodeCount++;
+
+                    if (account.RefCodeCount == 20)
+                    {
+                        int subscription = _repository.Subscription
+                                              .FindAll(new SubscriptionParameters(), trackChanges: false)
+                                              .Select(a => a.Id)
+                                              .FirstOrDefault();
+
+                        var season = _repository.Season.FindAll(new SeasonParameters
+                        {
+                            IsCurrent = true
+                        }, trackChanges: false).First();
+
+                        if (subscription > 0)
+                        {
+                            CreateAccountSubscription(new AccountSubscription
+                            {
+                                Fk_Account = refAccount.Id,
+                                Fk_Subscription = subscription,
+                                IsAction = true,
+                                Fk_Season = season.Id
+                            });
+
+                            account.RefCodeCount = 0;
+                        }
+                    }
+                }
+            }
+        }
+
+        public int GetAccountRefCodesCount()
+        {
+            return _repository.AccountRefCode.Count();
+        }
+
+        #endregion
+
         #region Account Subscription Services
 
         public IQueryable<AccountSubscriptionModel> GetAccountSubscriptions(
@@ -177,8 +284,11 @@ namespace CoreServices.Logic
                               {
                                   Id = a.Id,
                                   CreatedAt = a.CreatedAt,
-                                  StartDate = a.StartDate,
-                                  EndDate = a.EndDate,
+                                  Fk_Season = a.Fk_Season,
+                                  Season = new SeasonModel
+                                  {
+                                      Name = otherLang ? a.Season.SeasonLang.Name : a.Season.Name
+                                  },
                                   IsAction = a.IsAction,
                                   Fk_Account = a.Fk_Account,
                                   Fk_Subscription = a.Fk_Subscription
@@ -217,7 +327,7 @@ namespace CoreServices.Logic
 
         #endregion
 
-        #region Account Subscription Services
+        #region Payment Services
 
         public IQueryable<PaymentModel> GetPayments(
             PaymentParameters parameters,

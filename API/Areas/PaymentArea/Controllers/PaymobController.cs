@@ -100,12 +100,13 @@ namespace API.Areas.PaymentArea.Controllers
                         Fk_Account = account
                     });
 
+                    var season = _unitOfWork.Season.GetCurrentSeason();
+
                     _unitOfWork.Account.CreateAccountSubscription(new AccountSubscription
                     {
                         Fk_Account = account,
                         Fk_Subscription = subscription,
-                        StartDate = DateTime.UtcNow.Date,
-                        EndDate = DateTime.UtcNow.Date.AddYears(1)
+                        Fk_Season = season.Id
                     });
 
                     _unitOfWork.Save().Wait();

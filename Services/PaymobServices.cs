@@ -1,6 +1,7 @@
 ﻿using Entities.ServicesModels;
 using Newtonsoft.Json;
 using System.Text;
+using static Entities.EnumData.LogicEnumData;
 
 namespace Services
 {
@@ -13,6 +14,7 @@ namespace Services
             _config = config;
             _baseUrl = config.BaseUrl;
         }
+        #region Common Steps
 
         // Step 1
         public async Task<string> Authorization()
@@ -85,9 +87,24 @@ namespace Services
         }
 
         // Step 3
-        public async Task<string> PaymentKey(PaymentKeyRequestParameters parameters)
+        public async Task<string> PaymentKey(PaymentKeyRequestParameters parameters, PyamentTypeEnum pyamentType)
         {
             string token = null;
+
+            int integration_id = 0;
+
+            if (pyamentType == PyamentTypeEnum.Credit)
+            {
+                integration_id = _config.TestIntegrationId;
+            }
+            else if (pyamentType == PyamentTypeEnum.Wallet)
+            {
+                integration_id = _config.WalletIntegrationId;
+            }
+            else if (pyamentType == PyamentTypeEnum.Kiosk)
+            {
+                integration_id = _config.KioskIntegrationId;
+            }
 
             Dictionary<string, object> Params = new()
                 {
@@ -96,7 +113,7 @@ namespace Services
                     { "expiration" ,3600},
                     { "order_id" ,parameters.Order_id},
                     { "currency" ,"EGP"},
-                    { "integration_id" ,_config.TestIntegrationId},
+                    { "integration_id" ,integration_id},
                     { "billing_data" ,parameters.Billing_data},
                     { "lock_order_when_paid" ,"true"}
                 };
@@ -124,9 +141,94 @@ namespace Services
             return token;
         }
 
+        #endregion
+
+        // Pay By Credit
         public string GetIframeUrl(string payment_token)
         {
             return $"{_baseUrl}/acceptance/iframes/{_config.IframeId}?payment_token={payment_token}";
+        }
+
+        public async Task<string> WalletPayRequest(string payment_token)
+        {
+            string redirect_url = null;
+
+            Dictionary<string, object> Params = new()
+                {
+                    { "payment_token" ,payment_token},
+                    { "source" , new Dictionary<string, object>
+                        {
+                            { "identifier" ,_config.WalletIdentifier},
+                            { "subtype" ,"WALLET"},
+                        }
+                    }
+                };
+
+            string ParamsContecnt = JsonConvert.SerializeObject(Params);
+            HttpContent Content = new StringContent(ParamsContecnt, Encoding.UTF8, "application/json");
+
+            using HttpClient client = new();
+            HttpRequestMessage request = new()
+            {
+                Method = HttpMethod.Post,
+                RequestUri = new Uri($"{_baseUrl}/acceptance/payments/pay"),
+                Content = Content
+            };
+            HttpResponseMessage result = await client.SendAsync(request);
+            if (result.IsSuccessStatusCode)
+            {
+                string json = await result.Content.ReadAsStringAsync();
+
+                WalletPayResponse Data = JsonConvert.DeserializeObject<WalletPayResponse>(json);
+
+                if (Data.Success == "true" && Data.Pending == "false")
+                {
+                    redirect_url = Data.Redirect_url;
+                }
+            }
+
+            return redirect_url;
+        }
+
+        public async Task<string> KioskPayRequest(string payment_token)
+        {
+            string bill_reference = null;
+
+            Dictionary<string, object> Params = new()
+                {
+                    { "payment_token" ,payment_token},
+                    { "source" , new Dictionary<string, object>
+                        {
+                            { "identifier" ,"AGGREGATOR"},
+                            { "subtype" ,"AGGREGATOR"},
+                        }
+                    }
+                };
+
+            string ParamsContecnt = JsonConvert.SerializeObject(Params);
+            HttpContent Content = new StringContent(ParamsContecnt, Encoding.UTF8, "application/json");
+
+            using HttpClient client = new();
+            HttpRequestMessage request = new()
+            {
+                Method = HttpMethod.Post,
+                RequestUri = new Uri($"{_baseUrl}/acceptance/payments/pay"),
+                Content = Content
+            };
+            HttpResponseMessage result = await client.SendAsync(request);
+            if (result.IsSuccessStatusCode)
+            {
+                string json = await result.Content.ReadAsStringAsync();
+
+                KioskPayResponse Data = JsonConvert.DeserializeObject<KioskPayResponse>(json);
+
+                if (Data.Success == "false" && Data.Pending == "true")
+                {
+                    bill_reference = Data.Data.Bill_reference;
+                }
+            }
+
+            return bill_reference;
         }
 
         // Step 4
@@ -154,7 +256,6 @@ namespace Services
 
             return returnData;
         }
-
         public async Task<PayWithSavedTokenResponseParameters> PayWithSavedToken(PayWithSavedTokenRequestParameters parameters)
         {
             PayWithSavedTokenResponseParameters returnData = new();
@@ -318,6 +419,36 @@ namespace Services
         public string Token { get; set; }
     }
     #endregion
+
+    public class WalletPayResponse
+    {
+        [JsonProperty(PropertyName = "pending")]
+        public string Pending { get; set; }
+
+        [JsonProperty(PropertyName = "success")]
+        public string Success { get; set; }
+
+        [JsonProperty(PropertyName = "redirect_url")]
+        public string Redirect_url { get; set; }
+    }
+
+    public class KioskPayResponse
+    {
+        [JsonProperty(PropertyName = "pending")]
+        public string Pending { get; set; }
+
+        [JsonProperty(PropertyName = "success")]
+        public string Success { get; set; }
+
+        [JsonProperty(PropertyName = "data")]
+        public KioskPayResponseData Data { get; set; }
+    }
+
+    public class KioskPayResponseData
+    {
+        [JsonProperty(PropertyName = "bill_reference")]
+        public string Bill_reference { get; set; }
+    }
 
     #region Transaction Processed Callback
 

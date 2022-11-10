@@ -1,6 +1,8 @@
 ﻿using API.Controllers;
 using Entities.CoreServicesModels.AccountModels;
 using Entities.DBModels.AccountModels;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using static Entities.EnumData.LogicEnumData;
 
 namespace API.Areas.PaymentArea.Controllers
 {
@@ -25,7 +27,7 @@ namespace API.Areas.PaymentArea.Controllers
 
         [HttpPost]
         [Route(nameof(RequestPayment))]
-        public async Task<string> RequestPayment()
+        public async Task<string> RequestPayment([FromQuery, BindRequired] PyamentTypeEnum pyamentType)
         {
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
@@ -39,7 +41,7 @@ namespace API.Areas.PaymentArea.Controllers
                 throw new Exception("Please add email address!");
             }
 
-            int amount_cents = 100; // 1 LE
+            int amount_cents = 100; // 100 LE
 
             string auth_token = await _paymobServices.Authorization();
 
@@ -62,9 +64,24 @@ namespace API.Areas.PaymentArea.Controllers
                     Phone_number = auth.PhoneNumber,
                     Email = auth.EmailAddress
                 }
-            });
+            }, pyamentType);
 
-            return _paymobServices.GetIframeUrl(payment_token);
+            string returnUrl = null;
+
+            if (pyamentType == PyamentTypeEnum.Credit)
+            {
+                returnUrl = _paymobServices.GetIframeUrl(payment_token);
+            }
+            else if (pyamentType == PyamentTypeEnum.Wallet)
+            {
+                returnUrl = await _paymobServices.WalletPayRequest(payment_token);
+            }
+            else if (pyamentType == PyamentTypeEnum.Credit)
+            {
+                returnUrl = await _paymobServices.KioskPayRequest(payment_token);
+            }
+
+            return returnUrl;
         }
 
         [HttpPost]

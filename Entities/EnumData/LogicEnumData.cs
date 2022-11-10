@@ -19,5 +19,12 @@
             Buying = 1,
             Selling = 2
         }
+
+        public enum PyamentTypeEnum
+        {
+            Credit = 1,
+            Wallet = 2,
+            Kiosk = 3
+        }
     }
 }

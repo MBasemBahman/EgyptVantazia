@@ -1,6 +1,9 @@
 ﻿using API.Controllers;
 using Entities.CoreServicesModels.PlayerStateModels;
+using Entities.DBModels.PlayerStateModels;
+using Entities.DBModels.TeamModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace API.Areas.PlayerStateArea.Controllers
 {
@@ -25,6 +28,11 @@ namespace API.Areas.PlayerStateArea.Controllers
         [FromQuery] PlayerSeasonScoreStateParameters parameters)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
+            if (parameters.Fk_ScoreState == (int)ScoreStateEnum.CleanSheet)
+            {
+                parameters.Fk_PlayerPosition = (int)PlayerPositionEnum.Goalkeeper;
+            }
 
             PagedList<PlayerSeasonScoreStateModel> data = await _unitOfWork.PlayerState.GetPlayerSeasonScoreStatePaged(parameters, otherLang);
 

@@ -103,7 +103,7 @@ namespace API.Controllers
             do
             {
                 account.RefCode = RandomGenerator.GenerateString(8);
-            } while (_unitOfWork.Account.GetAccounts(new AccountParameters { RefCode = account.RefCode },otherLang:false).Any());
+            } while (_unitOfWork.Account.GetAccounts(new AccountParameters { RefCode = account.RefCode }, otherLang: false).Any());
 
             user.Account = account;
 

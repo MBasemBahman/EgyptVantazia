@@ -1797,6 +1797,9 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
                     b.Property<string>("StorageUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -3282,6 +3285,9 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("ShortName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("StorageUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -3314,6 +3320,9 @@ namespace DAL.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShortName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -3408,6 +3417,9 @@ namespace DAL.Migrations
                     b.Property<string>("ShirtStorageUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ShortName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("StorageUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -3440,6 +3452,9 @@ namespace DAL.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShortName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -3601,7 +3616,7 @@ namespace DAL.Migrations
                             EmailAddress = "user@mail.com",
                             LastModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Developer",
-                            Password = "$2a$11$OQ65cVR7HJxryE2Duj06TuOSnacyM0e5nXX0WOOdovtjTpE2Ewe7S",
+                            Password = "$2a$11$oj/7HhgMcFyY9DnPke/wt.hP57hK5KbdO5tSf7rYonOHx2CO8cOLW",
                             UserName = "Developer"
                         });
                 });

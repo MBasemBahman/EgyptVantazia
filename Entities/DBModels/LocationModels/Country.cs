@@ -9,6 +9,9 @@ namespace Entities.DBModels.LocationModels
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
 
+        [DisplayName(nameof(Order))]
+        public int Order { get; set; }
+
         [DisplayName(nameof(Accounts))]
         public IList<Account> Accounts { get; set; }
 

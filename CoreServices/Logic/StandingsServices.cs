@@ -48,6 +48,7 @@ namespace CoreServices.Logic
                            Team = new TeamModel
                            {
                                Name = otherLang ? a.Team.TeamLang.Name : a.Team.Name,
+                               ShortName = otherLang ? a.Team.TeamLang.ShortName : a.Team.ShortName,
                                ImageUrl = a.Team.StorageUrl + a.Team.ImageUrl,
                                ShirtImageUrl = a.Team.ShirtStorageUrl + a.Team.ShirtImageUrl,
                                _365_TeamId = a.Team._365_TeamId

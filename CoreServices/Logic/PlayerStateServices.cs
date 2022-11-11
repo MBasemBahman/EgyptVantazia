@@ -21,6 +21,8 @@ namespace CoreServices.Logic
         {
             return _repository.PlayerGameWeakScoreState
                        .FindAll(parameters, trackChanges: false)
+                       .OrderByDescending(a => a.Points)
+                       .ThenBy(a => a.Player.Id)
                        .Select(a => new PlayerGameWeakScoreStateModel
                        {
                            Id = a.Id,
@@ -96,6 +98,8 @@ namespace CoreServices.Logic
         {
             return _repository.PlayerSeasonScoreState
                        .FindAll(parameters, trackChanges: false)
+                       .OrderByDescending(a => a.Points)
+                       .ThenBy(a => a.Player.Id)
                        .Select(a => new PlayerSeasonScoreStateModel
                        {
                            Id = a.Id,
@@ -183,9 +187,10 @@ namespace CoreServices.Logic
                            BestPlayer = parameters.IncludeBestPlayer == false ? null :
                                         parameters.Fk_Season > 0 ?
                                         scoreState.PlayerSeasonScoreStates
-                                         .Where(a => scoreState.Id != (int)ScoreStateEnum.CleanSheet || 
+                                         .Where(a => scoreState.Id != (int)ScoreStateEnum.CleanSheet ||
                                                      a.Player.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper)
                                          .OrderByDescending(a => a.Points)
+                                         .ThenBy(a => a.Player.Id)
                                          .Select(playerScore => new PlayerModel
                                          {
                                              Id = playerScore.Player.Id,
@@ -197,12 +202,14 @@ namespace CoreServices.Logic
                                              PlayerPosition = new PlayerPositionModel
                                              {
                                                  Name = otherLang ? playerScore.Player.PlayerPosition.PlayerPositionLang.Name : playerScore.Player.PlayerPosition.Name,
+                                                 ShortName = otherLang ? playerScore.Player.PlayerPosition.PlayerPositionLang.ShortName : playerScore.Player.PlayerPosition.ShortName,
                                                  ImageUrl = playerScore.Player.PlayerPosition.StorageUrl + playerScore.Player.PlayerPosition.ImageUrl,
                                                  _365_PositionId = playerScore.Player.PlayerPosition._365_PositionId
                                              },
                                              Team = new TeamModel
                                              {
                                                  Name = otherLang ? playerScore.Player.Team.TeamLang.Name : playerScore.Player.Team.Name,
+                                                 ShortName = otherLang ? playerScore.Player.Team.TeamLang.ShortName : playerScore.Player.Team.ShortName,
                                                  ImageUrl = playerScore.Player.Team.StorageUrl + playerScore.Player.Team.ImageUrl,
                                                  ShirtImageUrl = playerScore.Player.Team.ShirtStorageUrl + playerScore.Player.Team.ShirtImageUrl,
                                                  _365_TeamId = playerScore.Player.Team._365_TeamId
@@ -226,6 +233,7 @@ namespace CoreServices.Logic
                                          .Where(a => scoreState.Id != (int)ScoreStateEnum.CleanSheet ||
                                                      a.Player.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper)
                                          .OrderByDescending(a => a.Points)
+                                         .ThenBy(a => a.Player.Id)
                                          .Select(playerScore => new PlayerModel
                                          {
                                              Id = playerScore.Player.Id,
@@ -237,12 +245,14 @@ namespace CoreServices.Logic
                                              PlayerPosition = new PlayerPositionModel
                                              {
                                                  Name = otherLang ? playerScore.Player.PlayerPosition.PlayerPositionLang.Name : playerScore.Player.PlayerPosition.Name,
+                                                 ShortName = otherLang ? playerScore.Player.PlayerPosition.PlayerPositionLang.ShortName : playerScore.Player.PlayerPosition.ShortName,
                                                  ImageUrl = playerScore.Player.PlayerPosition.StorageUrl + playerScore.Player.PlayerPosition.ImageUrl,
                                                  _365_PositionId = playerScore.Player.PlayerPosition._365_PositionId
                                              },
                                              Team = new TeamModel
                                              {
                                                  Name = otherLang ? playerScore.Player.Team.TeamLang.Name : playerScore.Player.Team.Name,
+                                                 ShortName = otherLang ? playerScore.Player.Team.TeamLang.ShortName : playerScore.Player.Team.ShortName,
                                                  ImageUrl = playerScore.Player.Team.StorageUrl + playerScore.Player.Team.ImageUrl,
                                                  ShirtImageUrl = playerScore.Player.Team.ShirtStorageUrl + playerScore.Player.Team.ShirtImageUrl,
                                                  _365_TeamId = playerScore.Player.Team._365_TeamId

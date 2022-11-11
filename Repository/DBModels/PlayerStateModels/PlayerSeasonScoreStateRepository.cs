@@ -19,6 +19,7 @@ namespace Repository.DBModels.PlayerStateModels
                            parameters.Fk_Players,
                            parameters.Fk_ScoreStates,
                            parameters.Fk_Seasons,
+                           parameters.Fk_PlayerPosition,
                            parameters.PointsFrom,
                            parameters.PointsTo,
                            parameters.PercentFrom,
@@ -61,6 +62,7 @@ namespace Repository.DBModels.PlayerStateModels
             List<int> fk_Players,
             List<int> fk_ScoreStates,
             List<int> fk_Seasons,
+            int fk_PlayerPosition,
             double? pointsFrom,
             double? pointsTo,
             double? percentFrom,
@@ -69,6 +71,7 @@ namespace Repository.DBModels.PlayerStateModels
             return PlayerSeasonScoreStates.Where(a => (id == 0 || a.Id == id) &&
                                                   (fk_Player == 0 || a.Fk_Player == fk_Player) &&
                                                   (fk_ScoreState == 0 || a.Fk_ScoreState == fk_ScoreState) &&
+                                                  (fk_PlayerPosition == 0 || a.Player.Fk_PlayerPosition == fk_PlayerPosition) &&
                                                   (fk_Season == 0 || a.Fk_Season == fk_Season) &&
                                                   (fk_Players == null || !fk_Players.Any() ||
                                                    fk_Players.Contains(a.Fk_Player)) &&

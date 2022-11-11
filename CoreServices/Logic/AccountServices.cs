@@ -56,7 +56,8 @@ namespace CoreServices.Logic
                                   : null,
                                   FavouriteTeam = new TeamModel
                                   {
-                                      Name = a.FavouriteTeam.Name
+                                      Name = otherLang ? a.FavouriteTeam.TeamLang.Name : a.FavouriteTeam.Name,
+                                      ShortName = otherLang ? a.FavouriteTeam.TeamLang.ShortName : a.FavouriteTeam.ShortName,
                                   }
                               })
                               .Search(parameters.SearchColumns, parameters.SearchTerm)

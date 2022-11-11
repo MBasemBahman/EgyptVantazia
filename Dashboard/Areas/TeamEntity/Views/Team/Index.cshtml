@@ -32,15 +32,9 @@
                                 <li class="breadcrumb-item active">
                                     @ViewData["Title"]
                                 </li>
-
                             </ol>
-
-
                         </div>
                     </div>
-
-
-
                 </div>
             </div>
         </div>
@@ -93,6 +87,7 @@
 
                                             </th>
                                             <th>@Html.DisplayNameFor(model => row.Name)</th>
+                                            <th>@Html.DisplayNameFor(model => row.ShortName)</th>
                                             <th>@Html.DisplayNameFor(model => row._365_TeamId)</th>
                                             <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
                                             <th>
@@ -167,6 +162,7 @@
                                 }
                             }
                         },
+                        { data: "shortName" },
                         { data: "_365_TeamId" },
                         { data: "createdAt" },
                         { data: "id" },

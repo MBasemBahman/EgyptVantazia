@@ -29,7 +29,8 @@ namespace CoreServices.Logic
                            LastModifiedAt = a.LastModifiedAt,
                            LastModifiedBy = a.LastModifiedBy,
                            AccountsCount = a.Accounts.Count,
-                           NationalitiesCount = a.AccountNationalities.Count
+                           NationalitiesCount = a.AccountNationalities.Count,
+                           Order = a.Order
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

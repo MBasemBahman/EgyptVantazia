@@ -371,11 +371,13 @@ namespace CoreServices.Logic
                                PlayerPosition = new PlayerPositionModel
                                {
                                    Name = otherLang ? a.Player.PlayerPosition.PlayerPositionLang.Name : a.Player.PlayerPosition.Name,
+                                   ShortName = otherLang ? a.Player.PlayerPosition.PlayerPositionLang.ShortName : a.Player.PlayerPosition.ShortName,
                                    ImageUrl = a.Player.PlayerPosition.StorageUrl + a.Player.PlayerPosition.ImageUrl,
                                },
                                Team = new TeamModel
                                {
                                    Name = otherLang ? a.Player.Team.TeamLang.Name : a.Player.Team.Name,
+                                   ShortName = otherLang ? a.Player.Team.TeamLang.ShortName : a.Player.Team.ShortName,
                                    ImageUrl = a.Player.Team.StorageUrl + a.Player.Team.ImageUrl,
                                    ShirtImageUrl = a.Player.Team.StorageUrl + a.Player.Team.ShirtImageUrl,
                                },
@@ -447,6 +449,7 @@ namespace CoreServices.Logic
                                 .Select(b => new TeamModel
                                 {
                                     Name = otherLang ? b.Home.TeamLang.Name : b.Home.Name,
+                                    ShortName = otherLang ? b.Home.TeamLang.ShortName : b.Home.ShortName,
                                     IsAwayTeam = false
                                 })
                                 .ToList() :
@@ -457,6 +460,7 @@ namespace CoreServices.Logic
                                 .Select(b => new TeamModel
                                 {
                                     Name = otherLang ? b.Away.TeamLang.Name : b.Away.Name,
+                                    ShortName = otherLang ? b.Away.TeamLang.ShortName : b.Away.ShortName,
                                     IsAwayTeam = true
                                 })
                                 .ToList())

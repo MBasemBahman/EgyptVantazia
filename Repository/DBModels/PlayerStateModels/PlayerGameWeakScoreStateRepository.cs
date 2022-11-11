@@ -19,6 +19,7 @@ namespace Repository.DBModels.PlayerStateModels
                            parameters.Fk_Players,
                            parameters.Fk_ScoreStates,
                            parameters.Fk_GameWeaks,
+                           parameters.Fk_PlayerPosition,
                            parameters.PointsFrom,
                            parameters.PointsTo,
                            parameters.PercentFrom,
@@ -63,6 +64,7 @@ namespace Repository.DBModels.PlayerStateModels
             List<int> fk_Players,
             List<int> fk_ScoreStates,
             List<int> fk_GameWeaks,
+            int fk_PlayerPosition,
             double? pointsFrom,
             double? pointsTo,
             double? percentFrom,
@@ -73,6 +75,7 @@ namespace Repository.DBModels.PlayerStateModels
             return PlayerGameWeakScoreStates.Where(a => (id == 0 || a.Id == id) &&
                                                   (fk_GameWeak == null || a.Fk_GameWeak == fk_GameWeak) &&
                                                   (fk_Player == 0 || a.Fk_Player == fk_Player) &&
+                                                  (fk_PlayerPosition == 0 || a.Player.Fk_PlayerPosition == fk_PlayerPosition) &&
                                                   (fk_ScoreState == 0 || a.Fk_ScoreState == fk_ScoreState) &&
                                                   (fk_Players == null || !fk_Players.Any() ||
                                                    fk_Players.Contains(a.Fk_Player)) &&

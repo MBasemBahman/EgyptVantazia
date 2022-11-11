@@ -7,6 +7,9 @@
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
 
+        [DisplayName($"{nameof(ShortName)}{PropertyAttributeConstants.ArLang}")]
+        public string ShortName { get; set; }
+
         [DisplayName(nameof(_365_PositionId))]
         public string _365_PositionId { get; set; }
 
@@ -21,5 +24,8 @@
         [DisplayName($"{nameof(Name)}{PropertyAttributeConstants.EnLang}")]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
+
+        [DisplayName($"{nameof(ShortName)}{PropertyAttributeConstants.EnLang}")]
+        public string ShortName { get; set; }
     }
 }

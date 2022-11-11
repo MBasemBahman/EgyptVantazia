@@ -51,7 +51,8 @@ namespace CoreServices.Logic
                                Fk_Team = a.Player.Fk_Team,
                                Team = new TeamModel
                                {
-                                   Name = otherLang ? a.Player.Team.TeamLang.Name : a.Player.Team.Name
+                                   Name = otherLang ? a.Player.Team.TeamLang.Name : a.Player.Team.Name,
+                                   ShortName = otherLang ? a.Player.Team.TeamLang.ShortName : a.Player.Team.ShortName
                                }
                            },
                        })

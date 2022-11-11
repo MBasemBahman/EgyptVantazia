@@ -107,11 +107,13 @@ namespace CoreServices.Logic
                                _365_MatchId = a.TeamGameWeak._365_MatchId,
                                Away = new TeamModel
                                {
-                                   Name = otherLang ? a.TeamGameWeak.Away.TeamLang.Name : a.TeamGameWeak.Away.Name
+                                   Name = otherLang ? a.TeamGameWeak.Away.TeamLang.Name : a.TeamGameWeak.Away.Name,
+                                   ShortName = otherLang ? a.TeamGameWeak.Away.TeamLang.ShortName : a.TeamGameWeak.Away.ShortName,
                                },
                                Home = new TeamModel
                                {
-                                   Name = otherLang ? a.TeamGameWeak.Home.TeamLang.Name : a.TeamGameWeak.Home.Name
+                                   Name = otherLang ? a.TeamGameWeak.Home.TeamLang.Name : a.TeamGameWeak.Home.Name,
+                                   ShortName = otherLang ? a.TeamGameWeak.Home.TeamLang.ShortName : a.TeamGameWeak.Home.ShortName,
                                },
                                GameWeak = new GameWeakModel
                                {

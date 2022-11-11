@@ -291,6 +291,7 @@ namespace CoreServices.Logic
                            Away = new TeamModel
                            {
                                Name = otherLang ? a.Away.TeamLang.Name : a.Away.Name,
+                               ShortName = otherLang ? a.Away.TeamLang.ShortName : a.Away.ShortName,
                                ImageUrl = a.Away.StorageUrl + a.Away.ImageUrl,
                                ShirtImageUrl = a.Away.ShirtStorageUrl + a.Away.ShirtImageUrl,
                                _365_TeamId = a.Away._365_TeamId,
@@ -299,6 +300,7 @@ namespace CoreServices.Logic
                            Home = new TeamModel
                            {
                                Name = otherLang ? a.Home.TeamLang.Name : a.Home.Name,
+                               ShortName = otherLang ? a.Home.TeamLang.ShortName : a.Home.ShortName,
                                ImageUrl = a.Home.StorageUrl + a.Home.ImageUrl,
                                ShirtImageUrl = a.Home.ShirtStorageUrl + a.Home.ShirtImageUrl,
                                _365_TeamId = a.Home._365_TeamId

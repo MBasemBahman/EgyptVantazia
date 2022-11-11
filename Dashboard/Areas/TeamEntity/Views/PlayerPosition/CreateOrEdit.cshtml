@@ -77,6 +77,21 @@
 
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
+                                                <label asp-for="ShortName" class="form-label"></label>
+                                                <input asp-for="ShortName" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"ShortName{PropertyAttributeConstants.ArLang}"))" />
+                                                <span asp-validation-for="ShortName" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="PlayerPositionLang.ShortName" class="form-label"></label>
+                                                <input asp-for="PlayerPositionLang.ShortName" class="form-control" placeholder="@Localizer.Get("Enter")  @(Localizer.Get($"ShortName{PropertyAttributeConstants.EnLang}"))" />
+                                                <span asp-validation-for="PlayerPositionLang.ShortName" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
                                                 <label asp-for="_365_PositionId" class="form-label"></label>
                                                 <input asp-for="_365_PositionId" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"_365_PositionId"))" />
                                                 <span asp-validation-for="_365_PositionId" class="text-danger"></span>

@@ -11,6 +11,9 @@ namespace Entities.DBModels.TeamModels
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
 
+        [DisplayName($"{nameof(ShortName)}{PropertyAttributeConstants.ArLang}")]
+        public string ShortName { get; set; }
+
         [DisplayName(nameof(_365_TeamId))]
         public string _365_TeamId { get; set; }
 
@@ -48,5 +51,8 @@ namespace Entities.DBModels.TeamModels
         [DisplayName($"{nameof(Name)}{PropertyAttributeConstants.EnLang}")]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
+
+        [DisplayName($"{nameof(ShortName)}{PropertyAttributeConstants.EnLang}")]
+        public string ShortName { get; set; }
     }
 }

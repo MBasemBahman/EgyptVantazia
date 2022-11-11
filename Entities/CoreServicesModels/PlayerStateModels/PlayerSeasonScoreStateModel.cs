@@ -15,7 +15,9 @@ namespace Entities.CoreServicesModels.PlayerStateModels
         public List<int> Fk_ScoreStates { get; set; }
         public int Fk_Season { get; set; }
         public List<int> Fk_Seasons { get; set; }
-        
+
+        public int Fk_PlayerPosition { get; set; }
+
         public double? PointsFrom { get; set; }
         public double? PointsTo { get; set; }
         public double? PercentFrom { get; set; }

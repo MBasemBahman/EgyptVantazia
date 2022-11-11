@@ -80,6 +80,7 @@
                                     </div>
                                     <br />
                                     <div class="row mb-1">
+
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="Name" class="form-label"></label>
@@ -92,6 +93,21 @@
                                                 <label asp-for="TeamLang.Name" class="form-label"></label>
                                                 <input asp-for="TeamLang.Name" class="form-control" placeholder="@Localizer.Get("Enter")  @(Localizer.Get($"Name{PropertyAttributeConstants.EnLang}"))" />
                                                 <span asp-validation-for="TeamLang.Name" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="ShortName" class="form-label"></label>
+                                                <input asp-for="ShortName" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"ShortName{PropertyAttributeConstants.ArLang}"))" />
+                                                <span asp-validation-for="ShortName" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="TeamLang.ShortName" class="form-label"></label>
+                                                <input asp-for="TeamLang.ShortName" class="form-control" placeholder="@Localizer.Get("Enter")  @(Localizer.Get($"ShortName{PropertyAttributeConstants.EnLang}"))" />
+                                                <span asp-validation-for="TeamLang.ShortName" class="text-danger"></span>
                                             </div>
                                         </div>
 

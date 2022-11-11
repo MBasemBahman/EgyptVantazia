@@ -22,6 +22,7 @@ namespace API.Areas.TeamArea.Controllers
 
         [HttpGet]
         [Route(nameof(GetTeams))]
+        [AllowAnonymous]
         public async Task<IEnumerable<TeamDto>> GetTeams(
         [FromQuery] TeamParameters parameters)
         {

@@ -20,6 +20,9 @@ namespace Entities.CoreServicesModels.TeamModels
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
 
+        [DisplayName(nameof(ShortName))]
+        public string ShortName { get; set; }
+
         [DisplayName(nameof(_365_TeamId))]
         public string _365_TeamId { get; set; }
 
@@ -34,6 +37,9 @@ namespace Entities.CoreServicesModels.TeamModels
         [DisplayName($"{nameof(Name)}{PropertyAttributeConstants.ArLang}")]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
+
+        [DisplayName($"{nameof(ShortName)}{PropertyAttributeConstants.ArLang}")]
+        public string ShortName { get; set; }
 
         [DisplayName(nameof(_365_TeamId))]
         public string _365_TeamId { get; set; }
@@ -62,5 +68,8 @@ namespace Entities.CoreServicesModels.TeamModels
         [DisplayName($"{nameof(Name)}{PropertyAttributeConstants.EnLang}")]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
+
+        [DisplayName($"{nameof(ShortName)}{PropertyAttributeConstants.EnLang}")]
+        public string ShortName { get; set; }
     }
 }

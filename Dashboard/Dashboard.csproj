@@ -48,4 +48,11 @@
     <AdditionalFiles Include="Areas\PlayerStateEntity\Views\ScoreState\Index.cshtml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\Uploud\PlayerPosition\default-user-image.png111020220928304139596Z.png">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

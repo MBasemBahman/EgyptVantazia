@@ -32,7 +32,8 @@ namespace CoreServices.Logic
                            _365_TeamId = a._365_TeamId,
                            Name = otherLang ? a.TeamLang.Name : a.Name,
                            ImageUrl = a.StorageUrl + a.ImageUrl,
-                           ShirtImageUrl = a.ShirtStorageUrl + a.ShirtImageUrl
+                           ShirtImageUrl = a.ShirtStorageUrl + a.ShirtImageUrl,
+                           ShortName = otherLang ? a.TeamLang.ShortName : a.ShortName,
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);
@@ -109,9 +110,10 @@ namespace CoreServices.Logic
                            LastModifiedAt = a.LastModifiedAt,
                            LastModifiedBy = a.LastModifiedBy,
                            Name = otherLang ? a.PlayerPositionLang.Name : a.Name,
+                           ShortName = otherLang ? a.PlayerPositionLang.ShortName : a.ShortName,
                            ImageUrl = a.StorageUrl + a.ImageUrl,
                            _365_PositionId = a._365_PositionId,
-                           PlayersCount = a.Players.Count
+                           PlayersCount = a.Players.Count,
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);
@@ -192,12 +194,14 @@ namespace CoreServices.Logic
                            PlayerPosition = new PlayerPositionModel
                            {
                                Name = otherLang ? a.PlayerPosition.PlayerPositionLang.Name : a.PlayerPosition.Name,
+                               ShortName = otherLang ? a.PlayerPosition.PlayerPositionLang.ShortName : a.PlayerPosition.ShortName,
                                ImageUrl = a.PlayerPosition.StorageUrl + a.PlayerPosition.ImageUrl,
                                _365_PositionId = a.PlayerPosition._365_PositionId
                            },
                            Team = new TeamModel
                            {
                                Name = otherLang ? a.Team.TeamLang.Name : a.Team.Name,
+                               ShortName = otherLang ? a.Team.TeamLang.ShortName : a.Team.ShortName,
                                ImageUrl = a.Team.StorageUrl + a.Team.ImageUrl,
                                ShirtImageUrl = a.Team.ShirtStorageUrl + a.Team.ShirtImageUrl,
                                _365_TeamId = a.Team._365_TeamId
@@ -379,6 +383,7 @@ namespace CoreServices.Logic
                            Team = new TeamModel
                            {
                                Name = otherLang ? a.Team.TeamLang.Name : a.Team.Name,
+                               ShortName = otherLang ? a.Team.TeamLang.ShortName : a.Team.ShortName,
                                ImageUrl = a.Team.StorageUrl + a.Team.ImageUrl,
                                ShirtImageUrl = a.Team.ShirtStorageUrl + a.Team.ShirtImageUrl,
                                _365_TeamId = a.Team._365_TeamId

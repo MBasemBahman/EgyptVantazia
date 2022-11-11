@@ -5,10 +5,16 @@
         public string BaseUrl { get; set; }
         public string ApiKey { get; set; }
         public string IframeId { get; set; }
-        public int LiveIntegrationId { get; set; }
-        public int WalletIntegrationId { get; set; }
-        public int KioskIntegrationId { get; set; }
-        public int TestIntegrationId { get; set; }
+
+        public int KioskTest { get; set; }
+        public int KioskLive { get; set; }
+
+        public int WalletTest { get; set; }
+        public int WalletLive { get; set; }
+
+        public int CardTest { get; set; }
+        public int CardLive { get; set; }
+
         public string WalletIdentifier { get; set; }
     }
 }

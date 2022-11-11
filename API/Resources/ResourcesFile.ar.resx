@@ -138,6 +138,9 @@
   <data name="Old password is wrong!" xml:space="preserve">
     <value>كلمة المرور القديمة خاطئة!</value>
   </data>
+  <data name="Payments have something wrong. try again later!" xml:space="preserve">
+    <value>المدفوعات بها شيء خاطئ. حاول مرة أخرى في وقت لاحق!</value>
+  </data>
   <data name="Please fill comment content!" xml:space="preserve">
     <value>الرجاء ملء محتوى التعليق!</value>
   </data>

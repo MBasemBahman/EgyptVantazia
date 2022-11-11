@@ -95,15 +95,15 @@ namespace Services
 
             if (pyamentType == PyamentTypeEnum.Credit)
             {
-                integration_id = _config.TestIntegrationId;
+                integration_id = _config.CardTest;
             }
             else if (pyamentType == PyamentTypeEnum.Wallet)
             {
-                integration_id = _config.WalletIntegrationId;
+                integration_id = _config.WalletTest;
             }
             else if (pyamentType == PyamentTypeEnum.Kiosk)
             {
-                integration_id = _config.KioskIntegrationId;
+                integration_id = _config.KioskTest;
             }
 
             Dictionary<string, object> Params = new()
@@ -181,10 +181,7 @@ namespace Services
 
                 WalletPayResponse Data = JsonConvert.DeserializeObject<WalletPayResponse>(json);
 
-                if (Data.Success == "true" && Data.Pending == "false")
-                {
-                    redirect_url = Data.Redirect_url;
-                }
+                redirect_url = Data.Redirect_url;
             }
 
             return redirect_url;
@@ -222,10 +219,7 @@ namespace Services
 
                 KioskPayResponse Data = JsonConvert.DeserializeObject<KioskPayResponse>(json);
 
-                if (Data.Success == "false" && Data.Pending == "true")
-                {
-                    bill_reference = Data.Data.Bill_reference;
-                }
+                bill_reference = Data.Data.Bill_reference;
             }
 
             return bill_reference;

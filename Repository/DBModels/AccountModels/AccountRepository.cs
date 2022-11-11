@@ -88,7 +88,7 @@ namespace Repository.DBModels.AccountModels
         {
             return accounts.Where(a => (id == 0 || a.Id == id) &&
                                        (fk_Account_Ignored == 0 || a.Id != fk_Account_Ignored) &&
-                                       (string.IsNullOrWhiteSpace(refCode) || a.RefCode != refCode) &&
+                                       (string.IsNullOrWhiteSpace(refCode) || a.RefCode == refCode) &&
 
                                        (fk_Country == 0 || a.Fk_Country == fk_Country) &&
                                        (fk_Nationality == 0 || a.Fk_Nationality == fk_Nationality) &&

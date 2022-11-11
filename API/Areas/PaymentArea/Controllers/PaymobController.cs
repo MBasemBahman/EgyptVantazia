@@ -27,6 +27,7 @@ namespace API.Areas.PaymentArea.Controllers
 
         [HttpPost]
         [Route(nameof(RequestPayment))]
+        [AllowAll]
         public async Task<string> RequestPayment([FromQuery, BindRequired] PyamentTypeEnum pyamentType)
         {
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
@@ -66,6 +67,11 @@ namespace API.Areas.PaymentArea.Controllers
                 }
             }, pyamentType);
 
+            if (payment_token.IsEmpty())
+            {
+                throw new Exception("Payments have something wrong. try again later!");
+            }
+
             string returnUrl = null;
 
             if (pyamentType == PyamentTypeEnum.Credit)
@@ -76,7 +82,7 @@ namespace API.Areas.PaymentArea.Controllers
             {
                 returnUrl = await _paymobServices.WalletPayRequest(payment_token);
             }
-            else if (pyamentType == PyamentTypeEnum.Credit)
+            else if (pyamentType == PyamentTypeEnum.Kiosk)
             {
                 returnUrl = await _paymobServices.KioskPayRequest(payment_token);
             }

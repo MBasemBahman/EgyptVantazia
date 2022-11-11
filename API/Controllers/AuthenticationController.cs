@@ -111,6 +111,7 @@ namespace API.Controllers
             await _unitOfWork.Save();
 
             await _unitOfWork.Account.CreateAccountRefCode(model.Account.RefCode, user.Account.Id);
+            await _unitOfWork.Save();
 
             UserAuthenticatedDto auth = await _authManager.Authenticate(new UserForAuthenticationDto
             {

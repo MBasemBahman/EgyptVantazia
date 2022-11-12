@@ -40,6 +40,7 @@ namespace CoreServices.Logic
                            {
                                Id = a.Fk_Player,
                                Name = otherLang ? a.Player.PlayerLang.Name : a.Player.Name,
+                               ShortName = otherLang ? a.Player.PlayerLang.ShortName : a.Player.ShortName,
                            },
                            GameWeak = new GameWeakModel
                            {
@@ -117,6 +118,7 @@ namespace CoreServices.Logic
                            {
                                Id = a.Fk_Player,
                                Name = otherLang ? a.Player.PlayerLang.Name : a.Player.Name,
+                               ShortName = otherLang ? a.Player.PlayerLang.ShortName : a.Player.ShortName,
                            },
                            ScoreState = new ScoreStateModel
                            {
@@ -195,6 +197,7 @@ namespace CoreServices.Logic
                                          {
                                              Id = playerScore.Player.Id,
                                              Name = otherLang ? playerScore.Player.PlayerLang.Name : playerScore.Player.Name,
+                                             ShortName = otherLang ? playerScore.Player.PlayerLang.ShortName : playerScore.Player.ShortName,
                                              ImageUrl = !string.IsNullOrEmpty(playerScore.Player.ImageUrl) ? playerScore.Player.StorageUrl + playerScore.Player.ImageUrl : playerScore.Player.Team.ShirtStorageUrl + playerScore.Player.Team.ShirtImageUrl,
                                              Fk_PlayerPosition = playerScore.Player.Fk_PlayerPosition,
                                              Fk_Team = playerScore.Player.Fk_Team,
@@ -238,6 +241,7 @@ namespace CoreServices.Logic
                                          {
                                              Id = playerScore.Player.Id,
                                              Name = otherLang ? playerScore.Player.PlayerLang.Name : playerScore.Player.Name,
+                                             ShortName = otherLang ? playerScore.Player.PlayerLang.ShortName : playerScore.Player.ShortName,
                                              ImageUrl = !string.IsNullOrEmpty(playerScore.Player.ImageUrl) ? playerScore.Player.StorageUrl + playerScore.Player.ImageUrl : playerScore.Player.Team.ShirtStorageUrl + playerScore.Player.Team.ShirtImageUrl,
                                              Fk_PlayerPosition = playerScore.Player.Fk_PlayerPosition,
                                              Fk_Team = playerScore.Player.Fk_Team,

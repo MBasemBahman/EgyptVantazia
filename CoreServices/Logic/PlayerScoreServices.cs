@@ -129,6 +129,7 @@ namespace CoreServices.Logic
                            {
                                Id = a.Fk_Player,
                                Name = otherLang ? a.Player.PlayerLang.Name : a.Player.Name,
+                               ShortName = otherLang ? a.Player.PlayerLang.ShortName : a.Player.ShortName,
                                ImageUrl = !string.IsNullOrEmpty(a.Player.ImageUrl) ? a.Player.StorageUrl + a.Player.ImageUrl : a.Player.Team.ShirtStorageUrl + a.Player.Team.ShirtImageUrl,
                                _365_PlayerId = a.Player._365_PlayerId,
                                Fk_PlayerPosition = a.Player.Fk_PlayerPosition,
@@ -298,6 +299,7 @@ namespace CoreServices.Logic
                                {
                                    Id = a.PlayerGameWeak.Player.Id,
                                    Name = otherLang ? a.PlayerGameWeak.Player.PlayerLang.Name : a.PlayerGameWeak.Player.Name,
+                                   ShortName = otherLang ? a.PlayerGameWeak.Player.PlayerLang.ShortName : a.PlayerGameWeak.Player.ShortName,
                                },
                                Ranking = a.PlayerGameWeak.Ranking,
                                Fk_Player = a.PlayerGameWeak.Fk_Player,

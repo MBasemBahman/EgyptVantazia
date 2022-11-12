@@ -14,7 +14,5 @@
 
         public int CardTest { get; set; }
         public int CardLive { get; set; }
-
-        public string WalletIdentifier { get; set; }
     }
 }

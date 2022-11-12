@@ -185,11 +185,11 @@ namespace CoreServices.Logic
                            LastModifiedBy = a.LastModifiedBy,
                            _365_PlayerId = a._365_PlayerId,
                            Name = otherLang ? a.PlayerLang.Name : a.Name,
+                           ShortName = otherLang ? a.PlayerLang.ShortName : a.ShortName,
                            ImageUrl = !string.IsNullOrEmpty(a.ImageUrl) ? a.StorageUrl + a.ImageUrl : a.Team.ShirtStorageUrl + a.Team.ShirtImageUrl,
                            Fk_PlayerPosition = a.Fk_PlayerPosition,
                            Fk_Team = a.Fk_Team,
                            PlayerNumber = a.PlayerNumber,
-                           ShortName = a.ShortName,
                            Age = a.Age,
                            PlayerPosition = new PlayerPositionModel
                            {
@@ -391,6 +391,7 @@ namespace CoreServices.Logic
                            Player = new PlayerModel
                            {
                                Name = otherLang ? a.Player.PlayerLang.Name : a.Player.Name,
+                               ShortName = otherLang ? a.Player.PlayerLang.ShortName : a.Player.ShortName,
                                ImageUrl = !string.IsNullOrEmpty(a.Player.ImageUrl) ? a.Player.StorageUrl + a.Player.ImageUrl : a.Player.Team.ShirtStorageUrl + a.Player.Team.ShirtImageUrl,
                                _365_PlayerId = a.Player._365_PlayerId
                            },

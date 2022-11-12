@@ -244,6 +244,7 @@ namespace CoreServices.Logic
                                Player = new PlayerModel
                                {
                                    Name = otherLang ? a.AccountTeamPlayer.Player.PlayerLang.Name : a.AccountTeamPlayer.Player.Name,
+                                   ShortName = otherLang ? a.AccountTeamPlayer.Player.PlayerLang.ShortName : a.AccountTeamPlayer.Player.ShortName,
                                    ImageUrl = !string.IsNullOrEmpty(a.AccountTeamPlayer.Player.ImageUrl) ? a.AccountTeamPlayer.Player.StorageUrl + a.AccountTeamPlayer.Player.ImageUrl : a.AccountTeamPlayer.Player.Team.ShirtStorageUrl + a.AccountTeamPlayer.Player.Team.ShirtImageUrl,
                                    _365_PlayerId = a.AccountTeamPlayer.Player._365_PlayerId
                                },
@@ -364,6 +365,7 @@ namespace CoreServices.Logic
                            {
                                Id = a.Fk_Player,
                                Name = otherLang ? a.Player.PlayerLang.Name : a.Player.Name,
+                               ShortName = otherLang ? a.Player.PlayerLang.ShortName : a.Player.ShortName,
                                ImageUrl = !string.IsNullOrEmpty(a.Player.ImageUrl) ? a.Player.StorageUrl + a.Player.ImageUrl : a.Player.Team.ShirtStorageUrl + a.Player.Team.ShirtImageUrl,
                                _365_PlayerId = a.Player._365_PlayerId,
                                Fk_Team = a.Player.Fk_Team,
@@ -383,7 +385,6 @@ namespace CoreServices.Logic
                                },
                                Age = a.Player.Age,
                                PlayerNumber = a.Player.PlayerNumber,
-                               ShortName = a.Player.ShortName,
                                BuyPrice = a.Player.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault(),
                                SellPrice = a.Player.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.SellPrice).FirstOrDefault(),
                                SeasonScoreStates = parameters.IncludeScore && parameters.Fk_SeasonForScore > 0 ?

@@ -149,7 +149,7 @@ namespace Services
             return $"{_baseUrl}/acceptance/iframes/{_config.IframeId}?payment_token={payment_token}";
         }
 
-        public async Task<string> WalletPayRequest(string payment_token)
+        public async Task<string> WalletPayRequest(string payment_token, string walletIdentifier)
         {
             string redirect_url = null;
 
@@ -158,7 +158,7 @@ namespace Services
                     { "payment_token" ,payment_token},
                     { "source" , new Dictionary<string, object>
                         {
-                            { "identifier" ,_config.WalletIdentifier},
+                            { "identifier" ,walletIdentifier},
                             { "subtype" ,"WALLET"},
                         }
                     }

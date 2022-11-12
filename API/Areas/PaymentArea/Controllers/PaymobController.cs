@@ -1,4 +1,5 @@
-﻿using API.Controllers;
+﻿using API.Areas.PaymentArea.Models;
+using API.Controllers;
 using Entities.CoreServicesModels.AccountModels;
 using Entities.DBModels.AccountModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -27,8 +28,7 @@ namespace API.Areas.PaymentArea.Controllers
 
         [HttpPost]
         [Route(nameof(RequestPayment))]
-        [AllowAll]
-        public async Task<string> RequestPayment([FromQuery, BindRequired] PyamentTypeEnum pyamentType)
+        public async Task<string> RequestPayment([FromBody] RequestPaymentDto model)
         {
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
@@ -40,6 +40,11 @@ namespace API.Areas.PaymentArea.Controllers
             if (auth.EmailAddress.IsEmpty())
             {
                 throw new Exception("Please add email address!");
+            }
+
+            if (model.PyamentType == PyamentTypeEnum.Wallet && model.WalletIdentifier.IsEmpty())
+            {
+                throw new Exception("Please add wallet number!");
             }
 
             int amount_cents = 100; // 100 LE
@@ -65,7 +70,7 @@ namespace API.Areas.PaymentArea.Controllers
                     Phone_number = auth.PhoneNumber,
                     Email = auth.EmailAddress
                 }
-            }, pyamentType);
+            }, model.PyamentType);
 
             if (payment_token.IsEmpty())
             {
@@ -74,17 +79,22 @@ namespace API.Areas.PaymentArea.Controllers
 
             string returnUrl = null;
 
-            if (pyamentType == PyamentTypeEnum.Credit)
+            if (model.PyamentType == PyamentTypeEnum.Credit)
             {
                 returnUrl = _paymobServices.GetIframeUrl(payment_token);
             }
-            else if (pyamentType == PyamentTypeEnum.Wallet)
+            else if (model.PyamentType == PyamentTypeEnum.Wallet)
             {
-                returnUrl = await _paymobServices.WalletPayRequest(payment_token);
+                returnUrl = await _paymobServices.WalletPayRequest(payment_token, model.WalletIdentifier);
             }
-            else if (pyamentType == PyamentTypeEnum.Kiosk)
+            else if (model.PyamentType == PyamentTypeEnum.Kiosk)
             {
                 returnUrl = await _paymobServices.KioskPayRequest(payment_token);
+            }
+
+            if (returnUrl.IsEmpty())
+            {
+                throw new Exception("Payments have something wrong. try again later!");
             }
 
             return returnUrl;

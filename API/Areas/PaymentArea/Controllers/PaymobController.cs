@@ -2,7 +2,6 @@
 using API.Controllers;
 using Entities.CoreServicesModels.AccountModels;
 using Entities.DBModels.AccountModels;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using static Entities.EnumData.LogicEnumData;
 
 namespace API.Areas.PaymentArea.Controllers
@@ -32,6 +31,8 @@ namespace API.Areas.PaymentArea.Controllers
         {
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
+            Entities.CoreServicesModels.SeasonModels.SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
+
             if (auth.PhoneNumber.IsEmpty())
             {
                 throw new Exception("Please add phone number!");
@@ -47,7 +48,9 @@ namespace API.Areas.PaymentArea.Controllers
                 throw new Exception("Please add wallet number!");
             }
 
-            int amount_cents = 100; // 100 LE
+            Entities.CoreServicesModels.SubscriptionModels.SubscriptionModel subscription = _unitOfWork.Subscription.GetSubscriptionById(model.Fk_Subscription, otherLang: false);
+
+            int amount_cents = subscription.CostAfterDiscount;
 
             string auth_token = await _paymobServices.Authorization();
 
@@ -96,15 +99,27 @@ namespace API.Areas.PaymentArea.Controllers
             {
                 throw new Exception("Payments have something wrong. try again later!");
             }
+            else
+            {
+                _unitOfWork.Account.CreateAccountSubscription(new AccountSubscription
+                {
+                    Fk_Subscription = subscription.Id,
+                    Fk_Account = auth.Fk_Account,
+                    Fk_Season = season.Id,
+                    Order_id = order_id.ToString(),
+                    IsActive = false
+                });
+                await _unitOfWork.Save();
+            }
 
             return returnUrl;
         }
 
         [HttpPost]
-        [Route(nameof(TransactionProcessedCallback))]
+        [Route(nameof(TransactionProcessedCallbackAsync))]
         [AllowAll]
         [ApiExplorerSettings(IgnoreApi = true)]
-        public IActionResult TransactionProcessedCallback([FromBody] TransactionProcessedCallbackParameters parameters)
+        public async Task<IActionResult> TransactionProcessedCallbackAsync([FromBody] TransactionProcessedCallbackParameters parameters)
         {
             WebhookServices.Send(parameters).Wait();
 
@@ -133,17 +148,17 @@ namespace API.Areas.PaymentArea.Controllers
                         Fk_Account = account
                     });
 
-                    var season = _unitOfWork.Season.GetCurrentSeason();
-
-                    _unitOfWork.Account.CreateAccountSubscription(new AccountSubscription
+                    int accountSubscriptionId = _unitOfWork.Account.GetAccountSubscriptions(new AccountSubscriptionParameters
                     {
-                        Fk_Account = account,
-                        Fk_Subscription = subscription,
-                        Fk_Season = season.Id,
-                        IsActive = true,
-                    });
+                        Order_id = parameters.Obj.Order_id
+                    }, otherLang: false).Select(a => a.Id).FirstOrDefault();
 
-                    _unitOfWork.Save().Wait();
+                    if (accountSubscriptionId > 0)
+                    {
+                        AccountSubscription accountSubscription = await _unitOfWork.Account.FindAccountSubscriptionById(accountSubscriptionId, trackChanges: true);
+                        accountSubscription.IsActive = true;
+                        _unitOfWork.Save().Wait();
+                    }
                 }
 
             }

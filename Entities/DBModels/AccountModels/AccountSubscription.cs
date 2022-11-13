@@ -31,5 +31,8 @@ namespace Entities.DBModels.AccountModels
 
         [DisplayName(nameof(IsAction))]
         public bool IsActive { get; set; }
+
+        [DisplayName(nameof(Order_id))]
+        public string Order_id { get; set; }
     }
 }

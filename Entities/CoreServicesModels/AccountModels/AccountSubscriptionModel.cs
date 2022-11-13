@@ -11,11 +11,11 @@ public class AccountSubscriptionParameters : RequestParameters
     public int Fk_Subscription { get; set; }
     public int Fk_Season { get; set; }
 
-    [DisplayName(nameof(IsAction))]
     public bool? IsAction { get; set; }
 
-    [DisplayName(nameof(IsAction))]
     public bool? IsActive { get; set; }
+
+    public string Order_id { get; set; }
 }
 public class AccountSubscriptionModel : BaseEntity
 {
@@ -39,4 +39,7 @@ public class AccountSubscriptionModel : BaseEntity
 
     [DisplayName(nameof(IsActive))]
     public bool IsActive { get; set; }
+
+    [DisplayName(nameof(Order_id))]
+    public string Order_id { get; set; }
 }

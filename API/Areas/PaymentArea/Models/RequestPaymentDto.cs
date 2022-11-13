@@ -7,5 +7,7 @@ namespace API.Areas.PaymentArea.Models
         public PyamentTypeEnum PyamentType { get; set; }
 
         public string WalletIdentifier { get; set; }
+
+        public int Fk_Subscription { get; set; }
     }
 }

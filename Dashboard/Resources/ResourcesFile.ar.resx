@@ -943,7 +943,7 @@
     <value>اضغط للمشاهدة</value>
   </data>
   <data name="Cost" xml:space="preserve">
-    <value>Cost</value>
+    <value>تكلفه</value>
   </data>
   <data name="FreeHit" xml:space="preserve">
     <value>Free Hit</value>
@@ -1157,5 +1157,14 @@
   </data>
   <data name="PercentTo" xml:space="preserve">
     <value>الى</value>
+  </data>
+  <data name="CostAfterDiscount" xml:space="preserve">
+    <value>التكلفة بعد الخصم</value>
+  </data>
+  <data name="Discount" xml:space="preserve">
+    <value>خصم</value>
+  </data>
+  <data name="ForAction" xml:space="preserve">
+    <value>للبروموكود</value>
   </data>
 </root>

@@ -240,26 +240,33 @@ namespace CoreServices.Logic
                     if (account.RefCodeCount == 20)
                     {
                         int subscription = _repository.Subscription
-                                              .FindAll(new SubscriptionParameters(), trackChanges: false)
+                                              .FindAll(new SubscriptionParameters
+                                              {
+                                                  ForAction = true
+                                              }, trackChanges: false)
                                               .Select(a => a.Id)
                                               .FirstOrDefault();
 
-                        var season = _repository.Season.FindAll(new SeasonParameters
-                        {
-                            IsCurrent = true
-                        }, trackChanges: false).First();
-
                         if (subscription > 0)
                         {
-                            CreateAccountSubscription(new AccountSubscription
+                            var season = _repository.Season.FindAll(new SeasonParameters
                             {
-                                Fk_Account = refAccount.Id,
-                                Fk_Subscription = subscription,
-                                IsAction = true,
-                                Fk_Season = season.Id
-                            });
+                                IsCurrent = true
+                            }, trackChanges: false).First();
 
-                            account.RefCodeCount = 0;
+                            if (subscription > 0)
+                            {
+                                CreateAccountSubscription(new AccountSubscription
+                                {
+                                    Fk_Account = refAccount.Id,
+                                    Fk_Subscription = subscription,
+                                    IsAction = true,
+                                    Fk_Season = season.Id,
+                                    IsActive = true
+                                });
+
+                                account.RefCodeCount = 0;
+                            }
                         }
                     }
                 }

@@ -26,7 +26,11 @@ namespace CoreServices.Logic
                            CreatedAt = a.CreatedAt,
                            CreatedBy = a.CreatedBy,
                            LastModifiedAt = a.LastModifiedAt,
-                           LastModifiedBy = a.LastModifiedBy
+                           LastModifiedBy = a.LastModifiedBy,
+                           ForAction = a.ForAction,
+                           IsActive = a.IsActive,
+                           Cost = a.Cost,
+                           Discount = a.Discount,
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

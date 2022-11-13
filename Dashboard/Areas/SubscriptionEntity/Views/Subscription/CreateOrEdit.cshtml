@@ -74,16 +74,51 @@
                                                 <span asp-validation-for="SubscriptionLang.Name" class="text-danger"></span>
                                             </div>
                                         </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Cost" class="form-label"></label>
+                                                <input asp-for="Cost" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Cost"))" />
+                                                <span asp-validation-for="Cost" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Discount" class="form-label"></label>
+                                                <input asp-for="Discount" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Discount"))" />
+                                                <span asp-validation-for="Discount" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="IsActive" class="form-label"></label>
+                                                <select class="form-control" asp-for="IsActive">
+                                                    <option value="true">@Localizer.Get("Yes")</option>
+                                                    <option value="false">@Localizer.Get("No")</option>
+                                                </select>
+                                                <span asp-validation-for="IsActive" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="ForAction" class="form-label"></label>
+                                                <select class="form-control" asp-for="ForAction">
+                                                    <option value="true">@Localizer.Get("Yes")</option>
+                                                    <option value="false">@Localizer.Get("No")</option>
+                                                </select>
+                                                <span asp-validation-for="ForAction" class="text-danger"></span>
+                                            </div>
+                                        </div>
                                     </div>
 
-                              
                                     <hr />
                                     <div class="row">
                                         <div class="col-12">
                                             <button type="submit" class="btn btn-primary me-1">@Localizer.Get("Submit")</button>
                                             <button type="reset" class="btn btn-outline-secondary me-1">@Localizer.Get("Reset")</button>
-                                           
-                                                <a asp-action="Index" class="btn btn-warning"> @Localizer.Get("Back") </a>
+
+                                            <a asp-action="Index" class="btn btn-warning"> @Localizer.Get("Back") </a>
 
                                         </div>
                                     </div>

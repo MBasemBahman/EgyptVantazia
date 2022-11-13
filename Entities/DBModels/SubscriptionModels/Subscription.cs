@@ -9,6 +9,21 @@ namespace Entities.DBModels.SubscriptionModels
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
 
+        [DisplayName(nameof(Cost))]
+        public int Cost { get; set; }
+
+        [DisplayName(nameof(Discount))]
+        public int Discount { get; set; }
+
+        [DisplayName(nameof(CostAfterDiscount))]
+        public int CostAfterDiscount => Cost - Discount;
+
+        [DisplayName(nameof(ForAction))]
+        public bool ForAction { get; set; }
+
+        [DisplayName(nameof(IsActive))]
+        public bool IsActive { get; set; } = true;
+
         [DisplayName(nameof(AccountSubscriptions))]
         public IList<AccountSubscription> AccountSubscriptions { get; set; }
 

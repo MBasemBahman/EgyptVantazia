@@ -1167,4 +1167,10 @@
   <data name="PercentTo" xml:space="preserve">
     <value>Percent To</value>
   </data>
+  <data name="CostAfterDiscount" xml:space="preserve">
+    <value>Cost After Discount</value>
+  </data>
+  <data name="ForAction" xml:space="preserve">
+    <value>For Promo Code</value>
+  </data>
 </root>

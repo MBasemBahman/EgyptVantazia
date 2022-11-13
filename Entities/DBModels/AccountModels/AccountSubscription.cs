@@ -28,5 +28,8 @@ namespace Entities.DBModels.AccountModels
 
         [DisplayName(nameof(IsAction))]
         public bool IsAction { get; set; }
+
+        [DisplayName(nameof(IsAction))]
+        public bool IsActive { get; set; }
     }
 }

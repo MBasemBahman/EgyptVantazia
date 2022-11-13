@@ -139,7 +139,8 @@ namespace API.Areas.PaymentArea.Controllers
                     {
                         Fk_Account = account,
                         Fk_Subscription = subscription,
-                        Fk_Season = season.Id
+                        Fk_Season = season.Id,
+                        IsActive = true,
                     });
 
                     _unitOfWork.Save().Wait();

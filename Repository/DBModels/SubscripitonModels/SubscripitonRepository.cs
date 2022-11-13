@@ -12,7 +12,9 @@ namespace Repository.DBModels.SubscripitonModels
         public IQueryable<Subscription> FindAll(SubscriptionParameters parameters, bool trackChanges)
         {
             return FindByCondition(a => true, trackChanges)
-                   .Filter(parameters.Id);
+                   .Filter(parameters.Id,
+                   parameters.IsActive,
+                   parameters.ForAction);
         }
 
         public async Task<Subscription> FindById(int id, bool trackChanges)
@@ -36,9 +38,13 @@ namespace Repository.DBModels.SubscripitonModels
     {
         public static IQueryable<Subscription> Filter(
             this IQueryable<Subscription> Subscriptions,
-            int id)
+            int id,
+            bool? isActive,
+            bool? forAction)
         {
-            return Subscriptions.Where(a => id == 0 || a.Id == id);
+            return Subscriptions.Where(a => (id == 0 || a.Id == id) &&
+                                            (isActive == null || a.IsActive == isActive) &&
+                                            (forAction == null || a.ForAction == forAction));
         }
 
     }

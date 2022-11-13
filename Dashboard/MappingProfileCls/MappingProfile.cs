@@ -225,6 +225,8 @@ namespace Dashboard.MappingProfileCls
             _ = CreateMap<Team, TeamCreateOrEditModel>();
 
             _ = CreateMap<TeamCreateOrEditModel, Team>()
+                .ForMember(dest => dest.ShirtImageUrl, opt => opt.Ignore())
+                .ForMember(dest => dest.ShirtStorageUrl, opt => opt.Ignore())
                 .ForMember(dest => dest.ImageUrl, opt => opt.Ignore())
                 .ForMember(dest => dest.StorageUrl, opt => opt.Ignore());
 

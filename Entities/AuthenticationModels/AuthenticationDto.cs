@@ -110,6 +110,10 @@ namespace Entities.AuthenticationModels
         public int Fk_Account { get; set; }
         public string ImageUrl { get; set; }
         public DateTime CreatedAt { get; set; }
+        public string RefCode { get; set; }
+
+        [DisplayName(nameof(RefCodeCount))]
+        public int RefCodeCount { get; set; }
 
         public TokenResponse TokenResponse { get; set; }
         public TokenResponse RefreshTokenResponse { get; set; }

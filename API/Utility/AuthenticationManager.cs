@@ -145,6 +145,8 @@ namespace API.Utility
                 userAuthenticated.Name = userAuthenticated.Name;
                 userAuthenticated.Fk_Account = account.Id;
                 userAuthenticated.CreatedAt = account.CreatedAt;
+                userAuthenticated.RefCode = account.RefCode;
+                userAuthenticated.RefCodeCount = account.RefCodeCount;
             }
             return userAuthenticated;
         }

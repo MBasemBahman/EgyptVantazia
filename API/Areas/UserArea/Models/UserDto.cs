@@ -10,6 +10,10 @@ namespace API.Areas.UserArea.Models
 
         public int Fk_Account { get; set; }
 
+        public string RefCode { get; set; }
+
+        public int RefCodeCount { get; set; }
+
         [JsonIgnore]
         public new string LastModifiedAt { get; set; }
 

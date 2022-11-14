@@ -3,7 +3,6 @@ using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.SeasonModels;
-using FantasyLogic.Calculations;
 using FantasyLogic.SharedLogic;
 using IntegrationWith365.Entities.GameModels;
 using IntegrationWith365.Entities.GamesModels;
@@ -15,14 +14,12 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
     {
         private readonly _365Services _365Services;
         private readonly UnitOfWork _unitOfWork;
-        private readonly PlayerScoreCalc _playerScoreCalc;
         private readonly GameResultLogic _gameResultLogic;
 
         public GameResultDataHelper(UnitOfWork unitOfWork, _365Services _365Services)
         {
             this._365Services = _365Services;
             _unitOfWork = unitOfWork;
-            _playerScoreCalc = new PlayerScoreCalc(unitOfWork);
             _gameResultLogic = new GameResultLogic(unitOfWork);
         }
 
@@ -31,7 +28,6 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
 
             parameters.Fk_Season = season.Id;
-            parameters.IsEnded = true;
 
             List<TeamGameWeakDto> teamGameWeaks = _unitOfWork.Season.GetTeamGameWeaks(parameters, otherLang: false).Select(a => new TeamGameWeakDto
             {
@@ -166,8 +162,6 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
 
                 jobId = BackgroundJob.ContinueJobWith(jobId, () => _gameResultLogic.UpdatePlayerGameWeakTotalPoints(player.Fk_PlayerGameWeak));
             }
-
-            jobId = BackgroundJob.ContinueJobWith(jobId, () => _gameResultLogic.UpdatePlayerGameWeakPosition(fk_TeamGameWeak));
 
             return jobId;
         }

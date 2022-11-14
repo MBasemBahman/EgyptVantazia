@@ -1,6 +1,7 @@
 ﻿using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.SeasonModels;
+using FantasyLogic.DataMigration.PlayerScoreData;
 using FantasyLogic.DataMigration.StandingsData;
 using IntegrationWith365.Entities.GamesModels;
 using IntegrationWith365.Helpers;
@@ -94,10 +95,13 @@ namespace FantasyLogic.DataMigration.GamesData
             if (startTime > DateTime.UtcNow.AddHours(2))
             {
                 StandingsDataHelper standingsDataHelper = new(_unitOfWork, _365Services);
+                GameResultDataHelper gameResultDataHelper = new(_unitOfWork, _365Services);
 
-                string recurringTime = startTime.AddHours(-2).ToCronExpression(startTime, 10);
+                string recurringTime = startTime.AddHours(-2).ToCronExpression(startTime.AddMinutes(30), 10);
 
                 RecurringJob.AddOrUpdate("UpdateStandings-" + game.Id.ToString(), () => standingsDataHelper.RunUpdateStandings(), recurringTime, TimeZoneInfo.Utc);
+
+                RecurringJob.AddOrUpdate("UpdateGameResult-" + game.Id.ToString(), () => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }), recurringTime, TimeZoneInfo.Utc);
             }
         }
 

@@ -36,6 +36,10 @@ namespace Repository.DBModels.PlayerStateModels
 
         public new void Create(PlayerSeasonScoreState entity)
         {
+            if (entity.Points == 0)
+            {
+                return;
+            }
             if (FindByCondition(a => a.Fk_Player == entity.Fk_Player && a.Fk_Season == entity.Fk_Season && a.Fk_ScoreState == entity.Fk_ScoreState, trackChanges: false).Any())
             {
                 PlayerSeasonScoreState oldEntity = FindByCondition(a => a.Fk_Player == entity.Fk_Player && a.Fk_Season == entity.Fk_Season && a.Fk_ScoreState == entity.Fk_ScoreState, trackChanges: true).First();

@@ -95,7 +95,6 @@ namespace CoreServices.Logic
                            Fk_Player = a.Fk_Player,
                            Ranking = a.Ranking,
                            TotalPoints = a.TotalPoints,
-                           Position = a.Position,
                            TeamGameWeak = new TeamGameWeakModel
                            {
                                Fk_Away = a.TeamGameWeak.Fk_Away,
@@ -259,11 +258,6 @@ namespace CoreServices.Logic
                                    .Select(a => a.Fk_Player).ToList();
         }
 
-        public void UpdatePlayerGameWeakPosition(int fk_TeamGameWeak)
-        {
-            _repository.PlayerGameWeak.UpdatePlayerGameWeakPosition(fk_TeamGameWeak);
-        }
-
         #endregion
 
         #region PlayerGameWeakScore Services
@@ -294,7 +288,6 @@ namespace CoreServices.Logic
                            },
                            PlayerGameWeak = new PlayerGameWeakModel
                            {
-                               Position = a.PlayerGameWeak.Position,
                                Player = new PlayerModel
                                {
                                    Id = a.PlayerGameWeak.Player.Id,

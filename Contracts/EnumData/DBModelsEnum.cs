@@ -84,6 +84,7 @@
         public enum ScoreStateEnum
         {
             Total = 1,
+
             CleanSheet = 2,
             Goals = 3,
             Assists = 4,

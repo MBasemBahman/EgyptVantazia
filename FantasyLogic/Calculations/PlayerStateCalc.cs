@@ -3,8 +3,6 @@ using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayerStateModels;
-using Entities.DBModels.SeasonModels;
-using Entities.DBModels.TeamModels;
 using static Contracts.EnumData.DBModelsEnum;
 
 namespace FantasyLogic.Calculations
@@ -71,7 +69,6 @@ namespace FantasyLogic.Calculations
                     (int)ScoreStateEnum.PenaltiesSaved,
                     (int)ScoreStateEnum.YellowCard,
                     (int)ScoreStateEnum.RedCard,
-                    (int)ScoreStateEnum.YellowCard
                 };
 
             foreach (int scoreState in scoreStates)

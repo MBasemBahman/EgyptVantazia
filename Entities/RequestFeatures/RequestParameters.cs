@@ -2,7 +2,7 @@
 {
     public class RequestParameters
     {
-        private const int maxPageSize = 500;
+        private const int maxPageSize = 1000;
         private int _pageSize = 10;
         private int _pageNumber = 1;
 

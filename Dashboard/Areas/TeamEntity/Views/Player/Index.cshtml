@@ -100,6 +100,7 @@
                                                         }
                                                     </th>
                                                     <th>@Html.DisplayNameFor(model => row.Name)</th>
+                                                    <th>@Html.DisplayNameFor(model => row.ShortName)</th>
                                                     <th>@Html.DisplayNameFor(model => row.PlayerNumber)</th>
                                                     <th>@Html.DisplayNameFor(model => row.Age)</th>
                                                     <th>@Html.DisplayNameFor(model => row.Team)</th>
@@ -170,6 +171,7 @@ else
 
                                     </th>
                                     <th>@Html.DisplayNameFor(model => row.Name)</th>
+                                    <th>@Html.DisplayNameFor(model => row.ShortName)</th>
                                     <th>@Html.DisplayNameFor(model => row.PlayerNumber)</th>
                                     <th>@Html.DisplayNameFor(model => row.Age)</th>
                                     <th>@Html.DisplayNameFor(model => row.Team)</th>
@@ -259,6 +261,7 @@ else
 
                             }
                         },
+                        { data: "shortName" },
                         { data: "playerNumber" },
                         { data: "age", orderable: false },
                         {

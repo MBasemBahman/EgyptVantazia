@@ -57,13 +57,5 @@ namespace FantasyLogic.SharedLogic
             await _unitOfWork.Save();
         }
         #endregion
-
-        #region Position
-        public async Task UpdatePlayerGameWeakPosition(int fk_TeamGameWeak)
-        {
-            _unitOfWork.PlayerScore.UpdatePlayerGameWeakPosition(fk_TeamGameWeak);
-            await _unitOfWork.Save();
-        }
-        #endregion
     }
 }

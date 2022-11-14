@@ -1,7 +1,5 @@
 ﻿using Entities.CoreServicesModels.PlayerScoreModels;
 using Entities.DBModels.PlayerScoreModels;
-using static System.Formats.Asn1.AsnWriter;
-
 
 namespace Repository.DBModels.PlayerScoreModels
 {
@@ -48,20 +46,6 @@ namespace Repository.DBModels.PlayerScoreModels
             {
                 base.Create(entity);
             }
-        }
-
-        public void UpdatePlayerGameWeakPosition(int fk_TeamGameWeak)
-        {
-            List<PlayerGameWeak> players = FindAll(new PlayerGameWeakParameters
-            {
-                Fk_TeamGameWeak = fk_TeamGameWeak
-            }, trackChanges: true)
-                .OrderByDescending(a => a.TotalPoints)
-                .ToList();
-
-            int[] ranks = players.Select(a => a.TotalPoints).Distinct().OrderByDescending(a => a).ToArray();
-
-            players.ForEach(a => a.Position = Array.IndexOf(ranks, a) + 1);
         }
     }
 

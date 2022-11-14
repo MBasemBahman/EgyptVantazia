@@ -24,6 +24,12 @@ namespace Entities.DBModels.SeasonModels
         [DisplayName(nameof(Season))]
         public Season Season { get; set; }
 
+        [DisplayName(nameof(Deadline))]
+        public DateTime? Deadline { get; set; }
+
+        [DisplayName(nameof(JobId))]
+        public string JobId { get; set; }
+
         [DisplayName(nameof(TeamGameWeaks))]
         public IList<TeamGameWeak> TeamGameWeaks { get; set; }
 

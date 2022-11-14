@@ -50,6 +50,8 @@ namespace Entities.CoreServicesModels.TeamModels
         public double? SellPriceFrom { get; set; }
 
         public double? SellPriceTo { get; set; }
+
+        public bool? IsActive { get; set; }
     }
 
     public class PlayerModel : AuditImageEntity
@@ -87,6 +89,9 @@ namespace Entities.CoreServicesModels.TeamModels
 
         [DisplayName(nameof(SellPrice))]
         public double SellPrice { get; set; }
+
+        [DisplayName(nameof(IsActive))]
+        public bool IsActive { get; set; }
 
         public List<PlayerSeasonScoreStateModel> SeasonScoreStates { get; set; }
 
@@ -134,6 +139,9 @@ namespace Entities.CoreServicesModels.TeamModels
         [DataType(DataType.Url, ErrorMessage = PropertyAttributeConstants.TypeValidationMsg)]
         [Url]
         public string StorageUrl { get; set; }
+
+        [DisplayName(nameof(IsActive))]
+        public bool IsActive { get; set; }
 
         [DisplayName(nameof(PlayerPrices))]
         public List<PlayerPriceCreateOrEditModel> PlayerPrices { get; set; }

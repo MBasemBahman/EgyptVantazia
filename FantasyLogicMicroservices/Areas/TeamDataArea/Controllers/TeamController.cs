@@ -1,5 +1,6 @@
 ﻿using FantasyLogic;
 using FantasyLogicMicroservices.Controllers;
+using Hangfire;
 
 namespace FantasyLogicMicroservices.Areas.TeamDataArea.Controllers
 {
@@ -23,7 +24,9 @@ namespace FantasyLogicMicroservices.Areas.TeamDataArea.Controllers
         [Route(nameof(UpdateTeams))]
         public IActionResult UpdateTeams()
         {
-            _fantasyUnitOfWork.TeamDataHelper.RunUpdateTeams();
+            _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.TeamDataHelper.RunUpdateTeams());
+
+            RecurringJob.AddOrUpdate("UpdateTeams", () => _fantasyUnitOfWork.TeamDataHelper.RunUpdateTeams(), "0 1 * * *", TimeZoneInfo.Utc);
 
             return Ok();
         }

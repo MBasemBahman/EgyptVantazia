@@ -22,5 +22,8 @@ namespace Dashboard.Areas.SeasonEntity.Models
 
         [DisplayName(nameof(Season))]
         public new SeasonDto Season { get; set; }
+
+        [DisplayName(nameof(Deadline))]
+        public new string Deadline { get; set; }
     }
 }

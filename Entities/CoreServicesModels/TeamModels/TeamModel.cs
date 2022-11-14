@@ -12,6 +12,8 @@ namespace Entities.CoreServicesModels.TeamModels
         public DateTime? CreatedAtFrom { get; set; }
 
         public DateTime? CreatedAtTo { get; set; }
+
+        public bool? IsActive { get; set; }
     }
 
     public class TeamModel : AuditImageEntity
@@ -30,6 +32,9 @@ namespace Entities.CoreServicesModels.TeamModels
         public string ShirtImageUrl { get; set; }
 
         public bool IsAwayTeam { get; set; }
+
+        [DisplayName(nameof(IsActive))]
+        public bool IsActive { get; set; }
     }
 
     public class TeamCreateOrEditModel
@@ -59,6 +64,9 @@ namespace Entities.CoreServicesModels.TeamModels
         [DataType(DataType.Url, ErrorMessage = PropertyAttributeConstants.TypeValidationMsg)]
         [Url]
         public string StorageUrl { get; set; }
+
+        [DisplayName(nameof(IsActive))]
+        public bool IsActive { get; set; }
 
         public TeamLangModel TeamLang { get; set; }
     }

@@ -37,11 +37,11 @@ namespace IntegrationWith365.Helpers
 
                 if (gamesReturn.Paging != null)
                 {
-                    games.AddRange(await GetGames(gamesReturn.Paging.PreviousAfterGame));
+                    games.AddRange(await GetGames(gamesReturn.Paging.PreviousAfterGame, _365_SeasonId));
                 }
             }
 
-            return games.Where(a => a.SeasonNum == _365_SeasonId && a.IsEnded == true).ToList();
+            return games.Where(a => a.SeasonNum == _365_SeasonId /*&& a.IsEnded == true*/).ToList();
         }
 
         public async Task<List<Games>> GetNextGames(int _365_SeasonId)
@@ -56,11 +56,11 @@ namespace IntegrationWith365.Helpers
 
                 if (gamesReturn.Paging != null)
                 {
-                    games.AddRange(await GetGames(gamesReturn.Paging.NextAfterGame));
+                    games.AddRange(await GetGames(gamesReturn.Paging.NextAfterGame, _365_SeasonId));
                 }
             }
 
-            return games.Where(a => a.SeasonNum == _365_SeasonId && a.IsEnded == false).ToList();
+            return games.Where(a => a.SeasonNum == _365_SeasonId /*&& a.IsEnded == false*/).ToList();
         }
 
         public int GetCurrentRound(int _365_SeasonId)
@@ -73,7 +73,7 @@ namespace IntegrationWith365.Helpers
             return GetCurrentRound(_365_SeasonId) + 1;
         }
 
-        public async Task<List<Games>> GetGames(int _365_AfterGameStartId)
+        public async Task<List<Games>> GetGames(int _365_AfterGameStartId, int _365_SeasonId)
         {
             List<Games> games = new();
 
@@ -86,12 +86,19 @@ namespace IntegrationWith365.Helpers
 
                 if (gamesReturn.Games != null && gamesReturn.Games.Any())
                 {
-                    if (gamesReturn.Paging != null)
+                    if (gamesReturn.Games.Any(a => a.SeasonNum == _365_SeasonId))
                     {
-                        _365_AfterGameStartId = gamesReturn.Paging.PreviousAfterGame == 0 ? gamesReturn.Paging.NextAfterGame : gamesReturn.Paging.PreviousAfterGame;
-                    }
+                        if (gamesReturn.Paging != null)
+                        {
+                            _365_AfterGameStartId = gamesReturn.Paging.PreviousAfterGame == 0 ? gamesReturn.Paging.NextAfterGame : gamesReturn.Paging.PreviousAfterGame;
+                        }
 
-                    games.AddRange(gamesReturn.Games);
+                        games.AddRange(gamesReturn.Games);
+                    }
+                    else
+                    {
+                        _365_AfterGameStartId = 0;
+                    }
                 }
                 else
                 {

@@ -31,6 +31,7 @@ namespace CoreServices.Logic
                            LastModifiedBy = a.LastModifiedBy,
                            _365_TeamId = a._365_TeamId,
                            Name = otherLang ? a.TeamLang.Name : a.Name,
+                           IsActive = a.IsActive,
                            ImageUrl = a.StorageUrl + a.ImageUrl,
                            ShirtImageUrl = a.ShirtStorageUrl + a.ShirtImageUrl,
                            ShortName = otherLang ? a.TeamLang.ShortName : a.ShortName,
@@ -55,6 +56,11 @@ namespace CoreServices.Logic
         public async Task<Team> FindTeamby365Id(string id, bool trackChanges)
         {
             return await _repository.Team.FindBy365Id(id, trackChanges);
+        }
+
+        public void UpdateTeamActivation(bool isActive)
+        {
+            _repository.Team.UpdateActivation(isActive);
         }
 
         public void CreateTeam(Team Team)
@@ -185,6 +191,7 @@ namespace CoreServices.Logic
                            LastModifiedBy = a.LastModifiedBy,
                            _365_PlayerId = a._365_PlayerId,
                            Name = otherLang ? a.PlayerLang.Name : a.Name,
+                           IsActive = a.IsActive,
                            ShortName = otherLang ? a.PlayerLang.ShortName : a.ShortName,
                            ImageUrl = !string.IsNullOrEmpty(a.ImageUrl) ? a.StorageUrl + a.ImageUrl : a.Team.ShirtStorageUrl + a.Team.ShirtImageUrl,
                            Fk_PlayerPosition = a.Fk_PlayerPosition,
@@ -285,6 +292,11 @@ namespace CoreServices.Logic
         public async Task<Player> FindPlayerby365Id(string id, bool trackChanges)
         {
             return await _repository.Player.FindBy365Id(id, trackChanges);
+        }
+
+        public void UpdatePlayerActivation(int fk_Team, bool isActive)
+        {
+            _repository.Player.UpdateActivation(fk_Team, isActive);
         }
 
         public void CreatePlayer(Player Player)

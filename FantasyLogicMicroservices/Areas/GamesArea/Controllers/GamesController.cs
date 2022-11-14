@@ -1,5 +1,6 @@
 ﻿using FantasyLogic;
 using FantasyLogicMicroservices.Controllers;
+using Hangfire;
 
 namespace FantasyLogicMicroservices.Areas.GamesArea.Controllers
 {
@@ -20,10 +21,24 @@ namespace FantasyLogicMicroservices.Areas.GamesArea.Controllers
         }
 
         [HttpPost]
-        [Route(nameof(UpdateGameWeak))]
-        public IActionResult UpdateGameWeak()
+        [Route(nameof(UpdateGames))]
+        public IActionResult UpdateGames()
         {
-            _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames();
+            //_fantasyUnitOfWork.GamesDataHelper.RunUpdateGames();
+
+            //var matchs = _unitOfWork.Season.GetTeamGameWeaks(new Entities.CoreServicesModels.SeasonModels.TeamGameWeakParameters
+            //{
+            //    FromTime = DateTime.UtcNow
+            //}, false).ToList();
+
+            //foreach (var match in matchs)
+            //{
+            //    string recurringTime = match.StartTime.AddHours(-2).ToCronExpression(match.StartTime, 10);
+            //}
+
+            _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames());
+
+            RecurringJob.AddOrUpdate("UpdateGames", () => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames(), "0 3 * * *", TimeZoneInfo.Utc);
 
             return Ok();
         }

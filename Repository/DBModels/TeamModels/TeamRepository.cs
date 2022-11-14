@@ -16,7 +16,8 @@ namespace Repository.DBModels.TeamModels
                    .Filter(parameters.Id,
                            parameters._365_TeamId,
                            parameters.CreatedAtFrom,
-                           parameters.CreatedAtTo);
+                           parameters.CreatedAtTo,
+                           parameters.IsActive);
         }
 
         public async Task<Team> FindById(int id, bool trackChanges)
@@ -33,6 +34,12 @@ namespace Repository.DBModels.TeamModels
                         .SingleOrDefaultAsync();
         }
 
+        public void UpdateActivation(bool isActive)
+        {
+            List<Team> teams = FindByCondition(a => true, trackChanges: true).ToList();
+            teams.ForEach(a => a.IsActive = isActive);
+        }
+
         public new void Create(Team entity)
         {
             if (entity._365_TeamId.IsExisting() && FindByCondition(a => a._365_TeamId == entity._365_TeamId, trackChanges: false).Any())
@@ -41,9 +48,10 @@ namespace Repository.DBModels.TeamModels
                                 .Include(a => a.TeamLang)
                                 .First();
 
-                oldEntity.Name = entity.Name;
+                //oldEntity.Name = entity.Name;
                 oldEntity._365_TeamId = entity._365_TeamId;
-                oldEntity.TeamLang.Name = entity.TeamLang.Name;
+                //oldEntity.TeamLang.Name = entity.TeamLang.Name;
+                oldEntity.IsActive = entity.IsActive;
             }
             else
             {
@@ -63,9 +71,11 @@ namespace Repository.DBModels.TeamModels
             int id,
             string _365_TeamId,
             DateTime? createdAtFrom,
-            DateTime? createdAtTo)
+            DateTime? createdAtTo,
+            bool? isActive)
         {
             return Teams.Where(a => (id == 0 || a.Id == id) &&
+                                    (isActive == null || a.IsActive == isActive) &&
                                     (string.IsNullOrWhiteSpace(_365_TeamId) || a._365_TeamId == _365_TeamId) &&
                                     (createdAtFrom == null || a.CreatedAt >= createdAtFrom) &&
                                     (createdAtTo == null || a.CreatedAt <= createdAtTo));

@@ -83,6 +83,9 @@ namespace Entities.CoreServicesModels.SeasonModels
 
         [DisplayName(nameof(IsDelayed))]
         public bool IsDelayed { get; set; }
+
+        [DisplayName(nameof(JobId))]
+        public string JobId { get; set; }
     }
 
     public class TeamGameWeakCreateOrEditModel

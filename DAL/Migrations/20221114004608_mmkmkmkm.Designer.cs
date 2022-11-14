@@ -4,6 +4,7 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20221114004608_mmkmkmkm")]
+    partial class mmkmkmkm
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2903,9 +2905,6 @@ namespace DAL.Migrations
                     b.Property<bool>("IsEnded")
                         .HasColumnType("bit");
 
-                    b.Property<string>("JobId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("LastModifiedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
@@ -3649,7 +3648,7 @@ namespace DAL.Migrations
                             EmailAddress = "user@mail.com",
                             LastModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Developer",
-                            Password = "$2a$11$HrIihtkxBetu/96ZjUG/n.C5srm3FQBBNxjh1NA/PMDKJRqWUE0Q2",
+                            Password = "$2a$11$gky4JNv93a4BHAVNKRJDKu8V94aQL9/CDH7BH3L2myzi85xydXLYK",
                             UserName = "Developer"
                         });
                 });

@@ -1,5 +1,6 @@
 ﻿using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.SeasonModels;
+using Entities.DBModels.TeamModels;
 
 namespace Repository.DBModels.SeasonModels
 {
@@ -18,7 +19,10 @@ namespace Repository.DBModels.SeasonModels
                            parameters.IsCurrent,
                            parameters.IsCurrentSeason,
                            parameters.BiggerThanWeak,
-                           parameters.LowerThanWeak);
+                           parameters.LowerThanWeak,
+                           parameters.Deadline,
+                           parameters.DeadlineFrom,
+                           parameters.DeadlineTo);
         }
 
         public async Task<GameWeak> FindById(int id, bool trackChanges)
@@ -33,6 +37,12 @@ namespace Repository.DBModels.SeasonModels
             return await FindByCondition(a => a.Fk_Season == fk_Season && a._365_GameWeakId == id, trackChanges)
                         .Include(a => a.GameWeakLang)
                         .SingleOrDefaultAsync();
+        }
+
+        public void ResetCurrent()
+        {
+            List<GameWeak> gameWeaks = FindByCondition(a => true, trackChanges: true).ToList();
+            gameWeaks.ForEach(a => a.IsCurrent = false);
         }
 
         public new void Create(GameWeak entity)
@@ -68,9 +78,15 @@ namespace Repository.DBModels.SeasonModels
             bool? isCurrent,
             bool? isCurrentSeason,
             int? biggerThanWeak,
-            int? lowerThanWeak)
+            int? lowerThanWeak,
+            DateTime? deadline,
+            DateTime? deadlineFrom,
+            DateTime? deadlineTo)
         {
             return GameWeaks.Where(a => (id == 0 || a.Id == id) &&
+                                        (deadline == null || a.Deadline == deadline) &&
+                                        (deadlineFrom == null || a.Deadline >= deadlineFrom) &&
+                                        (deadlineTo == null || a.Deadline <= deadlineTo) &&
                                         (Fk_Season == 0 || a.Fk_Season == Fk_Season) &&
                                         (biggerThanWeak == null || (!string.IsNullOrEmpty(a._365_GameWeakId) && Convert.ToInt32(a._365_GameWeakId) > biggerThanWeak.Value)) &&
                                         (lowerThanWeak == null || (!string.IsNullOrEmpty(a._365_GameWeakId) && Convert.ToInt32(a._365_GameWeakId) < lowerThanWeak.Value)) &&

@@ -8,5 +8,8 @@ namespace API.Areas.SeasonArea.Models
         [SwaggerIgnore]
         [DisplayName(nameof(_365_GameWeakId))]
         public new string _365_GameWeakId { get; set; }
+
+        [DisplayName(nameof(Deadline))]
+        public new string Deadline { get; set; }
     }
 }

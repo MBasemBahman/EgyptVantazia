@@ -26,7 +26,8 @@ namespace Repository.DBModels.TeamModels
                            parameters.BuyPriceFrom,
                            parameters.BuyPriceTo,
                            parameters.SellPriceFrom,
-                           parameters.SellPriceTo);
+                           parameters.SellPriceTo,
+                           parameters.IsActive);
         }
 
         public async Task<Player> FindById(int id, bool trackChanges)
@@ -43,6 +44,11 @@ namespace Repository.DBModels.TeamModels
                         .SingleOrDefaultAsync();
         }
 
+        public void UpdateActivation(int fk_Team, bool isActive)
+        {
+            List<Player> players = FindByCondition(a => a.Fk_Team == fk_Team, trackChanges: true).ToList();
+            players.ForEach(a => a.IsActive = isActive);
+        }
         public new void Create(Player entity)
         {
             if (entity._365_PlayerId.IsExisting() && FindByCondition(a => a._365_PlayerId == entity._365_PlayerId, trackChanges: false).Any())
@@ -51,15 +57,16 @@ namespace Repository.DBModels.TeamModels
                                 .Include(a => a.PlayerLang)
                                 .First();
 
-                oldEntity.Name = entity.Name;
+                //oldEntity.Name = entity.Name;
+                oldEntity.IsActive = entity.IsActive;
                 oldEntity._365_PlayerId = entity._365_PlayerId;
-                oldEntity.ShortName = entity.ShortName;
+                //oldEntity.ShortName = entity.ShortName;
                 oldEntity.Age = entity.Age;
-                oldEntity.PlayerNumber = entity.PlayerNumber;
+                //oldEntity.PlayerNumber = entity.PlayerNumber;
                 //oldEntity.Fk_PlayerPosition = entity.Fk_PlayerPosition;
                 oldEntity.Fk_Team = entity.Fk_Team;
-                oldEntity.PlayerLang.Name = entity.PlayerLang.Name;
-                oldEntity.PlayerLang.ShortName = entity.PlayerLang.ShortName;
+                //oldEntity.PlayerLang.Name = entity.PlayerLang.Name;
+                //oldEntity.PlayerLang.ShortName = entity.PlayerLang.ShortName;
             }
             else
             {
@@ -108,7 +115,7 @@ namespace Repository.DBModels.TeamModels
                 playersList.AddRange(GetRandomPlayers(playersQuery, PlayerPositionEnum.Defender, 5));
                 playersList.AddRange(GetRandomPlayers(playersQuery, PlayerPositionEnum.Midfielder, 5));
                 playersList.AddRange(GetRandomPlayers(playersQuery, PlayerPositionEnum.Attacker, 3));
-            
+
             } while (playersList.GroupBy(a => a.Fk_Team).Any(a => a.Count() > 3) ||
                      playersList.Select(a => a.BuyPrice).Sum() > 100);
 
@@ -150,11 +157,13 @@ namespace Repository.DBModels.TeamModels
             double? buyPriceFrom,
             double? buyPriceTo,
             double? sellPriceFrom,
-            double? sellPriceTo)
+            double? sellPriceTo,
+            bool? isActive)
 
         {
             return Players.Where(a => (id == 0 || a.Id == id) &&
                                       (Fk_Team == 0 || a.Fk_Team == Fk_Team) &&
+                                      (isActive == null || a.IsActive == isActive) &&
                                       (buyPriceFrom == null || a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault() >= buyPriceFrom) &&
                                       (buyPriceTo == null || a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault() <= buyPriceTo) &&
                                       (sellPriceFrom == null || a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.SellPrice).FirstOrDefault() >= sellPriceFrom) &&

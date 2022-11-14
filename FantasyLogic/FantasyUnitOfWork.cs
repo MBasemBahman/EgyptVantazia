@@ -28,7 +28,6 @@ namespace FantasyLogic
         #endregion
 
         #region TeamData
-        private PlayerPositionDataHelper _playerPositionDataHelper;
         private TeamDataHelper _teamDataHelper;
         private PlayerDataHelper _playerDataHelper;
         #endregion
@@ -74,14 +73,6 @@ namespace FantasyLogic
         #endregion
 
         #region TeamData
-        public PlayerPositionDataHelper PlayerPositionDataHelper
-        {
-            get
-            {
-                _playerPositionDataHelper ??= new PlayerPositionDataHelper(_unitOfWork, _365Services);
-                return _playerPositionDataHelper;
-            }
-        }
         public TeamDataHelper TeamDataHelper
         {
             get

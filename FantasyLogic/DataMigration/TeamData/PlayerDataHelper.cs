@@ -15,15 +15,10 @@ namespace FantasyLogic.DataMigration.TeamData
             _unitOfWork = unitOfWork;
         }
 
-        public void RunUpdatePlayers(TeamParameters parameters)
+        public void RunUpdatePlayers()
         {
-            List<TeamModel> teams = _unitOfWork.Team.GetTeams(parameters, otherLang: false).ToList();
+            List<TeamModel> teams = _unitOfWork.Team.GetTeams(new TeamParameters(), otherLang: false).ToList();
 
-            _ = BackgroundJob.Enqueue(() => UpdateTeamsPlayers(teams));
-        }
-
-        public void UpdateTeamsPlayers(List<TeamModel> teams)
-        {
             List<PlayerPositionDto> positions = _unitOfWork.Team.GetPlayerPositions(new PlayerPositionParameters
             {
             }, otherLang: false).Select(a => new PlayerPositionDto
@@ -32,6 +27,11 @@ namespace FantasyLogic.DataMigration.TeamData
                 _365_PositionId = a._365_PositionId
             }).ToList();
 
+            _ = BackgroundJob.Enqueue(() => UpdateTeamsPlayers(teams, positions));
+        }
+
+        public void UpdateTeamsPlayers(List<TeamModel> teams, List<PlayerPositionDto> positions)
+        {
             string jobId = null;
             foreach (TeamModel team in teams)
             {
@@ -43,6 +43,9 @@ namespace FantasyLogic.DataMigration.TeamData
 
         public async Task UpdatePlayers(TeamModel team, List<PlayerPositionDto> positions, string jobId)
         {
+            _unitOfWork.Team.UpdatePlayerActivation(fk_Team: team.Id, isActive: false);
+            _unitOfWork.Save().Wait();
+
             int _365_TeamId = team._365_TeamId.ParseToInt();
 
             SquadReturn squadsInArabic = await _365Services.GetSquads(new _365SquadsParameters
@@ -82,6 +85,7 @@ namespace FantasyLogic.DataMigration.TeamData
                 _365_PlayerId = athleteInArabic.Id.ToString(),
                 Fk_Team = fk_Team,
                 Fk_PlayerPosition = fk_PlayerPosition,
+                IsActive = true,
                 PlayerLang = new PlayerLang
                 {
                     Name = athleteInEnglish.Name,

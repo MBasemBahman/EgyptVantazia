@@ -45,6 +45,9 @@ namespace Entities.DBModels.SeasonModels
         [DisplayName(nameof(_365_MatchId))]
         public string _365_MatchId { get; set; }
 
+        [DisplayName(nameof(JobId))]
+        public string JobId { get; set; }
+
         [DisplayName(nameof(PlayerGameWeaks))]
         public IList<PlayerGameWeak> PlayerGameWeaks { get; set; }
     }

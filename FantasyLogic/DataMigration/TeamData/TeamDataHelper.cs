@@ -27,6 +27,9 @@ namespace FantasyLogic.DataMigration.TeamData
 
         public async Task UpdateSeasonTeams(int _365_SeasonId)
         {
+            _unitOfWork.Team.UpdateTeamActivation(isActive: false);
+            _unitOfWork.Save().Wait();
+
             StandingsReturn standingsInArabic = await _365Services.GetStandings(new _365StandingsParameters
             {
                 SeasonNum = _365_SeasonId,
@@ -58,6 +61,7 @@ namespace FantasyLogic.DataMigration.TeamData
             {
                 Name = competitorInArabic.Name,
                 _365_TeamId = competitorInArabic.Id.ToString(),
+                IsActive = true,
                 TeamLang = new TeamLang
                 {
                     Name = competitorInEnglish.Name

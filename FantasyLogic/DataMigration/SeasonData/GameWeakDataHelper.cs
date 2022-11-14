@@ -34,7 +34,7 @@ namespace FantasyLogic.DataMigration.SeasonData
                     : BackgroundJob.Enqueue(() => UpdateGameWeak(round, _365_SeasonId));
             }
 
-            _ = BackgroundJob.ContinueJobWith(jobId, () => UpdateCurrentGameWeak(fk_season, _365_SeasonId));
+            //_ = BackgroundJob.ContinueJobWith(jobId, () => UpdateCurrentGameWeak(fk_season, _365_SeasonId));
         }
 
         public async Task UpdateGameWeak(int round, int fk_Season)

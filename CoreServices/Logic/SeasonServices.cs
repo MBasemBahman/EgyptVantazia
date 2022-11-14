@@ -171,6 +171,8 @@ namespace CoreServices.Logic
                            LastModifiedBy = a.LastModifiedBy,
                            _365_GameWeakId = a._365_GameWeakId,
                            Name = otherLang ? a.GameWeakLang.Name : a.Name,
+                           Deadline = a.Deadline,
+                           JobId = a.JobId,
                            Fk_Season = a.Fk_Season,
                            Season = new SeasonModel
                            {
@@ -226,6 +228,11 @@ namespace CoreServices.Logic
         public async Task<GameWeak> FindGameWeakbyId(int id, bool trackChanges)
         {
             return await _repository.GameWeak.FindById(id, trackChanges);
+        }
+
+        public void ResetCurrentGameWeaks()
+        {
+            _repository.GameWeak.ResetCurrent();
         }
 
         public async Task<GameWeak> FindGameWeakby365Id(string id, int fk_Season, bool trackChanges)
@@ -288,6 +295,7 @@ namespace CoreServices.Logic
                            StartTime = a.StartTime,
                            _365_MatchId = a._365_MatchId,
                            IsDelayed = a.IsDelayed,
+                           JobId = a.JobId,
                            Away = new TeamModel
                            {
                                Name = otherLang ? a.Away.TeamLang.Name : a.Away.Name,

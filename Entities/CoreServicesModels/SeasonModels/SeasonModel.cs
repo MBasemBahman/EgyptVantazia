@@ -23,6 +23,7 @@ namespace Entities.CoreServicesModels.SeasonModels
         [DisplayName(nameof(IsCurrent))]
         public bool IsCurrent { get; set; }
     }
+
     public class SeasonCreateOrEditModel
     {
         public SeasonCreateOrEditModel()

@@ -1,5 +1,6 @@
 ﻿using FantasyLogic;
 using FantasyLogicMicroservices.Controllers;
+using Hangfire;
 
 namespace FantasyLogicMicroservices.Areas.StandingsDataArea.Controllers
 {
@@ -23,7 +24,11 @@ namespace FantasyLogicMicroservices.Areas.StandingsDataArea.Controllers
         [Route(nameof(UpdateStandings))]
         public IActionResult UpdateStandings()
         {
-            _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings();
+            //_fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings();
+
+            _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings());
+
+            RecurringJob.AddOrUpdate("UpdateStandings", () => _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings(), "0 4 * * *", TimeZoneInfo.Utc);
 
             return Ok();
         }

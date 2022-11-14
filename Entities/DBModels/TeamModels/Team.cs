@@ -25,6 +25,9 @@ namespace Entities.DBModels.TeamModels
         [Url]
         public string ShirtStorageUrl { get; set; }
 
+        [DisplayName(nameof(IsActive))]
+        public bool IsActive { get; set; }
+
         [DisplayName(nameof(Players))]
         public IList<Player> Players { get; set; }
 

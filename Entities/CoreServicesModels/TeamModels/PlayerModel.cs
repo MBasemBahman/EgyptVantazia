@@ -39,6 +39,8 @@ namespace Entities.CoreServicesModels.TeamModels
 
         public int Fk_GameWeak { get; set; }
 
+        public List<int> Fk_GameWeaks { get; set; }
+
         public int Fk_GameWeakForScores { get; set; }
 
         public List<int> Fk_Players { get; set; }
@@ -52,6 +54,8 @@ namespace Entities.CoreServicesModels.TeamModels
         public double? SellPriceTo { get; set; }
 
         public bool? IsActive { get; set; }
+
+        public string _365_MatchId { get; set; }
     }
 
     public class PlayerModel : AuditImageEntity

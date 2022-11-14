@@ -83,8 +83,10 @@
 
         public enum ScoreStateEnum
         {
+            // Points
             Total = 1,
 
+            // Points and Value
             CleanSheet = 2,
             Goals = 3,
             Assists = 4,
@@ -93,6 +95,7 @@
             YellowCard = 7,
             RedCard = 8,
 
+            // Value
             BuyingPrice = 9,
             SellingPrice = 10,
             BuyingCount = 11,

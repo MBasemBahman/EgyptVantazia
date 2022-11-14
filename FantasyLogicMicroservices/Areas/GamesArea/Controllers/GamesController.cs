@@ -26,16 +26,6 @@ namespace FantasyLogicMicroservices.Areas.GamesArea.Controllers
         {
             //_fantasyUnitOfWork.GamesDataHelper.RunUpdateGames();
 
-            //var matchs = _unitOfWork.Season.GetTeamGameWeaks(new Entities.CoreServicesModels.SeasonModels.TeamGameWeakParameters
-            //{
-            //    FromTime = DateTime.UtcNow
-            //}, false).ToList();
-
-            //foreach (var match in matchs)
-            //{
-            //    string recurringTime = match.StartTime.AddHours(-2).ToCronExpression(match.StartTime, 10);
-            //}
-
             _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames());
 
             RecurringJob.AddOrUpdate("UpdateGames", () => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames(), "0 3 * * *", TimeZoneInfo.Utc);

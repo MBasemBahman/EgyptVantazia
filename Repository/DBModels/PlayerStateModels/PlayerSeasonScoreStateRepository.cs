@@ -36,7 +36,7 @@ namespace Repository.DBModels.PlayerStateModels
 
         public new void Create(PlayerSeasonScoreState entity)
         {
-            if (entity.Points == 0)
+            if (entity.Points == 0 && entity.Value == 0)
             {
                 return;
             }

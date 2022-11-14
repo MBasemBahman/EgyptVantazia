@@ -35,18 +35,9 @@ namespace FantasyLogicMicroservices.Areas.TeamDataArea.Controllers
 
         [HttpPost]
         [Route(nameof(UpdatePlayersStates))]
-        public IActionResult UpdatePlayersStates([FromQuery] GameWeakParameters parameters)
+        public IActionResult UpdatePlayersStates([FromQuery] GameWeakParameters gameWeakParameters, [FromQuery] PlayerParameters playerParameters)
         {
-            _fantasyUnitOfWork.PlayerStateCalc.RunPlayersStateCalculations(parameters);
-
-            return Ok();
-        }
-
-        [HttpPost]
-        [Route(nameof(UpdatePlayersStatePositions))]
-        public IActionResult UpdatePlayersStatePositions([FromQuery] GameWeakParameters parameters)
-        {
-            _fantasyUnitOfWork.PlayerStateCalc.RunPlayersStatePositions(parameters);
+            _fantasyUnitOfWork.PlayerStateCalc.RunPlayersStateCalculations(gameWeakParameters, playerParameters);
 
             return Ok();
         }

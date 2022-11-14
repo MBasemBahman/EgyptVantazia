@@ -1,6 +1,7 @@
 ﻿using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.SeasonModels;
+using FantasyLogic.Calculations;
 using FantasyLogic.DataMigration.PlayerScoreData;
 using FantasyLogic.DataMigration.StandingsData;
 using IntegrationWith365.Entities.GamesModels;
@@ -96,12 +97,17 @@ namespace FantasyLogic.DataMigration.GamesData
             {
                 StandingsDataHelper standingsDataHelper = new(_unitOfWork, _365Services);
                 GameResultDataHelper gameResultDataHelper = new(_unitOfWork, _365Services);
+                PlayerStateCalc playerStateCalc = new(_unitOfWork);
 
-                string recurringTime = startTime.AddHours(-2).ToCronExpression(startTime.AddMinutes(30), 10);
+                string updateGameResultTime = startTime.AddHours(-2).ToCronExpression(startTime.AddMinutes(30), 10);
+                string updateStandingsTime = startTime.AddHours(-2).ToCronExpression(startTime.AddMinutes(30), 20);
+                string playersStateCalculationsTime = startTime.AddHours(-2).ToCronExpression(startTime.AddMinutes(30), 30);
 
-                RecurringJob.AddOrUpdate("UpdateStandings-" + game.Id.ToString(), () => standingsDataHelper.RunUpdateStandings(), recurringTime, TimeZoneInfo.Utc);
+                RecurringJob.AddOrUpdate("UpdateGameResult-" + game.Id.ToString(), () => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }), updateGameResultTime, TimeZoneInfo.Utc);
 
-                RecurringJob.AddOrUpdate("UpdateGameResult-" + game.Id.ToString(), () => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }), recurringTime, TimeZoneInfo.Utc);
+                RecurringJob.AddOrUpdate("UpdateStandings-" + game.Id.ToString(), () => standingsDataHelper.RunUpdateStandings(), updateStandingsTime, TimeZoneInfo.Utc);
+
+                RecurringJob.AddOrUpdate("PlayersStateCalculations-" + game.Id.ToString(), () => playerStateCalc.RunPlayersStateCalculations(new GameWeakParameters { Id = fk_GameWeak }, new PlayerParameters { _365_MatchId = game.Id.ToString() }), playersStateCalculationsTime, TimeZoneInfo.Utc);
             }
         }
 

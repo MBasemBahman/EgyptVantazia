@@ -16,6 +16,8 @@ namespace Repository.DBModels.TeamModels
                    .Filter(parameters.Id,
                            parameters.Fk_Team,
                            parameters.Fk_GameWeak,
+                           parameters.Fk_Season,
+                           parameters.Fk_GameWeaks,
                            parameters.Fk_PlayerPosition,
                            parameters._365_PlayerId,
                            parameters.CreatedAtFrom,
@@ -27,7 +29,8 @@ namespace Repository.DBModels.TeamModels
                            parameters.BuyPriceTo,
                            parameters.SellPriceFrom,
                            parameters.SellPriceTo,
-                           parameters.IsActive);
+                           parameters.IsActive,
+                           parameters._365_MatchId);
         }
 
         public async Task<Player> FindById(int id, bool trackChanges)
@@ -147,6 +150,8 @@ namespace Repository.DBModels.TeamModels
             int id,
             int Fk_Team,
             int Fk_GameWeak,
+            int Fk_Season,
+            List<int> Fk_GameWeaks,
             int Fk_PlayerPosition,
             string _365_PlayerId,
             DateTime? createdAtFrom,
@@ -158,17 +163,21 @@ namespace Repository.DBModels.TeamModels
             double? buyPriceTo,
             double? sellPriceFrom,
             double? sellPriceTo,
-            bool? isActive)
+            bool? isActive,
+            string _365_MatchId)
 
         {
             return Players.Where(a => (id == 0 || a.Id == id) &&
                                       (Fk_Team == 0 || a.Fk_Team == Fk_Team) &&
+                                      (string.IsNullOrWhiteSpace(_365_MatchId) || a.PlayerGameWeaks.Any(b => b.TeamGameWeak._365_MatchId == _365_MatchId)) &&
                                       (isActive == null || a.IsActive == isActive) &&
                                       (buyPriceFrom == null || a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault() >= buyPriceFrom) &&
                                       (buyPriceTo == null || a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault() <= buyPriceTo) &&
                                       (sellPriceFrom == null || a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.SellPrice).FirstOrDefault() >= sellPriceFrom) &&
                                       (sellPriceTo == null || a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.SellPrice).FirstOrDefault() <= sellPriceTo) &&
                                       (Fk_GameWeak == 0 || a.PlayerGameWeaks.Any(a => a.TeamGameWeak.Fk_GameWeak == Fk_GameWeak)) &&
+                                      (Fk_Season == 0 || a.PlayerGameWeaks.Any(a => a.TeamGameWeak.GameWeak.Fk_Season == Fk_Season)) &&
+                                      (Fk_GameWeaks == null || !Fk_GameWeaks.Any() || a.PlayerGameWeaks.Any(a => Fk_GameWeaks.Contains(a.TeamGameWeak.Fk_GameWeak))) &&
                                       (createdAtFrom == null || a.CreatedAt >= createdAtFrom) &&
                                       (createdAtTo == null || a.CreatedAt <= createdAtTo) &&
                                       (fk_TeamGameWeak_Ignored == 0 || !a.PlayerGameWeaks.Any(b => b.Fk_TeamGameWeak == fk_TeamGameWeak_Ignored)) &&

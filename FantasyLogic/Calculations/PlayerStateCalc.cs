@@ -17,40 +17,43 @@ namespace FantasyLogic.Calculations
         }
 
         #region Calculations
-        public void RunPlayersStateCalculations(GameWeakParameters gameWeakParameters, PlayerParameters playerParameters)
+        public void RunPlayersStateCalculations(int fk_GameWeak, string _365_MatchId)
         {
             SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
 
-            gameWeakParameters.Fk_Season = season.Id;
-
             List<int> gameWeaks = _unitOfWork.Season
-                                             .GetGameWeaks(gameWeakParameters, otherLang: false)
+                                             .GetGameWeaks(new GameWeakParameters
+                                             {
+                                                 Fk_Season = season.Id,
+                                                 Id = fk_GameWeak
+                                             }, otherLang: false)
                                              .Select(a => a.Id).ToList();
 
-            playerParameters.Fk_Season = season.Id;
-            playerParameters.Fk_GameWeaks = gameWeaks;
+            //PlayersStateCalculations(season.Id, gameWeaks, _365_MatchId);
 
-            List<int> players = _unitOfWork.Team.GetPlayers(playerParameters, otherLang: false)
-                .Select(a => a.Id)
-                .ToList();
-
-            //PlayersStateCalculations(players, season.Id, gameWeaks);
-
-            _ = BackgroundJob.Enqueue(() => PlayersStateCalculations(players, season.Id, gameWeaks));
+            _ = BackgroundJob.Enqueue(() => PlayersStateCalculations(season.Id, gameWeaks, _365_MatchId));
         }
 
-        public void PlayersStateCalculations(List<int> players, int fk_Season, List<int> fk_GameWeaks)
+        public void PlayersStateCalculations(int fk_Season, List<int> fk_GameWeaks, string _365_MatchId)
         {
             string jobId = null;
+            List<int> players = null;
             int playerSelectionCount = 0;
             int playerCaptainCount = 0;
 
-            foreach (int player in players)
+            foreach (int fk_GameWeak in fk_GameWeaks)
             {
-                foreach (int fk_GameWeak in fk_GameWeaks)
+                players = _unitOfWork.Team.GetPlayers(new PlayerParameters
                 {
-                    //PlayerStateCalculations(player, 0, fk_GameWeak, jobId);
+                    Fk_Season = fk_Season,
+                    Fk_GameWeak = fk_GameWeak,
+                    _365_MatchId = _365_MatchId
+                }, otherLang: false)
+                .Select(a => a.Id)
+                .ToList();
 
+                if (players != null && players.Any())
+                {
                     playerSelectionCount = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
                     {
                         Fk_GameWeak = fk_GameWeak
@@ -62,13 +65,28 @@ namespace FantasyLogic.Calculations
                         Fk_TeamPlayerType = (int)TeamPlayerTypeEnum.Captian
                     }, otherLang: false).Count();
 
-                    jobId = jobId.IsExisting()
-                        ? BackgroundJob.ContinueJobWith(jobId, () => PlayerStateCalculations(player, 0, fk_GameWeak, playerSelectionCount, playerCaptainCount, jobId))
-                        : BackgroundJob.Enqueue(() => PlayerStateCalculations(player, 0, fk_GameWeak, playerSelectionCount, playerCaptainCount, jobId));
+                    foreach (int player in players)
+                    {
+                        //PlayerStateCalculations(player, 0, fk_GameWeak, playerSelectionCount, playerCaptainCount, jobId);
+
+                        jobId = jobId.IsExisting()
+                            ? BackgroundJob.ContinueJobWith(jobId, () => PlayerStateCalculations(player, 0, fk_GameWeak, playerSelectionCount, playerCaptainCount, jobId))
+                            : BackgroundJob.Enqueue(() => PlayerStateCalculations(player, 0, fk_GameWeak, playerSelectionCount, playerCaptainCount, jobId));
+                    }
                 }
 
-                //PlayerStateCalculations(player, fk_Season, 0, jobId);
+            }
 
+            players = _unitOfWork.Team.GetPlayers(new PlayerParameters
+            {
+                Fk_Season = fk_Season,
+                _365_MatchId = _365_MatchId
+            }, otherLang: false)
+               .Select(a => a.Id)
+               .ToList();
+
+            if (players != null && players.Any())
+            {
                 playerSelectionCount = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
                 {
                     Fk_Season = fk_Season
@@ -80,9 +98,14 @@ namespace FantasyLogic.Calculations
                     Fk_TeamPlayerType = (int)TeamPlayerTypeEnum.Captian
                 }, otherLang: false).Count();
 
-                jobId = jobId.IsExisting()
-                    ? BackgroundJob.ContinueJobWith(jobId, () => PlayerStateCalculations(player, fk_Season, 0, playerSelectionCount, playerCaptainCount, jobId))
-                    : BackgroundJob.Enqueue(() => PlayerStateCalculations(player, fk_Season, 0, playerSelectionCount, playerCaptainCount, jobId));
+                foreach (int player in players)
+                {
+                    //PlayerStateCalculations(player, fk_Season, 0, playerSelectionCount, playerCaptainCount, jobId);
+
+                    jobId = jobId.IsExisting()
+                        ? BackgroundJob.ContinueJobWith(jobId, () => PlayerStateCalculations(player, fk_Season, 0, playerSelectionCount, playerCaptainCount, jobId))
+                        : BackgroundJob.Enqueue(() => PlayerStateCalculations(player, fk_Season, 0, playerSelectionCount, playerCaptainCount, jobId));
+                }
             }
         }
 
@@ -124,7 +147,7 @@ namespace FantasyLogic.Calculations
                                 Value = playescore.FinalValue
                             });
                         }
-                        else if (fk_GameWeak > 0)
+                        if (fk_GameWeak > 0)
                         {
                             _unitOfWork.PlayerState.CreatePlayerGameWeakScoreState(new PlayerGameWeakScoreState
                             {
@@ -204,7 +227,7 @@ namespace FantasyLogic.Calculations
                         Percent = playescore.PlayerCaptain / playerCaptainCount * 100
                     });
                 }
-                else if (fk_GameWeak > 0)
+                if (fk_GameWeak > 0)
                 {
                     _unitOfWork.PlayerState.CreatePlayerGameWeakScoreState(new PlayerGameWeakScoreState
                     {
@@ -269,7 +292,7 @@ namespace FantasyLogic.Calculations
                         Value = totalPlayescore.FinalValue
                     });
                 }
-                else if (fk_GameWeak > 0)
+                if (fk_GameWeak > 0)
                 {
                     _unitOfWork.PlayerState.CreatePlayerGameWeakScoreState(new PlayerGameWeakScoreState
                     {

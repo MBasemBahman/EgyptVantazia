@@ -119,6 +119,7 @@ namespace CoreServices.Logic
                                Id = a.Fk_Player,
                                Name = otherLang ? a.Player.PlayerLang.Name : a.Player.Name,
                                ShortName = otherLang ? a.Player.PlayerLang.ShortName : a.Player.ShortName,
+                               ImageUrl = !string.IsNullOrEmpty(a.Player.ImageUrl) ? a.Player.StorageUrl + a.Player.ImageUrl : a.Player.Team.ShirtStorageUrl + a.Player.Team.ShirtImageUrl,
                            },
                            ScoreState = new ScoreStateModel
                            {

@@ -37,7 +37,7 @@ namespace Repository.DBModels.PlayerStateModels
 
         public new void Create(PlayerGameWeakScoreState entity)
         {
-            if (entity.Points == 0)
+            if (entity.Points == 0 && entity.Value == 0)
             {
                 return;
             }

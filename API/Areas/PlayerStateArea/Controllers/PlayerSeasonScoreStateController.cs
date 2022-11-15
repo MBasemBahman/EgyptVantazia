@@ -34,6 +34,8 @@ namespace API.Areas.PlayerStateArea.Controllers
                 parameters.Fk_PlayerPosition = (int)PlayerPositionEnum.Goalkeeper;
             }
 
+            parameters.Fk_Season = _unitOfWork.Season.GetCurrentSeason().Id;
+
             PagedList<PlayerSeasonScoreStateModel> data = await _unitOfWork.PlayerState.GetPlayerSeasonScoreStatePaged(parameters, otherLang);
 
             SetPagination(data.MetaData, parameters);

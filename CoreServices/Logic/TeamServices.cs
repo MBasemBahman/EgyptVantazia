@@ -335,19 +335,19 @@ namespace CoreServices.Logic
                 .Select(a => new PlayerCustomStateResult
                 {
                     BuyingCount = a.PlayerTransfers.Count(b => (fk_GameWaek == 0 || b.Fk_GameWeak == fk_GameWaek) &&
-                                                               (fk_GameWaek == 0 || b.GameWeak.Fk_Season == fk_Season) &&
+                                                               (fk_Season == 0 || b.GameWeak.Fk_Season == fk_Season) &&
                                                                b.TransferTypeEnum == TransferTypeEnum.Buying),
                     SellingCount = a.PlayerTransfers.Count(b => (fk_GameWaek == 0 || b.Fk_GameWeak == fk_GameWaek) &&
-                                                               (fk_GameWaek == 0 || b.GameWeak.Fk_Season == fk_Season) &&
+                                                               (fk_Season == 0 || b.GameWeak.Fk_Season == fk_Season) &&
                                                                b.TransferTypeEnum == TransferTypeEnum.Selling),
                     BuyingPrice = a.PlayerTransfers.Where(b => (fk_GameWaek == 0 || b.Fk_GameWeak == fk_GameWaek) &&
-                                                               (fk_GameWaek == 0 || b.GameWeak.Fk_Season == fk_Season) &&
+                                                               (fk_Season == 0 || b.GameWeak.Fk_Season == fk_Season) &&
                                                                b.TransferTypeEnum == TransferTypeEnum.Buying)
                                                    .OrderByDescending(a => a.Id)
                                                    .Select(a => a.Cost)
                                                    .FirstOrDefault(),
                     SellingPrice = a.PlayerTransfers.Where(b => (fk_GameWaek == 0 || b.Fk_GameWeak == fk_GameWaek) &&
-                                                               (fk_GameWaek == 0 || b.GameWeak.Fk_Season == fk_Season) &&
+                                                                (fk_Season == 0 || b.GameWeak.Fk_Season == fk_Season) &&
                                                                b.TransferTypeEnum == TransferTypeEnum.Selling)
                                                    .OrderByDescending(a => a.Id)
                                                    .Select(a => a.Cost)
@@ -355,11 +355,11 @@ namespace CoreServices.Logic
                     PlayerSelection = a.AccountTeamPlayers
                                        .SelectMany(b => b.AccountTeamPlayerGameWeaks)
                                        .Count(b => (fk_GameWaek == 0 || b.Fk_GameWeak == fk_GameWaek) &&
-                                                   (fk_GameWaek == 0 || b.GameWeak.Fk_Season == fk_Season)),
+                                                   (fk_Season == 0 || b.GameWeak.Fk_Season == fk_Season)),
                     PlayerCaptain = a.AccountTeamPlayers
                                        .SelectMany(b => b.AccountTeamPlayerGameWeaks)
                                        .Count(b => (fk_GameWaek == 0 || b.Fk_GameWeak == fk_GameWaek) &&
-                                                   (fk_GameWaek == 0 || b.GameWeak.Fk_Season == fk_Season) &&
+                                                   (fk_Season == 0 || b.GameWeak.Fk_Season == fk_Season) &&
                                                    b.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian)
                 })
                 .FirstOrDefault();

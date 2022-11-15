@@ -110,6 +110,7 @@ namespace FantasyLogicMicroservices.Extensions
                 c.SwaggerDoc("Standings", new OpenApiInfo { Title = "Standings" });
                 c.SwaggerDoc("Team", new OpenApiInfo { Title = "Team" });
                 c.SwaggerDoc("Games", new OpenApiInfo { Title = "Games" });
+                c.SwaggerDoc("AccountTeam", new OpenApiInfo { Title = "AccountTeam" });
 
                 c.OperationFilter<DocsFilter>();
                 c.SchemaFilter<SwaggerSkipPropertyFilter>();

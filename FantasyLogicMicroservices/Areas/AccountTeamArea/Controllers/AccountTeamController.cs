@@ -1,0 +1,34 @@
+﻿using FantasyLogic;
+using FantasyLogicMicroservices.Controllers;
+using Hangfire;
+
+namespace FantasyLogicMicroservices.Areas.AccountTeamArea.Controllers
+{
+    [ApiVersion("1.0")]
+    [Area("AccountTeam")]
+    [ApiExplorerSettings(GroupName = "AccountTeam")]
+    [Route("[area]/v{version:apiVersion}/[controller]")]
+    public class AccountTeamController : ExtendControllerBase
+    {
+        public AccountTeamController(
+        ILoggerManager logger,
+        UnitOfWork unitOfWork,
+        LinkGenerator linkGenerator,
+        IWebHostEnvironment environment,
+        FantasyUnitOfWork fantasyUnitOfWork,
+        IOptions<AppSettings> appSettings) : base(logger, unitOfWork, linkGenerator, environment, fantasyUnitOfWork, appSettings)
+        {
+        }
+
+        [HttpPost]
+        [Route(nameof(UpdateAccountTeamsPoints))]
+        public IActionResult UpdateAccountTeamsPoints([FromQuery]int fk_GameWeak)
+        {
+            //_fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(fk_GameWeak);
+
+            _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(fk_GameWeak));
+
+            return Ok();
+        }
+    }
+}

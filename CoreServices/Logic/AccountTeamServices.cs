@@ -49,6 +49,9 @@ namespace CoreServices.Logic
                            {
                                ImageUrl = a.Account.StorageUrl + a.Account.ImageUrl,
                                FullName = a.Account.FullName,
+                               Fk_Country = a.Account.Fk_Country,
+                               Fk_FavouriteTeam = a.Account.Fk_FavouriteTeam,
+                               Fk_Nationality = a.Account.Fk_Nationality
                            },
                            PlayersCount = a.AccountTeamPlayers.Count,
                            FreeTransfer = a.FreeTransfer
@@ -152,7 +155,12 @@ namespace CoreServices.Logic
                            },
                            AccountTeam = new AccountTeamModel
                            {
-                               Name = a.AccountTeam.Name
+                               Name = a.AccountTeam.Name,
+                               Account = new AccountModel
+                               {
+                                   Fk_Country = a.AccountTeam.Account.Fk_Country,
+                                   Fk_FavouriteTeam = a.AccountTeam.Account.Fk_FavouriteTeam,
+                               }
                            }
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
@@ -241,8 +249,11 @@ namespace CoreServices.Logic
                            },
                            AccountTeamPlayer = new AccountTeamPlayerModel
                            {
+                               Fk_Player = a.AccountTeamPlayer.Fk_Player,
                                Player = new PlayerModel
                                {
+                                   Id = a.AccountTeamPlayer.Fk_Player,
+                                   Fk_PlayerPosition = a.AccountTeamPlayer.Player.Fk_PlayerPosition,
                                    Name = otherLang ? a.AccountTeamPlayer.Player.PlayerLang.Name : a.AccountTeamPlayer.Player.Name,
                                    ShortName = otherLang ? a.AccountTeamPlayer.Player.PlayerLang.ShortName : a.AccountTeamPlayer.Player.ShortName,
                                    ImageUrl = !string.IsNullOrEmpty(a.AccountTeamPlayer.Player.ImageUrl) ? a.AccountTeamPlayer.Player.StorageUrl + a.AccountTeamPlayer.Player.ImageUrl : a.AccountTeamPlayer.Player.Team.ShirtStorageUrl + a.AccountTeamPlayer.Player.Team.ShirtImageUrl,
@@ -274,6 +285,11 @@ namespace CoreServices.Logic
         public void CreateAccountTeamPlayerGameWeak(AccountTeamPlayerGameWeak AccountTeamPlayerGameWeak)
         {
             _repository.AccountTeamPlayerGameWeak.Create(AccountTeamPlayerGameWeak);
+        }
+
+        public void ResetPoints(int fk_AccountTeam)
+        {
+            _repository.AccountTeamPlayerGameWeak.ResetPoints(fk_AccountTeam);
         }
 
         public async Task DeleteAccountTeamPlayerGameWeak(int id)

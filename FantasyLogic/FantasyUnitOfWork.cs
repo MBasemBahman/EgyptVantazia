@@ -45,6 +45,10 @@ namespace FantasyLogic
         private PlayerStateCalc _PlayerStateCalc;
         #endregion
 
+        #region AccountTeamCalculations
+        private AccountTeamCalc _AccountTeamCalc;
+        #endregion
+
         #endregion
 
         #region Public
@@ -128,6 +132,17 @@ namespace FantasyLogic
             {
                 _PlayerStateCalc ??= new PlayerStateCalc(_unitOfWork);
                 return _PlayerStateCalc;
+            }
+        }
+        #endregion
+
+        #region AccountTeamCalculations
+        public AccountTeamCalc AccountTeamCalc
+        {
+            get
+            {
+                _AccountTeamCalc ??= new AccountTeamCalc(_unitOfWork);
+                return _AccountTeamCalc;
             }
         }
         #endregion

@@ -30,6 +30,7 @@
                 c.SwaggerEndpoint($"/swagger/Standings/swagger.json", "Standings");
                 c.SwaggerEndpoint($"/swagger/Team/swagger.json", "Team");
                 c.SwaggerEndpoint($"/swagger/Games/swagger.json", "Games");
+                c.SwaggerEndpoint($"/swagger/AccountTeam/swagger.json", "AccountTeam");
 
                 c.RoutePrefix = "docs";
             });

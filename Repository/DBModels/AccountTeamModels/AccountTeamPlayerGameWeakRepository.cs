@@ -19,13 +19,25 @@ namespace Repository.DBModels.AccountTeamModels
                            parameters.Fk_AccountTeam,
                            parameters.Fk_Account,
                            parameters.Fk_Season,
-                           parameters.Fk_GameWeak);
+                           parameters.Fk_GameWeak,
+                           parameters.IsPrimary,
+                           parameters.IsTransfer);
         }
 
         public async Task<AccountTeamPlayerGameWeak> FindById(int id, bool trackChanges)
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
                         .SingleOrDefaultAsync();
+        }
+
+        public void ResetPoints(int fk_AccountTeam)
+        {
+            var players = FindAll(new AccountTeamPlayerGameWeakParameters
+            {
+                Fk_AccountTeam = fk_AccountTeam
+            }, trackChanges: true).ToList();
+
+            players.ForEach(a => a.Points = 0);
         }
 
         public new void Create(AccountTeamPlayerGameWeak entity)
@@ -37,6 +49,7 @@ namespace Repository.DBModels.AccountTeamModels
                 oldEntity.Fk_TeamPlayerType = entity.Fk_TeamPlayerType;
                 oldEntity.IsPrimary = entity.IsPrimary;
                 oldEntity.Order = entity.Order;
+                oldEntity.Points = entity.Points;
             }
             else
             {
@@ -50,23 +63,27 @@ namespace Repository.DBModels.AccountTeamModels
         public static IQueryable<AccountTeamPlayerGameWeak> Filter(
             this IQueryable<AccountTeamPlayerGameWeak> AccountTeamPlayerGameWeaks,
             int id,
-            int Fk_AccountTeamPlayer,
-            int Fk_TeamPlayerType,
-            int Fk_Player,
-            int Fk_AccountTeam,
-            int Fk_Account,
-            int Fk_Season,
-            int Fk_GameWeak)
+            int fk_AccountTeamPlayer,
+            int fk_TeamPlayerType,
+            int fk_Player,
+            int fk_AccountTeam,
+            int fk_Account,
+            int fk_Season,
+            int fk_GameWeak,
+            bool? isPrimary,
+            bool? isTransfer)
 
         {
             return AccountTeamPlayerGameWeaks.Where(a => (id == 0 || a.Id == id) &&
-                                                   (Fk_AccountTeamPlayer == 0 || a.Fk_AccountTeamPlayer == Fk_AccountTeamPlayer) &&
-                                                   (Fk_Account == 0 || a.AccountTeamPlayer.AccountTeam.Fk_Account == Fk_Account) &&
-                                                   (Fk_Season == 0 || a.GameWeak.Fk_Season == Fk_Season) &&
-                                                   (Fk_GameWeak == 0 || a.Fk_GameWeak == Fk_GameWeak) &&
-                                                   (Fk_Player == 0 || a.AccountTeamPlayer.Fk_Player == Fk_Player) &&
-                                                   (Fk_AccountTeam == 0 || a.AccountTeamPlayer.Fk_AccountTeam == Fk_AccountTeam) &&
-                                                   (Fk_TeamPlayerType == 0 || a.Fk_TeamPlayerType == Fk_TeamPlayerType));
+                                                   (fk_AccountTeamPlayer == 0 || a.Fk_AccountTeamPlayer == fk_AccountTeamPlayer) &&
+                                                   (fk_Account == 0 || a.AccountTeamPlayer.AccountTeam.Fk_Account == fk_Account) &&
+                                                   (fk_Season == 0 || a.GameWeak.Fk_Season == fk_Season) &&
+                                                   (fk_GameWeak == 0 || a.Fk_GameWeak == fk_GameWeak) &&
+                                                   (isPrimary == null || a.IsPrimary == isPrimary) &&
+                                                   (isTransfer == null || a.IsTransfer == isTransfer) &&
+                                                   (fk_Player == 0 || a.AccountTeamPlayer.Fk_Player == fk_Player) &&
+                                                   (fk_AccountTeam == 0 || a.AccountTeamPlayer.Fk_AccountTeam == fk_AccountTeam) &&
+                                                   (fk_TeamPlayerType == 0 || a.Fk_TeamPlayerType == fk_TeamPlayerType));
 
 
         }

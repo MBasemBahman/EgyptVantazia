@@ -18,6 +18,11 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public int Fk_Season { get; set; }
 
         public int Fk_GameWeak { get; set; }
+
+        public bool? IsTransfer { get; set; }
+
+        public bool? IsPrimary { get; set; }
+
     }
     public class AccountTeamPlayerGameWeakModel : AuditEntity
     {

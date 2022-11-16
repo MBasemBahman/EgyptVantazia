@@ -118,6 +118,17 @@
                                                 <span asp-validation-for="_365_TeamId" class="text-danger"></span>
                                             </div>
                                         </div>
+                                        
+                                        <div class="col-md-12 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="IsActive" class="form-label"></label>
+                                                <select asp-for="IsActive" class="select2 form-select">
+                                                    <option value="true">@Localizer.Get("Yes")</option>
+                                                    <option value="false">@Localizer.Get("No")</option>
+                                                </select>
+                                                <span asp-validation-for="IsActive" class="text-danger"></span>
+                                            </div>
+                                        </div>
                                     </div>
 
 

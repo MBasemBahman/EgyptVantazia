@@ -44,6 +44,7 @@
                          @* <th>@Html.DisplayNameFor(model => gameWeak.Name)</th> *@
                          <th>@Localizer.Get("Week Number")</th>
                             <th>@Html.DisplayNameFor(model => gameWeak._365_GameWeakId)</th>
+                            <th>@Html.DisplayNameFor(model => gameWeak.Deadline)</th>
                             <th>@Html.DisplayNameFor(model => gameWeak.IsCurrent)</th>
                         </tr>
                     </thead>
@@ -54,6 +55,16 @@
                               
                                 <td>@item.Name</td>
                                 <td>@item._365_GameWeakId</td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(item.Deadline))
+                                    {
+                                        <span>@item.Deadline</span>
+                                    }
+                                    else
+                                    {
+                                        <span>@Localizer.Get("Not Found")</span>
+                                    }
+                                </td>
                                 <td>@(item.IsCurrent ? Localizer.Get("Yes") : Localizer.Get("No"))</td>
                             </tr>
                         }

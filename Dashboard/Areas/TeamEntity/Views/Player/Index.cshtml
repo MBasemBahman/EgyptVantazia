@@ -110,6 +110,7 @@
                                                     <th>@Html.DisplayNameFor(model => row.BuyPrice)</th>
 
                                                     <th>@Html.DisplayNameFor(model => row.PlayerPosition)</th>
+                                                    <th>@Html.DisplayNameFor(model => row.IsActive)</th>
                                                     <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
                                                     <th>
                                                         @Html.DisplayNameFor(model => row.Id)
@@ -181,6 +182,7 @@ else
                                     <th>@Html.DisplayNameFor(model => row.BuyPrice)</th>
 
                                     <th>@Html.DisplayNameFor(model => row.PlayerPosition)</th>
+                                    <th>@Html.DisplayNameFor(model => row.IsActive)</th>
                                     <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
                                     <th>
                                         @Html.DisplayNameFor(model => row.Id)
@@ -297,7 +299,6 @@ else
                         { data: "_365_PlayerId" },
                         { data: "sellPrice" },
                         { data: "buyPrice" },
-
                         {
                             data: "playerPosition",
                             orderable: false,
@@ -328,6 +329,12 @@ else
 
                             }
                         },
+                        { data: "isActive", render: function(data) {
+                          if (data) {
+                              return '@Localizer.Get("Yes")';
+                          }
+                          return '@Localizer.Get("No")';
+                        } },
                         { data: "createdAt" },
                         { data: "id" },
                     ],

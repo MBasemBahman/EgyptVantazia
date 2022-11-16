@@ -89,6 +89,7 @@
                                             <th>@Html.DisplayNameFor(model => row.Name)</th>
                                             <th>@Html.DisplayNameFor(model => row.ShortName)</th>
                                             <th>@Html.DisplayNameFor(model => row._365_TeamId)</th>
+                                            <th>@Html.DisplayNameFor(model => row.IsActive)</th>
                                             <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
                                             <th>
                                                 @Html.DisplayNameFor(model => row.Id)
@@ -164,6 +165,12 @@
                         },
                         { data: "shortName" },
                         { data: "_365_TeamId" },
+                        { data: "isActive", render: function(data) {
+                          if (data) {
+                              return '@Localizer.Get("Yes")';
+                          }
+                          return '@Localizer.Get("No")';
+                        } },
                         { data: "createdAt" },
                         { data: "id" },
                     ]

@@ -202,7 +202,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                     _unitOfWork.AccountTeam.CreateAccountTeamPlayerGameWeak(new AccountTeamPlayerGameWeak
                     {
                         Fk_GameWeak = nextGameWeak.Id,
-                        Fk_AccountTeamPlayer = player.Fk_AccountTeamPlayer
+                        Fk_AccountTeamPlayer = player.Fk_AccountTeamPlayer,
                         Fk_TeamPlayerType = player.Fk_TeamPlayerType,
                         IsPrimary = player.IsPrimary,
                         Order = player.Order,

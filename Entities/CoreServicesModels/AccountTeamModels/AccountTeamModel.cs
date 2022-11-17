@@ -1,4 +1,5 @@
 ﻿using Entities.CoreServicesModels.AccountModels;
+using Entities.CoreServicesModels.PlayerScoreModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.AccountModels;
 using Entities.DBModels.SeasonModels;
@@ -23,6 +24,8 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         [DisplayName(nameof(AccountUserName))]
         public string AccountUserName { get; set; }
+
+        public bool IncludeGameWeakPoints { get; set; }
     }
 
     public class AccountTeamModel : AuditImageEntity
@@ -63,6 +66,10 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public int PrevGameWeakPoints { get; set; }
 
         public bool IsUp => CurrentGameWeakPoints > PrevGameWeakPoints;
+
+        public double AverageGameWeakPoints { get; set; }
+
+        public AccountTeamGameWeakModel BestAccountTeamGameWeak { get; set; }
 
         public int TransferCount { get; set; }
 

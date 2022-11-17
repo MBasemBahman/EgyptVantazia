@@ -49,8 +49,6 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         [DisplayName(nameof(TotalPoints))]
         public int TotalPoints { get; set; }
 
-        public bool IsIncreasing { get; set; }
-
         [DisplayName(nameof(DoubleGameWeak))]
         public bool DoubleGameWeak { get; set; }
 

@@ -299,7 +299,18 @@ namespace CoreServices.Logic
                                   },
                                   IsAction = a.IsAction,
                                   Fk_Account = a.Fk_Account,
-                                  Fk_Subscription = a.Fk_Subscription
+                                  Fk_Subscription = a.Fk_Subscription,
+                                  Subscription = new SubscriptionModel
+                                  {
+                                      Id = a.Fk_Subscription,
+                                      Cost = a.Subscription.Cost,
+                                      Description = otherLang ? a.Subscription.SubscriptionLang.Description : a.Subscription.Description,
+                                      Discount = a.Subscription.Discount,
+                                      ForAction = a.Subscription.ForAction,
+                                      ImageUrl = a.Subscription.StorageUrl + a.Subscription.ImageUrl,
+                                      Name= otherLang ? a.Subscription.SubscriptionLang.Name : a.Subscription.Name,
+                                      IsActive = a.Subscription.IsActive,
+                                  }
                               })
                               .Search(parameters.SearchColumns, parameters.SearchTerm)
                               .Sort(parameters.OrderBy);

@@ -1,4 +1,5 @@
 ﻿using Entities.CoreServicesModels.SeasonModels;
+using Entities.CoreServicesModels.SubscriptionModels;
 using Entities.DBModels.AccountModels;
 using Entities.DBModels.SubscriptionModels;
 using Entities.RequestFeatures;
@@ -26,6 +27,8 @@ public class AccountSubscriptionModel : BaseEntity
     [DisplayName(nameof(Subscription))]
     [ForeignKey(nameof(Subscription))]
     public int Fk_Subscription { get; set; }
+
+    public SubscriptionModel Subscription { get; set; }
 
     [DisplayName(nameof(Season))]
     [ForeignKey(nameof(Season))]

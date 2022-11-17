@@ -1,6 +1,7 @@
 ﻿using API.Areas.PaymentArea.Models;
 using API.Controllers;
 using Entities.CoreServicesModels.AccountModels;
+using Entities.CoreServicesModels.SubscriptionModels;
 using Entities.DBModels.AccountModels;
 using static Entities.EnumData.LogicEnumData;
 
@@ -48,7 +49,7 @@ namespace API.Areas.PaymentArea.Controllers
                 throw new Exception("Please add wallet number!");
             }
 
-            Entities.CoreServicesModels.SubscriptionModels.SubscriptionModel subscription = _unitOfWork.Subscription.GetSubscriptionById(model.Fk_Subscription, otherLang: false);
+            SubscriptionModel subscription = _unitOfWork.Subscription.GetSubscriptionById(model.Fk_Subscription, otherLang: false);
 
             int amount_cents = subscription.CostAfterDiscount;
 
@@ -134,12 +135,7 @@ namespace API.Areas.PaymentArea.Controllers
                     Phone = phoneNumber
                 }, otherLang: false).Select(a => a.Id).FirstOrDefault();
 
-                int subscription = _unitOfWork.Subscription
-                                              .GetSubscriptions(new Entities.CoreServicesModels.SubscriptionModels.SubscriptionParameters(), otherLang: false)
-                                              .Select(a => a.Id)
-                                              .FirstOrDefault();
-
-                if (account > 0 && subscription > 0)
+                if (account > 0)
                 {
                     _unitOfWork.Account.CreatePayment(new Payment
                     {

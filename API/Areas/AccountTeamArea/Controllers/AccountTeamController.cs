@@ -49,8 +49,10 @@ namespace API.Areas.AccountTeamArea.Controllers
 
         [HttpGet]
         [Route(nameof(GetMyAccountTeam))]
-        public AccountTeamModel GetMyAccountTeam()
+        public AccountTeamModel GetMyAccountTeam([FromQuery] bool includeGameWeakPoints)
         {
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
             SeasonModel currentSeason = _unitOfWork.Season.GetCurrentSeason();
@@ -60,6 +62,20 @@ namespace API.Areas.AccountTeamArea.Controllers
             }
 
             AccountTeamModel currentTeam = _unitOfWork.AccountTeam.GetCurrentTeam(auth.Fk_Account, currentSeason.Id);
+
+            if (currentTeam != null && includeGameWeakPoints)
+            {
+                var currentGameWeak = _unitOfWork.Season.GetCurrentGameWeak();
+
+                currentTeam.AverageGameWeakPoints = _unitOfWork.AccountTeam.GetAverageGameWeakPoints(currentGameWeak.Id);
+
+                currentTeam.BestAccountTeamGameWeak = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
+                {
+                    Fk_GameWeak = currentGameWeak.Id
+                }, otherLang: otherLang)
+                    .OrderByDescending(a => a.TotalPoints)
+                    .FirstOrDefault();
+            }
 
             return currentTeam ?? throw new Exception("Please create your team!");
         }

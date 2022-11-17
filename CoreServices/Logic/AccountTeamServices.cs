@@ -62,7 +62,7 @@ namespace CoreServices.Logic
                            PrevGameWeakPoints = a.AccountTeamGameWeaks
                                                  .Where(a => a.GameWeak.IsPrev == true)
                                                  .Select(a => a.TotalPoints)
-                                                 .FirstOrDefault()
+                                                 .FirstOrDefault(),
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);
@@ -132,7 +132,6 @@ namespace CoreServices.Logic
                            CreatedBy = a.CreatedBy,
                            LastModifiedAt = a.LastModifiedAt,
                            LastModifiedBy = a.LastModifiedBy,
-                           IsIncreasing = a.TotalPoints > 0,
                            FreeHit = a.FreeHit,
                            TotalPoints = a.TotalPoints,
                            WildCard = a.WildCard,
@@ -216,6 +215,11 @@ namespace CoreServices.Logic
                 Fk_Account = fk_Account,
                 Fk_GameWeak = fk_GameWeak
             }, otherLang: false).FirstOrDefault();
+        }
+
+        public double GetAverageGameWeakPoints(int fk_GameWeak)
+        {
+            return _repository.AccountTeamGameWeak.GetAverageGameWeakPoints(fk_GameWeak);
         }
 
         #endregion

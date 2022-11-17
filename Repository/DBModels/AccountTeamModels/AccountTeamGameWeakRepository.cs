@@ -25,6 +25,13 @@ namespace Repository.DBModels.AccountTeamModels
             return await FindByCondition(a => a.Id == id, trackChanges)
                         .SingleOrDefaultAsync();
         }
+
+        public double GetAverageGameWeakPoints(int fk_GameWeak)
+        {
+            return FindByCondition(a => a.Fk_GameWeak == fk_GameWeak, trackChanges: false)
+                   .Select(a => a.TotalPoints)
+                   .Average();
+        }
     }
 
     public static class AccountTeamGameWeakRepositoryExtension

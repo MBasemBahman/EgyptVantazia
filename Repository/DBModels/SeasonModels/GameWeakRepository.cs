@@ -22,7 +22,9 @@ namespace Repository.DBModels.SeasonModels
                            parameters.LowerThanWeak,
                            parameters.Deadline,
                            parameters.DeadlineFrom,
-                           parameters.DeadlineTo);
+                           parameters.DeadlineTo,
+                           parameters.IsNext,
+                           parameters.IsPrev);
         }
 
         public async Task<GameWeak> FindById(int id, bool trackChanges)
@@ -42,7 +44,12 @@ namespace Repository.DBModels.SeasonModels
         public void ResetCurrent()
         {
             List<GameWeak> gameWeaks = FindByCondition(a => true, trackChanges: true).ToList();
-            gameWeaks.ForEach(a => a.IsCurrent = false);
+            gameWeaks.ForEach(a =>
+            {
+                a.IsCurrent = false;
+                a.IsPrev = false;
+                a.IsNext = false;
+            });
         }
 
         public new void Create(GameWeak entity)
@@ -81,7 +88,9 @@ namespace Repository.DBModels.SeasonModels
             int? lowerThanWeak,
             DateTime? deadline,
             DateTime? deadlineFrom,
-            DateTime? deadlineTo)
+            DateTime? deadlineTo,
+            bool? isNext,
+            bool? isPrev)
         {
             return GameWeaks.Where(a => (id == 0 || a.Id == id) &&
                                         (deadline == null || a.Deadline == deadline) &&
@@ -91,6 +100,8 @@ namespace Repository.DBModels.SeasonModels
                                         (biggerThanWeak == null || (!string.IsNullOrEmpty(a._365_GameWeakId) && Convert.ToInt32(a._365_GameWeakId) > biggerThanWeak.Value)) &&
                                         (lowerThanWeak == null || (!string.IsNullOrEmpty(a._365_GameWeakId) && Convert.ToInt32(a._365_GameWeakId) < lowerThanWeak.Value)) &&
                                         (isCurrent == null || a.IsCurrent == isCurrent) &&
+                                        (isNext == null || a.IsNext == isNext) &&
+                                        (isPrev == null || a.IsPrev == isPrev) &&
                                         (isCurrentSeason == null || a.Season.IsCurrent == isCurrentSeason) &&
                                         (string.IsNullOrWhiteSpace(_365_GameWeakId) || a._365_GameWeakId == _365_GameWeakId));
 

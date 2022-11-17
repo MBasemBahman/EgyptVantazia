@@ -106,6 +106,14 @@ namespace CoreServices.Logic
                                                           CountryRanking = b.CountryRanking,
                                                           GlobalRanking = b.GlobalRanking,
                                                           FavouriteTeamRanking = b.FavouriteTeamRanking,
+                                                          CurrentGameWeakPoints = b.AccountTeamGameWeaks
+                                                                                   .Where(a => a.GameWeak.IsCurrent == true)
+                                                                                   .Select(a => a.TotalPoints)
+                                                                                   .FirstOrDefault(),
+                                                          PrevGameWeakPoints = b.AccountTeamGameWeaks
+                                                                                   .Where(a => a.GameWeak.IsPrev == true)
+                                                                                   .Select(a => a.TotalPoints)
+                                                                                   .FirstOrDefault()
                                                       })
                                                       .FirstOrDefault()
                            },

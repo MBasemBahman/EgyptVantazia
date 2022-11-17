@@ -14,6 +14,12 @@ namespace Entities.DBModels.SeasonModels
         [DisplayName(nameof(IsCurrent))]
         public bool IsCurrent { get; set; }
 
+        [DisplayName(nameof(IsNext))]
+        public bool IsNext { get; set; }
+
+        [DisplayName(nameof(IsPrev))]
+        public bool IsPrev { get; set; }
+
         [DisplayName(nameof(_365_GameWeakId))]
         public string _365_GameWeakId { get; set; }
 

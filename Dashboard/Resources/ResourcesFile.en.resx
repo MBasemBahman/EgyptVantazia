@@ -1179,4 +1179,10 @@
   <data name="Description English" xml:space="preserve">
     <value>English Description </value>
   </data>
+  <data name="IsNext" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="IsPrev" xml:space="preserve">
+    <value>Previous</value>
+  </data>
 </root>

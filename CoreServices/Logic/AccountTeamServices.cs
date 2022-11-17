@@ -54,7 +54,15 @@ namespace CoreServices.Logic
                                Fk_Nationality = a.Account.Fk_Nationality
                            },
                            PlayersCount = a.AccountTeamPlayers.Count,
-                           FreeTransfer = a.FreeTransfer
+                           FreeTransfer = a.FreeTransfer,
+                           CurrentGameWeakPoints = a.AccountTeamGameWeaks
+                                                    .Where(a => a.GameWeak.IsCurrent == true)
+                                                    .Select(a => a.TotalPoints)
+                                                    .FirstOrDefault(),
+                           PrevGameWeakPoints = a.AccountTeamGameWeaks
+                                                 .Where(a => a.GameWeak.IsPrev == true)
+                                                 .Select(a => a.TotalPoints)
+                                                 .FirstOrDefault()
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

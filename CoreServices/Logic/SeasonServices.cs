@@ -181,6 +181,8 @@ namespace CoreServices.Logic
                                _365_SeasonId = a.Season._365_SeasonId,
                            },
                            IsCurrent = a.IsCurrent,
+                           IsNext = a.IsNext,
+                           IsPrev = a.IsPrev,
                            Order = string.IsNullOrWhiteSpace(a._365_GameWeakId) ? 0 : Convert.ToInt32(a._365_GameWeakId)
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
@@ -196,26 +198,18 @@ namespace CoreServices.Logic
 
         public GameWeakModel GetNextGameWeak(bool otherLang = false)
         {
-            int gameWeakNumber = GetCurrentGameWeak()._365_GameWeakId.ParseToInt();
             return GetGameWeaks(new GameWeakParameters
             {
-                IsDelayed = false,
-                BiggerThanWeak = gameWeakNumber
-            }, otherLang: otherLang)
-                .OrderBy(a => a.Order)
-                .FirstOrDefault();
+                IsNext = true
+            }, otherLang: otherLang).FirstOrDefault();
         }
 
         public GameWeakModel GetPrevGameWeak(bool otherLang = false)
         {
-            int gameWeakNumber = GetCurrentGameWeak()._365_GameWeakId.ParseToInt();
             return GetGameWeaks(new GameWeakParameters
             {
-                IsDelayed = false,
-                LowerThanWeak = gameWeakNumber
-            }, otherLang: otherLang)
-                .OrderByDescending(a => a.Order)
-                .FirstOrDefault();
+                IsPrev = true
+            }, otherLang: otherLang).FirstOrDefault();
         }
 
         public async Task<PagedList<GameWeakModel>> GetGameWeakPaged(
@@ -242,8 +236,12 @@ namespace CoreServices.Logic
 
         public List<GameWeak> FindGameWeaks(GameWeakParameters parameters, bool trackChanges)
         {
-            return _repository.GameWeak.FindAll(parameters, trackChanges)
-                 .Include(a => a.GameWeakLang).ToList();
+            return _repository.GameWeak
+                              .FindAll(parameters, trackChanges)
+                              .Include(a => a.GameWeakLang)
+                              .ToList()
+                              .OrderBy(a => a._365_GameWeakId.ParseToInt())
+                              .ToList();
         }
 
         public Dictionary<string, string> GetGameWeakLookUp(GameWeakParameters parameters, bool otherLang)
@@ -348,15 +346,7 @@ namespace CoreServices.Logic
 
         public DateTime? GetFirstTeamGameWeakMatchDate()
         {
-            int fk_GameWeak = GetCurrentGameWeak().Id;
-            TeamGameWeakModel firstTeamGameWeak = GetTeamGameWeaks(new TeamGameWeakParameters
-            {
-                Fk_GameWeak_Ignored = fk_GameWeak,
-                FromTime = DateTime.UtcNow,
-                IsDelayed = false,
-            }, false).OrderBy(a => a.StartTime).FirstOrDefault();
-
-            return firstTeamGameWeak?.StartTime.AddHours(-2) ?? null;
+            return GetNextGameWeak().Deadline;
         }
 
         public void CreateTeamGameWeak(TeamGameWeak TeamGameWeak)

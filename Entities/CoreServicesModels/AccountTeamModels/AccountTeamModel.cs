@@ -60,6 +60,10 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         public int CurrentGameWeakPoints { get; set; }
 
+        public int PrevGameWeakPoints { get; set; }
+
+        public bool IsUp => CurrentGameWeakPoints > PrevGameWeakPoints;
+
         public int TransferCount { get; set; }
 
         public int FreeTransferCount { get; set; }

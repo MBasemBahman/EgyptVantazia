@@ -4,6 +4,7 @@ using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.PlayersTransfersModels;
+using static Contracts.EnumData.DBModelsEnum;
 using static Entities.EnumData.LogicEnumData;
 
 namespace API.Areas.AccountTeamArea.Controllers
@@ -117,9 +118,14 @@ namespace API.Areas.AccountTeamArea.Controllers
                     }).ToList();
 
                 int totalPrice = 0;
-                foreach (AccountTeamPlayerCreateModel player in model.Players)
+
+                var captain = model.Players.Any(a => a.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian);
+                var viceCaptian = model.Players.Any(a => a.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.ViceCaptian);
+
+                foreach (AccountTeamPlayerCreateModel player in model.Players.OrderBy(a => a.IsPrimary).ThenBy(a => a.Order))
                 {
                     int price = (int)prices.Where(a => a.Id == player.Fk_Player).Select(a => a.BuyPrice).FirstOrDefault();
+                   
                     _unitOfWork.PlayerTransfers.CreatePlayerTransfer(new PlayerTransfer
                     {
                         Fk_AccountTeam = currentTeam.Id,
@@ -128,6 +134,17 @@ namespace API.Areas.AccountTeamArea.Controllers
                         TransferTypeEnum = TransferTypeEnum.Buying,
                         Cost = price
                     });
+
+                    if (!captain)
+                    {
+                        player.Fk_TeamPlayerType = (int)TeamPlayerTypeEnum.Captian;
+                        captain = true;
+                    }
+                    else if (!viceCaptian)
+                    {
+                        player.Fk_TeamPlayerType = (int)TeamPlayerTypeEnum.ViceCaptian;
+                        viceCaptian = true;
+                    }
 
                     _unitOfWork.AccountTeam.CreateAccountTeamPlayer(new AccountTeamPlayer
                     {

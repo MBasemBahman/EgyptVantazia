@@ -1173,4 +1173,10 @@
   <data name="Description English" xml:space="preserve">
     <value>الوصف الإنجليزي</value>
   </data>
+  <data name="IsNext" xml:space="preserve">
+    <value>القادم</value>
+  </data>
+  <data name="IsPrev" xml:space="preserve">
+    <value>السابق</value>
+  </data>
 </root>

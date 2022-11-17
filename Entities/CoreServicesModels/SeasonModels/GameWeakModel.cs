@@ -25,12 +25,17 @@ namespace Entities.CoreServicesModels.SeasonModels
 
         [DisplayName(nameof(LowerThanWeak))]
         public int? LowerThanWeak { get; set; }
-
         public DateTime? Deadline { get; set; }
 
         public DateTime? DeadlineFrom { get; set; }
 
         public DateTime? DeadlineTo { get; set; }
+
+        [DisplayName(nameof(IsNext))]
+        public bool? IsNext { get; set; }
+
+        [DisplayName(nameof(IsPrev))]
+        public bool? IsPrev { get; set; }
     }
 
     public class GameWeakModel : AuditEntity
@@ -44,6 +49,12 @@ namespace Entities.CoreServicesModels.SeasonModels
 
         [DisplayName(nameof(IsCurrent))]
         public bool IsCurrent { get; set; }
+
+        [DisplayName(nameof(IsNext))]
+        public bool IsNext { get; set; }
+
+        [DisplayName(nameof(IsPrev))]
+        public bool IsPrev { get; set; }
 
         [DisplayName(nameof(Season))]
         public int Fk_Season { get; set; }
@@ -76,6 +87,12 @@ namespace Entities.CoreServicesModels.SeasonModels
 
         [DisplayName(nameof(IsCurrent))]
         public bool IsCurrent { get; set; }
+
+        [DisplayName(nameof(IsNext))]
+        public bool IsNext { get; set; }
+
+        [DisplayName(nameof(IsPrev))]
+        public bool IsPrev { get; set; }
 
         [DisplayName(nameof(Deadline))]
         public DateTime? Deadline { get; set; }

@@ -166,6 +166,20 @@ namespace FantasyLogic.DataMigration.GamesData
             GameWeak gameWeak = await _unitOfWork.Season.FindGameWeakbyId(id, trackChanges: false);
             gameWeak.IsCurrent = true;
             await _unitOfWork.Save();
+
+            GameWeak nextGameWeak = await _unitOfWork.Season.FindGameWeakby365Id((gameWeak._365_GameWeakId.ParseToInt() + 1).ToString(), gameWeak.Fk_Season, trackChanges: false);
+            if (nextGameWeak != null)
+            {
+                gameWeak.IsNext = true;
+                await _unitOfWork.Save();
+            }
+
+            GameWeak prevGameWeak = await _unitOfWork.Season.FindGameWeakby365Id((gameWeak._365_GameWeakId.ParseToInt() - 1).ToString(), gameWeak.Fk_Season, trackChanges: false);
+            if (prevGameWeak != null)
+            {
+                gameWeak.IsPrev = true;
+                await _unitOfWork.Save();
+            }
         }
     }
 

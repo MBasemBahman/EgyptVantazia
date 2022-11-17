@@ -9,6 +9,10 @@ namespace Entities.CoreServicesModels.PrivateLeagueModels
         public bool? IsAdmin { get; set; }
 
         public string UniqueCode { get; set; }
+
+        public bool? HaveMembers { get; set; }
+
+        public int Fk_Season { get; set; }
     }
 
     public class PrivateLeagueModel : AuditEntity

@@ -47,6 +47,7 @@ namespace FantasyLogic
 
         #region AccountTeamCalculations
         private AccountTeamCalc _AccountTeamCalc;
+        private PrivateLeagueClac _PrivateLeagueClac;
         #endregion
 
         #endregion
@@ -143,6 +144,14 @@ namespace FantasyLogic
             {
                 _AccountTeamCalc ??= new AccountTeamCalc(_unitOfWork);
                 return _AccountTeamCalc;
+            }
+        }
+        public PrivateLeagueClac PrivateLeagueClac
+        {
+            get
+            {
+                _PrivateLeagueClac ??= new PrivateLeagueClac(_unitOfWork);
+                return _PrivateLeagueClac;
             }
         }
         #endregion

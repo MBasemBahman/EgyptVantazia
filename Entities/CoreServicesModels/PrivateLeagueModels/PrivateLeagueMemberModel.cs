@@ -7,6 +7,8 @@ namespace Entities.CoreServicesModels.PrivateLeagueModels
     {
         public int Fk_Account { get; set; }
 
+        public int Fk_Season { get; set; }
+
         public int Fk_PrivateLeague { get; set; }
 
         public bool? IsAdmin { get; set; }

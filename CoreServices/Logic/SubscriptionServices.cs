@@ -21,6 +21,7 @@ namespace CoreServices.Logic
                        .Select(a => new SubscriptionModel
                        {
                            Name = otherLang ? a.SubscriptionLang.Name : a.Name,
+                           Description = otherLang ? a.SubscriptionLang.Description : a.Description,
                            ImageUrl = a.StorageUrl + a.ImageUrl,
                            Id = a.Id,
                            CreatedAt = a.CreatedAt,

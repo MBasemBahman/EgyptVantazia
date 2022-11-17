@@ -70,7 +70,7 @@ namespace CoreServices.Extensions
         {
             if (string.IsNullOrWhiteSpace(orderByQueryString))
             {
-                return data.OrderBy(a => a.Id);
+                return data;
             }
 
             string orderQuery = OrderQueryBuilder.CreateOrderQuery<PlayerSeasonScoreStateModel>(orderByQueryString);

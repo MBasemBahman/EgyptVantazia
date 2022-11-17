@@ -30,5 +30,16 @@ namespace FantasyLogicMicroservices.Areas.AccountTeamArea.Controllers
 
             return Ok();
         }
+
+        [HttpPost]
+        [Route(nameof(UpdatePrivateLeaguesRanking))]
+        public IActionResult UpdatePrivateLeaguesRanking()
+        {
+            //_fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(fk_GameWeak);
+
+            _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.PrivateLeagueClac.RunPrivateLeaguesRanking());
+
+            return Ok();
+        }
     }
 }

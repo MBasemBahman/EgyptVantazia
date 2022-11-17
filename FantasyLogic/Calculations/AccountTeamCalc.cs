@@ -1,5 +1,6 @@
 ﻿using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.PlayerStateModels;
+using Entities.CoreServicesModels.PrivateLeagueModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.AccountTeamModels;
 using System.Linq.Dynamic.Core;
@@ -208,57 +209,55 @@ namespace FantasyLogic.Calculations
 
         public string UpdateAccountTeamGameWeakRanking(int fk_GameWeak, int fk_Season, string jobId)
         {
-            var accountTeamGameWeakRankings = new List<AccountTeamRanking>();
+            List<AccountTeamRanking> accountTeamGameWeakRankings = new();
             int ranking = 1;
 
-            var accountTeamGameWeaks = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
+            List<AccountTeamRanking> accountTeamGameWeaks = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
             {
                 Fk_Season = fk_Season,
                 Fk_GameWeak = fk_GameWeak,
             }, otherLang: false)
+                .OrderByDescending(a => a.TotalPoints)
                 .Select(a => new AccountTeamRanking
                 {
                     Id = a.Id,
-                    TotalPoints = a.TotalPoints,
                     Fk_Country = a.AccountTeam.Account.Fk_Country,
                     Fk_FavouriteTeam = a.AccountTeam.Account.Fk_FavouriteTeam
                 })
-                .OrderByDescending(a => a.TotalPoints)
                 .ToList();
 
-            foreach (var accountTeamGameWeak in accountTeamGameWeaks)
+            foreach (AccountTeamRanking accountTeamGameWeak in accountTeamGameWeaks)
             {
                 accountTeamGameWeakRankings.Add(new AccountTeamRanking
                 {
                     Id = accountTeamGameWeak.Id,
                     Fk_Country = accountTeamGameWeak.Fk_Country,
                     Fk_FavouriteTeam = accountTeamGameWeak.Fk_FavouriteTeam,
-                    TotalPoints = accountTeamGameWeak.TotalPoints,
                     GlobalRanking = ranking++
                 });
             }
 
-            foreach (var country in accountTeamGameWeaks.GroupBy(a => a.Fk_Country))
+            foreach (IGrouping<int, AccountTeamRanking> country in accountTeamGameWeaks.GroupBy(a => a.Fk_Country))
             {
                 ranking = 1;
-                foreach (var accountTeamGameWeak in country.ToList())
+                foreach (AccountTeamRanking accountTeamGameWeak in country.ToList())
                 {
                     accountTeamGameWeakRankings.First(a => a.Id == accountTeamGameWeak.Id).CountryRanking = ranking++;
                 }
             }
 
-            foreach (var favouriteTeam in accountTeamGameWeaks.GroupBy(a => a.Fk_FavouriteTeam))
+            foreach (IGrouping<int, AccountTeamRanking> favouriteTeam in accountTeamGameWeaks.GroupBy(a => a.Fk_FavouriteTeam))
             {
                 ranking = 1;
-                foreach (var accountTeamGameWeak in favouriteTeam.ToList())
+                foreach (AccountTeamRanking accountTeamGameWeak in favouriteTeam.ToList())
                 {
                     accountTeamGameWeakRankings.First(a => a.Id == accountTeamGameWeak.Id).FavouriteTeamRanking = ranking++;
                 }
             }
 
-            foreach (var accountTeamGameWeakRanking in accountTeamGameWeakRankings)
+            foreach (AccountTeamRanking accountTeamGameWeakRanking in accountTeamGameWeakRankings)
             {
-                var accountTeam = _unitOfWork.AccountTeam.FindAccountTeamGameWeakbyId(accountTeamGameWeakRanking.Id, trackChanges: true).Result;
+                AccountTeamGameWeak accountTeam = _unitOfWork.AccountTeam.FindAccountTeamGameWeakbyId(accountTeamGameWeakRanking.Id, trackChanges: true).Result;
                 accountTeam.GlobalRanking = accountTeamGameWeakRanking.GlobalRanking;
                 accountTeam.CountryRanking = accountTeamGameWeakRanking.CountryRanking;
                 accountTeam.FavouriteTeamRanking = accountTeamGameWeakRanking.FavouriteTeamRanking;
@@ -288,56 +287,54 @@ namespace FantasyLogic.Calculations
 
         public string UpdateAccountTeamRanking(int fk_Season, string jobId)
         {
-            var accountTeamRankings = new List<AccountTeamRanking>();
+            List<AccountTeamRanking> accountTeamRankings = new();
             int ranking = 1;
 
-            var accountTeams = _unitOfWork.AccountTeam.GetAccountTeams(new AccountTeamParameters
+            List<AccountTeamRanking> accountTeams = _unitOfWork.AccountTeam.GetAccountTeams(new AccountTeamParameters
             {
                 Fk_Season = fk_Season
             }, otherLang: false)
+                .OrderByDescending(a => a.TotalPoints)
                 .Select(a => new AccountTeamRanking
                 {
                     Id = a.Id,
-                    TotalPoints = a.TotalPoints,
                     Fk_Country = a.Account.Fk_Country,
                     Fk_FavouriteTeam = a.Account.Fk_FavouriteTeam
                 })
-                .OrderByDescending(a => a.TotalPoints)
                 .ToList();
 
-            foreach (var accountTeam in accountTeams)
+            foreach (AccountTeamRanking accountTeam in accountTeams)
             {
                 accountTeamRankings.Add(new AccountTeamRanking
                 {
                     Id = accountTeam.Id,
                     Fk_Country = accountTeam.Fk_Country,
                     Fk_FavouriteTeam = accountTeam.Fk_FavouriteTeam,
-                    TotalPoints = accountTeam.TotalPoints,
                     GlobalRanking = ranking++
                 });
             }
 
-            foreach (var country in accountTeams.GroupBy(a => a.Fk_Country))
+            foreach (IGrouping<int, AccountTeamRanking> country in accountTeams.GroupBy(a => a.Fk_Country))
             {
                 ranking = 1;
-                foreach (var accountTeam in country.ToList())
+                foreach (AccountTeamRanking accountTeam in country.ToList())
                 {
                     accountTeamRankings.First(a => a.Id == accountTeam.Id).CountryRanking = ranking++;
                 }
             }
 
-            foreach (var favouriteTeam in accountTeams.GroupBy(a => a.Fk_FavouriteTeam))
+            foreach (IGrouping<int, AccountTeamRanking> favouriteTeam in accountTeams.GroupBy(a => a.Fk_FavouriteTeam))
             {
                 ranking = 1;
-                foreach (var accountTeam in favouriteTeam.ToList())
+                foreach (AccountTeamRanking accountTeam in favouriteTeam.ToList())
                 {
                     accountTeamRankings.First(a => a.Id == accountTeam.Id).FavouriteTeamRanking = ranking++;
                 }
             }
 
-            foreach (var accountTeamRanking in accountTeamRankings)
+            foreach (AccountTeamRanking accountTeamRanking in accountTeamRankings)
             {
-                var accountTeam = _unitOfWork.AccountTeam.FindAccountTeambyId(accountTeamRanking.Id, trackChanges: true).Result;
+                AccountTeam accountTeam = _unitOfWork.AccountTeam.FindAccountTeambyId(accountTeamRanking.Id, trackChanges: true).Result;
                 accountTeam.GlobalRanking = accountTeamRanking.GlobalRanking;
                 accountTeam.CountryRanking = accountTeamRanking.CountryRanking;
                 accountTeam.FavouriteTeamRanking = accountTeamRanking.FavouriteTeamRanking;
@@ -364,7 +361,6 @@ namespace FantasyLogic.Calculations
     public class AccountTeamRanking
     {
         public int Id { get; set; }
-        public int TotalPoints { get; set; }
         public int Fk_Country { get; set; }
         public int Fk_FavouriteTeam { get; set; }
         public int CountryRanking { get; set; }

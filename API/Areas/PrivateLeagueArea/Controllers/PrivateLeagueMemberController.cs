@@ -30,6 +30,9 @@ namespace API.Areas.PrivateLeagueArea.Controllers
                 throw new Exception("Not Valid!");
             }
 
+            Entities.CoreServicesModels.SeasonModels.SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
+            parameters.Fk_Season = season.Id;
+
             PagedList<PrivateLeagueMemberModel> data = await _unitOfWork.PrivateLeague.GetPrivateLeagueMemberPaged(parameters);
 
             SetPagination(data.MetaData, parameters);

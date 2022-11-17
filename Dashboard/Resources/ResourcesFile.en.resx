@@ -1173,4 +1173,10 @@
   <data name="ForAction" xml:space="preserve">
     <value>For Promo Code</value>
   </data>
+  <data name="Description Arabic" xml:space="preserve">
+    <value>Arabic Description </value>
+  </data>
+  <data name="Description English" xml:space="preserve">
+    <value>English Description </value>
+  </data>
 </root>

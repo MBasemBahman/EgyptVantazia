@@ -9,6 +9,10 @@ namespace Entities.DBModels.SubscriptionModels
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
 
+        [DisplayName($"{nameof(Description)}{PropertyAttributeConstants.ArLang}")]
+        [DataType(DataType.MultilineText)]
+        public string Description { get; set; }
+
         [DisplayName(nameof(Cost))]
         public int Cost { get; set; }
 
@@ -35,5 +39,9 @@ namespace Entities.DBModels.SubscriptionModels
         [DisplayName($"{nameof(Name)}{PropertyAttributeConstants.EnLang}")]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
+
+        [DisplayName($"{nameof(Description)}{PropertyAttributeConstants.EnLang}")]
+        [DataType(DataType.MultilineText)]
+        public string Description { get; set; }
     }
 }

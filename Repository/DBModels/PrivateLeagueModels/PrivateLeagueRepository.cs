@@ -15,8 +15,10 @@ namespace Repository.DBModels.PrivateLeagueModels
             return FindByCondition(a => true, trackChanges)
                    .Filter(parameters.Id,
                            parameters.Fk_Account,
+                           parameters.HaveMembers,
                            parameters.UniqueCode,
-                           parameters.IsAdmin);
+                           parameters.IsAdmin,
+                           parameters.Fk_Season);
         }
 
         public async Task<PrivateLeague> FindById(int id, bool trackChanges)
@@ -42,10 +44,14 @@ namespace Repository.DBModels.PrivateLeagueModels
             this IQueryable<PrivateLeague> PrivateLeagues,
             int id,
             int Fk_Account,
+            bool? haveMembers,
             string UniqueCode,
-            bool? IsAdmin)
+            bool? IsAdmin,
+            int Fk_Season)
         {
             return PrivateLeagues.Where(a => (id == 0 || a.Id == id) &&
+                                             (Fk_Season == 0 || a.PrivateLeagueMembers.Any(b => b.Account.AccountTeams.Any(c => c.Fk_Season == Fk_Season))) &&
+                                             (haveMembers == null || haveMembers == true ? a.PrivateLeagueMembers.Any() : !a.PrivateLeagueMembers.Any()) &&
                                              (Fk_Account == 0 || a.PrivateLeagueMembers.Any(b => b.Fk_Account == Fk_Account)) &&
                                              (IsAdmin == null || a.PrivateLeagueMembers.Any(b => b.IsAdmin == IsAdmin)) &&
                                              (string.IsNullOrEmpty(UniqueCode) || a.UniqueCode == UniqueCode));

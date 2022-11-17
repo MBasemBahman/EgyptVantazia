@@ -77,6 +77,21 @@
 
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
+                                                <label asp-for="Description" class="form-label"></label>
+                                                <textarea asp-for="Description" class="form-control" rows="2" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Description{PropertyAttributeConstants.ArLang}"))" ></textarea>
+                                                <span asp-validation-for="Description" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="SubscriptionLang.Description" class="form-label"></label>
+                                                <textarea asp-for="SubscriptionLang.Description" class="form-control" rows="2" placeholder="@Localizer.Get("Enter")  @(Localizer.Get($"Description{PropertyAttributeConstants.EnLang}"))"> </textarea>
+                                                <span asp-validation-for="SubscriptionLang.Description" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
                                                 <label asp-for="Cost" class="form-label"></label>
                                                 <input asp-for="Cost" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Cost"))" />
                                                 <span asp-validation-for="Cost" class="text-danger"></span>

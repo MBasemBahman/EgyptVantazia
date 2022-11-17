@@ -1167,4 +1167,10 @@
   <data name="ForAction" xml:space="preserve">
     <value>للبروموكود</value>
   </data>
+  <data name="Description Arabic" xml:space="preserve">
+    <value>الوصف العربي</value>
+  </data>
+  <data name="Description English" xml:space="preserve">
+    <value>الوصف الإنجليزي</value>
+  </data>
 </root>

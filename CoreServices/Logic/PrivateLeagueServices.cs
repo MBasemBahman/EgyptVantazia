@@ -1,4 +1,5 @@
 ﻿using Entities.CoreServicesModels.AccountModels;
+using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.PrivateLeagueModels;
 using Entities.DBModels.PrivateLeagueModels;
 
@@ -91,12 +92,27 @@ namespace CoreServices.Logic
                            {
                                ImageUrl = a.Account.StorageUrl + a.Account.ImageUrl,
                                FullName = a.Account.FullName,
+                               AccountTeam = a.Account.AccountTeams
+                                                      .Where(b => b.Fk_Season == parameters.Fk_Season)
+                                                      .Select(b => new AccountTeamModel
+                                                      {
+                                                          Id = b.Id,
+                                                          Fk_Account = b.Fk_Account,
+                                                          Fk_Season = b.Fk_Season,
+                                                          Name = b.Name,
+                                                          TotalMoney = b.TotalMoney,
+                                                          TotalPoints = b.TotalPoints,
+                                                          ImageUrl = b.StorageUrl + b.ImageUrl,
+                                                          CountryRanking = b.CountryRanking,
+                                                          GlobalRanking = b.GlobalRanking,
+                                                          FavouriteTeamRanking = b.FavouriteTeamRanking,
+                                                      })
+                                                      .FirstOrDefault()
                            },
                            PrivateLeague = new PrivateLeagueModel
                            {
                                Name = a.PrivateLeague.Name
                            },
-
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

@@ -15,6 +15,8 @@ namespace Repository.DBModels.AccountTeamModels
             return FindByCondition(a => true, trackChanges)
                    .Filter(parameters.Id,
                            parameters.Fk_Account,
+                           parameters.Fk_User,
+                           parameters.CurrentSeason,
                            parameters.Fk_PrivateLeague,
                            parameters.Fk_Season,
                            parameters.CreatedAtFrom,
@@ -36,6 +38,8 @@ namespace Repository.DBModels.AccountTeamModels
             this IQueryable<AccountTeam> AccountTeams,
             int id,
             int Fk_Account,
+            int Fk_User,
+            bool? CurrentSeason,
             int Fk_PrivateLeague,
             int Fk_Season,
             DateTime? CreatedAtFrom,
@@ -45,7 +49,9 @@ namespace Repository.DBModels.AccountTeamModels
 
         {
             return AccountTeams.Where(a => (id == 0 || a.Id == id) &&
-                                           (Fk_Account == 0 || a.Fk_Account == Fk_Account) &&
+                                           (Fk_Account == 0 || a.Season.IsCurrent == CurrentSeason) &&
+                                           (CurrentSeason == null || a.Fk_Account == Fk_Account) &&
+                                           (Fk_User == 0 || a.Account.Fk_User == Fk_User) &&
                                            (Fk_PrivateLeague == 0 || a.Account.PrivateLeagueMembers.Any(b => b.Fk_PrivateLeague == Fk_PrivateLeague)) &&
                                            (CreatedAtFrom == null || a.CreatedAt >= CreatedAtFrom) &&
                                            (CreatedAtTo == null || a.CreatedAt <= CreatedAtTo) &&

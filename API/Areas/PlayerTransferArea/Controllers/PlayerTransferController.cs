@@ -51,21 +51,34 @@ namespace API.Areas.PlayerTransferArea.Controllers
                 throw new Exception("Season not started yet!");
             }
 
+            GameWeakModel currentGameWeak = _unitOfWork.Season.GetCurrentGameWeak();
+            if (currentGameWeak == null)
+            {
+                throw new Exception("Game Weak not started yet!");
+            }
+
             AccountTeamModel currentTeam = _unitOfWork.AccountTeam.GetCurrentTeam(auth.Fk_Account, currentSeason.Id);
             if (currentTeam == null)
             {
                 throw new Exception("Please create your team!");
             }
 
+            if (currentTeam.TotalMoney <= 0)
+            {
+                throw new Exception("You not have money for transfers!");
+            }
+
+            if (model.SellPlayers.Count == model.BuyPlayers.Count)
+            {
+                throw new Exception("The transfer is not successful. The number of players sold is not the same as the number of players bought!");
+            }
+
+            List<int> sellPlayers = model.SellPlayers.Select(a => a.Fk_Player).ToList();
+            List<int> buyPlayers = model.BuyPlayers.Select(a => a.Fk_Player).ToList();
+
             List<int> fk_Players = new();
-            if (model.SellPlayers != null && model.SellPlayers.Any())
-            {
-                fk_Players.AddRange(model.SellPlayers.Select(a => a.Fk_Player).ToList());
-            }
-            if (model.BuyPlayers != null && model.BuyPlayers.Any())
-            {
-                fk_Players.AddRange(model.BuyPlayers.Select(a => a.Fk_Player).ToList());
-            }
+            fk_Players.AddRange(sellPlayers);
+            fk_Players.AddRange(buyPlayers);
 
             var prices = _unitOfWork.Team.GetPlayers(new PlayerParameters
             {
@@ -78,24 +91,42 @@ namespace API.Areas.PlayerTransferArea.Controllers
                        a.SellPrice
                    }).ToList();
 
+            double sellMoney = prices.Where(a => sellPlayers.Contains(a.Id)).Select(a => a.SellPrice).Sum();
+            double buyMoney = prices.Where(a => buyPlayers.Contains(a.Id)).Select(a => a.BuyPrice).Sum();
+
+            if (currentTeam.TotalMoney + sellMoney < buyMoney)
+            {
+                throw new Exception("You not have money for transfers!");
+            }
+
+            List<SellPlayerModel> sellPlayersList = new();
+
             if (model.SellPlayers != null && model.SellPlayers.Any())
             {
-                GameWeakModel currentGameWeak = _unitOfWork.Season.GetCurrentGameWeak();
-
                 int totalPrice = 0;
                 foreach (PlayerTransferSellModel player in model.SellPlayers)
                 {
-                    int accountTeamPlayerGameWeakId = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
+                    SellPlayerModel accountTeamPlayer = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
                     {
                         Fk_AccountTeam = currentTeam.Id,
                         Fk_Player = player.Fk_Player,
                         Fk_Season = currentSeason.Id,
                         Fk_GameWeak = currentGameWeak.Id
-                    }, otherLang: false).Select(a => a.Id).FirstOrDefault();
+                    }, otherLang: false)
+                        .Select(a => new SellPlayerModel
+                        {
+                            Id = a.Id,
+                            Fk_TeamPlayerType = a.Fk_TeamPlayerType,
+                            IsPrimary = a.IsPrimary,
+                            Order = a.Order
+                        })
+                        .FirstOrDefault();
 
-                    if (accountTeamPlayerGameWeakId > 0)
+                    sellPlayersList.Add(accountTeamPlayer);
+
+                    if (accountTeamPlayer != null)
                     {
-                        AccountTeamPlayerGameWeak accountTeamPlayerGameWeak = await _unitOfWork.AccountTeam.FindAccountTeamPlayerGameWeakbyId(accountTeamPlayerGameWeakId, trackChanges: true);
+                        AccountTeamPlayerGameWeak accountTeamPlayerGameWeak = await _unitOfWork.AccountTeam.FindAccountTeamPlayerGameWeakbyId(accountTeamPlayer.Id, trackChanges: true);
                         accountTeamPlayerGameWeak.IsTransfer = true;
 
                         int price = (int)prices.Where(a => a.Id == player.Fk_Player).Select(a => a.SellPrice).FirstOrDefault();
@@ -136,17 +167,23 @@ namespace API.Areas.PlayerTransferArea.Controllers
                 }
 
                 int totalPrice = 0;
+                int index = 0;
+                int freeTransfer = currentTeam.FreeTransfer;
                 foreach (PlayerTransferBuyModel player in model.BuyPlayers)
                 {
                     int price = (int)prices.Where(a => a.Id == player.Fk_Player).Select(a => a.BuyPrice).FirstOrDefault();
+
                     _unitOfWork.PlayerTransfers.CreatePlayerTransfer(new PlayerTransfer
                     {
                         Fk_AccountTeam = currentTeam.Id,
                         Fk_GameWeak = nextGameWeak.Id,
                         Fk_Player = player.Fk_Player,
                         TransferTypeEnum = TransferTypeEnum.Buying,
-                        Cost = price
+                        Cost = price,
+                        IsFree = freeTransfer-- > 0
                     });
+
+                    SellPlayerModel sellPlayer = sellPlayersList[index++];
 
                     _unitOfWork.AccountTeam.CreateAccountTeamPlayer(new AccountTeamPlayer
                     {
@@ -157,9 +194,9 @@ namespace API.Areas.PlayerTransferArea.Controllers
                             new AccountTeamPlayerGameWeak
                             {
                                 Fk_GameWeak = nextGameWeak.Id,
-                                Fk_TeamPlayerType = player.Fk_TeamPlayerType,
-                                IsPrimary = player.IsPrimary,
-                                Order = player.Order
+                                Fk_TeamPlayerType = sellPlayer.Fk_TeamPlayerType,
+                                IsPrimary = sellPlayer.IsPrimary,
+                                Order = sellPlayer.Order,
                             }
                         }
                     });
@@ -170,6 +207,7 @@ namespace API.Areas.PlayerTransferArea.Controllers
 
                 AccountTeam accountTeam = await _unitOfWork.AccountTeam.FindAccountTeambyId(currentTeam.Id, trackChanges: true);
                 accountTeam.TotalMoney -= totalPrice;
+                accountTeam.FreeTransfer = freeTransfer;
                 await _unitOfWork.Save();
             }
 

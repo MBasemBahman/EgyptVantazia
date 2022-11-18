@@ -108,7 +108,8 @@ namespace API.Areas.PaymentArea.Controllers
                     Fk_Account = auth.Fk_Account,
                     Fk_Season = season.Id,
                     Order_id = order_id.ToString(),
-                    IsActive = false
+                    IsActive = false,
+                    Cost = amount_cents
                 });
                 await _unitOfWork.Save();
             }

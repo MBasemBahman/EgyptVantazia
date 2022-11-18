@@ -1,7 +1,6 @@
 ﻿using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.SubscriptionModels;
 using Entities.DBModels.AccountModels;
-using Entities.DBModels.SubscriptionModels;
 using Entities.RequestFeatures;
 
 namespace Entities.CoreServicesModels.AccountModels;
@@ -45,4 +44,7 @@ public class AccountSubscriptionModel : BaseEntity
 
     [DisplayName(nameof(Order_id))]
     public string Order_id { get; set; }
+
+    [DisplayName(nameof(Cost))]
+    public int Cost { get; set; }
 }

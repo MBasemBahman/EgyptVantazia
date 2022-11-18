@@ -14,6 +14,10 @@ namespace API.Areas.UserArea.Models
 
         public int RefCodeCount { get; set; }
 
+        public int Fk_AccountTeam { get; set; }
+        public int Fk_Country { get; set; }
+        public int Fk_FavouriteTeam { get; set; }
+
         [JsonIgnore]
         public new string LastModifiedAt { get; set; }
 

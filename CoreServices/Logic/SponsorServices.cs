@@ -29,6 +29,7 @@ namespace CoreServices.Logic
                            LastModifiedAt = a.LastModifiedAt,
                            LastModifiedBy = a.LastModifiedBy,
                            SponsorViewsCount = a.SponsorViews.Count,
+                           LinkUrl = a.LinkUrl,
                            SponsorViews = parameters.GetViews ? a.SponsorViews
                                                                   .Select(b => b.AppViewEnum)
                                                                   .ToList() : null,

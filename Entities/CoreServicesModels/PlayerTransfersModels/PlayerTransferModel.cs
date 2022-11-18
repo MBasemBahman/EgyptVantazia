@@ -59,6 +59,14 @@ namespace Entities.CoreServicesModels.PlayerTransfersModels
         public IList<PlayerTransferBuyModel> BuyPlayers { get; set; }
     }
 
+    public class SellPlayerModel
+    {
+        public int Id { get; set; }
+        public int Fk_TeamPlayerType { get; set; }
+        public bool IsPrimary { get; set; }
+        public int Order { get; set; }
+    }
+
     public class PlayerTransferSellModel
     {
         public int Fk_Player { get; set; }
@@ -66,13 +74,7 @@ namespace Entities.CoreServicesModels.PlayerTransfersModels
 
     public class PlayerTransferBuyModel
     {
-        public bool IsPrimary { get; set; }
-
-        public int Fk_TeamPlayerType { get; set; }
-
         public int Fk_Player { get; set; }
-
-        public int Order { get; set; }
 
         [DisplayName(nameof(IsFree))]
         public bool IsFree { get; set; }

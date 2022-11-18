@@ -1,4 +1,6 @@
-﻿using Entities.DBModels.AccountModels;
+﻿using Entities.CoreServicesModels.AccountTeamModels;
+using Entities.CoreServicesModels.SeasonModels;
+using Entities.DBModels.AccountModels;
 
 namespace FantasyLogicMicroservices.Utility
 {
@@ -145,7 +147,17 @@ namespace FantasyLogicMicroservices.Utility
                 userAuthenticated.Name = userAuthenticated.Name;
                 userAuthenticated.Fk_Account = account.Id;
                 userAuthenticated.CreatedAt = account.CreatedAt;
+                userAuthenticated.Fk_Country = account.Fk_Country;
+                userAuthenticated.Fk_FavouriteTeam = account.Fk_FavouriteTeam;
             }
+
+            var currentTeam = _unitOfWork.AccountTeam
+                                         .GetCurrentTeam(user.Id)
+                                         .Select(a => a.Id)
+                                         .FirstOrDefault();
+
+            userAuthenticated.Fk_AccountTeam = currentTeam;
+
             return userAuthenticated;
         }
 

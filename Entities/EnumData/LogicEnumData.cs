@@ -4,9 +4,9 @@
     {
         public enum AppViewEnum
         {
-            View1 = 1,
-            View2 = 2,
-            View3 = 3
+            More = 1,
+            States = 2,
+            Latest = 3
         }
 
         public enum NewsTypeEnum

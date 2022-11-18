@@ -300,6 +300,9 @@ namespace CoreServices.Logic
                                   IsAction = a.IsAction,
                                   Fk_Account = a.Fk_Account,
                                   Fk_Subscription = a.Fk_Subscription,
+                                  Cost = a.Cost,
+                                  IsActive = a.IsActive,
+                                  Order_id = a.Order_id,
                                   Subscription = new SubscriptionModel
                                   {
                                       Id = a.Fk_Subscription,
@@ -308,7 +311,7 @@ namespace CoreServices.Logic
                                       Discount = a.Subscription.Discount,
                                       ForAction = a.Subscription.ForAction,
                                       ImageUrl = a.Subscription.StorageUrl + a.Subscription.ImageUrl,
-                                      Name= otherLang ? a.Subscription.SubscriptionLang.Name : a.Subscription.Name,
+                                      Name = otherLang ? a.Subscription.SubscriptionLang.Name : a.Subscription.Name,
                                       IsActive = a.Subscription.IsActive,
                                   }
                               })

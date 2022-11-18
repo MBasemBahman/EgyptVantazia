@@ -34,5 +34,8 @@ namespace Entities.DBModels.AccountModels
 
         [DisplayName(nameof(Order_id))]
         public string Order_id { get; set; }
+
+        [DisplayName(nameof(Cost))]
+        public int Cost { get; set; }
     }
 }

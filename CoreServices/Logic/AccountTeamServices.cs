@@ -111,6 +111,15 @@ namespace CoreServices.Logic
             }, otherLang: false).FirstOrDefault();
         }
 
+        public IQueryable<AccountTeamModel> GetCurrentTeam(int fk_User)
+        {
+            return GetAccountTeams(new AccountTeamParameters()
+            {
+                Fk_User = fk_User,
+                CurrentSeason = true
+            }, otherLang: false);
+        }
+
         public async Task<string> UploadAccountTeamImage(string rootPath, IFormFile file)
         {
             FileUploader uploader = new(rootPath);

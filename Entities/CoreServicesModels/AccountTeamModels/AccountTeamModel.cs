@@ -11,7 +11,10 @@ namespace Entities.CoreServicesModels.AccountTeamModels
     public class AccountTeamParameters : RequestParameters
     {
         public int Fk_Account { get; set; }
+        public int Fk_User { get; set; }
         public int Fk_Season { get; set; }
+
+        public bool? CurrentSeason { get; set; }
 
         public int Fk_PrivateLeague { get; set; }
 

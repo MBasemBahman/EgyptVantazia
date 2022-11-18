@@ -1,4 +1,5 @@
-﻿using Entities.DBModels.AccountModels;
+﻿using Entities.CoreServicesModels.AccountModels;
+using Entities.DBModels.AccountModels;
 
 namespace API.Utility
 {
@@ -138,13 +139,16 @@ namespace API.Utility
                 UserName = user.UserName,
             };
 
-            Account account = _unitOfWork.Account.FindByUserId(user.Id, trackChanges: false).Result;
+            AccountModel account = _unitOfWork.Account.GetByUserId(user.Id, otherLang: false).Result;
             if (account != null)
             {
                 userAuthenticated.ImageUrl = account.StorageUrl + account.ImageUrl;
                 userAuthenticated.Name = userAuthenticated.Name;
                 userAuthenticated.Fk_Account = account.Id;
                 userAuthenticated.CreatedAt = account.CreatedAt;
+                userAuthenticated.Fk_Country = account.Fk_Country;
+                userAuthenticated.Fk_FavouriteTeam = account.Fk_FavouriteTeam;
+                userAuthenticated.Fk_AccountTeam = account.Fk_AccountTeam;
                 userAuthenticated.RefCode = account.RefCode;
                 userAuthenticated.RefCodeCount = account.RefCodeCount;
             }

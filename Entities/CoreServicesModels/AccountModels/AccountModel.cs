@@ -104,6 +104,8 @@ namespace Entities.CoreServicesModels.AccountModels
         [DisplayName(nameof(RefCodeCount))]
         public int RefCodeCount { get; set; }
 
+        public int Fk_AccountTeam { get; set; }
+
         public AccountTeamModel AccountTeam { get; set; }
     }
 

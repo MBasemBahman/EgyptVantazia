@@ -1,4 +1,7 @@
-﻿using Entities.CoreServicesModels.UserModels;
+﻿using Entities.CoreServicesModels.LocationModels;
+using Entities.CoreServicesModels.TeamModels;
+using Entities.CoreServicesModels.UserModels;
+using Entities.DBModels.LocationModels;
 using System.Text.Json.Serialization;
 
 namespace API.Areas.UserArea.Models
@@ -16,7 +19,12 @@ namespace API.Areas.UserArea.Models
 
         public int Fk_AccountTeam { get; set; }
         public int Fk_Country { get; set; }
+
+        public CountryModel Country { get; set; }
+
         public int Fk_FavouriteTeam { get; set; }
+
+        public TeamModel FavouriteTeam { get; set; }
 
         [JsonIgnore]
         public new string LastModifiedAt { get; set; }

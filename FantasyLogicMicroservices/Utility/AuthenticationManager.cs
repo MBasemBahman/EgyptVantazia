@@ -1,4 +1,5 @@
-﻿using Entities.CoreServicesModels.AccountTeamModels;
+﻿using Entities.CoreServicesModels.AccountModels;
+using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.AccountModels;
 
@@ -140,7 +141,7 @@ namespace FantasyLogicMicroservices.Utility
                 UserName = user.UserName,
             };
 
-            Account account = _unitOfWork.Account.FindByUserId(user.Id, trackChanges: false).Result;
+            AccountModel account = _unitOfWork.Account.GetByUserId(user.Id, otherLang: false).Result;
             if (account != null)
             {
                 userAuthenticated.ImageUrl = account.StorageUrl + account.ImageUrl;
@@ -149,15 +150,8 @@ namespace FantasyLogicMicroservices.Utility
                 userAuthenticated.CreatedAt = account.CreatedAt;
                 userAuthenticated.Fk_Country = account.Fk_Country;
                 userAuthenticated.Fk_FavouriteTeam = account.Fk_FavouriteTeam;
+                userAuthenticated.Fk_AccountTeam = account.Fk_AccountTeam;
             }
-
-            var currentTeam = _unitOfWork.AccountTeam
-                                         .GetCurrentTeam(user.Id)
-                                         .Select(a => a.Id)
-                                         .FirstOrDefault();
-
-            userAuthenticated.Fk_AccountTeam = currentTeam;
-
             return userAuthenticated;
         }
 

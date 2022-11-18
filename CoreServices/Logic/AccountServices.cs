@@ -43,6 +43,10 @@ namespace CoreServices.Logic
                                   PhoneNumberTwo = a.PhoneNumberTwo,
                                   RefCode = a.RefCode,
                                   RefCodeCount = a.RefCodeCount,
+                                  Fk_AccountTeam = a.AccountTeams
+                                                    .Where(a => a.Season.IsCurrent)
+                                                    .Select(a => a.Id)
+                                                    .FirstOrDefault(),
                                   Country = new CountryModel
                                   {
                                       Name = otherLang ? a.Country.CountryLang.Name : a.Country.Name
@@ -131,6 +135,14 @@ namespace CoreServices.Logic
         public async Task<Account> FindByUserId(int fK_User, bool trackChanges)
         {
             return await _repository.Account.FindByUserId(fK_User, trackChanges);
+        }
+
+        public async Task<AccountModel> GetByUserId(int fK_User, bool otherLang)
+        {
+            return await GetAccounts(new AccountParameters
+            {
+                Fk_User = fK_User
+            }, otherLang).FirstOrDefaultAsync();
         }
 
         public void CreateAccount(Account account)

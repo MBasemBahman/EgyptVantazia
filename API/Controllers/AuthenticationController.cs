@@ -1,6 +1,9 @@
 ﻿using API.Areas.UserArea.Models;
 using Entities.CoreServicesModels.AccountModels;
+using Entities.CoreServicesModels.LocationModels;
+using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountModels;
+using Entities.DBModels.LocationModels;
 using Entities.ServicesModels;
 using BC = BCrypt.Net.BCrypt;
 
@@ -33,6 +36,8 @@ namespace API.Controllers
         [AllowAnonymous]
         public async Task<UserDto> Login([FromBody] UserForAuthenticationDto model)
         {
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
             model.UserName = RegexService.GetUserName(model.UserName);
 
             UserAuthenticatedDto auth = await _authManager.Authenticate(model, IpAddress());
@@ -41,6 +46,10 @@ namespace API.Controllers
             SetRefresh(auth.RefreshTokenResponse);
 
             UserDto usersDto = _mapper.Map<UserDto>(auth);
+
+            var account = _unitOfWork.Account.GetAccountbyId(auth.Fk_Account, otherLang);
+            usersDto.Country = account.Country;
+            usersDto.FavouriteTeam = account.FavouriteTeam;
 
             return usersDto;
         }
@@ -51,6 +60,8 @@ namespace API.Controllers
         public async Task<UserDto> RegisterAnonymouse(
           [FromBody] UserForAnonymouseDto model)
         {
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
             string password = "123456";
 
             if ((await _unitOfWork.User.FindByUserName(model.UserName, trackChanges: false)) == null)
@@ -78,6 +89,10 @@ namespace API.Controllers
 
             UserDto usersDto = _mapper.Map<UserDto>(auth);
 
+            var account = _unitOfWork.Account.GetAccountbyId(auth.Fk_Account, otherLang);
+            usersDto.Country = account.Country;
+            usersDto.FavouriteTeam = account.FavouriteTeam;
+
             return usersDto;
         }
 
@@ -87,6 +102,8 @@ namespace API.Controllers
         public async Task<UserDto> RegisterUserWithAccount(
            [FromBody] UserWithAccountForRegistrationDto model)
         {
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
             if (!RegexService.ValidateEmail(model.User.EmailAddress))
             {
                 throw new Exception("Email address not valid!");
@@ -123,6 +140,10 @@ namespace API.Controllers
             SetRefresh(auth.RefreshTokenResponse);
 
             UserDto usersDto = _mapper.Map<UserDto>(auth);
+
+            var accountModel = _unitOfWork.Account.GetAccountbyId(auth.Fk_Account, otherLang);
+            usersDto.Country = accountModel.Country;
+            usersDto.FavouriteTeam = accountModel.FavouriteTeam;
 
             return usersDto;
         }
@@ -249,6 +270,8 @@ namespace API.Controllers
         public async Task<UserDto> RefreshToken(
             [FromBody] UserForTokenDto model)
         {
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
             model.Token = System.Net.WebUtility.UrlDecode(model.Token);
             model.Token = model.Token.Replace(" ", "+");
 
@@ -258,6 +281,10 @@ namespace API.Controllers
             SetRefresh(auth.RefreshTokenResponse);
 
             UserDto usersDto = _mapper.Map<UserDto>(auth);
+
+            var account = _unitOfWork.Account.GetAccountbyId(auth.Fk_Account, otherLang);
+            usersDto.Country = account.Country;
+            usersDto.FavouriteTeam = account.FavouriteTeam;
 
             return usersDto;
         }

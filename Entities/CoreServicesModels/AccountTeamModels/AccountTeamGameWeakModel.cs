@@ -12,6 +12,8 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public int Fk_Account { get; set; }
 
         public int Fk_Season { get; set; }
+
+        public string _365_GameWeakId { get; set; }
     }
 
     public class AccountTeamGameWeakModel : AuditEntity
@@ -48,6 +50,11 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         [DisplayName(nameof(TotalPoints))]
         public int TotalPoints { get; set; }
+
+        [DisplayName(nameof(PrevPoints))]
+        public int PrevPoints { get; set; }
+
+        public bool IsUp => TotalPoints > PrevPoints;
 
         [DisplayName(nameof(DoubleGameWeak))]
         public bool DoubleGameWeak { get; set; }

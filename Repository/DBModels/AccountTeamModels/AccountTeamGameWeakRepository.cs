@@ -16,7 +16,8 @@ namespace Repository.DBModels.AccountTeamModels
                            parameters.Fk_AccountTeam,
                            parameters.Fk_GameWeak,
                            parameters.Fk_Season,
-                           parameters.Fk_Account);
+                           parameters.Fk_Account,
+                           parameters._365_GameWeakId);
 
         }
 
@@ -42,11 +43,13 @@ namespace Repository.DBModels.AccountTeamModels
             int Fk_AccountTeam,
             int Fk_GameWeak,
             int Fk_Season,
-            int Fk_Account)
+            int Fk_Account,
+            string _365_GameWeakId)
 
         {
             return AccountTeamGameWeaks.Where(a => (id == 0 || a.Id == id) &&
                                                    (Fk_AccountTeam == 0 || a.Fk_AccountTeam == Fk_AccountTeam) &&
+                                                   (string.IsNullOrEmpty(_365_GameWeakId) || a.GameWeak._365_GameWeakId == _365_GameWeakId) &&
                                                    (Fk_Season == 0 || a.AccountTeam.Fk_Season == Fk_Season) &&
                                                    (Fk_Account == 0 || a.AccountTeam.Fk_Account == Fk_Account) &&
                                                    (Fk_GameWeak == 0 || a.Fk_GameWeak == Fk_GameWeak));

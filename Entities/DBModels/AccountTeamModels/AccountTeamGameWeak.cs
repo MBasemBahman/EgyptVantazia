@@ -36,6 +36,9 @@ namespace Entities.DBModels.AccountTeamModels
         [DisplayName(nameof(TotalPoints))]
         public int TotalPoints { get; set; }
 
+        [DisplayName(nameof(PrevPoints))]
+        public int PrevPoints { get; set; }
+
         [DisplayName(nameof(TansfarePoints))]
         public int TansfarePoints { get; set; }
 

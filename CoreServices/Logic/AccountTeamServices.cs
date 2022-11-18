@@ -134,6 +134,7 @@ namespace CoreServices.Logic
                            LastModifiedBy = a.LastModifiedBy,
                            FreeHit = a.FreeHit,
                            TotalPoints = a.TotalPoints,
+                           PrevPoints = a.PrevPoints,
                            WildCard = a.WildCard,
                            Fk_AccountTeam = a.Fk_AccountTeam,
                            Fk_GameWeak = a.Fk_GameWeak,

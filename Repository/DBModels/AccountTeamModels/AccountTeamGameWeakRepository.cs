@@ -24,7 +24,7 @@ namespace Repository.DBModels.AccountTeamModels
         public async Task<AccountTeamGameWeak> FindById(int id, bool trackChanges)
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public double GetAverageGameWeakPoints(int fk_GameWeak)

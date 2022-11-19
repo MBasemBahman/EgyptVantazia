@@ -32,7 +32,7 @@ namespace Repository.DBModels.PlayerStateModels
         public async Task<PlayerSeasonScoreState> FindById(int id, bool trackChanges)
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public void ResetTop15(int fk_Season)

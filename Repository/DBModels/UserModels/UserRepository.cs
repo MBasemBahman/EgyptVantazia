@@ -33,7 +33,7 @@ namespace Repository.DBModels.UserModels
 
             return await FindByCondition(a => a.UserName.ToLower().Trim() == userName, trackChanges: trackChanges)
                          .Include(a => a.RefreshTokens)
-                         .SingleOrDefaultAsync();
+                         .FirstOrDefaultAsync();
         }
 
         public async Task<User> FindByEmailAddress(string emailAddress, bool trackChanges)
@@ -47,7 +47,7 @@ namespace Repository.DBModels.UserModels
 
             return await FindByCondition(a => a.EmailAddress.ToLower().Trim() == emailAddress, trackChanges: trackChanges)
                          .Include(a => a.RefreshTokens)
-                         .SingleOrDefaultAsync();
+                         .FirstOrDefaultAsync();
         }
 
         public async Task<User> FindById(int id, bool trackChanges)
@@ -55,7 +55,7 @@ namespace Repository.DBModels.UserModels
             return id == 0
                 ? null
                 : await FindByCondition(a => a.Id == id, trackChanges: trackChanges)
-                         .SingleOrDefaultAsync();
+                         .FirstOrDefaultAsync();
         }
 
         public async Task<User> FindByRefreshToken(string token, bool trackChanges)
@@ -65,14 +65,14 @@ namespace Repository.DBModels.UserModels
                 : await FindByCondition(a => a.RefreshTokens.Any(b => b.Token == token)
                                               , trackChanges: trackChanges)
                          .Include(a => a.RefreshTokens)
-                         .SingleOrDefaultAsync();
+                         .FirstOrDefaultAsync();
         }
 
         public async Task<User> FindByAccountId(int fk_Account, bool trackChanges)
         {
 
             return await FindByCondition(a => a.Account.Id == fk_Account, trackChanges: trackChanges)
-                            .SingleOrDefaultAsync();
+                            .FirstOrDefaultAsync();
         }
 
         public async Task<User> FindByVerificationCode(string code, bool trackChanges)
@@ -82,14 +82,14 @@ namespace Repository.DBModels.UserModels
                 : await FindByCondition(a => a.Verifications.Any(b => b.Code == code)
                                               , trackChanges: trackChanges)
                          .Include(a => a.Verifications)
-                         .SingleOrDefaultAsync();
+                         .FirstOrDefaultAsync();
         }
 
         public async Task<User> FindByAdminId(int fk_admin, bool trackChanges)
         {
 
             return await FindByCondition(a => a.DashboardAdministrator.Id == fk_admin, trackChanges: trackChanges)
-                            .SingleOrDefaultAsync();
+                            .FirstOrDefaultAsync();
         }
     }
 

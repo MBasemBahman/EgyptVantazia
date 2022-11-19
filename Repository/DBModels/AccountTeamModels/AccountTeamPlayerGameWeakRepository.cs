@@ -27,7 +27,7 @@ namespace Repository.DBModels.AccountTeamModels
         public async Task<AccountTeamPlayerGameWeak> FindById(int id, bool trackChanges)
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public void ResetPoints(int fk_AccountTeam)

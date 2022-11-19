@@ -32,13 +32,13 @@ namespace Repository.DBModels.SeasonModels
         public async Task<TeamGameWeak> FindById(int id, bool trackChanges)
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public async Task<TeamGameWeak> FindBy365Id(string id, bool trackChanges)
         {
             return await FindByCondition(a => a._365_MatchId == id, trackChanges)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public new void Create(TeamGameWeak entity)

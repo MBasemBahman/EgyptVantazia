@@ -46,7 +46,7 @@ namespace CoreServices.Logic
 
         public DashboardViewModel GetViewbyId(int id, bool otherLang)
         {
-            return GetViews(new DashboardViewParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetViews(new DashboardViewParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
         public List<int> GetViewsByRoleId(int fk_role)
@@ -114,12 +114,12 @@ namespace CoreServices.Logic
 
         public DashboardAccessLevelModel GetAccessLevelbyId(int id, bool otherLang)
         {
-            return GetAccessLevels(new DashboardAccessLevelParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetAccessLevels(new DashboardAccessLevelParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
         public DashboardAccessLevelModel GetAccessLevelByPremission(DashboardAccessLevelParameters parameters)
         {
-            return GetAccessLevels(parameters, otherLang: false).SingleOrDefault();
+            return GetAccessLevels(parameters, otherLang: false).FirstOrDefault();
         }
 
         public void CreateAccessLevel(DashboardAccessLevel dashboardAccessLevel)
@@ -177,7 +177,7 @@ namespace CoreServices.Logic
 
         public DashboardAdministrationRoleModel GetRolebyId(int id, bool otherLang)
         {
-            return GetRoles(new DashboardAdministrationRoleRequestParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetRoles(new DashboardAdministrationRoleRequestParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
         public void CreateRole(DashboardAdministrationRole dashboardAdministrationRole)
@@ -258,7 +258,7 @@ namespace CoreServices.Logic
                         Fk_DashboardAccessLevel = fk_accesslevel,
                         Fk_DashboardAdministrationRole = fk_role,
                         Fk_DashboardView = fk_view
-                    }, trackChanges: false).SingleOrDefault();
+                    }, trackChanges: false).FirstOrDefault();
 
                 _repository.AdministrationRolePremission.Delete(premission);
             }
@@ -373,7 +373,7 @@ namespace CoreServices.Logic
 
         public DashboardAdministratorModel GetAdministratorbyId(int id, bool otherLang)
         {
-            return GetAdministrators(new DashboardAdministratorParameters { Id = id, GetDevelopers = true }, otherLang).SingleOrDefault();
+            return GetAdministrators(new DashboardAdministratorParameters { Id = id, GetDevelopers = true }, otherLang).FirstOrDefault();
         }
 
         public void CreateAdministrator(DashboardAdministrator dashboardAdministrator)

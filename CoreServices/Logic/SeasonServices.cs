@@ -71,7 +71,7 @@ namespace CoreServices.Logic
 
         public SeasonModel GetSeasonbyId(int id, bool otherLang)
         {
-            return GetSeasons(new SeasonParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetSeasons(new SeasonParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
         public int GetSeasonCount()
@@ -262,7 +262,7 @@ namespace CoreServices.Logic
 
         public GameWeakModel GetGameWeakbyId(int id, bool otherLang)
         {
-            return GetGameWeaks(new GameWeakParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetGameWeaks(new GameWeakParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
         public int GetGameWeakCount()
@@ -362,7 +362,7 @@ namespace CoreServices.Logic
 
         public TeamGameWeakModel GetTeamGameWeakbyId(int id, bool otherLang)
         {
-            return GetTeamGameWeaks(new TeamGameWeakParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetTeamGameWeaks(new TeamGameWeakParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
         public int GetTeamGameWeakCount()

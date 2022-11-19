@@ -21,7 +21,7 @@ namespace Repository.DBModels.SubscripitonModels
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
                         .Include(a => a.SubscriptionLang)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public new void Create(Subscription entity)

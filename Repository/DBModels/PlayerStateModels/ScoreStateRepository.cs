@@ -29,7 +29,7 @@ namespace Repository.DBModels.PlayerStateModels
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
                         .Include(a => a.ScoreStateLang)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
         public new void Create(ScoreState entity)
         {

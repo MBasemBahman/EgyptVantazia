@@ -30,7 +30,7 @@ namespace Repository.DBModels.AccountTeamModels
         public async Task<AccountTeam> FindById(int id, bool trackChanges)
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
     }
 

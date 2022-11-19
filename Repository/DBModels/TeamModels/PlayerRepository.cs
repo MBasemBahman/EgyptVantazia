@@ -37,14 +37,14 @@ namespace Repository.DBModels.TeamModels
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
                         .Include(a => a.PlayerLang)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public async Task<Player> FindBy365Id(string id, bool trackChanges)
         {
             return await FindByCondition(a => a._365_PlayerId == id, trackChanges)
                         .Include(a => a.PlayerLang)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public void UpdateActivation(int fk_Team, bool isActive)

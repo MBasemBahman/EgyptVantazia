@@ -74,7 +74,7 @@ namespace CoreServices.Logic
 
         public SubscriptionModel GetSubscriptionById(int id, bool otherLang)
         {
-            return GetSubscriptions(new SubscriptionParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetSubscriptions(new SubscriptionParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
         public int GetSubscriptionCount()

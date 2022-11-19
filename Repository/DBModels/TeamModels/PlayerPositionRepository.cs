@@ -20,14 +20,14 @@ namespace Repository.DBModels.TeamModels
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
                         .Include(a => a.PlayerPositionLang)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public async Task<PlayerPosition> FindBy365Id(string id, bool trackChanges)
         {
             return await FindByCondition(a => a._365_PositionId == id, trackChanges)
                         .Include(a => a.PlayerPositionLang)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public new void Create(PlayerPosition entity)

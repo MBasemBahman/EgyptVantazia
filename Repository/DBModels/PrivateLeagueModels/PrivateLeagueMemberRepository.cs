@@ -24,7 +24,7 @@ namespace Repository.DBModels.PrivateLeagueModels
         public async Task<PrivateLeagueMember> FindById(int id, bool trackChanges)
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public new void Create(PrivateLeagueMember entity)

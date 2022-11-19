@@ -22,14 +22,14 @@ namespace Repository.DBModels.SeasonModels
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
                         .Include(a => a.SeasonLang)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public async Task<Season> FindBy365Id(string id, bool trackChanges)
         {
             return await FindByCondition(a => a._365_SeasonId == id, trackChanges)
                         .Include(a => a.SeasonLang)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public new void Create(Season entity)

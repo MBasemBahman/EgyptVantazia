@@ -20,7 +20,7 @@ namespace Repository.DBModels.SponsorModels
         public async Task<SponsorView> FindById(int id, bool trackChanges)
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public new void Create(SponsorView entity)

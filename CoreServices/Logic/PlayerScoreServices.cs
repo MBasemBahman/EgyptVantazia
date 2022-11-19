@@ -69,7 +69,7 @@ namespace CoreServices.Logic
 
         public ScoreTypeModel GetScoreTypebyId(int id, bool otherLang)
         {
-            return GetScoreTypes(new ScoreTypeParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetScoreTypes(new ScoreTypeParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
         public int GetScoreTypeCount()
@@ -181,7 +181,7 @@ namespace CoreServices.Logic
 
         public PlayerGameWeakModel GetPlayerGameWeakbyId(int id, bool otherLang)
         {
-            return GetPlayerGameWeaks(new PlayerGameWeakParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetPlayerGameWeaks(new PlayerGameWeakParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
         public int GetPlayerGameWeakCount()
@@ -367,7 +367,7 @@ namespace CoreServices.Logic
 
         public PlayerGameWeakScoreModel GetPlayerGameWeakScorebyId(int id, bool otherLang)
         {
-            return GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
         public int GetPlayerGameWeakScoreCount()

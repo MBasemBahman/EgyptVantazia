@@ -72,7 +72,7 @@ namespace CoreServices.Logic
 
         public CountryModel GetCountrybyId(int id, bool otherLang)
         {
-            return GetCountrys(new RequestParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetCountrys(new RequestParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
         public int GetCountryCount()

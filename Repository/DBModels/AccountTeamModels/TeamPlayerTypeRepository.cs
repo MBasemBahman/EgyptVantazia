@@ -20,7 +20,7 @@ namespace Repository.DBModels.AccountTeamModels
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
                         .Include(a => a.TeamPlayerTypeLang)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public new void Create(TeamPlayerType entity)

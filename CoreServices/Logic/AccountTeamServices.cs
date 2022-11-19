@@ -94,7 +94,7 @@ namespace CoreServices.Logic
 
         public AccountTeamModel GetAccountTeambyId(int id, bool otherLang)
         {
-            return GetAccountTeams(new AccountTeamParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetAccountTeams(new AccountTeamParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
         public int GetAccountTeamCount()
@@ -210,7 +210,7 @@ namespace CoreServices.Logic
 
         public AccountTeamGameWeakModel GetAccountTeamGameWeakbyId(int id, bool otherLang)
         {
-            return GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
         public int GetAccountTeamGameWeakCount()
@@ -328,7 +328,7 @@ namespace CoreServices.Logic
 
         public AccountTeamPlayerGameWeakModel GetAccountTeamPlayerGameWeakbyId(int id, bool otherLang)
         {
-            return GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
         public int GetAccountTeamPlayerGameWeakCount()
@@ -566,7 +566,7 @@ namespace CoreServices.Logic
 
         public AccountTeamPlayerModel GetAccountTeamPlayerbyId(int id, bool otherLang)
         {
-            return GetAccountTeamPlayers(new AccountTeamPlayerParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetAccountTeamPlayers(new AccountTeamPlayerParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
         public int GetAccountTeamPlayerCount()
@@ -620,7 +620,7 @@ namespace CoreServices.Logic
 
         public TeamPlayerTypeModel GetTeamPlayerTypebyId(int id, bool otherLang)
         {
-            return GetTeamPlayerTypes(new RequestParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetTeamPlayerTypes(new RequestParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
         public int GetTeamPlayerTypeCount()

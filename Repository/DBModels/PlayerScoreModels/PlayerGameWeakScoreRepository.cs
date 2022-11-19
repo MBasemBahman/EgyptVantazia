@@ -39,7 +39,7 @@ namespace Repository.DBModels.PlayerScoreModels
         public async Task<PlayerGameWeakScore> FindById(int id, bool trackChanges)
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public new void Create(PlayerGameWeakScore entity)

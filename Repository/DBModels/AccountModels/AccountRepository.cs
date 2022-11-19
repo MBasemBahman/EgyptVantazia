@@ -35,14 +35,14 @@ namespace Repository.DBModels.AccountModels
 
         public async Task<Account> FindById(int id, bool trackChanges)
         {
-            return await FindByCondition(a => a.Id == id, trackChanges).SingleOrDefaultAsync();
+            return await FindByCondition(a => a.Id == id, trackChanges).FirstOrDefaultAsync();
         }
 
         public async Task<Account> FindByUserId(int fK_User, bool trackChanges)
         {
             return await FindByCondition(a => true, trackChanges)
                         .FindByUserId(fK_User)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public int GetIdByUserId(int fK_User)

@@ -31,7 +31,7 @@ namespace Repository.DBModels.PlayerScoreModels
         public async Task<PlayerGameWeak> FindById(int id, bool trackChanges)
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public new void Create(PlayerGameWeak entity)

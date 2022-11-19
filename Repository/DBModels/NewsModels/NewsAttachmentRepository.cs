@@ -20,7 +20,7 @@ namespace Repository.DBModels.NewsModels
         public async Task<NewsAttachment> FindById(int id, bool trackChanges)
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
     }
 

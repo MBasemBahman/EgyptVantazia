@@ -87,7 +87,7 @@ namespace CoreServices.Logic
 
         public PlayerTransferModel GetPlayerTransferbyId(int id, bool otherLang)
         {
-            return GetPlayerTransfers(new PlayerTransferParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetPlayerTransfers(new PlayerTransferParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
         public int GetPlayerTransferCount()

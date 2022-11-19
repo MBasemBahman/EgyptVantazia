@@ -89,7 +89,7 @@ namespace CoreServices.Logic
 
         public PlayerGameWeakScoreStateModel GetPlayerGameWeakScoreStatebyId(int id, bool otherLang)
         {
-            return GetPlayerGameWeakScoreStates(new PlayerGameWeakScoreStateParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetPlayerGameWeakScoreStates(new PlayerGameWeakScoreStateParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
         public int GetPlayerGameWeakScoreStateCount()
@@ -174,7 +174,7 @@ namespace CoreServices.Logic
 
         public PlayerSeasonScoreStateModel GetPlayerSeasonScoreStatebyId(int id, bool otherLang)
         {
-            return GetPlayerSeasonScoreStates(new PlayerSeasonScoreStateParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetPlayerSeasonScoreStates(new PlayerSeasonScoreStateParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
         public int GetPlayerSeasonScoreStateCount()
@@ -323,7 +323,7 @@ namespace CoreServices.Logic
 
         public ScoreStateModel GetScoreStatebyId(int id, bool otherLang)
         {
-            return GetScoreStates(new ScoreStateParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetScoreStates(new ScoreStateParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
         public int GetScoreStateCount()

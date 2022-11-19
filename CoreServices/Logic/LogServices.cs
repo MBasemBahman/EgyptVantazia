@@ -40,7 +40,7 @@ namespace CoreServices.Logic
 
         public LogModel GetLogbyId(int id, bool trackChanges)
         {
-            return GetLogs(new LogParameters { Id = id }, trackChanges).SingleOrDefault();
+            return GetLogs(new LogParameters { Id = id }, trackChanges).FirstOrDefault();
         }
 
 

@@ -20,14 +20,14 @@ namespace Repository.DBModels.AppInfoModels
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
                         .Include(a => a.AppAboutLang)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public async Task<AppAbout> Find(bool trackChanges)
         {
             return await FindByCondition(a => true, trackChanges)
                         .Include(a => a.AppAboutLang)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public new void Create(AppAbout entity)

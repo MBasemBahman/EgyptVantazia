@@ -78,7 +78,7 @@ namespace CoreServices.Logic
 
         public SponsorModel GetSponsorbyId(int id, bool otherLang)
         {
-            return GetSponsors(new SponsorParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetSponsors(new SponsorParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
         public int GetSponsorCount()
@@ -155,7 +155,7 @@ namespace CoreServices.Logic
                     {
                         AppView = (int)view,
                         Fk_Sponsor = fk_sponspor
-                    }, trackChanges: false).SingleOrDefault();
+                    }, trackChanges: false).FirstOrDefault();
 
                 _repository.SponsorView.Delete(data);
             }

@@ -20,7 +20,7 @@ namespace Repository.DBModels.TeamModels
         public async Task<PlayerPrice> FindById(int id, bool trackChanges)
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public new void Create(PlayerPrice entity)

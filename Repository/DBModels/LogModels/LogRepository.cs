@@ -23,7 +23,7 @@ namespace Repository.DBModels.LogModels
         public async Task<Log> FindById(int id, bool trackChanges)
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
     }
 

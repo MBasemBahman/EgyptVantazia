@@ -24,13 +24,13 @@ namespace Repository.DBModels.StandingsModels
         public async Task<Standings> FindById(int id, bool trackChanges)
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public async Task<Standings> FindBySeasonAndTeam(int fk_Season, int fk_Team, bool trackChanges)
         {
             return await FindByCondition(a => a.Fk_Season == fk_Season && a.Fk_Team == fk_Team, trackChanges)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public new void Create(Standings entity)

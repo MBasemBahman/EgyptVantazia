@@ -75,7 +75,7 @@ namespace CoreServices.Logic
 
         public AppAboutModel GetAppAboutbyId(int id, bool otherLang)
         {
-            return GetAppAbouts(new RequestParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetAppAbouts(new RequestParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
         public int GetAppAboutCount()

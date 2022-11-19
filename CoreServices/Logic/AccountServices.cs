@@ -131,7 +131,7 @@ namespace CoreServices.Logic
 
         public AccountModel GetAccountbyId(int id, bool otherLang)
         {
-            return GetAccounts(new AccountParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetAccounts(new AccountParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
 
@@ -219,7 +219,7 @@ namespace CoreServices.Logic
 
         public AccountRefCodeModel GetAccountRefCodebyId(int id)
         {
-            return GetAccountRefCodes(new AccountRefCodeParameters { Id = id }).SingleOrDefault();
+            return GetAccountRefCodes(new AccountRefCodeParameters { Id = id }).FirstOrDefault();
         }
 
         public void CreateAccountRefCode(AccountRefCode account)
@@ -348,7 +348,7 @@ namespace CoreServices.Logic
 
         public AccountSubscriptionModel GetAccountSubscriptionbyId(int id, bool otherLang)
         {
-            return GetAccountSubscriptions(new AccountSubscriptionParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetAccountSubscriptions(new AccountSubscriptionParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
 
@@ -398,7 +398,7 @@ namespace CoreServices.Logic
 
         public PaymentModel GetPaymentbyId(int id, bool otherLang)
         {
-            return GetPayments(new PaymentParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetPayments(new PaymentParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
 

@@ -22,7 +22,7 @@ namespace Repository.DBModels.SponsorModels
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
                         .Include(a => a.SponsorLang)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public new void Create(Sponsor entity)

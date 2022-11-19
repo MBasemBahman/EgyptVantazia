@@ -19,7 +19,7 @@ namespace Repository.DBModels.LocationModels
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
                         .Include(a => a.CountryLang)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public new void Create(Country entity)

@@ -85,7 +85,7 @@ namespace CoreServices.Logic
 
         public NewsModel GetNewsbyId(int id, bool otherLang)
         {
-            return GetNews(new NewsParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetNews(new NewsParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
         public int GetNewsCount()
@@ -138,7 +138,7 @@ namespace CoreServices.Logic
 
         public NewsAttachmentModel GetNewsAttachmentbyId(int id)
         {
-            return GetNewsAttachments(new NewsAttachmentParameters { Id = id }).SingleOrDefault();
+            return GetNewsAttachments(new NewsAttachmentParameters { Id = id }).FirstOrDefault();
         }
 
         public int GetNewsAttachmentCount()

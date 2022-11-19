@@ -31,14 +31,14 @@ namespace Repository.DBModels.SeasonModels
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
                         .Include(a => a.GameWeakLang)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public async Task<GameWeak> FindBy365Id(string id, int fk_Season, bool trackChanges)
         {
             return await FindByCondition(a => a.Fk_Season == fk_Season && a._365_GameWeakId == id, trackChanges)
                         .Include(a => a.GameWeakLang)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public void ResetCurrent()

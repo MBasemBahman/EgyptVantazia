@@ -23,7 +23,7 @@ namespace Repository.DBModels.PlayerScoreModels
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
                         .Include(a => a.ScoreTypeLang)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public new void Create(ScoreType entity)

@@ -21,7 +21,7 @@ namespace Repository.DBModels.DashboardAdministrationModels
         public async Task<AdministrationRolePremission> FindById(int id, bool trackChanges)
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
     }
 

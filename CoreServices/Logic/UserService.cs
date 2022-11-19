@@ -107,7 +107,7 @@ namespace CoreServices.Logic
 
         public UserModel GetUserbyId(int id, bool trackChanges)
         {
-            return GetUsers(new UserParameters { Id = id }, trackChanges).SingleOrDefault();
+            return GetUsers(new UserParameters { Id = id }, trackChanges).FirstOrDefault();
         }
 
         public bool CheckUserPassword(User user, string password)

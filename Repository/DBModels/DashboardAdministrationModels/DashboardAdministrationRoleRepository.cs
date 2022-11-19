@@ -21,7 +21,7 @@ namespace Repository.DBModels.DashboardAdministrationModels
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
                         .Include(a => a.DashboardAdministrationRoleLang)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public new void Create(DashboardAdministrationRole entity)

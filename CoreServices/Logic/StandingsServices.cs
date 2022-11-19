@@ -89,7 +89,7 @@ namespace CoreServices.Logic
 
         public StandingsModel GetStandingsbyId(int id, bool otherLang)
         {
-            return GetStandings(new StandingsParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetStandings(new StandingsParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
         public int GetStandingsCount()

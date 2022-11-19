@@ -25,7 +25,7 @@ namespace Repository.DBModels.PlayersTransfersModels
         public async Task<PlayerTransfer> FindById(int id, bool trackChanges)
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
     }
 

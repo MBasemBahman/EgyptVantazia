@@ -25,7 +25,7 @@ namespace Repository.DBModels.NewsModels
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
                         .Include(a => a.NewsLang)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public new void Create(News entity)

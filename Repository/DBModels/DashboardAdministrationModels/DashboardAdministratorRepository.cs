@@ -21,13 +21,13 @@ namespace Repository.DBModels.DashboardAdministrationModels
         public async Task<DashboardAdministrator> FindById(int id, bool trackChanges)
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public async Task<DashboardAdministrator> FindByUserId(int id, bool trackChanges)
         {
             return await FindByCondition(a => a.Fk_User == id, trackChanges)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
     }
 

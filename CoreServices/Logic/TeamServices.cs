@@ -76,7 +76,7 @@ namespace CoreServices.Logic
 
         public TeamModel GetTeambyId(int id, bool otherLang)
         {
-            return GetTeams(new TeamParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetTeams(new TeamParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
         public int GetTeamCount()
@@ -157,7 +157,7 @@ namespace CoreServices.Logic
 
         public PlayerPositionModel GetPlayerPositionbyId(int id, bool otherLang)
         {
-            return GetPlayerPositions(new PlayerPositionParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetPlayerPositions(new PlayerPositionParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
         public Dictionary<string, string> GetPlayerPositionLookUp(PlayerPositionParameters parameters, bool otherLang)
@@ -322,7 +322,7 @@ namespace CoreServices.Logic
 
         public PlayerModel GetPlayerbyId(int id, bool otherLang)
         {
-            return GetPlayers(new PlayerParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetPlayers(new PlayerParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
         public int GetPlayerCount()
@@ -442,7 +442,7 @@ namespace CoreServices.Logic
 
         public PlayerPriceModel GetPlayerPricebyId(int id, bool otherLang)
         {
-            return GetPlayerPrices(new PlayerPriceParameters { Id = id }, otherLang).SingleOrDefault();
+            return GetPlayerPrices(new PlayerPriceParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
         public int GetPlayerPriceCount()

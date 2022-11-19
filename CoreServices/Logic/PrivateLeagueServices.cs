@@ -67,7 +67,7 @@ namespace CoreServices.Logic
 
         public PrivateLeagueModel GetPrivateLeaguebyId(int id)
         {
-            return GetPrivateLeagues(new PrivateLeagueParameters { Id = id }).SingleOrDefault();
+            return GetPrivateLeagues(new PrivateLeagueParameters { Id = id }).FirstOrDefault();
         }
 
         public int GetPrivateLeagueCount()
@@ -154,7 +154,7 @@ namespace CoreServices.Logic
 
         public PrivateLeagueMemberModel GetPrivateLeagueMemberbyId(int id)
         {
-            return GetPrivateLeagueMembers(new PrivateLeagueMemberParameters { Id = id }).SingleOrDefault();
+            return GetPrivateLeagueMembers(new PrivateLeagueMemberParameters { Id = id }).FirstOrDefault();
         }
 
         public int GetPrivateLeagueMemberCount()

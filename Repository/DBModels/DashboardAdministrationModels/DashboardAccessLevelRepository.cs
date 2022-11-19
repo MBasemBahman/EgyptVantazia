@@ -20,7 +20,7 @@ namespace Repository.DBModels.DashboardAdministrationModels
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
                         .Include(a => a.DashboardAccessLevelLang)
-                        .SingleOrDefaultAsync();
+                        .FirstOrDefaultAsync();
         }
 
         public new void Create(DashboardAccessLevel entity)

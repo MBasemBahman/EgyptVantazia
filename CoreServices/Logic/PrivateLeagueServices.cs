@@ -29,6 +29,10 @@ namespace CoreServices.Logic
                            Name = a.Name,
                            UniqueCode = a.UniqueCode,
                            MemberCount = a.PrivateLeagueMembers.Count,
+                           MyPosition = a.PrivateLeagueMembers
+                                         .Where(b => b.Fk_Account == parameters.Fk_Account)
+                                         .Select(b => b.Ranking)
+                                         .FirstOrDefault()
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

@@ -51,7 +51,8 @@ namespace API.Areas.PrivateLeagueArea.Controllers
         public PrivateLeagueModel GetPrivateLeagueByUniqueCode(
         [FromQuery, BindRequired] string uniqueCode)
         {
-            PrivateLeagueModel data = _unitOfWork.PrivateLeague.GetPrivateLeagues(new PrivateLeagueParameters { UniqueCode = uniqueCode }).FirstOrDefault();
+            PrivateLeagueModel data = _unitOfWork.PrivateLeague
+                                                 .GetPrivateLeagues(new PrivateLeagueParameters { UniqueCode = uniqueCode }).FirstOrDefault();
 
             return data ?? throw new Exception("الكود غير صحيح!");
         }

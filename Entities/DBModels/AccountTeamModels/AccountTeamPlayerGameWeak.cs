@@ -39,5 +39,11 @@ namespace Entities.DBModels.AccountTeamModels
 
         [DisplayName(nameof(Points))]
         public int Points { get; set; }
+
+        [DisplayName(nameof(HavePoints))]
+        public bool HavePoints { get; set; }
+
+        [DisplayName(nameof(HavePointsInTotal))]
+        public bool HavePointsInTotal { get; set; }
     }
 }

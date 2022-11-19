@@ -111,8 +111,9 @@ namespace API.Areas.PlayerTransferArea.Controllers
                         Fk_AccountTeam = currentTeam.Id,
                         Fk_Player = player.Fk_Player,
                         Fk_Season = currentSeason.Id,
-                        Fk_GameWeak = currentGameWeak.Id
+                        //Fk_GameWeak = currentGameWeak.Id
                     }, otherLang: false)
+                        .OrderByDescending(a => a.Id)
                         .Select(a => new SellPlayerModel
                         {
                             Id = a.Id,

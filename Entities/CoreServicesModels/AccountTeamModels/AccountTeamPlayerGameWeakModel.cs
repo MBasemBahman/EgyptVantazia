@@ -59,6 +59,14 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         [DisplayName(nameof(Points))]
         public int Points { get; set; }
 
+        [DisplayName(nameof(HavePoints))]
+        public bool HavePoints { get; set; }
+
+        [DisplayName(nameof(HavePointsInTotal))]
+        public bool HavePointsInTotal { get; set; }
+
+        public bool IsPlayed { get; set; }
+
         public int? Top15 { get; set; }
     }
 }

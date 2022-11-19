@@ -138,27 +138,28 @@ namespace FantasyLogic.Calculations
                 .ToList();
 
             bool captianPointsFlag = true;
+            bool havePointsInTotal = true;
 
             foreach (var player in players)
             {
-                if (playersFinalPoints.Count == 11)
-                {
-                    break;
-                }
+                //if (playersFinalPoints.Count == 11)
+                //{
+                //    break;
+                //}
 
-                if (player.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper &&
-                    playersFinalPoints.Any(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper))
-                {
-                    continue;
-                }
+                //if (player.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper &&
+                //    playersFinalPoints.Any(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper))
+                //{
+                //    continue;
+                //}
 
 
-                if (playersFinalPoints.Count == 10 &&
-                       !playersFinalPoints.Any(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper) &&
-                       player.Fk_PlayerPosition != (int)PlayerPositionEnum.Goalkeeper)
-                {
-                    continue;
-                }
+                //if (playersFinalPoints.Count == 10 &&
+                //       !playersFinalPoints.Any(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper) &&
+                //       player.Fk_PlayerPosition != (int)PlayerPositionEnum.Goalkeeper)
+                //{
+                //    continue;
+                //}
 
                 if (playersPoints.Any(a => a.Fk_Player == player.Fk_Player))
                 {
@@ -182,9 +183,16 @@ namespace FantasyLogic.Calculations
                         Fk_TeamPlayerType = player.Fk_TeamPlayerType,
                         IsPrimary = player.IsPrimary,
                         Order = player.Order,
-                        Points = points
+                        Points = points,
+                        HavePointsInTotal = havePointsInTotal
                     });
 
+                    if (playersFinalPoints.Count == 11 ||
+                        playersFinalPoints.Count(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper) > 1)
+                    {
+                        havePointsInTotal = false;
+                        continue;
+                    }
                     totalPoints += points;
                 }
             }
@@ -200,7 +208,9 @@ namespace FantasyLogic.Calculations
                     Fk_TeamPlayerType = playersFinalPoint.Fk_TeamPlayerType,
                     Order = playersFinalPoint.Order,
                     IsPrimary = playersFinalPoint.IsPrimary,
-                    Points = (int)playersFinalPoint.Points
+                    Points = (int)playersFinalPoint.Points,
+                    HavePoints = true,
+                    HavePointsInTotal = playersFinalPoint.HavePointsInTotal
                 });
             }
 
@@ -370,6 +380,8 @@ namespace FantasyLogic.Calculations
         public int Order { get; set; }
         public bool IsPrimary { get; set; }
         public double Points { get; set; }
+
+        public bool HavePointsInTotal { get; set; }
     }
 
     public class AccountTeamRanking

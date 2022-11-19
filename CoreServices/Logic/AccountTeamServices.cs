@@ -255,6 +255,8 @@ namespace CoreServices.Logic
                            IsTransfer = a.IsTransfer,
                            Order = a.Order,
                            Points = a.Points,
+                           HavePoints = a.HavePoints,
+                           HavePointsInTotal = a.HavePointsInTotal,
                            Top15 = a.AccountTeamPlayer
                                     .Player
                                     .PlayerGameWeakScoreStates
@@ -366,6 +368,8 @@ namespace CoreServices.Logic
                                            {
                                                Name = otherLang ? b.TeamPlayerType.TeamPlayerTypeLang.Name : b.TeamPlayerType.Name,
                                            },
+                                           HavePoints = b.HavePoints,
+                                           HavePointsInTotal = b.HavePointsInTotal,
                                            Top15 = a.Player
                                                     .PlayerGameWeakScoreStates
                                                     .Where(c => c.Fk_GameWeak == b.Fk_GameWeak && c.Top15 != null)
@@ -390,6 +394,8 @@ namespace CoreServices.Logic
                                            {
                                                Name = otherLang ? b.TeamPlayerType.TeamPlayerTypeLang.Name : b.TeamPlayerType.Name,
                                            },
+                                           HavePoints = b.HavePoints,
+                                           HavePointsInTotal = b.HavePointsInTotal,
                                            Top15 = a.Player
                                                     .PlayerGameWeakScoreStates
                                                     .Where(c => c.Fk_GameWeak == b.Fk_GameWeak && c.Top15 != null)
@@ -409,6 +415,13 @@ namespace CoreServices.Logic
                                            IsTransfer = b.IsTransfer,
                                            Order = b.Order,
                                            Points = b.Points,
+                                           HavePoints = b.HavePoints,
+                                           HavePointsInTotal = b.HavePointsInTotal,
+                                           IsPlayed = b.AccountTeamPlayer
+                                                       .Player
+                                                       .PlayerGameWeaks
+                                                       .Any(c => c.TeamGameWeak.Fk_GameWeak == b.Fk_GameWeak &&
+                                                                 c.TeamGameWeak.StartTime <= DateTime.UtcNow.AddHours(2)),
                                            TeamPlayerType = new TeamPlayerTypeModel
                                            {
                                                Name = otherLang ? b.TeamPlayerType.TeamPlayerTypeLang.Name : b.TeamPlayerType.Name,
@@ -502,33 +515,33 @@ namespace CoreServices.Logic
                                                     }
                                                 })
                                                 .ToList() : null,
-                               NextMatches = parameters.Fk_NextGameWeak == 0 ? null :
+                               NextMatch =
                                (a.Player
                                 .Team
                                 .AwayGameWeaks
-                                .Any(b => b.Fk_GameWeak == parameters.Fk_NextGameWeak) ?
+                                .Any(b => b.StartTime >= DateTime.UtcNow.AddHours(2)) ?
                                a.Player
                                 .Team
                                 .AwayGameWeaks
-                                .Where(b => b.Fk_GameWeak == parameters.Fk_NextGameWeak)
+                                .Where(b => b.StartTime >= DateTime.UtcNow.AddHours(2))
                                 .Select(b => new TeamModel
                                 {
                                     Name = otherLang ? b.Home.TeamLang.Name : b.Home.Name,
                                     ShortName = otherLang ? b.Home.TeamLang.ShortName : b.Home.ShortName,
                                     IsAwayTeam = false
                                 })
-                                .ToList() :
+                                .FirstOrDefault() :
                                 a.Player
                                 .Team
                                 .HomeGameWeaks
-                                .Where(b => b.Fk_GameWeak == parameters.Fk_NextGameWeak)
+                                .Where(b => b.StartTime >= DateTime.UtcNow.AddHours(2))
                                 .Select(b => new TeamModel
                                 {
                                     Name = otherLang ? b.Away.TeamLang.Name : b.Away.Name,
                                     ShortName = otherLang ? b.Away.TeamLang.ShortName : b.Away.ShortName,
                                     IsAwayTeam = true
                                 })
-                                .ToList())
+                                .FirstOrDefault())
                            },
                            AccountTeam = new AccountTeamModel
                            {

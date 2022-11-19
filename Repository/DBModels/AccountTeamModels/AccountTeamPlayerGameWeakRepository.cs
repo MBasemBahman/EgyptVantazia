@@ -51,6 +51,8 @@ namespace Repository.DBModels.AccountTeamModels
                 oldEntity.IsPrimary = entity.IsPrimary;
                 oldEntity.Order = entity.Order;
                 oldEntity.Points = entity.Points;
+                oldEntity.HavePoints = entity.HavePoints;
+                oldEntity.HavePointsInTotal = entity.HavePointsInTotal;
             }
             else
             {

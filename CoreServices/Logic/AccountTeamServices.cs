@@ -315,9 +315,9 @@ namespace CoreServices.Logic
             _repository.AccountTeamPlayerGameWeak.Create(AccountTeamPlayerGameWeak);
         }
 
-        public void ResetPoints(int fk_AccountTeam)
+        public void ResetAccountTeamPlayerGameWeakPoints(int fk_AccountTeam, int fk_GameWeak)
         {
-            _repository.AccountTeamPlayerGameWeak.ResetPoints(fk_AccountTeam);
+            _repository.AccountTeamPlayerGameWeak.ResetPoints(fk_AccountTeam, fk_GameWeak);
         }
 
         public async Task DeleteAccountTeamPlayerGameWeak(int id)

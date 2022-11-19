@@ -30,11 +30,12 @@ namespace Repository.DBModels.AccountTeamModels
                         .FirstOrDefaultAsync();
         }
 
-        public void ResetPoints(int fk_AccountTeam)
+        public void ResetPoints(int fk_AccountTeam, int fk_GameWeak)
         {
             var players = FindAll(new AccountTeamPlayerGameWeakParameters
             {
-                Fk_AccountTeam = fk_AccountTeam
+                Fk_AccountTeam = fk_AccountTeam,
+                Fk_GameWeak = fk_GameWeak
             }, trackChanges: true).ToList();
 
             players.ForEach(a => a.Points = 0);

@@ -189,7 +189,7 @@ namespace FantasyLogic.Calculations
                 }
             }
 
-            _unitOfWork.AccountTeam.ResetPoints(fk_AccountTeam);
+            _unitOfWork.AccountTeam.ResetAccountTeamPlayerGameWeakPoints(fk_AccountTeam, gameWeak.Id);
 
             foreach (AccountTeamPlayersCalculationPoints playersFinalPoint in playersFinalPoints)
             {

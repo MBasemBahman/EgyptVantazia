@@ -1,5 +1,6 @@
 ﻿using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.PlayerScoreModels;
+using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayerStateModels;
@@ -73,6 +74,10 @@ namespace FantasyLogic.Calculations
                             ? BackgroundJob.ContinueJobWith(jobId, () => PlayerStateCalculations(player, 0, fk_GameWeak, playerSelectionCount, playerCaptainCount, jobId))
                             : BackgroundJob.Enqueue(() => PlayerStateCalculations(player, 0, fk_GameWeak, playerSelectionCount, playerCaptainCount, jobId));
                     }
+
+                    jobId = jobId.IsExisting()
+                            ? BackgroundJob.ContinueJobWith(jobId, () => UpdateTop15(fk_GameWeak, 0))
+                            : BackgroundJob.Enqueue(() => UpdateTop15(fk_GameWeak, 0));
                 }
 
             }
@@ -107,6 +112,10 @@ namespace FantasyLogic.Calculations
                         : BackgroundJob.Enqueue(() => PlayerStateCalculations(player, fk_Season, 0, playerSelectionCount, playerCaptainCount, jobId));
                 }
             }
+
+            jobId = jobId.IsExisting()
+                           ? BackgroundJob.ContinueJobWith(jobId, () => UpdateTop15(0, fk_Season))
+                           : BackgroundJob.Enqueue(() => UpdateTop15(0, fk_Season));
         }
 
         public string PlayerStateCalculations(
@@ -305,6 +314,56 @@ namespace FantasyLogic.Calculations
                 }
                 _unitOfWork.Save().Wait();
             }
+        }
+
+        public async Task UpdateTop15(int fk_GameWeak, int fk_Season)
+        {
+            if (fk_GameWeak > 0)
+            {
+                List<int> players = _unitOfWork.PlayerState.GetPlayerGameWeakScoreStates(new PlayerGameWeakScoreStateParameters
+                {
+                    Fk_ScoreState = (int)ScoreStateEnum.Total,
+                    Fk_GameWeak = fk_GameWeak,
+                }, otherLang: false)
+                .Skip(0)
+                .Take(15)
+                .Select(a => a.Id)
+                .ToList();
+
+                _unitOfWork.PlayerState.ResetPlayerGameWeakScoreStateTop15(fk_GameWeak);
+
+                int ranking = 1;
+                foreach (int id in players)
+                {
+                    PlayerGameWeakScoreState PlayerGameWeakScore = await _unitOfWork.PlayerState.FindPlayerGameWeakScoreStatebyId(id, trackChanges: true);
+                    PlayerGameWeakScore.Top15 = ranking++;
+                }
+                await _unitOfWork.Save();
+            }
+
+            if (fk_Season > 0)
+            {
+                List<int> players = _unitOfWork.PlayerState.GetPlayerSeasonScoreStates(new PlayerSeasonScoreStateParameters
+                {
+                    Fk_ScoreState = (int)ScoreStateEnum.Total,
+                    Fk_Season = fk_Season,
+                }, otherLang: false)
+                    .Skip(0)
+                    .Take(15)
+                    .Select(a => a.Id)
+                .ToList();
+
+                _unitOfWork.PlayerState.ResetPlayerSeasonScoreStateTop15(fk_Season);
+
+                int ranking = 1;
+                foreach (int id in players)
+                {
+                    PlayerSeasonScoreState PlayerGameWeakScore = await _unitOfWork.PlayerState.FindPlayerSeasonScoreStatebyId(id, trackChanges: true);
+                    PlayerGameWeakScore.Top15 = ranking++;
+                }
+                await _unitOfWork.Save();
+            }
+
         }
         #endregion
 

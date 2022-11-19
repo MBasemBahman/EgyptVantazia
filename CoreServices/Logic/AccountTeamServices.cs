@@ -255,6 +255,12 @@ namespace CoreServices.Logic
                            IsTransfer = a.IsTransfer,
                            Order = a.Order,
                            Points = a.Points,
+                           Top15 = a.AccountTeamPlayer
+                                    .Player
+                                    .PlayerGameWeakScoreStates
+                                    .Where(b => b.Fk_GameWeak == a.Fk_GameWeak && b.Top15 != null)
+                                    .Select(b => b.Top15)
+                                    .FirstOrDefault(),
                            GameWeak = new GameWeakModel
                            {
                                Name = otherLang ? a.GameWeak.GameWeakLang.Name : a.GameWeak.Name,
@@ -359,7 +365,12 @@ namespace CoreServices.Logic
                                            TeamPlayerType = new TeamPlayerTypeModel
                                            {
                                                Name = otherLang ? b.TeamPlayerType.TeamPlayerTypeLang.Name : b.TeamPlayerType.Name,
-                                           }
+                                           },
+                                           Top15 = a.Player
+                                                    .PlayerGameWeakScoreStates
+                                                    .Where(c => c.Fk_GameWeak == b.Fk_GameWeak && c.Top15 != null)
+                                                    .Select(c => c.Top15)
+                                                    .FirstOrDefault()
                                        })
                                        .FirstOrDefault() :
                                        parameters.IsNextGameWeak ?
@@ -378,7 +389,12 @@ namespace CoreServices.Logic
                                            TeamPlayerType = new TeamPlayerTypeModel
                                            {
                                                Name = otherLang ? b.TeamPlayerType.TeamPlayerTypeLang.Name : b.TeamPlayerType.Name,
-                                           }
+                                           },
+                                           Top15 = a.Player
+                                                    .PlayerGameWeakScoreStates
+                                                    .Where(c => c.Fk_GameWeak == b.Fk_GameWeak && c.Top15 != null)
+                                                    .Select(c => c.Top15)
+                                                    .FirstOrDefault()
                                        })
                                        .FirstOrDefault() :
                                        a.AccountTeamPlayerGameWeaks.Where(b => parameters.Fk_GameWeak != 0 && b.Fk_GameWeak == parameters.Fk_GameWeak)
@@ -396,7 +412,12 @@ namespace CoreServices.Logic
                                            TeamPlayerType = new TeamPlayerTypeModel
                                            {
                                                Name = otherLang ? b.TeamPlayerType.TeamPlayerTypeLang.Name : b.TeamPlayerType.Name,
-                                           }
+                                           },
+                                           Top15 = a.Player
+                                                    .PlayerGameWeakScoreStates
+                                                    .Where(c => c.Fk_GameWeak == b.Fk_GameWeak && c.Top15 != null)
+                                                    .Select(c => c.Top15)
+                                                    .FirstOrDefault()
                                        })
                                        .FirstOrDefault(),
                            Player = new PlayerModel
@@ -408,6 +429,11 @@ namespace CoreServices.Logic
                                _365_PlayerId = a.Player._365_PlayerId,
                                Fk_Team = a.Player.Fk_Team,
                                Fk_PlayerPosition = a.Player.Fk_PlayerPosition,
+                               Top15 = a.Player
+                                        .PlayerSeasonScoreStates
+                                        .Where(b => b.Season.IsCurrent && b.Top15 != null)
+                                        .Select(b => b.Top15)
+                                        .FirstOrDefault(),
                                PlayerPosition = new PlayerPositionModel
                                {
                                    Name = otherLang ? a.Player.PlayerPosition.PlayerPositionLang.Name : a.Player.PlayerPosition.Name,

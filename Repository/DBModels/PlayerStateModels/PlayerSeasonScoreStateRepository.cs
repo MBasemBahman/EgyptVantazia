@@ -1,4 +1,5 @@
-﻿using Entities.CoreServicesModels.PlayerStateModels;
+﻿using Entities.CoreServicesModels.AccountTeamModels;
+using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.DBModels.PlayerStateModels;
 
 namespace Repository.DBModels.PlayerStateModels
@@ -23,7 +24,8 @@ namespace Repository.DBModels.PlayerStateModels
                            parameters.PointsFrom,
                            parameters.PointsTo,
                            parameters.PercentFrom,
-                           parameters.PercentTo);
+                           parameters.PercentTo,
+                           parameters.IsTop15);
 
         }
 
@@ -33,6 +35,16 @@ namespace Repository.DBModels.PlayerStateModels
                         .SingleOrDefaultAsync();
         }
 
+        public void ResetTop15(int fk_Season)
+        {
+            var players = FindAll(new PlayerSeasonScoreStateParameters
+            {
+                Fk_Season = fk_Season,
+                IsTop15 = true
+            }, trackChanges: true).ToList();
+
+            players.ForEach(a => a.Top15 = null);
+        }
 
         public new void Create(PlayerSeasonScoreState entity)
         {
@@ -70,9 +82,11 @@ namespace Repository.DBModels.PlayerStateModels
             double? pointsFrom,
             double? pointsTo,
             double? percentFrom,
-            double? percentTo)
+            double? percentTo,
+            bool? IsTop15)
         {
             return PlayerSeasonScoreStates.Where(a => (id == 0 || a.Id == id) &&
+                                                  (IsTop15 == null || (IsTop15 == true ? a.Top15 != null : a.Top15 == null)) &&
                                                   (fk_Player == 0 || a.Fk_Player == fk_Player) &&
                                                   (fk_ScoreState == 0 || a.Fk_ScoreState == fk_ScoreState) &&
                                                   (fk_PlayerPosition == 0 || a.Player.Fk_PlayerPosition == fk_PlayerPosition) &&
@@ -86,7 +100,7 @@ namespace Repository.DBModels.PlayerStateModels
                                                   (pointsFrom == null || a.Points >= pointsFrom) &&
                                                   (pointsTo == null || a.Points <= pointsTo) &&
                                                   (percentFrom == null || a.Percent >= percentFrom) &&
-                                                  (percentTo == null || a.Percent <= percentTo) );
+                                                  (percentTo == null || a.Percent <= percentTo));
 
 
         }

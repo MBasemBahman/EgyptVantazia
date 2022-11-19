@@ -97,6 +97,8 @@ namespace Entities.CoreServicesModels.TeamModels
         [DisplayName(nameof(IsActive))]
         public bool IsActive { get; set; }
 
+        public int? Top15 { get; set; }
+
         public List<PlayerSeasonScoreStateModel> SeasonScoreStates { get; set; }
 
         public List<PlayerGameWeakScoreStateModel> GameWeakScoreStates { get; set; }

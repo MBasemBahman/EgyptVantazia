@@ -198,6 +198,10 @@ namespace CoreServices.Logic
                            Fk_Team = a.Fk_Team,
                            PlayerNumber = a.PlayerNumber,
                            Age = a.Age,
+                           Top15 = a.PlayerSeasonScoreStates
+                                    .Where(b => b.Season.IsCurrent && b.Top15 != null)
+                                    .Select(b => b.Top15)
+                                    .FirstOrDefault(),
                            PlayerPosition = new PlayerPositionModel
                            {
                                Name = otherLang ? a.PlayerPosition.PlayerPositionLang.Name : a.PlayerPosition.Name,

@@ -58,5 +58,7 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         [DisplayName(nameof(Points))]
         public int Points { get; set; }
+
+        public int? Top15 { get; set; }
     }
 }

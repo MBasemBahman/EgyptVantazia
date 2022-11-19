@@ -36,6 +36,7 @@ namespace CoreServices.Logic
                            Value = a.Value,
                            Fk_ScoreState = a.Fk_ScoreState,
                            Fk_GameWeak = a.Fk_GameWeak,
+                           Top15 = a.Top15,
                            Player = new PlayerModel
                            {
                                Id = a.Fk_Player,
@@ -68,6 +69,11 @@ namespace CoreServices.Logic
         public async Task<PlayerGameWeakScoreState> FindPlayerGameWeakScoreStatebyId(int id, bool trackChanges)
         {
             return await _repository.PlayerGameWeakScoreState.FindById(id, trackChanges);
+        }
+
+        public void ResetPlayerGameWeakScoreStateTop15(int fk_GameWeak)
+        {
+            _repository.PlayerGameWeakScoreState.ResetTop15(fk_GameWeak);
         }
 
         public void CreatePlayerGameWeakScoreState(PlayerGameWeakScoreState PlayerGameWeakScoreState)
@@ -114,6 +120,7 @@ namespace CoreServices.Logic
                            Value = a.Value,
                            Fk_ScoreState = a.Fk_ScoreState,
                            Fk_Season = a.Fk_Season,
+                           Top15 = a.Top15,
                            Player = new PlayerModel
                            {
                                Id = a.Fk_Player,
@@ -147,6 +154,11 @@ namespace CoreServices.Logic
         public async Task<PlayerSeasonScoreState> FindPlayerSeasonScoreStatebyId(int id, bool trackChanges)
         {
             return await _repository.PlayerSeasonScoreState.FindById(id, trackChanges);
+        }
+
+        public void ResetPlayerSeasonScoreStateTop15(int fk_Season)
+        {
+            _repository.PlayerSeasonScoreState.ResetTop15(fk_Season);
         }
 
         public void CreatePlayerSeasonScoreState(PlayerSeasonScoreState PlayerSeasonScoreState)

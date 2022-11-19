@@ -22,6 +22,8 @@ namespace Entities.CoreServicesModels.PlayerStateModels
         public double? PointsTo { get; set; }
         public double? PercentFrom { get; set; }
         public double? PercentTo { get; set; }
+
+        public bool? IsTop15 { get; set; }
     }
 
     public class PlayerSeasonScoreStateModel : AuditEntity
@@ -55,6 +57,9 @@ namespace Entities.CoreServicesModels.PlayerStateModels
 
         [DisplayName(nameof(Percent))]
         public double Percent { get; set; }
+
+        [DisplayName(nameof(Top15))]
+        public int? Top15 { get; set; }
     }
 
     public class PlayerSeasonScoreStateCreateOrEditModel

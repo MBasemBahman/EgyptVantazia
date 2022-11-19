@@ -34,5 +34,8 @@ namespace Entities.DBModels.PlayerStateModels
 
         [DisplayName(nameof(Percent))]
         public double Percent { get; set; }
+
+        [DisplayName(nameof(Top15))]
+        public int? Top15 { get; set; }
     }
 }

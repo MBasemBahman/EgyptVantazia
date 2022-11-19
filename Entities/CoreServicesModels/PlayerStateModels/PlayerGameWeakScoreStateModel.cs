@@ -14,6 +14,7 @@ namespace Entities.CoreServicesModels.PlayerStateModels
         public int Fk_ScoreState { get; set; }
         public List<int> Fk_ScoreStates { get; set; }
         public int? Fk_GameWeak { get; set; }
+        public int? Fk_Season { get; set; }
         public List<int> Fk_GameWeaks { get; set; }
         public int Fk_PlayerPosition { get; set; }
         public double? PointsFrom { get; set; }
@@ -22,6 +23,7 @@ namespace Entities.CoreServicesModels.PlayerStateModels
         public double? PercentTo { get; set; }
         public double? ValueFrom { get; set; }
         public double? ValueTo { get; set; }
+        public bool? IsTop15 { get; set; }
     }
 
     public class PlayerGameWeakScoreStateModel : AuditEntity
@@ -55,6 +57,9 @@ namespace Entities.CoreServicesModels.PlayerStateModels
 
         [DisplayName(nameof(Percent))]
         public double Percent { get; set; }
+
+        [DisplayName(nameof(Top15))]
+        public int? Top15 { get; set; }
     }
 
     public class PlayerGameWeakScoreStateCreateOrEditModel

@@ -49,10 +49,12 @@ namespace CoreServices.Logic
                                                     .FirstOrDefault(),
                                   Country = new CountryModel
                                   {
+                                      Id = a.Fk_Country,
                                       Name = otherLang ? a.Country.CountryLang.Name : a.Country.Name
                                   },
                                   Nationality = new CountryModel
                                   {
+                                      Id = a.Fk_Nationality,
                                       Name = otherLang ? a.Nationality.CountryLang.Name : a.Nationality.Name
                                   },
                                   LastActive = a.User.RefreshTokens.Any()
@@ -60,6 +62,7 @@ namespace CoreServices.Logic
                                   : null,
                                   FavouriteTeam = new TeamModel
                                   {
+                                      Id = a.Fk_FavouriteTeam,
                                       Name = otherLang ? a.FavouriteTeam.TeamLang.Name : a.FavouriteTeam.Name,
                                       ShortName = otherLang ? a.FavouriteTeam.TeamLang.ShortName : a.FavouriteTeam.ShortName,
                                   }

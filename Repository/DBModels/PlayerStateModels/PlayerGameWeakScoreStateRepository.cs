@@ -14,6 +14,7 @@ namespace Repository.DBModels.PlayerStateModels
             return FindByCondition(a => true, trackChanges)
                    .Filter(parameters.Id,
                            parameters.Fk_GameWeak,
+                           parameters.Fk_Season,
                            parameters.Fk_Player,
                            parameters.Fk_ScoreState,
                            parameters.Fk_Players,
@@ -25,7 +26,8 @@ namespace Repository.DBModels.PlayerStateModels
                            parameters.PercentFrom,
                            parameters.PercentTo,
                            parameters.ValueFrom,
-                           parameters.ValueTo);
+                           parameters.ValueTo,
+                           parameters.IsTop15);
 
         }
 
@@ -33,6 +35,17 @@ namespace Repository.DBModels.PlayerStateModels
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
                         .SingleOrDefaultAsync();
+        }
+
+        public void ResetTop15(int fk_GameWeak)
+        {
+            var players = FindAll(new PlayerGameWeakScoreStateParameters
+            {
+                Fk_GameWeak = fk_GameWeak,
+                IsTop15 = true
+            }, trackChanges: true).ToList();
+
+            players.ForEach(a => a.Top15 = null);
         }
 
         public new void Create(PlayerGameWeakScoreState entity)
@@ -63,6 +76,7 @@ namespace Repository.DBModels.PlayerStateModels
             this IQueryable<PlayerGameWeakScoreState> PlayerGameWeakScoreStates,
             int id,
             int? fk_GameWeak,
+            int? Fk_Season,
             int fk_Player,
             int fk_ScoreState,
             List<int> fk_Players,
@@ -74,9 +88,12 @@ namespace Repository.DBModels.PlayerStateModels
             double? percentFrom,
             double? percentTo,
             double? valueFrom,
-            double? valueTo)
+            double? valueTo,
+            bool? IsTop15)
         {
             return PlayerGameWeakScoreStates.Where(a => (id == 0 || a.Id == id) &&
+                                                  (IsTop15 == null || (IsTop15 == true ? a.Top15 != null : a.Top15 == null)) &&
+                                                  (Fk_Season == null || a.GameWeak.Fk_Season == Fk_Season) &&
                                                   (fk_GameWeak == null || a.Fk_GameWeak == fk_GameWeak) &&
                                                   (fk_Player == 0 || a.Fk_Player == fk_Player) &&
                                                   (fk_PlayerPosition == 0 || a.Player.Fk_PlayerPosition == fk_PlayerPosition) &&
@@ -92,7 +109,7 @@ namespace Repository.DBModels.PlayerStateModels
                                                   (percentFrom == null || a.Percent >= percentFrom) &&
                                                   (percentTo == null || a.Percent <= percentTo) &&
                                                   (valueFrom == null || a.Value >= valueFrom) &&
-                                                  (valueTo == null || a.Value <= valueTo) );
+                                                  (valueTo == null || a.Value <= valueTo));
 
 
         }

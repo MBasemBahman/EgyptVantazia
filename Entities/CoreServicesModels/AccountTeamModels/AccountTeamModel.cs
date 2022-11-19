@@ -29,6 +29,10 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public string AccountUserName { get; set; }
 
         public bool IncludeGameWeakPoints { get; set; }
+
+        public int Fk_Country { get; set; }
+
+        public int Fk_FavouriteTeam { get; set; }
     }
 
     public class AccountTeamModel : AuditImageEntity

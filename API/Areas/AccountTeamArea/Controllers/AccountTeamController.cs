@@ -38,11 +38,26 @@ namespace API.Areas.AccountTeamArea.Controllers
         [HttpGet]
         [Route(nameof(GetAccountTeamById))]
         public AccountTeamModel GetAccountTeamById(
-        [FromQuery, BindRequired] int id)
+        [FromQuery, BindRequired] int id,
+        [FromQuery] bool includeGameWeakPoints)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             AccountTeamModel data = _unitOfWork.AccountTeam.GetAccountTeambyId(id, otherLang);
+
+            if (data != null && includeGameWeakPoints)
+            {
+                var currentGameWeak = _unitOfWork.Season.GetCurrentGameWeak();
+
+                data.AverageGameWeakPoints = _unitOfWork.AccountTeam.GetAverageGameWeakPoints(currentGameWeak.Id);
+
+                data.BestAccountTeamGameWeak = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
+                {
+                    Fk_GameWeak = currentGameWeak.Id
+                }, otherLang: otherLang)
+                    .OrderByDescending(a => a.TotalPoints)
+                    .FirstOrDefault();
+            }
 
             return data;
         }

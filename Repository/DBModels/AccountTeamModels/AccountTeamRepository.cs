@@ -49,8 +49,8 @@ namespace Repository.DBModels.AccountTeamModels
 
         {
             return AccountTeams.Where(a => (id == 0 || a.Id == id) &&
-                                           (Fk_Account == 0 || a.Season.IsCurrent == CurrentSeason) &&
-                                           (CurrentSeason == null || a.Fk_Account == Fk_Account) &&
+                                           (CurrentSeason == null || a.Season.IsCurrent == CurrentSeason) &&
+                                           (Fk_Account == 0 || a.Fk_Account == Fk_Account) &&
                                            (Fk_User == 0 || a.Account.Fk_User == Fk_User) &&
                                            (Fk_PrivateLeague == 0 || a.Account.PrivateLeagueMembers.Any(b => b.Fk_PrivateLeague == Fk_PrivateLeague)) &&
                                            (CreatedAtFrom == null || a.CreatedAt >= CreatedAtFrom) &&

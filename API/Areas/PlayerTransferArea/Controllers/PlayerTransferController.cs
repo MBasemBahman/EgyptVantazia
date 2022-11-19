@@ -68,7 +68,7 @@ namespace API.Areas.PlayerTransferArea.Controllers
                 throw new Exception("You not have money for transfers!");
             }
 
-            if (model.SellPlayers.Count == model.BuyPlayers.Count)
+            if (model.SellPlayers.Count != model.BuyPlayers.Count)
             {
                 throw new Exception("The transfer is not successful. The number of players sold is not the same as the number of players bought!");
             }

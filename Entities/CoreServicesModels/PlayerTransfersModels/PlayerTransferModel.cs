@@ -75,8 +75,5 @@ namespace Entities.CoreServicesModels.PlayerTransfersModels
     public class PlayerTransferBuyModel
     {
         public int Fk_Player { get; set; }
-
-        [DisplayName(nameof(IsFree))]
-        public bool IsFree { get; set; }
     }
 }

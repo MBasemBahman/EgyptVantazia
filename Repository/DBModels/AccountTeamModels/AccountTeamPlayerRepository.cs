@@ -41,8 +41,8 @@ namespace Repository.DBModels.AccountTeamModels
             bool IsCurrent)
         {
             return AccountTeamPlayers.Where(a => (id == 0 || a.Id == id) &&
-                                                 (Fk_GameWeak == 0 || a.AccountTeam.AccountTeamGameWeaks.Any(b => b.Fk_GameWeak == Fk_GameWeak)) &&
-                                                 (IsCurrent == false || a.AccountTeam.AccountTeamGameWeaks.Any(b => b.GameWeak.IsCurrent)) &&
+                                                 (Fk_GameWeak == 0 || a.AccountTeamPlayerGameWeaks.Any(b => b.Fk_GameWeak == Fk_GameWeak)) &&
+                                                 (IsCurrent == false || a.AccountTeamPlayerGameWeaks.Any(b => b.GameWeak.IsCurrent)) &&
                                                  (Fk_Account == 0 || a.AccountTeam.Fk_Account == Fk_Account) &&
                                                  (Fk_AccountTeam == 0 || a.Fk_AccountTeam == Fk_AccountTeam) &&
                                                  (Fk_Season == 0 || a.AccountTeam.Fk_Season == Fk_Season) &&

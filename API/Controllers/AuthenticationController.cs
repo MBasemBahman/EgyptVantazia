@@ -89,9 +89,9 @@ namespace API.Controllers
 
             UserDto usersDto = _mapper.Map<UserDto>(auth);
 
-            var account = _unitOfWork.Account.GetAccountbyId(auth.Fk_Account, otherLang);
-            usersDto.Country = account.Country;
-            usersDto.FavouriteTeam = account.FavouriteTeam;
+            //var account = _unitOfWork.Account.GetAccountbyId(auth.Fk_Account, otherLang);
+            //usersDto.Country = account.Country;
+            //usersDto.FavouriteTeam = account.FavouriteTeam;
 
             return usersDto;
         }

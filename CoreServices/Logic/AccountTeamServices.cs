@@ -370,6 +370,11 @@ namespace CoreServices.Logic
                                            },
                                            HavePoints = b.HavePoints,
                                            HavePointsInTotal = b.HavePointsInTotal,
+                                           IsPlayed = b.AccountTeamPlayer
+                                                       .Player
+                                                       .PlayerGameWeaks
+                                                       .Any(c => c.TeamGameWeak.Fk_GameWeak == b.Fk_GameWeak &&
+                                                                 c.TeamGameWeak.StartTime <= DateTime.UtcNow.AddHours(2)),
                                            Top15 = a.Player
                                                     .PlayerGameWeakScoreStates
                                                     .Where(c => c.Fk_GameWeak == b.Fk_GameWeak && c.Top15 != null)
@@ -396,6 +401,11 @@ namespace CoreServices.Logic
                                            },
                                            HavePoints = b.HavePoints,
                                            HavePointsInTotal = b.HavePointsInTotal,
+                                           IsPlayed = b.AccountTeamPlayer
+                                                       .Player
+                                                       .PlayerGameWeaks
+                                                       .Any(c => c.TeamGameWeak.Fk_GameWeak == b.Fk_GameWeak &&
+                                                                 c.TeamGameWeak.StartTime <= DateTime.UtcNow.AddHours(2)),
                                            Top15 = a.Player
                                                     .PlayerGameWeakScoreStates
                                                     .Where(c => c.Fk_GameWeak == b.Fk_GameWeak && c.Top15 != null)

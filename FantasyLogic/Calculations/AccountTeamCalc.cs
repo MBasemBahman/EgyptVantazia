@@ -175,6 +175,13 @@ namespace FantasyLogic.Calculations
 
                     double points = playersPoints.Where(a => a.Fk_Player == player.Fk_Player).Select(a => a.Points).First() * captianPoints;
 
+                    if (havePointsInTotal && 
+                        (playersFinalPoints.Count > 11 ||
+                        playersFinalPoints.Any(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper)))
+                    {
+                        havePointsInTotal = false;
+                    }
+
                     playersFinalPoints.Add(new AccountTeamPlayersCalculationPoints
                     {
                         Fk_Player = player.Fk_Player,
@@ -187,13 +194,10 @@ namespace FantasyLogic.Calculations
                         HavePointsInTotal = havePointsInTotal
                     });
 
-                    if (playersFinalPoints.Count == 11 ||
-                        playersFinalPoints.Count(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper) > 1)
+                    if (havePointsInTotal)
                     {
-                        havePointsInTotal = false;
-                        continue;
+                        totalPoints += points;
                     }
-                    totalPoints += points;
                 }
             }
 

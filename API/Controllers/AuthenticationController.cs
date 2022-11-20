@@ -47,10 +47,13 @@ namespace API.Controllers
 
             UserDto usersDto = _mapper.Map<UserDto>(auth);
 
-            var account = _unitOfWork.Account.GetAccountbyId(auth.Fk_Account, otherLang);
-            usersDto.Country = account.Country;
-            usersDto.FavouriteTeam = account.FavouriteTeam;
-
+            if (auth.Fk_Account > 0)
+            {
+                var account = _unitOfWork.Account.GetAccountbyId(auth.Fk_Account, otherLang);
+                usersDto.Country = account.Country;
+                usersDto.FavouriteTeam = account.FavouriteTeam;
+            }
+           
             return usersDto;
         }
 
@@ -89,9 +92,12 @@ namespace API.Controllers
 
             UserDto usersDto = _mapper.Map<UserDto>(auth);
 
-            //var account = _unitOfWork.Account.GetAccountbyId(auth.Fk_Account, otherLang);
-            //usersDto.Country = account.Country;
-            //usersDto.FavouriteTeam = account.FavouriteTeam;
+            if (auth.Fk_Account > 0)
+            {
+                var account = _unitOfWork.Account.GetAccountbyId(auth.Fk_Account, otherLang);
+                usersDto.Country = account.Country;
+                usersDto.FavouriteTeam = account.FavouriteTeam;
+            }
 
             return usersDto;
         }
@@ -141,9 +147,12 @@ namespace API.Controllers
 
             UserDto usersDto = _mapper.Map<UserDto>(auth);
 
-            var accountModel = _unitOfWork.Account.GetAccountbyId(auth.Fk_Account, otherLang);
-            usersDto.Country = accountModel.Country;
-            usersDto.FavouriteTeam = accountModel.FavouriteTeam;
+            if (auth.Fk_Account > 0)
+            {
+                var accountModel = _unitOfWork.Account.GetAccountbyId(auth.Fk_Account, otherLang);
+                usersDto.Country = accountModel.Country;
+                usersDto.FavouriteTeam = accountModel.FavouriteTeam;
+            }
 
             return usersDto;
         }
@@ -282,9 +291,12 @@ namespace API.Controllers
 
             UserDto usersDto = _mapper.Map<UserDto>(auth);
 
-            var account = _unitOfWork.Account.GetAccountbyId(auth.Fk_Account, otherLang);
-            usersDto.Country = account.Country;
-            usersDto.FavouriteTeam = account.FavouriteTeam;
+            if (auth.Fk_Account > 0)
+            {
+                var account = _unitOfWork.Account.GetAccountbyId(auth.Fk_Account, otherLang);
+                usersDto.Country = account.Country;
+                usersDto.FavouriteTeam = account.FavouriteTeam;
+            }
 
             return usersDto;
         }

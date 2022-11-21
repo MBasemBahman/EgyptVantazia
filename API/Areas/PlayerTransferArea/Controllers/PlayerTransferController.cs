@@ -51,8 +51,8 @@ namespace API.Areas.PlayerTransferArea.Controllers
                 throw new Exception("Season not started yet!");
             }
 
-            GameWeakModel currentGameWeak = _unitOfWork.Season.GetCurrentGameWeak();
-            if (currentGameWeak == null)
+            GameWeakModel nextGameWeak = _unitOfWork.Season.GetNextGameWeak();
+            if (nextGameWeak == null)
             {
                 throw new Exception("Game Weak not started yet!");
             }
@@ -111,7 +111,6 @@ namespace API.Areas.PlayerTransferArea.Controllers
                         Fk_AccountTeam = currentTeam.Id,
                         Fk_Player = player.Fk_Player,
                         Fk_Season = currentSeason.Id,
-                        //Fk_GameWeak = currentGameWeak.Id
                     }, otherLang: false)
                         .OrderByDescending(a => a.Id)
                         .Select(a => new SellPlayerModel
@@ -123,10 +122,10 @@ namespace API.Areas.PlayerTransferArea.Controllers
                         })
                         .FirstOrDefault();
 
-                    sellPlayersList.Add(accountTeamPlayer);
-
                     if (accountTeamPlayer != null)
                     {
+                        sellPlayersList.Add(accountTeamPlayer);
+
                         AccountTeamPlayerGameWeak accountTeamPlayerGameWeak = await _unitOfWork.AccountTeam.FindAccountTeamPlayerGameWeakbyId(accountTeamPlayer.Id, trackChanges: true);
                         accountTeamPlayerGameWeak.IsTransfer = true;
 
@@ -134,7 +133,7 @@ namespace API.Areas.PlayerTransferArea.Controllers
                         _unitOfWork.PlayerTransfers.CreatePlayerTransfer(new PlayerTransfer
                         {
                             Fk_AccountTeam = currentTeam.Id,
-                            Fk_GameWeak = currentGameWeak.Id,
+                            Fk_GameWeak = nextGameWeak.Id,
                             Fk_Player = player.Fk_Player,
                             Cost = price,
                             TransferTypeEnum = TransferTypeEnum.Selling
@@ -151,12 +150,6 @@ namespace API.Areas.PlayerTransferArea.Controllers
             }
             if (model.BuyPlayers != null && model.BuyPlayers.Any())
             {
-                GameWeakModel nextGameWeak = _unitOfWork.Season.GetNextGameWeak();
-                if (nextGameWeak == null)
-                {
-                    throw new Exception("Game Weak not started yet!");
-                }
-
                 AccountTeamGameWeakModel teamGameWeak = _unitOfWork.AccountTeam.GetTeamGameWeak(auth.Fk_Account, nextGameWeak.Id);
                 if (teamGameWeak == null)
                 {

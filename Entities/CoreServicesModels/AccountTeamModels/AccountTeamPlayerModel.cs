@@ -1,5 +1,6 @@
 ﻿using Entities.CoreServicesModels.TeamModels;
 using Entities.RequestFeatures;
+using static Entities.EnumData.LogicEnumData;
 
 namespace Entities.CoreServicesModels.AccountTeamModels
 {
@@ -12,14 +13,15 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public int Fk_GameWeak { get; set; }
         public int Fk_SeasonForScore { get; set; }
         public int Fk_GameWeakForScore { get; set; }
-        public int Fk_NextGameWeak { get; set; }
-        public bool IsCurrent { get; set; }
-        public bool IsNextGameWeak { get; set; }
+        public bool? IsCurrent { get; set; }
+        public bool? IsNextGameWeak { get; set; }
         public bool IncludeNextMatch { get; set; }
         public bool IncludeScore { get; set; }
         public List<int> Fk_ScoreStatesForSeason { get; set; }
 
         public List<int> Fk_ScoreStatesForGameWeak { get; set; }
+
+        public bool? IsTransfer { get; set; }
     }
 
     public class AccountTeamPlayerModel : BaseEntity

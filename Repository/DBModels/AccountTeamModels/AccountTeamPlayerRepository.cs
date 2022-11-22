@@ -1,5 +1,6 @@
 ﻿using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.DBModels.AccountTeamModels;
+using static Entities.EnumData.LogicEnumData;
 
 namespace Repository.DBModels.AccountTeamModels
 {
@@ -18,7 +19,9 @@ namespace Repository.DBModels.AccountTeamModels
                            parameters.Fk_Player,
                            parameters.Fk_Season,
                            parameters.Fk_GameWeak,
-                           parameters.IsCurrent);
+                           parameters.IsCurrent,
+                           parameters.IsNextGameWeak,
+                           parameters.IsTransfer);
         }
 
         public async Task<AccountTeamPlayer> FindById(int id, bool trackChanges)
@@ -38,11 +41,18 @@ namespace Repository.DBModels.AccountTeamModels
             int Fk_Player,
             int Fk_Season,
             int Fk_GameWeak,
-            bool IsCurrent)
+            bool? IsCurrent,
+            bool? IsNextGameWeak,
+            bool? IsTransfer)
         {
             return AccountTeamPlayers.Where(a => (id == 0 || a.Id == id) &&
+                                                 (IsTransfer == null ||
+                                                  a.AccountTeamPlayerGameWeaks
+                                                   .Any(b => b.AccountTeamPlayer.Fk_AccountTeam == Fk_AccountTeam &&
+                                                             b.IsTransfer == IsTransfer)) &&
                                                  (Fk_GameWeak == 0 || a.AccountTeamPlayerGameWeaks.Any(b => b.Fk_GameWeak == Fk_GameWeak)) &&
-                                                 (IsCurrent == false || a.AccountTeamPlayerGameWeaks.Any(b => b.GameWeak.IsCurrent)) &&
+                                                 (IsCurrent == null || (IsCurrent == true ? a.AccountTeamPlayerGameWeaks.Any(b => b.GameWeak.IsCurrent) : !a.AccountTeamPlayerGameWeaks.Any(b => b.GameWeak.IsCurrent))) &&
+                                                 (IsNextGameWeak == null || (IsNextGameWeak == true ? a.AccountTeamPlayerGameWeaks.Any(b => b.GameWeak.IsNext) : !a.AccountTeamPlayerGameWeaks.Any(b => b.GameWeak.IsNext))) &&
                                                  (Fk_Account == 0 || a.AccountTeam.Fk_Account == Fk_Account) &&
                                                  (Fk_AccountTeam == 0 || a.Fk_AccountTeam == Fk_AccountTeam) &&
                                                  (Fk_Season == 0 || a.AccountTeam.Fk_Season == Fk_Season) &&

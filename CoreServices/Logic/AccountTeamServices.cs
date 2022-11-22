@@ -351,7 +351,7 @@ namespace CoreServices.Logic
                            CreatedAt = a.CreatedAt,
                            Fk_AccountTeam = a.Fk_AccountTeam,
                            Fk_Player = a.Fk_Player,
-                           AccountTeamPlayerGameWeak = parameters.IsCurrent ?
+                           AccountTeamPlayerGameWeak = parameters.IsCurrent == true ?
                                        a.AccountTeamPlayerGameWeaks.Where(b => b.GameWeak.IsCurrent)
                                        .Select(b => new AccountTeamPlayerGameWeakModel
                                        {
@@ -382,8 +382,8 @@ namespace CoreServices.Logic
                                                     .FirstOrDefault()
                                        })
                                        .FirstOrDefault() :
-                                       parameters.IsNextGameWeak ?
-                                       a.AccountTeamPlayerGameWeaks.Where(b => b.Fk_GameWeak == parameters.Fk_NextGameWeak)
+                                       parameters.IsNextGameWeak == true ?
+                                       a.AccountTeamPlayerGameWeaks.Where(b => b.GameWeak.IsNext)
                                        .Select(b => new AccountTeamPlayerGameWeakModel
                                        {
                                            Id = b.Id,
@@ -525,7 +525,7 @@ namespace CoreServices.Logic
                                                     }
                                                 })
                                                 .ToList() : null,
-                               NextMatch =
+                               NextMatch = parameters.IncludeNextMatch ?
                                (a.Player
                                 .Team
                                 .AwayGameWeaks
@@ -551,7 +551,7 @@ namespace CoreServices.Logic
                                     ShortName = otherLang ? b.Away.TeamLang.ShortName : b.Away.ShortName,
                                     IsAwayTeam = true
                                 })
-                                .FirstOrDefault())
+                                .FirstOrDefault()) : null
                            },
                            AccountTeam = new AccountTeamModel
                            {

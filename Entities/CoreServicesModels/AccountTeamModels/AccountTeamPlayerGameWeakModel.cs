@@ -23,6 +23,8 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         public bool? IsPrimary { get; set; }
 
+        public int GameWeakFrom { get; set; }
+        public int GameWeakTo { get; set; }
     }
     public class AccountTeamPlayerGameWeakModel : AuditEntity
     {
@@ -52,9 +54,6 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         [DisplayName(nameof(Order))]
         public int Order { get; set; }
-
-        [DisplayName(nameof(TrippleCaptain))]
-        public bool TrippleCaptain { get; set; }
 
         [DisplayName(nameof(Points))]
         public int Points { get; set; }

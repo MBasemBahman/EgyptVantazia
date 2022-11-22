@@ -184,8 +184,8 @@ namespace FantasyLogic.DataMigration.GamesData
                 await _unitOfWork.Save();
             }
 
-            //TransferAccountTeamPlayers(gameWeak.Id, prevGameWeak.Id, prevGameWeak._365_GameWeakId.ParseToInt());
-            _ = BackgroundJob.Enqueue(() => TransferAccountTeamPlayers(gameWeak.Id, prevGameWeak.Id, prevGameWeak._365_GameWeakId.ParseToInt()));
+            //TransferAccountTeamPlayers(nextGameWeak.Id, gameWeak.Id, gameWeak._365_GameWeakId.ParseToInt());
+            _ = BackgroundJob.Enqueue(() => TransferAccountTeamPlayers(nextGameWeak.Id, gameWeak.Id, gameWeak._365_GameWeakId.ParseToInt()));
         }
 
         public void TransferAccountTeamPlayers(int fk_CurrentGameWeak, int fk_PrevGameWeak, int prev_365_GameWeakId)
@@ -198,16 +198,31 @@ namespace FantasyLogic.DataMigration.GamesData
             string jobId = "";
             foreach (var accounTeam in accounTeams)
             {
-                TransferAccountTeamPlayers(accounTeam, fk_CurrentGameWeak, fk_PrevGameWeak, prev_365_GameWeakId).Wait();
+                //TransferAccountTeamPlayers(accounTeam, fk_CurrentGameWeak, fk_PrevGameWeak, prev_365_GameWeakId).Wait();
 
-                //jobId = jobId.IsExisting()
-                //        ? BackgroundJob.ContinueJobWith(jobId, () => TransferAccountTeamPlayers(accounTeam, fk_CurrentGameWeak, fk_PrevGameWeak, prev_365_GameWeakId))
-                //        : BackgroundJob.Enqueue(() => TransferAccountTeamPlayers(accounTeam, fk_CurrentGameWeak, fk_PrevGameWeak, prev_365_GameWeakId));
+                jobId = jobId.IsExisting()
+                        ? BackgroundJob.ContinueJobWith(jobId, () => TransferAccountTeamPlayers(accounTeam, fk_CurrentGameWeak, fk_PrevGameWeak, prev_365_GameWeakId))
+                        : BackgroundJob.Enqueue(() => TransferAccountTeamPlayers(accounTeam, fk_CurrentGameWeak, fk_PrevGameWeak, prev_365_GameWeakId));
             }
         }
 
         public async Task TransferAccountTeamPlayers(int fk_AccounTeam, int fk_CurrentGameWeak, int fk_PrevGameWeak, int prev_365_GameWeakId)
         {
+            if (!_unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
+            {
+                Fk_GameWeak = fk_CurrentGameWeak,
+                Fk_AccountTeam = fk_AccounTeam
+            }, otherLang: false).Any())
+            {
+                _unitOfWork.AccountTeam.CreateAccountTeamGameWeak(new AccountTeamGameWeak
+                {
+                    Fk_GameWeak = fk_CurrentGameWeak,
+                    Fk_AccountTeam = fk_AccounTeam,
+                });
+                await _unitOfWork.Save();
+            }
+
+
             if (_unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
             {
                 Fk_GameWeak = fk_CurrentGameWeak,

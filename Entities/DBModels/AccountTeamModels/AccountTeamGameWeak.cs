@@ -18,6 +18,8 @@ namespace Entities.DBModels.AccountTeamModels
         [DisplayName(nameof(GameWeak))]
         public GameWeak GameWeak { get; set; }
 
+        #region Cards
+
         [DisplayName(nameof(BenchBoost))]
         public bool BenchBoost { get; set; }
 
@@ -33,6 +35,13 @@ namespace Entities.DBModels.AccountTeamModels
         [DisplayName(nameof(Top_11))]
         public bool Top_11 { get; set; }
 
+        [DisplayName(nameof(TripleCaptain))]
+        public bool TripleCaptain { get; set; }
+
+        #endregion
+
+        #region Calculations
+
         [DisplayName(nameof(TotalPoints))]
         public int TotalPoints { get; set; }
 
@@ -42,6 +51,10 @@ namespace Entities.DBModels.AccountTeamModels
         [DisplayName(nameof(TansfarePoints))]
         public int TansfarePoints { get; set; }
 
+        #endregion
+
+        #region Ranking
+
         [DisplayName(nameof(GlobalRanking))]
         public double GlobalRanking { get; set; }
 
@@ -50,5 +63,7 @@ namespace Entities.DBModels.AccountTeamModels
 
         [DisplayName(nameof(FavouriteTeamRanking))]
         public double FavouriteTeamRanking { get; set; }
+
+        #endregion
     }
 }

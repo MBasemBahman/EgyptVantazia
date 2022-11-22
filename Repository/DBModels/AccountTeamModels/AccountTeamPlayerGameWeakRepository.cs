@@ -21,6 +21,8 @@ namespace Repository.DBModels.AccountTeamModels
                            parameters.Fk_Season,
                            parameters.Fk_GameWeak,
                            parameters.IsPrimary,
+                           parameters.GameWeakFrom,
+                           parameters.GameWeakTo,
                            parameters.IsTransfer);
         }
 
@@ -74,10 +76,14 @@ namespace Repository.DBModels.AccountTeamModels
             int fk_Season,
             int fk_GameWeak,
             bool? isPrimary,
+            int GameWeakFrom,
+            int GameWeakTo,
             bool? isTransfer)
 
         {
             return AccountTeamPlayerGameWeaks.Where(a => (id == 0 || a.Id == id) &&
+                                                   (GameWeakFrom == 0 || (string.IsNullOrEmpty(a.GameWeak._365_GameWeakId) && int.Parse(a.GameWeak._365_GameWeakId) >= GameWeakFrom)) &&
+                                                   (GameWeakTo == 0 || (string.IsNullOrEmpty(a.GameWeak._365_GameWeakId) && int.Parse(a.GameWeak._365_GameWeakId) <= GameWeakTo)) &&
                                                    (fk_AccountTeamPlayer == 0 || a.Fk_AccountTeamPlayer == fk_AccountTeamPlayer) &&
                                                    (fk_Account == 0 || a.AccountTeamPlayer.AccountTeam.Fk_Account == fk_Account) &&
                                                    (fk_Season == 0 || a.GameWeak.Fk_Season == fk_Season) &&

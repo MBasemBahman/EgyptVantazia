@@ -17,7 +17,15 @@ namespace Repository.DBModels.AccountTeamModels
                            parameters.Fk_GameWeak,
                            parameters.Fk_Season,
                            parameters.Fk_Account,
-                           parameters._365_GameWeakId);
+                           parameters._365_GameWeakId,
+                           parameters.GameWeakFrom,
+                           parameters.GameWeakTo,
+                           parameters.BenchBoost,
+                           parameters.FreeHit,
+                           parameters.WildCard,
+                           parameters.DoubleGameWeak,
+                           parameters.Top_11,
+                           parameters.TripleCaptain);
 
         }
 
@@ -33,6 +41,22 @@ namespace Repository.DBModels.AccountTeamModels
                    .Select(a => a.TotalPoints)
                    .Average();
         }
+
+        public new void Create(AccountTeamGameWeak entity)
+        {
+            base.Create(entity);
+
+            AccountTeam accountTeam = DBContext.Set<AccountTeam>().Find(entity.Fk_AccountTeam);
+
+            if (accountTeam.FreeTransfer >= 1)
+            {
+                accountTeam.FreeTransfer = 2;
+            }
+            else
+            {
+                accountTeam.FreeTransfer = 1;
+            }
+        }
     }
 
     public static class AccountTeamGameWeakRepositoryExtension
@@ -44,11 +68,27 @@ namespace Repository.DBModels.AccountTeamModels
             int Fk_GameWeak,
             int Fk_Season,
             int Fk_Account,
-            string _365_GameWeakId)
+            string _365_GameWeakId,
+            int GameWeakFrom,
+            int GameWeakTo,
+            bool? BenchBoost,
+            bool? FreeHit,
+            bool? WildCard,
+            bool? DoubleGameWeak,
+            bool? Top_11,
+            bool? TrippleCaptain)
 
         {
             return AccountTeamGameWeaks.Where(a => (id == 0 || a.Id == id) &&
                                                    (Fk_AccountTeam == 0 || a.Fk_AccountTeam == Fk_AccountTeam) &&
+                                                   (GameWeakFrom == 0 || (string.IsNullOrEmpty(a.GameWeak._365_GameWeakId) && int.Parse(a.GameWeak._365_GameWeakId) >= GameWeakFrom)) &&
+                                                   (GameWeakTo == 0 || (string.IsNullOrEmpty(a.GameWeak._365_GameWeakId) && int.Parse(a.GameWeak._365_GameWeakId) <= GameWeakTo)) &&
+                                                   (BenchBoost == null || a.BenchBoost == BenchBoost) &&
+                                                   (FreeHit == null || a.FreeHit == FreeHit) &&
+                                                   (WildCard == null || a.WildCard == WildCard) &&
+                                                   (DoubleGameWeak == null || a.DoubleGameWeak == DoubleGameWeak) &&
+                                                   (Top_11 == null || a.Top_11 == Top_11) &&
+                                                   (TrippleCaptain == null || a.TripleCaptain == TrippleCaptain) &&
                                                    (string.IsNullOrEmpty(_365_GameWeakId) || a.GameWeak._365_GameWeakId == _365_GameWeakId) &&
                                                    (Fk_Season == 0 || a.AccountTeam.Fk_Season == Fk_Season) &&
                                                    (Fk_Account == 0 || a.AccountTeam.Fk_Account == Fk_Account) &&

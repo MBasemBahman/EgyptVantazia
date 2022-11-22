@@ -24,14 +24,49 @@ namespace Entities.DBModels.AccountTeamModels
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
 
+        #region Calculations
+
         [DisplayName(nameof(TotalPoints))]
         public int TotalPoints { get; set; }
 
         [DisplayName(nameof(TotalMoney))]
         public int TotalMoney { get; set; }
 
+        #endregion
+
+        #region Cards
+
+        [DisplayName(nameof(BenchBoost))]
+        [DefaultValue(0)]
+        public int BenchBoost { get; set; }
+
+        [DisplayName(nameof(FreeHit))]
+        [DefaultValue(0)]
+        public int FreeHit { get; set; }
+
+        [DisplayName(nameof(WildCard))]
+        [DefaultValue(0)]
+        public int WildCard { get; set; }
+
+        [DisplayName(nameof(DoubleGameWeak))]
+        [DefaultValue(0)]
+        public int DoubleGameWeak { get; set; }
+
+        [DisplayName(nameof(Top_11))]
+        [DefaultValue(0)]
+        public int Top_11 { get; set; }
+
         [DisplayName(nameof(FreeTransfer))]
+        [DefaultValue(0)]
         public int FreeTransfer { get; set; }
+
+        [DisplayName(nameof(TripleCaptain))]
+        [DefaultValue(0)]
+        public int TripleCaptain { get; set; }
+
+        #endregion
+
+        #region Ranking
 
         [DisplayName(nameof(GlobalRanking))]
         public double GlobalRanking { get; set; }
@@ -41,6 +76,8 @@ namespace Entities.DBModels.AccountTeamModels
 
         [DisplayName(nameof(FavouriteTeamRanking))]
         public double FavouriteTeamRanking { get; set; }
+
+        #endregion
 
         [DisplayName(nameof(AccountTeamPlayers))]
         public IList<AccountTeamPlayer> AccountTeamPlayers { get; set; }

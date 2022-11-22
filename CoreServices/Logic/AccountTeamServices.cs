@@ -55,6 +55,12 @@ namespace CoreServices.Logic
                            },
                            PlayersCount = a.AccountTeamPlayers.Count,
                            FreeTransfer = a.FreeTransfer,
+                           BenchBoost = a.BenchBoost,
+                           DoubleGameWeak = a.DoubleGameWeak,
+                           FreeHit = a.FreeHit,
+                           Top_11 = a.Top_11,
+                           TripleCaptain= a.TripleCaptain,
+                           WildCard = a.WildCard,
                            CurrentGameWeakPoints = a.AccountTeamGameWeaks
                                                     .Where(a => a.GameWeak.IsCurrent == true)
                                                     .Select(a => a.TotalPoints)
@@ -160,6 +166,7 @@ namespace CoreServices.Logic
                            AvailableFreeHit = !a.FreeHit,
                            AvailableTop_11 = !a.Top_11,
                            AvailableWildCard = !a.WildCard,
+                           TripleCaptain = !a.TripleCaptain,
                            GameWeak = new GameWeakModel
                            {
                                Name = otherLang ? a.GameWeak.GameWeakLang.Name : a.GameWeak.Name,
@@ -250,7 +257,6 @@ namespace CoreServices.Logic
                            Fk_AccountTeamPlayer = a.Fk_AccountTeamPlayer,
                            Fk_GameWeak = a.Fk_GameWeak,
                            Fk_TeamPlayerType = a.Fk_TeamPlayerType,
-                           TrippleCaptain = a.TrippleCaptain,
                            IsPrimary = a.IsPrimary,
                            IsTransfer = a.IsTransfer,
                            Order = a.Order,
@@ -359,7 +365,6 @@ namespace CoreServices.Logic
                                            Fk_AccountTeamPlayer = b.Fk_AccountTeamPlayer,
                                            Fk_GameWeak = b.Fk_GameWeak,
                                            Fk_TeamPlayerType = b.Fk_TeamPlayerType,
-                                           TrippleCaptain = b.TrippleCaptain,
                                            IsPrimary = b.IsPrimary,
                                            IsTransfer = b.IsTransfer,
                                            Order = b.Order,
@@ -390,7 +395,6 @@ namespace CoreServices.Logic
                                            Fk_AccountTeamPlayer = b.Fk_AccountTeamPlayer,
                                            Fk_GameWeak = b.Fk_GameWeak,
                                            Fk_TeamPlayerType = b.Fk_TeamPlayerType,
-                                           TrippleCaptain = b.TrippleCaptain,
                                            IsPrimary = b.IsPrimary,
                                            IsTransfer = b.IsTransfer,
                                            Order = b.Order,
@@ -420,7 +424,6 @@ namespace CoreServices.Logic
                                            Fk_AccountTeamPlayer = b.Fk_AccountTeamPlayer,
                                            Fk_GameWeak = b.Fk_GameWeak,
                                            Fk_TeamPlayerType = b.Fk_TeamPlayerType,
-                                           TrippleCaptain = b.TrippleCaptain,
                                            IsPrimary = b.IsPrimary,
                                            IsTransfer = b.IsTransfer,
                                            Order = b.Order,

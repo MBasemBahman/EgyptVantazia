@@ -14,6 +14,16 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public int Fk_Season { get; set; }
 
         public string _365_GameWeakId { get; set; }
+
+        public int GameWeakFrom { get; set; }
+        public int GameWeakTo { get; set; }
+
+        public bool? BenchBoost { get; set; }
+        public bool? FreeHit { get; set; }
+        public bool? WildCard { get; set; }
+        public bool? DoubleGameWeak { get; set; }
+        public bool? Top_11 { get; set; }
+        public bool TripleCaptain { get; set; }
     }
 
     public class AccountTeamGameWeakModel : AuditEntity
@@ -67,6 +77,9 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         [DisplayName(nameof(AvailableTop_11))]
         public bool AvailableTop_11 { get; set; }
+
+        [DisplayName(nameof(TripleCaptain))]
+        public bool TripleCaptain { get; set; }
 
         [DisplayName(nameof(TansfarePoints))]
         public int TansfarePoints { get; set; }

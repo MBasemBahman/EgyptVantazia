@@ -26,5 +26,15 @@
             Wallet = 2,
             Kiosk = 3
         }
+
+        public enum CardTypeEnum
+        {
+            BenchBoost = 1,
+            FreeHit = 2,
+            WildCard = 3,
+            DoubleGameWeak = 4,
+            Top_11 = 5,
+            TripleCaptain = 6
+        }
     }
 }

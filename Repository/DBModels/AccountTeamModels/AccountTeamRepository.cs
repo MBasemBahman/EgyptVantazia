@@ -32,6 +32,21 @@ namespace Repository.DBModels.AccountTeamModels
             return await FindByCondition(a => a.Id == id, trackChanges)
                         .FirstOrDefaultAsync();
         }
+
+        public new void Create(AccountTeam entity)
+        {
+            entity.TotalMoney = 100;
+            entity.FreeTransfer = 0;
+
+            entity.BenchBoost = 1;
+            entity.FreeHit = 1;
+            entity.WildCard = 2;
+            entity.DoubleGameWeak = 1;
+            entity.Top_11 = 1;
+            entity.TripleCaptain = 1;
+
+            base.Create(entity);
+        }
     }
 
     public static class AccountTeamRepositoryExtension

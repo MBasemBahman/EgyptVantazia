@@ -63,6 +63,12 @@ namespace API.Areas.PlayerTransferArea.Controllers
                 throw new Exception("Please create your team!");
             }
 
+            AccountTeamGameWeakModel teamGameWeak = _unitOfWork.AccountTeam.GetTeamGameWeak(auth.Fk_Account, nextGameWeak.Id);
+            if (teamGameWeak == null)
+            {
+                throw new Exception("Game Weak not started yet!");
+            }
+
             if (currentTeam.TotalMoney <= 0)
             {
                 throw new Exception("You not have money for transfers!");
@@ -150,7 +156,6 @@ namespace API.Areas.PlayerTransferArea.Controllers
             }
             if (model.BuyPlayers != null && model.BuyPlayers.Any())
             {
-                AccountTeamGameWeakModel teamGameWeak = _unitOfWork.AccountTeam.GetTeamGameWeak(auth.Fk_Account, nextGameWeak.Id);
                 if (teamGameWeak == null)
                 {
                     _unitOfWork.AccountTeam.CreateAccountTeamGameWeak(new AccountTeamGameWeak
@@ -199,10 +204,23 @@ namespace API.Areas.PlayerTransferArea.Controllers
                 }
                 await _unitOfWork.Save();
 
-                AccountTeam accountTeam = await _unitOfWork.AccountTeam.FindAccountTeambyId(currentTeam.Id, trackChanges: true);
-                accountTeam.TotalMoney -= totalPrice;
-                accountTeam.FreeTransfer = freeTransfer;
-                await _unitOfWork.Save();
+                if (teamGameWeak.WildCard == false && _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
+                {
+                    Fk_AccountTeam = currentTeam.Id,
+                }, otherLang: false).Count() > 1)
+                {
+                    AccountTeam accountTeam = await _unitOfWork.AccountTeam.FindAccountTeambyId(currentTeam.Id, trackChanges: true);
+                    accountTeam.TotalMoney -= totalPrice;
+                    accountTeam.FreeTransfer = freeTransfer;
+
+                    teamGameWeak ??= _unitOfWork.AccountTeam.GetTeamGameWeak(auth.Fk_Account, nextGameWeak.Id);
+
+                    AccountTeamGameWeak accountTeamGameWeak = await _unitOfWork.AccountTeam.FindAccountTeamGameWeakbyId(teamGameWeak.Id, trackChanges: true);
+                    accountTeamGameWeak.TansfarePoints = accountTeam.FreeTransfer > 0 ? accountTeam.FreeTransfer * -4 : accountTeam.FreeTransfer * 4;
+
+                    await _unitOfWork.Save();
+                }
+
             }
 
             return true;

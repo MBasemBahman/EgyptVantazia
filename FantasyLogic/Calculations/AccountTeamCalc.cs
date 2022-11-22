@@ -140,6 +140,8 @@ namespace FantasyLogic.Calculations
             bool captianPointsFlag = true;
             bool havePointsInTotal = true;
 
+            AccountTeamGameWeak accountTeamGameWeak = _unitOfWork.AccountTeam.FindAccountTeamGameWeakbyId(fk_AccountTeamGameWeak, trackChanges: true).Result;
+
             foreach (var player in players)
             {
                 //if (playersFinalPoints.Count == 11)
@@ -170,12 +172,13 @@ namespace FantasyLogic.Calculations
                       player.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.ViceCaptian))
                     {
                         captianPointsFlag = false;
-                        captianPoints = 2;
+                        captianPoints = accountTeamGameWeak.TripleCaptain ? 3 : 2;
                     }
 
                     double points = playersPoints.Where(a => a.Fk_Player == player.Fk_Player).Select(a => a.Points).First() * captianPoints;
 
-                    if (havePointsInTotal && 
+                    if (havePointsInTotal &&
+                        accountTeamGameWeak.BenchBoost == false &&
                         (playersFinalPoints.Count > 11 ||
                         playersFinalPoints.Any(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper)))
                     {
@@ -227,8 +230,13 @@ namespace FantasyLogic.Calculations
                 .Select(a => a.TotalPoints)
                 .FirstOrDefault();
 
-            AccountTeamGameWeak accountTeamGameWeak = _unitOfWork.AccountTeam.FindAccountTeamGameWeakbyId(fk_AccountTeamGameWeak, trackChanges: true).Result;
-            accountTeamGameWeak.TotalPoints = (int)totalPoints;
+
+            if (accountTeamGameWeak.DoubleGameWeak)
+            {
+                totalPoints *= 2;
+            }
+
+            accountTeamGameWeak.TotalPoints = (int)totalPoints + accountTeamGameWeak.TansfarePoints;
             accountTeamGameWeak.PrevPoints = prevPoints;
             _unitOfWork.Save().Wait();
 

@@ -34,9 +34,6 @@ namespace Entities.DBModels.AccountTeamModels
         [DisplayName(nameof(Order))]
         public int Order { get; set; }
 
-        [DisplayName(nameof(TrippleCaptain))]
-        public bool TrippleCaptain { get; set; }
-
         [DisplayName(nameof(Points))]
         public int Points { get; set; }
 

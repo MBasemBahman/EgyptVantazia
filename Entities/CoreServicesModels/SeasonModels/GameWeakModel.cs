@@ -1,5 +1,6 @@
 ﻿using Entities.DBModels.SeasonModels;
 using Entities.RequestFeatures;
+using Newtonsoft.Json.Linq;
 
 namespace Entities.CoreServicesModels.SeasonModels
 {
@@ -46,6 +47,9 @@ namespace Entities.CoreServicesModels.SeasonModels
 
         [DisplayName(nameof(_365_GameWeakId))]
         public string _365_GameWeakId { get; set; }
+
+        [DisplayName(nameof(_365_GameWeakId_Parsed))]
+        public int? _365_GameWeakId_Parsed => string.IsNullOrWhiteSpace(_365_GameWeakId) ? null : int.Parse(_365_GameWeakId);
 
         [DisplayName(nameof(IsCurrent))]
         public bool IsCurrent { get; set; }

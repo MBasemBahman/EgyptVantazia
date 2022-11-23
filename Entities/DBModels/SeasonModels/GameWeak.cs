@@ -23,6 +23,9 @@ namespace Entities.DBModels.SeasonModels
         [DisplayName(nameof(_365_GameWeakId))]
         public string _365_GameWeakId { get; set; }
 
+        [DisplayName(nameof(_365_GameWeakIdValue))]
+        public int _365_GameWeakIdValue { get; set; }
+
         [DisplayName(nameof(Season))]
         [ForeignKey(nameof(Season))]
         public int Fk_Season { get; set; }

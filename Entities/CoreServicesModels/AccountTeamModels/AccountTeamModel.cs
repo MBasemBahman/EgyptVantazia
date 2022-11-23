@@ -121,6 +121,8 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public int TripleCaptain { get; set; }
 
         #endregion
+
+        public int AccounTeamGameWeakCount { get; set; }
     }
 
     public class AccountTeamCreateOrEditModel

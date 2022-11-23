@@ -39,6 +39,7 @@ namespace CoreServices.Logic
                            CountryRanking = a.CountryRanking,
                            GlobalRanking = a.GlobalRanking,
                            FavouriteTeamRanking = a.FavouriteTeamRanking,
+                           AccounTeamGameWeakCount = a.AccountTeamGameWeaks.Count,
                            Season = new SeasonModel
                            {
                                Name = otherLang ? a.Season.SeasonLang.Name : a.Season.Name,

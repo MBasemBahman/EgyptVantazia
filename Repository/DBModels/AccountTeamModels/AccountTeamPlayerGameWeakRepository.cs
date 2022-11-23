@@ -82,8 +82,8 @@ namespace Repository.DBModels.AccountTeamModels
 
         {
             return AccountTeamPlayerGameWeaks.Where(a => (id == 0 || a.Id == id) &&
-                                                   (GameWeakFrom == 0 || (string.IsNullOrEmpty(a.GameWeak._365_GameWeakId) && int.Parse(a.GameWeak._365_GameWeakId) >= GameWeakFrom)) &&
-                                                   (GameWeakTo == 0 || (string.IsNullOrEmpty(a.GameWeak._365_GameWeakId) && int.Parse(a.GameWeak._365_GameWeakId) <= GameWeakTo)) &&
+                                                   (GameWeakFrom == 0 || a.GameWeak._365_GameWeakIdValue >= GameWeakFrom) &&
+                                                   (GameWeakTo == 0 || a.GameWeak._365_GameWeakIdValue <= GameWeakTo) &&
                                                    (fk_AccountTeamPlayer == 0 || a.Fk_AccountTeamPlayer == fk_AccountTeamPlayer) &&
                                                    (fk_Account == 0 || a.AccountTeamPlayer.AccountTeam.Fk_Account == fk_Account) &&
                                                    (fk_Season == 0 || a.GameWeak.Fk_Season == fk_Season) &&

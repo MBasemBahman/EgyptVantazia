@@ -235,8 +235,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                     throw new Exception("You already use card in this half of season!");
                 }
             }
-
-            if (cardTypeEnum == CardTypeEnum.FreeHit)
+            else if (cardTypeEnum == CardTypeEnum.FreeHit)
             {
                 if (currentTeam.FreeHit <= 0)
                 {
@@ -254,8 +253,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                     throw new Exception("You already use card in this half of season!");
                 }
             }
-
-            if (cardTypeEnum == CardTypeEnum.WildCard)
+            else if (cardTypeEnum == CardTypeEnum.WildCard)
             {
                 if (currentTeam.WildCard <= 0)
                 {
@@ -273,8 +271,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                     throw new Exception("You already use card in this half of season!");
                 }
             }
-
-            if (cardTypeEnum == CardTypeEnum.DoubleGameWeak)
+            else if (cardTypeEnum == CardTypeEnum.DoubleGameWeak)
             {
                 if (currentTeam.DoubleGameWeak <= 0)
                 {
@@ -292,8 +289,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                     throw new Exception("You already use card in this half of season!");
                 }
             }
-
-            if (cardTypeEnum == CardTypeEnum.Top_11)
+            else if (cardTypeEnum == CardTypeEnum.Top_11)
             {
                 if (currentTeam.Top_11 <= 0)
                 {
@@ -311,8 +307,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                     throw new Exception("You already use card in this half of season!");
                 }
             }
-
-            if (cardTypeEnum == CardTypeEnum.TripleCaptain)
+            else if (cardTypeEnum == CardTypeEnum.TripleCaptain)
             {
                 if (currentTeam.TripleCaptain <= 0)
                 {

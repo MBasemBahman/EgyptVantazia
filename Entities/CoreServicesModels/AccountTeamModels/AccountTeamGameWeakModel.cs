@@ -9,6 +9,12 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         public int Fk_GameWeak { get; set; }
 
+        public bool GetNextGameWeak { get; set; }
+
+        public bool GetPrevGameWeak { get; set; }
+
+        public bool GetCurrentGameWeak { get; set; }
+
         public int Fk_Account { get; set; }
 
         public int Fk_Season { get; set; }
@@ -16,6 +22,7 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public string _365_GameWeakId { get; set; }
 
         public int GameWeakFrom { get; set; }
+
         public int GameWeakTo { get; set; }
 
         public bool? BenchBoost { get; set; }

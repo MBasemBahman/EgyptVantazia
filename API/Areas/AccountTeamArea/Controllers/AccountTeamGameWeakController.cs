@@ -25,6 +25,21 @@ namespace API.Areas.AccountTeamArea.Controllers
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
+            if (parameters.GetCurrentGameWeak)
+            {
+                parameters.Fk_GameWeak = _unitOfWork.Season.GetCurrentGameWeak(otherLang: false).Id;
+            }
+
+            if (parameters.GetPrevGameWeak)
+            {
+                parameters.Fk_GameWeak = _unitOfWork.Season.GetPrevGameWeak(otherLang: false).Id;
+            }
+
+            if (parameters.GetNextGameWeak)
+            {
+                parameters.Fk_GameWeak = _unitOfWork.Season.GetNextGameWeak(otherLang: false).Id;
+            }
+
             PagedList<AccountTeamGameWeakModel> data = await _unitOfWork.AccountTeam.GetAccountTeamGameWeakPaged(parameters, otherLang);
 
             SetPagination(data.MetaData, parameters);

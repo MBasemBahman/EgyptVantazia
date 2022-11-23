@@ -231,12 +231,13 @@ namespace FantasyLogic.Calculations
                 .FirstOrDefault();
 
 
+            accountTeamGameWeak.TotalPoints = (int)totalPoints + accountTeamGameWeak.TansfarePoints;
+
             if (accountTeamGameWeak.DoubleGameWeak)
             {
-                totalPoints *= 2;
+                accountTeamGameWeak.TotalPoints *= 2;
             }
 
-            accountTeamGameWeak.TotalPoints = (int)totalPoints + accountTeamGameWeak.TansfarePoints;
             accountTeamGameWeak.PrevPoints = prevPoints;
             _unitOfWork.Save().Wait();
 

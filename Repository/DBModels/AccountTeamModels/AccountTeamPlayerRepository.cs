@@ -29,6 +29,14 @@ namespace Repository.DBModels.AccountTeamModels
             return await FindByCondition(a => a.Id == id, trackChanges)
                         .FirstOrDefaultAsync();
         }
+
+        public new void Create(AccountTeamPlayer entity)
+        {
+            if (!FindByCondition(a => a.Fk_AccountTeam == entity.Fk_AccountTeam && a.Fk_Player == entity.Fk_Player, trackChanges: false).Any())
+            {
+                base.Create(entity);
+            }
+        }
     }
 
     public static class AccountTeamPlayerRepositoryExtension

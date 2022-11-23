@@ -216,7 +216,7 @@ namespace API.Areas.PlayerTransferArea.Controllers
                     teamGameWeak ??= _unitOfWork.AccountTeam.GetTeamGameWeak(auth.Fk_Account, nextGameWeak.Id);
 
                     AccountTeamGameWeak accountTeamGameWeak = await _unitOfWork.AccountTeam.FindAccountTeamGameWeakbyId(teamGameWeak.Id, trackChanges: true);
-                    accountTeamGameWeak.TansfarePoints = accountTeam.FreeTransfer > 0 ? accountTeam.FreeTransfer * -4 : accountTeam.FreeTransfer * 4;
+                    accountTeamGameWeak.TansfarePoints = accountTeam.FreeTransfer >= 0 ? 0 : accountTeam.FreeTransfer * 4;
 
                     await _unitOfWork.Save();
                 }

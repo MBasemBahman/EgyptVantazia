@@ -183,5 +183,6 @@ namespace Entities.CoreServicesModels.TeamModels
         public int Fk_PlayerPosition { get; set; }
         public int Fk_Team { get; set; }
         public double BuyPrice { get; set; }
+        public double TotalPoints { get; set; }
     }
 }

@@ -6,9 +6,9 @@ using Entities.DBModels.SeasonModels;
 using FantasyLogic.Calculations;
 using FantasyLogic.DataMigration.PlayerScoreData;
 using FantasyLogic.DataMigration.StandingsData;
-using IntegrationWith365.Entities.GameModels;
 using IntegrationWith365.Entities.GamesModels;
 using IntegrationWith365.Helpers;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace FantasyLogic.DataMigration.GamesData
 {
@@ -81,7 +81,7 @@ namespace FantasyLogic.DataMigration.GamesData
 
         public async Task UpdateGame(Games game, int fk_Home, int fk_Away, int fk_GameWeak)
         {
-            var startTime = game.StartTimeVal.AddHours(2);
+            DateTime startTime = game.StartTimeVal.AddHours(2);
 
             _unitOfWork.Season.CreateTeamGameWeak(new TeamGameWeak
             {
@@ -185,28 +185,28 @@ namespace FantasyLogic.DataMigration.GamesData
             }
 
             //TransferAccountTeamPlayers(nextGameWeak.Id, gameWeak.Id, gameWeak._365_GameWeakId.ParseToInt());
-            _ = BackgroundJob.Enqueue(() => TransferAccountTeamPlayers(nextGameWeak.Id, gameWeak.Id, gameWeak._365_GameWeakId.ParseToInt()));
+            _ = BackgroundJob.Enqueue(() => TransferAccountTeamPlayers(nextGameWeak.Id, gameWeak.Id, gameWeak._365_GameWeakId.ParseToInt(), nextGameWeak.Fk_Season));
         }
 
-        public void TransferAccountTeamPlayers(int fk_CurrentGameWeak, int fk_PrevGameWeak, int prev_365_GameWeakId)
+        public void TransferAccountTeamPlayers(int fk_CurrentGameWeak, int fk_PrevGameWeak, int prev_365_GameWeakId, int fk_Season)
         {
-            var accounTeams = _unitOfWork.AccountTeam
+            List<int> accounTeams = _unitOfWork.AccountTeam
                                          .GetAccountTeams(new AccountTeamParameters(), otherLang: false)
                                          .Select(a => a.Id)
                                          .ToList();
 
             string jobId = "";
-            foreach (var accounTeam in accounTeams)
+            foreach (int accounTeam in accounTeams)
             {
                 //TransferAccountTeamPlayers(accounTeam, fk_CurrentGameWeak, fk_PrevGameWeak, prev_365_GameWeakId).Wait();
 
                 jobId = jobId.IsExisting()
-                        ? BackgroundJob.ContinueJobWith(jobId, () => TransferAccountTeamPlayers(accounTeam, fk_CurrentGameWeak, fk_PrevGameWeak, prev_365_GameWeakId))
-                        : BackgroundJob.Enqueue(() => TransferAccountTeamPlayers(accounTeam, fk_CurrentGameWeak, fk_PrevGameWeak, prev_365_GameWeakId));
+                        ? BackgroundJob.ContinueJobWith(jobId, () => TransferAccountTeamPlayers(accounTeam, fk_CurrentGameWeak, fk_PrevGameWeak, prev_365_GameWeakId, fk_Season))
+                        : BackgroundJob.Enqueue(() => TransferAccountTeamPlayers(accounTeam, fk_CurrentGameWeak, fk_PrevGameWeak, prev_365_GameWeakId, fk_Season));
             }
         }
 
-        public async Task TransferAccountTeamPlayers(int fk_AccounTeam, int fk_CurrentGameWeak, int fk_PrevGameWeak, int prev_365_GameWeakId)
+        public async Task TransferAccountTeamPlayers(int fk_AccounTeam, int fk_CurrentGameWeak, int fk_PrevGameWeak, int prev_365_GameWeakId, int fk_Season)
         {
             if (!_unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
             {
@@ -222,54 +222,105 @@ namespace FantasyLogic.DataMigration.GamesData
                 await _unitOfWork.Save();
             }
 
-
-            if (_unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
+            AccountTeamGameWeakModel accountTeamGameWeakModel = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
             {
                 Fk_GameWeak = fk_CurrentGameWeak,
-                Fk_AccountTeam = fk_AccounTeam,
-                IsTransfer = false
-            }, otherLang: false).Count() < 15)
-            {
-                var prevPlayers = new List<AccountTeamPlayerGameWeakModel>();
+                Fk_AccountTeam = fk_AccounTeam
+            }, otherLang: false).First();
 
-                do
+            if (accountTeamGameWeakModel.FreeHit ||
+                accountTeamGameWeakModel.Top_11 ||
+                _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
                 {
-                    prevPlayers = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
-                    {
-                        Fk_GameWeak = fk_PrevGameWeak,
-                        Fk_AccountTeam = fk_AccounTeam,
-                        IsTransfer = false
-                    }, otherLang: false)
-                    .Select(a => new AccountTeamPlayerGameWeakModel
-                    {
-                        Fk_AccountTeamPlayer = a.Fk_AccountTeamPlayer,
-                        Fk_TeamPlayerType = a.Fk_TeamPlayerType,
-                        IsPrimary = a.IsPrimary,
-                        Order = a.Order
-                    })
-                    .ToList();
+                    Fk_GameWeak = fk_CurrentGameWeak,
+                    Fk_AccountTeam = fk_AccounTeam,
+                    IsTransfer = false
+                }, otherLang: false).Count() < 15)
+            {
+                List<AccountTeamPlayerGameWeakModel> prevPlayers = new();
 
-                    if (prevPlayers.Count < 15)
-                    {
-                        prev_365_GameWeakId--;
+                if (accountTeamGameWeakModel.Top_11)
+                {
+                    List<PlayerModel> players = _unitOfWork.Team.GetRandomTeam(fk_Season, isTop_11: true, otherLang: false);
 
-                        fk_PrevGameWeak = _unitOfWork.Season.GetGameWeaks(new GameWeakParameters
+                    bool captain = false;
+                    bool viceCaptian = false;
+                    int order = 1;
+                    int count = 0;
+
+                    foreach (PlayerModel player in players)
+                    {
+                        count++;
+                        AccountTeamPlayer accountTeamPlayer = new()
                         {
-                            _365_GameWeakId = prev_365_GameWeakId.ToString()
-                        }, otherLang: false)
-                            .Select(a => a.Id)
-                            .FirstOrDefault();
-                    }
-                    else
-                    {
-                        fk_PrevGameWeak = 0;
-                    }
+                            Fk_AccountTeam = accountTeamGameWeakModel.Fk_AccountTeam,
+                            Fk_Player = player.Id
+                        };
+                        _unitOfWork.AccountTeam.CreateAccountTeamPlayer(accountTeamPlayer);
+                        _unitOfWork.Save().Wait();
 
-                } while (fk_PrevGameWeak > 0);
+                        AccountTeamPlayerGameWeakModel newPlayer = new()
+                        {
+                            Fk_AccountTeamPlayer = accountTeamPlayer.Id,
+                            IsPrimary = count <= 11,
+                            Order = count <= 11 ? 0 : order++
+                        };
+
+                        if (!captain)
+                        {
+                            newPlayer.Fk_TeamPlayerType = (int)TeamPlayerTypeEnum.Captian;
+                            captain = true;
+                        }
+                        else if (!viceCaptian)
+                        {
+                            newPlayer.Fk_TeamPlayerType = (int)TeamPlayerTypeEnum.ViceCaptian;
+                            viceCaptian = true;
+                        }
+
+                        prevPlayers.Add(newPlayer);
+                    }
+                }
+                else
+                {
+                    do
+                    {
+                        prevPlayers = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
+                        {
+                            Fk_GameWeak = fk_PrevGameWeak,
+                            Fk_AccountTeam = fk_AccounTeam,
+                            IsTransfer = false
+                        }, otherLang: false)
+                        .Select(a => new AccountTeamPlayerGameWeakModel
+                        {
+                            Fk_AccountTeamPlayer = a.Fk_AccountTeamPlayer,
+                            Fk_TeamPlayerType = a.Fk_TeamPlayerType,
+                            IsPrimary = a.IsPrimary,
+                            Order = a.Order
+                        })
+                        .ToList();
+
+                        if (prevPlayers.Count < 15)
+                        {
+                            prev_365_GameWeakId--;
+
+                            fk_PrevGameWeak = _unitOfWork.Season.GetGameWeaks(new GameWeakParameters
+                            {
+                                _365_GameWeakId = prev_365_GameWeakId.ToString()
+                            }, otherLang: false)
+                                .Select(a => a.Id)
+                                .FirstOrDefault();
+                        }
+                        else
+                        {
+                            fk_PrevGameWeak = 0;
+                        }
+
+                    } while (fk_PrevGameWeak > 0);
+                }
 
                 if (prevPlayers.Any())
                 {
-                    foreach (var player in prevPlayers)
+                    foreach (AccountTeamPlayerGameWeakModel player in prevPlayers)
                     {
                         _unitOfWork.AccountTeam.CreateAccountTeamPlayerGameWeak(new AccountTeamPlayerGameWeak
                         {

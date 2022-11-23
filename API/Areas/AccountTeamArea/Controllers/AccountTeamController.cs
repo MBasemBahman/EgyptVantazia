@@ -187,6 +187,17 @@ namespace API.Areas.AccountTeamArea.Controllers
                 throw new Exception("Game Weak not started yet!");
             }
 
+            if ((cardTypeEnum == CardTypeEnum.WildCard ||
+                cardTypeEnum == CardTypeEnum.FreeHit ||
+                cardTypeEnum == CardTypeEnum.Top_11) &&
+                _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
+                {
+                    Fk_AccountTeam = currentTeam.Id,
+                }, otherLang: false).Count() == 1)
+            {
+                throw new Exception("You cannot activate this card, because you in first gameweek!");
+            }
+
             if (teamGameWeak.BenchBoost ||
                 teamGameWeak.DoubleGameWeak ||
                 teamGameWeak.WildCard ||
@@ -333,22 +344,22 @@ namespace API.Areas.AccountTeamArea.Controllers
                 accountTeamGameWeak.FreeHit = true;
                 accountTeam.FreeHit--;
             }
-            else if(cardTypeEnum == CardTypeEnum.WildCard)
+            else if (cardTypeEnum == CardTypeEnum.WildCard)
             {
                 accountTeamGameWeak.WildCard = true;
                 accountTeam.WildCard--;
             }
-            else if(cardTypeEnum == CardTypeEnum.DoubleGameWeak)
+            else if (cardTypeEnum == CardTypeEnum.DoubleGameWeak)
             {
                 accountTeamGameWeak.DoubleGameWeak = true;
                 accountTeam.DoubleGameWeak--;
             }
-            else if(cardTypeEnum == CardTypeEnum.Top_11)
+            else if (cardTypeEnum == CardTypeEnum.Top_11)
             {
                 accountTeamGameWeak.Top_11 = true;
                 accountTeam.Top_11--;
             }
-            else if(cardTypeEnum == CardTypeEnum.TripleCaptain)
+            else if (cardTypeEnum == CardTypeEnum.TripleCaptain)
             {
                 accountTeamGameWeak.TripleCaptain = true;
                 accountTeam.TripleCaptain--;

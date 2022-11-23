@@ -74,7 +74,7 @@ namespace API.Areas.TeamArea.Controllers
 
             int fk_Season = _unitOfWork.Season.GetCurrentSeason().Id;
 
-            List<PlayerModel> data = _unitOfWork.Team.GetRandomTeam(fk_Season, otherLang);
+            List<PlayerModel> data = _unitOfWork.Team.GetRandomTeam(fk_Season, isTop_11: false, otherLang);
 
             IEnumerable<PlayerDto> dataDto = _mapper.Map<IEnumerable<PlayerDto>>(data);
 

@@ -156,7 +156,7 @@ namespace API.Areas.AccountTeamArea.Controllers
         }
 
 
-        [HttpPut]
+        [HttpPost]
         [Route(nameof(ActivateCard))]
         public async Task<bool> ActivateCard([FromQuery, BindRequired] CardTypeEnum cardTypeEnum)
         {

@@ -166,7 +166,7 @@ namespace CoreServices.Logic
                            AvailableFreeHit = !a.FreeHit,
                            AvailableTop_11 = !a.Top_11,
                            AvailableWildCard = !a.WildCard,
-                           TripleCaptain = !a.TripleCaptain,
+                           TripleCaptain = a.TripleCaptain,
                            GameWeak = new GameWeakModel
                            {
                                Name = otherLang ? a.GameWeak.GameWeakLang.Name : a.GameWeak.Name,

@@ -37,9 +37,10 @@ namespace Repository.DBModels.AccountTeamModels
 
         public double GetAverageGameWeakPoints(int fk_GameWeak)
         {
-            return FindByCondition(a => a.Fk_GameWeak == fk_GameWeak, trackChanges: false)
+            return FindByCondition(a => a.Fk_GameWeak == fk_GameWeak, trackChanges: false).Any() ?
+                    FindByCondition(a => a.Fk_GameWeak == fk_GameWeak, trackChanges: false)
                    .Select(a => a.TotalPoints)
-                   .Average();
+                   .Average() : 0;
         }
 
         public new void Create(AccountTeamGameWeak entity)

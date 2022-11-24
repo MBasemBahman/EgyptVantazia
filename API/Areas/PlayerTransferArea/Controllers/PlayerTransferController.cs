@@ -117,6 +117,8 @@ namespace API.Areas.PlayerTransferArea.Controllers
                         Fk_AccountTeam = currentTeam.Id,
                         Fk_Player = player.Fk_Player,
                         Fk_Season = currentSeason.Id,
+                        Fk_GameWeak = teamGameWeak.Fk_GameWeak,
+                        IsTransfer = false,
                     }, otherLang: false)
                         .OrderByDescending(a => a.Id)
                         .Select(a => new SellPlayerModel
@@ -127,6 +129,11 @@ namespace API.Areas.PlayerTransferArea.Controllers
                             Order = a.Order
                         })
                         .FirstOrDefault();
+
+                    if (accountTeamPlayer == null)
+                    {
+                        throw new Exception("Please select correct players!");
+                    }
 
                     if (accountTeamPlayer != null)
                     {

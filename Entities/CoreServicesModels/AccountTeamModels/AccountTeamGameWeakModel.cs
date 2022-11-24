@@ -30,7 +30,7 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public bool? WildCard { get; set; }
         public bool? DoubleGameWeak { get; set; }
         public bool? Top_11 { get; set; }
-        public bool TripleCaptain { get; set; }
+        public bool? TripleCaptain { get; set; }
     }
 
     public class AccountTeamGameWeakModel : AuditEntity
@@ -65,6 +65,9 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         [DisplayName(nameof(AvailableWildCard))]
         public bool AvailableWildCard { get; set; }
 
+        [DisplayName(nameof(SeasonTotalPoints))]
+        public double SeasonTotalPoints { get; set; }
+
         [DisplayName(nameof(TotalPoints))]
         public int TotalPoints { get; set; }
 
@@ -96,6 +99,9 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         [DisplayName(nameof(BenchPoints))]
         public int BenchPoints { get; set; }
+
+        [DisplayName(nameof(SeasonGlobalRanking))]
+        public double SeasonGlobalRanking { get; set; }
 
         [DisplayName(nameof(GlobalRanking))]
         public double GlobalRanking { get; set; }

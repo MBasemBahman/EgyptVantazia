@@ -45,6 +45,9 @@ namespace Entities.DBModels.AccountTeamModels
         [DisplayName(nameof(TotalPoints))]
         public int TotalPoints { get; set; }
 
+        [DisplayName(nameof(SeasonTotalPoints))]
+        public double SeasonTotalPoints { get; set; }
+
         [DisplayName(nameof(PrevPoints))]
         public int PrevPoints { get; set; }
 
@@ -57,6 +60,9 @@ namespace Entities.DBModels.AccountTeamModels
         #endregion
 
         #region Ranking
+
+        [DisplayName(nameof(SeasonGlobalRanking))]
+        public double SeasonGlobalRanking { get; set; }
 
         [DisplayName(nameof(GlobalRanking))]
         public double GlobalRanking { get; set; }

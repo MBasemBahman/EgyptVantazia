@@ -74,7 +74,6 @@ namespace Repository.DBModels.AccountTeamModels
             bool? DoubleGameWeak,
             bool? Top_11,
             bool? TrippleCaptain)
-
         {
             return AccountTeamGameWeaks.Where(a => (id == 0 || a.Id == id) &&
                                                    (Fk_AccountTeam == 0 || a.Fk_AccountTeam == Fk_AccountTeam) &&

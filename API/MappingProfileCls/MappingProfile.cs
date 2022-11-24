@@ -47,6 +47,8 @@ namespace API.MappingProfileCls
 
             _ = CreateMap<UserAuthenticatedDto, UserDto>();
 
+            _ = CreateMap<AccountEditModel, Account>();
+
             #endregion
 
             #region UserModels

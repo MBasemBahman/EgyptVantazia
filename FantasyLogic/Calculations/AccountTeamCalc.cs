@@ -2,7 +2,6 @@
 using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.AccountTeamModels;
-using Entities.DBModels.TeamModels;
 using System.Linq.Dynamic.Core;
 using static Contracts.EnumData.DBModelsEnum;
 
@@ -325,6 +324,8 @@ namespace FantasyLogic.Calculations
 
         public string UpdateAccountTeamRanking(int fk_Season, string jobId)
         {
+            var currentGameWeak = _unitOfWork.Season.GetCurrentGameWeak();
+
             List<AccountTeamRanking> accountTeamRankings = new();
             int ranking = 1;
 
@@ -337,7 +338,8 @@ namespace FantasyLogic.Calculations
                 {
                     Id = a.Id,
                     Fk_Country = a.Account.Fk_Country,
-                    Fk_FavouriteTeam = a.Account.Fk_FavouriteTeam
+                    Fk_FavouriteTeam = a.Account.Fk_FavouriteTeam,
+                    TotalPoints = a.TotalPoints
                 })
                 .ToList();
 
@@ -348,7 +350,8 @@ namespace FantasyLogic.Calculations
                     Id = accountTeam.Id,
                     Fk_Country = accountTeam.Fk_Country,
                     Fk_FavouriteTeam = accountTeam.Fk_FavouriteTeam,
-                    GlobalRanking = ranking++
+                    GlobalRanking = ranking++,
+                    TotalPoints = accountTeam.TotalPoints
                 });
             }
 
@@ -376,6 +379,16 @@ namespace FantasyLogic.Calculations
                 accountTeam.GlobalRanking = accountTeamRanking.GlobalRanking;
                 accountTeam.CountryRanking = accountTeamRanking.CountryRanking;
                 accountTeam.FavouriteTeamRanking = accountTeamRanking.FavouriteTeamRanking;
+
+                AccountTeamGameWeakModel accountTeamGameWeakModel = _unitOfWork.AccountTeam.GetTeamGameWeak(accountTeam.Fk_Account, currentGameWeak.Id);
+
+                if (accountTeamGameWeakModel != null)
+                {
+                    AccountTeamGameWeak accountTeamGameWeak = _unitOfWork.AccountTeam.FindAccountTeamGameWeakbyId(accountTeamGameWeakModel.Id, trackChanges: true).Result;
+
+                    accountTeamGameWeak.SeasonGlobalRanking = accountTeam.GlobalRanking;
+                    accountTeamGameWeak.SeasonTotalPoints = accountTeam.TotalPoints;
+                }
 
                 _unitOfWork.Save().Wait();
             }
@@ -407,6 +420,7 @@ namespace FantasyLogic.Calculations
         public int CountryRanking { get; set; }
         public int FavouriteTeamRanking { get; set; }
         public int GlobalRanking { get; set; }
+        public int TotalPoints { get; set; }
     }
 
     public class AccountTeamPlayerGameWeakDto

@@ -150,6 +150,7 @@ namespace CoreServices.Logic
                            FreeHit = a.FreeHit,
                            TotalPoints = a.TotalPoints,
                            PrevPoints = a.PrevPoints,
+                           SeasonTotalPoints = a.SeasonTotalPoints,
                            WildCard = a.WildCard,
                            Fk_AccountTeam = a.Fk_AccountTeam,
                            Fk_GameWeak = a.Fk_GameWeak,
@@ -160,6 +161,7 @@ namespace CoreServices.Logic
                            TansfareCount = a.AccountTeam.PlayerTransfers.Count(b => b.Fk_GameWeak == parameters.Fk_GameWeak),
                            Top_11 = a.Top_11,
                            GlobalRanking = a.GlobalRanking,
+                           SeasonGlobalRanking = a.SeasonGlobalRanking,
                            CountryRanking = a.CountryRanking,
                            FavouriteTeamRanking = a.FavouriteTeamRanking,
                            AvailableBenchBoost = !a.BenchBoost,
@@ -186,6 +188,7 @@ namespace CoreServices.Logic
                                    Fk_Country = a.AccountTeam.Account.Fk_Country,
                                    Fk_FavouriteTeam = a.AccountTeam.Account.Fk_FavouriteTeam,
                                },
+                               TotalPoints = a.AccountTeam.TotalPoints,
                                GlobalRanking = a.AccountTeam.GlobalRanking,
                                CountryRanking = a.AccountTeam.CountryRanking,
                                FavouriteTeamRanking = a.AccountTeam.GlobalRanking

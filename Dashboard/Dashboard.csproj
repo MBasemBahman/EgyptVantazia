@@ -1,58 +1,61 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
+		<AspNetCoreModuleName>AspNetCoreModule</AspNetCoreModuleName>
+		<AllowUntrustedCertificate>True</AllowUntrustedCertificate>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.9" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.9" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.9" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.9" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.9" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.9">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.10" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.23.1" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.9" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.9" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.9" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.9" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.9" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.9">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.10" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.23.1" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Contracts\Contracts.csproj" />
-    <ProjectReference Include="..\CoreServices\CoreServices.csproj" />
-    <ProjectReference Include="..\DAL\DAL.csproj" />
-    <ProjectReference Include="..\LoggerService\LoggerService.csproj" />
-    <ProjectReference Include="..\Repository\Repository.csproj" />
-    <ProjectReference Include="..\TenantConfiguration\TenantConfiguration.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Contracts\Contracts.csproj" />
+		<ProjectReference Include="..\CoreServices\CoreServices.csproj" />
+		<ProjectReference Include="..\DAL\DAL.csproj" />
+		<ProjectReference Include="..\LoggerService\LoggerService.csproj" />
+		<ProjectReference Include="..\Repository\Repository.csproj" />
+		<ProjectReference Include="..\TenantConfiguration\TenantConfiguration.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\Uploud\Account\" />
-    <Folder Include="wwwroot\Uploud\Country\" />
-    <Folder Include="wwwroot\Uploud\Season\" />
-    <Folder Include="wwwroot\Uploud\Player\" />
-    <Folder Include="wwwroot\Uploud\PlayerPosition\" />
-    <Folder Include="wwwroot\Uploud\Sponsor\" />
-    <Folder Include="wwwroot\Uploud\NewsAttachment\" />
-    <Folder Include="wwwroot\Uploud\News\" />
-    <Folder Include="wwwroot\Uploud\Team\" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="wwwroot\Uploud\Account\" />
+		<Folder Include="wwwroot\Uploud\Country\" />
+		<Folder Include="wwwroot\Uploud\Season\" />
+		<Folder Include="wwwroot\Uploud\Player\" />
+		<Folder Include="wwwroot\Uploud\PlayerPosition\" />
+		<Folder Include="wwwroot\Uploud\Sponsor\" />
+		<Folder Include="wwwroot\Uploud\NewsAttachment\" />
+		<Folder Include="wwwroot\Uploud\News\" />
+		<Folder Include="wwwroot\Uploud\Team\" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <AdditionalFiles Include="Areas\PlayerStateEntity\Views\ScoreState\CreateOrEdit.cshtml" />
-    <AdditionalFiles Include="Areas\PlayerStateEntity\Views\ScoreState\Delete.cshtml" />
-    <AdditionalFiles Include="Areas\PlayerStateEntity\Views\ScoreState\Details.cshtml" />
-    <AdditionalFiles Include="Areas\PlayerStateEntity\Views\ScoreState\Index.cshtml" />
-  </ItemGroup>
+	<ItemGroup>
+		<AdditionalFiles Include="Areas\PlayerStateEntity\Views\ScoreState\CreateOrEdit.cshtml" />
+		<AdditionalFiles Include="Areas\PlayerStateEntity\Views\ScoreState\Delete.cshtml" />
+		<AdditionalFiles Include="Areas\PlayerStateEntity\Views\ScoreState\Details.cshtml" />
+		<AdditionalFiles Include="Areas\PlayerStateEntity\Views\ScoreState\Index.cshtml" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Content Update="wwwroot\Uploud\PlayerPosition\default-user-image.png111020220928304139596Z.png">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-  </ItemGroup>
+	<ItemGroup>
+		<Content Update="wwwroot\Uploud\PlayerPosition\default-user-image.png111020220928304139596Z.png">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
+	</ItemGroup>
 
 </Project>

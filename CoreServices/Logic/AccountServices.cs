@@ -1,9 +1,13 @@
 ﻿using Entities.CoreServicesModels.AccountModels;
+using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.LocationModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.SubscriptionModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountModels;
+using Entities.DBModels.AccountTeamModels;
+using Entities.DBModels.SeasonModels;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace CoreServices.Logic
 {
@@ -254,33 +258,41 @@ namespace CoreServices.Logic
 
                     if (account.RefCodeCount == 20)
                     {
-                        int subscription = _repository.Subscription
-                                              .FindAll(new SubscriptionParameters
-                                              {
-                                                  ForAction = true
-                                              }, trackChanges: false)
-                                              .Select(a => a.Id)
-                                              .FirstOrDefault();
-
-                        if (subscription > 0)
+                        Season season = _repository.Season.FindAll(new SeasonParameters
                         {
-                            Entities.DBModels.SeasonModels.Season season = _repository.Season.FindAll(new SeasonParameters
-                            {
-                                IsCurrent = true
-                            }, trackChanges: false).First();
+                            IsCurrent = true
+                        }, trackChanges: false).First();
 
-                            if (subscription > 0)
+                        if (!_repository.AccountSubscription.FindAll(new AccountSubscriptionParameters
+                        {
+                            Fk_Account = account.Id,
+                            Fk_Season = season.Id,
+                            NotEqualSubscriptionId = (int)SubscriptionEnum.Add3MillionsBank
+                        }, trackChanges: false).Any())
+                        {
+                            CreateAccountSubscription(new AccountSubscription
                             {
-                                CreateAccountSubscription(new AccountSubscription
-                                {
-                                    Fk_Account = refAccount.Id,
-                                    Fk_Subscription = subscription,
-                                    IsAction = true,
-                                    Fk_Season = season.Id,
-                                    IsActive = true
-                                });
+                                Fk_Account = account.Id,
+                                Fk_Subscription = (int)SubscriptionEnum.All,
+                                IsAction = true,
+                                Fk_Season = season.Id,
+                                IsActive = true,
+                            });
+                            account.RefCodeCount = 0;
 
-                                account.RefCodeCount = 0;
+                            int accountTeamId = _repository.AccountTeam.FindAll(new AccountTeamParameters
+                            {
+                                Fk_Account = account.Id,
+                                Fk_Season = season.Id,
+                            }, trackChanges: false).Select(a => a.Id).FirstOrDefault();
+
+                            if (accountTeamId > 0)
+                            {
+                                AccountTeam accounTeam = await _repository.AccountTeam.FindById(accountTeamId, trackChanges: true);
+                                accounTeam.TripleCaptain++;
+                                accounTeam.DoubleGameWeak++;
+                                accounTeam.BenchBoost++;
+                                accounTeam.Top_11++;
                             }
                         }
                     }

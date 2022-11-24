@@ -6,6 +6,10 @@ namespace Entities.CoreServicesModels.SubscriptionModels
     {
         public bool? IsActive { get; set; }
         public bool? ForAction { get; set; }
+
+        public int Fk_Account { get; set; }
+
+        public int Fk_Season { get; set; }
     }
 
     public class SubscriptionModel : AuditImageEntity
@@ -31,6 +35,8 @@ namespace Entities.CoreServicesModels.SubscriptionModels
 
         [DisplayName(nameof(IsActive))]
         public bool IsActive { get; set; }
+
+        public bool IsValid { get; set; }
     }
 
     public class SubscriptionCreateOrEditModel

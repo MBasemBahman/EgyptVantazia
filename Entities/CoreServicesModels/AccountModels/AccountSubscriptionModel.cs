@@ -7,6 +7,7 @@ namespace Entities.CoreServicesModels.AccountModels;
 
 public class AccountSubscriptionParameters : RequestParameters
 {
+    public int NotEqualSubscriptionId { get; set; }
     public int Fk_Account { get; set; }
     public int Fk_Subscription { get; set; }
     public int Fk_Season { get; set; }

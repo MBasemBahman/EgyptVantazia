@@ -110,5 +110,15 @@
             ViceCaptian = 2,
             Normal = 3
         }
+
+        public enum SubscriptionEnum
+        {
+            TripleCaptain = 5,
+            DoubleGameWeak = 6,
+            BenchBoost = 7,
+            Add3MillionsBank = 8,
+            Top_11 = 9,
+            All = 10
+        }
     }
 }

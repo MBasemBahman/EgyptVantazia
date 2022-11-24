@@ -18,7 +18,8 @@ namespace Repository.DBModels.AccountModels
                        parameters.Fk_Season,
                        parameters.IsAction,
                        parameters.IsActive,
-                       parameters.Order_id);
+                       parameters.Order_id,
+                       parameters.NotEqualSubscriptionId);
         }
 
         public async Task<AccountSubscription> FindById(int id, bool trackChanges)
@@ -40,9 +41,11 @@ namespace Repository.DBModels.AccountModels
             int Fk_Season,
             bool? isAction,
             bool? isActive,
-            string order_id)
+            string order_id,
+            int NotEqualSubscriptionId)
         {
             return AccountSubscriptions.Where(a => (id == 0 || a.Id == id) &&
+                                                 (NotEqualSubscriptionId == 0 || a.Fk_Subscription != NotEqualSubscriptionId) &&
                                                  (isAction == null || a.IsAction == isAction) &&
                                                  (string.IsNullOrWhiteSpace(order_id) || a.Order_id == order_id) &&
                                                  (isActive == null || a.IsActive == isActive) &&

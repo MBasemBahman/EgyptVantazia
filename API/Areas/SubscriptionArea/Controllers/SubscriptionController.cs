@@ -24,6 +24,10 @@ namespace API.Areas.SubscriptionArea.Controllers
         [FromQuery] SubscriptionParameters parameters)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            parameters.Fk_Account = auth.Fk_Account;
+            parameters.Fk_Season = _unitOfWork.Season.GetCurrentSeason().Id;
 
             PagedList<SubscriptionModel> data = await _unitOfWork.Subscription.GetSubscriptionPaged(parameters, otherLang);
 

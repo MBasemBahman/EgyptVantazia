@@ -156,6 +156,7 @@ namespace CoreServices.Logic
                            BenchBoost = a.BenchBoost,
                            DoubleGameWeak = a.DoubleGameWeak,
                            TansfarePoints = a.TansfarePoints,
+                           BenchPoints = a.BenchPoints,
                            TansfareCount = a.AccountTeam.PlayerTransfers.Count(b => b.Fk_GameWeak == parameters.Fk_GameWeak),
                            Top_11 = a.Top_11,
                            GlobalRanking = a.GlobalRanking,

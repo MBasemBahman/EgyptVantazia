@@ -104,6 +104,7 @@ namespace FantasyLogic.Calculations
         {
             List<AccountTeamPlayersCalculationPoints> playersFinalPoints = new();
             double totalPoints = 0;
+            double benchPoints = 0;
 
             var players = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
             {
@@ -196,6 +197,10 @@ namespace FantasyLogic.Calculations
                     {
                         totalPoints += player.Points.Value;
                     }
+                    else
+                    {
+                        benchPoints += player.Points.Value;
+                    }
                 }
             }
 
@@ -227,6 +232,7 @@ namespace FantasyLogic.Calculations
 
 
             accountTeamGameWeak.TotalPoints = (int)totalPoints + accountTeamGameWeak.TansfarePoints;
+            accountTeamGameWeak.BenchPoints = (int)benchPoints;
 
             if (accountTeamGameWeak.DoubleGameWeak)
             {

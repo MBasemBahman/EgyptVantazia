@@ -51,6 +51,9 @@ namespace Entities.DBModels.AccountTeamModels
         [DisplayName(nameof(TansfarePoints))]
         public int TansfarePoints { get; set; }
 
+        [DisplayName(nameof(BenchPoints))]
+        public int BenchPoints { get; set; }
+
         #endregion
 
         #region Ranking

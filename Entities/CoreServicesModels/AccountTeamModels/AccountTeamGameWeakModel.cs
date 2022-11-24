@@ -94,6 +94,9 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         [DisplayName(nameof(TansfareCount))]
         public int TansfareCount { get; set; }
 
+        [DisplayName(nameof(BenchPoints))]
+        public int BenchPoints { get; set; }
+
         [DisplayName(nameof(GlobalRanking))]
         public double GlobalRanking { get; set; }
 

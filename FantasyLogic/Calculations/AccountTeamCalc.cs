@@ -2,6 +2,7 @@
 using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.AccountTeamModels;
+using Entities.DBModels.TeamModels;
 using System.Linq.Dynamic.Core;
 using static Contracts.EnumData.DBModelsEnum;
 
@@ -110,15 +111,16 @@ namespace FantasyLogic.Calculations
                 Fk_Season = fk_Season,
                 Fk_GameWeak = gameWeak.Id,
                 IsTransfer = false
-            }, otherLang: false).Select(a => new
+            }, otherLang: false).Select(a => new AccountTeamPlayerGameWeakDto
             {
-                a.AccountTeamPlayer.Fk_Player,
-                a.AccountTeamPlayer.Player.Fk_PlayerPosition,
-                a.Fk_AccountTeamPlayer,
-                a.Fk_TeamPlayerType,
-                a.Order,
-                a.IsPrimary,
-                a.IsPlayed
+                Fk_Player = a.AccountTeamPlayer.Fk_Player,
+                Fk_PlayerPosition = a.AccountTeamPlayer.Player.Fk_PlayerPosition,
+                Fk_AccountTeamPlayer = a.Fk_AccountTeamPlayer,
+                Fk_TeamPlayerType = a.Fk_TeamPlayerType,
+                Order = a.Order,
+                IsPrimary = a.IsPrimary,
+                IsPlayed = a.IsPlayed,
+                Points = a.Points,
             }).ToList()
               .OrderByDescending(a => a.IsPrimary == true)
               .OrderByDescending(a => a.IsPlayed == true)
@@ -138,18 +140,28 @@ namespace FantasyLogic.Calculations
                     a.Fk_Player,
                     a.Points
                 })
-                .ToList();
+            .ToList();
 
             bool captianPointsFlag = true;
             bool havePointsInTotal = true;
 
             AccountTeamGameWeak accountTeamGameWeak = _unitOfWork.AccountTeam.FindAccountTeamGameWeakbyId(fk_AccountTeamGameWeak, trackChanges: true).Result;
+            players.ForEach(a => a.Points = playersPoints.Where(a => a.Fk_Player == a.Fk_Player).Select(a => a.Points).FirstOrDefault());
 
-            int playerPrimaryAndPlayed = players.Count(a => a.IsPrimary && a.IsPlayed);
+            int playerPrimaryAndPlayed = 11;
+
+            if (accountTeamGameWeak.Top_11)
+            {
+                players = players.OrderByDescending(a => a.Points).ToList();
+            }
+            else
+            {
+                playerPrimaryAndPlayed = players.Count(a => a.IsPrimary && a.IsPlayed);
+            }
 
             foreach (var player in players)
             {
-                if (playersPoints.Any(a => a.Fk_Player == player.Fk_Player))
+                if (player.Points != null)
                 {
                     int captianPoints = 1;
 
@@ -160,8 +172,6 @@ namespace FantasyLogic.Calculations
                         captianPointsFlag = false;
                         captianPoints = accountTeamGameWeak.TripleCaptain ? 3 : 2;
                     }
-
-                    double points = playersPoints.Where(a => a.Fk_Player == player.Fk_Player).Select(a => a.Points).First() * captianPoints;
 
                     if (havePointsInTotal &&
                         accountTeamGameWeak.BenchBoost == false &&
@@ -178,13 +188,13 @@ namespace FantasyLogic.Calculations
                         Fk_TeamPlayerType = player.Fk_TeamPlayerType,
                         IsPrimary = player.IsPrimary,
                         Order = player.Order,
-                        Points = points,
+                        Points = player.Points.Value,
                         HavePointsInTotal = havePointsInTotal
                     });
 
                     if (havePointsInTotal)
                     {
-                        totalPoints += points;
+                        totalPoints += player.Points.Value;
                     }
                 }
             }
@@ -382,6 +392,7 @@ namespace FantasyLogic.Calculations
         public bool HavePointsInTotal { get; set; }
     }
 
+
     public class AccountTeamRanking
     {
         public int Id { get; set; }
@@ -390,5 +401,17 @@ namespace FantasyLogic.Calculations
         public int CountryRanking { get; set; }
         public int FavouriteTeamRanking { get; set; }
         public int GlobalRanking { get; set; }
+    }
+
+    public class AccountTeamPlayerGameWeakDto
+    {
+        public int Fk_Player { get; set; }
+        public int Fk_PlayerPosition { get; set; }
+        public int Fk_AccountTeamPlayer { get; set; }
+        public int Fk_TeamPlayerType { get; set; }
+        public int Order { get; set; }
+        public bool IsPrimary { get; set; }
+        public bool IsPlayed { get; set; }
+        public double? Points { get; set; }
     }
 }

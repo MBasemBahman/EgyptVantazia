@@ -195,8 +195,7 @@ namespace API.Areas.AccountTeamArea.Controllers
             }
 
             if ((cardTypeEnum == CardTypeEnum.WildCard ||
-                cardTypeEnum == CardTypeEnum.FreeHit ||
-                cardTypeEnum == CardTypeEnum.Top_11) &&
+                cardTypeEnum == CardTypeEnum.FreeHit) &&
                 _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
                 {
                     Fk_AccountTeam = currentTeam.Id,
@@ -369,19 +368,11 @@ namespace API.Areas.AccountTeamArea.Controllers
 
             await _unitOfWork.Save();
 
-            if (cardTypeEnum == CardTypeEnum.Top_11)
-            {
-                GamesDataHelper gamesDataHelper = new(_unitOfWork, _365Services);
-
-                GameWeakModel prev = _unitOfWork.Season.GetCurrentGameWeak();
-                await gamesDataHelper.TransferAccountTeamPlayers(currentTeam.Id, teamGameWeak.Fk_GameWeak, prev.Id, prev._365_GameWeakId_Parsed.Value, currentSeason.Id);
-            }
-
             return true;
         }
 
         [HttpPost]
-        [Route(nameof(ActivateCard))]
+        [Route(nameof(DeActivateCard))]
         public async Task<bool> DeActivateCard([FromQuery, BindRequired] CardTypeEnum cardTypeEnum)
         {
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];

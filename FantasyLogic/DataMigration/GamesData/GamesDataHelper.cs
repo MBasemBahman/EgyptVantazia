@@ -229,7 +229,6 @@ namespace FantasyLogic.DataMigration.GamesData
             }, otherLang: false).First();
 
             if (accountTeamGameWeakModel.FreeHit ||
-                accountTeamGameWeakModel.Top_11 ||
                 _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
                 {
                     Fk_GameWeak = fk_CurrentGameWeak,
@@ -239,7 +238,7 @@ namespace FantasyLogic.DataMigration.GamesData
             {
                 List<AccountTeamPlayerGameWeakModel> prevPlayers = new();
 
-                if (accountTeamGameWeakModel.Top_11)
+                if (false && accountTeamGameWeakModel.Top_11)
                 {
                     List<PlayerModel> players = _unitOfWork.Team.GetRandomTeam(fk_Season, isTop_11: true, otherLang: false);
 
@@ -295,7 +294,8 @@ namespace FantasyLogic.DataMigration.GamesData
                             Fk_AccountTeamPlayer = a.Fk_AccountTeamPlayer,
                             Fk_TeamPlayerType = a.Fk_TeamPlayerType,
                             IsPrimary = a.IsPrimary,
-                            Order = a.Order
+                            Order = a.Order,
+                            Points = a.Points,
                         })
                         .ToList();
 

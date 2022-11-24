@@ -51,7 +51,7 @@ namespace CoreServices.Logic
                                FullName = a.Account.FullName,
                                Fk_Country = a.Account.Fk_Country,
                                Fk_FavouriteTeam = a.Account.Fk_FavouriteTeam,
-                               Fk_Nationality = a.Account.Fk_Nationality
+                               Fk_Nationality = a.Account.Fk_Nationality,
                            },
                            PlayersCount = a.AccountTeamPlayers.Count,
                            FreeTransfer = a.FreeTransfer,
@@ -185,7 +185,10 @@ namespace CoreServices.Logic
                                {
                                    Fk_Country = a.AccountTeam.Account.Fk_Country,
                                    Fk_FavouriteTeam = a.AccountTeam.Account.Fk_FavouriteTeam,
-                               }
+                               },
+                               GlobalRanking = a.AccountTeam.GlobalRanking,
+                               CountryRanking = a.AccountTeam.CountryRanking,
+                               FavouriteTeamRanking = a.AccountTeam.GlobalRanking
                            }
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)

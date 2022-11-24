@@ -11,6 +11,7 @@
         public enum TenantApis
         {
             Authentication,
+            Account,
             Location,
             AppInfo,
             News,

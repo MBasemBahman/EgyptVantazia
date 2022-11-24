@@ -69,11 +69,6 @@ namespace API.Areas.PlayerTransferArea.Controllers
                 throw new Exception("Game Weak not started yet!");
             }
 
-            if (teamGameWeak.Top_11)
-            {
-                throw new Exception("You can't do any transfer because you activate the Top_11 card!");
-            }
-
             if (currentTeam.TotalMoney <= 0)
             {
                 throw new Exception("You not have money for transfers!");

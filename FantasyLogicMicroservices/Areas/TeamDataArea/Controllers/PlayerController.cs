@@ -1,6 +1,4 @@
-﻿using Entities.CoreServicesModels.SeasonModels;
-using Entities.CoreServicesModels.TeamModels;
-using FantasyLogic;
+﻿using FantasyLogic;
 using FantasyLogicMicroservices.Controllers;
 using Hangfire;
 
@@ -38,7 +36,7 @@ namespace FantasyLogicMicroservices.Areas.TeamDataArea.Controllers
         public IActionResult UpdatePlayersStates([FromQuery] int fk_GameWeak, [FromQuery] string _365_MatchId)
         {
             //_fantasyUnitOfWork.GamesDataHelper.TransferAccountTeamPlayers(50, 55, 2);
-           //_fantasyUnitOfWork.PlayerStateCalc.UpdateTop15(45, 0).Wait();
+            //_fantasyUnitOfWork.PlayerStateCalc.UpdateTop15(45, 0).Wait();
 
             _fantasyUnitOfWork.PlayerStateCalc.RunPlayersStateCalculations(fk_GameWeak, _365_MatchId);
 

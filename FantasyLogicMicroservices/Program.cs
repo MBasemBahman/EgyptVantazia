@@ -28,7 +28,7 @@ builder.Services.ConfigureSwagger(config);
 
 builder.Services.AddControllers(opt =>
 {
-    opt.Filters.Add(typeof(GlobalModelStateValidatorAttribute));
+    _ = opt.Filters.Add(typeof(GlobalModelStateValidatorAttribute));
 });
 //builder.Services.ConfigureFirebase(config.AppSettings);
 builder.Services.ConfigureEmailSender(builder.Configuration);
@@ -70,7 +70,7 @@ app.UseHangfireDashboard("/schedulejobs", new DashboardOptions
 
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapControllers();
+    _ = endpoints.MapControllers();
 });
 
 app.Run();

@@ -77,8 +77,7 @@ namespace Dashboard.Areas.PlayerStateEntity.Controllers
         public async Task<IActionResult> CreateOrEdit(int id = 0)
         {
             PlayerGameWeakScoreStateCreateOrEditModel model = new();
-
-            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             if (id > 0)
             {
@@ -87,7 +86,7 @@ namespace Dashboard.Areas.PlayerStateEntity.Controllers
             }
 
             SetViewDataValues();
-            
+
             return View(model);
         }
 
@@ -99,7 +98,7 @@ namespace Dashboard.Areas.PlayerStateEntity.Controllers
             if (!ModelState.IsValid)
             {
                 SetViewDataValues();
-                
+
                 return View(model);
             }
             try
@@ -125,7 +124,7 @@ namespace Dashboard.Areas.PlayerStateEntity.Controllers
 
                     _ = _mapper.Map(model, dataDb);
                 }
-                
+
                 await _unitOfWork.Save();
 
                 return RedirectToAction(nameof(Index));
@@ -135,7 +134,7 @@ namespace Dashboard.Areas.PlayerStateEntity.Controllers
                 ViewData[ViewDataConstants.Error] = _logger.LogError(HttpContext.Request, ex).ErrorMessage;
             }
 
-            
+
 
             return View(model);
         }
@@ -161,7 +160,7 @@ namespace Dashboard.Areas.PlayerStateEntity.Controllers
         public void SetViewDataValues()
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
-            
+
             ViewData["ScoreState"] = _unitOfWork.PlayerState.GetScoreStatesLookUp(new ScoreStateParameters(), otherLang);
             ViewData["GameWeak"] = _unitOfWork.Season.GetGameWeakLookUp(new GameWeakParameters(), otherLang);
             ViewData["Player"] = _unitOfWork.Team.GetPlayerLookUp(new PlayerParameters(), otherLang);

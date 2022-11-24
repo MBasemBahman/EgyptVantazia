@@ -2,6 +2,8 @@
 using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.AccountTeamModels;
+using FantasyLogic.DataMigration.GamesData;
+using IntegrationWith365;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using static Entities.EnumData.LogicEnumData;
 
@@ -13,14 +15,19 @@ namespace API.Areas.AccountTeamArea.Controllers
     [Route("[area]/v{version:apiVersion}/[controller]")]
     public class AccountTeamController : ExtendControllerBase
     {
+        private readonly _365Services _365Services;
+
         public AccountTeamController(
         ILoggerManager logger,
         IMapper mapper,
         UnitOfWork unitOfWork,
         LinkGenerator linkGenerator,
         IWebHostEnvironment environment,
+        _365Services _365Services,
         IOptions<AppSettings> appSettings) : base(logger, mapper, unitOfWork, linkGenerator, environment, appSettings)
-        { }
+        {
+            this._365Services = _365Services;
+        }
 
         [HttpGet]
         [Route(nameof(GetAccountTeams))]
@@ -48,7 +55,7 @@ namespace API.Areas.AccountTeamArea.Controllers
 
             if (data != null && includeGameWeakPoints)
             {
-                var currentGameWeak = _unitOfWork.Season.GetCurrentGameWeak();
+                GameWeakModel currentGameWeak = _unitOfWork.Season.GetCurrentGameWeak();
 
                 data.AverageGameWeakPoints = _unitOfWork.AccountTeam.GetAverageGameWeakPoints(currentGameWeak.Id);
 
@@ -81,7 +88,7 @@ namespace API.Areas.AccountTeamArea.Controllers
 
             if (currentTeam != null && includeGameWeakPoints)
             {
-                var currentGameWeak = _unitOfWork.Season.GetCurrentGameWeak();
+                GameWeakModel currentGameWeak = _unitOfWork.Season.GetCurrentGameWeak();
 
                 currentTeam.AverageGameWeakPoints = _unitOfWork.AccountTeam.GetAverageGameWeakPoints(currentGameWeak.Id);
 
@@ -161,7 +168,7 @@ namespace API.Areas.AccountTeamArea.Controllers
         public async Task<bool> ActivateCard([FromQuery, BindRequired] CardTypeEnum cardTypeEnum)
         {
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
-            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             SeasonModel currentSeason = _unitOfWork.Season.GetCurrentSeason();
             if (currentSeason == null)
@@ -358,6 +365,69 @@ namespace API.Areas.AccountTeamArea.Controllers
             {
                 accountTeamGameWeak.TripleCaptain = true;
                 accountTeam.TripleCaptain--;
+            }
+
+            await _unitOfWork.Save();
+
+            if (cardTypeEnum == CardTypeEnum.Top_11)
+            {
+                GamesDataHelper gamesDataHelper = new(_unitOfWork, _365Services);
+
+                GameWeakModel prev = _unitOfWork.Season.GetCurrentGameWeak();
+                await gamesDataHelper.TransferAccountTeamPlayers(currentTeam.Id, teamGameWeak.Fk_GameWeak, prev.Id, prev._365_GameWeakId_Parsed.Value, currentSeason.Id);
+            }
+
+            return true;
+        }
+
+        [HttpPost]
+        [Route(nameof(ActivateCard))]
+        public async Task<bool> DeActivateCard([FromQuery, BindRequired] CardTypeEnum cardTypeEnum)
+        {
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+            _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
+            SeasonModel currentSeason = _unitOfWork.Season.GetCurrentSeason();
+            if (currentSeason == null)
+            {
+                throw new Exception("Season not started yet!");
+            }
+
+            GameWeakModel nextGameWeak = _unitOfWork.Season.GetNextGameWeak();
+            if (nextGameWeak == null || nextGameWeak._365_GameWeakId_Parsed == null)
+            {
+                throw new Exception("Game Weak not started yet!");
+            }
+
+            AccountTeamModel currentTeam = _unitOfWork.AccountTeam.GetCurrentTeam(auth.Fk_Account, currentSeason.Id);
+            if (currentTeam == null)
+            {
+                throw new Exception("Please create your team!");
+            }
+
+            AccountTeamGameWeakModel teamGameWeak = _unitOfWork.AccountTeam.GetTeamGameWeak(auth.Fk_Account, nextGameWeak.Id);
+            if (currentTeam == null)
+            {
+                throw new Exception("Game Weak not started yet!");
+            }
+
+            AccountTeamGameWeak accountTeamGameWeak = await _unitOfWork.AccountTeam.FindAccountTeamGameWeakbyId(teamGameWeak.Id, trackChanges: true);
+            AccountTeam accountTeam = await _unitOfWork.AccountTeam.FindAccountTeambyId(currentTeam.Id, trackChanges: true);
+
+            if (cardTypeEnum == CardTypeEnum.BenchBoost && accountTeamGameWeak.BenchBoost == true)
+            {
+                accountTeamGameWeak.BenchBoost = false;
+                accountTeam.BenchBoost++;
+            }
+            else if (cardTypeEnum == CardTypeEnum.DoubleGameWeak && accountTeamGameWeak.DoubleGameWeak == true)
+            {
+                accountTeamGameWeak.DoubleGameWeak = false;
+                accountTeam.DoubleGameWeak++;
+            }
+            else if (cardTypeEnum == CardTypeEnum.TripleCaptain && accountTeamGameWeak.TripleCaptain == true)
+            {
+                accountTeamGameWeak.TripleCaptain = false;
+                accountTeam.TripleCaptain++;
             }
 
             await _unitOfWork.Save();

@@ -1,7 +1,5 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
 
 namespace DAL.Migrations
 {
@@ -9,7 +7,7 @@ namespace DAL.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<int>(
+            _ = migrationBuilder.AlterColumn<int>(
                 name: "Order",
                 table: "AccountTeamPlayerGameWeaks",
                 type: "int",
@@ -17,7 +15,7 @@ namespace DAL.Migrations
                 oldClrType: typeof(bool),
                 oldType: "bit");
 
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "Payments",
                 columns: table => new
                 {
@@ -30,8 +28,8 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Payments", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_Payments", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_Payments_Accounts_Fk_Account",
                         column: x => x.Fk_Account,
                         principalTable: "Accounts",
@@ -54,7 +52,7 @@ namespace DAL.Migrations
             //    columns: new[] { "Id", "LastModifiedBy", "Name" },
             //    values: new object[] { 3, null, "Normal" });
 
-            migrationBuilder.UpdateData(
+            _ = migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 1,
@@ -86,7 +84,7 @@ namespace DAL.Migrations
             //    columns: new[] { "Id", "Fk_Source", "Name" },
             //    values: new object[] { 3, 3, "Normal" });
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_Payments_Fk_Account",
                 table: "Payments",
                 column: "Fk_Account");
@@ -94,65 +92,65 @@ namespace DAL.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "Payments");
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "AdministrationRolePremissions",
                 keyColumn: "Id",
                 keyValue: 32);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "AdministrationRolePremissions",
                 keyColumn: "Id",
                 keyValue: 33);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "AdministrationRolePremissions",
                 keyColumn: "Id",
                 keyValue: 34);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViewLang",
                 keyColumn: "Id",
                 keyValue: 32);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViewLang",
                 keyColumn: "Id",
                 keyValue: 33);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViewLang",
                 keyColumn: "Id",
                 keyValue: 34);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "TeamPlayerTypeLang",
                 keyColumn: "Id",
                 keyValue: 3);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViews",
                 keyColumn: "Id",
                 keyValue: 32);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViews",
                 keyColumn: "Id",
                 keyValue: 33);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "DashboardViews",
                 keyColumn: "Id",
                 keyValue: 34);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "TeamPlayerTypes",
                 keyColumn: "Id",
                 keyValue: 3);
 
-            migrationBuilder.AlterColumn<bool>(
+            _ = migrationBuilder.AlterColumn<bool>(
                 name: "Order",
                 table: "AccountTeamPlayerGameWeaks",
                 type: "bit",
@@ -160,7 +158,7 @@ namespace DAL.Migrations
                 oldClrType: typeof(int),
                 oldType: "int");
 
-            migrationBuilder.UpdateData(
+            _ = migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 1,

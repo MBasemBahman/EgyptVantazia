@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
 
 namespace DAL.Migrations
 {
@@ -8,31 +7,31 @@ namespace DAL.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "PositionByPercent",
                 table: "PlayerSeasonScoreStates");
 
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "PositionByPoints",
                 table: "PlayerSeasonScoreStates");
 
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "PositionByValue",
                 table: "PlayerSeasonScoreStates");
 
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "PositionByPercent",
                 table: "PlayerGameWeakScoreStates");
 
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "PositionByPoints",
                 table: "PlayerGameWeakScoreStates");
 
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "PositionByValue",
                 table: "PlayerGameWeakScoreStates");
 
-            migrationBuilder.UpdateData(
+            _ = migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 1,
@@ -42,49 +41,49 @@ namespace DAL.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
+            _ = migrationBuilder.AddColumn<int>(
                 name: "PositionByPercent",
                 table: "PlayerSeasonScoreStates",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
 
-            migrationBuilder.AddColumn<int>(
+            _ = migrationBuilder.AddColumn<int>(
                 name: "PositionByPoints",
                 table: "PlayerSeasonScoreStates",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
 
-            migrationBuilder.AddColumn<int>(
+            _ = migrationBuilder.AddColumn<int>(
                 name: "PositionByValue",
                 table: "PlayerSeasonScoreStates",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
 
-            migrationBuilder.AddColumn<int>(
+            _ = migrationBuilder.AddColumn<int>(
                 name: "PositionByPercent",
                 table: "PlayerGameWeakScoreStates",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
 
-            migrationBuilder.AddColumn<int>(
+            _ = migrationBuilder.AddColumn<int>(
                 name: "PositionByPoints",
                 table: "PlayerGameWeakScoreStates",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
 
-            migrationBuilder.AddColumn<int>(
+            _ = migrationBuilder.AddColumn<int>(
                 name: "PositionByValue",
                 table: "PlayerGameWeakScoreStates",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
 
-            migrationBuilder.UpdateData(
+            _ = migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 1,

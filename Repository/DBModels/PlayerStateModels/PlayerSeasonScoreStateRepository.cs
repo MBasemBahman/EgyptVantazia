@@ -1,5 +1,4 @@
-﻿using Entities.CoreServicesModels.AccountTeamModels;
-using Entities.CoreServicesModels.PlayerStateModels;
+﻿using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.DBModels.PlayerStateModels;
 
 namespace Repository.DBModels.PlayerStateModels
@@ -37,7 +36,7 @@ namespace Repository.DBModels.PlayerStateModels
 
         public void ResetTop15(int fk_Season)
         {
-            var players = FindAll(new PlayerSeasonScoreStateParameters
+            List<PlayerSeasonScoreState> players = FindAll(new PlayerSeasonScoreStateParameters
             {
                 Fk_Season = fk_Season,
                 IsTop15 = true

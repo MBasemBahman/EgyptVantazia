@@ -1,7 +1,4 @@
 ﻿using Entities.CoreServicesModels.AccountModels;
-using Entities.CoreServicesModels.AccountTeamModels;
-using Entities.CoreServicesModels.SeasonModels;
-using Entities.DBModels.AccountModels;
 
 namespace FantasyLogicMicroservices.Utility
 {

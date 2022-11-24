@@ -1,6 +1,5 @@
 ﻿using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.DBModels.AccountTeamModels;
-using static Entities.EnumData.LogicEnumData;
 
 namespace Repository.DBModels.AccountTeamModels
 {

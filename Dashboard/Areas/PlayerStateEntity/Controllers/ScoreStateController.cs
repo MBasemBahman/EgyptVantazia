@@ -119,7 +119,7 @@ namespace Dashboard.Areas.PlayerStateEntity.Controllers
 
                     _ = _mapper.Map(model, dataDb);
                 }
-                
+
                 await _unitOfWork.Save();
 
                 return RedirectToAction(nameof(Index));

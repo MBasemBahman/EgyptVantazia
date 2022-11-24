@@ -371,7 +371,7 @@ namespace CoreServices.Logic
 
         public List<PlayerModel> GetRandomTeam(int fk_Season, bool isTop_11, bool otherLang)
         {
-            var ids = _repository.Player.GetRandomTeam(fk_Season, isTop_11);
+            List<int> ids = _repository.Player.GetRandomTeam(fk_Season, isTop_11);
             return GetPlayers(new PlayerParameters
             {
                 Fk_Players = ids

@@ -85,7 +85,7 @@ namespace Dashboard.Areas.PlayerStateEntity.Controllers
             }
 
             SetViewDataValues();
-            
+
             return View(model);
         }
 
@@ -97,7 +97,7 @@ namespace Dashboard.Areas.PlayerStateEntity.Controllers
             if (!ModelState.IsValid)
             {
                 SetViewDataValues();
-                
+
                 return View(model);
             }
             try
@@ -123,7 +123,7 @@ namespace Dashboard.Areas.PlayerStateEntity.Controllers
 
                     _ = _mapper.Map(model, dataDb);
                 }
-                
+
                 await _unitOfWork.Save();
 
                 return RedirectToAction(nameof(Index));
@@ -133,7 +133,7 @@ namespace Dashboard.Areas.PlayerStateEntity.Controllers
                 ViewData[ViewDataConstants.Error] = _logger.LogError(HttpContext.Request, ex).ErrorMessage;
             }
 
-            
+
 
             return View(model);
         }
@@ -159,7 +159,7 @@ namespace Dashboard.Areas.PlayerStateEntity.Controllers
         public void SetViewDataValues()
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
-            
+
             ViewData["ScoreState"] = _unitOfWork.PlayerState.GetScoreStatesLookUp(new ScoreStateParameters(), otherLang);
             ViewData["Season"] = _unitOfWork.Season.GetSeasonLookUp(new SeasonParameters(), otherLang);
             ViewData["GameWeak"] = _unitOfWork.Season.GetGameWeakLookUp(new GameWeakParameters(), otherLang);

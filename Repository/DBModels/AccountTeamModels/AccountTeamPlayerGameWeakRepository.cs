@@ -34,7 +34,7 @@ namespace Repository.DBModels.AccountTeamModels
 
         public void ResetPoints(int fk_AccountTeam, int fk_GameWeak)
         {
-            var players = FindAll(new AccountTeamPlayerGameWeakParameters
+            List<AccountTeamPlayerGameWeak> players = FindAll(new AccountTeamPlayerGameWeakParameters
             {
                 Fk_AccountTeam = fk_AccountTeam,
                 Fk_GameWeak = fk_GameWeak
@@ -47,7 +47,7 @@ namespace Repository.DBModels.AccountTeamModels
         {
             if (FindByCondition(a => a.Fk_AccountTeamPlayer == entity.Fk_AccountTeamPlayer && a.Fk_GameWeak == entity.Fk_GameWeak, false).Any())
             {
-                var oldEntity = FindByCondition(a => a.Fk_AccountTeamPlayer == entity.Fk_AccountTeamPlayer && a.Fk_GameWeak == entity.Fk_GameWeak, trackChanges: true).First();
+                AccountTeamPlayerGameWeak oldEntity = FindByCondition(a => a.Fk_AccountTeamPlayer == entity.Fk_AccountTeamPlayer && a.Fk_GameWeak == entity.Fk_GameWeak, trackChanges: true).First();
 
                 oldEntity.Fk_TeamPlayerType = entity.Fk_TeamPlayerType;
                 oldEntity.IsPrimary = entity.IsPrimary;

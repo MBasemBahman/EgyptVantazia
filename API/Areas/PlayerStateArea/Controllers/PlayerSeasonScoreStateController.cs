@@ -1,7 +1,5 @@
 ﻿using API.Controllers;
 using Entities.CoreServicesModels.PlayerStateModels;
-using Entities.DBModels.PlayerStateModels;
-using Entities.DBModels.TeamModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using static Contracts.EnumData.DBModelsEnum;
 

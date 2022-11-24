@@ -1,6 +1,5 @@
 ﻿using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.PlayerStateModels;
-using Entities.CoreServicesModels.PrivateLeagueModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.AccountTeamModels;
 using System.Linq.Dynamic.Core;
@@ -44,6 +43,7 @@ namespace FantasyLogic.Calculations
             foreach (GameWeakModel gameWeak in gameWeaks)
             {
                 //AccountTeamGameWeakCalculations(gameWeak, fk_Season, jobId);
+
                 jobId = jobId.IsExisting()
                             ? BackgroundJob.ContinueJobWith(jobId, () => AccountTeamGameWeakCalculations(gameWeak, fk_Season, jobId))
                             : BackgroundJob.Enqueue(() => AccountTeamGameWeakCalculations(gameWeak, fk_Season, jobId));
@@ -89,7 +89,7 @@ namespace FantasyLogic.Calculations
 
             foreach (var accountTeamGameWeak in accountTeamGameWeaks)
             {
-                //AccountTeamPlayersCalculations(accountTeamGameWeak.Id, accountTeamGameWeak.Fk_AccountTeam, fk_GameWeak, fk_Season, jobId);
+                //AccountTeamPlayersCalculations(accountTeamGameWeak.Id, accountTeamGameWeak.Fk_AccountTeam, gameWeak, fk_Season, jobId);
 
                 jobId = jobId.IsExisting()
                            ? BackgroundJob.ContinueJobWith(jobId, () => AccountTeamPlayersCalculations(accountTeamGameWeak.Id, accountTeamGameWeak.Fk_AccountTeam, gameWeak, fk_Season, jobId))
@@ -117,8 +117,11 @@ namespace FantasyLogic.Calculations
                 a.Fk_AccountTeamPlayer,
                 a.Fk_TeamPlayerType,
                 a.Order,
-                a.IsPrimary
-            }).OrderByDescending(a => a.IsPrimary == true)
+                a.IsPrimary,
+                a.IsPlayed
+            }).ToList()
+              .OrderByDescending(a => a.IsPrimary == true)
+              .OrderByDescending(a => a.IsPlayed == true)
               .ThenByDescending(a => a.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian)
               .ThenByDescending(a => a.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.ViceCaptian)
               .ThenBy(a => a.Order)
@@ -142,27 +145,10 @@ namespace FantasyLogic.Calculations
 
             AccountTeamGameWeak accountTeamGameWeak = _unitOfWork.AccountTeam.FindAccountTeamGameWeakbyId(fk_AccountTeamGameWeak, trackChanges: true).Result;
 
+            int playerPrimaryAndPlayed = players.Count(a => a.IsPrimary && a.IsPlayed);
+
             foreach (var player in players)
             {
-                //if (playersFinalPoints.Count == 11)
-                //{
-                //    break;
-                //}
-
-                //if (player.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper &&
-                //    playersFinalPoints.Any(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper))
-                //{
-                //    continue;
-                //}
-
-
-                //if (playersFinalPoints.Count == 10 &&
-                //       !playersFinalPoints.Any(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper) &&
-                //       player.Fk_PlayerPosition != (int)PlayerPositionEnum.Goalkeeper)
-                //{
-                //    continue;
-                //}
-
                 if (playersPoints.Any(a => a.Fk_Player == player.Fk_Player))
                 {
                     int captianPoints = 1;
@@ -179,8 +165,7 @@ namespace FantasyLogic.Calculations
 
                     if (havePointsInTotal &&
                         accountTeamGameWeak.BenchBoost == false &&
-                        (playersFinalPoints.Count > 11 ||
-                        playersFinalPoints.Any(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper)))
+                        playersFinalPoints.Count > playerPrimaryAndPlayed)
                     {
                         havePointsInTotal = false;
                     }
@@ -221,7 +206,7 @@ namespace FantasyLogic.Calculations
                 });
             }
 
-            var prevPoints = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
+            int prevPoints = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
             {
                 Fk_AccountTeam = fk_AccountTeam,
                 Fk_Season = fk_Season,

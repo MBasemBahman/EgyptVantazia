@@ -1,9 +1,5 @@
-﻿using Entities.CoreServicesModels.PlayerScoreModels;
-using Entities.CoreServicesModels.PlayerStateModels;
-using Entities.DBModels.AccountTeamModels;
-using Entities.DBModels.PlayerScoreModels;
+﻿using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.DBModels.PlayerStateModels;
-using Entities.RequestFeatures;
 
 
 namespace Repository.DBModels.PlayerStateModels

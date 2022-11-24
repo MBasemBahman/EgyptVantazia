@@ -1,7 +1,5 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
 
 namespace DAL.Migrations
 {
@@ -9,7 +7,7 @@ namespace DAL.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "AccountRefCode",
                 columns: table => new
                 {
@@ -21,14 +19,14 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AccountRefCode", x => x.Id);
-                    table.ForeignKey(
+                    _ = table.PrimaryKey("PK_AccountRefCode", x => x.Id);
+                    _ = table.ForeignKey(
                         name: "FK_AccountRefCode_Accounts_Fk_NewAccount",
                         column: x => x.Fk_NewAccount,
                         principalTable: "Accounts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
+                    _ = table.ForeignKey(
                         name: "FK_AccountRefCode_Accounts_Fk_RefAccount",
                         column: x => x.Fk_RefAccount,
                         principalTable: "Accounts",
@@ -36,26 +34,26 @@ namespace DAL.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.UpdateData(
+            _ = migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Password",
                 value: "$2a$11$aCXmfCoX9W0PaeeP0pIHkujLbS89YdejCEaDALk0HZufed5cY78v.");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_AccountRefCode_Fk_NewAccount",
                 table: "AccountRefCode",
                 column: "Fk_NewAccount",
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_AccountRefCode_Fk_NewAccount_Fk_RefAccount",
                 table: "AccountRefCode",
                 columns: new[] { "Fk_NewAccount", "Fk_RefAccount" },
                 unique: true);
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_AccountRefCode_Fk_RefAccount",
                 table: "AccountRefCode",
                 column: "Fk_RefAccount");
@@ -63,10 +61,10 @@ namespace DAL.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "AccountRefCode");
 
-            migrationBuilder.UpdateData(
+            _ = migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 1,

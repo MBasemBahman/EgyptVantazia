@@ -2,7 +2,6 @@
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.RequestFeatures;
-using System.Collections;
 using static Entities.EnumData.LogicEnumData;
 
 namespace Entities.CoreServicesModels.PlayerTransfersModels

@@ -1,5 +1,4 @@
 ﻿using Entities.CoreServicesModels.PrivateLeagueModels;
-using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.PrivateLeagueModels;
 
 

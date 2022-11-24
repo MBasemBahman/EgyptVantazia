@@ -1,7 +1,6 @@
 ﻿using Entities.CoreServicesModels.LocationModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.CoreServicesModels.UserModels;
-using Entities.DBModels.LocationModels;
 using System.Text.Json.Serialization;
 
 namespace API.Areas.UserArea.Models

@@ -28,6 +28,7 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
 
         [HttpPost]
         [Route(nameof(UpdateGameWeak))]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult UpdateGameWeak()
         {
             _fantasyUnitOfWork.GameWeakDataHelper.RunUpdateGameWeaks();
@@ -37,6 +38,7 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
 
         [HttpPost]
         [Route(nameof(UpdateCurrentGameWeak))]
+        [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult UpdateCurrentGameWeak()
         {
             SeasonModel season = _unitOfWork.Season.GetCurrentSeason();

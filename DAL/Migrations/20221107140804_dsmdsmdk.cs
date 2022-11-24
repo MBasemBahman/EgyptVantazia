@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
 
 namespace DAL.Migrations
 {
@@ -8,7 +7,7 @@ namespace DAL.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
+            _ = migrationBuilder.AlterColumn<string>(
                 name: "RefCode",
                 table: "Accounts",
                 type: "nvarchar(450)",
@@ -18,21 +17,21 @@ namespace DAL.Migrations
                 oldType: "nvarchar(max)",
                 oldNullable: true);
 
-            migrationBuilder.AddColumn<int>(
+            _ = migrationBuilder.AddColumn<int>(
                 name: "RefCodeCount",
                 table: "Accounts",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
 
-            migrationBuilder.UpdateData(
+            _ = migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Password",
                 value: "$2a$11$4xnTUS1iZYWrr1xP8LhW3ONXSO.7Fa8trPIKjtFx3.7Obiov4v18.");
 
-            migrationBuilder.CreateIndex(
+            _ = migrationBuilder.CreateIndex(
                 name: "IX_Accounts_RefCode",
                 table: "Accounts",
                 column: "RefCode",
@@ -41,15 +40,15 @@ namespace DAL.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropIndex(
+            _ = migrationBuilder.DropIndex(
                 name: "IX_Accounts_RefCode",
                 table: "Accounts");
 
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "RefCodeCount",
                 table: "Accounts");
 
-            migrationBuilder.AlterColumn<string>(
+            _ = migrationBuilder.AlterColumn<string>(
                 name: "RefCode",
                 table: "Accounts",
                 type: "nvarchar(max)",
@@ -57,7 +56,7 @@ namespace DAL.Migrations
                 oldClrType: typeof(string),
                 oldType: "nvarchar(450)");
 
-            migrationBuilder.UpdateData(
+            _ = migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 1,

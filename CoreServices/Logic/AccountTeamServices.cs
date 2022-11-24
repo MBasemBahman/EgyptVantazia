@@ -4,7 +4,6 @@ using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountTeamModels;
-using static Contracts.EnumData.DBModelsEnum;
 
 namespace CoreServices.Logic
 {
@@ -60,7 +59,7 @@ namespace CoreServices.Logic
                            DoubleGameWeak = a.DoubleGameWeak,
                            FreeHit = a.FreeHit,
                            Top_11 = a.Top_11,
-                           TripleCaptain= a.TripleCaptain,
+                           TripleCaptain = a.TripleCaptain,
                            WildCard = a.WildCard,
                            CurrentGameWeakPoints = a.AccountTeamGameWeaks
                                                     .Where(a => a.GameWeak.IsCurrent == true)
@@ -264,6 +263,16 @@ namespace CoreServices.Logic
                            Points = a.Points,
                            HavePoints = a.HavePoints,
                            HavePointsInTotal = a.HavePointsInTotal,
+                           IsPlayed = a.AccountTeamPlayer
+                                       .Player
+                                       .Team
+                                       .HomeGameWeaks.Any(b => b.Fk_GameWeak == a.Fk_GameWeak &&
+                                                               b.StartTime <= DateTime.UtcNow.AddHours(2)) ||
+                                       a.AccountTeamPlayer
+                                       .Player
+                                       .Team
+                                       .AwayGameWeaks.Any(b => b.Fk_GameWeak == a.Fk_GameWeak &&
+                                                               b.StartTime <= DateTime.UtcNow.AddHours(2)),
                            Top15 = a.AccountTeamPlayer
                                     .Player
                                     .PlayerGameWeakScoreStates
@@ -378,9 +387,16 @@ namespace CoreServices.Logic
                                            HavePointsInTotal = b.HavePointsInTotal,
                                            IsPlayed = b.AccountTeamPlayer
                                                        .Player
-                                                       .PlayerGameWeaks
-                                                       .Any(c => c.TeamGameWeak.Fk_GameWeak == b.Fk_GameWeak &&
-                                                                 c.TeamGameWeak.StartTime <= DateTime.UtcNow.AddHours(2)),
+                                                       .Team
+                                                       .HomeGameWeaks
+                                                       .Any(c => c.Fk_GameWeak == b.Fk_GameWeak &&
+                                                                 c.StartTime <= DateTime.UtcNow.AddHours(2)) ||
+                                                       b.AccountTeamPlayer
+                                                       .Player
+                                                       .Team
+                                                       .AwayGameWeaks
+                                                       .Any(c => c.Fk_GameWeak == b.Fk_GameWeak &&
+                                                                 c.StartTime <= DateTime.UtcNow.AddHours(2)),
                                            Top15 = a.Player
                                                     .PlayerGameWeakScoreStates
                                                     .Where(c => c.Fk_GameWeak == b.Fk_GameWeak && c.Top15 != null)
@@ -408,9 +424,16 @@ namespace CoreServices.Logic
                                            HavePointsInTotal = b.HavePointsInTotal,
                                            IsPlayed = b.AccountTeamPlayer
                                                        .Player
-                                                       .PlayerGameWeaks
-                                                       .Any(c => c.TeamGameWeak.Fk_GameWeak == b.Fk_GameWeak &&
-                                                                 c.TeamGameWeak.StartTime <= DateTime.UtcNow.AddHours(2)),
+                                                       .Team
+                                                       .HomeGameWeaks
+                                                       .Any(c => c.Fk_GameWeak == b.Fk_GameWeak &&
+                                                                 c.StartTime <= DateTime.UtcNow.AddHours(2)) ||
+                                                       b.AccountTeamPlayer
+                                                       .Player
+                                                       .Team
+                                                       .AwayGameWeaks
+                                                       .Any(c => c.Fk_GameWeak == b.Fk_GameWeak &&
+                                                                 c.StartTime <= DateTime.UtcNow.AddHours(2)),
                                            Top15 = a.Player
                                                     .PlayerGameWeakScoreStates
                                                     .Where(c => c.Fk_GameWeak == b.Fk_GameWeak && c.Top15 != null)
@@ -433,9 +456,16 @@ namespace CoreServices.Logic
                                            HavePointsInTotal = b.HavePointsInTotal,
                                            IsPlayed = b.AccountTeamPlayer
                                                        .Player
-                                                       .PlayerGameWeaks
-                                                       .Any(c => c.TeamGameWeak.Fk_GameWeak == b.Fk_GameWeak &&
-                                                                 c.TeamGameWeak.StartTime <= DateTime.UtcNow.AddHours(2)),
+                                                       .Team
+                                                       .HomeGameWeaks
+                                                       .Any(c => c.Fk_GameWeak == b.Fk_GameWeak &&
+                                                                 c.StartTime <= DateTime.UtcNow.AddHours(2)) ||
+                                                       b.AccountTeamPlayer
+                                                       .Player
+                                                       .Team
+                                                       .AwayGameWeaks
+                                                       .Any(c => c.Fk_GameWeak == b.Fk_GameWeak &&
+                                                                 c.StartTime <= DateTime.UtcNow.AddHours(2)),
                                            TeamPlayerType = new TeamPlayerTypeModel
                                            {
                                                Name = otherLang ? b.TeamPlayerType.TeamPlayerTypeLang.Name : b.TeamPlayerType.Name,

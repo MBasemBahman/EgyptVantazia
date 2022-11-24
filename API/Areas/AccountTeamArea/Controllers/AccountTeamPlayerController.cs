@@ -113,8 +113,8 @@ namespace API.Areas.AccountTeamArea.Controllers
 
                 int totalPrice = 0;
 
-                var captain = model.Players.Any(a => a.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian);
-                var viceCaptian = model.Players.Any(a => a.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.ViceCaptian);
+                bool captain = model.Players.Any(a => a.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian);
+                bool viceCaptian = model.Players.Any(a => a.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.ViceCaptian);
 
                 foreach (AccountTeamPlayerCreateModel player in model.Players.OrderByDescending(a => a.IsPrimary).ThenBy(a => a.Order))
                 {

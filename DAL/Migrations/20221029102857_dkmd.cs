@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
 
 namespace DAL.Migrations
 {
@@ -13,12 +12,12 @@ namespace DAL.Migrations
             //    columns: new[] { "Id", "LastModifiedBy", "Name" },
             //    values: new object[] { 1, null, "Captian" });
 
-            migrationBuilder.InsertData(
+            _ = migrationBuilder.InsertData(
                 table: "TeamPlayerTypes",
                 columns: new[] { "Id", "LastModifiedBy", "Name" },
                 values: new object[] { 2, null, "ViceCaptian" });
 
-            migrationBuilder.UpdateData(
+            _ = migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 1,
@@ -30,7 +29,7 @@ namespace DAL.Migrations
             //    columns: new[] { "Id", "Fk_Source", "Name" },
             //    values: new object[] { 1, 1, "Captian" });
 
-            migrationBuilder.InsertData(
+            _ = migrationBuilder.InsertData(
                 table: "TeamPlayerTypeLang",
                 columns: new[] { "Id", "Fk_Source", "Name" },
                 values: new object[] { 2, 2, "ViceCaptian" });
@@ -38,27 +37,27 @@ namespace DAL.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "TeamPlayerTypeLang",
                 keyColumn: "Id",
                 keyValue: 1);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "TeamPlayerTypeLang",
                 keyColumn: "Id",
                 keyValue: 2);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "TeamPlayerTypes",
                 keyColumn: "Id",
                 keyValue: 1);
 
-            migrationBuilder.DeleteData(
+            _ = migrationBuilder.DeleteData(
                 table: "TeamPlayerTypes",
                 keyColumn: "Id",
                 keyValue: 2);
 
-            migrationBuilder.UpdateData(
+            _ = migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 1,

@@ -1,6 +1,5 @@
 ﻿using Entities.DBModels.SeasonModels;
 using Entities.RequestFeatures;
-using Newtonsoft.Json.Linq;
 
 namespace Entities.CoreServicesModels.SeasonModels
 {
@@ -37,6 +36,10 @@ namespace Entities.CoreServicesModels.SeasonModels
 
         [DisplayName(nameof(IsPrev))]
         public bool? IsPrev { get; set; }
+
+        public int GameWeakFrom { get; set; }
+
+        public int GameWeakTo { get; set; }
     }
 
     public class GameWeakModel : AuditEntity
@@ -47,6 +50,9 @@ namespace Entities.CoreServicesModels.SeasonModels
 
         [DisplayName(nameof(_365_GameWeakId))]
         public string _365_GameWeakId { get; set; }
+
+        [DisplayName(nameof(_365_GameWeakIdValue))]
+        public int _365_GameWeakIdValue { get; set; }
 
         [DisplayName(nameof(_365_GameWeakId_Parsed))]
         public int? _365_GameWeakId_Parsed => string.IsNullOrWhiteSpace(_365_GameWeakId) ? null : int.Parse(_365_GameWeakId);

@@ -1,5 +1,4 @@
 ﻿using Entities.CoreServicesModels.AccountModels;
-using Entities.DBModels.AccountModels;
 
 namespace API.Utility
 {

@@ -1,9 +1,6 @@
 ﻿using API.Areas.UserArea.Models;
 using Entities.CoreServicesModels.AccountModels;
-using Entities.CoreServicesModels.LocationModels;
-using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountModels;
-using Entities.DBModels.LocationModels;
 using Entities.ServicesModels;
 using BC = BCrypt.Net.BCrypt;
 
@@ -49,11 +46,11 @@ namespace API.Controllers
 
             if (auth.Fk_Account > 0)
             {
-                var account = _unitOfWork.Account.GetAccountbyId(auth.Fk_Account, otherLang);
+                AccountModel account = _unitOfWork.Account.GetAccountbyId(auth.Fk_Account, otherLang);
                 usersDto.Country = account.Country;
                 usersDto.FavouriteTeam = account.FavouriteTeam;
             }
-           
+
             return usersDto;
         }
 
@@ -94,7 +91,7 @@ namespace API.Controllers
 
             if (auth.Fk_Account > 0)
             {
-                var account = _unitOfWork.Account.GetAccountbyId(auth.Fk_Account, otherLang);
+                AccountModel account = _unitOfWork.Account.GetAccountbyId(auth.Fk_Account, otherLang);
                 usersDto.Country = account.Country;
                 usersDto.FavouriteTeam = account.FavouriteTeam;
             }
@@ -149,7 +146,7 @@ namespace API.Controllers
 
             if (auth.Fk_Account > 0)
             {
-                var accountModel = _unitOfWork.Account.GetAccountbyId(auth.Fk_Account, otherLang);
+                AccountModel accountModel = _unitOfWork.Account.GetAccountbyId(auth.Fk_Account, otherLang);
                 usersDto.Country = accountModel.Country;
                 usersDto.FavouriteTeam = accountModel.FavouriteTeam;
             }
@@ -293,7 +290,7 @@ namespace API.Controllers
 
             if (auth.Fk_Account > 0)
             {
-                var account = _unitOfWork.Account.GetAccountbyId(auth.Fk_Account, otherLang);
+                AccountModel account = _unitOfWork.Account.GetAccountbyId(auth.Fk_Account, otherLang);
                 usersDto.Country = account.Country;
                 usersDto.FavouriteTeam = account.FavouriteTeam;
             }

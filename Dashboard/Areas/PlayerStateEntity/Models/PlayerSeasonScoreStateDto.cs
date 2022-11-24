@@ -1,6 +1,5 @@
-﻿using Entities.CoreServicesModels.LocationModels;
+﻿using Entities.CoreServicesModels.PlayerStateModels;
 using System.ComponentModel;
-using Entities.CoreServicesModels.PlayerStateModels;
 
 namespace Dashboard.Areas.PlayerStateEntity.Models
 {

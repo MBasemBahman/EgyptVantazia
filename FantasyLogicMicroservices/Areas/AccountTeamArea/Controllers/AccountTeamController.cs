@@ -22,7 +22,7 @@ namespace FantasyLogicMicroservices.Areas.AccountTeamArea.Controllers
 
         [HttpPost]
         [Route(nameof(UpdateAccountTeamsPoints))]
-        public IActionResult UpdateAccountTeamsPoints([FromQuery]int fk_GameWeak)
+        public IActionResult UpdateAccountTeamsPoints([FromQuery] int fk_GameWeak)
         {
             //_fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(fk_GameWeak);
 

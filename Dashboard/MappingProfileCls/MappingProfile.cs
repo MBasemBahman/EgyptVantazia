@@ -539,13 +539,13 @@ namespace Dashboard.MappingProfileCls
             _ = CreateMap<ScoreStateModel, ScoreStateDto>();
 
             _ = CreateMap<ScoreStateFilter, ScoreStateParameters>();
-            
+
             _ = CreateMap<ScoreStateLangModel, ScoreStateLang>();
 
             _ = CreateMap<ScoreStateLang, ScoreStateLangModel>();
 
             #endregion
-            
+
             #region PlayerGameWeakScoreState
             _ = CreateMap<PlayerGameWeakScoreState, PlayerGameWeakScoreStateCreateOrEditModel>();
 
@@ -556,7 +556,7 @@ namespace Dashboard.MappingProfileCls
             _ = CreateMap<PlayerGameWeakScoreStateFilter, PlayerGameWeakScoreStateParameters>();
 
             #endregion
-            
+
             #region PlayerSeasonScoreState
             _ = CreateMap<PlayerSeasonScoreState, PlayerSeasonScoreStateCreateOrEditModel>();
 

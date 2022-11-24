@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
 
 namespace DAL.Migrations
 {
@@ -8,19 +7,19 @@ namespace DAL.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
+            _ = migrationBuilder.RenameColumn(
                 name: "IsPlayed",
                 table: "AccountTeamPlayerGameWeaks",
                 newName: "HavePointsInTotal");
 
-            migrationBuilder.AddColumn<bool>(
+            _ = migrationBuilder.AddColumn<bool>(
                 name: "HavePoints",
                 table: "AccountTeamPlayerGameWeaks",
                 type: "bit",
                 nullable: false,
                 defaultValue: false);
 
-            migrationBuilder.UpdateData(
+            _ = migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 1,
@@ -30,16 +29,16 @@ namespace DAL.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "HavePoints",
                 table: "AccountTeamPlayerGameWeaks");
 
-            migrationBuilder.RenameColumn(
+            _ = migrationBuilder.RenameColumn(
                 name: "HavePointsInTotal",
                 table: "AccountTeamPlayerGameWeaks",
                 newName: "IsPlayed");
 
-            migrationBuilder.UpdateData(
+            _ = migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 1,

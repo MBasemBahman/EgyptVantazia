@@ -1,5 +1,4 @@
 ﻿using Entities.CoreServicesModels.TeamModels;
-using Entities.DBModels.PlayerStateModels;
 using Entities.DBModels.TeamModels;
 using static Contracts.EnumData.DBModelsEnum;
 
@@ -104,14 +103,7 @@ namespace Repository.DBModels.TeamModels
                                                                    .FirstOrDefault()
                                                 });
 
-            if (isTop_11)
-            {
-                playersQuery = playersQuery.OrderByDescending(a => a.TotalPoints);
-            }
-            else
-            {
-                playersQuery = playersQuery.OrderBy(a => Guid.NewGuid());
-            }
+            playersQuery = isTop_11 ? playersQuery.OrderByDescending(a => a.TotalPoints) : (IQueryable<PlayerModelForRandomTeam>)playersQuery.OrderBy(a => Guid.NewGuid());
 
             List<PlayerModelForRandomTeam> players = GetRandomPlayers(playersQuery, isTop_11);
 

@@ -1,6 +1,5 @@
 ﻿using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.SeasonModels;
-using Entities.DBModels.TeamModels;
 
 namespace Repository.DBModels.SeasonModels
 {
@@ -24,7 +23,9 @@ namespace Repository.DBModels.SeasonModels
                            parameters.DeadlineFrom,
                            parameters.DeadlineTo,
                            parameters.IsNext,
-                           parameters.IsPrev);
+                           parameters.IsPrev,
+                           parameters.GameWeakFrom,
+                           parameters.GameWeakTo);
         }
 
         public async Task<GameWeak> FindById(int id, bool trackChanges)
@@ -90,11 +91,15 @@ namespace Repository.DBModels.SeasonModels
             DateTime? deadlineFrom,
             DateTime? deadlineTo,
             bool? isNext,
-            bool? isPrev)
+            bool? isPrev,
+            int GameWeakFrom,
+            int GameWeakTo)
         {
             return GameWeaks.Where(a => (id == 0 || a.Id == id) &&
                                         (deadline == null || a.Deadline == deadline) &&
                                         (deadlineFrom == null || a.Deadline >= deadlineFrom) &&
+                                        (GameWeakFrom == 0 || a._365_GameWeakIdValue >= GameWeakFrom) &&
+                                        (GameWeakTo == 0 || a._365_GameWeakIdValue <= GameWeakTo) &&
                                         (deadlineTo == null || a.Deadline <= deadlineTo) &&
                                         (Fk_Season == 0 || a.Fk_Season == Fk_Season) &&
                                         (biggerThanWeak == null || (!string.IsNullOrEmpty(a._365_GameWeakId) && Convert.ToInt32(a._365_GameWeakId) > biggerThanWeak.Value)) &&

@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
 
 namespace DAL.Migrations
 {
@@ -8,60 +7,60 @@ namespace DAL.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "TrippleCaptain",
                 table: "AccountTeamPlayerGameWeaks");
 
-            migrationBuilder.AddColumn<int>(
+            _ = migrationBuilder.AddColumn<int>(
                 name: "BenchBoost",
                 table: "AccountTeams",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
 
-            migrationBuilder.AddColumn<int>(
+            _ = migrationBuilder.AddColumn<int>(
                 name: "DoubleGameWeak",
                 table: "AccountTeams",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
 
-            migrationBuilder.AddColumn<int>(
+            _ = migrationBuilder.AddColumn<int>(
                 name: "FreeHit",
                 table: "AccountTeams",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
 
-            migrationBuilder.AddColumn<int>(
+            _ = migrationBuilder.AddColumn<int>(
                 name: "Top_11",
                 table: "AccountTeams",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
 
-            migrationBuilder.AddColumn<int>(
+            _ = migrationBuilder.AddColumn<int>(
                 name: "TripleCaptain",
                 table: "AccountTeams",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
 
-            migrationBuilder.AddColumn<int>(
+            _ = migrationBuilder.AddColumn<int>(
                 name: "WildCard",
                 table: "AccountTeams",
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
 
-            migrationBuilder.AddColumn<bool>(
+            _ = migrationBuilder.AddColumn<bool>(
                 name: "TripleCaptain",
                 table: "AccountTeamGameWeaks",
                 type: "bit",
                 nullable: false,
                 defaultValue: false);
 
-            migrationBuilder.UpdateData(
+            _ = migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 1,
@@ -71,42 +70,42 @@ namespace DAL.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "BenchBoost",
                 table: "AccountTeams");
 
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "DoubleGameWeak",
                 table: "AccountTeams");
 
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "FreeHit",
                 table: "AccountTeams");
 
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "Top_11",
                 table: "AccountTeams");
 
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "TripleCaptain",
                 table: "AccountTeams");
 
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "WildCard",
                 table: "AccountTeams");
 
-            migrationBuilder.DropColumn(
+            _ = migrationBuilder.DropColumn(
                 name: "TripleCaptain",
                 table: "AccountTeamGameWeaks");
 
-            migrationBuilder.AddColumn<bool>(
+            _ = migrationBuilder.AddColumn<bool>(
                 name: "TrippleCaptain",
                 table: "AccountTeamPlayerGameWeaks",
                 type: "bit",
                 nullable: false,
                 defaultValue: false);
 
-            migrationBuilder.UpdateData(
+            _ = migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 1,

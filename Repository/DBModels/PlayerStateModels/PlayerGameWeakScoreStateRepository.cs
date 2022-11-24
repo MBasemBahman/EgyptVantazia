@@ -39,7 +39,7 @@ namespace Repository.DBModels.PlayerStateModels
 
         public void ResetTop15(int fk_GameWeak)
         {
-            var players = FindAll(new PlayerGameWeakScoreStateParameters
+            List<PlayerGameWeakScoreState> players = FindAll(new PlayerGameWeakScoreStateParameters
             {
                 Fk_GameWeak = fk_GameWeak,
                 IsTop15 = true

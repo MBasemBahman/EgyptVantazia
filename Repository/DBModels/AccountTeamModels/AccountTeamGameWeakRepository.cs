@@ -49,14 +49,7 @@ namespace Repository.DBModels.AccountTeamModels
 
             AccountTeam accountTeam = DBContext.Set<AccountTeam>().Find(entity.Fk_AccountTeam);
 
-            if (accountTeam.FreeTransfer >= 1)
-            {
-                accountTeam.FreeTransfer = 2;
-            }
-            else
-            {
-                accountTeam.FreeTransfer = 1;
-            }
+            accountTeam.FreeTransfer = accountTeam.FreeTransfer >= 1 ? 2 : 1;
         }
     }
 

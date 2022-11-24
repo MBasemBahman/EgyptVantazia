@@ -67,11 +67,11 @@ namespace Entities.CoreServicesModels.PlayerStateModels
         [DisplayName(nameof(Player))]
         [ForeignKey(nameof(Player))]
         public int Fk_Player { get; set; }
-        
+
         [DisplayName(nameof(ScoreState))]
         [ForeignKey(nameof(ScoreState))]
         public int Fk_ScoreState { get; set; }
-        
+
         [DisplayName(nameof(GameWeak))]
         [ForeignKey(nameof(GameWeak))]
         public int Fk_GameWeak { get; set; }

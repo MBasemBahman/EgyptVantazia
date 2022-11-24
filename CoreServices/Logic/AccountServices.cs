@@ -264,7 +264,7 @@ namespace CoreServices.Logic
 
                         if (subscription > 0)
                         {
-                            var season = _repository.Season.FindAll(new SeasonParameters
+                            Entities.DBModels.SeasonModels.Season season = _repository.Season.FindAll(new SeasonParameters
                             {
                                 IsCurrent = true
                             }, trackChanges: false).First();

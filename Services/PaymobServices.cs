@@ -95,15 +95,15 @@ namespace Services
 
             if (pyamentType == PyamentTypeEnum.Credit)
             {
-                integration_id = _config.CardTest;
+                integration_id = _config.CardLive;
             }
             else if (pyamentType == PyamentTypeEnum.Wallet)
             {
-                integration_id = _config.WalletTest;
+                integration_id = _config.WalletLive;
             }
             else if (pyamentType == PyamentTypeEnum.Kiosk)
             {
-                integration_id = _config.KioskTest;
+                integration_id = _config.KioskLive;
             }
 
             Dictionary<string, object> Params = new()

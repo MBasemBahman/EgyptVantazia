@@ -165,19 +165,20 @@ namespace FantasyLogic.Calculations
                 {
                     int captianPoints = 1;
 
-                    if (captianPointsFlag &&
-                      (player.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian ||
-                      player.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.ViceCaptian))
-                    {
-                        captianPointsFlag = false;
-                        captianPoints = accountTeamGameWeak.TripleCaptain ? 3 : 2;
-                    }
-
                     if (havePointsInTotal &&
                         accountTeamGameWeak.BenchBoost == false &&
                         playersFinalPoints.Count > playerPrimaryAndPlayed)
                     {
                         havePointsInTotal = false;
+                    }
+
+                    if (havePointsInTotal &&
+                        captianPointsFlag &&
+                      (player.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian ||
+                      player.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.ViceCaptian))
+                    {
+                        captianPointsFlag = false;
+                        captianPoints = accountTeamGameWeak.TripleCaptain ? 3 : 2;
                     }
 
                     playersFinalPoints.Add(new AccountTeamPlayersCalculationPoints

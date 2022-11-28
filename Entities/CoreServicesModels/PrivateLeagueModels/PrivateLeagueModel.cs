@@ -29,6 +29,8 @@ namespace Entities.CoreServicesModels.PrivateLeagueModels
         public int MemberCount { get; set; }
 
         public double MyPosition { get; set; }
+
+        public bool IsAdmin { get; set; }
     }
 
     public class PrivateLeagueCreateOrEditModel

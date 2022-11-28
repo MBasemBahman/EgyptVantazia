@@ -27,6 +27,7 @@ namespace API.Areas.AppInfoArea.Controllers
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             AppAboutModel data = await _unitOfWork.AppInfo.GetAppAbouts(new RequestParameters(), otherLang).FirstOrDefaultAsync();
+            data.ShowPayment = false;
 
             return data;
         }

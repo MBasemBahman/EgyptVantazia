@@ -29,6 +29,7 @@ namespace CoreServices.Logic
                            Name = a.Name,
                            UniqueCode = a.UniqueCode,
                            MemberCount = a.PrivateLeagueMembers.Count,
+                           IsAdmin = a.PrivateLeagueMembers.Any(b => b.Fk_Account == parameters.Fk_Account && b.IsAdmin),
                            MyPosition = a.PrivateLeagueMembers
                                          .Where(b => b.Fk_Account == parameters.Fk_Account)
                                          .Select(b => b.Ranking)

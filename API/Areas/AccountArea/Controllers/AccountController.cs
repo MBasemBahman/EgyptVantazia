@@ -36,5 +36,17 @@ namespace API.Areas.AccountArea.Controllers
 
             return data;
         }
+
+        [HttpDelete]
+        [Route(nameof(DeleteAccount))]
+        public bool DeleteAccount()
+        {
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            _unitOfWork.Account.DeleteAccount(auth.Fk_Account).Wait();
+            _unitOfWork.Save().Wait();
+
+            return true;
+        }
     }
 }

@@ -348,7 +348,7 @@ namespace CoreServices.Logic
 
         public DateTime? GetFirstTeamGameWeakMatchDate()
         {
-            return GetNextGameWeak().Deadline;
+            return GetNextGameWeak().Deadline.Value.AddHours(-2);
         }
 
         public void CreateTeamGameWeak(TeamGameWeak TeamGameWeak)

@@ -1,6 +1,7 @@
 ﻿using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.TeamModels;
 using IntegrationWith365.Entities.SquadsModels;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace FantasyLogic.DataMigration.TeamData
 {
@@ -68,9 +69,14 @@ namespace FantasyLogic.DataMigration.TeamData
                 int fk_PlayerPosition = positions.Where(a => a._365_PositionId == athletesInArabic[i].Position.Id.ToString())
                                                  .Select(a => a.Id)
                                                  .FirstOrDefault();
-                jobId = jobId.IsExisting()
-                    ? BackgroundJob.ContinueJobWith(jobId, () => UpdatePlayer(athletesInArabic[i], athletesInEnglish[i], team.Id, fk_PlayerPosition))
-                    : BackgroundJob.Enqueue(() => UpdatePlayer(athletesInArabic[i], athletesInEnglish[i], team.Id, fk_PlayerPosition));
+
+                if (fk_PlayerPosition != (int)PlayerPositionEnum.Coach)
+                {
+
+                    jobId = jobId.IsExisting()
+                        ? BackgroundJob.ContinueJobWith(jobId, () => UpdatePlayer(athletesInArabic[i], athletesInEnglish[i], team.Id, fk_PlayerPosition))
+                        : BackgroundJob.Enqueue(() => UpdatePlayer(athletesInArabic[i], athletesInEnglish[i], team.Id, fk_PlayerPosition));
+                }
             }
         }
 

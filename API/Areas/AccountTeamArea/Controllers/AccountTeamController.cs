@@ -420,6 +420,11 @@ namespace API.Areas.AccountTeamArea.Controllers
                 accountTeamGameWeak.TripleCaptain = false;
                 accountTeam.TripleCaptain++;
             }
+            else if (cardTypeEnum == CardTypeEnum.Top_11 && accountTeamGameWeak.Top_11 == true)
+            {
+                accountTeamGameWeak.Top_11 = false;
+                accountTeam.Top_11++;
+            }
 
             await _unitOfWork.Save();
 

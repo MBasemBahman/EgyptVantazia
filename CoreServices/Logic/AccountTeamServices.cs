@@ -35,7 +35,7 @@ namespace CoreServices.Logic
                            TotalMoney = a.TotalMoney,
                            TotalTeamPrice = a.AccountTeamPlayers
                                              .Where(b => b.AccountTeamPlayerGameWeaks
-                                                          .Any(c => c.GameWeak.IsCurrent &&
+                                                          .Any(c => c.GameWeak.IsNext &&
                                                                     c.AccountTeamPlayer.Fk_AccountTeam == a.Id &&
                                                                     c.IsTransfer == false))
                                              .SelectMany(b => b.Player

@@ -104,11 +104,11 @@ namespace FantasyLogic.DataMigration.GamesData
                 AccountTeamCalc accountTeamCalc = new(_unitOfWork);
                 PrivateLeagueClac privateLeagueClac = new(_unitOfWork);
 
-                string updateGameResultTime = startTime.AddHours(-2).ToCronExpression(startTime.AddMinutes(30), 10);
-                string updateStandingsTime = startTime.AddHours(-2).ToCronExpression(startTime.AddMinutes(30), 20);
-                string playersStateCalculationsTime = startTime.AddHours(-2).ToCronExpression(startTime.AddMinutes(30), 30);
-                string accountTeamCalculationsTime = startTime.AddHours(-2).ToCronExpression(startTime.AddMinutes(30), 40);
-                string privateLeagueCalculationsTime = startTime.AddHours(-2).ToCronExpression(startTime.AddMinutes(30), 50);
+                string updateGameResultTime = startTime.AddHours(-2).ToCronExpression(startTime.AddMinutes(60), 5);
+                string updateStandingsTime = startTime.AddHours(-2).ToCronExpression(startTime.AddMinutes(60), 10);
+                string playersStateCalculationsTime = startTime.AddHours(-2).ToCronExpression(startTime.AddMinutes(60), 15);
+                string accountTeamCalculationsTime = startTime.AddHours(-2).ToCronExpression(startTime.AddMinutes(60), 20);
+                string privateLeagueCalculationsTime = startTime.AddHours(-2).ToCronExpression(startTime.AddMinutes(60), 30);
 
                 RecurringJob.AddOrUpdate("UpdateGameResult-" + game.Id.ToString(), () => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }), updateGameResultTime, TimeZoneInfo.Utc);
 
@@ -166,18 +166,18 @@ namespace FantasyLogic.DataMigration.GamesData
             _unitOfWork.Season.ResetCurrentGameWeaks();
             await _unitOfWork.Save();
 
-            GameWeak gameWeak = await _unitOfWork.Season.FindGameWeakbyId(id, trackChanges: false);
+            GameWeak gameWeak = await _unitOfWork.Season.FindGameWeakbyId(id, trackChanges: true);
             gameWeak.IsCurrent = true;
             await _unitOfWork.Save();
 
-            GameWeak nextGameWeak = await _unitOfWork.Season.FindGameWeakby365Id((gameWeak._365_GameWeakId.ParseToInt() + 1).ToString(), gameWeak.Fk_Season, trackChanges: false);
+            GameWeak nextGameWeak = await _unitOfWork.Season.FindGameWeakby365Id((gameWeak._365_GameWeakId.ParseToInt() + 1).ToString(), gameWeak.Fk_Season, trackChanges: true);
             if (nextGameWeak != null)
             {
                 gameWeak.IsNext = true;
                 await _unitOfWork.Save();
             }
 
-            GameWeak prevGameWeak = await _unitOfWork.Season.FindGameWeakby365Id((gameWeak._365_GameWeakId.ParseToInt() - 1).ToString(), gameWeak.Fk_Season, trackChanges: false);
+            GameWeak prevGameWeak = await _unitOfWork.Season.FindGameWeakby365Id((gameWeak._365_GameWeakId.ParseToInt() - 1).ToString(), gameWeak.Fk_Season, trackChanges: true);
             if (prevGameWeak != null)
             {
                 gameWeak.IsPrev = true;

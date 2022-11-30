@@ -12,6 +12,7 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public int Fk_Account { get; set; }
         public int Fk_User { get; set; }
         public int Fk_Season { get; set; }
+        public int Fk_GameWeak { get; set; }
 
         public bool? CurrentSeason { get; set; }
 
@@ -58,6 +59,9 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         [DisplayName(nameof(TotalMoney))]
         public int TotalMoney { get; set; }
 
+        [DisplayName(nameof(IsVip))]
+        public bool IsVip { get; set; }
+
         [DisplayName(nameof(GlobalRanking))]
         public double GlobalRanking { get; set; }
 
@@ -81,7 +85,7 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         public int FreeTransferCount { get; set; }
 
-        public int TotalTeamPrice { get; set; }
+        public double TotalTeamPrice { get; set; }
 
         public int AveragePoints { get; set; }
 

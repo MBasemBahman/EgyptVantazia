@@ -105,6 +105,7 @@ namespace CoreServices.Logic
                                                           Fk_Account = b.Fk_Account,
                                                           Fk_Season = b.Fk_Season,
                                                           Name = b.Name,
+                                                          IsVip = b.IsVip,
                                                           TotalMoney = b.TotalMoney,
                                                           TotalPoints = b.TotalPoints,
                                                           ImageUrl = b.StorageUrl + b.ImageUrl,

@@ -64,6 +64,9 @@ namespace Entities.DBModels.AccountTeamModels
         [DefaultValue(0)]
         public int TripleCaptain { get; set; }
 
+        [DisplayName(nameof(IsVip))]
+        public bool IsVip { get; set; }
+
         #endregion
 
         #region Ranking

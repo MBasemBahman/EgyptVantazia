@@ -54,7 +54,7 @@ namespace API.Areas.PrivateLeagueArea.Controllers
             PrivateLeagueModel data = _unitOfWork.PrivateLeague
                                                  .GetPrivateLeagues(new PrivateLeagueParameters { UniqueCode = uniqueCode }).FirstOrDefault();
 
-            return data ?? throw new Exception("الكود غير صحيح!");
+            return data ?? throw new Exception("The code is incorrect!");
         }
 
         [HttpPost]

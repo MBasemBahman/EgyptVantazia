@@ -32,9 +32,11 @@ namespace CoreServices.Logic
                            IsActive = a.IsActive,
                            Cost = a.Cost,
                            Discount = a.Discount,
-                           IsValid = parameters.Fk_Account == 0 || parameters.Fk_Season == 0 ? true :
+                           IsValid = parameters.Fk_Account == 0 || 
+                                     parameters.Fk_Season == 0 || 
                                      !a.AccountSubscriptions.Any(b => b.Fk_Account == parameters.Fk_Account &&
-                                                                     b.Fk_Season == parameters.Fk_Season),
+                                                                      b.Fk_Season == parameters.Fk_Season &&
+                                                                      b.IsActive),
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

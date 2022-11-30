@@ -42,7 +42,7 @@ namespace API.Areas.PaymentArea.Controllers
             {
                 Fk_Account = auth.Fk_Account,
                 Fk_Season = season.Id,
-                Id = model.Fk_Subscription
+                Id = model.Fk_Subscription,
             }, otherLang: false).FirstOrDefault();
 
             if (prevSubscription != null && !prevSubscription.IsValid)
@@ -208,6 +208,7 @@ namespace API.Areas.PaymentArea.Controllers
                             accounTeam.DoubleGameWeak++;
                             accounTeam.BenchBoost++;
                             accounTeam.Top_11++;
+                            accounTeam.IsVip = true;
                         }
                         else if (accountSubscription.Fk_Subscription == (int)SubscriptionEnum.TripleCaptain)
                         {

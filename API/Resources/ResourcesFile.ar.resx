@@ -117,11 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Email address not valid!" xml:space="preserve">
-    <value>عنوان البريد الإلكتروني غير صالح</value>
+  <data name="Account already registered!" xml:space="preserve">
+    <value>الحساب مسجل بالفعل!</value>
   </data>
-  <data name="Invalid code!" xml:space="preserve">
-    <value>رمز غير صالح!</value>
+  <data name="Email address not valid!" xml:space="preserve">
+    <value>عنوان البريد الإلكتروني غير صالح!</value>
+  </data>
+  <data name="Game Weak not started yet!" xml:space="preserve">
+    <value>أسبوع اللعبة لم يبدأ بعد!</value>
   </data>
   <data name="Invalid token" xml:space="preserve">
     <value>رمز غير صالح</value>
@@ -129,40 +132,67 @@
   <data name="login failed. Wrong user name or password." xml:space="preserve">
     <value>فشل عملية الدخول. اسم المستخدم أو كلمة المرور خاطئة.</value>
   </data>
-  <data name="Not Allowed" xml:space="preserve">
-    <value>غير مسموح</value>
-  </data>
   <data name="Not Found!" xml:space="preserve">
-    <value>غير موجود!</value>
+    <value>غير موجود</value>
   </data>
-  <data name="Old password is wrong!" xml:space="preserve">
-    <value>كلمة المرور القديمة خاطئة!</value>
+  <data name="Not Valid!" xml:space="preserve">
+    <value>غير صالح!</value>
   </data>
   <data name="Payments have something wrong. try again later!" xml:space="preserve">
     <value>المدفوعات بها شيء خاطئ. حاول مرة أخرى في وقت لاحق!</value>
   </data>
-  <data name="Please fill comment content!" xml:space="preserve">
-    <value>الرجاء ملء محتوى التعليق!</value>
+  <data name="Please add email address!" xml:space="preserve">
+    <value>الرجاء إضافة عنوان البريد الإلكتروني الخاص بك!</value>
   </data>
-  <data name="Please fill message content!" xml:space="preserve">
-    <value>الرجاء تعبئة محتوى الرسالة!</value>
+  <data name="Please add phone number!" xml:space="preserve">
+    <value>الرجاء إضافة رقم هاتفك!</value>
   </data>
-  <data name="Please fill post content!" xml:space="preserve">
-    <value>الرجاء ملء محتوى المنشور</value>
+  <data name="Please add wallet number!" xml:space="preserve">
+    <value>الرجاء إضافة رقم محفظتك!</value>
+  </data>
+  <data name="Please create your team!" xml:space="preserve">
+    <value>الرجاء إنشاء فريقك!</value>
+  </data>
+  <data name="Please select correct players!" xml:space="preserve">
+    <value>الرجاء تحديد اللاعبين المناسبين!</value>
+  </data>
+  <data name="Season not started yet!" xml:space="preserve">
+    <value>الموسم لم يبدأ بعد!</value>
+  </data>
+  <data name="The code is incorrect!" xml:space="preserve">
+    <value>الكود غير صحيح!</value>
+  </data>
+  <data name="The transfer is not successful. The number of players sold is not the same as the number of players bought!" xml:space="preserve">
+    <value>النقل غير ناجح. عدد اللاعبين المباعين يختلف عن عدد اللاعبين الذين تم شراؤهم!</value>
   </data>
   <data name="User name already registered" xml:space="preserve">
-    <value>اسم المستخدم مسجل مسبقا</value>
+    <value>اسم المستخدم مسجل بالفعل</value>
   </data>
   <data name="user not found" xml:space="preserve">
-    <value>لم يتم العثور على المستخدم</value>
+    <value>المستخدم ليس موجود</value>
   </data>
-  <data name="You must add at aleast two members to chat!" xml:space="preserve">
-    <value>يجب عليك إضافة عضوين على الأقل للدردشة!</value>
+  <data name="You already get this subscription in this season!" xml:space="preserve">
+    <value>لقد حصلت بالفعل على هذا الاشتراك هذا الموسم!</value>
   </data>
-  <data name="You must add chat name!" xml:space="preserve">
-    <value>يجب عليك إضافة اسم الدردشة!</value>
+  <data name="You already use card in this gameweek!" xml:space="preserve">
+    <value>لقد استخدمت البطاقة بالفعل في أسبوع اللعبة هذا!</value>
   </data>
-  <data name="You must add members to Group!" xml:space="preserve">
-    <value>يجب عليك إضافة أعضاء إلى المجموعة!</value>
+  <data name="You already use card in this half of season!" xml:space="preserve">
+    <value>أنت تستخدم بالفعل بطاقة في هذا النصف من الموسم!</value>
+  </data>
+  <data name="You cannot activate this card, because you in first gameweek!" xml:space="preserve">
+    <value>لا يمكنك تفعيل هذه البطاقة لأنك في أسبوع اللعبة الأول!</value>
+  </data>
+  <data name="You can`t buy this subscription because you already have sub one in this season!" xml:space="preserve">
+    <value>لا يمكنك شراء هذا الاشتراك لأن لديك بالفعل اشتراك فرعي هذا الموسم!</value>
+  </data>
+  <data name="You can`t buy this subscription because you already have super one in this season!" xml:space="preserve">
+    <value>لا يمكنك شراء هذا الاشتراك لأن لديك بالفعل اشتراكًا رائعًا هذا الموسم!</value>
+  </data>
+  <data name="You not have money for transfers!" xml:space="preserve">
+    <value>ليس لديك أموال للتحويلات!</value>
+  </data>
+  <data name="You not have valid card!" xml:space="preserve">
+    <value>ليس لديك بطاقة صالحة!</value>
   </data>
 </root>

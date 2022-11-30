@@ -33,6 +33,18 @@ namespace CoreServices.Logic
                            Fk_Season = a.Fk_Season,
                            Name = a.Name,
                            TotalMoney = a.TotalMoney,
+                           TotalTeamPrice = a.AccountTeamPlayers
+                                             .Where(b => b.AccountTeamPlayerGameWeaks
+                                                          .Any(c => c.GameWeak.IsCurrent &&
+                                                                    c.AccountTeamPlayer.Fk_AccountTeam == a.Id &&
+                                                                    c.IsTransfer == false))
+                                             .SelectMany(b => b.Player
+                                                               .PlayerPrices
+                                                               .OrderByDescending(c => c.Id))
+                                             .GroupBy(b => b.Fk_Player)
+                                             .Select(b => b.FirstOrDefault().SellPrice)
+                                             .Sum(),
+                           IsVip = a.IsVip,
                            TotalPoints = a.TotalPoints,
                            ImageUrl = a.StorageUrl + a.ImageUrl,
                            CountryRanking = a.CountryRanking,
@@ -183,6 +195,7 @@ namespace CoreServices.Logic
                            AccountTeam = new AccountTeamModel
                            {
                                Name = a.AccountTeam.Name,
+                               IsVip = a.AccountTeam.IsVip,
                                Account = new AccountModel
                                {
                                    Fk_Country = a.AccountTeam.Account.Fk_Country,
@@ -314,7 +327,8 @@ namespace CoreServices.Logic
                                },
                                AccountTeam = new AccountTeamModel
                                {
-                                   Name = a.AccountTeamPlayer.AccountTeam.Name
+                                   Name = a.AccountTeamPlayer.AccountTeam.Name,
+                                   IsVip = a.AccountTeamPlayer.AccountTeam.IsVip,
                                }
                            }
                        })
@@ -596,7 +610,8 @@ namespace CoreServices.Logic
                            },
                            AccountTeam = new AccountTeamModel
                            {
-                               Name = a.AccountTeam.Name
+                               Name = a.AccountTeam.Name,
+                               IsVip = a.AccountTeam.IsVip
                            },
 
                        })

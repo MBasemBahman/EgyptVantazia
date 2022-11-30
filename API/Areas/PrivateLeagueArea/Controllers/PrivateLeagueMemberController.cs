@@ -110,7 +110,7 @@ namespace API.Areas.PrivateLeagueArea.Controllers
                                                .FirstOrDefault();
             if (fk_PrivateLeague == 0)
             {
-                throw new Exception("الكود غير صحيح!");
+                throw new Exception("The code is incorrect!");
             }
 
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];

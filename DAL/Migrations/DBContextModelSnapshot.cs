@@ -253,6 +253,9 @@ namespace DAL.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsVip")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("LastModifiedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
@@ -3706,7 +3709,7 @@ namespace DAL.Migrations
                             EmailAddress = "user@mail.com",
                             LastModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Developer",
-                            Password = "$2a$11$HafWZiiZ17Ou4Ge00iWWIuvDJdIM52TmM4J9CDUxvB98I.Z0E74Ta",
+                            Password = "$2a$11$vNwgx5LJin4b1jtJXfz6ROwgh5EGlm0NWgYm6RFAqojMiipM1o9mK",
                             UserName = "Developer"
                         });
                 });

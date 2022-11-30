@@ -1,0 +1,107 @@
+﻿<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <!-- Title  -->
+    <title>Fantasy Egyptian Matches</title>
+
+    <!-- Favicon  -->
+    <link rel="icon" href="~/download-assets/img/favicon.png">
+
+    <!-- ***** All CSS Files ***** -->
+    <!-- Style css -->
+    <link rel="stylesheet" href="~/download-assets/css/style.css">
+
+</head>
+
+<body class="homepage-2 download-page inner">
+    <!--====== Scroll To Top Area Start ======-->
+    <div id="scrollUp" title="Scroll To Top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    <!--====== Scroll To Top Area End ======-->
+
+    <div class="main">
+
+        <!-- ***** Welcome Area Start ***** -->
+        <section id="home" class="section welcome-area inner-area bg-overlay h-100vh overflow-hidden">
+            <div class="container h-100">
+                <div class="row align-items-center">
+                    <!-- Welcome Intro Start -->
+                    <div class="col-12 d-flex justify-content-center p-5">
+                        <img src="~/download-assets/img/gah.png">
+                    </div>
+                    <div class="col-12 download-text text-center">
+                        <div class="row button-group store-buttons">
+                            <div id="apple" class="col p-2">
+                                <a href="https://play.google.com/store/apps/details?id=com.dinnova.fem">
+                                    <img src="~/download-assets/img/icon/app-store-black.png" alt="">
+                                </a>
+                            </div>
+                            <div id="google" class="col p-2">
+                                <a href="https://play.google.com/store/apps/details?id=com.dinnova.fem">
+                                    <img src="~/download-assets/img/icon/google-play-black.png" alt="">
+                                </a>
+                            </div>
+                            <div id="huawei" class="col p-2">
+                                <a href="https://play.google.com/store/apps/details?id=com.dinnova.fem">
+                                    <img src="~/download-assets/img/icon/app-gallery-black.png" alt="">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ***** Welcome Area End ***** -->
+    </div>
+
+    @RenderBody()
+
+    <!-- ***** All jQuery Plugins ***** -->
+    <!-- jQuery(necessary for all JavaScript plugins) -->
+    <script src="~/download-assets/js/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap js -->
+    <script src="~/download-assets/js/bootstrap/popper.min.js"></script>
+    <script src="~/download-assets/js/bootstrap/bootstrap.min.js"></script>
+
+    <!-- Plugins js -->
+    <script src="~/download-assets/js/plugins/plugins.min.js"></script>
+
+    <!-- Active js -->
+    <script src="~/download-assets/js/active.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            var userAgent = window.navigator.userAgent,
+                platform = window.navigator.platform,
+                macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'],
+                windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'],
+                iosPlatforms = ['iPhone', 'iPad', 'iPod'],
+                os = null;
+
+            if (iosPlatforms.indexOf(platform) !== -1) {
+                window.location.href = "https://play.google.com/store/apps/details?id=com.dinnova.fem";
+            } else if (/Android/.test(userAgent)) {
+                $('#apple').hide();
+            }
+
+            // Act on clicks to a elements
+            $("#link1").on('click', function (e) {
+                // prevent the default action, in this case the following of a link
+                e.preventDefault();
+                // capture the href attribute of the a element
+                var url = $(this).attr('href');
+                // perform a get request using ajax to the captured href value
+                window.location = url;
+            });
+        });
+    </script>
+</body>
+</html>

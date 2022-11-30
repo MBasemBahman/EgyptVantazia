@@ -57,7 +57,7 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public int TotalPoints { get; set; }
 
         [DisplayName(nameof(TotalMoney))]
-        public int TotalMoney { get; set; }
+        public double TotalMoney { get; set; }
 
         [DisplayName(nameof(IsVip))]
         public bool IsVip { get; set; }

@@ -45,7 +45,7 @@ namespace Entities.CoreServicesModels.PlayerTransfersModels
         public TransferTypeEnum TransferTypeEnum { get; set; }
 
         [DisplayName(nameof(Cost))]
-        public int Cost { get; set; }
+        public double Cost { get; set; }
 
         [DisplayName(nameof(IsFree))]
         public bool IsFree { get; set; }

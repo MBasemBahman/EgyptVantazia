@@ -30,7 +30,7 @@ namespace Entities.DBModels.AccountTeamModels
         public int TotalPoints { get; set; }
 
         [DisplayName(nameof(TotalMoney))]
-        public int TotalMoney { get; set; }
+        public double TotalMoney { get; set; }
 
         #endregion
 

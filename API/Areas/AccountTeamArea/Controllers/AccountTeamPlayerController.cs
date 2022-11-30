@@ -111,14 +111,14 @@ namespace API.Areas.AccountTeamArea.Controllers
                         a.BuyPrice
                     }).ToList();
 
-                int totalPrice = 0;
+                double totalPrice = 0;
 
                 bool captain = model.Players.Any(a => a.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian);
                 bool viceCaptian = model.Players.Any(a => a.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.ViceCaptian);
 
                 foreach (AccountTeamPlayerCreateModel player in model.Players.OrderByDescending(a => a.IsPrimary).ThenBy(a => a.Order))
                 {
-                    int price = (int)prices.Where(a => a.Id == player.Fk_Player).Select(a => a.BuyPrice).FirstOrDefault();
+                    double price = prices.Where(a => a.Id == player.Fk_Player).Select(a => a.BuyPrice).FirstOrDefault();
 
                     _unitOfWork.PlayerTransfers.CreatePlayerTransfer(new PlayerTransfer
                     {

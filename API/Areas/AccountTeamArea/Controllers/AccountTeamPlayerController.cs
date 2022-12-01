@@ -75,21 +75,18 @@ namespace API.Areas.AccountTeamArea.Controllers
             }
 
             GameWeakModel nextGameWeak = _unitOfWork.Season.GetNextGameWeak();
-
             if (nextGameWeak == null)
             {
                 throw new Exception("Game Weak not started yet!");
             }
 
             AccountTeamModel currentTeam = _unitOfWork.AccountTeam.GetCurrentTeam(auth.Fk_Account, currentSeason.Id);
-
             if (currentTeam == null)
             {
                 throw new Exception("Please create your team!");
             }
 
             AccountTeamGameWeakModel teamGameWeak = _unitOfWork.AccountTeam.GetTeamGameWeak(auth.Fk_Account, nextGameWeak.Id);
-
             if (teamGameWeak == null)
             {
                 _unitOfWork.AccountTeam.CreateAccountTeamGameWeak(new AccountTeamGameWeak
@@ -97,6 +94,19 @@ namespace API.Areas.AccountTeamArea.Controllers
                     Fk_AccountTeam = currentTeam.Id,
                     Fk_GameWeak = nextGameWeak.Id
                 });
+            }
+
+            if (model.Players.Count != 15)
+            {
+                throw new Exception("The team must have 15 players!");
+            }
+            if (model.Players.Count(a => a.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian) > 1)
+            {
+                throw new Exception("You must select one captain only!");
+            }
+            if (model.Players.Count(a => a.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.ViceCaptian) > 1)
+            {
+                throw new Exception("You must select one vice-captain only!");
             }
 
             if (model.Players != null && model.Players.Any())
@@ -182,21 +192,18 @@ namespace API.Areas.AccountTeamArea.Controllers
             }
 
             GameWeakModel nextGameWeak = _unitOfWork.Season.GetNextGameWeak();
-
             if (nextGameWeak == null)
             {
                 throw new Exception("Game Weak not started yet!");
             }
 
             AccountTeamModel currentTeam = _unitOfWork.AccountTeam.GetCurrentTeam(auth.Fk_Account, currentSeason.Id);
-
             if (currentTeam == null)
             {
                 throw new Exception("Please create your team!");
             }
 
             AccountTeamGameWeakModel teamGameWeak = _unitOfWork.AccountTeam.GetTeamGameWeak(auth.Fk_Account, nextGameWeak.Id);
-
             if (teamGameWeak == null)
             {
                 _unitOfWork.AccountTeam.CreateAccountTeamGameWeak(new AccountTeamGameWeak
@@ -204,6 +211,19 @@ namespace API.Areas.AccountTeamArea.Controllers
                     Fk_AccountTeam = currentTeam.Id,
                     Fk_GameWeak = nextGameWeak.Id
                 });
+            }
+
+            if (model.Players.Count != 15)
+            {
+                throw new Exception("The team must have 15 players!");
+            }
+            if (model.Players.Count(a => a.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian) != 1)
+            {
+                throw new Exception("You must select one captain only!");
+            }
+            if (model.Players.Count(a => a.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.ViceCaptian) != 1)
+            {
+                throw new Exception("You must select one vice-captain only!");
             }
 
             if (model.Players != null && model.Players.Any())

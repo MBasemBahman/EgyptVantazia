@@ -5,6 +5,8 @@ namespace CoreServices
     public class UnitOfWork
     {
         private readonly RepositoryManager _repository;
+        private readonly DbContext _dBContext;
+
         private UserService _userService;
         private LogServices _logServices;
         private AccountServices _accountServices;
@@ -23,9 +25,10 @@ namespace CoreServices
         private TeamServices _teamServices;
         private SubscriptionServices _subscriptionServices;
 
-        public UnitOfWork(RepositoryManager repository)
+        public UnitOfWork(RepositoryManager repository, DbContext dBContext)
         {
             _repository = repository;
+            _dBContext = dBContext;
         }
 
         public async Task Save()
@@ -78,7 +81,7 @@ namespace CoreServices
         {
             get
             {
-                _accountTeamServices ??= new AccountTeamServices(_repository);
+                _accountTeamServices ??= new AccountTeamServices(_repository, _dBContext);
                 return _accountTeamServices;
             }
         }

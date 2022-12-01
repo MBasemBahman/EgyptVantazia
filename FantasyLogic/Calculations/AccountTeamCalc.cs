@@ -146,7 +146,8 @@ namespace FantasyLogic.Calculations
             bool havePointsInTotal = true;
 
             AccountTeamGameWeak accountTeamGameWeak = _unitOfWork.AccountTeam.FindAccountTeamGameWeakbyId(fk_AccountTeamGameWeak, trackChanges: true).Result;
-            players.ForEach(a => a.Points = playersPoints.Where(a => a.Fk_Player == a.Fk_Player).Select(a => a.Points).FirstOrDefault());
+            
+            players.ForEach(player => player.Points = playersPoints.Where(points => points.Fk_Player == player.Fk_Player).Select(a => a.Points).FirstOrDefault());
 
             int playerPrimaryAndPlayed = 11;
 
@@ -167,7 +168,7 @@ namespace FantasyLogic.Calculations
 
                     if (havePointsInTotal &&
                         accountTeamGameWeak.BenchBoost == false &&
-                        playersFinalPoints.Count > playerPrimaryAndPlayed)
+                        playersFinalPoints.Count >= playerPrimaryAndPlayed)
                     {
                         havePointsInTotal = false;
                     }
@@ -189,7 +190,7 @@ namespace FantasyLogic.Calculations
                         Fk_TeamPlayerType = player.Fk_TeamPlayerType,
                         IsPrimary = player.IsPrimary,
                         Order = player.Order,
-                        Points = player.Points.Value,
+                        Points = player.Points.Value * captianPoints,
                         HavePointsInTotal = havePointsInTotal
                     });
 

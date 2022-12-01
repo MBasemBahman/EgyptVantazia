@@ -4,16 +4,19 @@ using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountTeamModels;
+using Entities.DBModels.SeasonModels;
 
 namespace CoreServices.Logic
 {
     public class AccountTeamServices
     {
         private readonly RepositoryManager _repository;
+        private readonly DbContext _dBContext;
 
-        public AccountTeamServices(RepositoryManager repository)
+        public AccountTeamServices(RepositoryManager repository, DbContext dBContext)
         {
             _repository = repository;
+            _dBContext = dBContext;
         }
 
         #region AccountTeam Services
@@ -580,33 +583,23 @@ namespace CoreServices.Logic
                                                     }
                                                 })
                                                 .ToList() : null,
-                               NextMatch = parameters.IncludeNextMatch ?
-                               (a.Player
-                                .Team
-                                .AwayGameWeaks
-                                .Any(b => b.StartTime >= DateTime.UtcNow.AddHours(2)) ?
-                               a.Player
-                                .Team
-                                .AwayGameWeaks
-                                .Where(b => b.StartTime >= DateTime.UtcNow.AddHours(2))
-                                .Select(b => new TeamModel
-                                {
-                                    Name = otherLang ? b.Home.TeamLang.Name : b.Home.Name,
-                                    ShortName = otherLang ? b.Home.TeamLang.ShortName : b.Home.ShortName,
-                                    IsAwayTeam = false
-                                })
-                                .FirstOrDefault() :
-                                a.Player
-                                .Team
-                                .HomeGameWeaks
-                                .Where(b => b.StartTime >= DateTime.UtcNow.AddHours(2))
-                                .Select(b => new TeamModel
-                                {
-                                    Name = otherLang ? b.Away.TeamLang.Name : b.Away.Name,
-                                    ShortName = otherLang ? b.Away.TeamLang.ShortName : b.Away.ShortName,
-                                    IsAwayTeam = true
-                                })
-                                .FirstOrDefault()) : null
+                               NextMatch = (parameters.IncludeNextMatch ?
+                               (_dBContext.Set<TeamGameWeak>()
+                                          .Where(b => b.StartTime >= DateTime.UtcNow.AddHours(2) &&
+                                                      (b.Fk_Away == a.Player.Fk_Team || b.Fk_Home == a.Player.Fk_Team))
+                                          .OrderBy(b => b.StartTime)
+                                          .Select(b => b.Fk_Home != a.Player.Fk_Team ? new TeamModel
+                                          {
+                                              Name = otherLang ? b.Home.TeamLang.Name : b.Home.Name,
+                                              ShortName = otherLang ? b.Home.TeamLang.ShortName : b.Home.ShortName,
+                                              IsAwayTeam = false
+                                          } : new TeamModel
+                                          {
+                                              Name = otherLang ? b.Away.TeamLang.Name : b.Away.Name,
+                                              ShortName = otherLang ? b.Away.TeamLang.ShortName : b.Away.ShortName,
+                                              IsAwayTeam = true
+                                          })
+                                          .FirstOrDefault()) : null),
                            },
                            AccountTeam = new AccountTeamModel
                            {

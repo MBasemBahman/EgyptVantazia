@@ -162,6 +162,9 @@
   <data name="The code is incorrect!" xml:space="preserve">
     <value>الكود غير صحيح!</value>
   </data>
+  <data name="The team must have 15 players!" xml:space="preserve">
+    <value>يجب أن يضم الفريق 15 لاعبًا!</value>
+  </data>
   <data name="The transfer is not successful. The number of players sold is not the same as the number of players bought!" xml:space="preserve">
     <value>النقل غير ناجح. عدد اللاعبين المباعين يختلف عن عدد اللاعبين الذين تم شراؤهم!</value>
   </data>
@@ -188,6 +191,12 @@
   </data>
   <data name="You can`t buy this subscription because you already have super one in this season!" xml:space="preserve">
     <value>لا يمكنك شراء هذا الاشتراك لأن لديك بالفعل اشتراكًا رائعًا هذا الموسم!</value>
+  </data>
+  <data name="You must select one captain only!" xml:space="preserve">
+    <value>يجب عليك اختيار كابتن واحد فقط!</value>
+  </data>
+  <data name="You must select one vice-captain only!" xml:space="preserve">
+    <value>يجب عليك اختيار نائب الكابتن واحد فقط!</value>
   </data>
   <data name="You not have money for transfers!" xml:space="preserve">
     <value>ليس لديك أموال للتحويلات!</value>

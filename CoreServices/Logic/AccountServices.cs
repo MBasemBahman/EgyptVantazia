@@ -47,6 +47,7 @@ namespace CoreServices.Logic
                                   PhoneNumberTwo = a.PhoneNumberTwo,
                                   RefCode = a.RefCode,
                                   RefCodeCount = a.RefCodeCount,
+                                  AccountRefCodeCount = a.RefAccountsRefCode != null ? a.RefAccountsRefCode.Count : 0,
                                   Fk_AccountTeam = a.AccountTeams
                                                     .Where(a => a.Season.IsCurrent)
                                                     .Select(a => a.Id)
@@ -142,6 +143,12 @@ namespace CoreServices.Logic
         public async Task<Account> FindByUserId(int fK_User, bool trackChanges)
         {
             return await _repository.Account.FindByUserId(fK_User, trackChanges);
+        }
+        
+        public Dictionary<string, string> GetAccountLookUp(AccountParameters parameters, bool otherLang)
+        {
+            return GetAccounts(parameters, otherLang)
+                .OrderByDescending(a => a.Id).ToDictionary(a => a.Id.ToString(), a => a.UserName);
         }
 
         public async Task<AccountModel> GetByUserId(int fK_User, bool otherLang)
@@ -323,6 +330,10 @@ namespace CoreServices.Logic
                                   Season = new SeasonModel
                                   {
                                       Name = otherLang ? a.Season.SeasonLang.Name : a.Season.Name
+                                  },
+                                  Account = new AccountModel
+                                  {
+                                      Name = a.Account.FullName
                                   },
                                   IsAction = a.IsAction,
                                   Fk_Account = a.Fk_Account,

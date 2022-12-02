@@ -80,7 +80,9 @@ namespace Dashboard.Areas.AccountEntity.Models
     public enum AccountProfileItems
     {
         Details = 1,
-        AccountTeam = 2
+        AccountTeam = 2,
+        AccountSubscription = 3,
+        Payment = 4
     }
 
 }

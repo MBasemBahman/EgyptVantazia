@@ -1,6 +1,8 @@
 ﻿using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.SubscriptionModels;
 using Entities.DBModels.AccountModels;
+using Entities.DBModels.SeasonModels;
+using Entities.DBModels.SubscriptionModels;
 using Entities.RequestFeatures;
 
 namespace Entities.CoreServicesModels.AccountModels;
@@ -23,6 +25,8 @@ public class AccountSubscriptionModel : BaseEntity
     [DisplayName(nameof(Account))]
     [ForeignKey(nameof(Account))]
     public int Fk_Account { get; set; }
+    
+    public AccountModel Account { get; set; }
 
     [DisplayName(nameof(Subscription))]
     [ForeignKey(nameof(Subscription))]
@@ -45,6 +49,30 @@ public class AccountSubscriptionModel : BaseEntity
 
     [DisplayName(nameof(Order_id))]
     public string Order_id { get; set; }
+
+    [DisplayName(nameof(Cost))]
+    public int Cost { get; set; }
+}
+
+public class AccountSubscriptionCreateOrEditModel
+{
+    [DisplayName(nameof(Account))]
+    [ForeignKey(nameof(Account))]
+    public int Fk_Account { get; set; }
+
+    [DisplayName(nameof(Subscription))]
+    [ForeignKey(nameof(Subscription))]
+    public int Fk_Subscription { get; set; }
+
+    [DisplayName(nameof(Season))]
+    [ForeignKey(nameof(Season))]
+    public int Fk_Season { get; set; }
+
+    [DisplayName(nameof(IsAction))]
+    public bool IsAction { get; set; }
+
+    [DisplayName(nameof(IsActive))]
+    public bool IsActive { get; set; }
 
     [DisplayName(nameof(Cost))]
     public int Cost { get; set; }

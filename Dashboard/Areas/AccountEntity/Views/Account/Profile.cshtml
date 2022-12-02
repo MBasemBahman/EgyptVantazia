@@ -61,19 +61,29 @@
                                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                         <div class="profile-tabs d-flex justify-content-between flex-wrap mt-1 mt-md-0">
                                             <ul class="nav nav-pills mb-0">
-                                                 <li class="nav-item ">
+                                                <li class="nav-item ">
                                                     <a id="/AccountEntity/Account/Details/@Model.Id" class="nav-link tab-item  @(returnItem==(int)AccountProfileItems.Details ? "active" : "")">
                                                         <span class="fw-bold">@Localizer.Get("Account Details")</span>
                                                     </a>
                                                 </li>
-                                                    <li class="nav-item ">
-                                                        <a id="/AccountTeamEntity/AccountTeam/Index/?Fk_Account=@Model.Id&ProfileLayOut=true" class="nav-link tab-item  @(returnItem==(int)AccountProfileItems.AccountTeam ? "active" : "")">
-                                                            <span class="fw-bold">@Localizer.Get("Teams")</span>
-                                                        </a>
-                                                    </li>
+                                                
+                                                <li class="nav-item ">
+                                                    <a id="/AccountTeamEntity/AccountTeam/Index/?Fk_Account=@Model.Id&ProfileLayOut=true" class="nav-link tab-item  @(returnItem==(int)AccountProfileItems.AccountTeam ? "active" : "")">
+                                                        <span class="fw-bold">@Localizer.Get("Teams")</span>
+                                                    </a>
+                                                </li>
 
-
-
+                                                <li class="nav-item ">
+                                                    <a id="/AccountSubscriptionEntity/AccountSubscription/Index/?Fk_Account=@Model.Id&ProfileLayOut=true" class="nav-link tab-item  @(returnItem==(int)AccountProfileItems.AccountSubscription ? "active" : "")">
+                                                        <span class="fw-bold">@Localizer.Get("AccountSubscriptions")</span>
+                                                    </a>
+                                                </li>
+                                                
+                                                <li class="nav-item ">
+                                                    <a id="/PaymentEntity/Payment/Index/?Fk_Account=@Model.Id&ProfileLayOut=true" class="nav-link tab-item  @(returnItem==(int)AccountProfileItems.Payment ? "active" : "")">
+                                                        <span class="fw-bold">@Localizer.Get("Account Payment")</span>
+                                                    </a>
+                                                </li>
 
                                             </ul>
 

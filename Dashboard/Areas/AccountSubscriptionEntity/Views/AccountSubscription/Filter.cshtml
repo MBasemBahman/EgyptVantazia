@@ -1,0 +1,52 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Dashboard.Areas.AccountSubscriptionEntity.Models.AccountSubscriptionFilter
+@{
+    ViewData["Title"] = Localizer.Get("Advanced Search");
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.emptyLayout = true;
+
+}
+
+
+<div class="collapse" id="AdvancedFilter">
+    <div class="card-header border-bottom">
+        <h4 class="card-title">@Localizer.Get("Advanced Search")</h4>
+    </div>
+
+    <div class="card-body mt-2">
+        <form asp-action="LoadTable" class="filter">
+            <div class="row g-1 mb-md-1">
+                <div class="col-md-6 col-12">
+                    <div class="mb-1">
+                        <label asp-for="Fk_Account" class="form-label"></label>
+                        <select asp-for="Fk_Account" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["Account"] as Dictionary<string,string>,"Key","Value"))">
+                            <option value="0">@Localizer.Get("All")</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-12">
+                    <div class="mb-1">
+                        <label asp-for="Fk_Season" class="form-label"></label>
+                        <select asp-for="Fk_Season" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["Season"] as Dictionary<string,string>,"Key","Value"))">
+                            <option value="0">@Localizer.Get("All")</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <hr />
+            <br />
+            <div class="row g-1 mb-md-1">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">@Localizer.Get("Search")</button>
+                    <button type="reset" class="btn btn-outline-secondary">@Localizer.Get("Reset")</button>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- END: Content-->
+</div>
+

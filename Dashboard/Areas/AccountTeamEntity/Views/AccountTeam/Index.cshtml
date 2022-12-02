@@ -82,9 +82,14 @@
 
                                                 </th>
                                                 <th>@Html.DisplayNameFor(model => row.Account)</th>
-                                                <th>@Html.DisplayNameFor(model => row.Name)</th>
                                                 <th>@Html.DisplayNameFor(model => row.Season)</th>
+                                                <th>@Html.DisplayNameFor(model => row.Name)</th>
                                                 <th>@Html.DisplayNameFor(model => row.TotalPoints)</th>
+                                                <th>@Html.DisplayNameFor(model => row.TotalMoney)</th>
+                                                <th>@Html.DisplayNameFor(model => row.IsVip)</th>
+                                                <th>@Html.DisplayNameFor(model => row.GlobalRanking)</th>
+                                                <th>@Html.DisplayNameFor(model => row.CountryRanking)</th>
+                                                <th>@Html.DisplayNameFor(model => row.FavouriteTeamRanking)</th>
                                                 <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
                                                 <th>
                                                     @Html.DisplayNameFor(model => row.Id)
@@ -138,9 +143,14 @@ else
 
                                     </th>
                                     <th>@Html.DisplayNameFor(model => row.Account)</th>
-                                    <th>@Html.DisplayNameFor(model => row.Name)</th>
                                     <th>@Html.DisplayNameFor(model => row.Season)</th>
+                                    <th>@Html.DisplayNameFor(model => row.Name)</th>
                                     <th>@Html.DisplayNameFor(model => row.TotalPoints)</th>
+                                    <th>@Html.DisplayNameFor(model => row.TotalMoney)</th>
+                                    <th>@Html.DisplayNameFor(model => row.IsVip)</th>
+                                    <th>@Html.DisplayNameFor(model => row.GlobalRanking)</th>
+                                    <th>@Html.DisplayNameFor(model => row.CountryRanking)</th>
+                                    <th>@Html.DisplayNameFor(model => row.FavouriteTeamRanking)</th>
                                     <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
                                     <th>
                                         @Html.DisplayNameFor(model => row.Id)
@@ -214,6 +224,7 @@ else
 
                             }
                         },
+                        { data: "season.name", orderable: false, },
                         {
                             data: "name",
                             render: function (data, type, row) {
@@ -243,9 +254,18 @@ else
 
                             }
                         },
-
-                        { data: "season.name", orderable: false, },
                         { data: "totalPoints" },
+                        { data: "totalMoney" },
+                        { data: "isVip", render: function(data) {
+                          if (data) {
+                              return '@Localizer.Get("Yes")';
+                          } else {
+                              return '@Localizer.Get("No")';
+                          }
+                        } },
+                        { data: "globalRanking" },
+                        { data: "countryRanking" },
+                        { data: "favouriteTeamRanking" },
                         { data: "createdAt" },
                         { data: "id" },
                     ]

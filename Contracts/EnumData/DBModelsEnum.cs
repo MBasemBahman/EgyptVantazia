@@ -50,6 +50,8 @@
             ScoreState = 32,
             PlayerGameWeakScoreState = 33,
             PlayerSeasonScoreState = 34,
+            AccountSubscription = 35,
+            Payment = 36
         }
 
         public enum ScoreTypeEnum

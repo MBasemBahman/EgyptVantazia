@@ -1,0 +1,172 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Dashboard.Areas.AccountSubscriptionEntity.Models
+@using Dashboard.Areas.AccountEntity.Models
+@model Entities.CoreServicesModels.AccountModels.AccountSubscriptionCreateOrEditModel
+@{
+    ViewData["Title"] = $"{Localizer.Get("CreateOrEdit")} {Localizer.Get("Account Subscriptions")}";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.useForm = true;
+    ViewBag.useImageUploud = true;
+    ViewBag.userFormRepeater = true;
+    int id = ViewData["id"] != null ? (int)ViewData["id"] : 0;
+    int returnPage = ViewData["returnPage"] != null ?
+        (int)ViewData["returnPage"] : (int)AccountSubscriptionReturnPageEnum.Index;
+
+}
+
+<!-- BEGIN: Content-->
+<div class="app-content content ">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row">
+            <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h2 class="content-header-title float-start mb-0">@ViewData["Title"]</h2>
+                        <div class="breadcrumb-wrapper">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="/AccountSubscriptionEntity/AccountSubscription/Profile/@Model.Fk_Account">@Localizer.Get("Account Profile")</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    @ViewData["Title"]
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-body">
+            <section id="multiple-column-form">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form class="form" asp-action="CreateOrEdit" enctype="multipart/form-data">
+                                    <div asp-validation-summary="All" class="text-danger">@ViewData["Error"]</div>
+                                    <input type="hidden" name="returnPage" value="@returnPage">
+                                    
+                                    <div class="row mb-1">
+                                        @if (Model.Fk_Account == 0)
+                                        {
+                                            <div class="col-md-12 col-12">
+                                                <div class="mb-1">
+                                                    <label asp-for="Fk_Account" class="form-label"></label>
+                                                    <select class="form-control select2" asp-for="Fk_Account" asp-items="@(new SelectList(ViewData["Account"] as Dictionary<string,string>,"Key","Value"))"></select>
+                                                    <span asp-validation-for="Fk_Account" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <input type="hidden" asp-for="Fk_Account">
+                                        }
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Fk_Season" class="form-label"></label>
+                                                <select class="form-control select2" asp-for="Fk_Season" asp-items="@(new SelectList(ViewData["Season"] as Dictionary<string,string>,"Key","Value"))"></select>
+                                                <span asp-validation-for="Fk_Season" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Fk_Subscription" class="form-label"></label>
+                                                <select class="form-control select2" asp-for="Fk_Subscription" asp-items="@(new SelectList(ViewData["Subscription"] as Dictionary<string,string>,"Key","Value"))"></select>
+                                                <span asp-validation-for="Fk_Subscription" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Cost" class="form-label"></label>
+                                                <input asp-for="Cost" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("Cost"))" />
+                                                <span asp-validation-for="Cost" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="IsAction" class="form-label"></label>
+                                                <select class="form-control" asp-for="IsAction">
+                                                    <option value="true">@Localizer.Get("Yes")</option>
+                                                    <option value="false">@Localizer.Get("No")</option>
+                                                </select>
+                                                <span asp-validation-for="IsAction" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="IsActive" class="form-label"></label>
+                                                <select class="form-control" asp-for="IsActive">
+                                                    <option value="true">@Localizer.Get("Yes")</option>
+                                                    <option value="false">@Localizer.Get("No")</option>
+                                                </select>
+                                                <span asp-validation-for="IsActive" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary me-1">@Localizer.Get("Submit")</button>
+                                            <button type="reset" class="btn btn-outline-secondary me-1">@Localizer.Get("Reset")</button>
+                                            @if (returnPage == (int)AccountSubscriptionReturnPageEnum.Index)
+                                            {
+                                                <a asp-action="Index" asp-area="AccountSubscriptionEntity"
+                                                   class="btn btn-warning"> @Localizer.Get("Back") </a>
+                                            }
+                                            else
+                                            {
+                                                <a asp-action="Profile" asp-controller="Account"
+                                                   asp-area="AccountEntity"
+                                                   asp-route-id="@Model.Fk_Account" 
+                                                   asp-route-returnItem="@((int)AccountProfileItems.AccountSubscription)"
+                                                   class="btn btn-warning"> @Localizer.Get("Back") </a>
+                                            }
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+</div>
+
+@section scripts{
+    <script>
+
+        function resetRepeaterData() {
+            $(".game-id").last().val('0');
+           $(".game-name").last().val('');
+           $(".game-name-en").last().val('');
+           $(".gameid365").last().val('');
+
+        }
+
+        $(document).ready(function () {
+            $('button[data-repeater-delete][newRepeater]').each(function () {
+                $(this).click();
+            });
+
+            $("#add-new-btn").on('click', function () {
+                setTimeout(resetRepeaterData, 500)
+            });
+
+        });
+
+    </script>
+}

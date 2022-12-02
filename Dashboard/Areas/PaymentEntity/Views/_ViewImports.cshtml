@@ -1,0 +1,21 @@
+﻿@using Dashboard;
+@using Contracts;
+@using Microsoft.AspNetCore.Http;
+@using System.Globalization;
+@using Contracts.Constants;
+@using Entities.Constants;
+@using Dashboard.Areas.AccountTeamEntity.Models;
+@using Dashboard.Areas.PlayerTransferEntity.Models;
+@using Dashboard.Areas.Dashboard.Models;
+@using Entities.DBModels.AccountTeamModels;
+@using Entities.CoreServicesModels.PlayerTransfersModels;
+@using Entities.CoreServicesModels.AccountTeamModels;
+@using static Contracts.EnumData.DashboardModelsEnum;
+@using static Contracts.EnumData.DBModelsEnum;
+@using Entities.CoreServicesModels.DashboardAdministrationModels;
+
+
+@inject IHttpContextAccessor ContextAccessor
+@inject ILocalizationManager Localizer
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

@@ -1185,4 +1185,13 @@
   <data name="IsPrev" xml:space="preserve">
     <value>Previous</value>
   </data>
+  <data name="AccountSubscriptions" xml:space="preserve">
+    <value>Account Subscriptions</value>
+  </data>
+  <data name="Account Subscriptions" xml:space="preserve">
+    <value>Account Subscriptions</value>
+  </data>
+  <data name="Account Payment" xml:space="preserve">
+    <value>Account Payment</value>
+  </data>
 </root>

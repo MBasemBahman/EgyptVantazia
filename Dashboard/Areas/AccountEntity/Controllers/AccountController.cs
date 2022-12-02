@@ -85,7 +85,6 @@ namespace Dashboard.Areas.AccountEntity.Controllers
             ViewData["returnItem"] = returnItem;
             ViewData["otherLang"] = otherLang;
 
-
             return View(data);
         }
 
@@ -127,7 +126,6 @@ namespace Dashboard.Areas.AccountEntity.Controllers
             }
             try
             {
-
                 UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
                 Account accountDB = new();
                 if (id == 0)
@@ -170,9 +168,9 @@ namespace Dashboard.Areas.AccountEntity.Controllers
 
                 await _unitOfWork.Save();
 
-                _unitOfWork.Account.UpdateAccountSubscriptions(accountDB.Id, model.Subscriptions);
+                // _unitOfWork.Account.UpdateAccountSubscriptions(accountDB.Id, model.Subscriptions);
 
-                await _unitOfWork.Save();
+                // await _unitOfWork.Save();
 
                 return IsProfile ? RedirectToAction(nameof(Profile), new { id }) : (IActionResult)RedirectToAction(nameof(Index));
             }

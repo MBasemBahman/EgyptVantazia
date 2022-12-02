@@ -45,13 +45,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<AdditionalFiles Include="Areas\PlayerStateEntity\Views\ScoreState\CreateOrEdit.cshtml" />
-		<AdditionalFiles Include="Areas\PlayerStateEntity\Views\ScoreState\Delete.cshtml" />
-		<AdditionalFiles Include="Areas\PlayerStateEntity\Views\ScoreState\Details.cshtml" />
-		<AdditionalFiles Include="Areas\PlayerStateEntity\Views\ScoreState\Index.cshtml" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<Content Update="wwwroot\Uploud\PlayerPosition\default-user-image.png111020220928304139596Z.png">
 			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
 			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

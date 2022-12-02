@@ -63,8 +63,36 @@
                     </a>
                 </li>
             }
+        
+            @if (viewList.Contains((int)DashboardViewEnum.AccountSubscription))
+            {
+                <li id="AccountSubscriptionList" class="@(active ==DashboardViewEnum.AccountSubscription.ToString()?"active":"") nav-item">
+                    <a class="d-flex align-items-center"
+                       asp-action="Index" asp-area="AccountSubscriptionEntity"
+                       asp-controller="AccountSubscription">
+                        <i data-feather='key'></i>
+                        <span class="menu-title text-truncate">
+                            @Localizer.Get("AccountSubscriptions")
+                        </span>
+                    </a>
+                </li>
+            }
+        
+        @if (viewList.Contains((int)DashboardViewEnum.Payment))
+        {
+            <li id="AccountSubscriptionList" class="@(active ==DashboardViewEnum.Payment.ToString()?"active":"") nav-item">
+                <a class="d-flex align-items-center"
+                   asp-action="Index" asp-area="PaymentEntity"
+                   asp-controller="Payment">
+                    <i data-feather='key'></i>
+                    <span class="menu-title text-truncate">
+                        @Localizer.Get("Account Payment")
+                    </span>
+                </a>
+            </li>
+        }
 
-            @if (viewList.Contains((int)DashboardViewEnum.AccountTeam))
+        @if (viewList.Contains((int)DashboardViewEnum.AccountTeam))
             {
                 <li id="AccountTeamList" class="@(active ==DashboardViewEnum.AccountTeam.ToString()?"active":"") nav-item">
                     <a class="d-flex align-items-center"

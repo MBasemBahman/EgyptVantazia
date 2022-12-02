@@ -1179,4 +1179,13 @@
   <data name="IsPrev" xml:space="preserve">
     <value>السابق</value>
   </data>
+  <data name="AccountSubscriptions" xml:space="preserve">
+    <value>اشتراكات الحسابات</value>
+  </data>
+  <data name="Account Subscriptions" xml:space="preserve">
+    <value>اشتراكات الحسابات</value>
+  </data>
+  <data name="Account Payment" xml:space="preserve">
+    <value>عمليات الدفع للحساب</value>
+  </data>
 </root>

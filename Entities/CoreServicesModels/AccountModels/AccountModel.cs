@@ -106,6 +106,9 @@ namespace Entities.CoreServicesModels.AccountModels
         public int Fk_AccountTeam { get; set; }
 
         public AccountTeamModel AccountTeam { get; set; }
+        
+        [DisplayName(nameof(AccountRefCodeCount))]
+        public int AccountRefCodeCount { get; set; }
     }
 
     public class AccountEditModel
@@ -150,6 +153,16 @@ namespace Entities.CoreServicesModels.AccountModels
         [DisplayName("FavouriteTeam")]
         public int Fk_FavouriteTeam { get; set; }
 
+        [DisplayName(nameof(RefCode))]
+        [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string RefCode { get; set; }
+        
+        [DisplayName(nameof(PhoneNumberTwo))]
+        [DataType(DataType.PhoneNumber)]
+        [Phone]
+        public string PhoneNumberTwo { get; set; }
+        
+        [DisplayName(nameof(RefCodeCount))]
+        public int RefCodeCount { get; set; }
     }
 }

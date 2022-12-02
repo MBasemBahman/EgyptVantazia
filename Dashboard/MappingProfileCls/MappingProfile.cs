@@ -1,10 +1,12 @@
 ﻿using Dashboard.Areas.AccountEntity.Models;
+using Dashboard.Areas.AccountSubscriptionEntity.Models;
 using Dashboard.Areas.AccountTeamEntity.Models;
 using Dashboard.Areas.AppInfoEntity.Models;
 using Dashboard.Areas.DashboardAdministration.Models;
 using Dashboard.Areas.Location.Models;
 using Dashboard.Areas.LogEntity.Models;
 using Dashboard.Areas.NewsEntity.Models;
+using Dashboard.Areas.PaymentEntity.Models;
 using Dashboard.Areas.PlayerScoreEntity.Models;
 using Dashboard.Areas.PlayerStateEntity.Models;
 using Dashboard.Areas.PlayerTransferEntity.Models;
@@ -92,6 +94,25 @@ namespace Dashboard.MappingProfileCls
             _ = CreateMap<AccountModel, AccountDto>();
 
             _ = CreateMap<AccountFilter, AccountParameters>();
+
+            #endregion
+            
+            #region AccountSubscription
+            _ = CreateMap<AccountSubscription, AccountSubscriptionCreateOrEditModel>();
+
+            _ = CreateMap<AccountSubscriptionCreateOrEditModel, AccountSubscription>();
+
+            _ = CreateMap<AccountSubscriptionModel, AccountSubscriptionDto>();
+
+            _ = CreateMap<AccountSubscriptionFilter, AccountSubscriptionParameters>();
+
+            #endregion
+            
+            #region Payment
+            
+            _ = CreateMap<PaymentModel, PaymentDto>();
+
+            _ = CreateMap<PaymentFilter, PaymentParameters>();
 
             #endregion
 

@@ -29,18 +29,27 @@ namespace API.Areas.AccountTeamArea.Controllers
         public async Task<IEnumerable<AccountTeamPlayerModel>> GetAccountTeamPlayers(
         [FromQuery] AccountTeamPlayerParameters parameters)
         {
-            //if (parameters.IsCurrent == true || parameters.IsNextGameWeak == true)
-            //{
-            //    parameters.IsTransfer = false;
-            //}
+            var currentSeason = _unitOfWork.Season.GetCurrentSeason();
+            var currentGamWeak = _unitOfWork.Season.GetCurrentGameWeak();
 
             parameters.IsTransfer = false;
+
+            if (parameters.IsCurrent == true)
+            {
+                parameters.Fk_GameWeak = currentGamWeak.Id;
+            }
+            else if (parameters.IsNextGameWeak == true)
+            {
+                var nextGameWeak = _unitOfWork.Season.GetNextGameWeak();
+                parameters.Fk_GameWeak = nextGameWeak.Id;
+            }
+
             if (parameters.IncludeScore && parameters.Fk_SeasonForScore == 0)
             {
                 if (parameters.Fk_GameWeakForScore == 0)
                 {
-                    parameters.Fk_SeasonForScore = _unitOfWork.Season.GetCurrentSeason().Id;
-                    parameters.Fk_GameWeakForScore = _unitOfWork.Season.GetCurrentGameWeak().Id;
+                    parameters.Fk_SeasonForScore = currentSeason.Id;
+                    parameters.Fk_GameWeakForScore = currentGamWeak.Id;
                 }
             }
 

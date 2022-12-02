@@ -211,23 +211,23 @@ namespace API.Areas.PlayerTransferArea.Controllers
                 }
                 await _unitOfWork.Save();
 
-                if (teamGameWeak.WildCard == false && _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
-                {
-                    Fk_AccountTeam = currentTeam.Id,
-                }, otherLang: false).Count() > 1)
-                {
-                    AccountTeam accountTeam = await _unitOfWork.AccountTeam.FindAccountTeambyId(currentTeam.Id, trackChanges: true);
-                    accountTeam.TotalMoney -= totalPrice;
-                    accountTeam.FreeTransfer = freeTransfer;
+                AccountTeam accountTeam = await _unitOfWork.AccountTeam.FindAccountTeambyId(currentTeam.Id, trackChanges: true);
+                accountTeam.TotalMoney -= totalPrice;
+                accountTeam.FreeTransfer = freeTransfer;
 
-                    teamGameWeak ??= _unitOfWork.AccountTeam.GetTeamGameWeak(auth.Fk_Account, nextGameWeak.Id);
+                teamGameWeak ??= _unitOfWork.AccountTeam.GetTeamGameWeak(auth.Fk_Account, nextGameWeak.Id);
 
+                if (teamGameWeak.WildCard == false &&
+                    _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
+                    {
+                        Fk_AccountTeam = currentTeam.Id,
+                    }, otherLang: false).Count() > 1)
+                {
                     AccountTeamGameWeak accountTeamGameWeak = await _unitOfWork.AccountTeam.FindAccountTeamGameWeakbyId(teamGameWeak.Id, trackChanges: true);
                     accountTeamGameWeak.TansfarePoints = accountTeam.FreeTransfer >= 0 ? 0 : accountTeam.FreeTransfer * 4;
-
-                    await _unitOfWork.Save();
                 }
 
+                await _unitOfWork.Save();
             }
 
             return true;

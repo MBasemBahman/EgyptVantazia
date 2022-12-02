@@ -154,7 +154,6 @@ namespace Entities.CoreServicesModels.AccountModels
         public int Fk_FavouriteTeam { get; set; }
 
         [DisplayName(nameof(RefCode))]
-        [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string RefCode { get; set; }
         
         [DisplayName(nameof(PhoneNumberTwo))]

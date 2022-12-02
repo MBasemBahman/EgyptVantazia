@@ -54,8 +54,10 @@ namespace Repository.DBModels.AccountTeamModels
         {
             return AccountTeamPlayers.Where(a => (id == 0 || a.Id == id) &&
                                                  (IsTransfer == null ||
+                                                  Fk_GameWeak == 0 ||
                                                   a.AccountTeamPlayerGameWeaks
-                                                   .Any(b => b.AccountTeamPlayer.Fk_AccountTeam == Fk_AccountTeam &&
+                                                   .Any(b => b.Fk_GameWeak == Fk_GameWeak && 
+                                                             b.AccountTeamPlayer.Fk_AccountTeam == Fk_AccountTeam &&
                                                              b.IsTransfer == IsTransfer)) &&
                                                  (Fk_GameWeak == 0 || a.AccountTeamPlayerGameWeaks.Any(b => b.Fk_GameWeak == Fk_GameWeak)) &&
                                                  (IsCurrent == null || (IsCurrent == true ? a.AccountTeamPlayerGameWeaks.Any(b => b.GameWeak.IsCurrent) : !a.AccountTeamPlayerGameWeaks.Any(b => b.GameWeak.IsCurrent))) &&

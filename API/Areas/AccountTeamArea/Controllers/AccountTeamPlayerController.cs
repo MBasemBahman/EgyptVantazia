@@ -29,11 +29,12 @@ namespace API.Areas.AccountTeamArea.Controllers
         public async Task<IEnumerable<AccountTeamPlayerModel>> GetAccountTeamPlayers(
         [FromQuery] AccountTeamPlayerParameters parameters)
         {
-            if (parameters.IsCurrent == true || parameters.IsNextGameWeak == true)
-            {
-                parameters.IsTransfer = false;
-            }
+            //if (parameters.IsCurrent == true || parameters.IsNextGameWeak == true)
+            //{
+            //    parameters.IsTransfer = false;
+            //}
 
+            parameters.IsTransfer = false;
             if (parameters.IncludeScore && parameters.Fk_SeasonForScore == 0)
             {
                 if (parameters.Fk_GameWeakForScore == 0)

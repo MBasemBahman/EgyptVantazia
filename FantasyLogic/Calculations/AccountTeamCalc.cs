@@ -43,6 +43,7 @@ namespace FantasyLogic.Calculations
             foreach (GameWeakModel gameWeak in gameWeaks)
             {
                 //AccountTeamGameWeakCalculations(gameWeak, fk_Season, jobId);
+                //UpdateAccountTeamGameWeakRanking(gameWeak, fk_Season, jobId);
 
                 jobId = jobId.IsExisting()
                             ? BackgroundJob.ContinueJobWith(jobId, () => AccountTeamGameWeakCalculations(gameWeak, fk_Season, jobId))
@@ -51,6 +52,7 @@ namespace FantasyLogic.Calculations
                 jobId = jobId.IsExisting()
                             ? BackgroundJob.ContinueJobWith(jobId, () => UpdateAccountTeamGameWeakRanking(gameWeak, fk_Season, jobId))
                             : BackgroundJob.Enqueue(() => UpdateAccountTeamGameWeakRanking(gameWeak, fk_Season, jobId));
+
             }
 
             List<int> accountTeams = _unitOfWork.AccountTeam.GetAccountTeams(new AccountTeamParameters
@@ -63,14 +65,19 @@ namespace FantasyLogic.Calculations
             foreach (int accountTeam in accountTeams)
             {
                 //_ = UpdateAccountTeamPoints(accountTeam, fk_Season, jobId);
+
                 jobId = jobId.IsExisting()
                             ? BackgroundJob.ContinueJobWith(jobId, () => UpdateAccountTeamPoints(accountTeam, fk_Season, jobId))
                             : BackgroundJob.Enqueue(() => UpdateAccountTeamPoints(accountTeam, fk_Season, jobId));
+
             }
+
+            //UpdateAccountTeamRanking(fk_Season, jobId);
 
             jobId = jobId.IsExisting()
                             ? BackgroundJob.ContinueJobWith(jobId, () => UpdateAccountTeamRanking(fk_Season, jobId))
                             : BackgroundJob.Enqueue(() => UpdateAccountTeamRanking(fk_Season, jobId));
+
         }
 
         public string AccountTeamGameWeakCalculations(GameWeakModel gameWeak, int fk_Season, string jobId)
@@ -94,6 +101,7 @@ namespace FantasyLogic.Calculations
                 jobId = jobId.IsExisting()
                            ? BackgroundJob.ContinueJobWith(jobId, () => AccountTeamPlayersCalculations(accountTeamGameWeak.Id, accountTeamGameWeak.Fk_AccountTeam, gameWeak, fk_Season, jobId))
                            : BackgroundJob.Enqueue(() => AccountTeamPlayersCalculations(accountTeamGameWeak.Id, accountTeamGameWeak.Fk_AccountTeam, gameWeak, fk_Season, jobId));
+
             }
 
             return jobId;
@@ -121,6 +129,7 @@ namespace FantasyLogic.Calculations
                 IsPrimary = a.IsPrimary,
                 IsPlayed = a.IsPlayed,
                 Points = a.Points,
+                PlayerName = a.AccountTeamPlayer.Player.Name
             }).ToList()
               .OrderByDescending(a => a.IsPrimary == true)
               .OrderByDescending(a => a.IsPlayed == true)
@@ -144,9 +153,10 @@ namespace FantasyLogic.Calculations
 
             bool captianPointsFlag = true;
             bool havePointsInTotal = true;
+            bool captainPlayed = players.Any(a => a.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian && a.IsPlayed);
 
             AccountTeamGameWeak accountTeamGameWeak = _unitOfWork.AccountTeam.FindAccountTeamGameWeakbyId(fk_AccountTeamGameWeak, trackChanges: true).Result;
-            
+
             players.ForEach(player => player.Points = playersPoints.Where(points => points.Fk_Player == player.Fk_Player).Select(a => a.Points).FirstOrDefault());
 
             int playerPrimaryAndPlayed = 11;
@@ -157,7 +167,14 @@ namespace FantasyLogic.Calculations
             }
             else
             {
-                playerPrimaryAndPlayed = players.Count(a => a.IsPrimary && a.IsPlayed);
+                if (accountTeamGameWeak.BenchBoost)
+                {
+                    playerPrimaryAndPlayed = players.Count(a => a.IsPlayed);
+                }
+                else
+                {
+                    playerPrimaryAndPlayed = players.Count(a => a.IsPrimary && a.IsPlayed);
+                }
             }
 
             foreach (var player in players)
@@ -166,8 +183,8 @@ namespace FantasyLogic.Calculations
                 {
                     int captianPoints = 1;
 
-                    if (havePointsInTotal &&
-                        accountTeamGameWeak.BenchBoost == false &&
+                    if (accountTeamGameWeak.BenchBoost == false &&
+                        havePointsInTotal &&
                         playersFinalPoints.Count >= playerPrimaryAndPlayed)
                     {
                         havePointsInTotal = false;
@@ -175,12 +192,15 @@ namespace FantasyLogic.Calculations
 
                     if (havePointsInTotal &&
                         captianPointsFlag &&
+                        captainPlayed &&
                       (player.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian ||
                       player.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.ViceCaptian))
                     {
                         captianPointsFlag = false;
                         captianPoints = accountTeamGameWeak.TripleCaptain ? 3 : 2;
                     }
+
+                    double points = player.Points.Value * captianPoints;
 
                     playersFinalPoints.Add(new AccountTeamPlayersCalculationPoints
                     {
@@ -190,17 +210,17 @@ namespace FantasyLogic.Calculations
                         Fk_TeamPlayerType = player.Fk_TeamPlayerType,
                         IsPrimary = player.IsPrimary,
                         Order = player.Order,
-                        Points = player.Points.Value * captianPoints,
+                        Points = points,
                         HavePointsInTotal = havePointsInTotal
                     });
 
                     if (havePointsInTotal)
                     {
-                        totalPoints += player.Points.Value;
+                        totalPoints += points;
                     }
                     else
                     {
-                        benchPoints += player.Points.Value;
+                        benchPoints += points;
                     }
                 }
             }
@@ -435,5 +455,7 @@ namespace FantasyLogic.Calculations
         public bool IsPrimary { get; set; }
         public bool IsPlayed { get; set; }
         public double? Points { get; set; }
+
+        public string PlayerName { get; set; }
     }
 }

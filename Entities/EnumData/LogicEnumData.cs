@@ -6,7 +6,8 @@
         {
             More = 1,
             States = 2,
-            Latest = 3
+            Latest = 3,
+            Fantasy = 4
         }
 
         public enum NewsTypeEnum

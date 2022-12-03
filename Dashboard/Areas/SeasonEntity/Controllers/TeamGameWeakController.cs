@@ -1,6 +1,8 @@
 ﻿using Dashboard.Areas.PlayerScoreEntity.Models;
+using Dashboard.Areas.PlayerStateEntity.Models;
 using Dashboard.Areas.SeasonEntity.Models;
 using Entities.CoreServicesModels.PlayerScoreModels;
+using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.SeasonModels;
@@ -83,6 +85,20 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
                    Fk_Player = fk_Player,
                    Fk_TeamGameWeak = fk_TeamGameWeak
                }, otherLang).ToList());
+        
+            return View(data);
+        }
+        
+        public IActionResult ScoreStateDetails(int fk_Player, int fk_GameWeak)
+        {
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+        
+            List<PlayerGameWeakScoreStateDto> data = _mapper.Map<List<PlayerGameWeakScoreStateDto>>
+            (_unitOfWork.PlayerState.GetPlayerGameWeakScoreStates(new PlayerGameWeakScoreStateParameters
+            {
+                Fk_Player = fk_Player,
+                Fk_GameWeak = fk_GameWeak
+            }, otherLang).ToList());
         
             return View(data);
         }

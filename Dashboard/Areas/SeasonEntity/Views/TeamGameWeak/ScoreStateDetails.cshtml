@@ -1,11 +1,11 @@
-﻿@model List<Dashboard.Areas.PlayerScoreEntity.Models.PlayerGameWeakScoreDto>
+﻿@model List<Dashboard.Areas.PlayerStateEntity.Models.PlayerGameWeakScoreStateDto>
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.emptyLayout = true;
 }
 <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalScrollableTitle">@Localizer.Get("PlayerGameWeakScore")</h5>
+    <h5 class="modal-title" id="exampleModalScrollableTitle">@Localizer.Get("PlayerGameWeakScoreState")</h5>
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
@@ -17,22 +17,22 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>@Localizer.Get("ScoreType")</th>
-                            <th>@Localizer.Get("Value")</th>
-                            <th>@Localizer.Get("FinalValue")</th>
+                            <th>@Localizer.Get("ScoreState")</th>
                             <th>@Localizer.Get("Points")</th>
-                            <th>@Localizer.Get("GameTime")</th>
+                            <th>@Localizer.Get("Value")</th>
+                            <th>@Localizer.Get("Percent")</th>
+                            <th>@Localizer.Get("Top15")</th>
                          </tr>
                     </thead>
                     <tbody>
                         @foreach (var playerScore in Model)
                         {
                             <tr>
-                                <td>@playerScore.ScoreType.Name</td>
-                                <td>@playerScore.Value</td>
-                                <td>@playerScore.FinalValue</td>
+                                <td>@playerScore.ScoreState.Name</td>
                                 <td>@playerScore.Points</td>
-                                <td>@playerScore.GameTime</td>
+                                <td>@playerScore.Value</td>
+                                <td>@playerScore.Percent</td>
+                                <td>@playerScore.Top15</td>
                             </tr>
                         }
                     </tbody>

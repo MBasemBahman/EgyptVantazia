@@ -24,7 +24,8 @@ namespace Repository.DBModels.AccountTeamModels
                            parameters.AccountFullName,
                            parameters.AccountUserName,
                            parameters.Fk_Country,
-                           parameters.Fk_FavouriteTeam);
+                           parameters.Fk_FavouriteTeam,
+                           parameters.FromTotalPoints);
         }
 
         public async Task<AccountTeam> FindById(int id, bool trackChanges)
@@ -64,11 +65,13 @@ namespace Repository.DBModels.AccountTeamModels
             string AccountFullName,
             string AccountUserName,
             int Fk_Country,
-            int Fk_FavouriteTeam)
+            int Fk_FavouriteTeam,
+            int? FromTotalPoints)
 
         {
             return AccountTeams.Where(a => (id == 0 || a.Id == id) &&
                                            (CurrentSeason == null || a.Season.IsCurrent == CurrentSeason) &&
+                                           (FromTotalPoints == null || a.TotalPoints >= FromTotalPoints) &&
                                            (Fk_Country == 0 || a.Account.Fk_Country == Fk_Country) &&
                                            (Fk_FavouriteTeam == 0 || a.Account.Fk_FavouriteTeam == Fk_FavouriteTeam) &&
                                            (Fk_Account == 0 || a.Fk_Account == Fk_Account) &&

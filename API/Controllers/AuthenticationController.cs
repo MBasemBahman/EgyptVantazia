@@ -33,6 +33,14 @@ namespace API.Controllers
         [AllowAnonymous]
         public async Task<UserDto> Login([FromBody] UserForAuthenticationDto model)
         {
+            if (model.UserName.IsEmpty())
+            {
+                throw new Exception("Please enter your username!");
+            }
+            if (model.Password.IsEmpty())
+            {
+                throw new Exception("Please enter your password!");
+            }
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             model.UserName = RegexService.GetUserName(model.UserName);
@@ -107,10 +115,10 @@ namespace API.Controllers
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
-            if (!RegexService.ValidateEmail(model.User.EmailAddress))
-            {
-                throw new Exception("Email address not valid!");
-            }
+            //if (!RegexService.ValidateEmail(model.User.EmailAddress))
+            //{
+            //    throw new Exception("Email address not valid!");
+            //}
 
             model.User.UserName = RegexService.GetUserName(model.User.UserName);
 

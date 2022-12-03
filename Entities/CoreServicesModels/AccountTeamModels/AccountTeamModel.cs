@@ -33,6 +33,8 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public int Fk_Country { get; set; }
 
         public int Fk_FavouriteTeam { get; set; }
+
+        public int? FromTotalPoints { get; set; }
     }
 
     public class AccountTeamModel : AuditImageEntity

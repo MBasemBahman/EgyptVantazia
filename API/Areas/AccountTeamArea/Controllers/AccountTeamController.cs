@@ -34,6 +34,13 @@ namespace API.Areas.AccountTeamArea.Controllers
         public async Task<IEnumerable<AccountTeamModel>> GetAccountTeams(
         [FromQuery] AccountTeamParameters parameters)
         {
+            if (parameters.OrderBy.Contains("globalRanking") ||
+                parameters.OrderBy.Contains("countryRanking") ||
+                parameters.OrderBy.Contains("favouriteTeamRanking"))
+            {
+                parameters.FromTotalPoints = 1;
+            }
+
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             PagedList<AccountTeamModel> data = await _unitOfWork.AccountTeam.GetAccountTeamPaged(parameters, otherLang);

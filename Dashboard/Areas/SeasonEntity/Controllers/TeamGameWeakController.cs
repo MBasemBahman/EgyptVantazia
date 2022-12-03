@@ -1,4 +1,6 @@
-﻿using Dashboard.Areas.SeasonEntity.Models;
+﻿using Dashboard.Areas.PlayerScoreEntity.Models;
+using Dashboard.Areas.SeasonEntity.Models;
+using Entities.CoreServicesModels.PlayerScoreModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.SeasonModels;
@@ -71,12 +73,30 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
             return Json(dataTableManager.ReturnTable(dataTableResult));
         }
 
-        public IActionResult Details(int id)
+        public IActionResult ScoreDetails(int fk_Player, int fk_TeamGameWeak)
+        {
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+        
+            List<PlayerGameWeakScoreDto> data = _mapper.Map<List<PlayerGameWeakScoreDto>>
+            (_unitOfWork.PlayerScore.GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
+               {
+                   Fk_Player = fk_Player,
+                   Fk_TeamGameWeak = fk_TeamGameWeak
+               }, otherLang).ToList());
+        
+            return View(data);
+        }
+        
+        public IActionResult Profile(int id, int returnItem = (int)TeamGameWeakProfileItems.Details)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             TeamGameWeakDto data = _mapper.Map<TeamGameWeakDto>(_unitOfWork.Season
-                                                           .GetTeamGameWeakbyId(id, otherLang));
+                .GetTeamGameWeakbyId(id, otherLang));
+
+            ViewData["returnItem"] = returnItem;
+            ViewData["otherLang"] = otherLang;
+
 
             return View(data);
         }

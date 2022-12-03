@@ -1,6 +1,8 @@
 ﻿using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
+using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.SeasonModels;
+using Entities.DBModels.TeamModels;
 
 namespace CoreServices.Logic
 {
@@ -303,7 +305,6 @@ namespace CoreServices.Logic
                                ImageUrl = a.Away.StorageUrl + a.Away.ImageUrl,
                                ShirtImageUrl = a.Away.ShirtStorageUrl + a.Away.ShirtImageUrl,
                                _365_TeamId = a.Away._365_TeamId,
-
                            },
                            Home = new TeamModel
                            {
@@ -321,8 +322,35 @@ namespace CoreServices.Logic
                                Season = new SeasonModel
                                {
                                    Name = otherLang ? a.GameWeak.Season.SeasonLang.Name : a.GameWeak.Season.Name
-                               }
-                           }
+                               },
+                           },
+                           
+                           HomeTeamPlayers = a.PlayerGameWeaks
+                               .Where(b => b.Player.Fk_Team == a.Fk_Home).Select(b => 
+                                   new PlayerGameWeak
+                                   {
+                                       Player = new Player
+                                       {
+                                           Id = b.Fk_Player,
+                                           Name = otherLang ? b.Player.PlayerLang.Name : b.Player.Name
+                                       },
+                                       Ranking = b.Ranking,
+                                       TotalPoints = b.TotalPoints,
+                                   }).ToList(),
+                           
+                           AwayTeamPlayers = a.PlayerGameWeaks
+                               .Where(b => b.Player.Fk_Team == a.Fk_Away).Select(b => 
+                                   new PlayerGameWeak
+                                   {
+                                       Player = new Player
+                                       {
+                                           Id = b.Fk_Player,
+                                           Name = otherLang ? b.Player.PlayerLang.Name : b.Player.Name
+                                       },
+                                       Ranking = b.Ranking,
+                                       TotalPoints = b.TotalPoints,
+                                   }).ToList(),
+                           
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

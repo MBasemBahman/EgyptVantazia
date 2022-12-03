@@ -1200,4 +1200,13 @@
   <data name="CreatedAtTo" xml:space="preserve">
     <value>CreatedAtTo</value>
   </data>
+  <data name="HomeTeamPlayers" xml:space="preserve">
+    <value>Home Team Players</value>
+  </data>
+  <data name="AwayTeamPlayers" xml:space="preserve">
+    <value>Away Team Players</value>
+  </data>
+  <data name="TeamGameWeak Profile" xml:space="preserve">
+    <value>TeamGameWeak Profile</value>
+  </data>
 </root>

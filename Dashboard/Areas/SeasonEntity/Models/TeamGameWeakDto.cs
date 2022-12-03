@@ -60,6 +60,11 @@ namespace Dashboard.Areas.SeasonEntity.Models
         public new string StartTime { get; set; }
     }
 
+    public enum TeamGameWeakProfileItems
+    {
+        Details = 1
+    }
+    
     public enum TeamGameWeakReturnPage
     {
         Index = 1,

@@ -1,4 +1,5 @@
 ﻿using Entities.CoreServicesModels.TeamModels;
+using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.SeasonModels;
 using Entities.Extensions;
 using Entities.RequestFeatures;
@@ -86,6 +87,11 @@ namespace Entities.CoreServicesModels.SeasonModels
 
         [DisplayName(nameof(JobId))]
         public string JobId { get; set; }
+
+        [DisplayName(nameof(HomeTeamPlayers))]
+        public List<PlayerGameWeak> HomeTeamPlayers { get; set; }
+        [DisplayName(nameof(AwayTeamPlayers))]
+        public List<PlayerGameWeak> AwayTeamPlayers { get; set; }
     }
 
     public class TeamGameWeakCreateOrEditModel

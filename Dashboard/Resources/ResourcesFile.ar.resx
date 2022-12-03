@@ -1194,4 +1194,13 @@
   <data name="CreatedAtTo" xml:space="preserve">
     <value>الى</value>
   </data>
+  <data name="HomeTeamPlayers" xml:space="preserve">
+    <value>لاعبين الفريق المستضيف</value>
+  </data>
+  <data name="AwayTeamPlayers" xml:space="preserve">
+    <value>لاعبين الفريق الضيف</value>
+  </data>
+  <data name="TeamGameWeak Profile" xml:space="preserve">
+    <value>بروفايل اسبوع الفريق</value>
+  </data>
 </root>

@@ -46,6 +46,7 @@
                 </dl>
             </div>
         </div>
+        
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-start">
                 <span class="badge bg-light-primary">@Html.DisplayNameFor(model => Model.PlayerPrices)</span>
@@ -83,6 +84,49 @@
             }
         </div>
         <hr />
+        
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+                <span class="badge bg-light-primary">@Html.DisplayNameFor(model => Model.SeasonScoreStates)</span>
+            </div>
+            <br />
+        
+            @if (Model.SeasonScoreStates != null && Model.SeasonScoreStates.Any())
+            {
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>@Localizer.Get("Season")</th>
+                        <th>@Localizer.Get("ScoreState")</th>
+                        <th>@Localizer.Get("Point")</th>
+                        <th>@Localizer.Get("Value")</th>
+                        <th>@Localizer.Get("Percent")</th>
+                        <th>@Localizer.Get("Top15")</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in Model.SeasonScoreStates)
+                    {
+                        <tr>
+                            <td>@item.Season.Name</td>
+                            <td>@item.ScoreState.Name</td>
+                            <td>@item.Points</td>
+                            <td>@item.Value</td>
+                            <td>@item.Percent</td>
+                            <td>@item.Top15</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>@Localizer.Get("Not Found")</p>
+        
+            }
+        </div>
+        
+        <hr/>
         <div class="row">
             <div class="col-xl-6 col-12">
                 <dl class="row mb-0">

@@ -85,6 +85,7 @@
                                             </th>
                                             <th>@Html.DisplayNameFor(model => row.Name)</th>
                                             <th>@Html.DisplayNameFor(model => row.SponsorViewsCount)</th>
+                                            <th>@Html.DisplayNameFor(model => row.LinkUrl)</th>
                                             <th>@Html.DisplayNameFor(model => row.ExpireDate)</th>
                                             <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
                                             <th>
@@ -156,6 +157,9 @@
                             }
                         },
                       {data:"sponsorViewsCount"},
+                      {data:"linkUrl", render: function(data) {
+                        return `<a class="btn btn-info" href="${data}" target="_blank">@Localizer.Get("Click To Open")</a>`;
+                      }},
                       {data:"expireDate"},
                         { data: "createdAt" },
                         { data: "id" },

@@ -1,0 +1,50 @@
+﻿@model List<Dashboard.Areas.PlayerScoreEntity.Models.PlayerGameWeakScoreDto>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.emptyLayout = true;
+}
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalScrollableTitle">@Localizer.Get("PlayerGameWeakScore")</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+    
+    <div class="row">
+        <div class="col-xl-12 col-12">
+            @if (Model != null && Model.Any())
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>@Localizer.Get("ScoreType")</th>
+                            <th>@Localizer.Get("Value")</th>
+                            <th>@Localizer.Get("FinalValue")</th>
+                            <th>@Localizer.Get("Points")</th>
+                            <th>@Localizer.Get("GameTime")</th>
+                         </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var playerScore in Model)
+                        {
+                            <tr>
+                                <td>@playerScore.ScoreType.Name</td>
+                                <td>@playerScore.Value</td>
+                                <td>@playerScore.FinalValue</td>
+                                <td>@playerScore.Points</td>
+                                <td>@playerScore.GameTime</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p class="text-center">@Localizer.Get("Not Found")</p>
+            }
+        </div>
+      
+    </div>
+  
+</div>
+

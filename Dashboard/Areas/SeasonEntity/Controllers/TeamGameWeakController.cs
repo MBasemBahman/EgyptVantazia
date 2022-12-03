@@ -1,4 +1,8 @@
-﻿using Dashboard.Areas.SeasonEntity.Models;
+﻿using Dashboard.Areas.PlayerScoreEntity.Models;
+using Dashboard.Areas.PlayerStateEntity.Models;
+using Dashboard.Areas.SeasonEntity.Models;
+using Entities.CoreServicesModels.PlayerScoreModels;
+using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.SeasonModels;
@@ -28,7 +32,7 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
             _environment = environment;
         }
 
-        public IActionResult Index(List<int> Fk_Teams, int Fk_Away, int Fk_Home,
+        public IActionResult Index(List<int> Fk_Teams, int Fk_Team, int Fk_Away, int Fk_Home,
             int Fk_Season, bool ProfileLayOut = false)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
@@ -36,6 +40,7 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
             TeamGameWeakFilter filter = new()
             {
                 Fk_Teams = Fk_Teams,
+                Fk_Team = Fk_Team,
                 Fk_Away = Fk_Away,
                 Fk_Home = Fk_Home,
                 Fk_Season = Fk_Season
@@ -70,12 +75,44 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
             return Json(dataTableManager.ReturnTable(dataTableResult));
         }
 
-        public IActionResult Details(int id)
+        public IActionResult ScoreDetails(int fk_Player, int fk_TeamGameWeak)
+        {
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+        
+            List<PlayerGameWeakScoreDto> data = _mapper.Map<List<PlayerGameWeakScoreDto>>
+            (_unitOfWork.PlayerScore.GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
+               {
+                   Fk_Player = fk_Player,
+                   Fk_TeamGameWeak = fk_TeamGameWeak
+               }, otherLang).ToList());
+        
+            return View(data);
+        }
+        
+        public IActionResult ScoreStateDetails(int fk_Player, int fk_GameWeak)
+        {
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+        
+            List<PlayerGameWeakScoreStateDto> data = _mapper.Map<List<PlayerGameWeakScoreStateDto>>
+            (_unitOfWork.PlayerState.GetPlayerGameWeakScoreStates(new PlayerGameWeakScoreStateParameters
+            {
+                Fk_Player = fk_Player,
+                Fk_GameWeak = fk_GameWeak
+            }, otherLang).ToList());
+        
+            return View(data);
+        }
+        
+        public IActionResult Profile(int id, int returnItem = (int)TeamGameWeakProfileItems.Details)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             TeamGameWeakDto data = _mapper.Map<TeamGameWeakDto>(_unitOfWork.Season
-                                                           .GetTeamGameWeakbyId(id, otherLang));
+                .GetTeamGameWeakbyId(id, otherLang));
+
+            ViewData["returnItem"] = returnItem;
+            ViewData["otherLang"] = otherLang;
+
 
             return View(data);
         }

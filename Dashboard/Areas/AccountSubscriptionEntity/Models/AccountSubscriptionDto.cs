@@ -20,6 +20,7 @@ namespace Dashboard.Areas.AccountSubscriptionEntity.Models
         [DisplayName("CreatedAt")]
         public DateTime? CreatedAtFrom { get; set; }
 
+        [DisplayName(nameof(CreatedAtTo))]
         public DateTime? CreatedAtTo { get; set; }
 
         [DisplayName(nameof(AccountFullName))]

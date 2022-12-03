@@ -71,7 +71,11 @@ namespace Dashboard.Areas.TeamEntity.Controllers
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             PlayerDto data = _mapper.Map<PlayerDto>(_unitOfWork.Team
-                                                           .GetPlayerbyId(id, otherLang));
+               .GetPlayers(new PlayerParameters
+               {
+                   Id = id,
+                   IncludeScore = true
+               }, otherLang).SingleOrDefault());
 
             data.PlayerPrices = _mapper.Map<List<PlayerPriceDto>>(
                 _unitOfWork.Team.GetPlayerPrices(new PlayerPriceParameters { Fk_Player = id }, otherLang)

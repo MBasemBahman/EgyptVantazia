@@ -185,6 +185,7 @@
                                         <th>@Localizer.Get("Name")</th>
                                         <th>@Localizer.Get("Ranking")</th>
                                         <th>@Localizer.Get("TotalPoints")</th>
+                                        <th>@Localizer.Get("PlayerGameWeakScoreState")</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -199,6 +200,11 @@
                                             </td>
                                             <td>@item.Ranking</td>
                                             <td>@item.TotalPoints</td>
+                                            <td>
+                                                <a class="modalbtn" href="/SeasonEntity/TeamGameWeak/ScoreStateDetails?fk_Player=@item.Player.Id&fk_GameWeak=@Model.Fk_GameWeak">
+                                                    @Localizer.Get("Click to View")
+                                                </a>
+                                            </td>
                                         </tr>
                                     }
                                     </tbody>

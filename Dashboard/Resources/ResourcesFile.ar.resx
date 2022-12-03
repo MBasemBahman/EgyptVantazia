@@ -1188,4 +1188,10 @@
   <data name="Account Payment" xml:space="preserve">
     <value>عمليات الدفع للحساب</value>
   </data>
+  <data name="Click To Open" xml:space="preserve">
+    <value>الدخول الى الرابط</value>
+  </data>
+  <data name="CreatedAtTo" xml:space="preserve">
+    <value>الى</value>
+  </data>
 </root>

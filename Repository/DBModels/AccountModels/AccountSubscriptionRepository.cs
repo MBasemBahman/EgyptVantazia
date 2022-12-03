@@ -19,7 +19,9 @@ namespace Repository.DBModels.AccountModels
                        parameters.IsAction,
                        parameters.IsActive,
                        parameters.Order_id,
-                       parameters.NotEqualSubscriptionId);
+                       parameters.NotEqualSubscriptionId,
+                       parameters.CreatedAtFrom,
+                       parameters.CreatedAtTo);
         }
 
         public async Task<AccountSubscription> FindById(int id, bool trackChanges)
@@ -42,7 +44,9 @@ namespace Repository.DBModels.AccountModels
             bool? isAction,
             bool? isActive,
             string order_id,
-            int NotEqualSubscriptionId)
+            int NotEqualSubscriptionId,
+            DateTime? createdAtFrom,
+            DateTime? createdAtTo)
         {
             return AccountSubscriptions.Where(a => (id == 0 || a.Id == id) &&
                                                  (NotEqualSubscriptionId == 0 || a.Fk_Subscription != NotEqualSubscriptionId) &&
@@ -51,7 +55,9 @@ namespace Repository.DBModels.AccountModels
                                                  (isActive == null || a.IsActive == isActive) &&
                                                  (Fk_Account == 0 || a.Fk_Account == Fk_Account) &&
                                                  (Fk_Season == 0 || a.Fk_Season == Fk_Season) &&
-                                                 (Fk_Subscription == 0 || a.Fk_Subscription == Fk_Subscription));
+                                                 (Fk_Subscription == 0 || a.Fk_Subscription == Fk_Subscription) &&
+                                                 (createdAtFrom == null || a.CreatedAt >= createdAtFrom) &&
+                                                 (createdAtTo == null || a.CreatedAt <= createdAtTo));
 
         }
 

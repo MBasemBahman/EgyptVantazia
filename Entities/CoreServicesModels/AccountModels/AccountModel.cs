@@ -8,6 +8,7 @@ namespace Entities.CoreServicesModels.AccountModels
 {
     public class AccountParameters : RequestParameters
     {
+        public int Fk_Subscription { get; set; }
         public int Fk_User { get; set; }
 
         public string UserName { get; set; }

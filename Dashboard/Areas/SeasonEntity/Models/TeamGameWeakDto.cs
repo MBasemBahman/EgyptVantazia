@@ -12,6 +12,9 @@ namespace Dashboard.Areas.SeasonEntity.Models
 
         [DisplayName("HomeTeam")]
         public int Fk_Home { get; set; }
+        
+        [DisplayName("Fk_Team")]
+        public int Fk_Team { get; set; }
 
         [DisplayName("AwayTeam")]
         public int Fk_Away { get; set; }

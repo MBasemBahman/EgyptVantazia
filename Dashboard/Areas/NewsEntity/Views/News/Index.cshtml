@@ -95,6 +95,9 @@
 
                                             </th>
                                             <th>@Html.DisplayNameFor(model => row.Title)</th>
+                                            <th>@Html.DisplayNameFor(model => row.GameWeak)</th>
+                                            <th>@Html.DisplayNameFor(model => row.NewsTypeEnum)</th>
+                                            <th>@Html.DisplayNameFor(model => row.NewsAttachments)</th>
                                             <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
                                             <th>
                                                 @Html.DisplayNameFor(model => row.Id)
@@ -179,6 +182,15 @@
                             }
                         },
                       
+                        { data: "gameWeak", render: function(data) {
+                          if (data != null && data.length > 0){
+                              return data.name;
+                          }
+                          
+                          return '@Localizer.Get("Not Found")';
+                        } },
+                        { data: "newsTypeEnum" },
+                        { data: "attachmentsCount" },
                         { data: "createdAt" },
                         { data: "id" },
                     ]

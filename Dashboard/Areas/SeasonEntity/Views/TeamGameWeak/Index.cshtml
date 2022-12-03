@@ -105,6 +105,7 @@
                                                 <th>@Html.DisplayNameFor(model => row.AwayScore)</th>
                                                 <th>@Html.DisplayNameFor(model => row.StartTime)</th>
                                                 <th>@Html.DisplayNameFor(model => row.IsEnded)</th>
+                                                <th>@Html.DisplayNameFor(model => row.IsDelayed)</th>
                                                 <th>
                                                     @Html.DisplayNameFor(model => row.Id)
                                                 </th>
@@ -153,6 +154,7 @@ else
                                                 <th>@Html.DisplayNameFor(model => row.AwayScore)</th>
                                                 <th>@Html.DisplayNameFor(model => row.StartTime)</th>
                                                 <th>@Html.DisplayNameFor(model => row.IsEnded)</th>
+                                                <th>@Html.DisplayNameFor(model => row.IsDelayed)</th>
                                                 <th>
                                                     @Html.DisplayNameFor(model => row.Id)
                                                 </th>
@@ -192,6 +194,7 @@ else
                         dataType: "json",
                         data: function (data) {
                             data.Fk_Teams = $("#Fk_Teams").length > 0 ? $("#Fk_Teams").val() : null;
+                            data.Fk_Team = '@Model.Fk_Team';
                             data.Fk_Season = $("#Fk_Season").length > 0 ? $("#Fk_Season").val() : @Model.Fk_Season;
                             data.Fk_GameWeak = $("#Fk_GameWeak").length > 0 ? $("#Fk_GameWeak").val() : @Model.Fk_GameWeak;
                             data.Fk_Away = $("#Fk_Away").length > 0 ? $("#Fk_Away").val() : @Model.Fk_Away;
@@ -286,6 +289,7 @@ else
                                 }
                             }
                         },
+                        { data: "isDelayed" },
                         { data: "id" },
                     ]
                 });

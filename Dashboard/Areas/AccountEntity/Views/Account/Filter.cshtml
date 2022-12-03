@@ -84,6 +84,14 @@
                     </div>
                 </div>
 
+                <div class="col-md-6 col-12">
+                    <div class="mb-1">
+                        <label asp-for="Fk_Subscription" class="form-label"></label>
+                        <select asp-for="Fk_Subscription" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["Subscription"] as Dictionary<string,string>,"Key","Value"))">
+                            <option value="0">@Localizer.Get("All")</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             <hr />
             <br />

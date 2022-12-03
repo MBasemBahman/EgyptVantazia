@@ -25,6 +25,7 @@ namespace Dashboard.Areas.TeamEntity.Models
         Details = 1,
         Player = 2,
         HomeTeamGameWeak = 3,
-        AwayTeamGameWeak = 4
+        AwayTeamGameWeak = 4,
+        TeamGameWeak = 5
     }
 }

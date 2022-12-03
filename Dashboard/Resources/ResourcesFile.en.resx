@@ -1194,4 +1194,10 @@
   <data name="Account Payment" xml:space="preserve">
     <value>Account Payment</value>
   </data>
+  <data name="Click To Open" xml:space="preserve">
+    <value>Click To Open</value>
+  </data>
+  <data name="CreatedAtTo" xml:space="preserve">
+    <value>CreatedAtTo</value>
+  </data>
 </root>

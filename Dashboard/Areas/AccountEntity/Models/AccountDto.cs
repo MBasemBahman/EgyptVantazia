@@ -29,6 +29,7 @@ namespace Dashboard.Areas.AccountEntity.Models
 
     public class AccountFilter : DtParameters
     {
+        public int Fk_Subscription { get; set; }
         public int Fk_User { get; set; }
 
         public string UserName { get; set; }

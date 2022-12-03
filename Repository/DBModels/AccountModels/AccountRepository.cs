@@ -29,7 +29,8 @@ namespace Repository.DBModels.AccountModels
                            parameters.Fk_Country,
                            parameters.Fk_Nationality,
                            parameters.Fk_FavouriteTeam,
-                           parameters.RefCode);
+                           parameters.RefCode,
+                           parameters.Fk_Subscription);
 
         }
 
@@ -84,7 +85,8 @@ namespace Repository.DBModels.AccountModels
             int fk_Country,
             int fk_Nationality,
             int fk_FavouriteTeam,
-            string refCode)
+            string refCode,
+            int fk_Subscription)
         {
             return accounts.Where(a => (id == 0 || a.Id == id) &&
                                        (fk_Account_Ignored == 0 || a.Id != fk_Account_Ignored) &&
@@ -102,6 +104,9 @@ namespace Repository.DBModels.AccountModels
                                        (string.IsNullOrWhiteSpace(phone) || a.User.PhoneNumber.ToLower().Contains(phone)) &&
                                        (string.IsNullOrWhiteSpace(email) || a.User.EmailAddress.ToLower().Contains(email)) &&
                                        (string.IsNullOrEmpty(UserName) || a.User.UserName.ToLower() == UserName.ToLower()) &&
+                                       
+                                       (fk_Subscription == 0 || (a.AccountSubscriptions != null && 
+                                            a.AccountSubscriptions.Any(a => a.Fk_Subscription == fk_Subscription))) &&
 
                                        (lastActiveFrom == null || (a.User.RefreshTokens.Any() && a.User.RefreshTokens.OrderByDescending(b => b.Id).Select(a => a.CreatedAt).First() >= lastActiveFrom)) &&
                                        (lastActiveTo == null || lastActiveTo == lastActiveFrom || (a.User.RefreshTokens.Any() && a.User.RefreshTokens.OrderByDescending(b => b.Id).Select(a => a.CreatedAt).First() <= lastActiveTo)) &&

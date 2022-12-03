@@ -23,8 +23,11 @@
                             <th>@Html.DisplayNameFor(model => accountTeamPlayerGameWeak.GameWeak)</th>
                             <th>@Html.DisplayNameFor(model => accountTeamPlayerGameWeak.TeamPlayerType)</th>
                             <th>@Html.DisplayNameFor(model => accountTeamPlayerGameWeak.IsPrimary)</th>
+                            <th>@Html.DisplayNameFor(model => accountTeamPlayerGameWeak.Order)</th>
                             <th>@Html.DisplayNameFor(model => accountTeamPlayerGameWeak.IsTransfer)</th>
                             <th>@Html.DisplayNameFor(model => accountTeamPlayerGameWeak.Points)</th>
+                            <th>@Html.DisplayNameFor(model => accountTeamPlayerGameWeak.HavePoints)</th>
+                            <th>@Html.DisplayNameFor(model => accountTeamPlayerGameWeak.HavePointsInTotal)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -35,8 +38,11 @@
                                 <td>@gameWeak.GameWeak.Name</td>
                                 <td>@gameWeak.TeamPlayerType.Name</td>
                                 <td>@gameWeak.IsPrimary</td>
+                                <td>@gameWeak.Order</td>
                                 <td>@gameWeak.IsTransfer</td>
                                 <td>@gameWeak.Points</td>
+                                <td>@gameWeak.HavePoints</td>
+                                <td>@gameWeak.HavePointsInTotal</td>
                             </tr>
                         }
                     </tbody>

@@ -37,6 +37,9 @@ namespace Entities.CoreServicesModels.SubscriptionModels
         public bool IsActive { get; set; }
 
         public bool IsValid { get; set; }
+        
+        [DisplayName(nameof(AccountSubscriptionCount))]
+        public int AccountSubscriptionCount { get; set; }
     }
 
     public class SubscriptionCreateOrEditModel

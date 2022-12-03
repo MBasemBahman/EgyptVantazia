@@ -28,7 +28,7 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
             _environment = environment;
         }
 
-        public IActionResult Index(List<int> Fk_Teams, int Fk_Away, int Fk_Home,
+        public IActionResult Index(List<int> Fk_Teams, int Fk_Team, int Fk_Away, int Fk_Home,
             int Fk_Season, bool ProfileLayOut = false)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
@@ -36,6 +36,7 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
             TeamGameWeakFilter filter = new()
             {
                 Fk_Teams = Fk_Teams,
+                Fk_Team = Fk_Team,
                 Fk_Away = Fk_Away,
                 Fk_Home = Fk_Home,
                 Fk_Season = Fk_Season

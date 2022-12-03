@@ -26,8 +26,9 @@
                 <dl class="row mb-0">
                     <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.NewsTypeEnum):</dt>
                     <dd class="col-sm-8 mb-1">@Model.NewsTypeEnum.ToString()</dd>
-
-                   
+                    
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.AttachmentsCount):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.AttachmentsCount</dd>
                 </dl>
             </div>
         </div>
@@ -45,33 +46,31 @@
                 <span class="badge bg-light-primary">@Html.DisplayNameFor(model => Model.LongDescription)</span>
             </div>
             <br />
-            <p>@Model.LongDescription</p>
+            <p>@Html.Raw(Model.LongDescription)</p>
         </div>
-
 
         <div class="row">
-            <div class="col-xl-6 col-12">
-                <dl class="row mb-0">
-                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.CreatedAt):</dt>
-                    <dd class="col-sm-8 mb-1">@Model.CreatedAt</dd>
-
-                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.LastModifiedAt):</dt>
-                    <dd class="col-sm-8 mb-1">@Model.LastModifiedAt</dd>
-
-
-                   
-                </dl>
-            </div>
-            <div class="col-xl-6 col-12">
-                <dl class="row mb-0">
-                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.CreatedBy):</dt>
-                    <dd class="col-sm-8 mb-1">@Model.CreatedBy</dd>
-
-                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.LastModifiedBy):</dt>
-                    <dd class="col-sm-8 mb-1">@Model.LastModifiedBy</dd>
-                </dl>
-            </div>
-        </div>
-      
+                    <div class="col-xl-6 col-12">
+                        <dl class="row mb-0">
+                            <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.CreatedAt):</dt>
+                            <dd class="col-sm-8 mb-1">@Model.CreatedAt</dd>
+        
+                            <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.LastModifiedAt):</dt>
+                            <dd class="col-sm-8 mb-1">@Model.LastModifiedAt</dd>
+        
+        
+                           
+                        </dl>
+                    </div>
+                    <div class="col-xl-6 col-12">
+                        <dl class="row mb-0">
+                            <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.CreatedBy):</dt>
+                            <dd class="col-sm-8 mb-1">@Model.CreatedBy</dd>
+        
+                            <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.LastModifiedBy):</dt>
+                            <dd class="col-sm-8 mb-1">@Model.LastModifiedBy</dd>
+                        </dl>
+                    </div>
+                </div>
     </div>
 </div>

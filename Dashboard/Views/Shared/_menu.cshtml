@@ -222,7 +222,7 @@
 
             @if (viewList.Contains((int)DashboardViewEnum.PrivateLeague))
             {
-                <li id="NewsList" class="@(active ==DashboardViewEnum.PrivateLeague.ToString()?"active":"") nav-item">
+                <li id="PrivateLeagueList" class="@(active ==DashboardViewEnum.PrivateLeague.ToString()?"active":"") nav-item">
                     <a class="d-flex align-items-center"
                        asp-action="Index" asp-area="PrivateLeagueEntity"
                        asp-controller="PrivateLeague">

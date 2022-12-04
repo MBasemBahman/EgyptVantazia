@@ -296,6 +296,18 @@ namespace CoreServices.Logic
                                        .Team
                                        .AwayGameWeaks.Any(b => b.Fk_GameWeak == a.Fk_GameWeak &&
                                                                b.StartTime <= DateTime.UtcNow.AddHours(2)),
+                           IsParticipate = a.AccountTeamPlayer
+                                       .Player
+                                       .Team
+                                       .HomeGameWeaks.Any(b => b.Fk_GameWeak == a.Fk_GameWeak &&
+                                                               b.StartTime <= DateTime.UtcNow.AddHours(2) &&
+                                                               b.PlayerGameWeaks.Any(c => c.Fk_Player == a.AccountTeamPlayer.Fk_Player)) ||
+                                       a.AccountTeamPlayer
+                                       .Player
+                                       .Team
+                                       .AwayGameWeaks.Any(b => b.Fk_GameWeak == a.Fk_GameWeak &&
+                                                               b.StartTime <= DateTime.UtcNow.AddHours(2) &&
+                                                               b.PlayerGameWeaks.Any(c => c.Fk_Player == a.AccountTeamPlayer.Fk_Player)),
                            Top15 = a.AccountTeamPlayer
                                     .Player
                                     .PlayerGameWeakScoreStates

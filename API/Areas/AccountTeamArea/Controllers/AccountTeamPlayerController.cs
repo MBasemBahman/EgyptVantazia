@@ -119,6 +119,11 @@ namespace API.Areas.AccountTeamArea.Controllers
                 throw new Exception("You must select one vice-captain only!");
             }
 
+            if (currentTeam.TotalMoney == 100)
+            {
+                throw new Exception("You not have enough money!");
+            }
+
             if (model.Players != null && model.Players.Any())
             {
                 var prices = _unitOfWork.Team.GetPlayers(new PlayerParameters
@@ -178,7 +183,7 @@ namespace API.Areas.AccountTeamArea.Controllers
 
                     totalPrice += price;
                 }
-                await _unitOfWork.Save();
+                //await _unitOfWork.Save();
 
                 AccountTeam accountTeam = await _unitOfWork.AccountTeam.FindAccountTeambyId(currentTeam.Id, trackChanges: true);
                 accountTeam.TotalMoney -= totalPrice;

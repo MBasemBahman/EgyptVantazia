@@ -100,7 +100,7 @@ namespace API.Areas.PlayerTransferArea.Controllers
             double sellMoney = prices.Where(a => sellPlayers.Contains(a.Id)).Select(a => a.SellPrice).Sum();
             double buyMoney = prices.Where(a => buyPlayers.Contains(a.Id)).Select(a => a.BuyPrice).Sum();
 
-            if (currentTeam.TotalMoney + sellMoney < buyMoney)
+            if ((currentTeam.TotalMoney + sellMoney) < buyMoney)
             {
                 throw new Exception("You not have money for transfers!");
             }
@@ -159,7 +159,7 @@ namespace API.Areas.PlayerTransferArea.Controllers
                 AccountTeam accountTeam = await _unitOfWork.AccountTeam.FindAccountTeambyId(currentTeam.Id, trackChanges: true);
                 accountTeam.TotalMoney += totalPrice;
 
-                _unitOfWork.Save().Wait();
+                //_unitOfWork.Save().Wait();
             }
             if (model.BuyPlayers != null && model.BuyPlayers.Any())
             {
@@ -209,7 +209,7 @@ namespace API.Areas.PlayerTransferArea.Controllers
 
                     totalPrice += price;
                 }
-                await _unitOfWork.Save();
+                //await _unitOfWork.Save();
 
                 AccountTeam accountTeam = await _unitOfWork.AccountTeam.FindAccountTeambyId(currentTeam.Id, trackChanges: true);
                 accountTeam.TotalMoney -= totalPrice;
@@ -227,8 +227,9 @@ namespace API.Areas.PlayerTransferArea.Controllers
                     accountTeamGameWeak.TansfarePoints = accountTeam.FreeTransfer >= 0 ? 0 : accountTeam.FreeTransfer * 4;
                 }
 
-                await _unitOfWork.Save();
             }
+
+            await _unitOfWork.Save();
 
             return true;
         }

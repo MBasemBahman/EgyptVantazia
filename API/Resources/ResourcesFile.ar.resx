@@ -198,6 +198,9 @@
   <data name="You must select one vice-captain only!" xml:space="preserve">
     <value>يجب عليك اختيار نائب الكابتن واحد فقط!</value>
   </data>
+  <data name="You not have enough money" xml:space="preserve">
+    <value>ليس لديك نقود كافية</value>
+  </data>
   <data name="You not have money for transfers!" xml:space="preserve">
     <value>ليس لديك أموال للتحويلات!</value>
   </data>

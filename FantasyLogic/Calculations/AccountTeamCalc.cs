@@ -127,12 +127,13 @@ namespace FantasyLogic.Calculations
                 Fk_TeamPlayerType = a.Fk_TeamPlayerType,
                 Order = a.Order,
                 IsPrimary = a.IsPrimary,
+                IsParticipate = a.IsParticipate,
                 IsPlayed = a.IsPlayed,
                 Points = a.Points,
                 PlayerName = a.AccountTeamPlayer.Player.Name
             }).ToList()
               .OrderByDescending(a => a.IsPrimary == true)
-              .OrderByDescending(a => a.IsPlayed == true)
+              .OrderByDescending(a => a.IsParticipate == true)
               .ThenByDescending(a => a.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian)
               .ThenByDescending(a => a.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.ViceCaptian)
               .ThenBy(a => a.Order)
@@ -153,7 +154,7 @@ namespace FantasyLogic.Calculations
 
             bool captianPointsFlag = true;
             bool havePointsInTotal = true;
-            bool captainPlayed = players.Any(a => a.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian && a.IsPlayed);
+            bool captainPlayed = players.Any(a => a.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian && a.IsParticipate);
 
             AccountTeamGameWeak accountTeamGameWeak = _unitOfWork.AccountTeam.FindAccountTeamGameWeakbyId(fk_AccountTeamGameWeak, trackChanges: true).Result;
 
@@ -169,7 +170,7 @@ namespace FantasyLogic.Calculations
             {
                 if (accountTeamGameWeak.BenchBoost)
                 {
-                    playerPrimaryAndPlayed = players.Count(a => a.IsPlayed);
+                    playerPrimaryAndPlayed = players.Count(a => a.IsParticipate);
                 }
                 else
                 {
@@ -453,6 +454,7 @@ namespace FantasyLogic.Calculations
         public int Fk_TeamPlayerType { get; set; }
         public int Order { get; set; }
         public bool IsPrimary { get; set; }
+        public bool IsParticipate { get; set; }
         public bool IsPlayed { get; set; }
         public double? Points { get; set; }
 

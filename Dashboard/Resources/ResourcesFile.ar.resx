@@ -823,10 +823,10 @@
     <value>وقت البداية</value>
   </data>
   <data name="TeamGameWeak" xml:space="preserve">
-    <value>أسبوع الفريق</value>
+    <value>الماتشات</value>
   </data>
   <data name="TeamGameWeaks" xml:space="preserve">
-    <value>أسابيع الفريق</value>
+    <value>الماتشات</value>
   </data>
   <data name="AwayGameWeaks" xml:space="preserve">
     <value>اسابيع الفريق الضيف</value>
@@ -919,19 +919,19 @@
     <value>Account Team</value>
   </data>
   <data name="AccountTeamGameWeaks" xml:space="preserve">
-    <value>Account Team Game Weaks</value>
+    <value>مشاركات الفريق فى الجولات</value>
   </data>
   <data name="AccountTeamPlayer" xml:space="preserve">
-    <value>Account Team Player</value>
+    <value>لاعبين الفريق</value>
   </data>
   <data name="AccountTeamPlayerGameWeaks" xml:space="preserve">
-    <value>Account Team Player Game Weaks</value>
+    <value>مشاركة اللاعب فى الجولات</value>
   </data>
   <data name="AccountTeamPlayers" xml:space="preserve">
-    <value>Account Team Players</value>
+    <value>لاعبين الفريق</value>
   </data>
   <data name="AccountTeams" xml:space="preserve">
-    <value>Account Teams</value>
+    <value>فرق الفانتزي</value>
   </data>
   <data name="AccountUserName" xml:space="preserve">
     <value>اسم المستخدم</value>
@@ -949,10 +949,10 @@
     <value>Free Hit</value>
   </data>
   <data name="IsFree" xml:space="preserve">
-    <value>Is Free?</value>
+    <value>مجاني؟</value>
   </data>
   <data name="PlayerTransfers" xml:space="preserve">
-    <value>Player Transfers</value>
+    <value>حركة البيع والشراء</value>
   </data>
   <data name="TotalMoney" xml:space="preserve">
     <value>اجمالي النقود</value>
@@ -961,7 +961,7 @@
     <value>اجمالي النقاط</value>
   </data>
   <data name="TransferTypeEnum" xml:space="preserve">
-    <value>Transfer Type</value>
+    <value>نوع العمليه</value>
   </data>
   <data name="WildCard" xml:space="preserve">
     <value>Wild Card</value>
@@ -1201,7 +1201,7 @@
     <value>لاعبين الفريق الضيف</value>
   </data>
   <data name="TeamGameWeak Profile" xml:space="preserve">
-    <value>بروفايل اسبوع الفريق</value>
+    <value>ملف الماتش</value>
   </data>
   <data name="AccountRefCodeCount" xml:space="preserve">
     <value>عدد الدعوات</value>
@@ -1217,5 +1217,23 @@
   </data>
   <data name="TransactionId" xml:space="preserve">
     <value>رقم العمليه</value>
+  </data>
+  <data name="Account Team Game Weaks" xml:space="preserve">
+    <value>مشاركات الفريق فى الجولات</value>
+  </data>
+  <data name="Buying" xml:space="preserve">
+    <value>شراء</value>
+  </data>
+  <data name="HavePointsInTotal" xml:space="preserve">
+    <value>محسوب فى إجمالي النقاط</value>
+  </data>
+  <data name="Selling" xml:space="preserve">
+    <value>بيع</value>
+  </data>
+  <data name="TansfarePoints" xml:space="preserve">
+    <value>نقاط البيع والشراء</value>
+  </data>
+  <data name="_365_MatchId" xml:space="preserve">
+    <value>Integration ID</value>
   </data>
 </root>

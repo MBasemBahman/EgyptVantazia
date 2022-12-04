@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var profileItem = new Player();
     int returnItem = ViewData["returnItem"] != null ? (int)ViewData["returnItem"] : (int)PlayerProfileItems.Details;
-    bool ltr = ViewData["otherLang"]!=null ? (bool)ViewData["otherLang"] : false;
+    bool ltr = ViewData["otherLang"] != null ? (bool)ViewData["otherLang"] : false;
     string views = (string)ContextAccessor.HttpContext.Request.Cookies[ViewDataConstants.Views];
 
     List<int> viewList = new List<int>();
@@ -14,11 +14,11 @@
         viewList = views.Split(",").Select(Int32.Parse).ToList();
     }
 
-    
+
 }
 
 @section styles{
-<link rel="stylesheet" type="text/css" href="~/app-assets/css@(ltr?"":"-rtl")/pages/page-profile.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css@(ltr?"":"-rtl")/pages/page-profile.css">
 }
 <div class="app-content content">
     <div class="content-overlay"></div>
@@ -33,7 +33,7 @@
                     <div class="col-12">
                         <div class="card profile-header mb-2">
                             <!-- profile cover photo -->
-                            <img class="card-img-top" height="400" src="~/coverImg.jpg" alt="cover">
+                            <img class="card-img-top" height="150" src="~/coverImg.png" alt="cover">
                             <!--/ profile cover photo -->
                             <div class="position-relative">
                                 <!-- profile picture -->
@@ -44,7 +44,7 @@
                                     <!-- profile title -->
                                     <div class="profile-title ms-3">
                                         <h2 class="text-dark">@Model.Name</h2>
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -61,24 +61,24 @@
                                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                         <div class="profile-tabs d-flex justify-content-between flex-wrap mt-1 mt-md-0">
                                             <ul class="nav nav-pills mb-0">
-                                                 <li class="nav-item ">
-                                                        <a id="/TeamEntity/Player/Details/@Model.Id" class="nav-link tab-item  @(returnItem==(int)PlayerProfileItems.Details ? "active" : "")">
-                                                            <span class="fw-bold">@Localizer.Get("Player Details")</span>
+                                                <li class="nav-item ">
+                                                    <a id="/TeamEntity/Player/Details/@Model.Id" class="nav-link tab-item  @(returnItem==(int)PlayerProfileItems.Details ? "active" : "")">
+                                                        <span class="fw-bold">@Localizer.Get("Player Details")</span>
                                                     </a>
                                                 </li>
-                                                    <li class="nav-item ">
-                                                        <a id="/PlayerScoreEntity/PlayerGameWeak/Index/?Fk_Player=@Model.Id&ProfileLayOut=true" class="nav-link tab-item   @(returnItem==(int)PlayerProfileItems.PlayerGameWeak ? "active" : "")">
-                                                            <span class="fw-bold">@Html.DisplayNameFor(model => profileItem.PlayerGameWeaks)</span>
-                                                        </a>
-                                                    </li>
-                                            
+                                                <li class="nav-item ">
+                                                    <a id="/PlayerScoreEntity/PlayerGameWeak/Index/?Fk_Player=@Model.Id&ProfileLayOut=true" class="nav-link tab-item   @(returnItem==(int)PlayerProfileItems.PlayerGameWeak ? "active" : "")">
+                                                        <span class="fw-bold">@Html.DisplayNameFor(model => profileItem.PlayerGameWeaks)</span>
+                                                    </a>
+                                                </li>
+
 
 
                                             </ul>
 
                                             <!-- edit button -->
 
-                                                <a href="/TeamEntity/Player/CreateOrEdit/@Model.Id?returnPage=@((int)PlayerReturnPage.PlayerProfile)" class="btn btn-primary waves-effect waves-float waves-light">
+                                            <a href="/TeamEntity/Player/CreateOrEdit/@Model.Id?returnPage=@((int)PlayerReturnPage.PlayerProfile)" class="btn btn-primary waves-effect waves-float waves-light">
                                                 <span class="fw-bold d-none d-md-block">@Localizer.Get("Edit")</span>
                                             </a>
 
@@ -108,27 +108,27 @@
 
 
 @section scripts{
-<script>
-    $(document).ready(function () {
-        $(".navigation navigation-main ul li .active").each(function () {
-            $(this).removeClass("active");
-        });
+    <script>
+        $(document).ready(function () {
+            $(".navigation navigation-main ul li .active").each(function () {
+                $(this).removeClass("active");
+            });
 
-        $("#d1").load($(".tab-item.active").eq(0).attr("id"));
+            $("#d1").load($(".tab-item.active").eq(0).attr("id"));
             $("#PlayerList").addClass("active");
 
-        $(".tab-item").each(function(){
-            $(this).on('click',function(){
-                $("#d1").load($(this).attr('id'));
-                $(".active").each(function(){
-                    $(this).removeClass("active");
-                });
-                $(this).addClass("active");
+            $(".tab-item").each(function () {
+                $(this).on('click', function () {
+                    $("#d1").load($(this).attr('id'));
+                    $(".active").each(function () {
+                        $(this).removeClass("active");
+                    });
+                    $(this).addClass("active");
                     $("#PlayerList").addClass("active");
-            });
-        })
+                });
+            })
 
         });
-</script>
+    </script>
 
 }

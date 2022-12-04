@@ -48,8 +48,9 @@
                                 <form class="form" asp-action="CreateOrEdit" enctype="multipart/form-data">
                                     <div asp-validation-summary="All" class="text-danger">@ViewData["Error"]</div>
                                     <input type="hidden" name="returnPage" value="@returnPage">
-                                    
+                                    <input type="hidden" asp-for="IsAction" />
                                     <div class="row mb-1">
+                                       
                                         @if (Model.Fk_Account == 0)
                                         {
                                             <div class="col-md-12 col-12">
@@ -81,7 +82,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-4 col-12">
+                                        <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="Cost" class="form-label"></label>
                                                 <input asp-for="Cost" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("Cost"))" />
@@ -89,18 +90,7 @@
                                             </div>
                                         </div>
                                         
-                                        <div class="col-md-4 col-12">
-                                            <div class="mb-1">
-                                                <label asp-for="IsAction" class="form-label"></label>
-                                                <select class="form-control" asp-for="IsAction">
-                                                    <option value="true">@Localizer.Get("Yes")</option>
-                                                    <option value="false">@Localizer.Get("No")</option>
-                                                </select>
-                                                <span asp-validation-for="IsAction" class="text-danger"></span>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="col-md-4 col-12">
+                                        <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="IsActive" class="form-label"></label>
                                                 <select class="form-control" asp-for="IsActive">

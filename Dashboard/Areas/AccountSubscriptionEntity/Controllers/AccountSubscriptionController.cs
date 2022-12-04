@@ -2,11 +2,14 @@
 using Dashboard.Areas.AccountSubscriptionEntity.Models;
 using Dashboard.Areas.PlayerTransferEntity.Models;
 using Entities.CoreServicesModels.AccountModels;
+using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.PlayerTransfersModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.SubscriptionModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountModels;
+using Entities.DBModels.AccountTeamModels;
+using Entities.DBModels.SubscriptionModels;
 using Entities.RequestFeatures;
 namespace Dashboard.Areas.AccountSubscriptionEntity.Controllers
 {
@@ -68,7 +71,7 @@ namespace Dashboard.Areas.AccountSubscriptionEntity.Controllers
         }
 
         [Authorize(DashboardViewEnum.AccountSubscription, AccessLevelEnum.CreateOrEdit)]
-        public async Task<IActionResult> CreateOrEdit(int fk_Account, int id = 0, 
+        public async Task<IActionResult> CreateOrEdit(int fk_Account, int id = 0,
             int returnPage = (int)AccountSubscriptionReturnPageEnum.Index)
         {
             AccountSubscriptionCreateOrEditModel model = new()
@@ -90,7 +93,7 @@ namespace Dashboard.Areas.AccountSubscriptionEntity.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(DashboardViewEnum.AccountSubscription, AccessLevelEnum.CreateOrEdit)]
-        public async Task<IActionResult> CreateOrEdit(int id, AccountSubscriptionCreateOrEditModel model, 
+        public async Task<IActionResult> CreateOrEdit(int id, AccountSubscriptionCreateOrEditModel model,
             int returnPage = (int)AccountSubscriptionReturnPageEnum.Index)
         {
             if (!ModelState.IsValid)
@@ -103,6 +106,43 @@ namespace Dashboard.Areas.AccountSubscriptionEntity.Controllers
             try
             {
 
+                var prevSubscription = _unitOfWork.Subscription.GetSubscriptions(new SubscriptionParameters
+                {
+                    Fk_Account = model.Fk_Account,
+                    Fk_Season = model.Fk_Season,
+                    Id = model.Fk_Subscription,
+                }, otherLang: false).FirstOrDefault();
+
+                if (prevSubscription != null && !prevSubscription.IsValid)
+                {
+                    throw new Exception("Account already get this subscription in this season!");
+                }
+
+                if (model.Fk_Subscription == (int)SubscriptionEnum.All)
+                {
+                    if (_unitOfWork.Account.GetAccountSubscriptions(new AccountSubscriptionParameters
+                    {
+                        Fk_Account = model.Fk_Account,
+                        Fk_Season = model.Fk_Season,
+                        NotEqualSubscriptionId = (int)SubscriptionEnum.Add3MillionsBank
+                    }, otherLang: false).Any())
+                    {
+                        throw new Exception("Account can`t buy this subscription because you already have sub one in this season!");
+                    }
+                }
+                else if (model.Fk_Subscription != (int)SubscriptionEnum.All)
+                {
+                    if (_unitOfWork.Account.GetAccountSubscriptions(new AccountSubscriptionParameters
+                    {
+                        Fk_Account = model.Fk_Account,
+                        Fk_Season = model.Fk_Season,
+                        Fk_Subscription = (int)SubscriptionEnum.All
+                    }, otherLang: false).Any())
+                    {
+                        throw new Exception("Account can`t buy this subscription because you already have super one in this season!");
+                    }
+                }
+
                 UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
                 AccountSubscription accountSubscriptionDB = new();
                 if (id == 0)
@@ -111,15 +151,47 @@ namespace Dashboard.Areas.AccountSubscriptionEntity.Controllers
 
                     _unitOfWork.Account.CreateAccountSubscription(accountSubscriptionDB);
 
+                    AccountTeamModel currentTeam = _unitOfWork.AccountTeam.GetCurrentTeam(model.Fk_Account, model.Fk_Season);
+                    AccountTeam accounTeam = await _unitOfWork.AccountTeam.FindAccountTeambyId(currentTeam.Id, trackChanges: true);
+
+                    if (accountSubscriptionDB.Fk_Subscription == (int)SubscriptionEnum.All)
+                    {
+                        accounTeam.TripleCaptain++;
+                        accounTeam.DoubleGameWeak++;
+                        accounTeam.BenchBoost++;
+                        accounTeam.Top_11++;
+                        accounTeam.IsVip = true;
+                    }
+                    else if (accountSubscriptionDB.Fk_Subscription == (int)SubscriptionEnum.TripleCaptain)
+                    {
+                        accounTeam.TripleCaptain++;
+                    }
+                    else if (accountSubscriptionDB.Fk_Subscription == (int)SubscriptionEnum.DoubleGameWeak)
+                    {
+                        accounTeam.DoubleGameWeak++;
+                    }
+                    else if (accountSubscriptionDB.Fk_Subscription == (int)SubscriptionEnum.BenchBoost)
+                    {
+                        accounTeam.BenchBoost++;
+                    }
+                    else if (accountSubscriptionDB.Fk_Subscription == (int)SubscriptionEnum.Top_11)
+                    {
+                        accounTeam.Top_11++;
+                    }
+                    else if (accountSubscriptionDB.Fk_Subscription == (int)SubscriptionEnum.Add3MillionsBank)
+                    {
+                        accounTeam.TotalMoney += 3;
+                    }
                 }
                 else
                 {
                     accountSubscriptionDB = await _unitOfWork.Account.FindAccountSubscriptionById(id, trackChanges: true);
 
-                    _ = _mapper.Map(model, accountSubscriptionDB);
+                    accountSubscriptionDB.IsActive = model.IsActive;
                 }
 
                 await _unitOfWork.Save();
+
 
                 if (returnPage == (int)AccountSubscriptionReturnPageEnum.Index)
                 {
@@ -128,13 +200,14 @@ namespace Dashboard.Areas.AccountSubscriptionEntity.Controllers
                         area = "AccountSubscriptionEntity"
                     });
                 }
-                
+
                 return RedirectToAction("Profile", "Account", new
                 {
-                    area = "AccountEntity", id = model.Fk_Account,
+                    area = "AccountEntity",
+                    id = model.Fk_Account,
                     returnItem = (int)AccountProfileItems.AccountSubscription
                 });
-                
+
             }
             catch (Exception ex)
             {
@@ -143,7 +216,7 @@ namespace Dashboard.Areas.AccountSubscriptionEntity.Controllers
 
             SetViewData(ProfileLayOut: false);
             ViewData["returnPage"] = returnPage;
-            
+
             return View(model);
         }
 

@@ -1057,7 +1057,7 @@
     <value>Plan</value>
   </data>
   <data name="IsAction" xml:space="preserve">
-    <value>In Action</value>
+    <value>By Invitation Code</value>
   </data>
   <data name="EditSpec" xml:space="preserve">
     <value>Edit Rows</value>
@@ -1208,5 +1208,11 @@
   </data>
   <data name="TeamGameWeak Profile" xml:space="preserve">
     <value>TeamGameWeak Profile</value>
+  </data>
+  <data name="AccountRefCodeCount" xml:space="preserve">
+    <value>Invitations count</value>
+  </data>
+  <data name="RefCode" xml:space="preserve">
+    <value>Invitation code</value>
   </data>
 </root>

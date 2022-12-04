@@ -1048,7 +1048,7 @@
     <value>الخطة</value>
   </data>
   <data name="IsAction" xml:space="preserve">
-    <value>الحالية</value>
+    <value>عن طريق رمز الدعوة</value>
   </data>
   <data name="EditSpec" xml:space="preserve">
     <value>تعديل الجدول</value>
@@ -1202,5 +1202,20 @@
   </data>
   <data name="TeamGameWeak Profile" xml:space="preserve">
     <value>بروفايل اسبوع الفريق</value>
+  </data>
+  <data name="AccountRefCodeCount" xml:space="preserve">
+    <value>عدد الدعوات</value>
+  </data>
+  <data name="RefCode" xml:space="preserve">
+    <value>كود الدعوة</value>
+  </data>
+  <data name="Subscription" xml:space="preserve">
+    <value>الاشتراك</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>المبلغ</value>
+  </data>
+  <data name="TransactionId" xml:space="preserve">
+    <value>رقم العمليه</value>
   </data>
 </root>

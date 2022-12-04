@@ -2,6 +2,7 @@
 using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.AccountTeamModels;
+using Entities.DBModels.TeamModels;
 using System.Linq.Dynamic.Core;
 using static Contracts.EnumData.DBModelsEnum;
 
@@ -182,14 +183,41 @@ namespace FantasyLogic.Calculations
             {
                 if (player.Points != null)
                 {
+                    havePointsInTotal = true;
                     int captianPoints = 1;
 
-                    if (accountTeamGameWeak.BenchBoost == false &&
-                        havePointsInTotal &&
-                        playersFinalPoints.Count >= playerPrimaryAndPlayed)
+                    if (havePointsInTotal && accountTeamGameWeak.BenchBoost == false)
                     {
-                        havePointsInTotal = false;
+                        if (playersFinalPoints.Count(a => a.HavePointsInTotal == true) >= playerPrimaryAndPlayed)
+                        {
+                            havePointsInTotal = false;
+                        }
+                        else if (player.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper &&
+                        playersFinalPoints.Count(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper &&
+                                                      a.HavePointsInTotal == true) == 1)
+                        {
+                            havePointsInTotal = false;
+                        }
+                        else if (player.Fk_PlayerPosition == (int)PlayerPositionEnum.Defender &&
+                           playersFinalPoints.Count(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Defender &&
+                                                         a.HavePointsInTotal == true) == 5)
+                        {
+                            havePointsInTotal = false;
+                        }
+                        else if (player.Fk_PlayerPosition == (int)PlayerPositionEnum.Midfielder &&
+                          playersFinalPoints.Count(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Midfielder &&
+                                                        a.HavePointsInTotal == true) == 5)
+                        {
+                            havePointsInTotal = false;
+                        }
+                        else if (player.Fk_PlayerPosition == (int)PlayerPositionEnum.Attacker &&
+                         playersFinalPoints.Count(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Attacker &&
+                                                       a.HavePointsInTotal == true) == 3)
+                        {
+                            havePointsInTotal = false;
+                        }
                     }
+
 
                     if (havePointsInTotal &&
                         captianPointsFlag &&
@@ -212,7 +240,9 @@ namespace FantasyLogic.Calculations
                         IsPrimary = player.IsPrimary,
                         Order = player.Order,
                         Points = points,
-                        HavePointsInTotal = havePointsInTotal
+                        HavePointsInTotal = havePointsInTotal,
+                        PlayerName = player.PlayerName,
+                        IsPlayed = player.IsPlayed,
                     });
 
                     if (havePointsInTotal)
@@ -224,6 +254,35 @@ namespace FantasyLogic.Calculations
                         benchPoints += points;
                     }
                 }
+            }
+
+            var checkPositions = playersFinalPoints.Where(a => a.IsPlayed &&
+                                                               a.HavePointsInTotal == false &&
+                                                               a.Fk_PlayerPosition != (int)PlayerPositionEnum.Midfielder)
+                                                   .GroupBy(a => a.Fk_PlayerPosition)
+                                                   .Select(a => new
+                                                   {
+                                                       a.Key,
+                                                       Count = a.Count()
+                                                   })
+                                                   .ToList();
+
+
+            if (checkPositions.Any(a => a.Count >= 3))
+            {
+                var position = checkPositions.Where(a => a.Count >= 3).First();
+
+                playersFinalPoints.Where(a => a.IsPrimary == false &&
+                                              a.HavePointsInTotal == true &&
+                                              a.Fk_PlayerPosition != position.Key &&
+                                               a.Fk_PlayerPosition != (int)PlayerPositionEnum.Goalkeeper)
+                                  .First().HavePointsInTotal = false;
+
+                playersFinalPoints.Where(a => a.IsPrimary == true &&
+                                              a.HavePointsInTotal == false &&
+                                              a.Fk_PlayerPosition == position.Key &&
+                                              a.Fk_PlayerPosition != (int)PlayerPositionEnum.Goalkeeper)
+                                  .First().HavePointsInTotal = true;
             }
 
             _unitOfWork.AccountTeam.ResetAccountTeamPlayerGameWeakPoints(fk_AccountTeam, gameWeak.Id);
@@ -432,6 +491,10 @@ namespace FantasyLogic.Calculations
         public double Points { get; set; }
 
         public bool HavePointsInTotal { get; set; }
+
+        public string PlayerName { get; set; }
+
+        public bool IsPlayed { get; set; }
     }
 
 

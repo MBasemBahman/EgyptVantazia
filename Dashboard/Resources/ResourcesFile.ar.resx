@@ -1236,4 +1236,7 @@
   <data name="_365_MatchId" xml:space="preserve">
     <value>Integration ID</value>
   </data>
+  <data name="PlayerGameWeakScore" xml:space="preserve">
+    <value>نتائج اسابيع اللاعب</value>
+  </data>
 </root>

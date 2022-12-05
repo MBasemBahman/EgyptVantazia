@@ -28,13 +28,15 @@ namespace Dashboard.Areas.PlayerStateEntity.Controllers
             _linkGenerator = linkGenerator;
             _environment = environment;
         }
-        public IActionResult Index(int id)
+        public IActionResult Index(int id, int fk_Player, bool ProfileLayOut = false)
         {
             PlayerSeasonScoreStateFilter filter = new()
             {
-                Id = id
+                Id = id,
+                Fk_Player = fk_Player
             };
 
+            ViewData["ProfileLayOut"] = ProfileLayOut;
             ViewData[ViewDataConstants.AccessLevel] = (DashboardAccessLevelModel)Request.HttpContext.Items[ViewDataConstants.AccessLevel];
 
             SetViewDataValues();

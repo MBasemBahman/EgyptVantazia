@@ -8,100 +8,167 @@
     ViewBag.useForm = true;
 
     var accessLevel = (DashboardAccessLevelModel)ViewData[ViewDataConstants.AccessLevel];
+    ViewBag.emptyLayout = ViewData["ProfileLayOut"] != null ? (bool)ViewData["ProfileLayOut"] : false;
 
     var row = new PlayerSeasonScoreStateDto();
 }
 
 <!-- BEGIN: Content-->
-<div class="app-content content ">
-    <div class="content-overlay"></div>
-    <div class="header-navbar-shadow"></div>
-    <div class="content-wrapper container-xxl p-0">
-        <div class="content-header row">
-            <div class="content-header-left col-md-9 col-12 mb-2">
-                <div class="row breadcrumbs-top">
-                    <div class="col-12">
-                        <h2 class="content-header-title float-start mb-0">@ViewData["Title"]</h2>
-                        <div class="breadcrumb-wrapper">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item">
-                                    <a href="#">@Localizer.Get("Dashboard")</a>
-                                </li>
-                                <li class="breadcrumb-item active">
-                                    @ViewData["Title"]
-                                </li>
-                            </ol>
+@if (!ViewBag.emptyLayout)
+{
+    <div class="app-content content ">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper container-xxl p-0">
+            <div class="content-header row">
+                <div class="content-header-left col-md-9 col-12 mb-2">
+                    <div class="row breadcrumbs-top">
+                        <div class="col-12">
+                            <h2 class="content-header-title float-start mb-0">@ViewData["Title"]</h2>
+                            <div class="breadcrumb-wrapper">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a href="#">@Localizer.Get("Dashboard")</a>
+                                    </li>
+                                    <li class="breadcrumb-item active">
+                                        @ViewData["Title"]
+                                    </li>
+                                </ol>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="content-body">
-            <section id="ajax-datatable">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header border-bottom">
-                                <h4 class="card-title"> @ViewData["Title"]</h4>
-                            </div>
-                            <p class="m-2 demo-inline-spacing">
-                                <a class="btn btn-primary me-1" data-bs-toggle="collapse" href="#AdvancedFilter" role="button" aria-expanded="false" aria-controls="AdvancedFilter">
-                                    <i data-feather='filter'></i>
-                                    @Localizer.Get("Advanced Search")
-                                </a>
-                            </p>
-                            @{
-                                await Html.RenderPartialAsync("../PlayerSeasonScoreState/Filter", Model, ViewData);
-                            }
-                            <div class="card-datatable">
-                            <table class="datatables datatables-ajax table table-responsive table">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            @Html.DisplayNameFor(model => row.Id)
-                                            <a id="details" asp-action="Details">
-                                            </a>
+            <div class="content-body">
+                <section id="ajax-datatable">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header border-bottom">
+                                    <h4 class="card-title"> @ViewData["Title"]</h4>
+                                </div>
+                                <p class="m-2 demo-inline-spacing">
+                                    <a class="btn btn-primary me-1" data-bs-toggle="collapse" href="#AdvancedFilter" role="button" aria-expanded="false" aria-controls="AdvancedFilter">
+                                        <i data-feather='filter'></i>
+                                        @Localizer.Get("Advanced Search")
+                                    </a>
+                                </p>
+                                @{
+                                    await Html.RenderPartialAsync("../PlayerSeasonScoreState/Filter", Model, ViewData);
+                                }
+                                <div class="card-datatable">
+                                    <table class="datatables datatables-ajax table table-responsive table">
+                                        <thead>
+                                        <tr>
+                                            <th>
+                                                @Html.DisplayNameFor(model => row.Id)
+                                                <a id="details" asp-action="Details">
+                                                </a>
 
-                                            @if (accessLevel.CreateAccess)
-                                            {
-                                                <a id="create" asp-action="CreateOrEdit">
-                                                </a>
-                                            }
+                                                @if (accessLevel.CreateAccess)
+                                                {
+                                                    <a id="create" asp-action="CreateOrEdit">
+                                                    </a>
+                                                }
 
-                                            @if (accessLevel.EditAccess)
-                                            {
-                                                <a id="edit" asp-action="CreateOrEdit">
-                                                </a>
-                                            }
-                                            @if (accessLevel.DeleteAccess)
-                                            {
-                                                <a id="delete" asp-action="Delete">
-                                                </a>
-                                            }
-                                        </th>
-                                        <th>@Html.DisplayNameFor(model => row.Player)</th>
-                                        <th>@Html.DisplayNameFor(model => row.Season)</th>
-                                        <th>@Html.DisplayNameFor(model => row.ScoreState)</th>
-                                        <th>@Html.DisplayNameFor(model => row.Percent)</th>
-                                        <th>@Html.DisplayNameFor(model => row.Points)</th>
-                                        <th>@Html.DisplayNameFor(model => row.Value)</th>
-                                        <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => row.Id)
-                                        </th>
-                                    </tr>
-                                </thead>
-                            </table>
+                                                @if (accessLevel.EditAccess)
+                                                {
+                                                    <a id="edit" asp-action="CreateOrEdit">
+                                                    </a>
+                                                }
+                                                @if (accessLevel.DeleteAccess)
+                                                {
+                                                    <a id="delete" asp-action="Delete">
+                                                    </a>
+                                                }
+                                            </th>
+                                            <th>@Html.DisplayNameFor(model => row.Player)</th>
+                                            <th>@Html.DisplayNameFor(model => row.Season)</th>
+                                            <th>@Html.DisplayNameFor(model => row.ScoreState)</th>
+                                            <th>@Html.DisplayNameFor(model => row.Percent)</th>
+                                            <th>@Html.DisplayNameFor(model => row.Points)</th>
+                                            <th>@Html.DisplayNameFor(model => row.Value)</th>
+                                            <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => row.Id)
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-        </div>
+                </section>
+            </div>
 
+        </div>
     </div>
-</div>
+}
+else
+{
+    <section id="ajax-datatable">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header border-bottom">
+                        <h4 class="card-title"> @ViewData["Title"]</h4>
+                    </div>
+                    <p class="m-2 demo-inline-spacing">
+                        <a class="btn btn-primary me-1" data-bs-toggle="collapse" href="#AdvancedFilter" role="button" aria-expanded="false" aria-controls="AdvancedFilter">
+                            <i data-feather='filter'></i>
+                            @Localizer.Get("Advanced Search")
+                        </a>
+                    </p>
+                    @{
+                        await Html.RenderPartialAsync("../PlayerSeasonScoreState/Filter", Model, ViewData);
+                    }
+                    <div class="card-datatable">
+                        <table class="datatables datatables-ajax table table-responsive table">
+                            <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => row.Id)
+                                    <a id="details" asp-action="Details">
+                                    </a>
+
+                                    @if (accessLevel.CreateAccess)
+                                    {
+                                        <a id="create" asp-action="CreateOrEdit">
+                                        </a>
+                                    }
+
+                                    @if (accessLevel.EditAccess)
+                                    {
+                                        <a id="edit" asp-action="CreateOrEdit">
+                                        </a>
+                                    }
+                                    @if (accessLevel.DeleteAccess)
+                                    {
+                                        <a id="delete" asp-action="Delete">
+                                        </a>
+                                    }
+                                </th>
+                                <th>@Html.DisplayNameFor(model => row.Player)</th>
+                                <th>@Html.DisplayNameFor(model => row.Season)</th>
+                                <th>@Html.DisplayNameFor(model => row.ScoreState)</th>
+                                <th>@Html.DisplayNameFor(model => row.Percent)</th>
+                                <th>@Html.DisplayNameFor(model => row.Points)</th>
+                                <th>@Html.DisplayNameFor(model => row.Value)</th>
+                                <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
+                                <th>
+                                    @Html.DisplayNameFor(model => row.Id)
+                                </th>
+                            </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
 <!-- END: Content-->
 @section scripts{
     <script src="~/apis/site.js"></script>
@@ -126,6 +193,7 @@
                               data.PointsTo = $("#PointsTo").length > 0 ? $("#PointsTo").val() : null;
                               data.PercentFrom = $("#PercentFrom").length > 0 ? $("#PercentFrom").val() : null;
                               data.PercentTo = $("#PercentTo").length > 0 ? $("#PercentTo").val() : null;
+                              data.Fk_Player = @Model.Fk_Player;
                               return JSON.stringify(data);
                           }
                       },

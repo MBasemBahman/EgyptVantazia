@@ -16,7 +16,9 @@
 }
 
 <!-- BEGIN: Content-->
-<div class="app-content content ">
+@if (!ViewBag.emptyLayout)
+{
+    <div class="app-content content ">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper container-xxl p-0">
@@ -103,6 +105,62 @@
 
         </div>
     </div>
+}
+else
+{
+    <section id="ajax-datatable">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header border-bottom">
+                                    <h4 class="card-title"> @ViewData["Title"]</h4>
+                                </div>
+                                
+                                <p class="m-2 demo-inline-spacing">
+                                    <a class="btn btn-primary me-1" data-bs-toggle="collapse" href="#AdvancedFilter" role="button" aria-expanded="false" aria-controls="AdvancedFilter">
+                                        <i data-feather='filter'></i>
+                                        @Localizer.Get("Advanced Search")
+                                    </a>
+    
+                                </p>
+                                @{
+                                    await Html.RenderPartialAsync("../PlayerGameWeakScore/Filter", Model, ViewData);
+                                }
+                                <div class="card-datatable">
+                                    <table class="datatables datatables-ajax table table-responsive table">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => row.Id)
+                                                    <a id="details" asp-action="Details">
+                                                    </a>
+                                                    
+                                                    @if (accessLevel.DeleteAccess)
+                                                    {
+                                                        <a id="delete" asp-action="Delete">
+                                                        </a>
+                                                    }
+
+                                                </th>
+                                                <th>@Html.DisplayNameFor(model => row.PlayerGameWeak.Player)</th>
+                                                <th>@Html.DisplayNameFor(model => row.ScoreType)</th>
+                                                <th>@Html.DisplayNameFor(model => row.Points)</th>
+                                                <th>@Html.DisplayNameFor(model => row.Value)</th>
+                                                <th>@Html.DisplayNameFor(model => row.FinalValue)</th>
+                                                <th>@Html.DisplayNameFor(model => row.GameTime)</th>
+
+                                                <th>
+                                                    @Html.DisplayNameFor(model => row.Id)
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+}
 
 <!-- END: Content-->
 @section scripts{
@@ -130,6 +188,7 @@
                             data.RateTo = $("#RateTo").length > 0 ? $("#RateTo").val() : @Model.RateTo;
                             data.PointsFrom = $("#PointsFrom").length > 0 ? $("#PointsFrom").val() : @Model.PointsFrom;
                             data.PointsTo = $("#PointsTo").length > 0 ? $("#PointsTo").val() : @Model.PointsTo;
+                            data.Fk_Player = @Model.Fk_Player;
                             return JSON.stringify(data);
                         }
                     },

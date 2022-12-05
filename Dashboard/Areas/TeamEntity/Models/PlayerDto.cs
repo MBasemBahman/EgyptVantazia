@@ -46,7 +46,10 @@ namespace Dashboard.Areas.TeamEntity.Models
     public enum PlayerProfileItems
     {
         Details = 1,
-        PlayerGameWeak = 2
+        PlayerGameWeak = 2,
+        PlayerGameWeakScore = 3,
+        PlayerGameWeakScoreStates = 4,
+        PlayerSeasonScoreStates = 5,
     }
 
     public enum PlayerReturnPage

@@ -66,13 +66,30 @@
                                                         <span class="fw-bold">@Localizer.Get("Player Details")</span>
                                                     </a>
                                                 </li>
+                                                
                                                 <li class="nav-item ">
                                                     <a id="/PlayerScoreEntity/PlayerGameWeak/Index/?Fk_Player=@Model.Id&ProfileLayOut=true" class="nav-link tab-item   @(returnItem==(int)PlayerProfileItems.PlayerGameWeak ? "active" : "")">
                                                         <span class="fw-bold">@Html.DisplayNameFor(model => profileItem.PlayerGameWeaks)</span>
                                                     </a>
                                                 </li>
-
-
+                                                
+                                                <li class="nav-item ">
+                                                    <a id="/PlayerScoreEntity/PlayerGameWeakScore/Index/?Fk_Player=@Model.Id&ProfileLayOut=true" class="nav-link tab-item   @(returnItem==(int)PlayerProfileItems.PlayerGameWeakScore ? "active" : "")">
+                                                        <span class="fw-bold">@Localizer.Get("PlayerGameWeakScore")</span>
+                                                    </a>
+                                                </li>
+                                                
+                                                <li class="nav-item ">
+                                                    <a id="/PlayerStateEntity/PlayerGameWeakScoreState/Index/?Fk_Player=@Model.Id&ProfileLayOut=true" class="nav-link tab-item   @(returnItem==(int)PlayerProfileItems.PlayerGameWeakScoreStates ? "active" : "")">
+                                                        <span class="fw-bold">@Html.DisplayNameFor(model => profileItem.PlayerGameWeakScoreStates)</span>
+                                                    </a>
+                                                </li>
+                                                
+                                                <li class="nav-item ">
+                                                    <a id="/PlayerStateEntity/PlayerSeasonScoreState/Index/?Fk_Player=@Model.Id&ProfileLayOut=true" class="nav-link tab-item   @(returnItem==(int)PlayerProfileItems.PlayerSeasonScoreStates ? "active" : "")">
+                                                        <span class="fw-bold">@Html.DisplayNameFor(model => profileItem.PlayerSeasonScoreStates)</span>
+                                                    </a>
+                                                </li>
 
                                             </ul>
 

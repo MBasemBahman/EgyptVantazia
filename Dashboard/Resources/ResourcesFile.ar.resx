@@ -856,13 +856,13 @@
     <value>المكسب</value>
   </data>
   <data name="PlayerGameWeak" xml:space="preserve">
-    <value>أسبوع للاعب</value>
+    <value>ماتش اللاعب</value>
   </data>
   <data name="PlayerGameWeaks" xml:space="preserve">
-    <value>أسابيع اللاعب</value>
+    <value>ماتشات اللاعب</value>
   </data>
   <data name="PlayerGameWeakScores" xml:space="preserve">
-    <value>نتائج أسابيع الاعبون</value>
+    <value>اهداف واحصائيات اللاعبين</value>
   </data>
   <data name="Points" xml:space="preserve">
     <value>النقط</value>
@@ -1096,7 +1096,7 @@
     <value>الوصف</value>
   </data>
   <data name="PlayersGameWeaks" xml:space="preserve">
-    <value>اسابيع اللاعبين</value>
+    <value>ماتشات اللاعب</value>
   </data>
   <data name="RateFrom" xml:space="preserve">
     <value>التقييم من</value>
@@ -1126,13 +1126,13 @@
     <value>حالات التسجيل</value>
   </data>
   <data name="PlayerGameWeakScoreStates" xml:space="preserve">
-    <value>حالات تسجيل اسابيع اللاعبين</value>
+    <value>نقاط اللاعب فى الجوله</value>
   </data>
   <data name="PlayerGameWeakScoreState" xml:space="preserve">
-    <value>حالة تسجيل اسابيع اللاعبين</value>
+    <value>نقاط اللاعب فى الجوله</value>
   </data>
   <data name="PlayerSeasonScoreStates" xml:space="preserve">
-    <value>حالات تسجيل اللاعبين للموسم</value>
+    <value>نقاط اللاعب فى الموسم</value>
   </data>
   <data name="ScoreState" xml:space="preserve">
     <value>حالة التسجيل</value>
@@ -1237,6 +1237,9 @@
     <value>Integration ID</value>
   </data>
   <data name="PlayerGameWeakScore" xml:space="preserve">
-    <value>نتائج اسابيع اللاعب</value>
+    <value>اهداف واحصائيات اللاعب</value>
+  </data>
+  <data name="Teams Points" xml:space="preserve">
+    <value>نقاط الفرق</value>
   </data>
 </root>

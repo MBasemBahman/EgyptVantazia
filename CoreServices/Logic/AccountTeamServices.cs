@@ -5,6 +5,7 @@ using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.SeasonModels;
+using static Entities.EnumData.LogicEnumData;
 
 namespace CoreServices.Logic
 {
@@ -173,7 +174,7 @@ namespace CoreServices.Logic
                            DoubleGameWeak = a.DoubleGameWeak,
                            TansfarePoints = a.TansfarePoints,
                            BenchPoints = a.BenchPoints,
-                           TansfareCount = a.AccountTeam.PlayerTransfers.Count(b => b.Fk_GameWeak == parameters.Fk_GameWeak),
+                           TansfareCount = a.AccountTeam.PlayerTransfers.Count(b => b.Fk_GameWeak == a.Fk_GameWeak && b.TransferTypeEnum == TransferTypeEnum.Buying),
                            Top_11 = a.Top_11,
                            GlobalRanking = a.GlobalRanking,
                            SeasonGlobalRanking = a.SeasonGlobalRanking,
@@ -342,6 +343,7 @@ namespace CoreServices.Logic
                                },
                                AccountTeam = new AccountTeamModel
                                {
+                                   Id = a.AccountTeamPlayer.Fk_AccountTeam,
                                    Name = a.AccountTeamPlayer.AccountTeam.Name,
                                    IsVip = a.AccountTeamPlayer.AccountTeam.IsVip,
                                }

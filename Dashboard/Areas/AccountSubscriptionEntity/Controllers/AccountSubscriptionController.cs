@@ -120,7 +120,7 @@ namespace Dashboard.Areas.AccountSubscriptionEntity.Controllers
                     {
                         Fk_Account = model.Fk_Account,
                         Fk_Season = model.Fk_Season,
-                        NotEqualSubscriptionId = (int)SubscriptionEnum.Add3MillionsBank
+                        //NotEqualSubscriptionId = (int)SubscriptionEnum.Add3MillionsBank
                     }, otherLang: false).Any())
                     {
                         throw new Exception("Account can`t buy this subscription because you already have sub one in this season!");
@@ -157,6 +157,7 @@ namespace Dashboard.Areas.AccountSubscriptionEntity.Controllers
                         accounTeam.BenchBoost++;
                         accounTeam.Top_11++;
                         accounTeam.IsVip = true;
+                        accounTeam.TotalMoney += 3;
                     }
                     else if (accountSubscriptionDB.Fk_Subscription == (int)SubscriptionEnum.TripleCaptain)
                     {

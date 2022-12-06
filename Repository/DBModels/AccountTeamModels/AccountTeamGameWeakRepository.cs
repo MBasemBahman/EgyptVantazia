@@ -47,11 +47,14 @@ namespace Repository.DBModels.AccountTeamModels
         {
             if (!FindByCondition(a => a.Fk_AccountTeam == entity.Fk_AccountTeam && a.Fk_GameWeak == entity.Fk_GameWeak, trackChanges: false).Any())
             {
-                base.Create(entity);
-
                 AccountTeam accountTeam = DBContext.Set<AccountTeam>().Find(entity.Fk_AccountTeam);
 
-                accountTeam.FreeTransfer = accountTeam.FreeTransfer >= 1 ? 2 : 1;
+                if (accountTeam != null)
+                {
+                    accountTeam.FreeTransfer = accountTeam.FreeTransfer >= 1 ? 2 : 1;
+
+                    base.Create(entity);
+                }
             }
         }
     }

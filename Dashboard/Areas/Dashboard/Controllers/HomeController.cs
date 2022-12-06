@@ -26,8 +26,20 @@
 
         public IActionResult Index()
         {
+            //var players = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new Entities.CoreServicesModels.AccountTeamModels.AccountTeamPlayerGameWeakParameters
+            //{
+            //    Fk_GameWeak = 43,
+            //    IsTransfer = false
+            //}, otherLang: false).ToList();
 
-            //var accounteams = _unitOfWork.AccountTeam.GetAccountTeams(new )
+            //var teams = players.GroupBy(a => a.AccountTeamPlayer.AccountTeam.Id)
+            //                   .Where(a => a.Count() != 15)
+            //                   .Select(a => new
+            //                   {
+            //                       a.Key,
+            //                       count = a.Count()
+            //                   })
+            //                   .ToList();
 
             return View();
         }

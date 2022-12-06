@@ -119,7 +119,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                 throw new Exception("You must select one vice-captain only!");
             }
 
-            if (currentTeam.TotalMoney == 100)
+            if (currentTeam.TotalMoney < 100)
             {
                 throw new Exception("You not have enough money!");
             }

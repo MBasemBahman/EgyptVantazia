@@ -38,12 +38,9 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
 
         [HttpPost]
         [Route(nameof(UpdateCurrentGameWeak))]
-        [ApiExplorerSettings(IgnoreApi = true)]
-        public IActionResult UpdateCurrentGameWeak()
+        public IActionResult UpdateCurrentGameWeak(int fk_GameWeak)
         {
-            SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
-
-            _ = BackgroundJob.Schedule(() => _fantasyUnitOfWork.GameWeakDataHelper.UpdateCurrentGameWeak(season.Id, season._365_SeasonId.ParseToInt()), TimeSpan.FromMinutes(1));
+            _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.GamesDataHelper.UpdateCurrentGameWeak(fk_GameWeak));
 
             return Ok();
         }

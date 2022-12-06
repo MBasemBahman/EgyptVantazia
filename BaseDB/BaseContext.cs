@@ -258,6 +258,14 @@ namespace BaseDB
                           cancellationToken);
         }
 
+        public override async Task<int> SaveChangesAsync(
+          CancellationToken cancellationToken = default
+       )
+        {
+            OnBeforeSaving();
+            return await base.SaveChangesAsync(cancellationToken);
+        }
+
         private void OnBeforeSaving()
         {
             IEnumerable<EntityEntry> entries = ChangeTracker.Entries();

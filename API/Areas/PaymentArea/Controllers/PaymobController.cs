@@ -6,7 +6,6 @@ using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.SubscriptionModels;
 using Entities.DBModels.AccountModels;
 using Entities.DBModels.AccountTeamModels;
-using Entities.DBModels.SubscriptionModels;
 using static Contracts.EnumData.DBModelsEnum;
 using static Entities.EnumData.LogicEnumData;
 
@@ -56,7 +55,7 @@ namespace API.Areas.PaymentArea.Controllers
                 {
                     Fk_Account = auth.Fk_Account,
                     Fk_Season = season.Id,
-                    NotEqualSubscriptionId = (int)SubscriptionEnum.Add3MillionsBank
+                    //NotEqualSubscriptionId = (int)SubscriptionEnum.Add3MillionsBank
                 }, otherLang: false).Any())
                 {
                     throw new Exception("You can`t buy this subscription because you already have sub one in this season!");
@@ -72,6 +71,16 @@ namespace API.Areas.PaymentArea.Controllers
                 }, otherLang: false).Any())
                 {
                     throw new Exception("You can`t buy this subscription because you already have super one in this season!");
+                }
+
+                if (_unitOfWork.Account.GetAccountSubscriptions(new AccountSubscriptionParameters
+                {
+                    Fk_Account = auth.Fk_Account,
+                    Fk_Season = season.Id,
+                    Fk_Subscription = model.Fk_Subscription
+                }, otherLang: false).Any())
+                {
+                    throw new Exception("You can`t buy this subscription because you already have one in this season!");
                 }
             }
 
@@ -209,6 +218,7 @@ namespace API.Areas.PaymentArea.Controllers
                             accounTeam.BenchBoost++;
                             accounTeam.Top_11++;
                             accounTeam.IsVip = true;
+                            accounTeam.TotalMoney += 3;
                         }
                         else if (accountSubscription.Fk_Subscription == (int)SubscriptionEnum.TripleCaptain)
                         {

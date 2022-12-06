@@ -69,10 +69,10 @@ namespace API.Areas.PlayerTransferArea.Controllers
                 throw new Exception("Game Weak not started yet!");
             }
 
-            if (currentTeam.TotalMoney <= 0)
-            {
-                throw new Exception("You not have money for transfers!");
-            }
+            //if (currentTeam.TotalMoney <= 0)
+            //{
+            //    throw new Exception("You not have money for transfers!");
+            //}
 
             if (model.SellPlayers.Count != model.BuyPlayers.Count)
             {
@@ -85,6 +85,12 @@ namespace API.Areas.PlayerTransferArea.Controllers
             List<int> fk_Players = new();
             fk_Players.AddRange(sellPlayers);
             fk_Players.AddRange(buyPlayers);
+
+            if (sellPlayers.Distinct().Count() != sellPlayers.Count ||
+                buyPlayers.Distinct().Count() != buyPlayers.Count)
+            {
+                throw new Exception("The players must be distinct!");
+            }
 
             var prices = _unitOfWork.Team.GetPlayers(new PlayerParameters
             {
@@ -218,6 +224,7 @@ namespace API.Areas.PlayerTransferArea.Controllers
                 teamGameWeak ??= _unitOfWork.AccountTeam.GetTeamGameWeak(auth.Fk_Account, nextGameWeak.Id);
 
                 if (teamGameWeak.WildCard == false &&
+                    teamGameWeak.FreeHit == false &&
                     _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
                     {
                         Fk_AccountTeam = currentTeam.Id,

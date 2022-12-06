@@ -3,7 +3,7 @@ using Entities.CoreServicesModels.AccountTeamModels;
 namespace Dashboard.Areas.AccountTeamEntity.Controllers
 {
     [Area("AccountTeamEntity")]
-    [Authorize(DashboardViewEnum.AccountTeam, AccessLevelEnum.View)]
+    [Authorize(DashboardViewEnum.AccountTeamPlayer, AccessLevelEnum.View)]
     public class AccountTeamPlayerController : Controller
     {
         private readonly ILoggerManager _logger;

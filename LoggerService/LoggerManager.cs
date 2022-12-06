@@ -72,7 +72,7 @@ namespace LoggerService
 
             return new Response
             {
-                ErrorMessage = logModel.ErrorMessage.Length > 80 ? "Something error, please try again!" : logModel.ErrorMessage,
+                ErrorMessage = /*logModel.ErrorMessage.Length > 80 ? "Something error, please try again!" : */logModel.ErrorMessage,
                 ExceptionMessage = StringChecker.HasArabicCharacters(logModel.ExceptionMessage) ? "" : logModel.ExceptionMessage
             };
         }

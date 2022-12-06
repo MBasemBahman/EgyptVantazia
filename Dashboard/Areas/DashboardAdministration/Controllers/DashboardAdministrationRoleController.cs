@@ -4,7 +4,7 @@ using Entities.RequestFeatures;
 namespace Dashboard.Areas.DashboardAdministration.Controllers
 {
     [Area("DashboardAdministration")]
-    [Authorize(DashboardViewEnum.DashboardAccessLevel, AccessLevelEnum.View)]
+    [Authorize(DashboardViewEnum.DashboardAdministrationRole, AccessLevelEnum.View)]
     public class DashboardAdministrationRoleController : Controller
     {
         private readonly ILoggerManager _logger;

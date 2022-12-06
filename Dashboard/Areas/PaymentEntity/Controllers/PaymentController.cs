@@ -1,12 +1,5 @@
-﻿using Dashboard.Areas.AccountEntity.Models;
-using Dashboard.Areas.PaymentEntity.Models;
-using Dashboard.Areas.PlayerTransferEntity.Models;
+﻿using Dashboard.Areas.PaymentEntity.Models;
 using Entities.CoreServicesModels.AccountModels;
-using Entities.CoreServicesModels.PlayerTransfersModels;
-using Entities.CoreServicesModels.SeasonModels;
-using Entities.CoreServicesModels.SubscriptionModels;
-using Entities.CoreServicesModels.TeamModels;
-using Entities.DBModels.AccountModels;
 using Entities.RequestFeatures;
 namespace Dashboard.Areas.PaymentEntity.Controllers
 {

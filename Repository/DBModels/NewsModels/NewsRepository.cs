@@ -6,7 +6,7 @@ namespace Repository.DBModels.NewsModels
 {
     public class NewsRepository : RepositoryBase<News>
     {
-        public NewsRepository(DbContext context) : base(context)
+        public NewsRepository(BaseContext context) : base(context)
         {
         }
 

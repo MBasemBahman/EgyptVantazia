@@ -5,7 +5,7 @@ namespace Repository.DBModels.AccountModels
 {
     public class AccountSubscriptionRepository : RepositoryBase<AccountSubscription>
     {
-        public AccountSubscriptionRepository(DbContext context) : base(context)
+        public AccountSubscriptionRepository(BaseContext context) : base(context)
         {
         }
 

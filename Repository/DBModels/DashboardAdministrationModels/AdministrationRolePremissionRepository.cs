@@ -5,7 +5,7 @@ namespace Repository.DBModels.DashboardAdministrationModels
 {
     public class AdministrationRolePremissionRepository : RepositoryBase<AdministrationRolePremission>
     {
-        public AdministrationRolePremissionRepository(DbContext context) : base(context)
+        public AdministrationRolePremissionRepository(BaseContext context) : base(context)
         {
         }
 

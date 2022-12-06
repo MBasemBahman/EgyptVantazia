@@ -6,7 +6,7 @@ namespace Repository.DBModels.DashboardAdministrationModels
 {
     public class DashboardAdministrationRoleRepository : RepositoryBase<DashboardAdministrationRole>
     {
-        public DashboardAdministrationRoleRepository(DbContext context) : base(context)
+        public DashboardAdministrationRoleRepository(BaseContext context) : base(context)
         {
         }
 

@@ -5,7 +5,7 @@ namespace Repository.DBModels.SeasonModels
 {
     public class TeamGameWeakRepository : RepositoryBase<TeamGameWeak>
     {
-        public TeamGameWeakRepository(DbContext context) : base(context)
+        public TeamGameWeakRepository(BaseContext context) : base(context)
         {
         }
 

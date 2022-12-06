@@ -6,6 +6,8 @@ global using Repository.DBModels.UserModels;
 global using System.Linq.Dynamic.Core;
 global using System.Linq.Expressions;
 global using BC = BCrypt.Net.BCrypt;
+global using BaseDB;
+
 
 
 

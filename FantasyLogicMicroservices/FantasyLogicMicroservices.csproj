@@ -29,7 +29,6 @@
 		<ProjectReference Include="..\DAL\DAL.csproj" />
 		<ProjectReference Include="..\FantasyLogic\FantasyLogic.csproj" />
 		<ProjectReference Include="..\IntegrationWith365\IntegrationWith365.csproj" />
-		<ProjectReference Include="..\Live\Live.csproj" />
 		<ProjectReference Include="..\LoggerService\LoggerService.csproj" />
 	</ItemGroup>
 

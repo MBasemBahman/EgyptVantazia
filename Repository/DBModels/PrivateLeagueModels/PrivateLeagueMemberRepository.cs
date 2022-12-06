@@ -6,7 +6,7 @@ namespace Repository.DBModels.PrivateLeagueModels
 {
     public class PrivateLeagueMemberRepository : RepositoryBase<PrivateLeagueMember>
     {
-        public PrivateLeagueMemberRepository(DbContext context) : base(context)
+        public PrivateLeagueMemberRepository(BaseContext context) : base(context)
         {
         }
 

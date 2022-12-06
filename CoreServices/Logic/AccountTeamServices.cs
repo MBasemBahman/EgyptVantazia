@@ -1,4 +1,5 @@
-﻿using Entities.CoreServicesModels.AccountModels;
+﻿using BaseDB;
+using Entities.CoreServicesModels.AccountModels;
 using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
@@ -12,9 +13,9 @@ namespace CoreServices.Logic
     public class AccountTeamServices
     {
         private readonly RepositoryManager _repository;
-        private readonly DbContext _dBContext;
+        private readonly BaseContext _dBContext;
 
-        public AccountTeamServices(RepositoryManager repository, DbContext dBContext)
+        public AccountTeamServices(RepositoryManager repository, BaseContext dBContext)
         {
             _repository = repository;
             _dBContext = dBContext;

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using BaseDB;
+using Newtonsoft.Json.Linq;
 
 namespace Dashboard.Extensions
 {
@@ -38,7 +39,7 @@ namespace Dashboard.Extensions
         {
             if (config.Tenant == TenantEnvironments.Development)
             {
-                _ = services.AddDbContext<DbContext, DBContext>(options => options.UseSqlServer(configuration.GetConnectionString("sqlConnection"),
+                _ = services.AddDbContext<BaseContext, DBContext>(options => options.UseSqlServer(configuration.GetConnectionString("sqlConnection"),
                                                                            options => options.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
             }
 

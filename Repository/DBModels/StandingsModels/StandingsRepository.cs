@@ -6,7 +6,7 @@ namespace Repository.DBModels.StandingsModels
 {
     public class StandingsRepository : RepositoryBase<Standings>
     {
-        public StandingsRepository(DbContext context) : base(context)
+        public StandingsRepository(BaseContext context) : base(context)
         {
         }
 

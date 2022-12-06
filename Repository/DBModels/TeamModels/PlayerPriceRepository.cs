@@ -5,7 +5,7 @@ namespace Repository.DBModels.TeamModels
 {
     public class PlayerPriceRepository : RepositoryBase<PlayerPrice>
     {
-        public PlayerPriceRepository(DbContext context) : base(context)
+        public PlayerPriceRepository(BaseContext context) : base(context)
         {
         }
 

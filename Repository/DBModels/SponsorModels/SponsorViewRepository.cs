@@ -5,7 +5,7 @@ namespace Repository.DBModels.SponsorModels
 {
     public class SponsorViewRepository : RepositoryBase<SponsorView>
     {
-        public SponsorViewRepository(DbContext context) : base(context)
+        public SponsorViewRepository(BaseContext context) : base(context)
         {
         }
 

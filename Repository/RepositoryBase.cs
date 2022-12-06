@@ -1,9 +1,11 @@
-﻿namespace Repository
+﻿using BaseDB;
+
+namespace Repository
 {
     public class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
-        protected DbContext DBContext;
-        public RepositoryBase(DbContext dBContext)
+        protected BaseContext DBContext;
+        public RepositoryBase(BaseContext dBContext)
         {
             DBContext = dBContext;
         }

@@ -6,7 +6,7 @@ namespace Repository.DBModels.AccountTeamModels
 {
     public class TeamPlayerTypeRepository : RepositoryBase<TeamPlayerType>
     {
-        public TeamPlayerTypeRepository(DbContext context) : base(context)
+        public TeamPlayerTypeRepository(BaseContext context) : base(context)
         {
         }
 

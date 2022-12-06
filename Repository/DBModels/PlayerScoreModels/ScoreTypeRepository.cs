@@ -5,7 +5,7 @@ namespace Repository.DBModels.PlayerScoreModels
 {
     public class ScoreTypeRepository : RepositoryBase<ScoreType>
     {
-        public ScoreTypeRepository(DbContext context) : base(context)
+        public ScoreTypeRepository(BaseContext context) : base(context)
         {
         }
 

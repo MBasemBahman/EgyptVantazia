@@ -6,7 +6,7 @@ namespace Repository.DBModels.SeasonModels
 {
     public class SeasonRepository : RepositoryBase<Season>
     {
-        public SeasonRepository(DbContext context) : base(context)
+        public SeasonRepository(BaseContext context) : base(context)
         {
         }
 

@@ -5,7 +5,7 @@ namespace Repository.DBModels.LogModels
 {
     public class LogRepository : RepositoryBase<Log>
     {
-        public LogRepository(DbContext context) : base(context)
+        public LogRepository(BaseContext context) : base(context)
         {
         }
 

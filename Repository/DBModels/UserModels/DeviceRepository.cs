@@ -4,7 +4,7 @@ namespace Repository.DBModels.UserModels
 {
     public class DeviceRepository : RepositoryBase<Device>
     {
-        public DeviceRepository(DbContext context) : base(context)
+        public DeviceRepository(BaseContext context) : base(context)
         {
         }
 

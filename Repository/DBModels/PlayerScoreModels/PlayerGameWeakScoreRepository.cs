@@ -6,7 +6,7 @@ namespace Repository.DBModels.PlayerScoreModels
 {
     public class PlayerGameWeakScoreRepository : RepositoryBase<PlayerGameWeakScore>
     {
-        public PlayerGameWeakScoreRepository(DbContext context) : base(context)
+        public PlayerGameWeakScoreRepository(BaseContext context) : base(context)
         {
         }
 

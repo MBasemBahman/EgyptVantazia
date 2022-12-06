@@ -5,7 +5,7 @@ namespace Repository.DBModels.DashboardAdministrationModels
 {
     public class DashboardAccessLevelRepository : RepositoryBase<DashboardAccessLevel>
     {
-        public DashboardAccessLevelRepository(DbContext context) : base(context)
+        public DashboardAccessLevelRepository(BaseContext context) : base(context)
         {
         }
 

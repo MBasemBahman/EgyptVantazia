@@ -6,7 +6,7 @@ namespace Repository.DBModels.PlayersTransfersModels
 {
     public class PlayerTransferRepository : RepositoryBase<PlayerTransfer>
     {
-        public PlayerTransferRepository(DbContext context) : base(context)
+        public PlayerTransferRepository(BaseContext context) : base(context)
         {
         }
 

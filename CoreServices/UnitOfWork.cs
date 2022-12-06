@@ -1,11 +1,12 @@
-﻿using CoreServices.Logic;
+﻿using BaseDB;
+using CoreServices.Logic;
 
 namespace CoreServices
 {
     public class UnitOfWork
     {
         private readonly RepositoryManager _repository;
-        private readonly DbContext _dBContext;
+        private readonly BaseContext _dBContext;
 
         private UserService _userService;
         private LogServices _logServices;
@@ -25,7 +26,7 @@ namespace CoreServices
         private TeamServices _teamServices;
         private SubscriptionServices _subscriptionServices;
 
-        public UnitOfWork(RepositoryManager repository, DbContext dBContext)
+        public UnitOfWork(RepositoryManager repository, BaseContext dBContext)
         {
             _repository = repository;
             _dBContext = dBContext;

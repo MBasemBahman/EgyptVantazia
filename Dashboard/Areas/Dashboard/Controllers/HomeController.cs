@@ -7,20 +7,17 @@
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
         private readonly UnitOfWork _unitOfWork;
-        private readonly DbContext _context;
         private readonly IWebHostEnvironment _environment;
 
         public HomeController(
             ILoggerManager logger,
             IMapper mapper,
             UnitOfWork unitOfWork,
-            DbContext context,
             IWebHostEnvironment environment)
         {
             _logger = logger;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
-            _context = context;
             _environment = environment;
         }
 

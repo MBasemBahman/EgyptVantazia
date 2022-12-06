@@ -6,7 +6,7 @@ namespace Repository.DBModels.AppInfoModels
 {
     public class AppAboutRepository : RepositoryBase<AppAbout>
     {
-        public AppAboutRepository(DbContext context) : base(context)
+        public AppAboutRepository(BaseContext context) : base(context)
         {
         }
 

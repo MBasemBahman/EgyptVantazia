@@ -4,7 +4,7 @@ namespace Repository.DBModels.UserModels
 {
     public class VerificationRepository : RepositoryBase<Verification>
     {
-        public VerificationRepository(DbContext context) : base(context)
+        public VerificationRepository(BaseContext context) : base(context)
         {
         }
 

@@ -5,7 +5,7 @@ namespace Repository.DBModels.PlayerStateModels
 {
     public class PlayerSeasonScoreStateRepository : RepositoryBase<PlayerSeasonScoreState>
     {
-        public PlayerSeasonScoreStateRepository(DbContext context) : base(context)
+        public PlayerSeasonScoreStateRepository(BaseContext context) : base(context)
         {
         }
 

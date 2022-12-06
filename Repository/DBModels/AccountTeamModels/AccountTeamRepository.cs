@@ -6,7 +6,7 @@ namespace Repository.DBModels.AccountTeamModels
 {
     public class AccountTeamRepository : RepositoryBase<AccountTeam>
     {
-        public AccountTeamRepository(DbContext context) : base(context)
+        public AccountTeamRepository(BaseContext context) : base(context)
         {
         }
 

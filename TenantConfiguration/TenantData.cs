@@ -4,8 +4,7 @@
     {
         public enum TenantEnvironments
         {
-            Development,
-            Live,
+            Development
         }
 
         public enum TenantApis

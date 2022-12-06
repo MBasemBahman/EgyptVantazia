@@ -35,14 +35,14 @@ namespace Dashboard.Areas.AccountSubscriptionEntity.Models
         public new string CreatedAt { get; set; }
 
         [DisplayName(nameof(LastModifiedAt))]
-        public new string LastModifiedAt { get; set; }
+        public string LastModifiedAt { get; set; }
 
         [DisplayName(nameof(Account))]
         public new AccountDto Account { get; set; }
 
         [DisplayName(nameof(Season))]
         public new SeasonDto Season { get; set; }
-        
+
         [DisplayName(nameof(Subscription))]
         public new SubscriptionDto Subscription { get; set; }
     }

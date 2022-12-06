@@ -5,7 +5,7 @@ namespace Repository.DBModels.AccountModels
 {
     public class PaymentRepository : RepositoryBase<Payment>
     {
-        public PaymentRepository(DbContext context) : base(context)
+        public PaymentRepository(BaseContext context) : base(context)
         {
         }
 

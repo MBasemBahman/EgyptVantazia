@@ -5,7 +5,7 @@ namespace Repository.DBModels.AccountTeamModels
 {
     public class AccountTeamGameWeakRepository : RepositoryBase<AccountTeamGameWeak>
     {
-        public AccountTeamGameWeakRepository(DbContext context) : base(context)
+        public AccountTeamGameWeakRepository(BaseContext context) : base(context)
         {
         }
 

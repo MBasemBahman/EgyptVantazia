@@ -4,7 +4,7 @@ namespace Repository.DBModels.UserModels
 {
     public class RefreshTokenRepository : RepositoryBase<RefreshToken>
     {
-        public RefreshTokenRepository(DbContext context) : base(context)
+        public RefreshTokenRepository(BaseContext context) : base(context)
         {
         }
 

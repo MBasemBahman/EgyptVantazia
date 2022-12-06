@@ -5,7 +5,7 @@ namespace Repository.DBModels.LocationModels
 {
     public class CountryRepository : RepositoryBase<Country>
     {
-        public CountryRepository(DbContext context) : base(context)
+        public CountryRepository(BaseContext context) : base(context)
         {
         }
 

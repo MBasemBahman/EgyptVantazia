@@ -4,7 +4,7 @@ namespace Repository.DBModels.UserModels
 {
     public class UserRepository : RepositoryBase<User>
     {
-        public UserRepository(DbContext context) : base(context)
+        public UserRepository(BaseContext context) : base(context)
         {
         }
 

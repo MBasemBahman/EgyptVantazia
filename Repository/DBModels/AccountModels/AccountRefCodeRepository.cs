@@ -5,7 +5,7 @@ namespace Repository.DBModels.AccountModels
 {
     public class AccountRefCodeRepository : RepositoryBase<AccountRefCode>
     {
-        public AccountRefCodeRepository(DbContext context) : base(context)
+        public AccountRefCodeRepository(BaseContext context) : base(context)
         {
         }
 

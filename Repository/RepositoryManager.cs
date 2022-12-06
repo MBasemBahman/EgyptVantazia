@@ -1,4 +1,5 @@
-﻿using Repository.DBModels.AccountModels;
+﻿using BaseDB;
+using Repository.DBModels.AccountModels;
 using Repository.DBModels.AccountTeamModels;
 using Repository.DBModels.AppInfoModels;
 using Repository.DBModels.DashboardAdministrationModels;
@@ -19,7 +20,7 @@ namespace Repository
 {
     public class RepositoryManager
     {
-        private readonly DbContext _dBContext;
+        private readonly BaseContext _dBContext;
 
         #region LogModels
         private LogRepository _logRepository;
@@ -118,7 +119,7 @@ namespace Repository
         #endregion
 
 
-        public RepositoryManager(DbContext dBContext)
+        public RepositoryManager(BaseContext dBContext)
         {
             _dBContext = dBContext;
         }

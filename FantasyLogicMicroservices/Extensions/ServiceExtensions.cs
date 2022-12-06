@@ -1,9 +1,9 @@
-﻿using Entities.ServicesModels;
+﻿using BaseDB;
+using Entities.ServicesModels;
 using FantasyLogic;
 using Hangfire;
 using Hangfire.SqlServer;
 using IntegrationWith365;
-using Live;
 
 namespace FantasyLogicMicroservices.Extensions
 {
@@ -54,12 +54,7 @@ namespace FantasyLogicMicroservices.Extensions
         {
             if (config.Tenant == TenantEnvironments.Development)
             {
-                _ = services.AddDbContext<DbContext, DBContext>(options => options.UseSqlServer(configuration.GetConnectionString("sqlConnection"),
-                                                                options => options.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
-            }
-            else if (config.Tenant == TenantEnvironments.Live)
-            {
-                _ = services.AddDbContext<DbContext, LiveDBContext>(options => options.UseSqlServer(configuration.GetConnectionString("sqlConnection"),
+                _ = services.AddDbContext<BaseContext, DBContext>(options => options.UseSqlServer(configuration.GetConnectionString("sqlConnection"),
                                                                 options => options.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)));
             }
         }

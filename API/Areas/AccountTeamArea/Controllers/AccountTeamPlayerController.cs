@@ -136,6 +136,11 @@ namespace API.Areas.AccountTeamArea.Controllers
                         a.BuyPrice
                     }).ToList();
 
+                if (prices.Select(a => a.BuyPrice).Sum() > currentTeam.TotalMoney)
+                {
+                    throw new Exception("You not have enough money!");
+                }
+
                 double totalPrice = 0;
 
                 bool captain = model.Players.Any(a => a.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian);

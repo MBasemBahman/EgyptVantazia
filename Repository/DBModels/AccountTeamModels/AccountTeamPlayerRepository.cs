@@ -31,7 +31,36 @@ namespace Repository.DBModels.AccountTeamModels
 
         public new void Create(AccountTeamPlayer entity)
         {
-            if (!FindByCondition(a => a.Fk_AccountTeam == entity.Fk_AccountTeam && a.Fk_Player == entity.Fk_Player, trackChanges: false).Any())
+            if (FindByCondition(a => a.Fk_AccountTeam == entity.Fk_AccountTeam && a.Fk_Player == entity.Fk_Player, trackChanges: false).Any())
+            {
+                if (entity.AccountTeamPlayerGameWeaks != null && entity.AccountTeamPlayerGameWeaks.Any())
+                {
+                    AccountTeamPlayer oldEntity = FindByCondition(a => a.Fk_AccountTeam == entity.Fk_AccountTeam && a.Fk_Player == entity.Fk_Player, trackChanges: false).First();
+
+                    foreach (AccountTeamPlayerGameWeak accountTeamPlayerGameWeak in entity.AccountTeamPlayerGameWeaks)
+                    {
+                        if (DBContext.AccountTeamPlayerGameWeaks
+                                     .Any(a => a.Fk_AccountTeamPlayer == oldEntity.Id &&
+                                               a.Fk_GameWeak == accountTeamPlayerGameWeak.Fk_GameWeak))
+                        {
+                            AccountTeamPlayerGameWeak oldPlayerEntity = DBContext.AccountTeamPlayerGameWeaks
+                                                                                 .Where(a => a.Fk_AccountTeamPlayer == oldEntity.Id &&
+                                                                                             a.Fk_GameWeak == accountTeamPlayerGameWeak.Fk_GameWeak)
+                                                                                 .First();
+                            oldPlayerEntity.IsTransfer = accountTeamPlayerGameWeak.IsTransfer;
+                            oldPlayerEntity.IsPrimary = accountTeamPlayerGameWeak.IsPrimary;
+                            oldPlayerEntity.Order = accountTeamPlayerGameWeak.Order;
+                            oldPlayerEntity.Fk_TeamPlayerType = accountTeamPlayerGameWeak.Fk_TeamPlayerType;
+                        }
+                        else
+                        {
+                            accountTeamPlayerGameWeak.Fk_AccountTeamPlayer = oldEntity.Id;
+                            _ = DBContext.AccountTeamPlayerGameWeaks.Add(accountTeamPlayerGameWeak);
+                        }
+                    }
+                }
+            }
+            else
             {
                 base.Create(entity);
             }
@@ -56,7 +85,7 @@ namespace Repository.DBModels.AccountTeamModels
                                                  (IsTransfer == null ||
                                                   Fk_GameWeak == 0 ||
                                                   a.AccountTeamPlayerGameWeaks
-                                                   .Any(b => b.Fk_GameWeak == Fk_GameWeak && 
+                                                   .Any(b => b.Fk_GameWeak == Fk_GameWeak &&
                                                              b.AccountTeamPlayer.Fk_AccountTeam == Fk_AccountTeam &&
                                                              b.IsTransfer == IsTransfer)) &&
                                                  (Fk_GameWeak == 0 || a.AccountTeamPlayerGameWeaks.Any(b => b.Fk_GameWeak == Fk_GameWeak)) &&

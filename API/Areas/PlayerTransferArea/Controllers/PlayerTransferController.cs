@@ -5,6 +5,7 @@ using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.PlayersTransfersModels;
+using System.Linq;
 using static Entities.EnumData.LogicEnumData;
 
 namespace API.Areas.PlayerTransferArea.Controllers
@@ -88,6 +89,12 @@ namespace API.Areas.PlayerTransferArea.Controllers
 
             if (sellPlayers.Distinct().Count() != sellPlayers.Count ||
                 buyPlayers.Distinct().Count() != buyPlayers.Count)
+            {
+                throw new Exception("The players must be distinct!");
+            }
+
+            if (sellPlayers.Any(a => buyPlayers.Contains(a)) ||
+                buyPlayers.Any(a => sellPlayers.Contains(a)))
             {
                 throw new Exception("The players must be distinct!");
             }

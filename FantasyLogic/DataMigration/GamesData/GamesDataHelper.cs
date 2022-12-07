@@ -208,88 +208,98 @@ namespace FantasyLogic.DataMigration.GamesData
 
         public async Task TransferAccountTeamPlayers(int fk_AccounTeam, int fk_CurrentGameWeak, int fk_PrevGameWeak, int prev_365_GameWeakId, int fk_Season)
         {
-            if (!_unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
+            var players = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
             {
-                Fk_GameWeak = fk_CurrentGameWeak,
-                Fk_AccountTeam = fk_AccounTeam
-            }, otherLang: false).Any())
+                Fk_GameWeak = fk_PrevGameWeak,
+                Fk_AccountTeam = fk_AccounTeam,
+                IsTransfer = false
+            }, otherLang: false).Count();
+
+            if (players != 0)
             {
-                _unitOfWork.AccountTeam.CreateAccountTeamGameWeak(new AccountTeamGameWeak
+                if (!_unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
                 {
                     Fk_GameWeak = fk_CurrentGameWeak,
-                    Fk_AccountTeam = fk_AccounTeam,
-                });
-                await _unitOfWork.Save();
-            }
-
-            AccountTeamGameWeakModel accountTeamGameWeakModel = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
-            {
-                Fk_GameWeak = fk_CurrentGameWeak,
-                Fk_AccountTeam = fk_AccounTeam
-            }, otherLang: false).FirstOrDefault();
-
-            if (accountTeamGameWeakModel != null)
-            {
-                if (accountTeamGameWeakModel.FreeHit ||
-                    _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
+                    Fk_AccountTeam = fk_AccounTeam
+                }, otherLang: false).Any())
+                {
+                    _unitOfWork.AccountTeam.CreateAccountTeamGameWeak(new AccountTeamGameWeak
                     {
                         Fk_GameWeak = fk_CurrentGameWeak,
                         Fk_AccountTeam = fk_AccounTeam,
-                        IsTransfer = false
-                    }, otherLang: false).Count() < 15)
-                {
-                    List<AccountTeamPlayerGameWeakModel> prevPlayers = new();
+                    });
+                    await _unitOfWork.Save();
+                }
 
-                    do
-                    {
-                        prevPlayers = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
+                AccountTeamGameWeakModel accountTeamGameWeakModel = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
+                {
+                    Fk_GameWeak = fk_CurrentGameWeak,
+                    Fk_AccountTeam = fk_AccounTeam
+                }, otherLang: false).FirstOrDefault();
+
+                if (accountTeamGameWeakModel != null)
+                {
+                    if (accountTeamGameWeakModel.FreeHit ||
+                        _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
                         {
-                            Fk_GameWeak = fk_PrevGameWeak,
+                            Fk_GameWeak = fk_CurrentGameWeak,
                             Fk_AccountTeam = fk_AccounTeam,
                             IsTransfer = false
-                        }, otherLang: false)
-                        .Select(a => new AccountTeamPlayerGameWeakModel
-                        {
-                            Fk_AccountTeamPlayer = a.Fk_AccountTeamPlayer,
-                            Fk_TeamPlayerType = a.Fk_TeamPlayerType,
-                            IsPrimary = a.IsPrimary,
-                            Order = a.Order,
-                            Points = a.Points,
-                        })
-                        .ToList();
-
-                        if (prevPlayers.Count < 15)
-                        {
-                            prev_365_GameWeakId--;
-
-                            fk_PrevGameWeak = _unitOfWork.Season.GetGameWeaks(new GameWeakParameters
-                            {
-                                _365_GameWeakId = prev_365_GameWeakId.ToString()
-                            }, otherLang: false)
-                                .Select(a => a.Id)
-                                .FirstOrDefault();
-                        }
-                        else
-                        {
-                            fk_PrevGameWeak = 0;
-                        }
-
-                    } while (fk_PrevGameWeak > 0);
-
-                    if (prevPlayers.Any())
+                        }, otherLang: false).Count() < 15)
                     {
-                        foreach (AccountTeamPlayerGameWeakModel player in prevPlayers)
+                        List<AccountTeamPlayerGameWeakModel> prevPlayers = new();
+
+                        do
                         {
-                            _unitOfWork.AccountTeam.CreateAccountTeamPlayerGameWeak(new AccountTeamPlayerGameWeak
+                            prevPlayers = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
                             {
-                                Fk_AccountTeamPlayer = player.Fk_AccountTeamPlayer,
-                                Fk_GameWeak = fk_CurrentGameWeak,
-                                Fk_TeamPlayerType = player.Fk_TeamPlayerType,
-                                IsPrimary = player.IsPrimary,
-                                Order = player.Order
-                            });
+                                Fk_GameWeak = fk_PrevGameWeak,
+                                Fk_AccountTeam = fk_AccounTeam,
+                                IsTransfer = false
+                            }, otherLang: false)
+                            .Select(a => new AccountTeamPlayerGameWeakModel
+                            {
+                                Fk_AccountTeamPlayer = a.Fk_AccountTeamPlayer,
+                                Fk_TeamPlayerType = a.Fk_TeamPlayerType,
+                                IsPrimary = a.IsPrimary,
+                                Order = a.Order,
+                                Points = a.Points,
+                            })
+                            .ToList();
+
+                            if (prevPlayers.Count < 15)
+                            {
+                                prev_365_GameWeakId--;
+
+                                fk_PrevGameWeak = _unitOfWork.Season.GetGameWeaks(new GameWeakParameters
+                                {
+                                    _365_GameWeakId = prev_365_GameWeakId.ToString()
+                                }, otherLang: false)
+                                    .Select(a => a.Id)
+                                    .FirstOrDefault();
+                            }
+                            else
+                            {
+                                fk_PrevGameWeak = 0;
+                            }
+
+                        } while (fk_PrevGameWeak > 0);
+
+                        if (prevPlayers.Any())
+                        {
+                            foreach (AccountTeamPlayerGameWeakModel player in prevPlayers)
+                            {
+                                _unitOfWork.AccountTeam.CreateAccountTeamPlayerGameWeak(new AccountTeamPlayerGameWeak
+                                {
+                                    Fk_AccountTeamPlayer = player.Fk_AccountTeamPlayer,
+                                    Fk_GameWeak = fk_CurrentGameWeak,
+                                    Fk_TeamPlayerType = player.Fk_TeamPlayerType,
+                                    IsPrimary = player.IsPrimary,
+                                    Order = player.Order
+                                });
+                            }
+                            await _unitOfWork.Save();
                         }
-                        await _unitOfWork.Save();
                     }
                 }
             }

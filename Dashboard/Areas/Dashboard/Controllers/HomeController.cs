@@ -23,20 +23,20 @@
 
         public IActionResult Index()
         {
-            //var players = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new Entities.CoreServicesModels.AccountTeamModels.AccountTeamPlayerGameWeakParameters
+            AddBulkData(192, new List<int> { 46, 43 });
+            //var teams = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new Entities.CoreServicesModels.AccountTeamModels.AccountTeamPlayerGameWeakParameters
             //{
-            //    Fk_GameWeak = 43,
-            //    IsTransfer = false
-            //}, otherLang: false).ToList();
-
-            //var teams = players.GroupBy(a => a.AccountTeamPlayer.AccountTeam.Id)
-            //                   .Where(a => a.Count() != 15)
-            //                   .Select(a => new
-            //                   {
-            //                       a.Key,
-            //                       count = a.Count()
-            //                   })
-            //                   .ToList();
+            //    Fk_GameWeak = 52,
+            //    IsTransfer = false,
+            //    IsPrimary = true,
+            //}, false).GroupBy(a => a.AccountTeamPlayer.AccountTeam.Id)
+            //         .Where(a => a.Count() != 11)
+            //         .Select(a => new
+            //         {
+            //             a.Key,
+            //             count = a.Count()
+            //         })
+            //         .ToList();
 
             return View();
         }
@@ -74,6 +74,48 @@
         public IActionResult Error()
         {
             return View();
+        }
+
+        private void AddBulkData(int fk_AccountTeam, List<int> fk_GameWeeks)
+        {
+            var accountTeamGame = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new Entities.CoreServicesModels.AccountTeamModels.AccountTeamGameWeakParameters
+            {
+                Fk_AccountTeam = fk_AccountTeam
+            }, false).FirstOrDefault();
+            if (accountTeamGame != null)
+            {
+                var players = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new Entities.CoreServicesModels.AccountTeamModels.AccountTeamPlayerGameWeakParameters
+                {
+                    Fk_AccountTeam = fk_AccountTeam,
+                    IsTransfer = false
+                }, false).ToList();
+
+                if (players.Any() && players.Count == 15)
+                {
+                    foreach (var fk_GameWeek in fk_GameWeeks)
+                    {
+                        _unitOfWork.AccountTeam.CreateAccountTeamGameWeak(new Entities.DBModels.AccountTeamModels.AccountTeamGameWeak
+                        {
+                            Fk_AccountTeam = fk_AccountTeam,
+                            Fk_GameWeak = fk_GameWeek,
+                        });
+
+                        foreach (var player in players)
+                        {
+                            _unitOfWork.AccountTeam.CreateAccountTeamPlayerGameWeak(new Entities.DBModels.AccountTeamModels.AccountTeamPlayerGameWeak
+                            {
+                                Fk_AccountTeamPlayer = player.Fk_AccountTeamPlayer,
+                                Fk_GameWeak = fk_GameWeek,
+                                Fk_TeamPlayerType = player.Fk_TeamPlayerType,
+                                IsPrimary = player.IsPrimary,
+                                Order = player.Order,
+                            });
+                        }
+                    }
+                    _unitOfWork.Save().Wait();
+                 }
+            }
+
         }
     }
 }

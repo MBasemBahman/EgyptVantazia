@@ -113,21 +113,29 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                             if (player != null)
                             {
                                 Member memberResult = allMembersResults.Where(a => a.Id == member.Id).SingleOrDefault();
+                                if (memberResult != null)
+                                {
+                                    List<EventType> eventResult = new();
 
-                                List<EventType> eventResult = gameReturn.Game
-                                                                        .Events
-                                                                        .Where(a => a.PlayerId == member.Id && a.GameTime > 0)
-                                                                        .Select(a => new EventType
-                                                                        {
-                                                                            Id = a.EventType.Id,
-                                                                            Name = a.EventType.Name,
-                                                                            SubTypeId = a.EventType.SubTypeId,
-                                                                            SubTypeName = a.EventType.SubTypeName,
-                                                                            GameTime = a.GameTime,
-                                                                            Value = 1
-                                                                        })
-                                                                        .ToList();
-                                jobId = await UpdatePlayerGameResult(player.Id, player.Fk_Team, player.Fk_PlayerPosition, teamGameWeak.Id, memberResult, eventResult, scoreTypes, jobId);
+                                    if (gameReturn.Game != null && gameReturn.Game.Events != null)
+                                    {
+                                        eventResult = gameReturn.Game
+                                                            .Events
+                                                            .Where(a => a.PlayerId == member.Id && a.GameTime > 0)
+                                                            .Select(a => new EventType
+                                                            {
+                                                                Id = a.EventType.Id,
+                                                                Name = a.EventType.Name,
+                                                                SubTypeId = a.EventType.SubTypeId,
+                                                                SubTypeName = a.EventType.SubTypeName,
+                                                                GameTime = a.GameTime,
+                                                                Value = 1
+                                                            })
+                                                            .ToList();
+                                    }
+
+                                    jobId = await UpdatePlayerGameResult(player.Id, player.Fk_Team, player.Fk_PlayerPosition, teamGameWeak.Id, memberResult, eventResult, scoreTypes, jobId);
+                                }
                             }
                         }
                     }

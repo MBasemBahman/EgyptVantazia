@@ -263,7 +263,7 @@ namespace CoreServices.Logic
                     Account account = await FindAccountById(refAccount.Id, trackChanges: true);
                     account.RefCodeCount++;
 
-                    if (account.RefCodeCount == 20)
+                    if (account.RefCodeCount == 10)
                     {
                         Season season = _repository.Season.FindAll(new SeasonParameters
                         {
@@ -300,6 +300,8 @@ namespace CoreServices.Logic
                                 accounTeam.DoubleGameWeak++;
                                 accounTeam.BenchBoost++;
                                 accounTeam.Top_11++;
+                                accounTeam.IsVip = true;
+                                accounTeam.TotalMoney += 3;
                             }
                         }
                     }

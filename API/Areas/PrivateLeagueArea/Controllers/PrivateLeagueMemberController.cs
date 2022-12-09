@@ -1,5 +1,7 @@
 ﻿using API.Controllers;
+using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.PrivateLeagueModels;
+using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.PrivateLeagueModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
@@ -105,6 +107,20 @@ namespace API.Areas.PrivateLeagueArea.Controllers
         public async Task<PrivateLeagueModel> JoinPrivateLeague(
         [FromQuery, BindRequired] string uniqueCode)
         {
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            SeasonModel currentSeason = _unitOfWork.Season.GetCurrentSeason();
+            if (currentSeason == null)
+            {
+                throw new Exception("Season not started yet!");
+            }
+
+            AccountTeamModel currentTeam = _unitOfWork.AccountTeam.GetCurrentTeam(auth.Fk_Account, currentSeason.Id);
+            if (currentTeam == null)
+            {
+                throw new Exception("Please create your team!");
+            }
+
             int fk_PrivateLeague = _unitOfWork.PrivateLeague.GetPrivateLeagues(new PrivateLeagueParameters { UniqueCode = uniqueCode })
                                               .Select(a => a.Id)
                                                .FirstOrDefault();
@@ -112,8 +128,6 @@ namespace API.Areas.PrivateLeagueArea.Controllers
             {
                 throw new Exception("The code is incorrect!");
             }
-
-            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
             _unitOfWork.PrivateLeague.CreatePrivateLeagueMember(new PrivateLeagueMember
             {

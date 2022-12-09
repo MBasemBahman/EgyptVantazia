@@ -114,6 +114,8 @@ namespace API.Areas.AccountTeamArea.Controllers
         [Route(nameof(Create))]
         public async Task<AccountTeamModel> Create([FromForm] AccountTeamCreateModel model)
         {
+            //throw new Exception("نعمل حاليا على على بعض تحديثات الفرق واللاعبين والأسعار, الرجاء المحاوله في وقت لاحق");
+
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 

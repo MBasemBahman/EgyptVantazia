@@ -235,10 +235,10 @@ namespace API.Controllers
         public async Task<bool> UpdateUserWithAccount(
           [FromBody] UserWithAccountForEditDto model)
         {
-            if (!RegexService.ValidateEmail(model.User.EmailAddress))
-            {
-                throw new Exception("Email address not valid!");
-            }
+            //if (!RegexService.ValidateEmail(model.User.EmailAddress))
+            //{
+            //    throw new Exception("Email address not valid!");
+            //}
 
             model.User.UserName = RegexService.GetUserName(model.User.UserName);
 

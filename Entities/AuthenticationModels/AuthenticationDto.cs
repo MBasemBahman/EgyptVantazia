@@ -40,8 +40,8 @@ namespace Entities.AuthenticationModels
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string UserName { get; set; }
 
-        [DataType(DataType.EmailAddress)]
-        [EmailAddress]
+        //[DataType(DataType.EmailAddress)]
+        //[EmailAddress]
         public string EmailAddress { get; set; }
 
         [DataType(DataType.PhoneNumber)]
@@ -64,7 +64,7 @@ namespace Entities.AuthenticationModels
 
     public class UserForAuthenticationDto
     {
-        [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
+        //[Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         [DisplayName(nameof(UserName))]
         public string UserName { get; set; }
 

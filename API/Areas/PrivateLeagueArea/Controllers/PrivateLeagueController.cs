@@ -1,5 +1,7 @@
 ﻿using API.Controllers;
+using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.PrivateLeagueModels;
+using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.PrivateLeagueModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
@@ -62,6 +64,18 @@ namespace API.Areas.PrivateLeagueArea.Controllers
         public async Task<PrivateLeagueModel> Create([FromBody] PrivateLeagueCreateModel model)
         {
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            SeasonModel currentSeason = _unitOfWork.Season.GetCurrentSeason();
+            if (currentSeason == null)
+            {
+                throw new Exception("Season not started yet!");
+            }
+
+            AccountTeamModel currentTeam = _unitOfWork.AccountTeam.GetCurrentTeam(auth.Fk_Account, currentSeason.Id);
+            if (currentTeam == null)
+            {
+                throw new Exception("Please create your team!");
+            }
 
             PrivateLeague privateLeague = _mapper.Map<PrivateLeague>(model);
             privateLeague.CreatedBy = auth.Name;

@@ -2,7 +2,6 @@
 using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.AccountTeamModels;
-using Entities.DBModels.TeamModels;
 using System.Linq.Dynamic.Core;
 using static Contracts.EnumData.DBModelsEnum;
 
@@ -111,6 +110,8 @@ namespace FantasyLogic.Calculations
         public string AccountTeamPlayersCalculations(int fk_AccountTeamGameWeak, int fk_AccountTeam, GameWeakModel gameWeak, int fk_Season, string jobId)
         {
             List<AccountTeamPlayersCalculationPoints> playersFinalPoints = new();
+            List<AccountTeamPlayersCalculationPoints> flagListPoints = new();
+
             double totalPoints = 0;
             double benchPoints = 0;
 
@@ -134,7 +135,7 @@ namespace FantasyLogic.Calculations
                 PlayerName = a.AccountTeamPlayer.Player.Name
             }).ToList()
               .OrderByDescending(a => a.IsPrimary == true)
-              .OrderByDescending(a => a.IsParticipate == true)
+              .ThenByDescending(a => a.IsParticipate == true)
               .ThenByDescending(a => a.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian)
               .ThenByDescending(a => a.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.ViceCaptian)
               .ThenBy(a => a.Order)
@@ -155,7 +156,6 @@ namespace FantasyLogic.Calculations
 
             bool captianPointsFlag = true;
             bool havePointsInTotal = true;
-            bool captainPlayed = players.Any(a => a.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian && a.IsParticipate);
 
             AccountTeamGameWeak accountTeamGameWeak = _unitOfWork.AccountTeam.FindAccountTeamGameWeakbyId(fk_AccountTeamGameWeak, trackChanges: true).Result;
 
@@ -181,108 +181,246 @@ namespace FantasyLogic.Calculations
 
             foreach (var player in players)
             {
-                if (player.Points != null)
+                havePointsInTotal = true;
+                int captianPoints = 1;
+
+                if (havePointsInTotal && accountTeamGameWeak.BenchBoost == false)
                 {
-                    havePointsInTotal = true;
-                    int captianPoints = 1;
-
-                    if (havePointsInTotal && accountTeamGameWeak.BenchBoost == false)
+                    if (playersFinalPoints.Count(a => a.HavePointsInTotal == true) >= playerPrimaryAndPlayed)
                     {
-                        if (playersFinalPoints.Count(a => a.HavePointsInTotal == true) >= playerPrimaryAndPlayed)
-                        {
-                            havePointsInTotal = false;
-                        }
-                        else if (player.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper &&
-                        playersFinalPoints.Count(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper &&
-                                                      a.HavePointsInTotal == true) == 1)
-                        {
-                            havePointsInTotal = false;
-                        }
-                        else if (player.Fk_PlayerPosition == (int)PlayerPositionEnum.Defender &&
-                           playersFinalPoints.Count(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Defender &&
-                                                         a.HavePointsInTotal == true) == 5)
-                        {
-                            havePointsInTotal = false;
-                        }
-                        else if (player.Fk_PlayerPosition == (int)PlayerPositionEnum.Midfielder &&
-                          playersFinalPoints.Count(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Midfielder &&
-                                                        a.HavePointsInTotal == true) == 5)
-                        {
-                            havePointsInTotal = false;
-                        }
-                        else if (player.Fk_PlayerPosition == (int)PlayerPositionEnum.Attacker &&
-                         playersFinalPoints.Count(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Attacker &&
-                                                       a.HavePointsInTotal == true) == 3)
-                        {
-                            havePointsInTotal = false;
-                        }
+                        havePointsInTotal = false;
                     }
-
-
-                    if (havePointsInTotal &&
-                        captianPointsFlag &&
-                        captainPlayed &&
-                      (player.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian ||
-                      player.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.ViceCaptian))
+                    else if (player.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper &&
+                    playersFinalPoints.Count(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper &&
+                                                  a.HavePointsInTotal == true) == 1)
                     {
-                        captianPointsFlag = false;
-                        captianPoints = accountTeamGameWeak.TripleCaptain ? 3 : 2;
+                        havePointsInTotal = false;
                     }
-
-                    double points = player.Points.Value * captianPoints;
-
-                    playersFinalPoints.Add(new AccountTeamPlayersCalculationPoints
+                    else if (player.Fk_PlayerPosition == (int)PlayerPositionEnum.Defender &&
+                       playersFinalPoints.Count(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Defender &&
+                                                     a.HavePointsInTotal == true) == 5)
                     {
-                        Fk_Player = player.Fk_Player,
-                        Fk_AccountTeamPlayer = player.Fk_AccountTeamPlayer,
-                        Fk_PlayerPosition = player.Fk_PlayerPosition,
-                        Fk_TeamPlayerType = player.Fk_TeamPlayerType,
-                        IsPrimary = player.IsPrimary,
-                        Order = player.Order,
-                        Points = points,
-                        HavePointsInTotal = havePointsInTotal,
-                        PlayerName = player.PlayerName,
-                        IsPlayed = player.IsPlayed,
-                    });
-
-                    if (havePointsInTotal)
-                    {
-                        totalPoints += points;
+                        havePointsInTotal = false;
                     }
-                    else
+                    else if (player.Fk_PlayerPosition == (int)PlayerPositionEnum.Midfielder &&
+                      playersFinalPoints.Count(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Midfielder &&
+                                                    a.HavePointsInTotal == true) == 5)
                     {
-                        benchPoints += points;
+                        havePointsInTotal = false;
+                    }
+                    else if (player.Fk_PlayerPosition == (int)PlayerPositionEnum.Attacker &&
+                     playersFinalPoints.Count(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Attacker &&
+                                                   a.HavePointsInTotal == true) == 3)
+                    {
+                        havePointsInTotal = false;
                     }
                 }
-            }
 
-            var checkPositions = playersFinalPoints.Where(a => a.IsPlayed &&
-                                                               a.HavePointsInTotal == false &&
-                                                               a.Fk_PlayerPosition != (int)PlayerPositionEnum.Midfielder)
-                                                   .GroupBy(a => a.Fk_PlayerPosition)
-                                                   .Select(a => new
-                                                   {
-                                                       a.Key,
-                                                       Count = a.Count()
-                                                   })
-                                                   .ToList();
+                if (havePointsInTotal &&
+                    captianPointsFlag &&
+                    ((player.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian && player.IsParticipate) ||
+                     (player.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.ViceCaptian && player.IsParticipate)))
+                {
+                    captianPointsFlag = false;
+                    captianPoints = accountTeamGameWeak.TripleCaptain ? 3 : 2;
+                }
+
+                double points = player.Points.Value * captianPoints;
+
+                if (player.IsPrimary == false &&
+                    accountTeamGameWeak.BenchBoost == false)
+                {
+                    havePointsInTotal = false;
+
+                    if (player.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper)
+                    {
+                        havePointsInTotal = playersFinalPoints.Any(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper &&
+                                                                         a.IsPrimary &&
+                                                                         a.HavePointsInTotal &&
+                                                                         a.IsParticipate == false);
+                        if (havePointsInTotal)
+                        {
+                            playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper &&
+                                                          a.IsPrimary &&
+                                                          a.HavePointsInTotal &&
+                                                          a.IsParticipate == false).HavePointsInTotal = false;
+                        }
+                    }
+                    else if (player.Fk_PlayerPosition == (int)PlayerPositionEnum.Attacker)
+                    {
+                        havePointsInTotal = playersFinalPoints.Any(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Attacker &&
+                                                                        a.IsPrimary &&
+                                                                        a.HavePointsInTotal &&
+                                                                        a.IsParticipate == false);
+
+                        if (havePointsInTotal)
+                        {
+                            playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Attacker &&
+                                                          a.IsPrimary &&
+                                                          a.HavePointsInTotal &&
+                                                          a.IsParticipate == false).HavePointsInTotal = false;
+                        }
+
+                        if (havePointsInTotal == false)
+                        {
+                            havePointsInTotal = playersFinalPoints.Any(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Midfielder &&
+                                                                            a.IsPrimary &&
+                                                                            a.HavePointsInTotal &&
+                                                                            a.IsParticipate == false);
+
+                            if (havePointsInTotal)
+                            {
+                                playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Midfielder &&
+                                                              a.IsPrimary &&
+                                                              a.HavePointsInTotal &&
+                                                              a.IsParticipate == false).HavePointsInTotal = false;
+                            }
+                        }
+
+                        if (havePointsInTotal == false)
+                        {
+                            havePointsInTotal = playersFinalPoints.Any(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Defender &&
+                                                                            a.IsPrimary &&
+                                                                            a.HavePointsInTotal &&
+                                                                            a.IsParticipate == false) &&
+                                                playersFinalPoints.Count(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Defender &&
+                                                                              a.IsPrimary) > 3;
+
+                            if (havePointsInTotal)
+                            {
+                                playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Defender &&
+                                                              a.IsPrimary &&
+                                                              a.HavePointsInTotal &&
+                                                              a.IsParticipate == false).HavePointsInTotal = false;
+                            }
+                        }
+                    }
+                    else if (player.Fk_PlayerPosition == (int)PlayerPositionEnum.Midfielder)
+                    {
+                        havePointsInTotal = playersFinalPoints.Any(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Midfielder &&
+                                                                        a.IsPrimary &&
+                                                                        a.HavePointsInTotal &&
+                                                                        a.IsParticipate == false);
+
+                        if (havePointsInTotal)
+                        {
+                            playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Midfielder &&
+                                                          a.IsPrimary &&
+                                                          a.HavePointsInTotal &&
+                                                          a.IsParticipate == false).HavePointsInTotal = false;
+                        }
+
+                        if (havePointsInTotal == false)
+                        {
+                            havePointsInTotal = playersFinalPoints.Any(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Attacker &&
+                                                                       a.IsPrimary &&
+                                                                       a.HavePointsInTotal &&
+                                                                       a.IsParticipate == false) &&
+                                                playersFinalPoints.Count(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Attacker &&
+                                                                              a.IsPrimary) > 1;
+
+                            if (havePointsInTotal)
+                            {
+                                playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Attacker &&
+                                                              a.IsPrimary &&
+                                                              a.HavePointsInTotal &&
+                                                              a.IsParticipate == false).HavePointsInTotal = false;
+                            }
+                        }
+
+                        if (havePointsInTotal == false)
+                        {
+                            havePointsInTotal = playersFinalPoints.Any(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Defender &&
+                                                                            a.IsPrimary &&
+                                                                            a.HavePointsInTotal &&
+                                                                            a.IsParticipate == false) &&
+                                                playersFinalPoints.Count(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Defender &&
+                                                                              a.IsPrimary) > 3;
+
+                            if (havePointsInTotal)
+                            {
+                                playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Defender &&
+                                                              a.IsPrimary &&
+                                                              a.HavePointsInTotal &&
+                                                              a.IsParticipate == false).HavePointsInTotal = false;
+                            }
+                        }
+                    }
+                    else if (player.Fk_PlayerPosition == (int)PlayerPositionEnum.Defender)
+                    {
+                        havePointsInTotal = playersFinalPoints.Any(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Defender &&
+                                                                        a.IsPrimary &&
+                                                                        a.HavePointsInTotal &&
+                                                                        a.IsParticipate == false);
+
+                        if (havePointsInTotal)
+                        {
+                            playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Defender &&
+                                                          a.IsPrimary &&
+                                                          a.HavePointsInTotal &&
+                                                          a.IsParticipate == false).HavePointsInTotal = false;
+                        }
 
 
-            if (checkPositions.Any(a => a.Count >= 3))
-            {
-                var position = checkPositions.Where(a => a.Count >= 3).First();
+                        if (havePointsInTotal == false)
+                        {
+                            havePointsInTotal = playersFinalPoints.Any(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Midfielder &&
+                                                                            a.IsPrimary &&
+                                                                            a.HavePointsInTotal &&
+                                                                            a.IsParticipate == false);
 
-                playersFinalPoints.Where(a => a.IsPrimary == false &&
-                                              a.HavePointsInTotal == true &&
-                                              a.Fk_PlayerPosition != position.Key &&
-                                               a.Fk_PlayerPosition != (int)PlayerPositionEnum.Goalkeeper)
-                                  .First().HavePointsInTotal = false;
+                            if (havePointsInTotal)
+                            {
+                                playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Midfielder &&
+                                                              a.IsPrimary &&
+                                                              a.HavePointsInTotal &&
+                                                              a.IsParticipate == false).HavePointsInTotal = false;
+                            }
+                        }
 
-                playersFinalPoints.Where(a => a.IsPrimary == true &&
-                                              a.HavePointsInTotal == false &&
-                                              a.Fk_PlayerPosition == position.Key &&
-                                              a.Fk_PlayerPosition != (int)PlayerPositionEnum.Goalkeeper)
-                                  .First().HavePointsInTotal = true;
+                        if (havePointsInTotal == false)
+                        {
+                            havePointsInTotal = playersFinalPoints.Any(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Attacker &&
+                                                                       a.IsPrimary &&
+                                                                       a.HavePointsInTotal &&
+                                                                       a.IsParticipate == false) &&
+                                                playersFinalPoints.Count(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Attacker &&
+                                                                              a.IsPrimary) > 1;
+
+                            if (havePointsInTotal)
+                            {
+                                playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Attacker &&
+                                                              a.IsPrimary &&
+                                                              a.HavePointsInTotal &&
+                                                              a.IsParticipate == false).HavePointsInTotal = false;
+                            }
+                        }
+                    }
+                }
+
+                playersFinalPoints.Add(new AccountTeamPlayersCalculationPoints
+                {
+                    Fk_Player = player.Fk_Player,
+                    Fk_AccountTeamPlayer = player.Fk_AccountTeamPlayer,
+                    Fk_PlayerPosition = player.Fk_PlayerPosition,
+                    Fk_TeamPlayerType = player.Fk_TeamPlayerType,
+                    IsPrimary = player.IsPrimary,
+                    Order = player.Order,
+                    Points = points,
+                    HavePointsInTotal = havePointsInTotal,
+                    PlayerName = player.PlayerName,
+                    IsPlayed = player.IsPlayed,
+                    IsParticipate = player.IsParticipate
+                });
+
+                if (havePointsInTotal)
+                {
+                    totalPoints += points;
+                }
+                else
+                {
+                    benchPoints += points;
+                }
             }
 
             _unitOfWork.AccountTeam.ResetAccountTeamPlayerGameWeakPoints(fk_AccountTeam, gameWeak.Id);
@@ -478,49 +616,49 @@ namespace FantasyLogic.Calculations
             return jobId;
         }
     }
+}
 
-    public class AccountTeamPlayersCalculationPoints
-    {
-        public int Fk_Player { get; set; }
-        public int Fk_PlayerPosition { get; set; }
+public class AccountTeamPlayersCalculationPoints
+{
+    public int Fk_Player { get; set; }
+    public int Fk_PlayerPosition { get; set; }
 
-        public int Fk_AccountTeamPlayer { get; set; }
-        public int Fk_TeamPlayerType { get; set; }
-        public int Order { get; set; }
-        public bool IsPrimary { get; set; }
-        public double Points { get; set; }
+    public int Fk_AccountTeamPlayer { get; set; }
+    public int Fk_TeamPlayerType { get; set; }
+    public int Order { get; set; }
+    public bool IsPrimary { get; set; }
+    public double Points { get; set; }
 
-        public bool HavePointsInTotal { get; set; }
+    public bool HavePointsInTotal { get; set; }
 
-        public string PlayerName { get; set; }
+    public string PlayerName { get; set; }
 
-        public bool IsPlayed { get; set; }
-    }
+    public bool IsPlayed { get; set; }
+    public bool IsParticipate { get; set; }
+}
 
+public class AccountTeamRanking
+{
+    public int Id { get; set; }
+    public int Fk_Country { get; set; }
+    public int Fk_FavouriteTeam { get; set; }
+    public int CountryRanking { get; set; }
+    public int FavouriteTeamRanking { get; set; }
+    public int GlobalRanking { get; set; }
+    public int TotalPoints { get; set; }
+}
 
-    public class AccountTeamRanking
-    {
-        public int Id { get; set; }
-        public int Fk_Country { get; set; }
-        public int Fk_FavouriteTeam { get; set; }
-        public int CountryRanking { get; set; }
-        public int FavouriteTeamRanking { get; set; }
-        public int GlobalRanking { get; set; }
-        public int TotalPoints { get; set; }
-    }
+public class AccountTeamPlayerGameWeakDto
+{
+    public int Fk_Player { get; set; }
+    public int Fk_PlayerPosition { get; set; }
+    public int Fk_AccountTeamPlayer { get; set; }
+    public int Fk_TeamPlayerType { get; set; }
+    public int Order { get; set; }
+    public bool IsPrimary { get; set; }
+    public bool IsParticipate { get; set; }
+    public bool IsPlayed { get; set; }
+    public double? Points { get; set; }
 
-    public class AccountTeamPlayerGameWeakDto
-    {
-        public int Fk_Player { get; set; }
-        public int Fk_PlayerPosition { get; set; }
-        public int Fk_AccountTeamPlayer { get; set; }
-        public int Fk_TeamPlayerType { get; set; }
-        public int Order { get; set; }
-        public bool IsPrimary { get; set; }
-        public bool IsParticipate { get; set; }
-        public bool IsPlayed { get; set; }
-        public double? Points { get; set; }
-
-        public string PlayerName { get; set; }
-    }
+    public string PlayerName { get; set; }
 }

@@ -353,12 +353,14 @@ namespace API.Areas.AccountTeamArea.Controllers
             {
                 accountTeamGameWeak.FreeHit = true;
                 accountTeamGameWeak.TansfarePoints = 0;
+                accountTeam.FreeTransfer = 0;
                 accountTeam.FreeHit--;
             }
             else if (cardTypeEnum == CardTypeEnum.WildCard)
             {
                 accountTeamGameWeak.WildCard = true;
                 accountTeamGameWeak.TansfarePoints = 0;
+                accountTeam.FreeTransfer = 0;
                 accountTeam.WildCard--;
             }
             else if (cardTypeEnum == CardTypeEnum.DoubleGameWeak)

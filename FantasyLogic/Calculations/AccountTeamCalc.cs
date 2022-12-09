@@ -228,7 +228,8 @@ namespace FantasyLogic.Calculations
                 double points = player.Points.Value * captianPoints;
 
                 if (player.IsPrimary == false &&
-                    accountTeamGameWeak.BenchBoost == false)
+                    accountTeamGameWeak.BenchBoost == false &&
+                    accountTeamGameWeak.Top_11 == false)
                 {
                     havePointsInTotal = false;
 

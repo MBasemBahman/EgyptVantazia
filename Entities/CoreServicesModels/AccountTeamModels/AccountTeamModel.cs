@@ -35,6 +35,8 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public int Fk_FavouriteTeam { get; set; }
 
         public int? FromTotalPoints { get; set; }
+        
+        public string DashboardSearch { get; set; }
     }
 
     public class AccountTeamModel : AuditImageEntity

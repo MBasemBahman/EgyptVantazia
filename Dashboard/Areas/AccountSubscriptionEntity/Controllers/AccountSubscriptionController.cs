@@ -50,7 +50,7 @@ namespace Dashboard.Areas.AccountSubscriptionEntity.Controllers
 
             AccountSubscriptionParameters parameters = new()
             {
-                SearchColumns = "Id,FullName"
+                SearchColumns = ""
             };
 
             _ = _mapper.Map(dtParameters, parameters);

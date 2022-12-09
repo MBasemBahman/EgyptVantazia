@@ -18,7 +18,8 @@ namespace Repository.DBModels.StandingsModels
                            parameters.Fk_Team,
                            parameters._365_For,
                            parameters.CreatedAtFrom,
-                           parameters.CreatedAtTo);
+                           parameters.CreatedAtTo,
+                           parameters.DashboardSearch);
         }
 
         public async Task<Standings> FindById(int id, bool trackChanges)
@@ -67,9 +68,17 @@ namespace Repository.DBModels.StandingsModels
             int Fk_Team,
             int _365_For,
             DateTime? createdAtFrom,
-            DateTime? createdAtTo)
+            DateTime? createdAtTo,
+            string dashboardSearch)
         {
             return Standingss.Where(a => (id == 0 || a.Id == id) &&
+                                         
+                                         (string.IsNullOrEmpty(dashboardSearch) || 
+                                          a.Id.ToString().Contains(dashboardSearch) ||
+                                          a.Team.Name.Contains(dashboardSearch) ||
+                                          a.Season.Name.Contains(dashboardSearch) ||
+                                          a.GamesWon.ToString().Contains(dashboardSearch)) &&
+
                                          (Fk_Season == 0 || a.Fk_Season == Fk_Season) &&
                                          (Fk_Team == 0 || a.Fk_Team == Fk_Team) &&
                                          (_365_For == 0 || a.For == _365_For) &&

@@ -36,6 +36,8 @@ namespace Dashboard.Areas.SeasonEntity.Models
 
         [DisplayName(nameof(IsEnded))]
         public bool? IsEnded { get; set; }
+
+        public string DashboardSearch { get; set; }
     }
 
     public class TeamGameWeakDto : TeamGameWeakModel

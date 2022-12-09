@@ -202,7 +202,8 @@ else
                             data.FromTime = $("#FromTime").length > 0 ? $("#FromTime").val() : '@Model.FromTime';
                             data.ToTime = $("#ToTime").length > 0 ? $("#ToTime").val() : '@Model.ToTime';
                             data.IsEnded = $("#IsEnded").length > 0 ? $("#IsEnded").val() : '@Model.IsEnded';
-
+                            data.DashboardSearch = $("#DataTables_Table_0_filter input").val();
+                            
                             return JSON.stringify(data);
                         }
                     },

@@ -44,7 +44,7 @@ namespace Dashboard.Areas.PaymentEntity.Controllers
 
             PaymentParameters parameters = new()
             {
-                SearchColumns = "Id"
+                SearchColumns = ""
             };
 
             _ = _mapper.Map(dtParameters, parameters);

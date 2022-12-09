@@ -133,6 +133,7 @@ else
                             dataType: "json",
                             data: function (data) {
                                 data.Fk_Account = @Model.Fk_Account;
+                                data.DashboardSearch = $("#DataTables_Table_0_filter input").val();
                                 return JSON.stringify(data);
                             }
                         },

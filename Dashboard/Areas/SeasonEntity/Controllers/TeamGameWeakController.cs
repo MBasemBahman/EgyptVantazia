@@ -59,7 +59,7 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
 
             TeamGameWeakParameters parameters = new()
             {
-                SearchColumns = "Id"
+                SearchColumns = ""
             };
 
             _ = _mapper.Map(dtParameters, parameters);

@@ -25,7 +25,8 @@ namespace Repository.DBModels.AccountTeamModels
                            parameters.AccountUserName,
                            parameters.Fk_Country,
                            parameters.Fk_FavouriteTeam,
-                           parameters.FromTotalPoints);
+                           parameters.FromTotalPoints,
+                           parameters.DashboardSearch);
         }
 
         public async Task<AccountTeam> FindById(int id, bool trackChanges)
@@ -66,10 +67,18 @@ namespace Repository.DBModels.AccountTeamModels
             string AccountUserName,
             int Fk_Country,
             int Fk_FavouriteTeam,
-            int? FromTotalPoints)
+            int? FromTotalPoints,
+            string dashboardSearch)
 
         {
             return AccountTeams.Where(a => (id == 0 || a.Id == id) &&
+                                           
+                                           (string.IsNullOrEmpty(dashboardSearch) || 
+                                            a.Id.ToString().Contains(dashboardSearch) ||
+                                            a.Account.FullName.Contains(dashboardSearch) ||
+                                            a.Season.Name.Contains(dashboardSearch) ||
+                                            a.Name.Contains(dashboardSearch)) &&
+
                                            (CurrentSeason == null || a.Season.IsCurrent == CurrentSeason) &&
                                            (FromTotalPoints == null || a.TotalPoints >= FromTotalPoints) &&
                                            (Fk_Country == 0 || a.Account.Fk_Country == Fk_Country) &&

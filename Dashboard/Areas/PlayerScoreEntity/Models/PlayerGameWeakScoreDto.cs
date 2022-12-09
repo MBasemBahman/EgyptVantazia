@@ -24,6 +24,8 @@ namespace Dashboard.Areas.PlayerScoreEntity.Models
         public double RateTo { get; set; }
 
         public List<int> Fk_ScoreTypes { get; set; }
+        
+        public string DashboardSearch { get; set; }
     }
     public class PlayerGameWeakScoreDto : PlayerGameWeakScoreModel
     {

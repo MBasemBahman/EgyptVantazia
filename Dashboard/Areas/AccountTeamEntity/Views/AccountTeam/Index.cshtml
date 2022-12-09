@@ -188,6 +188,7 @@ else
                             data.CreatedAtTo = $("#CreatedAtTo").length > 0 ? $("#CreatedAtTo").val() : '@Model.CreatedAtTo'
                             data.AccountUserName = $("#AccountUserName").length > 0 ? $("#AccountUserName").val() : '@Model.AccountUserName'
                             data.AccountFullName = $("#AccountFullName").length > 0 ? $("#AccountFullName").val() : '@Model.AccountFullName'
+                            data.DashboardSearch = $("#DataTables_Table_0_filter input").val();
                             return JSON.stringify(data);
                         }
                     },

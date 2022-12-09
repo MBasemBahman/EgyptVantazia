@@ -26,7 +26,8 @@ namespace Repository.DBModels.SeasonModels
                            parameters.IsEnded,
                            parameters.IsDelayed,
                            parameters.CurrentSeason,
-                           parameters.CurrentGameWeak);
+                           parameters.CurrentGameWeak,
+                           parameters.DashboardSearch);
         }
 
         public async Task<TeamGameWeak> FindById(int id, bool trackChanges)
@@ -81,9 +82,16 @@ namespace Repository.DBModels.SeasonModels
             bool? isEnded,
             bool? isDelayed,
             bool currentSeason,
-            bool currentGameWeak)
+            bool currentGameWeak,
+            string dashboardSearch)
         {
             return TeamGameWeaks.Where(a => (id == 0 || a.Id == id) &&
+                                            
+                                            (string.IsNullOrEmpty(dashboardSearch) || 
+                                             a.Id.ToString().Contains(dashboardSearch) ||
+                                             a.Home.Name.Contains(dashboardSearch) ||
+                                             a.Away.Name.Contains(dashboardSearch) ) &&
+                                            
                                             (isEnded == null || a.IsEnded == isEnded) &&
                                             (isDelayed == null || a.IsDelayed == isDelayed) &&
                                             (fk_Teams == null || !fk_Teams.Any() ||

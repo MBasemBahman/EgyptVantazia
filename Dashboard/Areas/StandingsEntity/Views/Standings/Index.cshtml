@@ -142,6 +142,7 @@
                             data.Fk_Team = $("#Fk_Team").length > 0 ? $("#Fk_Team").val() : @Model.Fk_Team;
                             data.CreatedAtFrom = $("#CreatedAtFrom").length > 0 ? $("#CreatedAtFrom").val() : '@Model.CreatedAtFrom';
                             data.CreatedAtTo = $("#CreatedAtTo").length > 0 ? $("#CreatedAtTo").val() : '@Model.CreatedAtTo';
+                            data.DashboardSearch = $("#DataTables_Table_0_filter input").val();
                             
                             return JSON.stringify(data);
                         }

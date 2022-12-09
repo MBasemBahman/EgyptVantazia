@@ -189,6 +189,8 @@ else
                             data.PointsFrom = $("#PointsFrom").length > 0 ? $("#PointsFrom").val() : @Model.PointsFrom;
                             data.PointsTo = $("#PointsTo").length > 0 ? $("#PointsTo").val() : @Model.PointsTo;
                             data.Fk_Player = @Model.Fk_Player;
+                            data.DashboardSearch = $("#DataTables_Table_0_filter input").val();
+                            
                             return JSON.stringify(data);
                         }
                     },
@@ -196,8 +198,8 @@ else
                     // Columns Setups
                     columns: [
                         { data: "id" },
-                        { data: "playerGameWeak.player.name" },
-                        { data: "scoreType.name" },
+                        { data: "playerGameWeak.player.name", orderable: false },
+                        { data: "scoreType.name", orderable: false },
                         { data: "points" },
                         { data: "value" },
                         { data: "finalValue" },

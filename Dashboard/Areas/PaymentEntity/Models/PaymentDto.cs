@@ -12,6 +12,8 @@ namespace Dashboard.Areas.PaymentEntity.Models
     {
         public int Id { get; set; }
         public int Fk_Account { get; set; }
+        
+        public string DashboardSearch { get; set; }
     }
     public class PaymentDto : PaymentModel
     {

@@ -49,7 +49,7 @@ namespace Dashboard.Areas.PlayerStateEntity.Controllers
 
             PlayerSeasonScoreStateParameters parameters = new()
             {
-                SearchColumns = "Id,Name"
+                SearchColumns = ""
             };
 
             _ = _mapper.Map(dtParameters, parameters);

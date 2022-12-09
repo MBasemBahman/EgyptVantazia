@@ -50,7 +50,7 @@ namespace Dashboard.Areas.PlayerStateEntity.Controllers
 
             PlayerGameWeakScoreStateParameters parameters = new()
             {
-                SearchColumns = "Id,Name"
+                SearchColumns = ""
             };
 
             _ = _mapper.Map(dtParameters, parameters);

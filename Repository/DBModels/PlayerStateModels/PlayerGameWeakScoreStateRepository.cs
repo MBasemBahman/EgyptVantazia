@@ -27,7 +27,8 @@ namespace Repository.DBModels.PlayerStateModels
                            parameters.PercentTo,
                            parameters.ValueFrom,
                            parameters.ValueTo,
-                           parameters.IsTop15);
+                           parameters.IsTop15,
+                           parameters.DashboardSearch);
 
         }
 
@@ -89,9 +90,17 @@ namespace Repository.DBModels.PlayerStateModels
             double? percentTo,
             double? valueFrom,
             double? valueTo,
-            bool? IsTop15)
+            bool? IsTop15,
+            string dashboardSearch)
         {
             return PlayerGameWeakScoreStates.Where(a => (id == 0 || a.Id == id) &&
+                                                        
+                                                    (string.IsNullOrEmpty(dashboardSearch) || 
+                                                     a.Id.ToString().Contains(dashboardSearch) ||
+                                                     a.Player.Name.Contains(dashboardSearch) ||
+                                                     a.GameWeak.Name.Contains(dashboardSearch) ||
+                                                     a.ScoreState.Name.Contains(dashboardSearch)) &&
+                                                        
                                                   (IsTop15 == null || (IsTop15 == true ? a.Top15 != null : a.Top15 == null)) &&
                                                   (Fk_Season == null || a.GameWeak.Fk_Season == Fk_Season) &&
                                                   (fk_GameWeak == null || a.Fk_GameWeak == fk_GameWeak) &&

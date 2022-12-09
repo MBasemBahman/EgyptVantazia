@@ -199,6 +199,7 @@ else
                             data.ValueFrom = $("#ValueFrom").length > 0 ? $("#ValueFrom").val() : null;
                             data.ValueTo = $("#ValueTo").length > 0 ? $("#ValueTo").val() : null;
                             data.Fk_Player = @Model.Fk_Player;
+                            data.DashboardSearch = $("#DataTables_Table_0_filter input").val();
                                                          
                             return JSON.stringify(data);
                         }
@@ -206,9 +207,9 @@ else
                     // Columns Setups
                     columns: [
                        {data:"id"},
-                       { data: "player.name" },
-                       { data: "gameWeak.name" },
-                       { data: "scoreState.name" },
+                       { data: "player.name", orderable: false },
+                       { data: "gameWeak.name", orderable: false },
+                       { data: "scoreState.name", orderable: false },
                        { data: "percent" },
                        { data: "points" },
                        { data: "value" },

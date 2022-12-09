@@ -49,7 +49,7 @@ namespace Dashboard.Areas.AccountTeamEntity.Controllers
 
             AccountTeamParameters parameters = new()
             {
-                SearchColumns = "Id,FullName"
+                SearchColumns = ""
             };
 
             _ = _mapper.Map(dtParameters, parameters);

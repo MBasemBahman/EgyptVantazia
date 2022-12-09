@@ -14,6 +14,7 @@ namespace Dashboard.Areas.PlayerStateEntity.Models
         public double? PointsTo { get; set; }
         public double? PercentFrom { get; set; }
         public double? PercentTo { get; set; }
+        public string DashboardSearch { get; set; }
     }
     public class PlayerSeasonScoreStateDto : PlayerSeasonScoreStateModel
     {

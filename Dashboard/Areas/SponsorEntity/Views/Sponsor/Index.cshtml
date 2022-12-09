@@ -157,7 +157,7 @@
                             }
                         },
                       {data:"sponsorViewsCount"},
-                      {data:"linkUrl", render: function(data) {
+                      {data:"linkUrl", orderable: false, render: function(data) {
                         return `<a class="btn btn-info" href="${data}" target="_blank">@Localizer.Get("Click To Open")</a>`;
                       }},
                       {data:"expireDate"},

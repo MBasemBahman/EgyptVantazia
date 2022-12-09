@@ -32,7 +32,8 @@ namespace Repository.DBModels.PlayerScoreModels
                            parameters.Fk_Season,
                            parameters.IsEnded,
                            parameters.RateFrom,
-                           parameters.RateTo);
+                           parameters.RateTo,
+                           parameters.DashboardSearch);
 
         }
 
@@ -102,9 +103,16 @@ public static class PlayerGameWeakScoreRepositoryExtension
          int fk_Season,
          bool? isEnded,
          double rateFrom,
-         double rateTo)
+         double rateTo,
+         string dashboardSearch)
     {
         return PlayerGameWeakScores.Where(a => (id == 0 || a.Id == id) &&
+                                               
+                                               (string.IsNullOrEmpty(dashboardSearch) || 
+                                                a.Id.ToString().Contains(dashboardSearch) ||
+                                                a.ScoreType.Name.Contains(dashboardSearch) ||
+                                                a.PlayerGameWeak.Player.Name.Contains(dashboardSearch) ) &&
+                                               
                                                (finalValueFrom == null || a.FinalValue >= finalValueFrom) &&
                                                (finalValueTo == null || a.FinalValue <= finalValueTo) &&
                                                (fk_PlayerGameWeak == 0 || a.Fk_PlayerGameWeak == fk_PlayerGameWeak) &&

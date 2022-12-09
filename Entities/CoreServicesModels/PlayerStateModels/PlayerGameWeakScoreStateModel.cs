@@ -24,6 +24,7 @@ namespace Entities.CoreServicesModels.PlayerStateModels
         public double? ValueFrom { get; set; }
         public double? ValueTo { get; set; }
         public bool? IsTop15 { get; set; }
+        public string DashboardSearch { get; set; }
     }
 
     public class PlayerGameWeakScoreStateModel : AuditEntity

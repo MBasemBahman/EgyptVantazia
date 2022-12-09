@@ -19,6 +19,7 @@ public class AccountSubscriptionParameters : RequestParameters
     public bool? IsActive { get; set; }
 
     public string Order_id { get; set; }
+    public string DashboardSearch { get; set; }
     
     public DateTime? CreatedAtFrom { get; set; }
     public DateTime? CreatedAtTo { get; set; }

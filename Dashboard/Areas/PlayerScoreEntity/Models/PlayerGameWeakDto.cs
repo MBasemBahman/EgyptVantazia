@@ -23,6 +23,8 @@ namespace Dashboard.Areas.PlayerScoreEntity.Models
 
         public int Fk_Home { get; set; }
         public int Fk_Away { get; set; }
+
+        public string DashboardSearch { get; set; }
     }
     public class PlayerGameWeakDto : PlayerGameWeakModel
     {

@@ -44,6 +44,8 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
         public bool? IsEnded { get; set; }
         public double RateFrom { get; set; }
         public double RateTo { get; set; }
+
+        public string DashboardSearch { get; set; }
     }
 
     public class PlayerGameWeakScoreModel : AuditEntity

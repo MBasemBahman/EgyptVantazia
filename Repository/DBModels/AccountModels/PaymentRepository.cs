@@ -14,7 +14,8 @@ namespace Repository.DBModels.AccountModels
             return FindByCondition(a => true, trackChanges)
                    .Filter(parameters.Id,
                        parameters.Fk_Account,
-                       parameters.TransactionId);
+                       parameters.TransactionId,
+                       parameters.DashboardSearch);
         }
 
         public async Task<Payment> FindById(int id, bool trackChanges)
@@ -32,9 +33,17 @@ namespace Repository.DBModels.AccountModels
             this IQueryable<Payment> Payments,
             int id,
             int fk_Account,
-            string transactionId)
+            string transactionId,
+            string dashboardSearch)
         {
             return Payments.Where(a => (id == 0 || a.Id == id) &&
+                                       
+                                       (string.IsNullOrEmpty(dashboardSearch) || 
+                                            a.Account.FullName.Contains(dashboardSearch) ||
+                                            a.Id.ToString().Contains(dashboardSearch) ||
+                                            a.Amount.ToString().Contains(dashboardSearch) ||
+                                            a.TransactionId.Contains(dashboardSearch)) &&
+                                       
                                        (fk_Account == 0 || a.Fk_Account == fk_Account) &&
                                        (string.IsNullOrEmpty(transactionId) || a.TransactionId == transactionId));
 

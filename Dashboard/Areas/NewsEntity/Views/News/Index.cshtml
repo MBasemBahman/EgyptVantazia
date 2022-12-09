@@ -182,14 +182,14 @@
                             }
                         },
                       
-                        { data: "gameWeak", render: function(data) {
+                        { data: "gameWeak", orderable: false, render: function(data) {
                           if (data != null && data.length > 0){
                               return data.name;
                           }
                           
                           return '@Localizer.Get("Not Found")';
                         } },
-                        { data: "newsTypeEnum" },
+                        { data: "newsTypeEnum", orderable: false },
                         { data: "attachmentsCount" },
                         { data: "createdAt" },
                         { data: "id" },

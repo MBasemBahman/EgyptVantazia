@@ -194,15 +194,17 @@ else
                               data.PercentFrom = $("#PercentFrom").length > 0 ? $("#PercentFrom").val() : null;
                               data.PercentTo = $("#PercentTo").length > 0 ? $("#PercentTo").val() : null;
                               data.Fk_Player = @Model.Fk_Player;
+                              data.DashboardSearch = $("#DataTables_Table_0_filter input").val();
+                              
                               return JSON.stringify(data);
                           }
                       },
                       // Columns Setups
                       columns: [
                          {data:"id"},
-                         { data: "player.name" },
-                         { data: "season.name" },
-                         { data: "scoreState.name" },
+                         { data: "player.name", orderable: false },
+                         { data: "season.name", orderable: false },
+                         { data: "scoreState.name", orderable: false },
                          { data: "percent" },
                          { data: "points" },
                          { data: "value" },

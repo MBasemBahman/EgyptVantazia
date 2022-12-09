@@ -22,8 +22,8 @@ namespace Entities.CoreServicesModels.PlayerStateModels
         public double? PointsTo { get; set; }
         public double? PercentFrom { get; set; }
         public double? PercentTo { get; set; }
-
         public bool? IsTop15 { get; set; }
+        public string DashboardSearch { get; set; }
     }
 
     public class PlayerSeasonScoreStateModel : AuditEntity

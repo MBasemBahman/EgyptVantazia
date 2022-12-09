@@ -36,9 +36,11 @@ namespace Entities.CoreServicesModels.TeamModels
     public class PlayerPriceCreateOrEditModel
     {
         [DisplayName(nameof(BuyPrice))]
+        [Range(0, double.MaxValue)]
         public double BuyPrice { get; set; }
 
         [DisplayName(nameof(SellPrice))]
+        [Range(0, double.MaxValue)]
         public double SellPrice { get; set; }
 
         public int Id { get; set; }

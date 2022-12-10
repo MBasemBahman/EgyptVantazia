@@ -23,7 +23,6 @@ $(function () {
 
     if (dt_ajax_table.length) {
         $.extend(true, $.fn.dataTable.defaults, {
-            "scrollX": true,
             stateSave: true,
             autoWidth: true,
             // ServerSide Setups

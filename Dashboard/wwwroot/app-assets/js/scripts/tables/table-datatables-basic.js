@@ -144,7 +144,7 @@ $(function () {
           render: function (data, type, full, meta) {
             return (
               '<div class="d-inline-flex">' +
-              '<a class="pe-1 dropdown-toggle hide-arrow text-primary" data-bs-toggle="dropdown">' +
+              '<a class="pe-1 dropdown-toggle hide-arrow text-warningwarning" data-bs-toggle="dropdown">' +
               feather.icons['more-vertical'].toSvg({ class: 'font-small-4' }) +
               '</a>' +
               '<div class="dropdown-menu dropdown-menu-end">' +
@@ -359,7 +359,7 @@ $(function () {
           render: function (data, type, full, meta) {
             return (
               '<div class="d-inline-flex">' +
-              '<a class="pe-1 dropdown-toggle hide-arrow text-primary" data-bs-toggle="dropdown">' +
+              '<a class="pe-1 dropdown-toggle hide-arrow text-warningwarning" data-bs-toggle="dropdown">' +
               feather.icons['more-vertical'].toSvg({ class: 'font-small-4' }) +
               '</a>' +
               '<div class="dropdown-menu dropdown-menu-end">' +
@@ -452,7 +452,7 @@ $(function () {
           render: function (data, type, full, meta) {
             return (
               '<div class="d-inline-flex">' +
-              '<a class="pe-1 dropdown-toggle hide-arrow text-primary" data-bs-toggle="dropdown">' +
+              '<a class="pe-1 dropdown-toggle hide-arrow text-warningwarning" data-bs-toggle="dropdown">' +
               feather.icons['more-vertical'].toSvg({ class: 'font-small-4' }) +
               '</a>' +
               '<div class="dropdown-menu dropdown-menu-end">' +
@@ -604,7 +604,7 @@ $(function () {
           render: function (data, type, full, meta) {
             return (
               '<div class="d-inline-flex">' +
-              '<a class="pe-1 dropdown-toggle hide-arrow text-primary" data-bs-toggle="dropdown">' +
+              '<a class="pe-1 dropdown-toggle hide-arrow text-warning" data-bs-toggle="dropdown">' +
               feather.icons['more-vertical'].toSvg({ class: 'font-small-4' }) +
               '</a>' +
               '<div class="dropdown-menu dropdown-menu-end">' +

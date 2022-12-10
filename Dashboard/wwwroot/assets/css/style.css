@@ -1,14 +1,333 @@
-/*================================================================================
-	Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
-	Version: 2.0
-	Author: PIXINVENT
-	Author URL: http://www.themeforest.net/user/pixinvent
-================================================================================
+.btn {
+    transition: all .2s ease-in-out
+}
 
-NOTE:
-------
-PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
-WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
-* {
-	font-family: 'Cairo', sans-serif;
+    .btn:hover {
+        box-shadow: 2px 2px 7px 0px rgba(167,167,167,.6705882353) !important;
+        transform: translateY(-2px)
+    }
+
+.btn-primary {
+    background: linear-gradient(90deg, #D4AF37 3%, #D4AF37 96%);
+    border-color: rgba(0,0,0,0) !important;
+    color: #fff !important;
+    transition: all .2s ease-in-out;
+    border-radius: 30px
+}
+
+    .btn-primary:hover {
+        box-shadow: 2px 2px 7px 0px rgba(167,167,167,.6705882353) !important;
+        transform: translateY(-2px)
+    }
+
+.main-menu.menu-light .navigation > li ul .active {
+    background: linear-gradient(90deg, #D4AF37 3%, #D4AF37 96%);
+    border-radius: 30px
+}
+
+.main-menu.menu-light .navigation > li.active > a {
+    background: linear-gradient(90deg, #D4AF37 3%, #D4AF37 96%);
+    box-shadow: 2px 2px 7px 0px rgba(167,167,167,.6705882353) !important;
+    border-radius: 30px
+}
+
+.form-control {
+    border-radius: 30px
+}
+
+.input-group:not(.has-validation) > :not(:last-child):not(.dropdown-toggle):not(.dropdown-menu) {
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px
+}
+
+    .input-group:not(.has-validation) > :not(:last-child):not(.dropdown-toggle):not(.dropdown-menu):focus {
+        border-color: #041b2e !important
+    }
+
+.input-group {
+    border-radius: 30px
+}
+
+.input-group-merge:focus {
+    border-color: #041b2e !important
+}
+
+.input-group-text:focus {
+    border-color: #041b2e !important
+}
+
+.input-group:not(.bootstrap-touchspin):focus-within .form-control {
+    border-color: #041b2e;
+    box-shadow: none
+}
+
+.input-group:not(.bootstrap-touchspin):focus-within .input-group-text {
+    border-color: #282828;
+    box-shadow: none
+}
+
+.input-group:not(.bootstrap-touchspin):focus-within {
+    box-shadow: none;
+    border-radius: .357rem
+}
+
+.form-check-input:checked {
+    background-color: #041b2e !important;
+    border-color: #041b2e !important
+}
+
+.form-check-input:not(:disabled):checked {
+    box-shadow: 2px 2px 7px 0px #dbdcdd !important
+}
+
+.form-check-input:focus {
+    border-color: #D4AF37 !important;
+    outline: 0;
+    box-shadow: 2px 2px 7px 0px #dbdcdd !important
+}
+
+.email-application .content-area-wrapper .sidebar .list-group .list-group-item.active {
+    border-color: #D4AF37 !important
+}
+
+.email-application .content-area-wrapper .sidebar .list-group .list-group-item.active {
+    background: rgba(0,0,0,0);
+    color: #D4AF37
+}
+
+.badge.badge-light-primary {
+    background-color: rgba(12,9,44,.12);
+    color: #D4AF37 !important
+}
+
+.email-application .content-area-wrapper .sidebar .list-group .list-group-item:hover {
+    color: #D4AF37 !important
+}
+
+.header-navbar .navbar-container ul.navbar-nav li svg.ficon:hover {
+    color: #D4AF37
+}
+
+.chat-application .sidebar-content .chat-list-title {
+    color: #D4AF37
+}
+
+.todo-application .content-area-wrapper .sidebar .todo-sidebar .todo-app-menu .list-group .list-group-item.active {
+    background: rgba(0,0,0,0);
+    color: #D4AF37
+}
+
+.todo-application .content-area-wrapper .sidebar .todo-sidebar .todo-app-menu .list-group .list-group-item:hover {
+    color: #D4AF37
+}
+
+.btn-outline-danger {
+    border-radius: 30px
+}
+
+.btn-outline-secondary {
+    border-radius: 30px
+}
+
+.todo-application .content-area-wrapper .sidebar .todo-sidebar .todo-app-menu .list-group .list-group-item:focus {
+    color: #D4AF37
+}
+
+.modal-body .form-control:focus {
+    border-color: #D4AF37
+}
+
+.select2-container--default .select2-selection--single {
+    border-radius: 30px
+}
+
+.select2-container--classic .select2-selection--multiple, .select2-container--default .select2-selection--multiple {
+    border-radius: 30px
+}
+
+.ql-container + .ql-toolbar {
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px
+}
+
+.ql-container {
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px
+}
+
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+    border-color: #D4AF37 !important
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #D4AF37 !important;
+    border-color: #D4AF37 !important
+}
+
+.main-menu.menu-light .navigation > li ul .active {
+    box-shadow: 2px 2px 7px 0px rgba(167,167,167,.6705882353) !important
+}
+
+.select2-container--default.select2-container--open .select2-selection--single {
+    border-color: #D4AF37 !important
+}
+
+.select2-container--default .select2-results__option--highlighted {
+    background-color: rgba(62,61,77,.12) !important;
+    color: #D4AF37 !important
+}
+
+.select2-container--default .select2-results__option[aria-selected=true] {
+    background-color: #D4AF37 !important
+}
+
+.select2-container--default .select2-selection--single:focus {
+    border-color: #D4AF37 !important
+}
+
+.bg-primary {
+    background-color: #D4AF37 !important
+}
+
+.fc .fc-toolbar .fc-button-group .fc-button-primary:not(.fc-prev-button):not(.fc-next-button).fc-button-active {
+    background-color: #eee !important;
+    border-color: #D4AF37 !important;
+    color: #D4AF37
+}
+
+.fc .fc-toolbar .fc-button-group .fc-button-primary:not(.fc-prev-button):not(.fc-next-button):hover {
+    background-color: #eee !important;
+    border-color: #D4AF37 !important;
+    color: #D4AF37
+}
+
+.form-select {
+    border-radius: 30px
+}
+
+.select2-container--default.select2-container--open.select2-container--below .select2-selection--single {
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px
+}
+
+.btn-check:checked + .btn-outline-primary {
+    background-color: #eee !important
+}
+
+    .btn-check:checked + .btn-outline-primary:focus {
+        box-shadow: 2px 2px 7px 0px rgba(167,167,167,.6705882353) !important
+    }
+
+.input-group > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+    margin-left: -1px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px
+}
+
+.ecommerce-application .ecommerce-searchbar .input-group {
+    box-shadow: none
+}
+
+.btn-outline-primary.show.dropdown-toggle {
+    background-color: #eee;
+    color: #D4AF37
+}
+
+.btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled).active, .btn-outline-primary:not(:disabled):not(.disabled):focus {
+    background-color: #eee
+}
+
+.btn-outline-primary.dropdown-toggle.show:focus {
+    box-shadow: none
+}
+
+.ratings-list a:hover {
+    color: #D4AF37
+}
+
+.btn-outline-primary {
+    border-radius: 30px !important
+}
+
+    .btn-outline-primary:hover {
+        background-color: #eee
+    }
+
+.btn-success {
+    border-radius: 30px
+}
+
+.btn-light {
+    border-radius: 30px
+}
+
+.main-menu .navbar-header .navbar-brand .brand-text {
+    color: #D4AF37 !important
+}
+
+.text-primary {
+    color: #D4AF37 !important
+}
+
+.nav-pills .nav-link.active {
+    background: linear-gradient(90deg, #D4AF37 3%, #D4AF37 96%)
+}
+
+.progress-bar {
+    background: linear-gradient(90deg, #D4AF37 3%, #D4AF37 96%)
+}
+
+.select2-container--default.select2-container--open {
+    box-shadow: none
+}
+
+.select2-container--default .select2-results__option[aria-selected=true] {
+    background: linear-gradient(90deg, #D4AF37 3%, #D4AF37 96%)
+}
+
+.bs-stepper .bs-stepper-header .step.active .step-trigger .bs-stepper-box {
+    background: linear-gradient(90deg, #D4AF37 3%, #D4AF37 96%)
+}
+
+.dropdown-item:active {
+    background: linear-gradient(90deg, #D4AF37 3%, #D4AF37 96%)
+}
+
+.select2-container--default.select2-container--open.select2-container--above .select2-selection--single {
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px
+}
+
+.nav.nav-left .nav-item .nav-link {
+    border-radius: 30px
+}
+/*# sourceMappingURL=style.css.map */
+.btn-warning {
+    border-radius: 30px
+}
+.form-control {
+    border: 1px solid #D4AF37;
+}
+
+.select2-container--classic .select2-selection--single, .select2-container--default .select2-selection--single {
+    border: 1px solid #D4AF37;
+}
+
+.btn-outline-secondary {
+    border: 1px solid #D4AF37 !important;
+}
+
+.form-select {
+    border: 1px solid #D4AF37;
+}
+
+.form-label {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+@media screen and (max-width: 767px) {
+    div.dataTables_wrapper div.dataTables_filter {
+        text-align: center;
+    }
 }

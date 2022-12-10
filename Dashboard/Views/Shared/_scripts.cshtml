@@ -2,20 +2,18 @@
 @if (ViewBag.emptyLayout == null || !ViewBag.emptyLayout)
 {
     <script src="~/app-assets/vendors/js/vendors.min.js"></script>
-      
-
 }
 
+<script src="~/app-assets/vendors/js/jquery/jquery.min.js"></script>
 
 <!-- BEGIN Vendor JS-->
 @if (((ViewBag.useForm != null && ViewBag.useForm) ||
-           (ViewBag.useCharts != null && ViewBag.useCharts) ||
-            (ViewBag.useDatePicker != null && ViewBag.useDatePicker)) &&
+          (ViewBag.useCharts != null && ViewBag.useCharts) ||
+           (ViewBag.useDatePicker != null && ViewBag.useDatePicker)) &&
 (ViewBag.emptyLayout == null || !ViewBag.emptyLayout))
 {
-    
-    <script src="~/app-assets/vendors/js/jquery/jquery.min.js"></script>
 
+    <script src="~/app-assets/vendors/js/jquery/jquery.min.js"></script>
 }
 
 @if (ViewBag.useDatePicker != null && ViewBag.useDatePicker)
@@ -71,8 +69,8 @@
 }
 
 @if ((ViewBag.useForm != null && ViewBag.useForm) ||
-           (ViewBag.useCharts != null && ViewBag.useCharts) ||
-            (ViewBag.useDatePicker != null && ViewBag.useDatePicker))
+          (ViewBag.useCharts != null && ViewBag.useCharts) ||
+           (ViewBag.useDatePicker != null && ViewBag.useDatePicker))
 {
     <script src="~/app-assets/vendors/js/pickers/flatpickr/flatpickr.min.js"></script>
 
@@ -91,7 +89,7 @@
 @if (ViewBag.useCharts != null && ViewBag.useCharts)
 {
     <script src="~/app-assets/vendors/js/charts/apexcharts.min.js"></script>
-    
+
 }
 <!-- END: Page Vendor JS-->
 <!-- BEGIN: Theme JS-->

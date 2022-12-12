@@ -23,7 +23,10 @@
 
         public IActionResult Index()
         {
-            AddBulkData(192, new List<int> { 46, 43 });
+            //_unitOfWork.Season.DeleteDuplicattion();
+            //_unitOfWork.Save().Wait();
+
+            //AddBulkData(192, new List<int> { 46, 43 });
             //var teams = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new Entities.CoreServicesModels.AccountTeamModels.AccountTeamPlayerGameWeakParameters
             //{
             //    Fk_GameWeak = 52,

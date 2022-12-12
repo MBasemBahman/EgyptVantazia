@@ -269,6 +269,11 @@ namespace CoreServices.Logic
             return GetGameWeaks(new GameWeakParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
+        public GameWeak GetGameWeak(DateTime matchStartMatch)
+        {
+            return _repository.GameWeak.GetGameWeak(matchStartMatch);
+        }
+
         public int GetGameWeakCount()
         {
             return _repository.GameWeak.Count();
@@ -400,5 +405,10 @@ namespace CoreServices.Logic
             return _repository.TeamGameWeak.Count();
         }
         #endregion
+
+        public void DeleteDuplicattion()
+        {
+            _repository.TeamGameWeak.DeleteDuplicattion();
+        }
     }
 }

@@ -31,8 +31,14 @@ namespace API.Areas.AccountTeamArea.Controllers
         {
             var currentSeason = _unitOfWork.Season.GetCurrentSeason();
             var currentGamWeak = _unitOfWork.Season.GetCurrentGameWeak();
+            var nextGameWeak = _unitOfWork.Season.GetNextGameWeak();
 
             parameters.IsTransfer = false;
+
+            if (parameters.IncludeNextMatch)
+            {
+                parameters.NextDeadLine = nextGameWeak.Deadline;
+            }
 
             if (parameters.IsCurrent == true)
             {
@@ -40,7 +46,6 @@ namespace API.Areas.AccountTeamArea.Controllers
             }
             else if (parameters.IsNextGameWeak == true)
             {
-                var nextGameWeak = _unitOfWork.Season.GetNextGameWeak();
                 parameters.Fk_GameWeak = nextGameWeak.Id;
             }
 

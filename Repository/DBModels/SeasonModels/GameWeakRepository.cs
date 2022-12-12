@@ -74,6 +74,14 @@ namespace Repository.DBModels.SeasonModels
                 base.Create(entity);
             }
         }
+
+        public GameWeak GetGameWeak(DateTime matchStartMatch)
+        {
+            return FindByCondition(a => a.Deadline != null &&
+                                        a.Deadline.Value.Date <= matchStartMatch.Date, trackChanges: false)
+                   .OrderByDescending(a => a._365_GameWeakIdValue)
+                   .FirstOrDefault();
+        }
     }
 
     public static class GameWeakRepositoryExtension

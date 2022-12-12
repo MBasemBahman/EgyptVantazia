@@ -44,9 +44,9 @@ namespace Repository.DBModels.SeasonModels
 
         public new void Create(TeamGameWeak entity)
         {
-            if (entity._365_MatchId.IsExisting() && FindByCondition(a => a.Fk_GameWeak == entity.Fk_GameWeak && a.Fk_Away == entity.Fk_Away && a.Fk_Home == entity.Fk_Home, trackChanges: false).Any())
+            if (entity._365_MatchId.IsExisting() && FindByCondition(a => a.Fk_Away == entity.Fk_Away && a.Fk_Home == entity.Fk_Home, trackChanges: false).Any())
             {
-                TeamGameWeak oldEntity = FindByCondition(a => a.Fk_GameWeak == entity.Fk_GameWeak && a.Fk_Away == entity.Fk_Away && a.Fk_Home == entity.Fk_Home, trackChanges: true).First();
+                TeamGameWeak oldEntity = FindByCondition(a => a.Fk_Away == entity.Fk_Away && a.Fk_Home == entity.Fk_Home, trackChanges: true).First();
 
                 oldEntity.Fk_Away = entity.Fk_Away;
                 oldEntity.Fk_Home = entity.Fk_Home;
@@ -56,10 +56,23 @@ namespace Repository.DBModels.SeasonModels
                 oldEntity._365_MatchId = entity._365_MatchId;
                 oldEntity.AwayScore = entity.AwayScore;
                 oldEntity.HomeScore = entity.HomeScore;
+                oldEntity.IsDelayed = entity.IsDelayed;
             }
             else
             {
                 base.Create(entity);
+            }
+        }
+
+        public void DeleteDuplicattion()
+        {
+            var data = FindByCondition(a => a.Fk_GameWeak == 45 && a.IsDelayed, trackChanges: true)
+                        .Include(a => a.PlayerGameWeaks)
+                        .ToList();
+            foreach (var item in data)
+            {
+                DBContext.PlayerGameWeaks.RemoveRange(item.PlayerGameWeaks);
+                Delete(item);
             }
         }
     }
@@ -86,12 +99,12 @@ namespace Repository.DBModels.SeasonModels
             string dashboardSearch)
         {
             return TeamGameWeaks.Where(a => (id == 0 || a.Id == id) &&
-                                            
-                                            (string.IsNullOrEmpty(dashboardSearch) || 
+
+                                            (string.IsNullOrEmpty(dashboardSearch) ||
                                              a.Id.ToString().Contains(dashboardSearch) ||
                                              a.Home.Name.Contains(dashboardSearch) ||
-                                             a.Away.Name.Contains(dashboardSearch) ) &&
-                                            
+                                             a.Away.Name.Contains(dashboardSearch)) &&
+
                                             (isEnded == null || a.IsEnded == isEnded) &&
                                             (isDelayed == null || a.IsDelayed == isDelayed) &&
                                             (fk_Teams == null || !fk_Teams.Any() ||

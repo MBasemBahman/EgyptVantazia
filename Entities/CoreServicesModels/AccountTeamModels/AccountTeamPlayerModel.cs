@@ -21,6 +21,8 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public List<int> Fk_ScoreStatesForGameWeak { get; set; }
 
         public bool? IsTransfer { get; set; }
+
+        public DateTime? NextDeadLine { get; set; }
     }
 
     public class AccountTeamPlayerModel : BaseEntity

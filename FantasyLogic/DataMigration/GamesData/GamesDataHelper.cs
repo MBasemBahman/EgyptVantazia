@@ -82,6 +82,15 @@ namespace FantasyLogic.DataMigration.GamesData
         public async Task UpdateGame(Games game, int fk_Home, int fk_Away, int fk_GameWeak)
         {
             DateTime startTime = game.StartTimeVal.AddHours(2);
+            bool isDelayed = false;
+
+            var checkGameWeek = _unitOfWork.Season.GetGameWeak(startTime);
+
+            if (checkGameWeek != null && checkGameWeek.Id != fk_GameWeak)
+            {
+                fk_GameWeak = checkGameWeek.Id;
+                isDelayed = true;
+            }
 
             _unitOfWork.Season.CreateTeamGameWeak(new TeamGameWeak
             {
@@ -93,6 +102,7 @@ namespace FantasyLogic.DataMigration.GamesData
                 _365_MatchId = game.Id.ToString(),
                 AwayScore = (int)game.AwayCompetitor.Score,
                 HomeScore = (int)game.HomeCompetitor.Score,
+                IsDelayed = isDelayed
             });
             await _unitOfWork.Save();
 

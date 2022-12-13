@@ -199,8 +199,14 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                                    .GetPlayerGameWeaks(new PlayerGameWeakParameters { Fk_TeamGameWeak = fk_TeamGameWeak, Fk_Player = fk_Player }, false)
                                                    .Select(x => x.Id)
                                                    .SingleOrDefault();
+
+                //PlayerGameWeakScore
+
                 if (fk_PlayerGameWeak > 0)
                 {
+                    _unitOfWork.PlayerScore.DeleteOldPlayerScores(fk_PlayerGameWeak);
+                    _unitOfWork.Save().Wait();
+
                     if (memberResult.Stats != null && memberResult.Stats.Any())
                     {
                         foreach (Stat Stat in memberResult.Stats)

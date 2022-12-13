@@ -16,7 +16,7 @@ namespace FantasyLogic.Calculations
             _unitOfWork = unitOfWork;
         }
 
-        public void RunAccountTeamsCalculations(int fk_GameWeak)
+        public void RunAccountTeamsCalculations(int fk_GameWeak, int fk_AccountTeam, bool inDebug = false)
         {
             SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
 
@@ -31,61 +31,81 @@ namespace FantasyLogic.Calculations
                                                  Id = a.Id,
                                                  _365_GameWeakId = a._365_GameWeakId
                                              }).ToList();
-
-            //AccountTeamsCalculations(gameWeaks, season.Id);
-            _ = BackgroundJob.Enqueue(() => AccountTeamsCalculations(gameWeaks, season.Id));
+            if (inDebug)
+            {
+                AccountTeamsCalculations(gameWeaks, season.Id, fk_AccountTeam, inDebug: true);
+            }
+            else
+            {
+                _ = BackgroundJob.Enqueue(() => AccountTeamsCalculations(gameWeaks, season.Id, fk_AccountTeam, false));
+            }
         }
 
-        public void AccountTeamsCalculations(List<GameWeakModel> gameWeaks, int fk_Season)
+        public void AccountTeamsCalculations(List<GameWeakModel> gameWeaks, int fk_Season, int fk_AccountTeam, bool inDebug)
         {
             string jobId = null;
 
             foreach (GameWeakModel gameWeak in gameWeaks)
             {
-                //AccountTeamGameWeakCalculations(gameWeak, fk_Season, jobId);
-                //UpdateAccountTeamGameWeakRanking(gameWeak, fk_Season, jobId);
+                if (inDebug)
+                {
+                    AccountTeamGameWeakCalculations(gameWeak, fk_Season, fk_AccountTeam, jobId, inDebug: true);
+                    UpdateAccountTeamGameWeakRanking(gameWeak, fk_Season, jobId);
+                }
+                else
+                {
+                    jobId = jobId.IsExisting()
+                            ? BackgroundJob.ContinueJobWith(jobId, () => AccountTeamGameWeakCalculations(gameWeak, fk_AccountTeam, fk_Season, jobId, false))
+                            : BackgroundJob.Enqueue(() => AccountTeamGameWeakCalculations(gameWeak, fk_AccountTeam, fk_Season, jobId, false));
 
-                jobId = jobId.IsExisting()
-                            ? BackgroundJob.ContinueJobWith(jobId, () => AccountTeamGameWeakCalculations(gameWeak, fk_Season, jobId))
-                            : BackgroundJob.Enqueue(() => AccountTeamGameWeakCalculations(gameWeak, fk_Season, jobId));
-
-                jobId = jobId.IsExisting()
-                            ? BackgroundJob.ContinueJobWith(jobId, () => UpdateAccountTeamGameWeakRanking(gameWeak, fk_Season, jobId))
-                            : BackgroundJob.Enqueue(() => UpdateAccountTeamGameWeakRanking(gameWeak, fk_Season, jobId));
-
+                    jobId = jobId.IsExisting()
+                                ? BackgroundJob.ContinueJobWith(jobId, () => UpdateAccountTeamGameWeakRanking(gameWeak, fk_Season, jobId))
+                                : BackgroundJob.Enqueue(() => UpdateAccountTeamGameWeakRanking(gameWeak, fk_Season, jobId));
+                }
             }
 
             List<int> accountTeams = _unitOfWork.AccountTeam.GetAccountTeams(new AccountTeamParameters
             {
-                Fk_Season = fk_Season
+                Fk_Season = fk_Season,
+                Id = fk_AccountTeam,
             }, otherLang: false)
                 .Select(a => a.Id)
                 .ToList();
 
             foreach (int accountTeam in accountTeams)
             {
-                //_ = UpdateAccountTeamPoints(accountTeam, fk_Season, jobId);
-
-                jobId = jobId.IsExisting()
-                            ? BackgroundJob.ContinueJobWith(jobId, () => UpdateAccountTeamPoints(accountTeam, fk_Season, jobId))
-                            : BackgroundJob.Enqueue(() => UpdateAccountTeamPoints(accountTeam, fk_Season, jobId));
-
+                if (inDebug)
+                {
+                    _ = UpdateAccountTeamPoints(accountTeam, fk_Season, jobId);
+                }
+                else
+                {
+                    jobId = jobId.IsExisting()
+                       ? BackgroundJob.ContinueJobWith(jobId, () => UpdateAccountTeamPoints(accountTeam, fk_Season, jobId))
+                       : BackgroundJob.Enqueue(() => UpdateAccountTeamPoints(accountTeam, fk_Season, jobId));
+                }
             }
 
-            //UpdateAccountTeamRanking(fk_Season, jobId);
-
-            jobId = jobId.IsExisting()
-                            ? BackgroundJob.ContinueJobWith(jobId, () => UpdateAccountTeamRanking(fk_Season, jobId))
-                            : BackgroundJob.Enqueue(() => UpdateAccountTeamRanking(fk_Season, jobId));
+            if (inDebug)
+            {
+                UpdateAccountTeamRanking(fk_Season, jobId);
+            }
+            else
+            {
+                jobId = jobId.IsExisting()
+                           ? BackgroundJob.ContinueJobWith(jobId, () => UpdateAccountTeamRanking(fk_Season, jobId))
+                           : BackgroundJob.Enqueue(() => UpdateAccountTeamRanking(fk_Season, jobId));
+            }
 
         }
 
-        public string AccountTeamGameWeakCalculations(GameWeakModel gameWeak, int fk_Season, string jobId)
+        public string AccountTeamGameWeakCalculations(GameWeakModel gameWeak, int fk_Season, int fk_AccountTeam, string jobId, bool inDebug)
         {
             var accountTeamGameWeaks = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
             {
                 Fk_Season = fk_Season,
-                Fk_GameWeak = gameWeak.Id
+                Fk_GameWeak = gameWeak.Id,
+                Id = fk_AccountTeam
             }, otherLang: false)
                     .Select(a => new
                     {
@@ -96,18 +116,22 @@ namespace FantasyLogic.Calculations
 
             foreach (var accountTeamGameWeak in accountTeamGameWeaks)
             {
-                //AccountTeamPlayersCalculations(accountTeamGameWeak.Id, accountTeamGameWeak.Fk_AccountTeam, gameWeak, fk_Season, jobId);
-
-                jobId = jobId.IsExisting()
-                           ? BackgroundJob.ContinueJobWith(jobId, () => AccountTeamPlayersCalculations(accountTeamGameWeak.Id, accountTeamGameWeak.Fk_AccountTeam, gameWeak, fk_Season, jobId))
-                           : BackgroundJob.Enqueue(() => AccountTeamPlayersCalculations(accountTeamGameWeak.Id, accountTeamGameWeak.Fk_AccountTeam, gameWeak, fk_Season, jobId));
-
+                if (inDebug)
+                {
+                    AccountTeamPlayersCalculations(accountTeamGameWeak.Id, accountTeamGameWeak.Fk_AccountTeam, gameWeak, fk_Season, jobId, inDebug: true);
+                }
+                else
+                {
+                    jobId = jobId.IsExisting()
+                               ? BackgroundJob.ContinueJobWith(jobId, () => AccountTeamPlayersCalculations(accountTeamGameWeak.Id, accountTeamGameWeak.Fk_AccountTeam, gameWeak, fk_Season, jobId, false))
+                               : BackgroundJob.Enqueue(() => AccountTeamPlayersCalculations(accountTeamGameWeak.Id, accountTeamGameWeak.Fk_AccountTeam, gameWeak, fk_Season, jobId, false));
+                }
             }
 
             return jobId;
         }
 
-        public string AccountTeamPlayersCalculations(int fk_AccountTeamGameWeak, int fk_AccountTeam, GameWeakModel gameWeak, int fk_Season, string jobId)
+        public string AccountTeamPlayersCalculations(int fk_AccountTeamGameWeak, int fk_AccountTeam, GameWeakModel gameWeak, int fk_Season, string jobId, bool inDebug)
         {
             List<AccountTeamPlayersCalculationPoints> playersFinalPoints = new();
             List<AccountTeamPlayersCalculationPoints> flagListPoints = new();

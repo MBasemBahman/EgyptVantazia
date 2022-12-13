@@ -22,11 +22,19 @@ namespace FantasyLogicMicroservices.Areas.AccountTeamArea.Controllers
 
         [HttpPost]
         [Route(nameof(UpdateAccountTeamsPoints))]
-        public IActionResult UpdateAccountTeamsPoints([FromQuery] int fk_GameWeak)
+        public IActionResult UpdateAccountTeamsPoints(
+            [FromQuery] int fk_GameWeak,
+            [FromQuery] int fk_AccountTeam,
+            [FromQuery] bool inDebug)
         {
-            //_fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(fk_GameWeak);
-
-            _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(fk_GameWeak));
+            if (inDebug)
+            {
+                _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(fk_GameWeak, fk_AccountTeam);
+            }
+            else
+            {
+                _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(fk_GameWeak, fk_AccountTeam, true));
+            }
 
             return Ok();
         }

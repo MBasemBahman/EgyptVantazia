@@ -104,6 +104,7 @@ namespace CoreServices.Logic
                                AwayScore = a.TeamGameWeak.AwayScore,
                                StartTime = a.TeamGameWeak.StartTime,
                                _365_MatchId = a.TeamGameWeak._365_MatchId,
+                               IsEnded = a.TeamGameWeak.IsEnded,
                                Away = new TeamModel
                                {
                                    Name = otherLang ? a.TeamGameWeak.Away.TeamLang.Name : a.TeamGameWeak.Away.Name,
@@ -378,6 +379,11 @@ namespace CoreServices.Logic
         public PlayerTotalScoreModel GetPlayerTotalScores(int fk_Player, int fk_Season, int fk_GameWeak, List<int> fk_ScoreTypes)
         {
             return _repository.PlayerGameWeakScore.GetPlayerTotalScores(fk_Player, fk_Season, fk_GameWeak, fk_ScoreTypes);
+        }
+
+        public void DeleteOldPlayerScores(int fk_PlayerGameWeak)
+        {
+            _repository.PlayerGameWeakScore.DeleteOldPlayerScores(fk_PlayerGameWeak);
         }
         #endregion
     }

@@ -77,6 +77,12 @@ namespace Repository.DBModels.PlayerScoreModels
                 })
                 .SingleOrDefault();
         }
+
+        public void DeleteOldPlayerScores(int fk_PlayerGameWeak)
+        {
+            List<PlayerGameWeakScore> data = FindByCondition(a => a.Fk_PlayerGameWeak == fk_PlayerGameWeak, trackChanges: true).ToList();
+            DBContext.PlayerGameWeakScores.RemoveRange(data);
+        }
     }
 }
 
@@ -107,12 +113,12 @@ public static class PlayerGameWeakScoreRepositoryExtension
          string dashboardSearch)
     {
         return PlayerGameWeakScores.Where(a => (id == 0 || a.Id == id) &&
-                                               
-                                               (string.IsNullOrEmpty(dashboardSearch) || 
+
+                                               (string.IsNullOrEmpty(dashboardSearch) ||
                                                 a.Id.ToString().Contains(dashboardSearch) ||
                                                 a.ScoreType.Name.Contains(dashboardSearch) ||
-                                                a.PlayerGameWeak.Player.Name.Contains(dashboardSearch) ) &&
-                                               
+                                                a.PlayerGameWeak.Player.Name.Contains(dashboardSearch)) &&
+
                                                (finalValueFrom == null || a.FinalValue >= finalValueFrom) &&
                                                (finalValueTo == null || a.FinalValue <= finalValueTo) &&
                                                (fk_PlayerGameWeak == 0 || a.Fk_PlayerGameWeak == fk_PlayerGameWeak) &&

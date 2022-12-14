@@ -48,6 +48,7 @@ using Entities.DBModels.StandingsModels;
 using Entities.DBModels.SubscriptionModels;
 using Entities.DBModels.TeamModels;
 using Entities.RequestFeatures;
+using AccountTeamGameWeakDto = Dashboard.Areas.AccountTeamEntity.Models.AccountTeamGameWeakDto;
 
 namespace Dashboard.MappingProfileCls
 {
@@ -386,6 +387,19 @@ namespace Dashboard.MappingProfileCls
             _ = CreateMap<AccountTeam, AccountTeamCreateOrEditModel>();
 
             _ = CreateMap<AccountTeamCreateOrEditModel, AccountTeam>();
+
+            #endregion
+            
+            #region Account Team GameWeak
+
+            _ = CreateMap<AccountTeamGameWeakModel , 
+                Dashboard.Areas.AccountTeamGameWeakEntity.Models.AccountTeamGameWeakDto>();
+            
+            _ = CreateMap<Dashboard.Areas.AccountTeamGameWeakEntity.Models.AccountTeamGameWeakDto, 
+                AccountTeamGameWeakModel>();
+
+            _ = CreateMap<Dashboard.Areas.AccountTeamGameWeakEntity.Models.AccountTeamGameWeakFilter, 
+                AccountTeamGameWeakParameters>();
 
             #endregion
 

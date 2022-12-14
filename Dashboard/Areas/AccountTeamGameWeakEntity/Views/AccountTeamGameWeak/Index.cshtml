@@ -1,0 +1,285 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Dashboard.Areas.AccountTeamGameWeakEntity.Models.AccountTeamGameWeakFilter
+@{
+    ViewData["Title"] = Localizer.Get("Account Team Game Weaks");
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.useDatatable = true;
+    ViewBag.useModels = true;
+    ViewBag.useForm = true;
+    ViewBag.useDatePicker = true;
+    ViewBag.useCharts = true;
+
+
+    var accessLevel = (DashboardAccessLevelModel)ViewData[ViewDataConstants.AccessLevel];
+    ViewBag.emptyLayout = ViewData["ProfileLayOut"] != null ? (bool)ViewData["ProfileLayOut"] : false;
+
+    var row = new AccountTeamGameWeakDto();
+}
+
+<!-- BEGIN: Content-->
+@if (!ViewBag.emptyLayout)
+{
+    <div class="app-content content ">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper container-xxl p-0">
+            <div class="content-header row">
+                <div class="content-header-left col-md-9 col-12 mb-2">
+                    <div class="row breadcrumbs-top">
+                        <div class="col-6">
+                            <h2 class="content-header-title float-start mb-0">@ViewData["Title"]</h2>
+                            <div class="breadcrumb-wrapper">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a href="#">@Localizer.Get("Dashboard")</a>
+                                    </li>
+                                    <li class="breadcrumb-item active">
+                                        @ViewData["Title"]
+                                    </li>
+
+                                </ol>
+                                
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-body">
+                <section id="ajax-datatable">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header border-bottom">
+                                    <h4 class="card-title"> @ViewData["Title"]</h4>
+                                </div>
+                                <p class="m-2 demo-inline-spacing">
+                                    <a class="btn btn-primary me-1" data-bs-toggle="collapse" href="#AdvancedFilter" role="button" aria-expanded="false" aria-controls="AdvancedFilter">
+                                        <i data-feather='filter'></i>
+                                        @Localizer.Get("Advanced Search")
+                                    </a>
+
+                                </p>
+                                @{
+                                    await Html.RenderPartialAsync("../AccountTeamGameWeak/Filter", Model, ViewData);
+                                }
+
+                                <div class="card-datatable">
+                                    <table class="datatables datatables-ajax table table-responsive table">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => row.Id)
+
+                                                    @* <a id="profile" asp-action="Profile"> *@
+                                                    @* </a> *@
+                                                    @* *@
+                                                    @* @if (Model.Fk_Account != 0 && accessLevel.CreateAccess) *@
+                                                    @* { *@
+                                                    @*     <a id="create" asp-action="Profile"> *@
+                                                    @*     </a> *@
+                                                    @* } *@
+
+                                                </th>
+                                                <th>@Html.DisplayNameFor(model => row.AccountTeam.Account)</th>
+                                                <th>@Html.DisplayNameFor(model => row.AccountTeam.Season)</th>
+                                                <th>@Html.DisplayNameFor(model => row.AccountTeam.Name)</th>
+                                                <th>@Html.DisplayNameFor(model => row.TotalPoints)</th>
+                                                <th>@Html.DisplayNameFor(model => row.AccountTeam.TotalMoney)</th>
+                                                <th>@Html.DisplayNameFor(model => row.AccountTeam.IsVip)</th>
+                                                <th>@Html.DisplayNameFor(model => row.GlobalRanking)</th>
+                                                <th>@Html.DisplayNameFor(model => row.CountryRanking)</th>
+                                                <th>@Html.DisplayNameFor(model => row.FavouriteTeamRanking)</th>
+                                                <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => row.Id)
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+        </div>
+    </div>
+}
+else
+{
+    <section id="ajax-datatable">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header border-bottom">
+                        <h4 class="card-title"> @ViewData["Title"]</h4>
+
+                    </div>
+
+                    <div class="card-datatable">
+                        <table class="datatables datatables-ajax table table-responsive table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => row.Id)
+
+                                        @* <a id="profile" asp-action="Profile"> *@
+                                        @* </a> *@
+
+                                    </th>
+                                    <th>@Html.DisplayNameFor(model => row.AccountTeam.Account)</th>
+                                    <th>@Html.DisplayNameFor(model => row.AccountTeam.Season)</th>
+                                    <th>@Html.DisplayNameFor(model => row.AccountTeam.Name)</th>
+                                    <th>@Html.DisplayNameFor(model => row.TotalPoints)</th>
+                                    <th>@Html.DisplayNameFor(model => row.AccountTeam.TotalMoney)</th>
+                                    <th>@Html.DisplayNameFor(model => row.AccountTeam.IsVip)</th>
+                                    <th>@Html.DisplayNameFor(model => row.GlobalRanking)</th>
+                                    <th>@Html.DisplayNameFor(model => row.CountryRanking)</th>
+                                    <th>@Html.DisplayNameFor(model => row.FavouriteTeamRanking)</th>
+                                    <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => row.Id)
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+}
+
+<!-- END: Content-->
+@section scripts{
+    <script src="~/apis/site.js"></script>
+    <script src="~/apis/charts.js"></script>
+    <script>
+        function LoadTable() {
+            var dt_ajax_table = $('.datatables');
+            if (dt_ajax_table.length) {
+                var dt_ajax = dt_ajax_table.dataTable({
+                    // Ajax Filter
+                    ajax: {
+                        url: '@Url.Action("LoadTable")',
+                        type: "POST",
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: function (data) {
+                            data.Fk_Account = @Model.Fk_Account;
+                            data.Fk_Season = $("#Fk_Season").length > 0 ? $("#Fk_Season").val() : @Model.Fk_Season
+                            data.CreatedAtFrom = $("#CreatedAtFrom").length > 0 ? $("#CreatedAtFrom").val() : '@Model.CreatedAtFrom'
+                            data.CreatedAtTo = $("#CreatedAtTo").length > 0 ? $("#CreatedAtTo").val() : '@Model.CreatedAtTo'
+                            data.AccountUserName = $("#AccountUserName").length > 0 ? $("#AccountUserName").val() : '@Model.AccountUserName'
+                            data.AccountFullName = $("#AccountFullName").length > 0 ? $("#AccountFullName").val() : '@Model.AccountFullName'
+                            data.DashboardSearch = $("#DataTables_Table_0_filter input").val();
+                            
+                            return JSON.stringify(data);
+                        }
+                    },
+                    // Columns Setups
+                    columns: [
+                        { data: "id" },
+                        {
+                            data: "accountTeam.account",
+                            orderable: false,
+                            render: function (data, type, row) {
+                                var span = '';
+                                if (data.imageUrl != null) {
+
+                                    return '<div class="d-flex justify-content-left align-items-center"><div class= "avatar-wrapper" ><div class="avatar me-1">'
+                                        + '<img src="' + data.imageUrl + '"  height="32" width="32">'
+                                        + span
+                                        + '</div></div>'
+                                        + ' <div class= "d-flex flex-column">'
+                                        + '<a href="/AccountEntity/Account/Profile/' + row.accountTeam.fk_Account + '" target="_blank" class= "user_name text-truncate">'
+                                        + '<span class= "fw-bolder">' + data.name + '</span></a> '
+                                        + '<small class= "emp_post text-muted" ></small ></div></div>';
+                                }
+                                else {
+                                    return '<div class="d-flex justify-content-left align-items-center"><div class= "avatar-wrapper" >'
+                                        + '<div class="avatar  bg-light-dark  me-1"><span class="avatar-content"></span>' + span + '</div>'
+                                        + '</div>'
+                                        + ' <div class= "d-flex flex-column">'
+                                        + '<a href="/AccountEntity/Account/Profile/' + row.accountTeam.fk_Account + '"  target="_blank" class= "user_name text-truncate">'
+                                        + '<span class= "fw-bolder">' + data.name + '</span></a> '
+                                        + '<small class= "emp_post text-muted" ></small ></div></div>';
+                                }
+
+
+                            }
+                        },
+                        { data: "gameWeak.season.name", orderable: false, },
+                        {
+                            data: "accountTeam.name",
+                            orderable: false,
+                            render: function (data, type, row) {
+                                var span = '';
+
+                                if (row.imageUrl != null) {
+
+                                    return '<div class="d-flex justify-content-left align-items-center"><div class= "avatar-wrapper" ><div class="avatar me-1">'
+                                        + '<img src="' + row.accountTeam.imageUrl + '"  height="32" width="32">'
+                                        + span
+                                        + '</div></div>'
+                                        + ' <div class= "d-flex flex-column">'
+                                        + '<a href="/AccountTeamEntity/AccountTeam/Profile/' + row.accountTeam.id + '" class= "user_name text-truncate">'
+                                        + '<span class= "fw-bolder">' + data + '</span></a> '
+                                        + '<small class= "emp_post text-muted" ></small ></div></div>';
+                                }
+                                else {
+                                    return '<div class="d-flex justify-content-left align-items-center"><div class= "avatar-wrapper" >'
+                                        + '<div class="avatar  bg-light-dark  me-1"><span class="avatar-content"></span>' + span + '</div>'
+                                        + '</div>'
+                                        + ' <div class= "d-flex flex-column">'
+                                        + '<a href="/AccountTeamEntity/AccountTeam/Profile/' + row.accountTeam.id + '" class= "user_name text-truncate">'
+                                        + '<span class= "fw-bolder">' + data + '</span></a> '
+                                        + '<small class= "emp_post text-muted" ></small ></div></div>';
+                                }
+
+
+                            }
+                        },
+                        { data: "totalPoints" },
+                        { data: "accountTeam.totalMoney", orderable: false },
+                        { data: "accountTeam.isVip", orderable: false, render: function(data) {
+                          if (data) {
+                              return '@Localizer.Get("Yes")';
+                          } else {
+                              return '@Localizer.Get("No")';
+                          }
+                        } },
+                        { data: "globalRanking" },
+                        { data: "countryRanking" },
+                        { data: "favouriteTeamRanking" },
+                        { data: "createdAt" },
+                        { data: "id" },
+                    ]
+                });
+                $("button[type=reset]").on("click", function () {
+                    $(".dt-date").each(function () {
+                        $(this).val('');
+                    })
+                });
+
+                $('body').on('submit', '.filter', function () {
+                    event.preventDefault();
+                    dt_ajax_table.DataTable().draw();
+                });
+
+
+            }
+        };
+
+
+
+        $(document).ready(function () {
+            LoadTable();
+        });
+    </script>
+}

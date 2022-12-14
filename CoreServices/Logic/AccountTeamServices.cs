@@ -199,13 +199,17 @@ namespace CoreServices.Logic
                            },
                            AccountTeam = new AccountTeamModel
                            {
+                               Id = a.Fk_AccountTeam,
                                Name = a.AccountTeam.Name,
                                IsVip = a.AccountTeam.IsVip,
                                Account = new AccountModel
                                {
                                    Fk_Country = a.AccountTeam.Account.Fk_Country,
                                    Fk_FavouriteTeam = a.AccountTeam.Account.Fk_FavouriteTeam,
+                                   Name = a.AccountTeam.Account.FullName,
                                },
+                               Fk_Account = a.AccountTeam.Fk_Account,
+                               TotalMoney = a.AccountTeam.TotalMoney,
                                TotalPoints = a.AccountTeam.TotalPoints,
                                GlobalRanking = a.AccountTeam.GlobalRanking,
                                CountryRanking = a.AccountTeam.CountryRanking,

@@ -25,7 +25,12 @@ namespace Repository.DBModels.AccountTeamModels
                            parameters.WildCard,
                            parameters.DoubleGameWeak,
                            parameters.Top_11,
-                           parameters.TripleCaptain);
+                           parameters.TripleCaptain,
+                           parameters.CreatedAtFrom,
+                           parameters.CreatedAtTo,
+                           parameters.AccountFullName,
+                           parameters.AccountUserName,
+                           parameters.DashboardSearch);
 
         }
 
@@ -76,9 +81,21 @@ namespace Repository.DBModels.AccountTeamModels
             bool? WildCard,
             bool? DoubleGameWeak,
             bool? Top_11,
-            bool? TrippleCaptain)
+            bool? TrippleCaptain,
+            DateTime? CreatedAtFrom,
+            DateTime? CreatedAtTo,
+            string AccountFullName,
+            string AccountUserName,
+            string dashboardSearch)
         {
             return AccountTeamGameWeaks.Where(a => (id == 0 || a.Id == id) &&
+                                                   
+                                                   (string.IsNullOrEmpty(dashboardSearch) ||
+                                                    a.Id.ToString().Contains(dashboardSearch) ||
+                                                    a.AccountTeam.Account.FullName.Contains(dashboardSearch) ||
+                                                    a.AccountTeam.Season.Name.Contains(dashboardSearch) ||
+                                                    a.AccountTeam.Name.Contains(dashboardSearch)) &&
+                                                   
                                                    (Fk_AccountTeam == 0 || a.Fk_AccountTeam == Fk_AccountTeam) &&
                                                    (GameWeakFrom == 0 || a.GameWeak._365_GameWeakIdValue >= GameWeakFrom) &&
                                                    (GameWeakTo == 0 || a.GameWeak._365_GameWeakIdValue <= GameWeakTo) &&
@@ -91,6 +108,10 @@ namespace Repository.DBModels.AccountTeamModels
                                                    (string.IsNullOrEmpty(_365_GameWeakId) || a.GameWeak._365_GameWeakId == _365_GameWeakId) &&
                                                    (Fk_Season == 0 || a.AccountTeam.Fk_Season == Fk_Season) &&
                                                    (Fk_Account == 0 || a.AccountTeam.Fk_Account == Fk_Account) &&
+                                                   (CreatedAtFrom == null || a.CreatedAt >= CreatedAtFrom) &&
+                                                   (CreatedAtTo == null || a.CreatedAt <= CreatedAtTo) &&
+                                                   (string.IsNullOrWhiteSpace(AccountUserName) || a.AccountTeam.Account.User.UserName.ToLower().Contains(AccountUserName)) &&
+                                                   (string.IsNullOrWhiteSpace(AccountFullName) || a.AccountTeam.Account.FullName.ToLower().Contains(AccountFullName)) &&
                                                    (Fk_GameWeak == 0 || a.Fk_GameWeak == Fk_GameWeak));
 
         }

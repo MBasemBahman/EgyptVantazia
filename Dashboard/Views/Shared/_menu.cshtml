@@ -85,6 +85,20 @@
                     </a>
                 </li>
             }
+        
+            @if (viewList.Contains((int)DashboardViewEnum.AccountTeamGameWeak))
+            {
+                <li id="AccountTeamGameWeakList" class="@(active ==DashboardViewEnum.AccountTeamGameWeak.ToString()?"active":"") nav-item">
+                    <a class="d-flex align-items-center"
+                       asp-action="Index" asp-area="AccountTeamGameWeakEntity"
+                       asp-controller="AccountTeamGameWeak">
+                        <i data-feather='users'></i>
+                        <span class="menu-title text-truncate">
+                            @Localizer.Get("Account Team Game Weaks")
+                        </span>
+                    </a>
+                </li>
+            }
 
             @if (viewList.Contains((int)DashboardViewEnum.PrivateLeague))
             {

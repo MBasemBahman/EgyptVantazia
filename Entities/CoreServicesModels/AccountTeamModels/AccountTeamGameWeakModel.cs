@@ -31,6 +31,17 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public bool? DoubleGameWeak { get; set; }
         public bool? Top_11 { get; set; }
         public bool? TripleCaptain { get; set; }
+        public DateTime? CreatedAtFrom { get; set; }
+
+        public DateTime? CreatedAtTo { get; set; }
+        
+        [DisplayName(nameof(AccountFullName))]
+        public string AccountFullName { get; set; }
+
+        [DisplayName(nameof(AccountUserName))]
+        public string AccountUserName { get; set; }
+
+        public string DashboardSearch { get; set; }
     }
 
     public class AccountTeamGameWeakModel : AuditEntity

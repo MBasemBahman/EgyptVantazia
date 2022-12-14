@@ -1,0 +1,286 @@
+﻿@model AccountTeamDto
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var accountTeamGameWeak = new AccountTeamGameWeakDto();
+    var accountTeamPlayerGameWeak = new AccountTeamPlayerGameWeakDto();
+    var accountTeamPlayer = new AccountTeamPlayerDto();
+    var playerTransfer = new PlayerTransferDto();
+    ViewData["Title"] = Localizer.Get("Account Teams");
+    ViewBag.useModels = true;
+}
+
+
+
+<div class="app-content content ">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row">
+            <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h2 class="content-header-title float-start mb-0">@ViewData["Title"]</h2>
+                        <div class="breadcrumb-wrapper">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="/AccountTeamEntity/AccountTeam/Index">@Localizer.Get("Account Teams")</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    @ViewData["Title"]
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-body">
+            <section id="multiple-column-form">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <a href="#" class="me-25">
+                                        <img src="@($"{Model.ImageUrl}")" id="account-upload-img" class="uploadedAvatar rounded me-50" height="100" width="100">
+                                    </a>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-xl-7 col-12">
+                                        <dl class="row mb-0">
+                                            <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.Name):</dt>
+                                            <dd class="col-sm-8 mb-1">@Model.Name</dd>
+
+                                            <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.Account):</dt>
+                                            <dd class="col-sm-8 mb-1">
+                                                <a href="/AccountEntity/Account/Profile/@Model.Fk_Account" target="_blank">@Model.Account.FullName</a>
+
+                                            </dd>
+
+                                            <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.TotalPoints):</dt>
+                                            <dd class="col-sm-8 mb-1">@Model.TotalPoints</dd>
+
+                                            <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.CountryRanking):</dt>
+                                            <dd class="col-sm-8 mb-1">@Model.CountryRanking</dd>
+
+                                            <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.FavouriteTeamRanking):</dt>
+                                            <dd class="col-sm-8 mb-1">@Model.FavouriteTeamRanking</dd>
+
+                                        </dl>
+                                    </div>
+                                    <div class="col-xl-5 col-12">
+                                        <dl class="row mb-0">
+                                            <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.Season):</dt>
+                                            <dd class="col-sm-8 mb-1">
+                                                <a href="/SeasonEntity/Season/Profile/@Model.Fk_Season" target="_blank">@Model.Season.Name</a>
+                                            </dd>
+                                            <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.TotalMoney):</dt>
+                                            <dd class="col-sm-8 mb-1">@Model.TotalMoney</dd>
+
+                                            <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.FreeTransfer):</dt>
+                                            <dd class="col-sm-8 mb-1">@Model.FreeTransfer</dd>
+
+                                            <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.GlobalRanking):</dt>
+                                            <dd class="col-sm-8 mb-1">@Model.GlobalRanking</dd>
+
+
+                                        </dl>
+                                    </div>
+
+                                </div>
+                                <div class="card-body" style="overflow-x: auto">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <span class="badge bg-light-primary">@Html.DisplayNameFor(model => Model.AccountTeamGameWeaks)</span>
+                                    </div>
+                                    <br />
+
+                                    @if (Model.AccountTeamGameWeaks != null && Model.AccountTeamGameWeaks.Any())
+                                    {
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>@Html.DisplayNameFor(model => accountTeamGameWeak.GameWeak.Season)</th>
+                                                    <th>@Html.DisplayNameFor(model => accountTeamGameWeak.GameWeak)</th>
+                                                    <th>@Html.DisplayNameFor(model => accountTeamGameWeak.BenchBoost)</th>
+                                                    <th>@Html.DisplayNameFor(model => accountTeamGameWeak.FreeHit)</th>
+                                                    <th>@Html.DisplayNameFor(model => accountTeamGameWeak.WildCard)</th>
+                                                    <th>@Html.DisplayNameFor(model => accountTeamGameWeak.TotalPoints)</th>
+                                                    <th>@Html.DisplayNameFor(model => accountTeamGameWeak.GlobalRanking)</th>
+                                                    <th>@Html.DisplayNameFor(model => accountTeamGameWeak.CountryRanking)</th>
+                                                    <th>@Html.DisplayNameFor(model => accountTeamGameWeak.FavouriteTeamRanking)</th>
+                                                    <th>@Html.DisplayNameFor(model => accountTeamGameWeak.DoubleGameWeak)</th>
+                                                    <th>@Html.DisplayNameFor(model => accountTeamGameWeak.Top_11)</th>
+                                                    <th>@Html.DisplayNameFor(model => accountTeamGameWeak.TansfarePoints)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.AccountTeamGameWeaks)
+                                                {
+                                                    <tr>
+
+                                                        <td>@item.GameWeak.Season.Name</td>
+                                                        <td>@item.GameWeak.Name</td>
+                                                        <td>@(item.BenchBoost ? Localizer.Get("Yes") : Localizer.Get("No"))</td>
+                                                        <td>@(item.FreeHit ? Localizer.Get("Yes") : Localizer.Get("No"))</td>
+                                                        <td>@(item.WildCard ? Localizer.Get("Yes") : Localizer.Get("No"))</td>
+                                                        <td>@item.TotalPoints</td>
+                                                        <td>@item.GlobalRanking</td>
+                                                        <td>@item.CountryRanking</td>
+                                                        <td>@item.FavouriteTeamRanking</td>
+                                                        <td>@item.DoubleGameWeak</td>
+                                                        <td>@item.Top_11</td>
+                                                        <td>@item.TansfarePoints</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    }
+                                    else
+                                    {
+                                        <p>@Localizer.Get("Not Found")</p>
+
+                                    }
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <span class="badge bg-light-primary">@Html.DisplayNameFor(model => Model.AccountTeamPlayers)</span>
+                                    </div>
+                                    <br />
+
+                                    @if (Model.AccountTeamPlayers != null && Model.AccountTeamPlayers.Any())
+                                    {
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>@Html.DisplayNameFor(model => accountTeamPlayer.Player)</th>
+                                                    <th>@Html.DisplayNameFor(model => accountTeamPlayer.Player.Team)</th>
+                                                    <th></th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.AccountTeamPlayers)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <a href="/TeamEntity/Player/Profile/@item.Fk_Player" target="_blank" targe>@item.Player.Name</a>
+                                                        </td>
+                                                        <td>@item.Player.Team.Name</td>
+                                                        <td>
+                                                            <a class="modalbtn" href="/AccountTeamEntity/AccountTeamPlayer/Details/@item.Id">
+                                                                @Localizer.Get("AccountTeamPlayerGameWeaks")
+                                                            </a>
+
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    }
+                                    else
+                                    {
+                                        <p>@Localizer.Get("Not Found")</p>
+
+                                    }
+                                </div>
+
+
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <span class="badge bg-light-primary">@Html.DisplayNameFor(model => Model.PlayerTransfers)</span>
+                                    </div>
+                                    <br />
+
+                                    @if (Model.PlayerTransfers != null && Model.PlayerTransfers.Any())
+                                    {
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>@Html.DisplayNameFor(model => playerTransfer.Player)</th>
+                                                    <th>@Html.DisplayNameFor(model => playerTransfer.Player.Team)</th>
+                                                    <th>@Html.DisplayNameFor(model => playerTransfer.GameWeak.Season)</th>
+                                                    <th>@Html.DisplayNameFor(model => playerTransfer.GameWeak)</th>
+                                                    <th>@Html.DisplayNameFor(model => playerTransfer.TransferTypeEnum)</th>
+                                                    <th>@Html.DisplayNameFor(model => playerTransfer.Cost)</th>
+                                                    <th>@Html.DisplayNameFor(model => playerTransfer.IsFree)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.PlayerTransfers)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <a href="/TeamEntity/Player/Profile/@item.Fk_Player" target="_blank" targe>@item.Player.Name</a>
+                                                        </td>
+                                                        <td>@item.Player.Team.Name</td>
+                                                        <td>@item.GameWeak.Season.Name</td>
+                                                        <td>@item.GameWeak.Name</td>
+                                                        <td>@(item.TransferTypeEnum == Entities.EnumData.LogicEnumData.TransferTypeEnum.Buying ? Localizer.Get("Buying") : Localizer.Get("Selling"))</td>
+                                                        <td>@item.Cost</td>
+                                                        <td>@(item.IsFree ? Localizer.Get("Yes") : Localizer.Get("No"))</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    }
+                                    else
+                                    {
+                                        <p>@Localizer.Get("Not Found")</p>
+
+                                    }
+                                </div>
+
+                                <hr />
+                                <div class="row">
+                                    <div class="col-xl-7 col-12">
+                                        <dl class="row mb-0">
+
+                                            <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.CreatedBy):</dt>
+                                            <dd class="col-sm-8 mb-1">@Model.CreatedBy</dd>
+
+                                            <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.LastModifiedBy):</dt>
+                                            <dd class="col-sm-8 mb-1">@Model.LastModifiedBy</dd>
+
+                                        </dl>
+                                    </div>
+                                    <div class="col-xl-5 col-12">
+                                        <dl class="row mb-0">
+                                            <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.CreatedAt):</dt>
+                                            <dd class="col-sm-8 mb-1">@Model.CreatedAt</dd>
+
+                                            <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.LastModifiedAt):</dt>
+                                            <dd class="col-sm-8 mb-1">@Model.LastModifiedAt</dd>
+                                        </dl>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+</div>
+
+
+@section scripts {
+
+    <script>
+        $('body').on('click', '.modalbtn', function () {
+            event.preventDefault();
+            var href = $(this).attr('href');
+            $('.form-content').load(href);
+            $("#Modal").modal("show");
+        });
+    </script>
+
+}

@@ -29,11 +29,11 @@ namespace FantasyLogicMicroservices.Areas.AccountTeamArea.Controllers
         {
             if (inDebug)
             {
-                _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(fk_GameWeak, fk_AccountTeam);
+                _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(fk_GameWeak, fk_AccountTeam, true);
             }
             else
             {
-                _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(fk_GameWeak, fk_AccountTeam, true));
+                _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(fk_GameWeak, fk_AccountTeam, false));
             }
 
             return Ok();

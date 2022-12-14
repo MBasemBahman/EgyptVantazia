@@ -1,6 +1,4 @@
-﻿using BaseDB;
-
-namespace Repository
+﻿namespace Repository
 {
     public class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {

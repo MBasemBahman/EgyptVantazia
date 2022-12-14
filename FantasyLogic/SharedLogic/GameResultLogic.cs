@@ -5,7 +5,7 @@ using IntegrationWith365.Entities.GameModels;
 
 namespace FantasyLogic.SharedLogic
 {
-    internal class GameResultLogic
+    public class GameResultLogic
     {
         private readonly UnitOfWork _unitOfWork;
         private readonly PlayerScoreCalc _playerScoreCalc;

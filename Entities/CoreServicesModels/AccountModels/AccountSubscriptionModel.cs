@@ -20,7 +20,7 @@ public class AccountSubscriptionParameters : RequestParameters
 
     public string Order_id { get; set; }
     public string DashboardSearch { get; set; }
-    
+
     public DateTime? CreatedAtFrom { get; set; }
     public DateTime? CreatedAtTo { get; set; }
 }
@@ -29,7 +29,7 @@ public class AccountSubscriptionModel : BaseEntity
     [DisplayName(nameof(Account))]
     [ForeignKey(nameof(Account))]
     public int Fk_Account { get; set; }
-    
+
     public AccountModel Account { get; set; }
 
     [DisplayName(nameof(Subscription))]

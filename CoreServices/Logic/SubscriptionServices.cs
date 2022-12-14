@@ -32,10 +32,10 @@ namespace CoreServices.Logic
                            IsActive = a.IsActive,
                            Cost = a.Cost,
                            Discount = a.Discount,
-                           AccountSubscriptionCount = (a.AccountSubscriptions != null && 
+                           AccountSubscriptionCount = (a.AccountSubscriptions != null &&
                                 a.AccountSubscriptions.Count > 0) ? a.AccountSubscriptions.Count : 0,
-                           IsValid = parameters.Fk_Account == 0 || 
-                                     parameters.Fk_Season == 0 || 
+                           IsValid = parameters.Fk_Account == 0 ||
+                                     parameters.Fk_Season == 0 ||
                                      !a.AccountSubscriptions.Any(b => b.Fk_Account == parameters.Fk_Account &&
                                                                       b.Fk_Season == parameters.Fk_Season &&
                                                                       b.IsActive),

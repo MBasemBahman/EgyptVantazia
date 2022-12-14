@@ -81,13 +81,13 @@
 
         private void AddBulkData(int fk_AccountTeam, List<int> fk_GameWeeks)
         {
-            var accountTeamGame = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new Entities.CoreServicesModels.AccountTeamModels.AccountTeamGameWeakParameters
+            Entities.CoreServicesModels.AccountTeamModels.AccountTeamGameWeakModel accountTeamGame = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new Entities.CoreServicesModels.AccountTeamModels.AccountTeamGameWeakParameters
             {
                 Fk_AccountTeam = fk_AccountTeam
             }, false).FirstOrDefault();
             if (accountTeamGame != null)
             {
-                var players = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new Entities.CoreServicesModels.AccountTeamModels.AccountTeamPlayerGameWeakParameters
+                List<Entities.CoreServicesModels.AccountTeamModels.AccountTeamPlayerGameWeakModel> players = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new Entities.CoreServicesModels.AccountTeamModels.AccountTeamPlayerGameWeakParameters
                 {
                     Fk_AccountTeam = fk_AccountTeam,
                     IsTransfer = false
@@ -95,7 +95,7 @@
 
                 if (players.Any() && players.Count == 15)
                 {
-                    foreach (var fk_GameWeek in fk_GameWeeks)
+                    foreach (int fk_GameWeek in fk_GameWeeks)
                     {
                         _unitOfWork.AccountTeam.CreateAccountTeamGameWeak(new Entities.DBModels.AccountTeamModels.AccountTeamGameWeak
                         {
@@ -103,7 +103,7 @@
                             Fk_GameWeak = fk_GameWeek,
                         });
 
-                        foreach (var player in players)
+                        foreach (Entities.CoreServicesModels.AccountTeamModels.AccountTeamPlayerGameWeakModel player in players)
                         {
                             _unitOfWork.AccountTeam.CreateAccountTeamPlayerGameWeak(new Entities.DBModels.AccountTeamModels.AccountTeamPlayerGameWeak
                             {
@@ -116,7 +116,7 @@
                         }
                     }
                     _unitOfWork.Save().Wait();
-                 }
+                }
             }
 
         }

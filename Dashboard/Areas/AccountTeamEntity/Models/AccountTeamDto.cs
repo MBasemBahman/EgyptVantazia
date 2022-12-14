@@ -25,7 +25,7 @@ namespace Dashboard.Areas.AccountTeamEntity.Models
 
         [DisplayName(nameof(AccountUserName))]
         public string AccountUserName { get; set; }
-        
+
         public string DashboardSearch { get; set; }
     }
     public class AccountTeamDto : AccountTeamModel

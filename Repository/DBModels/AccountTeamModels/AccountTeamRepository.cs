@@ -72,8 +72,8 @@ namespace Repository.DBModels.AccountTeamModels
 
         {
             return AccountTeams.Where(a => (id == 0 || a.Id == id) &&
-                                           
-                                           (string.IsNullOrEmpty(dashboardSearch) || 
+
+                                           (string.IsNullOrEmpty(dashboardSearch) ||
                                             a.Id.ToString().Contains(dashboardSearch) ||
                                             a.Account.FullName.Contains(dashboardSearch) ||
                                             a.Season.Name.Contains(dashboardSearch) ||

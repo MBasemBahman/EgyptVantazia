@@ -66,10 +66,10 @@ namespace Repository.DBModels.SeasonModels
 
         public void DeleteDuplicattion()
         {
-            var data = FindByCondition(a => a.Fk_GameWeak == 45 && a.IsDelayed, trackChanges: true)
+            List<TeamGameWeak> data = FindByCondition(a => a.Fk_GameWeak == 45 && a.IsDelayed, trackChanges: true)
                         .Include(a => a.PlayerGameWeaks)
                         .ToList();
-            foreach (var item in data)
+            foreach (TeamGameWeak item in data)
             {
                 DBContext.PlayerGameWeaks.RemoveRange(item.PlayerGameWeaks);
                 Delete(item);

@@ -42,7 +42,7 @@ namespace Entities.CoreServicesModels.SeasonModels
         public bool CurrentGameWeak { get; set; }
 
         public bool NextGameWeak { get; set; }
-        
+
         public string DashboardSearch { get; set; }
     }
 

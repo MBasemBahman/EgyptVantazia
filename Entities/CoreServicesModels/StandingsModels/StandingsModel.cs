@@ -18,7 +18,7 @@ namespace Entities.CoreServicesModels.StandingsModels
         public DateTime? CreatedAtFrom { get; set; }
 
         public DateTime? CreatedAtTo { get; set; }
-        
+
         public string DashboardSearch { get; set; }
     }
 

@@ -37,7 +37,7 @@ namespace API.Areas.PaymentArea.Controllers
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
             SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
 
-            var prevSubscription = _unitOfWork.Subscription.GetSubscriptions(new SubscriptionParameters
+            SubscriptionModel prevSubscription = _unitOfWork.Subscription.GetSubscriptions(new SubscriptionParameters
             {
                 Fk_Account = auth.Fk_Account,
                 Fk_Season = season.Id,

@@ -107,7 +107,7 @@ namespace Entities.CoreServicesModels.AccountModels
         public int Fk_AccountTeam { get; set; }
 
         public AccountTeamModel AccountTeam { get; set; }
-        
+
         [DisplayName(nameof(AccountRefCodeCount))]
         public int AccountRefCodeCount { get; set; }
     }
@@ -156,12 +156,12 @@ namespace Entities.CoreServicesModels.AccountModels
 
         [DisplayName(nameof(RefCode))]
         public string RefCode { get; set; }
-        
+
         [DisplayName(nameof(PhoneNumberTwo))]
         [DataType(DataType.PhoneNumber)]
         [Phone]
         public string PhoneNumberTwo { get; set; }
-        
+
         [DisplayName(nameof(RefCodeCount))]
         public int RefCodeCount { get; set; }
     }

@@ -102,7 +102,7 @@ namespace Dashboard.Areas.AccountSubscriptionEntity.Controllers
             try
             {
 
-                var prevSubscription = _unitOfWork.Subscription.GetSubscriptions(new SubscriptionParameters
+                SubscriptionModel prevSubscription = _unitOfWork.Subscription.GetSubscriptions(new SubscriptionParameters
                 {
                     Fk_Account = model.Fk_Account,
                     Fk_Season = model.Fk_Season,
@@ -190,21 +190,17 @@ namespace Dashboard.Areas.AccountSubscriptionEntity.Controllers
                 await _unitOfWork.Save();
 
 
-                if (returnPage == (int)AccountSubscriptionReturnPageEnum.Index)
-                {
-                    return RedirectToAction("Index", "AccountSubscription", new
+                return returnPage == (int)AccountSubscriptionReturnPageEnum.Index
+                    ? RedirectToAction("Index", "AccountSubscription", new
                     {
                         area = "AccountSubscriptionEntity"
+                    })
+                    : (IActionResult)RedirectToAction("Profile", "Account", new
+                    {
+                        area = "AccountEntity",
+                        id = model.Fk_Account,
+                        returnItem = (int)AccountProfileItems.AccountSubscription
                     });
-                }
-
-                return RedirectToAction("Profile", "Account", new
-                {
-                    area = "AccountEntity",
-                    id = model.Fk_Account,
-                    returnItem = (int)AccountProfileItems.AccountSubscription
-                });
-
             }
             catch (Exception ex)
             {

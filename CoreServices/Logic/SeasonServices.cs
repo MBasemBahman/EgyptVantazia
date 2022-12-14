@@ -329,9 +329,9 @@ namespace CoreServices.Logic
                                    Name = otherLang ? a.GameWeak.Season.SeasonLang.Name : a.GameWeak.Season.Name
                                },
                            },
-                           
+
                            HomeTeamPlayers = a.PlayerGameWeaks
-                               .Where(b => b.Player.Fk_Team == a.Fk_Home).Select(b => 
+                               .Where(b => b.Player.Fk_Team == a.Fk_Home).Select(b =>
                                    new PlayerGameWeak
                                    {
                                        Player = new Player
@@ -342,9 +342,9 @@ namespace CoreServices.Logic
                                        Ranking = b.Ranking,
                                        TotalPoints = b.TotalPoints,
                                    }).ToList(),
-                           
+
                            AwayTeamPlayers = a.PlayerGameWeaks
-                               .Where(b => b.Player.Fk_Team == a.Fk_Away).Select(b => 
+                               .Where(b => b.Player.Fk_Team == a.Fk_Away).Select(b =>
                                    new PlayerGameWeak
                                    {
                                        Player = new Player
@@ -355,7 +355,7 @@ namespace CoreServices.Logic
                                        Ranking = b.Ranking,
                                        TotalPoints = b.TotalPoints,
                                    }).ToList(),
-                           
+
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

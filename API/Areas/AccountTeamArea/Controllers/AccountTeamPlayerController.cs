@@ -29,9 +29,9 @@ namespace API.Areas.AccountTeamArea.Controllers
         public async Task<IEnumerable<AccountTeamPlayerModel>> GetAccountTeamPlayers(
         [FromQuery] AccountTeamPlayerParameters parameters)
         {
-            var currentSeason = _unitOfWork.Season.GetCurrentSeason();
-            var currentGamWeak = _unitOfWork.Season.GetCurrentGameWeak();
-            var nextGameWeak = _unitOfWork.Season.GetNextGameWeak();
+            SeasonModel currentSeason = _unitOfWork.Season.GetCurrentSeason();
+            GameWeakModel currentGamWeak = _unitOfWork.Season.GetCurrentGameWeak();
+            GameWeakModel nextGameWeak = _unitOfWork.Season.GetNextGameWeak();
 
             parameters.IsTransfer = false;
 

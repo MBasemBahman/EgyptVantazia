@@ -71,11 +71,11 @@ namespace Repository.DBModels.PlayerScoreModels
             string dashboardSearch)
         {
             return PlayerGameWeaks.Where(a => (id == 0 || a.Id == id) &&
-                                              
-                                              (string.IsNullOrEmpty(dashboardSearch) || 
+
+                                              (string.IsNullOrEmpty(dashboardSearch) ||
                                                    a.Id.ToString().Contains(dashboardSearch) ||
-                                                   a.Player.Name.Contains(dashboardSearch) ) &&
-                                              
+                                                   a.Player.Name.Contains(dashboardSearch)) &&
+
                                               (fk_TeamGameWeak == 0 || a.Fk_TeamGameWeak == fk_TeamGameWeak) &&
                                               (fk_Home == 0 || a.TeamGameWeak.Fk_Home == fk_Home) &&
                                               (fk_Away == 0 || a.TeamGameWeak.Fk_Away == fk_Away) &&

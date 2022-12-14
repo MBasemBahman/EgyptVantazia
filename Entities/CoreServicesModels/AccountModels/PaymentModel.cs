@@ -7,7 +7,7 @@ namespace Entities.CoreServicesModels.AccountModels
         public int Fk_Account { get; set; }
 
         public string TransactionId { get; set; }
-        
+
         public string DashboardSearch { get; set; }
     }
 

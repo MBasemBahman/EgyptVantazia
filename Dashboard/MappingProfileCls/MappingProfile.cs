@@ -96,7 +96,7 @@ namespace Dashboard.MappingProfileCls
             _ = CreateMap<AccountFilter, AccountParameters>();
 
             #endregion
-            
+
             #region AccountSubscription
             _ = CreateMap<AccountSubscription, AccountSubscriptionCreateOrEditModel>();
 
@@ -107,9 +107,9 @@ namespace Dashboard.MappingProfileCls
             _ = CreateMap<AccountSubscriptionFilter, AccountSubscriptionParameters>();
 
             #endregion
-            
+
             #region Payment
-            
+
             _ = CreateMap<PaymentModel, PaymentDto>();
 
             _ = CreateMap<PaymentFilter, PaymentParameters>();

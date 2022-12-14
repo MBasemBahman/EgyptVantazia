@@ -8,7 +8,6 @@ using FantasyLogic.DataMigration.PlayerScoreData;
 using FantasyLogic.DataMigration.StandingsData;
 using IntegrationWith365.Entities.GamesModels;
 using IntegrationWith365.Helpers;
-using static Contracts.EnumData.DBModelsEnum;
 
 namespace FantasyLogic.DataMigration.GamesData
 {
@@ -84,7 +83,7 @@ namespace FantasyLogic.DataMigration.GamesData
             DateTime startTime = game.StartTimeVal.AddHours(2);
             bool isDelayed = false;
 
-            var checkGameWeek = _unitOfWork.Season.GetGameWeak(startTime);
+            GameWeak checkGameWeek = _unitOfWork.Season.GetGameWeak(startTime);
 
             if (checkGameWeek != null && checkGameWeek.Id != fk_GameWeak)
             {
@@ -225,7 +224,7 @@ namespace FantasyLogic.DataMigration.GamesData
 
         public async Task TransferAccountTeamPlayers(int fk_AccounTeam, int fk_CurrentGameWeak, int fk_PrevGameWeak, int prev_365_GameWeakId, int fk_Season)
         {
-            var players = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
+            int players = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
             {
                 Fk_GameWeak = fk_PrevGameWeak,
                 Fk_AccountTeam = fk_AccounTeam,

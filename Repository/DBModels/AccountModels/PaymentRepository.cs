@@ -37,13 +37,13 @@ namespace Repository.DBModels.AccountModels
             string dashboardSearch)
         {
             return Payments.Where(a => (id == 0 || a.Id == id) &&
-                                       
-                                       (string.IsNullOrEmpty(dashboardSearch) || 
+
+                                       (string.IsNullOrEmpty(dashboardSearch) ||
                                             a.Account.FullName.Contains(dashboardSearch) ||
                                             a.Id.ToString().Contains(dashboardSearch) ||
                                             a.Amount.ToString().Contains(dashboardSearch) ||
                                             a.TransactionId.Contains(dashboardSearch)) &&
-                                       
+
                                        (fk_Account == 0 || a.Fk_Account == fk_Account) &&
                                        (string.IsNullOrEmpty(transactionId) || a.TransactionId == transactionId));
 

@@ -49,8 +49,8 @@ namespace FantasyLogic.Calculations
             {
                 if (inDebug)
                 {
-                    AccountTeamGameWeakCalculations(gameWeak, fk_Season, fk_AccountTeam, jobId, inDebug: true);
-                    UpdateAccountTeamGameWeakRanking(gameWeak, fk_Season, jobId);
+                    _ = AccountTeamGameWeakCalculations(gameWeak, fk_Season, fk_AccountTeam, jobId, inDebug: true);
+                    _ = UpdateAccountTeamGameWeakRanking(gameWeak, fk_Season, jobId);
                 }
                 else
                 {
@@ -88,7 +88,7 @@ namespace FantasyLogic.Calculations
 
             if (inDebug)
             {
-                UpdateAccountTeamRanking(fk_Season, jobId);
+                _ = UpdateAccountTeamRanking(fk_Season, jobId);
             }
             else
             {
@@ -118,7 +118,7 @@ namespace FantasyLogic.Calculations
             {
                 if (inDebug)
                 {
-                    AccountTeamPlayersCalculations(accountTeamGameWeak.Id, accountTeamGameWeak.Fk_AccountTeam, gameWeak, fk_Season, jobId, inDebug: true);
+                    _ = AccountTeamPlayersCalculations(accountTeamGameWeak.Id, accountTeamGameWeak.Fk_AccountTeam, gameWeak, fk_Season, jobId, inDebug: true);
                 }
                 else
                 {
@@ -139,7 +139,7 @@ namespace FantasyLogic.Calculations
             double totalPoints = 0;
             double benchPoints = 0;
 
-            var players = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
+            List<AccountTeamPlayerGameWeakDto> players = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
             {
                 Fk_AccountTeam = fk_AccountTeam,
                 Fk_Season = fk_Season,
@@ -193,17 +193,10 @@ namespace FantasyLogic.Calculations
             }
             else
             {
-                if (accountTeamGameWeak.BenchBoost)
-                {
-                    playerPrimaryAndPlayed = players.Count(a => a.IsParticipate);
-                }
-                else
-                {
-                    playerPrimaryAndPlayed = players.Count(a => a.IsPrimary && a.IsPlayed);
-                }
+                playerPrimaryAndPlayed = accountTeamGameWeak.BenchBoost ? players.Count(a => a.IsParticipate) : players.Count(a => a.IsPrimary && a.IsPlayed);
             }
 
-            foreach (var player in players)
+            foreach (AccountTeamPlayerGameWeakDto player in players)
             {
                 havePointsInTotal = true;
                 int captianPoints = 1;
@@ -569,7 +562,7 @@ namespace FantasyLogic.Calculations
 
         public string UpdateAccountTeamRanking(int fk_Season, string jobId)
         {
-            var currentGameWeak = _unitOfWork.Season.GetCurrentGameWeak();
+            GameWeakModel currentGameWeak = _unitOfWork.Season.GetCurrentGameWeak();
 
             List<AccountTeamRanking> accountTeamRankings = new();
             int ranking = 1;

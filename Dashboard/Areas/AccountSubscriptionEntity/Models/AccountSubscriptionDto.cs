@@ -1,10 +1,9 @@
 ﻿using Dashboard.Areas.AccountEntity.Models;
-using Dashboard.Areas.PlayerTransferEntity.Models;
 using Dashboard.Areas.SeasonEntity.Models;
-using Entities.DBModels.SeasonModels;
-using System.ComponentModel;
 using Dashboard.Areas.SubscriptionEntity.Models;
 using Entities.CoreServicesModels.AccountModels;
+using Entities.DBModels.SeasonModels;
+using System.ComponentModel;
 
 namespace Dashboard.Areas.AccountSubscriptionEntity.Models
 {
@@ -28,7 +27,7 @@ namespace Dashboard.Areas.AccountSubscriptionEntity.Models
 
         [DisplayName(nameof(AccountUserName))]
         public string AccountUserName { get; set; }
-        
+
         public string DashboardSearch { get; set; }
     }
     public class AccountSubscriptionDto : AccountSubscriptionModel

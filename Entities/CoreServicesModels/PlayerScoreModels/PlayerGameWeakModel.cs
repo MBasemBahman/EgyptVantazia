@@ -34,7 +34,7 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
         public bool? IsEnded { get; set; }
 
         public bool IncludeScore { get; set; }
-        
+
         public string DashboardSearch { get; set; }
     }
 

@@ -1,7 +1,5 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-#nullable disable
 
 namespace DAL.Migrations
 {
@@ -9,7 +7,7 @@ namespace DAL.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
+            _ = migrationBuilder.CreateTable(
                 name: "Audits",
                 columns: table => new
                 {
@@ -24,10 +22,10 @@ namespace DAL.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Audits", x => x.Id);
+                    _ = table.PrimaryKey("PK_Audits", x => x.Id);
                 });
 
-            migrationBuilder.UpdateData(
+            _ = migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 1,
@@ -37,10 +35,10 @@ namespace DAL.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
+            _ = migrationBuilder.DropTable(
                 name: "Audits");
 
-            migrationBuilder.UpdateData(
+            _ = migrationBuilder.UpdateData(
                 table: "Users",
                 keyColumn: "Id",
                 keyValue: 1,

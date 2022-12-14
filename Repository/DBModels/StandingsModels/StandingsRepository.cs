@@ -72,8 +72,8 @@ namespace Repository.DBModels.StandingsModels
             string dashboardSearch)
         {
             return Standingss.Where(a => (id == 0 || a.Id == id) &&
-                                         
-                                         (string.IsNullOrEmpty(dashboardSearch) || 
+
+                                         (string.IsNullOrEmpty(dashboardSearch) ||
                                           a.Id.ToString().Contains(dashboardSearch) ||
                                           a.Team.Name.Contains(dashboardSearch) ||
                                           a.Season.Name.Contains(dashboardSearch) ||

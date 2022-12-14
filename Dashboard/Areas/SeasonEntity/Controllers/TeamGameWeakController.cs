@@ -78,31 +78,31 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
         public IActionResult ScoreDetails(int fk_Player, int fk_TeamGameWeak)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
-        
+
             List<PlayerGameWeakScoreDto> data = _mapper.Map<List<PlayerGameWeakScoreDto>>
             (_unitOfWork.PlayerScore.GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
-               {
-                   Fk_Player = fk_Player,
-                   Fk_TeamGameWeak = fk_TeamGameWeak
-               }, otherLang).ToList());
-        
+            {
+                Fk_Player = fk_Player,
+                Fk_TeamGameWeak = fk_TeamGameWeak
+            }, otherLang).ToList());
+
             return View(data);
         }
-        
+
         public IActionResult ScoreStateDetails(int fk_Player, int fk_GameWeak)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
-        
+
             List<PlayerGameWeakScoreStateDto> data = _mapper.Map<List<PlayerGameWeakScoreStateDto>>
             (_unitOfWork.PlayerState.GetPlayerGameWeakScoreStates(new PlayerGameWeakScoreStateParameters
             {
                 Fk_Player = fk_Player,
                 Fk_GameWeak = fk_GameWeak
             }, otherLang).ToList());
-        
+
             return View(data);
         }
-        
+
         public IActionResult Profile(int id, int returnItem = (int)TeamGameWeakProfileItems.Details)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];

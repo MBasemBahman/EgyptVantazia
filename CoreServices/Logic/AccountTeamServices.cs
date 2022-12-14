@@ -598,8 +598,8 @@ namespace CoreServices.Logic
                                                     }
                                                 })
                                                 .ToList() : null,
-                               NextMatch = (parameters.IncludeNextMatch ?
-                               (_dBContext.Set<TeamGameWeak>()
+                               NextMatch = parameters.IncludeNextMatch ?
+                               _dBContext.Set<TeamGameWeak>()
                                           .Where(b => b.StartTime >= DateTime.UtcNow.AddHours(2) &&
                                                       (b.Fk_Away == a.Player.Fk_Team || b.Fk_Home == a.Player.Fk_Team))
                                           .OrderBy(b => b.StartTime)
@@ -614,9 +614,9 @@ namespace CoreServices.Logic
                                               ShortName = otherLang ? b.Away.TeamLang.ShortName : b.Away.ShortName,
                                               IsAwayTeam = true
                                           })
-                                          .FirstOrDefault()) : null),
-                               NextMatches = (parameters.IncludeNextMatch ?
-                               (_dBContext.Set<TeamGameWeak>()
+                                          .FirstOrDefault() : null,
+                               NextMatches = parameters.IncludeNextMatch ?
+                               _dBContext.Set<TeamGameWeak>()
                                           .Where(b => b.StartTime >= DateTime.UtcNow.AddHours(2) &&
                                                       (parameters.NextDeadLine == null || b.StartTime <= parameters.NextDeadLine) &&
                                                       (b.Fk_Away == a.Player.Fk_Team || b.Fk_Home == a.Player.Fk_Team))
@@ -632,7 +632,7 @@ namespace CoreServices.Logic
                                               ShortName = otherLang ? b.Away.TeamLang.ShortName : b.Away.ShortName,
                                               IsAwayTeam = true
                                           })
-                                          .ToList()) : null),
+                                          .ToList() : null,
                            },
                            AccountTeam = new AccountTeamModel
                            {

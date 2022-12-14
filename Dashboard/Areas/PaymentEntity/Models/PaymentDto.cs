@@ -1,10 +1,6 @@
 ﻿using Dashboard.Areas.AccountEntity.Models;
-using Dashboard.Areas.PlayerTransferEntity.Models;
-using Dashboard.Areas.SeasonEntity.Models;
-using Entities.DBModels.SeasonModels;
-using System.ComponentModel;
-using Dashboard.Areas.SubscriptionEntity.Models;
 using Entities.CoreServicesModels.AccountModels;
+using System.ComponentModel;
 
 namespace Dashboard.Areas.PaymentEntity.Models
 {
@@ -12,7 +8,7 @@ namespace Dashboard.Areas.PaymentEntity.Models
     {
         public int Id { get; set; }
         public int Fk_Account { get; set; }
-        
+
         public string DashboardSearch { get; set; }
     }
     public class PaymentDto : PaymentModel

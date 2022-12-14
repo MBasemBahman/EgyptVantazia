@@ -42,7 +42,7 @@ namespace Dashboard.Areas.PlayerStateEntity.Controllers
             SetViewDataValues();
             return View(filter);
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> LoadTable([FromBody] PlayerGameWeakScoreStateFilter dtParameters)
         {

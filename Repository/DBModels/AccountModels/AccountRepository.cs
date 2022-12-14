@@ -104,8 +104,8 @@ namespace Repository.DBModels.AccountModels
                                        (string.IsNullOrWhiteSpace(phone) || a.User.PhoneNumber.ToLower().Contains(phone)) &&
                                        (string.IsNullOrWhiteSpace(email) || a.User.EmailAddress.ToLower().Contains(email)) &&
                                        (string.IsNullOrEmpty(UserName) || a.User.UserName.ToLower() == UserName.ToLower()) &&
-                                       
-                                       (fk_Subscription == 0 || (a.AccountSubscriptions != null && 
+
+                                       (fk_Subscription == 0 || (a.AccountSubscriptions != null &&
                                             a.AccountSubscriptions.Any(a => a.Fk_Subscription == fk_Subscription))) &&
 
                                        (lastActiveFrom == null || (a.User.RefreshTokens.Any() && a.User.RefreshTokens.OrderByDescending(b => b.Id).Select(a => a.CreatedAt).First() >= lastActiveFrom)) &&

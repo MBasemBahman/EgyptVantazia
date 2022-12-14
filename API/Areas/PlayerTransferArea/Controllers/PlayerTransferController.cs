@@ -5,7 +5,6 @@ using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.PlayersTransfersModels;
-using System.Linq;
 using static Entities.EnumData.LogicEnumData;
 
 namespace API.Areas.PlayerTransferArea.Controllers

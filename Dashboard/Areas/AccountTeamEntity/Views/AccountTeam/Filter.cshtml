@@ -15,7 +15,6 @@
     <div class="card-body mt-2">
         <form asp-action="LoadTable" class="filter">
             <div class="row g-1 mb-md-1">
-                
                 <div class="col-md-6">
                     <label asp-for="AccountFullName" class="form-label"></label>
                     <div class="mb-0">
@@ -32,10 +31,18 @@
             </div>
 
             <div class="row g-1 mb-md-1">
+                <div class="col-md-12 col-12">
+                    <div class="mb-1">
+                        <label asp-for="Fk_GameWeak" class="form-label"></label>
+                        <select asp-for="Fk_GameWeak" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["GameWeak"] as Dictionary<string,string>,"Key","Value"))">
+                            <option value="0">@Localizer.Get("All")</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="col-md-6 col-12">
                     <div class="mb-1">
                         <label asp-for="Fk_Season" class="form-label"></label>
-                        <select asp-for="Fk_Season" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["Season"] as Dictionary<string,string>,"Key","Value"))">
+                        <select asp-for="Fk_Season" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["Season"] as Dictionary<string, string>, "Key", "Value"))">
                             <option value="0">@Localizer.Get("All")</option>
                         </select>
                     </div>
@@ -46,6 +53,19 @@
                         <input type="text" class="form-control dt-date flatpickr-range dt-input flatpickr-input active" data-column="1" placeholder="@Localizer.Get("From Date To Date")" data-column-index="0" name="dt_date" readonly="readonly">
                         <input type="hidden" class="form-control dt-date start_date dt-input" data-column="1" data-column-index="0" asp-for="CreatedAtFrom">
                         <input type="hidden" class="form-control dt-date end_date dt-input" asp-for="CreatedAtTo" data-column="1" data-column-index="0">
+                    </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    <div class="mb-1">
+                        <label asp-for="PointsFrom" class="form-label">@Localizer.Get("PointsFrom")</label>
+                        <input type="text" class="form-control" asp-for="PointsFrom">
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-12">
+                    <div class="mb-1">
+                        <label asp-for="PointsTo" class="form-label">@Localizer.Get("PointsTo")</label>
+                        <input type="text" class="form-control" asp-for="PointsTo">
                     </div>
                 </div>
 

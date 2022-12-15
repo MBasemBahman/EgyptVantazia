@@ -15,6 +15,8 @@ namespace Repository.DBModels.AccountTeamModels
                    .Filter(parameters.Id,
                            parameters.Fk_AccountTeam,
                            parameters.Fk_GameWeak,
+                           parameters.PointsFrom,
+                           parameters.PointsTo,
                            parameters.Fk_Season,
                            parameters.Fk_Account,
                            parameters._365_GameWeakId,
@@ -71,6 +73,8 @@ namespace Repository.DBModels.AccountTeamModels
             int id,
             int Fk_AccountTeam,
             int Fk_GameWeak,
+            double? pointsFrom,
+            double? pointsTo,
             int Fk_Season,
             int Fk_Account,
             string _365_GameWeakId,
@@ -99,6 +103,8 @@ namespace Repository.DBModels.AccountTeamModels
                                                    (Fk_AccountTeam == 0 || a.Fk_AccountTeam == Fk_AccountTeam) &&
                                                    (GameWeakFrom == 0 || a.GameWeak._365_GameWeakIdValue >= GameWeakFrom) &&
                                                    (GameWeakTo == 0 || a.GameWeak._365_GameWeakIdValue <= GameWeakTo) &&
+                                                   (pointsFrom == null || a.TotalPoints >= pointsFrom) &&
+                                                   (pointsTo == null || a.TotalPoints <= pointsTo) &&
                                                    (BenchBoost == null || a.BenchBoost == BenchBoost) &&
                                                    (FreeHit == null || a.FreeHit == FreeHit) &&
                                                    (WildCard == null || a.WildCard == WildCard) &&

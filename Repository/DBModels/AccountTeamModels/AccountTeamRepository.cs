@@ -15,6 +15,9 @@ namespace Repository.DBModels.AccountTeamModels
             return FindByCondition(a => true, trackChanges)
                    .Filter(parameters.Id,
                            parameters.Fk_Account,
+                           parameters.Fk_GameWeak,
+                           parameters.PointsFrom,
+                           parameters.PointsTo,
                            parameters.Fk_User,
                            parameters.CurrentSeason,
                            parameters.Fk_PrivateLeague,
@@ -57,6 +60,9 @@ namespace Repository.DBModels.AccountTeamModels
             this IQueryable<AccountTeam> AccountTeams,
             int id,
             int Fk_Account,
+            int Fk_GameWeak,
+            double? pointsFrom,
+            double? pointsTo,
             int Fk_User,
             bool? CurrentSeason,
             int Fk_PrivateLeague,
@@ -79,6 +85,10 @@ namespace Repository.DBModels.AccountTeamModels
                                             a.Season.Name.Contains(dashboardSearch) ||
                                             a.Name.Contains(dashboardSearch)) &&
 
+                                           (Fk_GameWeak == 0 || a.AccountTeamGameWeaks.Any(a => a.Fk_GameWeak == Fk_GameWeak) ) &&
+                                           (pointsFrom == null || a.TotalPoints >= pointsFrom) &&
+                                           (pointsTo == null || a.TotalPoints <= pointsTo) &&
+                                           
                                            (CurrentSeason == null || a.Season.IsCurrent == CurrentSeason) &&
                                            (FromTotalPoints == null || a.TotalPoints >= FromTotalPoints) &&
                                            (Fk_Country == 0 || a.Account.Fk_Country == Fk_Country) &&

@@ -33,10 +33,18 @@
             </div>
 
             <div class="row g-1 mb-md-1">
+                <div class="col-md-12 col-12">
+                    <div class="mb-1">
+                        <label asp-for="Fk_GameWeak" class="form-label"></label>
+                        <select asp-for="Fk_GameWeak" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["GameWeak"] as Dictionary<string,string>,"Key","Value"))">
+                            <option value="0">@Localizer.Get("All")</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="col-md-6 col-12">
                     <div class="mb-1">
                         <label asp-for="Fk_Season" class="form-label"></label>
-                        <select asp-for="Fk_Season" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["Season"] as Dictionary<string,string>,"Key","Value"))">
+                        <select asp-for="Fk_Season" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["Season"] as Dictionary<string, string>, "Key", "Value"))">
                             <option value="0">@Localizer.Get("All")</option>
                         </select>
                     </div>
@@ -49,7 +57,19 @@
                         <input type="hidden" class="form-control dt-date end_date dt-input" asp-for="CreatedAtTo" data-column="1" data-column-index="0">
                     </div>
                 </div>
-
+                <div class="col-md-6 col-12">
+                    <div class="mb-1">
+                        <label asp-for="PointsFrom" class="form-label">@Localizer.Get("PointsFrom")</label>
+                        <input type="text" class="form-control" asp-for="PointsFrom">
+                    </div>
+                </div>
+    
+                <div class="col-md-6 col-12">
+                    <div class="mb-1">
+                        <label asp-for="PointsTo" class="form-label">@Localizer.Get("PointsTo")</label>
+                        <input type="text" class="form-control" asp-for="PointsTo">
+                    </div>
+                </div>
             </div>
             <hr />
             <br />

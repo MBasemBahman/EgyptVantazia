@@ -14,6 +14,8 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public int Fk_Season { get; set; }
         public int Fk_GameWeak { get; set; }
 
+        public double? PointsFrom { get; set; }
+        public double? PointsTo { get; set; }
         public bool? CurrentSeason { get; set; }
 
         public int Fk_PrivateLeague { get; set; }

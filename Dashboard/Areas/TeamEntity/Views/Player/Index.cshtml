@@ -212,8 +212,8 @@ else
                         contentType: "application/json",
                         dataType: "json",
                         data: function (data) {
-                           data.Fk_Team = $("#Fk_Team").length > 0 ? $("#Fk_Team").val() : @Model.Fk_Team;
-                           data.Fk_GameWeak = $("#Fk_GameWeak").length > 0 ? $("#Fk_GameWeak").val() : @Model.Fk_GameWeak;
+                            data.Fk_Team = $("#Fk_Team").length > 0 ? $("#Fk_Team").val() : @Model.Fk_Team;
+                            data.Fk_GameWeak = $("#Fk_GameWeak").length > 0 ? $("#Fk_GameWeak").val() : @Model.Fk_GameWeak;
                             data.Fk_PlayerPosition = $("#Fk_PlayerPosition").length > 0 ? $("#Fk_PlayerPosition").val() : @Model.Fk_PlayerPosition;
                             data.CreatedAtFrom = $("#CreatedAtFrom").length > 0 ? $("#CreatedAtFrom").val() : '@Model.CreatedAtFrom';
                             data.CreatedAtTo = $("#CreatedAtTo").length > 0 ? $("#CreatedAtTo").val() : '@Model.CreatedAtTo';

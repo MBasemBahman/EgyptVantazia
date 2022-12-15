@@ -85,11 +85,23 @@
                                                 <th>@Html.DisplayNameFor(model => row.AccountTeam.Account)</th>
                                                 <th>@Html.DisplayNameFor(model => row.AccountTeam.Season)</th>
                                                 <th>@Html.DisplayNameFor(model => row.AccountTeam.Name)</th>
+                                                <th>@Html.DisplayNameFor(model => row.GameWeak)</th>
                                                 <th>@Html.DisplayNameFor(model => row.TotalPoints)</th>
+                                                <th>@Html.DisplayNameFor(model => row.SeasonTotalPoints)</th>
+                                                <th>@Html.DisplayNameFor(model => row.PrevPoints)</th>
+                                                <th>@Html.DisplayNameFor(model => row.TansfarePoints)</th>
+                                                <th>@Html.DisplayNameFor(model => row.BenchPoints)</th>
+                                                <th>@Html.DisplayNameFor(model => row.BenchBoost)</th>
+                                                <th>@Html.DisplayNameFor(model => row.FreeHit)</th>
+                                                <th>@Html.DisplayNameFor(model => row.WildCard)</th>
+                                                @* <th>@Html.DisplayNameFor(model => row.DoubleGameWeak)</th> *@
+                                                <th>@Html.DisplayNameFor(model => row.Top_11)</th>
+                                                @* <th>@Html.DisplayNameFor(model => row.TripleCaptain)</th> *@
                                                 <th>@Html.DisplayNameFor(model => row.AccountTeam.TotalMoney)</th>
                                                 <th>@Html.DisplayNameFor(model => row.AccountTeam.IsVip)</th>
                                                 <th>@Html.DisplayNameFor(model => row.GlobalRanking)</th>
                                                 <th>@Html.DisplayNameFor(model => row.CountryRanking)</th>
+                                                <th>@Html.DisplayNameFor(model => row.SeasonGlobalRanking)</th>
                                                 <th>@Html.DisplayNameFor(model => row.FavouriteTeamRanking)</th>
                                                 <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
                                                 <th>
@@ -134,11 +146,23 @@ else
                                     <th>@Html.DisplayNameFor(model => row.AccountTeam.Account)</th>
                                     <th>@Html.DisplayNameFor(model => row.AccountTeam.Season)</th>
                                     <th>@Html.DisplayNameFor(model => row.AccountTeam.Name)</th>
+                                    <th>@Html.DisplayNameFor(model => row.GameWeak)</th>
                                     <th>@Html.DisplayNameFor(model => row.TotalPoints)</th>
+                                    <th>@Html.DisplayNameFor(model => row.SeasonTotalPoints)</th>
+                                    <th>@Html.DisplayNameFor(model => row.PrevPoints)</th>
+                                    <th>@Html.DisplayNameFor(model => row.TansfarePoints)</th>
+                                    <th>@Html.DisplayNameFor(model => row.BenchPoints)</th>
+                                    <th>@Html.DisplayNameFor(model => row.BenchBoost)</th>
+                                    <th>@Html.DisplayNameFor(model => row.FreeHit)</th>
+                                    <th>@Html.DisplayNameFor(model => row.WildCard)</th>
+                                    @* <th>@Html.DisplayNameFor(model => row.DoubleGameWeak)</th> *@
+                                    <th>@Html.DisplayNameFor(model => row.Top_11)</th>
+                                    @* <th>@Html.DisplayNameFor(model => row.TripleCaptain)</th> *@
                                     <th>@Html.DisplayNameFor(model => row.AccountTeam.TotalMoney)</th>
                                     <th>@Html.DisplayNameFor(model => row.AccountTeam.IsVip)</th>
                                     <th>@Html.DisplayNameFor(model => row.GlobalRanking)</th>
                                     <th>@Html.DisplayNameFor(model => row.CountryRanking)</th>
+                                    <th>@Html.DisplayNameFor(model => row.SeasonGlobalRanking)</th>
                                     <th>@Html.DisplayNameFor(model => row.FavouriteTeamRanking)</th>
                                     <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
                                     <th>
@@ -164,6 +188,7 @@ else
             var dt_ajax_table = $('.datatables');
             if (dt_ajax_table.length) {
                 var dt_ajax = dt_ajax_table.dataTable({
+                    scrollX: true,
                     // Ajax Filter
                     ajax: {
                         url: '@Url.Action("LoadTable")',
@@ -173,12 +198,15 @@ else
                         data: function (data) {
                             data.Fk_Account = @Model.Fk_Account;
                             data.Fk_Season = $("#Fk_Season").length > 0 ? $("#Fk_Season").val() : @Model.Fk_Season
+                            data.Fk_GameWeak = $("#Fk_GameWeak").length > 0 ? $("#Fk_GameWeak").val() : @Model.Fk_GameWeak
                             data.CreatedAtFrom = $("#CreatedAtFrom").length > 0 ? $("#CreatedAtFrom").val() : '@Model.CreatedAtFrom'
                             data.CreatedAtTo = $("#CreatedAtTo").length > 0 ? $("#CreatedAtTo").val() : '@Model.CreatedAtTo'
                             data.AccountUserName = $("#AccountUserName").length > 0 ? $("#AccountUserName").val() : '@Model.AccountUserName'
                             data.AccountFullName = $("#AccountFullName").length > 0 ? $("#AccountFullName").val() : '@Model.AccountFullName'
                             data.DashboardSearch = $("#DataTables_Table_0_filter input").val();
-                            
+                            data.PointsFrom = $("#PointsFrom").length > 0 ? $("#PointsFrom").val() : null;
+                            data.PointsTo = $("#PointsTo").length > 0 ? $("#PointsTo").val() : null;
+                                                        
                             return JSON.stringify(data);
                         }
                     },
@@ -245,7 +273,18 @@ else
 
                             }
                         },
+                        { data: "gameWeak.name", orderable: false },
                         { data: "totalPoints" },
+                        { data: "seasonTotalPoints" },
+                        { data: "prevPoints" },
+                        { data: "tansfarePoints" },
+                        { data: "benchPoints" },
+                        { data: "benchBoost" },
+                        { data: "freeHit" },
+                        { data: "wildCard" },
+                        // { data: "doubleGameWeak" },
+                        { data: "top_11" },
+                        // { data: "tripleCaptain" },
                         { data: "accountTeam.totalMoney", orderable: false },
                         { data: "accountTeam.isVip", orderable: false, render: function(data) {
                           if (data) {
@@ -256,6 +295,7 @@ else
                         } },
                         { data: "globalRanking" },
                         { data: "countryRanking" },
+                        { data: "seasonGlobalRanking" },
                         { data: "favouriteTeamRanking" },
                         { data: "createdAt" },
                         { data: "id" },

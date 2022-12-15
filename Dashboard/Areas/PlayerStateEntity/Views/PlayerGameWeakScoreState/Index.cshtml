@@ -190,6 +190,7 @@ else
                         data: function (data) {
                             data.Id = @Model.Id;
                             data.Fk_Players = $("#Fk_Players").length > 0 ? $("#Fk_Players").val() : null;
+                            data.Fk_GameWeaks = $("#Fk_GameWeaks").length > 0 ? $("#Fk_GameWeaks").val() : null;
                             data.Fk_ScoreStates = $("#Fk_ScoreStates").length > 0 ? $("#Fk_ScoreStates").val() : null;
                             data.Fk_GameWeak = $("#Fk_GameWeak").length > 0 ? $("#Fk_GameWeak").val() : null;
                             data.PointsFrom = $("#PointsFrom").length > 0 ? $("#PointsFrom").val() : null;

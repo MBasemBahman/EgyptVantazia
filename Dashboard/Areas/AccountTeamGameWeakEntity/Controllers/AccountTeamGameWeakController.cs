@@ -99,6 +99,7 @@ namespace Dashboard.Areas.AccountTeamGameWeakEntity.Controllers
 
             ViewData["Season"] = _unitOfWork.Season.GetSeasonLookUp(new SeasonParameters(), otherLang);
             ViewData["Player"] = _unitOfWork.Team.GetPlayerLookUp(new PlayerParameters(), otherLang);
+            ViewData["GameWeak"] = _unitOfWork.Season.GetGameWeakLookUp(new GameWeakParameters(), otherLang);
             ViewData["ProfileLayOut"] = ProfileLayOut;
         }
 

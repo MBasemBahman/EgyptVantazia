@@ -184,11 +184,15 @@ else
                         data: function (data) {
                             data.Fk_Account = @Model.Fk_Account;
                             data.Fk_Season = $("#Fk_Season").length > 0 ? $("#Fk_Season").val() : @Model.Fk_Season
+                            data.Fk_GameWeak = $("#Fk_GameWeak").length > 0 ? $("#Fk_GameWeak").val() : @Model.Fk_GameWeak
                             data.CreatedAtFrom = $("#CreatedAtFrom").length > 0 ? $("#CreatedAtFrom").val() : '@Model.CreatedAtFrom'
                             data.CreatedAtTo = $("#CreatedAtTo").length > 0 ? $("#CreatedAtTo").val() : '@Model.CreatedAtTo'
                             data.AccountUserName = $("#AccountUserName").length > 0 ? $("#AccountUserName").val() : '@Model.AccountUserName'
                             data.AccountFullName = $("#AccountFullName").length > 0 ? $("#AccountFullName").val() : '@Model.AccountFullName'
                             data.DashboardSearch = $("#DataTables_Table_0_filter input").val();
+                            data.PointsFrom = $("#PointsFrom").length > 0 ? $("#PointsFrom").val() : null;
+                            data.PointsTo = $("#PointsTo").length > 0 ? $("#PointsTo").val() : null;
+                                                        
                             return JSON.stringify(data);
                         }
                     },

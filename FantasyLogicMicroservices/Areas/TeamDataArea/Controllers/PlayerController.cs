@@ -35,9 +35,6 @@ namespace FantasyLogicMicroservices.Areas.TeamDataArea.Controllers
         [Route(nameof(UpdatePlayersStates))]
         public IActionResult UpdatePlayersStates([FromQuery] int fk_GameWeak, [FromQuery] string _365_MatchId)
         {
-            //_fantasyUnitOfWork.GamesDataHelper.TransferAccountTeamPlayers(50, 55, 2);
-            //_fantasyUnitOfWork.PlayerStateCalc.UpdateTop15(45, 0).Wait();
-
             _fantasyUnitOfWork.PlayerStateCalc.RunPlayersStateCalculations(fk_GameWeak, _365_MatchId);
 
             return Ok();

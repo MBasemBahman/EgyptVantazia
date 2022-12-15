@@ -19,12 +19,15 @@ namespace FantasyLogic.Calculations
         public void RunAccountTeamsCalculations(int fk_GameWeak, int fk_AccountTeam, bool inDebug = false)
         {
             SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
+            GameWeakModel nextGameWeek = _unitOfWork.Season.GetNextGameWeak();
+
 
             List<GameWeakModel> gameWeaks = _unitOfWork.Season
                                              .GetGameWeaks(new GameWeakParameters
                                              {
                                                  Fk_Season = season.Id,
-                                                 Id = fk_GameWeak
+                                                 Id = fk_GameWeak,
+                                                 GameWeakTo = nextGameWeek._365_GameWeakIdValue
                                              }, otherLang: false)
                                              .Select(a => new GameWeakModel
                                              {
@@ -55,8 +58,8 @@ namespace FantasyLogic.Calculations
                 else
                 {
                     jobId = jobId.IsExisting()
-                            ? BackgroundJob.ContinueJobWith(jobId, () => AccountTeamGameWeakCalculations(gameWeak, fk_AccountTeam, fk_Season, jobId, false))
-                            : BackgroundJob.Enqueue(() => AccountTeamGameWeakCalculations(gameWeak, fk_AccountTeam, fk_Season, jobId, false));
+                            ? BackgroundJob.ContinueJobWith(jobId, () => AccountTeamGameWeakCalculations(gameWeak, fk_Season, fk_AccountTeam, jobId, false))
+                            : BackgroundJob.Enqueue(() => AccountTeamGameWeakCalculations(gameWeak, fk_Season, fk_AccountTeam, jobId, false));
 
                     jobId = jobId.IsExisting()
                                 ? BackgroundJob.ContinueJobWith(jobId, () => UpdateAccountTeamGameWeakRanking(gameWeak, fk_Season, jobId))
@@ -105,7 +108,7 @@ namespace FantasyLogic.Calculations
             {
                 Fk_Season = fk_Season,
                 Fk_GameWeak = gameWeak.Id,
-                Id = fk_AccountTeam
+                Fk_AccountTeam = fk_AccountTeam
             }, otherLang: false)
                     .Select(a => new
                     {

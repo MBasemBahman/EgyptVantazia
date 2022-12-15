@@ -130,7 +130,7 @@ namespace FantasyLogic.DataMigration.GamesData
 
                 RecurringJob.AddOrUpdate("UpdateStandings-" + game.Id.ToString(), () => standingsDataHelper.RunUpdateStandings(), updateStandingsTime, TimeZoneInfo.Utc);
 
-                RecurringJob.AddOrUpdate("PlayersStateCalculations-" + game.Id.ToString(), () => playerStateCalc.RunPlayersStateCalculations(fk_GameWeak, game.Id.ToString()), playersStateCalculationsTime, TimeZoneInfo.Utc);
+                RecurringJob.AddOrUpdate("PlayersStateCalculations-" + game.Id.ToString(), () => playerStateCalc.RunPlayersStateCalculations(fk_GameWeak, null /*game.Id.ToString()*/), playersStateCalculationsTime, TimeZoneInfo.Utc);
 
                 RecurringJob.AddOrUpdate("AccountTeamCalculations-" + game.Id.ToString(), () => accountTeamCalc.RunAccountTeamsCalculations(fk_GameWeak, 0, false), accountTeamCalculationsTime, TimeZoneInfo.Utc);
 

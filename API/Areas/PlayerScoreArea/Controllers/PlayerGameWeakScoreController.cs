@@ -1,6 +1,7 @@
 ﻿using API.Controllers;
 using Entities.CoreServicesModels.PlayerScoreModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace API.Areas.PlayerScoreArea.Controllers
 {
@@ -24,6 +25,23 @@ namespace API.Areas.PlayerScoreArea.Controllers
         public async Task<IEnumerable<PlayerGameWeakScoreModel>> GetPlayerGameWeakScores(
         [FromQuery] PlayerGameWeakScoreParameters parameters)
         {
+            parameters.Fk_ScoreTypes = new List<int>
+            {
+                (int)ScoreTypeEnum.Minutes,
+                (int)ScoreTypeEnum.GoalkeeperSaves,
+                (int)ScoreTypeEnum.Goals,
+                (int)ScoreTypeEnum.Assists,
+                (int)ScoreTypeEnum.PenaltiesSaved,
+                (int)ScoreTypeEnum.PenaltyMissed,
+                (int)ScoreTypeEnum.RedCard,
+                (int)ScoreTypeEnum.SecondYellowCard,
+                (int)ScoreTypeEnum.YellowCard,
+                (int)ScoreTypeEnum.SelfGoal,
+                (int)ScoreTypeEnum.CleanSheet,
+                (int)ScoreTypeEnum.ReceiveGoals,
+                (int)ScoreTypeEnum.Ranking,
+            };
+
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             PagedList<PlayerGameWeakScoreModel> data = await _unitOfWork.PlayerScore.GetPlayerGameWeakScorePaged(parameters, otherLang);

@@ -38,10 +38,10 @@ namespace Dashboard.Areas.AccountTeamGameWeakEntity.Models
         public new string LastModifiedAt { get; set; }
 
         [DisplayName(nameof(Account))]
-        public new AccountDto Account { get; set; }
+        public AccountDto Account { get; set; }
 
         [DisplayName(nameof(Season))]
-        public new SeasonDto Season { get; set; }
+        public SeasonDto Season { get; set; }
 
         [DisplayName(nameof(AccountTeamGameWeaks))]
         public List<AccountTeamGameWeakDto> AccountTeamGameWeaks { get; set; }

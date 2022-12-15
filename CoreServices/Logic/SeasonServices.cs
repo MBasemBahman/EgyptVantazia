@@ -178,6 +178,7 @@ namespace CoreServices.Logic
                            Deadline = a.Deadline,
                            JobId = a.JobId,
                            Fk_Season = a.Fk_Season,
+                           _365_GameWeakIdValue = a._365_GameWeakIdValue,
                            Season = new SeasonModel
                            {
                                Name = otherLang ? a.Season.SeasonLang.Name : a.Season.Name,

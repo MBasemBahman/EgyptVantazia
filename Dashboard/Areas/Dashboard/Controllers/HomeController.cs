@@ -23,24 +23,6 @@
 
         public IActionResult Index()
         {
-            //_unitOfWork.Season.DeleteDuplicattion();
-            //_unitOfWork.Save().Wait();
-
-            //AddBulkData(192, new List<int> { 46, 43 });
-            //var teams = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new Entities.CoreServicesModels.AccountTeamModels.AccountTeamPlayerGameWeakParameters
-            //{
-            //    Fk_GameWeak = 52,
-            //    IsTransfer = false,
-            //    IsPrimary = true,
-            //}, false).GroupBy(a => a.AccountTeamPlayer.AccountTeam.Id)
-            //         .Where(a => a.Count() != 11)
-            //         .Select(a => new
-            //         {
-            //             a.Key,
-            //             count = a.Count()
-            //         })
-            //         .ToList();
-
             return View();
         }
 

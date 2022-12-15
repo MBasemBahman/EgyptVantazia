@@ -140,10 +140,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                         }
                     }
 
-                    if (match.IsEnded)
-                    {
-                        jobId = UpdateGameFinalResult(match.Id, jobId);
-                    }
+                    jobId = UpdateGameFinalResult(match.Id, jobId);
                 }
             }
         }

@@ -53,6 +53,7 @@ namespace Repository.DBModels.PlayerScoreModels
                 oldEntity.FinalValue = entity.FinalValue;
                 oldEntity.GameTime = entity.GameTime;
                 oldEntity.Points = entity.Points;
+                oldEntity.IsOut = entity.IsOut;
             }
             else
             {
@@ -132,9 +133,10 @@ public static class PlayerGameWeakScoreRepositoryExtension
                                               (pointsTo == null || pointsFrom == 0 || a.Points <= pointsTo) &&
                                               (rateFrom == 0 || a.PlayerGameWeak.Ranking >= rateFrom) &&
                                               (rateTo == 0 || a.PlayerGameWeak.Ranking <= rateTo) &&
-                                               (checkCleanSheet == false || (a.Fk_ScoreType == (int)ScoreTypeEnum.Minutes &&
+                                               (checkCleanSheet == false ||
+                                                (a.Fk_ScoreType == (int)ScoreTypeEnum.Minutes &&
                                                  a.Points > 1 &&
-                                                 ((a.PlayerGameWeak.Player.Fk_Team == a.PlayerGameWeak.TeamGameWeak.Fk_Away &&
+                                                ((a.PlayerGameWeak.Player.Fk_Team == a.PlayerGameWeak.TeamGameWeak.Fk_Away &&
                                                    a.PlayerGameWeak.TeamGameWeak.HomeScore == 0) ||
                                                   (a.PlayerGameWeak.Player.Fk_Team == a.PlayerGameWeak.TeamGameWeak.Fk_Home &&
                                                    a.PlayerGameWeak.TeamGameWeak.AwayScore == 0)))) &&

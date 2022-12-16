@@ -181,7 +181,7 @@ namespace FantasyLogic.Calculations
                 })
             .ToList();
 
-            bool captianPointsFlag = true;
+            bool captianPointsFlag = players.Any(a => a.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian && a.IsPlayed);
             bool havePointsInTotal = true;
 
             AccountTeamGameWeak accountTeamGameWeak = _unitOfWork.AccountTeam.FindAccountTeamGameWeakbyId(fk_AccountTeamGameWeak, trackChanges: true).Result;

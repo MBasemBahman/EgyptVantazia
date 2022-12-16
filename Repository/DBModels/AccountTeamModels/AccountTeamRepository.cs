@@ -29,6 +29,7 @@ namespace Repository.DBModels.AccountTeamModels
                            parameters.Fk_Country,
                            parameters.Fk_FavouriteTeam,
                            parameters.FromTotalPoints,
+                           parameters.FromGlobalRanking,
                            parameters.DashboardSearch);
         }
 
@@ -74,6 +75,7 @@ namespace Repository.DBModels.AccountTeamModels
             int Fk_Country,
             int Fk_FavouriteTeam,
             int? FromTotalPoints,
+            int? FromGlobalRanking,
             string dashboardSearch)
 
         {
@@ -91,6 +93,7 @@ namespace Repository.DBModels.AccountTeamModels
                                            
                                            (CurrentSeason == null || a.Season.IsCurrent == CurrentSeason) &&
                                            (FromTotalPoints == null || a.TotalPoints >= FromTotalPoints) &&
+                                           (FromGlobalRanking == null || a.GlobalRanking >= FromGlobalRanking) &&
                                            (Fk_Country == 0 || a.Account.Fk_Country == Fk_Country) &&
                                            (Fk_FavouriteTeam == 0 || a.Account.Fk_FavouriteTeam == Fk_FavouriteTeam) &&
                                            (Fk_Account == 0 || a.Fk_Account == Fk_Account) &&

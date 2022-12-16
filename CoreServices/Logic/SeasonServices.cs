@@ -209,6 +209,18 @@ namespace CoreServices.Logic
             }, otherLang: otherLang).FirstOrDefault();
         }
 
+        public GameWeakModel GetNextNextGameWeak(bool otherLang = false)
+        {
+            GameWeakModel next = GetNextGameWeak();
+
+            return next != null
+                ? GetGameWeaks(new GameWeakParameters
+                {
+                    _365_GameWeakId = (next._365_GameWeakIdValue + 1).ToString()
+                }, otherLang: otherLang).FirstOrDefault()
+                : null;
+        }
+
         public GameWeakModel GetPrevGameWeak(bool otherLang = false)
         {
             return GetGameWeaks(new GameWeakParameters

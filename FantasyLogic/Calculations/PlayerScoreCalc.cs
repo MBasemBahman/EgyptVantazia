@@ -121,7 +121,7 @@ namespace FantasyLogic.Calculations
                         Fk_PlayerGameWeak = fk_PlayerGameWeak
                     }, otherLang: false).Any())
                     {
-                        IQueryable<PlayerGameWeakScoreModel> otherGoals = _unitOfWork.PlayerScore
+                        IQueryable<PlayerGameWeakScoreModel> allOtherGoals = _unitOfWork.PlayerScore
                                                                           .GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
                                                                           {
                                                                               Fk_TeamGameWeak = fk_TeamGameWeak,
@@ -134,28 +134,45 @@ namespace FantasyLogic.Calculations
                                                                           }, otherLang: false)
                                                                           .OrderBy(a => a.GameTime);
 
-                        score.FinalValue = otherGoals.Count();
-                        score.Points = score.FinalValue / 2 * -1;
+                        PlayerGameWeakScoreModel substitution = null;
 
-                        if (score.Points > 0 &&
-                            _unitOfWork.PlayerScore.GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
-                            {
-                                Fk_Player = fk_Player,
-                                Fk_PlayerGameWeak = fk_PlayerGameWeak,
-                                Fk_ScoreType = (int)ScoreTypeEnum.Substitution
-                            }, otherLang: false).Any())
+                        if (_unitOfWork.PlayerScore.GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
                         {
-                            PlayerGameWeakScoreModel substitution = _unitOfWork.PlayerScore.GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
+                            Fk_Player = fk_Player,
+                            Fk_PlayerGameWeak = fk_PlayerGameWeak,
+                            Fk_ScoreType = (int)ScoreTypeEnum.Substitution
+                        }, otherLang: false).Any())
+                        {
+                            substitution = _unitOfWork.PlayerScore.GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
                             {
                                 Fk_Player = fk_Player,
                                 Fk_PlayerGameWeak = fk_PlayerGameWeak,
                                 Fk_ScoreType = (int)ScoreTypeEnum.Substitution
                             }, otherLang: false).Single();
+                        }
 
-                            if (substitution.GameTime < otherGoals.First().GameTime)
+                        int myTimeGaolsCount = allOtherGoals.Count();
+
+                        if (substitution != null)
+                        {
+                            if (substitution.IsOut == false) // TRUE
                             {
-                                score = CalcCleanSheet(score, fk_PlayerPosition);
+                                myTimeGaolsCount = allOtherGoals.Count(a => a.GameTime < substitution.GameTime);
                             }
+                            else if (substitution.IsOut == true) // FALSE
+                            {
+                                myTimeGaolsCount = allOtherGoals.Count(a => a.GameTime > substitution.GameTime);
+                            }
+                        }
+
+                        if (myTimeGaolsCount > 0)
+                        {
+                            score.FinalValue = myTimeGaolsCount;
+                            score.Points = score.FinalValue / 2 * -1;
+                        }
+                        else
+                        {
+                            score = CalcCleanSheet(score, fk_PlayerPosition);
                         }
                     }
                 }

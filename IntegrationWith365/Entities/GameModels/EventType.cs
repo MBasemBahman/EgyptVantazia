@@ -11,5 +11,9 @@
         public int Value { get; set; }
         public double GameTime { get; set; }
 
+        public int ExtraPlayer { get; set; }
+        public bool? IsOut { get; set; }
+
+        public int _365_PlayerId { get; set; }
     }
 }

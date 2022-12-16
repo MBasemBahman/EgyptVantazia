@@ -39,6 +39,7 @@ namespace FantasyLogic.SharedLogic
                     Fk_ScoreType = fk_ScoreType,
                     Value = events.Value.ToString(),
                     GameTime = events.GameTime,
+                    IsOut = events.IsOut,
                 };
                 _unitOfWork.PlayerScore.CreatePlayerGameWeakScore(_playerScoreCalc.GetPlayerScore(score, fk_Player, fk_Team, fk_PlayerGameWeak, fk_PlayerPosition, fk_TeamGameWeak));
                 await _unitOfWork.Save();

@@ -73,6 +73,9 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
 
         [DisplayName(nameof(Points))]
         public int Points { get; set; }
+
+        [DisplayName(nameof(IsOut))]
+        public bool? IsOut { get; set; }
     }
 
     public class PlayerGameWeakScoreCreateOrEditModel

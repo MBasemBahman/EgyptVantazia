@@ -95,6 +95,7 @@ namespace CoreServices.Logic
                            Fk_Player = a.Fk_Player,
                            Ranking = a.Ranking,
                            TotalPoints = a.TotalPoints,
+                           _365_PlayerId = a._365_PlayerId,
                            TeamGameWeak = new TeamGameWeakModel
                            {
                                Fk_Away = a.TeamGameWeak.Fk_Away,
@@ -149,6 +150,7 @@ namespace CoreServices.Logic
                                                        {
                                                            Name = otherLang ? b.ScoreType.ScoreTypeLang.Name : b.ScoreType.Name,
                                                        },
+                                                       IsOut = b.IsOut
                                                    })
                                                    .ToList() : null
                        })
@@ -281,6 +283,7 @@ namespace CoreServices.Logic
                            GameTime = a.GameTime,
                            FinalValue = a.FinalValue,
                            Fk_Team = a.PlayerGameWeak.Player.Fk_Team,
+                           IsOut = a.IsOut,
                            ScoreType = new ScoreTypeModel
                            {
                                Name = otherLang ? a.ScoreType.ScoreTypeLang.Name : a.ScoreType.Name,
@@ -295,6 +298,7 @@ namespace CoreServices.Logic
                                    Name = otherLang ? a.PlayerGameWeak.Player.PlayerLang.Name : a.PlayerGameWeak.Player.Name,
                                    ShortName = otherLang ? a.PlayerGameWeak.Player.PlayerLang.ShortName : a.PlayerGameWeak.Player.ShortName,
                                },
+                               _365_PlayerId = a.PlayerGameWeak._365_PlayerId,
                                Ranking = a.PlayerGameWeak.Ranking,
                                Fk_Player = a.PlayerGameWeak.Fk_Player,
                            },

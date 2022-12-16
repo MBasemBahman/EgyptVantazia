@@ -22,7 +22,9 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         public bool? IsTransfer { get; set; }
 
-        public DateTime? NextDeadLine { get; set; }
+        public DateTime? FromDeadLine { get; set; }
+
+        public DateTime? ToDeadLine { get; set; }
     }
 
     public class AccountTeamPlayerModel : BaseEntity

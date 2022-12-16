@@ -19,6 +19,9 @@ namespace Entities.DBModels.PlayerScoreModels
         [DisplayName(nameof(Player))]
         public Player Player { get; set; }
 
+        [DisplayName(nameof(_365_PlayerId))]
+        public string _365_PlayerId { get; set; }
+
         [DisplayName(nameof(Ranking))]
         public double Ranking { get; set; }
 

@@ -9,5 +9,7 @@
         public double GameTime { get; set; }
 
         public EventType EventType { get; set; }
+
+        public List<int> ExtraPlayers { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20221216003237_dsmdmd")]
+    partial class dsmdmd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2205,9 +2207,6 @@ namespace DAL.Migrations
                     b.Property<int>("TotalPoints")
                         .HasColumnType("int");
 
-                    b.Property<string>("_365_PlayerId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Fk_Player");
@@ -3836,7 +3835,7 @@ namespace DAL.Migrations
                             EmailAddress = "user@mail.com",
                             LastModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Developer",
-                            Password = "$2a$11$6P7xlkRdBB/4k6g2wZwQ.OV.KXsv59s6I3618vd8Ml.CdnxFe0Wlu",
+                            Password = "$2a$11$dqJUfqHxwqUU6ETEUWI3b.LGpPynQevTYCiw8HXZh2Y8v6tb6mQfq",
                             UserName = "Developer"
                         });
                 });

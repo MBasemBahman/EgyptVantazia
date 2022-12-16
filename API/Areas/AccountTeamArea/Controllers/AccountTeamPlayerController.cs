@@ -37,7 +37,7 @@ namespace API.Areas.AccountTeamArea.Controllers
 
             if (parameters.IncludeNextMatch)
             {
-                parameters.NextDeadLine = nextGameWeak.Deadline;
+                parameters.ToDeadLine = nextGameWeak.Deadline;
             }
 
             if (parameters.IsCurrent == true)
@@ -47,6 +47,14 @@ namespace API.Areas.AccountTeamArea.Controllers
             else if (parameters.IsNextGameWeak == true)
             {
                 parameters.Fk_GameWeak = nextGameWeak.Id;
+
+                if (parameters.IncludeNextMatch)
+                {
+                    GameWeakModel nextNextGameWeak = _unitOfWork.Season.GetNextNextGameWeak();
+
+                    parameters.FromDeadLine = nextGameWeak.Deadline;
+                    parameters.ToDeadLine = nextNextGameWeak.Deadline;
+                }
             }
 
             if (parameters.IncludeScore && parameters.Fk_SeasonForScore == 0)

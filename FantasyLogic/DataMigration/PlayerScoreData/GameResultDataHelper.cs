@@ -3,6 +3,7 @@ using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.SeasonModels;
+using FantasyLogic.Calculations;
 using FantasyLogic.SharedLogic;
 using IntegrationWith365.Entities.GameModels;
 using IntegrationWith365.Entities.GamesModels;
@@ -15,15 +16,17 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
         private readonly _365Services _365Services;
         private readonly UnitOfWork _unitOfWork;
         private readonly GameResultLogic _gameResultLogic;
+        private readonly PlayerStateCalc _playerStateCalc;
 
         public GameResultDataHelper(UnitOfWork unitOfWork, _365Services _365Services)
         {
             this._365Services = _365Services;
             _unitOfWork = unitOfWork;
             _gameResultLogic = new GameResultLogic(unitOfWork);
+            _playerStateCalc = new(_unitOfWork);
         }
 
-        public void RunUpdateGameResult(TeamGameWeakParameters parameters)
+        public void RunUpdateGameResult(TeamGameWeakParameters parameters, bool ignore365Points = false)
         {
             SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
 
@@ -54,12 +57,12 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             foreach (TeamGameWeakDto teamGameWeak in teamGameWeaks)
             {
                 jobId = jobId.IsExisting()
-                    ? BackgroundJob.ContinueJobWith(jobId, () => UpdateGameResult(teamGameWeak, scoreTypes))
-                    : BackgroundJob.Enqueue(() => UpdateGameResult(teamGameWeak, scoreTypes));
+                    ? BackgroundJob.ContinueJobWith(jobId, () => UpdateGameResult(teamGameWeak, scoreTypes, ignore365Points))
+                    : BackgroundJob.Enqueue(() => UpdateGameResult(teamGameWeak, scoreTypes, ignore365Points));
             }
         }
 
-        public async Task UpdateGameResult(TeamGameWeakDto teamGameWeak, List<ScoreTypeDto> scoreTypes)
+        public async Task UpdateGameResult(TeamGameWeakDto teamGameWeak, List<ScoreTypeDto> scoreTypes, bool ignore365Points)
         {
             GameReturn gameReturn = await _365Services.GetGame(new _365GameParameters
             {
@@ -78,68 +81,121 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
 
                 if (gameReturn.Game.Members != null && gameReturn.Game.Members.Any())
                 {
-                    List<GameMember> allMembers = gameReturn.Game.Members;
-
-                    IQueryable<PlayerModel> playersQuary = _unitOfWork.Team.GetPlayers(new PlayerParameters
-                    {
-                        _365_PlayerIds = allMembers.Select(a => a.AthleteId.ToString()).ToList(),
-                    }, otherLang: false);
-
                     string jobId = null;
-                    if (playersQuary.Any())
+
+                    if (!ignore365Points)
                     {
-                        List<PlayerDto> players = playersQuary.Select(a => new PlayerDto
-                        {
-                            Id = a.Id,
-                            _365_PlayerId = a._365_PlayerId,
-                            Fk_PlayerPosition = a.Fk_PlayerPosition,
-                            Fk_Team = a.Fk_Team
-                        }).ToList();
+                        List<GameMember> allMembers = gameReturn.Game.Members;
 
-                        List<Member> allMembersResults = new();
-                        allMembersResults.AddRange(gameReturn.Game.HomeCompetitor.Lineups.Members);
-                        allMembersResults.AddRange(gameReturn.Game.AwayCompetitor.Lineups.Members);
-
-                        foreach (GameMember member in allMembers)
+                        IQueryable<PlayerModel> playersQuary = _unitOfWork.Team.GetPlayers(new PlayerParameters
                         {
-                            var player = players.Where(a => a._365_PlayerId == member.AthleteId.ToString())
-                                                   .Select(a => new
-                                                   {
-                                                       a.Id,
-                                                       a.Fk_PlayerPosition,
-                                                       a.Fk_Team
-                                                   })
-                                                   .SingleOrDefault();
-                            if (player != null)
+                            _365_PlayerIds = allMembers.Select(a => a.AthleteId.ToString()).ToList(),
+                        }, otherLang: false);
+
+                        if (playersQuary.Any())
+                        {
+                            List<PlayerDto> players = playersQuary.Select(a => new PlayerDto
                             {
-                                Member memberResult = allMembersResults.Where(a => a.Id == member.Id).SingleOrDefault();
-                                if (memberResult != null)
+                                Id = a.Id,
+                                _365_PlayerId = a._365_PlayerId,
+                                Fk_PlayerPosition = a.Fk_PlayerPosition,
+                                Fk_Team = a.Fk_Team
+                            }).ToList();
+
+                            List<Member> allMembersResults = new();
+                            allMembersResults.AddRange(gameReturn.Game.HomeCompetitor.Lineups.Members);
+                            allMembersResults.AddRange(gameReturn.Game.AwayCompetitor.Lineups.Members);
+
+                            int substitutionId = 1000;
+                            List<EventType> substitutionPlayers = new();
+
+                            foreach (GameMember member in allMembers)
+                            {
+                                var player = players.Where(a => a._365_PlayerId == member.AthleteId.ToString())
+                                                       .Select(a => new
+                                                       {
+                                                           a.Id,
+                                                           a.Fk_PlayerPosition,
+                                                           a.Fk_Team
+                                                       })
+                                                       .SingleOrDefault();
+                                if (player != null)
                                 {
-                                    List<EventType> eventResult = new();
-
-                                    if (gameReturn.Game != null && gameReturn.Game.Events != null)
+                                    Member memberResult = allMembersResults.Where(a => a.Id == member.Id).SingleOrDefault();
+                                    if (memberResult != null)
                                     {
-                                        eventResult = gameReturn.Game
-                                                            .Events
-                                                            .Where(a => a.PlayerId == member.Id && a.GameTime > 0)
-                                                            .Select(a => new EventType
-                                                            {
-                                                                Id = a.EventType.Id,
-                                                                Name = a.EventType.Name,
-                                                                SubTypeId = a.EventType.SubTypeId,
-                                                                SubTypeName = a.EventType.SubTypeName,
-                                                                GameTime = a.GameTime,
-                                                                Value = 1
-                                                            })
-                                                            .ToList();
-                                    }
+                                        List<EventType> eventResult = new();
 
-                                    jobId = await UpdatePlayerGameResult(player.Id, player.Fk_Team, player.Fk_PlayerPosition, teamGameWeak.Id, memberResult, eventResult, scoreTypes, jobId);
+                                        if (gameReturn.Game != null && gameReturn.Game.Events != null)
+                                        {
+                                            eventResult = gameReturn.Game
+                                                                .Events
+                                                                .Where(a => a.PlayerId == member.Id && a.GameTime > 0)
+                                                                .Select(a => new EventType
+                                                                {
+                                                                    Id = a.EventType.Id,
+                                                                    Name = a.EventType.Name,
+                                                                    SubTypeId = a.EventType.SubTypeId,
+                                                                    SubTypeName = a.EventType.SubTypeName,
+                                                                    GameTime = a.GameTime,
+                                                                    Value = 1,
+                                                                    ExtraPlayer = (a.EventType.Id == substitutionId && a.ExtraPlayers != null && a.ExtraPlayers.Any()) ? a.ExtraPlayers.First() : 0,
+                                                                    IsOut = (a.EventType.Id == substitutionId && a.ExtraPlayers != null && a.ExtraPlayers.Any()) ? true : null
+                                                                })
+                                                                .ToList();
+
+                                            if (eventResult.Any(a => a.IsOut == true))
+                                            {
+                                                EventType eventResultItem = eventResult.First(a => a.IsOut == true);
+
+                                                substitutionPlayers.Add(new EventType
+                                                {
+                                                    Id = eventResultItem.Id,
+                                                    Name = eventResultItem.Name,
+                                                    SubTypeId = eventResultItem.SubTypeId,
+                                                    SubTypeName = eventResultItem.SubTypeName,
+                                                    GameTime = eventResultItem.GameTime,
+                                                    Value = eventResultItem.Value,
+                                                    IsOut = false,
+                                                    _365_PlayerId = eventResultItem.ExtraPlayer,
+                                                });
+                                            }
+                                        }
+
+                                        jobId = await UpdatePlayerGameResult(player.Id, player.Fk_Team, player.Fk_PlayerPosition, teamGameWeak.Id, memberResult, eventResult, scoreTypes, jobId);
+                                    }
                                 }
                             }
+
+                            if (substitutionPlayers.Any())
+                            {
+                                List<int> substitutionPlayersIds = substitutionPlayers.Select(a => a._365_PlayerId).ToList();
+                                List<GameMember> substitutionMembers = allMembers.Where(a => substitutionPlayersIds.Contains(a.Id)).ToList();
+                                foreach (GameMember member in substitutionMembers)
+                                {
+                                    var player = players.Where(a => a._365_PlayerId == member.AthleteId.ToString())
+                                                       .Select(a => new
+                                                       {
+                                                           a.Id,
+                                                           a.Fk_PlayerPosition,
+                                                           a.Fk_Team
+                                                       })
+                                                       .SingleOrDefault();
+                                    if (player != null)
+                                    {
+                                        Member memberResult = allMembersResults.Where(a => a.Id == member.Id).SingleOrDefault();
+                                        if (memberResult != null)
+                                        {
+                                            List<EventType> eventResult = substitutionPlayers.Where(a => a._365_PlayerId == member.Id).ToList();
+
+                                            jobId = await UpdatePlayerGameResult(player.Id, player.Fk_Team, player.Fk_PlayerPosition, teamGameWeak.Id, memberResult, eventResult, scoreTypes, jobId);
+                                        }
+                                    }
+                                }
+                            }
+
                         }
                     }
-
                     jobId = UpdateGameFinalResult(match.Id, jobId);
                 }
             }
@@ -156,19 +212,31 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                     Fk_Player = a.Fk_Player,
                     Fk_PlayerPosition = a.Player.Fk_PlayerPosition,
                     Fk_PlayerGameWeak = a.Id,
-                    Fk_Team = a.Player.Fk_Team
+                    Fk_Team = a.Player.Fk_Team,
+                    Fk_GameWeak = a.TeamGameWeak.Fk_GameWeak,
+                    _365_MatchId = a.TeamGameWeak._365_MatchId
                 }).ToList();
 
             if (players != null && players.Any())
             {
                 foreach (PlayerGameWeakDto player in players)
                 {
-                    jobId = BackgroundJob.ContinueJobWith(jobId, () => _gameResultLogic.UpdatePlayerStateScore((int)ScoreTypeEnum.CleanSheet, "", player.Fk_Player, player.Fk_Team, player.Fk_PlayerPosition, player.Fk_PlayerGameWeak, fk_TeamGameWeak));
+                    jobId = jobId.IsExisting()
+                    ? BackgroundJob.ContinueJobWith(jobId, () => _gameResultLogic.UpdatePlayerStateScore((int)ScoreTypeEnum.CleanSheet, "", player.Fk_Player, player.Fk_Team, player.Fk_PlayerPosition, player.Fk_PlayerGameWeak, fk_TeamGameWeak))
+                    : BackgroundJob.Enqueue(() => _gameResultLogic.UpdatePlayerStateScore((int)ScoreTypeEnum.CleanSheet, "", player.Fk_Player, player.Fk_Team, player.Fk_PlayerPosition, player.Fk_PlayerGameWeak, fk_TeamGameWeak));
+
+                    //jobId = BackgroundJob.ContinueJobWith(jobId, () => _gameResultLogic.UpdatePlayerStateScore((int)ScoreTypeEnum.CleanSheet, "", player.Fk_Player, player.Fk_Team, player.Fk_PlayerPosition, player.Fk_PlayerGameWeak, fk_TeamGameWeak));
+
                     jobId = BackgroundJob.ContinueJobWith(jobId, () => _gameResultLogic.UpdatePlayerStateScore((int)ScoreTypeEnum.ReceiveGoals, "", player.Fk_Player, player.Fk_Team, player.Fk_PlayerPosition, player.Fk_PlayerGameWeak, fk_TeamGameWeak));
                     jobId = BackgroundJob.ContinueJobWith(jobId, () => _gameResultLogic.UpdatePlayerStateScore((int)ScoreTypeEnum.Ranking, "", player.Fk_Player, player.Fk_Team, player.Fk_PlayerPosition, player.Fk_PlayerGameWeak, fk_TeamGameWeak));
 
                     jobId = BackgroundJob.ContinueJobWith(jobId, () => _gameResultLogic.UpdatePlayerGameWeakTotalPoints(player.Fk_PlayerGameWeak));
                 }
+
+                int fk_GameWeak = players.First().Fk_GameWeak;
+                string _365_MatchId = players.First()._365_MatchId;
+
+                _playerStateCalc.RunPlayersStateCalculations(fk_GameWeak, _365_MatchId);
             }
 
             return jobId;
@@ -190,8 +258,10 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 {
                     Fk_TeamGameWeak = fk_TeamGameWeak,
                     Fk_Player = fk_Player,
-                    Ranking = memberResult.Ranking
+                    Ranking = memberResult.Ranking,
+                    _365_PlayerId = memberResult.Id.ToString()
                 };
+
                 _unitOfWork.PlayerScore.CreatePlayerGameWeak(playerGame);
                 await _unitOfWork.Save();
 
@@ -257,6 +327,10 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
         public int Fk_PlayerPosition { get; set; }
         public int Fk_Player { get; set; }
         public int Fk_Team { get; set; }
+
+        public int Fk_GameWeak { get; set; }
+
+        public string _365_MatchId { get; set; }
     }
 
     public class ScoreTypeDto

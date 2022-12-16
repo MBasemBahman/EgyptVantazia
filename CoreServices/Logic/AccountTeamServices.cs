@@ -622,7 +622,8 @@ namespace CoreServices.Logic
                                NextMatches = parameters.IncludeNextMatch ?
                                _dBContext.Set<TeamGameWeak>()
                                           .Where(b => b.StartTime >= DateTime.UtcNow.AddHours(2) &&
-                                                      (parameters.NextDeadLine == null || b.StartTime <= parameters.NextDeadLine) &&
+                                                      (parameters.FromDeadLine == null || b.StartTime >= parameters.FromDeadLine) &&
+                                                      (parameters.ToDeadLine == null || b.StartTime <= parameters.ToDeadLine) &&
                                                       (b.Fk_Away == a.Player.Fk_Team || b.Fk_Home == a.Player.Fk_Team))
                                           .OrderBy(b => b.StartTime)
                                           .Select(b => b.Fk_Home != a.Player.Fk_Team ? new TeamModel

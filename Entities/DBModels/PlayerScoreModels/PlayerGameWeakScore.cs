@@ -27,5 +27,8 @@
 
         [DisplayName(nameof(GameTime))]
         public double GameTime { get; set; }
+
+        [DisplayName(nameof(IsOut))]
+        public bool? IsOut { get; set; }
     }
 }

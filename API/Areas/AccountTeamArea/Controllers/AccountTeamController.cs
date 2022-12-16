@@ -37,7 +37,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                 parameters.OrderBy.Contains("countryRanking") ||
                 parameters.OrderBy.Contains("favouriteTeamRanking"))
             {
-                parameters.FromTotalPoints = 1;
+                parameters.FromGlobalRanking = 1;
             }
 
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];

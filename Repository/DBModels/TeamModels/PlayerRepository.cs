@@ -77,6 +77,16 @@ namespace Repository.DBModels.TeamModels
                 {
                     Name = entity.Name,
                 };
+
+                entity.PlayerPrices ??= new List<PlayerPrice>
+                {
+                    new PlayerPrice
+                    {
+                        BuyPrice = 5,
+                        SellPrice = 5
+                    }
+                };
+
                 base.Create(entity);
             }
         }

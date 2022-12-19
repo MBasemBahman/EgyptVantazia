@@ -8,6 +8,7 @@ using FantasyLogic.SharedLogic;
 using IntegrationWith365.Entities.GameModels;
 using IntegrationWith365.Entities.GamesModels;
 using static Contracts.EnumData.DBModelsEnum;
+using static Microsoft.IO.RecyclableMemoryStreamManager;
 
 namespace FantasyLogic.DataMigration.PlayerScoreData
 {
@@ -107,10 +108,13 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                             allMembersResults.AddRange(gameReturn.Game.AwayCompetitor.Lineups.Members);
 
                             int substitutionId = 1000;
+                            int goalId = 1;
+
                             List<EventType> substitutionPlayers = new();
 
                             foreach (GameMember member in allMembers)
                             {
+
                                 var player = players.Where(a => a._365_PlayerId == member.AthleteId.ToString())
                                                        .Select(a => new
                                                        {
@@ -125,6 +129,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                     if (memberResult != null)
                                     {
                                         List<EventType> eventResult = new();
+                                        int assistCount = 0;
 
                                         if (gameReturn.Game != null && gameReturn.Game.Events != null)
                                         {
@@ -139,10 +144,16 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                                                     SubTypeName = a.EventType.SubTypeName,
                                                                     GameTime = a.GameTime,
                                                                     Value = 1,
-                                                                    ExtraPlayer = (a.EventType.Id == substitutionId && a.ExtraPlayers != null && a.ExtraPlayers.Any()) ? a.ExtraPlayers.First() : 0,
-                                                                    IsOut = (a.EventType.Id == substitutionId && a.ExtraPlayers != null && a.ExtraPlayers.Any()) ? true : null
+                                                                    ExtraPlayer = (a.ExtraPlayers != null && a.ExtraPlayers.Any()) ? a.ExtraPlayers.First() : 0,
+                                                                    IsOut = (a.EventType.Id == substitutionId && a.ExtraPlayers != null && a.ExtraPlayers.Any()) ? true : null,
+                                                                    IsAssist = (a.EventType.Id == goalId && a.ExtraPlayers != null && a.ExtraPlayers.Any()) ? true : null
                                                                 })
                                                                 .ToList();
+
+                                            assistCount = gameReturn.Game
+                                                                .Events
+                                                                .Where(a => a.EventType.Id == goalId && a.ExtraPlayers != null && a.ExtraPlayers.Any() && a.ExtraPlayers.First() == member.Id && a.GameTime > 0)
+                                                                .Count();
 
                                             if (eventResult.Any(a => a.IsOut == true))
                                             {
@@ -156,13 +167,13 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                                     SubTypeName = eventResultItem.SubTypeName,
                                                     GameTime = eventResultItem.GameTime,
                                                     Value = eventResultItem.Value,
-                                                    IsOut = false,
+                                                    IsOut = true,
                                                     _365_PlayerId = eventResultItem.ExtraPlayer,
                                                 });
                                             }
                                         }
 
-                                        jobId = await UpdatePlayerGameResult(player.Id, player.Fk_Team, player.Fk_PlayerPosition, teamGameWeak.Id, memberResult, eventResult, scoreTypes, jobId);
+                                        jobId = await UpdatePlayerGameResult(player.Id, player.Fk_Team, player.Fk_PlayerPosition, teamGameWeak.Id, memberResult, eventResult, scoreTypes, assistCount, jobId);
                                     }
                                 }
                             }
@@ -181,6 +192,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                                            a.Fk_Team
                                                        })
                                                        .SingleOrDefault();
+
                                     if (player != null)
                                     {
                                         Member memberResult = allMembersResults.Where(a => a.Id == member.Id).SingleOrDefault();
@@ -188,12 +200,11 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                         {
                                             List<EventType> eventResult = substitutionPlayers.Where(a => a._365_PlayerId == member.Id).ToList();
 
-                                            jobId = await UpdatePlayerGameResult(player.Id, player.Fk_Team, player.Fk_PlayerPosition, teamGameWeak.Id, memberResult, eventResult, scoreTypes, jobId);
+                                            jobId = await UpdatePlayerGameResult(player.Id, player.Fk_Team, player.Fk_PlayerPosition, teamGameWeak.Id, memberResult, eventResult, scoreTypes, 0, jobId);
                                         }
                                     }
                                 }
                             }
-
                         }
                     }
                     jobId = UpdateGameFinalResult(match.Id, jobId);
@@ -250,6 +261,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             Member memberResult,
             List<EventType> eventResult,
             List<ScoreTypeDto> scoreTypes,
+            int assistCount,
             string jobId)
         {
             if (fk_Player > 0 && memberResult != null)
@@ -284,6 +296,16 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                             int fk_ScoreType = scoreTypes.Where(a => a._365_TypeId == Stat.Type.ToString()).Select(a => a.Id).SingleOrDefault();
                             if (fk_ScoreType > 0)
                             {
+                                if (fk_ScoreType == (int)ScoreTypeEnum.Goals)
+                                {
+                                    var eventType = scoreTypes.Where(a => a.Id == (int)ScoreTypeEnum.Goal_Event).SingleOrDefault();
+                                    var result = eventResult.Where(a => eventType._365_TypeId == a.SubTypeId.ToString() && eventType._365_EventTypeId == a.Id.ToString()).ToList();
+                                    Stat.Value = result.Count.ToString();
+                                }else if (fk_ScoreType == (int)ScoreTypeEnum.Assists)
+                                {
+                                    Stat.Value = assistCount.ToString();
+                                }
+
                                 jobId = jobId.IsExisting()
                                     ? BackgroundJob.ContinueJobWith(jobId, () => _gameResultLogic.UpdatePlayerStateScore(fk_ScoreType, Stat.Value, fk_Player, fk_Team, fk_PlayerPosition, fk_PlayerGameWeak, fk_TeamGameWeak))
                                     : BackgroundJob.Enqueue(() => _gameResultLogic.UpdatePlayerStateScore(fk_ScoreType, Stat.Value, fk_Player, fk_Team, fk_PlayerPosition, fk_PlayerGameWeak, fk_TeamGameWeak));

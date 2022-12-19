@@ -2,6 +2,7 @@
 using Entities.DBModels.PlayerScoreModels;
 using FantasyLogic.Calculations;
 using IntegrationWith365.Entities.GameModels;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace FantasyLogic.SharedLogic
 {
@@ -25,6 +26,7 @@ namespace FantasyLogic.SharedLogic
                 Fk_ScoreType = fk_ScoreType,
                 Value = value,
             };
+
             _unitOfWork.PlayerScore.CreatePlayerGameWeakScore(_playerScoreCalc.GetPlayerScore(score, fk_Player, fk_Team, fk_PlayerGameWeak, fk_PlayerPosition, fk_TeamGameWeak));
             await _unitOfWork.Save();
         }
@@ -41,6 +43,36 @@ namespace FantasyLogic.SharedLogic
                     GameTime = events.GameTime,
                     IsOut = events.IsOut,
                 };
+
+                //if (fk_ScoreType == (int)ScoreTypeEnum.Goal_Event)
+                //{
+                //    PlayerGameWeakScore extraScore = new()
+                //    {
+                //        Fk_PlayerGameWeak = fk_PlayerGameWeak,
+                //        Fk_ScoreType = (int)ScoreTypeEnum.Goals,
+                //        Value = events.Value.ToString(),
+                //    };
+
+                //    if (_unitOfWork.PlayerScore.GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
+                //    {
+                //        Fk_ScoreType = extraScore.Fk_ScoreType,
+                //        Fk_PlayerGameWeak = extraScore.Fk_PlayerGameWeak
+                //    }, otherLang: false).Any())
+                //    {
+                //        string oldValue = _unitOfWork.PlayerScore.GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
+                //        {
+                //            Fk_ScoreType = extraScore.Fk_ScoreType,
+                //            Fk_PlayerGameWeak = extraScore.Fk_PlayerGameWeak
+                //        }, otherLang: false).Select(a => a.Value).FirstOrDefault();
+
+                //        int newValue = extraScore.Value.ParseToInt() + oldValue.ParseToInt();
+
+                //        extraScore.Value = newValue.ToString();
+                //    }
+
+                //    _unitOfWork.PlayerScore.CreatePlayerGameWeakScore(_playerScoreCalc.GetPlayerScore(extraScore, fk_Player, fk_Team, fk_PlayerGameWeak, fk_PlayerPosition, fk_TeamGameWeak));
+                //}
+
                 _unitOfWork.PlayerScore.CreatePlayerGameWeakScore(_playerScoreCalc.GetPlayerScore(score, fk_Player, fk_Team, fk_PlayerGameWeak, fk_PlayerPosition, fk_TeamGameWeak));
                 await _unitOfWork.Save();
             }

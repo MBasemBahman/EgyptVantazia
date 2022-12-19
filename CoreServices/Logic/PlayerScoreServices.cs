@@ -328,9 +328,9 @@ namespace CoreServices.Logic
             }
 
             if (PlayerGameWeakScore.Fk_ScoreType is
-                    ((int)ScoreTypeEnum.Goal) or
-                    ((int)ScoreTypeEnum.Substitution) or
-                    ((int)ScoreTypeEnum.PenaltyKick))
+                    ((int)ScoreTypeEnum.Goal_Event) or
+                    ((int)ScoreTypeEnum.Substitution_Event) or
+                    ((int)ScoreTypeEnum.PenaltyKick_Event))
             {
                 if (PlayerGameWeakScore.GameTime <= 0)
                 {

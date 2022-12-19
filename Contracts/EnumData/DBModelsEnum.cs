@@ -64,16 +64,19 @@
             Assists = 37, // صناعة
             PenaltiesSaved = 56, // انقاذ ركلات جزاء
             PenaltyMissed = 59, // ضربة جزاء ضائعة
-            YellowCard = 75, // بطاقة صفراء
-            SecondYellowCard = 79,
-            RedCard = 80, // بطاقة حمراء
-            SelfGoal = 82, // هدف - هدف ذاتي
+
+            YellowCard_Event = 75, // بطاقة صفراء
+            SecondYellowCard_Event = 79,
+            RedCard_Event = 80, // بطاقة حمراء
+            SelfGoal_Event = 82, // هدف - هدف ذاتي
+
             CleanSheet = 84, // From My Side - بدون اهداف
             ReceiveGoals = 85, // From My Side - تلقي اهداف
             Ranking = 86, // From My Side - الترتيب
-            Goal = 118, // هدف - هدف
-            Substitution = 119, // Substitution
-            PenaltyKick = 120 // هدف - ركلة جزاء
+
+            Goal_Event = 118, // هدف - هدف
+            Substitution_Event = 119, // Substitution
+            PenaltyKick_Event = 120 // هدف - ركلة جزاء
         }
 
         public enum PlayerPositionEnum

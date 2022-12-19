@@ -399,13 +399,13 @@ namespace FantasyLogic.Calculations
                 : scoreState == (int)ScoreStateEnum.YellowCard
                 ? new List<int>
                 {
-                    (int)ScoreTypeEnum.YellowCard,
-                    (int)ScoreTypeEnum.SecondYellowCard
+                    (int)ScoreTypeEnum.YellowCard_Event,
+                    (int)ScoreTypeEnum.SecondYellowCard_Event
                 }
                 : scoreState == (int)ScoreStateEnum.RedCard
                 ? new List<int>
                 {
-                    (int)ScoreTypeEnum.RedCard
+                    (int)ScoreTypeEnum.RedCard_Event
                 }
                 : null;
         }

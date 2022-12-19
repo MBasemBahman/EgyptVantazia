@@ -77,22 +77,22 @@ namespace FantasyLogic.Calculations
                 score.FinalValue = score.Value.ParseToInt();
                 score.Points = score.FinalValue * -2;
             }
-            else if (score.Fk_ScoreType == (int)ScoreTypeEnum.RedCard)
+            else if (score.Fk_ScoreType == (int)ScoreTypeEnum.RedCard_Event)
             {
                 score.FinalValue = score.Value.ParseToInt();
                 score.Points = score.FinalValue * -3;
             }
-            else if (score.Fk_ScoreType == (int)ScoreTypeEnum.SecondYellowCard)
+            else if (score.Fk_ScoreType == (int)ScoreTypeEnum.SecondYellowCard_Event)
             {
                 score.FinalValue = score.Value.ParseToInt();
                 score.Points = score.FinalValue * -2;
             }
-            else if (score.Fk_ScoreType == (int)ScoreTypeEnum.YellowCard)
+            else if (score.Fk_ScoreType == (int)ScoreTypeEnum.YellowCard_Event)
             {
                 score.FinalValue = score.Value.ParseToInt();
                 score.Points = score.FinalValue * -1;
             }
-            else if (score.Fk_ScoreType == (int)ScoreTypeEnum.SelfGoal)
+            else if (score.Fk_ScoreType == (int)ScoreTypeEnum.SelfGoal_Event)
             {
                 score.FinalValue = score.Value.ParseToInt();
                 score.Points = score.FinalValue * -2;
@@ -128,8 +128,8 @@ namespace FantasyLogic.Calculations
                                                                               Fk_TeamIgnored = fk_Team,
                                                                               Fk_ScoreTypes = new List<int>
                                                                               {
-                                                                                  (int)ScoreTypeEnum.Goal,
-                                                                                  (int)ScoreTypeEnum.PenaltyKick,
+                                                                                  (int)ScoreTypeEnum.Goal_Event,
+                                                                                  (int)ScoreTypeEnum.PenaltyKick_Event,
                                                                               },
                                                                           }, otherLang: false)
                                                                           .OrderBy(a => a.GameTime);
@@ -140,14 +140,14 @@ namespace FantasyLogic.Calculations
                         {
                             Fk_Player = fk_Player,
                             Fk_PlayerGameWeak = fk_PlayerGameWeak,
-                            Fk_ScoreType = (int)ScoreTypeEnum.Substitution
+                            Fk_ScoreType = (int)ScoreTypeEnum.Substitution_Event
                         }, otherLang: false).Any())
                         {
                             substitution = _unitOfWork.PlayerScore.GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
                             {
                                 Fk_Player = fk_Player,
                                 Fk_PlayerGameWeak = fk_PlayerGameWeak,
-                                Fk_ScoreType = (int)ScoreTypeEnum.Substitution
+                                Fk_ScoreType = (int)ScoreTypeEnum.Substitution_Event
                             }, otherLang: false).Single();
                         }
 

@@ -14,6 +14,10 @@
         public int ExtraPlayer { get; set; }
         public bool? IsOut { get; set; }
 
+
+        public bool? IsAssist { get; set; }
+        public int Fk_Player { get; set; }
+
         public int _365_PlayerId { get; set; }
     }
 }

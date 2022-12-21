@@ -18,7 +18,15 @@ namespace FantasyLogic.SharedLogic
         }
 
         #region Scores
-        public async Task UpdatePlayerStateScore(int fk_ScoreType, string value, int fk_Player, int fk_Team, int fk_PlayerPosition, int fk_PlayerGameWeak, int fk_TeamGameWeak)
+        public void UpdatePlayerStateScore(
+            List<Event> otherGoals, 
+            List<EventType> substitutions, 
+            int rankingIndex, 
+            bool canGetCleanSheat, 
+            int fk_ScoreType, 
+            string value, 
+            int fk_PlayerPosition, 
+            int fk_PlayerGameWeak)
         {
             PlayerGameWeakScore score = new()
             {
@@ -27,11 +35,18 @@ namespace FantasyLogic.SharedLogic
                 Value = value,
             };
 
-            _unitOfWork.PlayerScore.CreatePlayerGameWeakScore(_playerScoreCalc.GetPlayerScore(score, fk_Player, fk_Team, fk_PlayerGameWeak, fk_PlayerPosition, fk_TeamGameWeak));
-            await _unitOfWork.Save();
+            _unitOfWork.PlayerScore.CreatePlayerGameWeakScore(_playerScoreCalc.GetPlayerScore(otherGoals, substitutions, score, rankingIndex, canGetCleanSheat, fk_PlayerPosition));
         }
 
-        public async Task UpdatePlayerEventScore(EventType events, int fk_ScoreType, int fk_Player, int fk_Team, int fk_PlayerPosition, int fk_PlayerGameWeak, int fk_TeamGameWeak)
+        public void UpdatePlayerEventScore(
+            List<Event> otherGoals, 
+            List<EventType> substitutions, 
+            int rankingIndex, 
+            bool canGetCleanSheat,
+            EventType events, 
+            int fk_ScoreType, 
+            int fk_PlayerPosition, 
+            int fk_PlayerGameWeak)
         {
             if (events.GameTime > 0)
             {
@@ -44,37 +59,7 @@ namespace FantasyLogic.SharedLogic
                     IsOut = events.IsOut,
                 };
 
-                //if (fk_ScoreType == (int)ScoreTypeEnum.Goal_Event)
-                //{
-                //    PlayerGameWeakScore extraScore = new()
-                //    {
-                //        Fk_PlayerGameWeak = fk_PlayerGameWeak,
-                //        Fk_ScoreType = (int)ScoreTypeEnum.Goals,
-                //        Value = events.Value.ToString(),
-                //    };
-
-                //    if (_unitOfWork.PlayerScore.GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
-                //    {
-                //        Fk_ScoreType = extraScore.Fk_ScoreType,
-                //        Fk_PlayerGameWeak = extraScore.Fk_PlayerGameWeak
-                //    }, otherLang: false).Any())
-                //    {
-                //        string oldValue = _unitOfWork.PlayerScore.GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
-                //        {
-                //            Fk_ScoreType = extraScore.Fk_ScoreType,
-                //            Fk_PlayerGameWeak = extraScore.Fk_PlayerGameWeak
-                //        }, otherLang: false).Select(a => a.Value).FirstOrDefault();
-
-                //        int newValue = extraScore.Value.ParseToInt() + oldValue.ParseToInt();
-
-                //        extraScore.Value = newValue.ToString();
-                //    }
-
-                //    _unitOfWork.PlayerScore.CreatePlayerGameWeakScore(_playerScoreCalc.GetPlayerScore(extraScore, fk_Player, fk_Team, fk_PlayerGameWeak, fk_PlayerPosition, fk_TeamGameWeak));
-                //}
-
-                _unitOfWork.PlayerScore.CreatePlayerGameWeakScore(_playerScoreCalc.GetPlayerScore(score, fk_Player, fk_Team, fk_PlayerGameWeak, fk_PlayerPosition, fk_TeamGameWeak));
-                await _unitOfWork.Save();
+                _unitOfWork.PlayerScore.CreatePlayerGameWeakScore(_playerScoreCalc.GetPlayerScore(otherGoals, substitutions, score, rankingIndex, canGetCleanSheat, fk_PlayerPosition));
             }
         }
         #endregion
@@ -87,7 +72,6 @@ namespace FantasyLogic.SharedLogic
             {
                 Fk_PlayerGameWeak = fk_PlayerGameWeak
             }, otherLang: false).Select(a => a.Points).Sum();
-            await _unitOfWork.Save();
         }
         #endregion
     }

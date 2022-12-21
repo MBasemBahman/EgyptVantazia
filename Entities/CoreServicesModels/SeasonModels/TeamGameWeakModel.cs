@@ -87,8 +87,7 @@ namespace Entities.CoreServicesModels.SeasonModels
         [DisplayName(nameof(IsDelayed))]
         public bool IsDelayed { get; set; }
 
-        [DisplayName(nameof(JobId))]
-        public string JobId { get; set; }
+        public string LastUpdateId { get; set; }
 
         [DisplayName(nameof(HomeTeamPlayers))]
         public List<PlayerGameWeak> HomeTeamPlayers { get; set; }

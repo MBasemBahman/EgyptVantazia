@@ -80,7 +80,7 @@ namespace FantasyLogic.DataMigration.GamesData
 
         public async Task UpdateGame(Games game, int fk_Home, int fk_Away, int fk_GameWeak)
         {
-            DateTime startTime = game.StartTimeVal.AddHours(2);
+            DateTime startTime = game.StartTimeVal;
             bool isDelayed = false;
 
             GameWeak checkGameWeek = _unitOfWork.Season.GetGameWeak(startTime);
@@ -105,37 +105,11 @@ namespace FantasyLogic.DataMigration.GamesData
             });
             await _unitOfWork.Save();
 
-            if (startTime > DateTime.UtcNow.AddHours(2) && startTime < DateTime.UtcNow.AddDays(10))
+            if (startTime > DateTime.UtcNow.ToEgypt()/* && startTime < DateTime.UtcNow.AddDays(10)*/)
             {
-                StandingsDataHelper standingsDataHelper = new(_unitOfWork, _365Services);
                 GameResultDataHelper gameResultDataHelper = new(_unitOfWork, _365Services);
-                PlayerStateCalc playerStateCalc = new(_unitOfWork);
-                AccountTeamCalc accountTeamCalc = new(_unitOfWork);
-                PrivateLeagueClac privateLeagueClac = new(_unitOfWork);
 
-                string updateGameResultTime = startTime.AddHours(-2).ToCronExpression(startTime.AddMinutes(60), 5);
-
-                string updateGameWeakResultTime = startTime.ToCronExpression(startTime.AddHours(4), 360);
-
-                string updateStandingsTime = startTime.AddHours(-2).ToCronExpression(startTime.AddMinutes(60), 10);
-                string playersStateCalculationsTime = startTime.AddHours(-2).ToCronExpression(startTime.AddMinutes(60), 15);
-                string accountTeamCalculationsTime = startTime.AddHours(-2).ToCronExpression(startTime.AddMinutes(60), 20);
-                string privateLeagueCalculationsTime = startTime.AddHours(-2).ToCronExpression(startTime.AddMinutes(60), 30);
-
-                RecurringJob.AddOrUpdate("UpdateGameResult-" + game.Id.ToString(), () => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, false), updateGameResultTime, TimeZoneInfo.Utc);
-
-                RecurringJob.AddOrUpdate("UpdateGameWeakResult-" + fk_GameWeak.ToString(), () => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { Fk_GameWeak = fk_GameWeak }, false), updateGameWeakResultTime, TimeZoneInfo.Utc);
-
-                RecurringJob.AddOrUpdate("UpdateGameWeakDailyResult-" + fk_GameWeak.ToString(), () => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { Fk_GameWeak = fk_GameWeak }, false), "0 6 * * *", TimeZoneInfo.Utc);
-
-                RecurringJob.AddOrUpdate("UpdateStandings-" + game.Id.ToString(), () => standingsDataHelper.RunUpdateStandings(), updateStandingsTime, TimeZoneInfo.Utc);
-
-                ///////////
-                RecurringJob.AddOrUpdate("PlayersStateCalculations-" + game.Id.ToString(), () => playerStateCalc.RunPlayersStateCalculations(fk_GameWeak, null /*game.Id.ToString()*/), playersStateCalculationsTime, TimeZoneInfo.Utc);
-
-                RecurringJob.AddOrUpdate("AccountTeamCalculations-" + game.Id.ToString(), () => accountTeamCalc.RunAccountTeamsCalculations(fk_GameWeak, 0, false), accountTeamCalculationsTime, TimeZoneInfo.Utc);
-
-                RecurringJob.AddOrUpdate("PrivateLeagueCalculations-" + game.Id.ToString(), () => privateLeagueClac.RunPrivateLeaguesRanking(), privateLeagueCalculationsTime, TimeZoneInfo.Utc);
+                BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, false, false), startTime);
             }
         }
 

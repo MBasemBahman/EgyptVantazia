@@ -37,7 +37,8 @@ namespace CoreServices.Logic
                            ShortName = otherLang ? a.TeamLang.ShortName : a.ShortName,
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
-                       .Sort(parameters.OrderBy);
+                       //.Sort(parameters.OrderBy)
+                       .OrderBy(a => a.Name);
         }
 
 

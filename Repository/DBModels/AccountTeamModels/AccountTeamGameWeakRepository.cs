@@ -32,7 +32,8 @@ namespace Repository.DBModels.AccountTeamModels
                            parameters.CreatedAtTo,
                            parameters.AccountFullName,
                            parameters.AccountUserName,
-                           parameters.DashboardSearch);
+                           parameters.DashboardSearch,
+                           parameters.Fk_Players);
 
         }
 
@@ -90,16 +91,24 @@ namespace Repository.DBModels.AccountTeamModels
             DateTime? CreatedAtTo,
             string AccountFullName,
             string AccountUserName,
-            string dashboardSearch)
+            string dashboardSearch,
+            List<int> fk_Players)
         {
             return AccountTeamGameWeaks.Where(a => (id == 0 || a.Id == id) &&
-                                                   
+
                                                    (string.IsNullOrEmpty(dashboardSearch) ||
                                                     a.Id.ToString().Contains(dashboardSearch) ||
                                                     a.AccountTeam.Account.FullName.Contains(dashboardSearch) ||
                                                     a.AccountTeam.Season.Name.Contains(dashboardSearch) ||
                                                     a.AccountTeam.Name.Contains(dashboardSearch)) &&
-                                                   
+
+                                                   (fk_Players == null ||
+                                                    !fk_Players.Any() ||
+                                                    a.AccountTeam
+                                                     .AccountTeamPlayers
+                                                     .Any(b => fk_Players.Contains(b.Fk_Player) &&
+                                                               (Fk_GameWeak == 0 || b.AccountTeamPlayerGameWeaks.Any(c => c.Fk_GameWeak == Fk_GameWeak && c.IsTransfer == false)))) &&
+
                                                    (Fk_AccountTeam == 0 || a.Fk_AccountTeam == Fk_AccountTeam) &&
                                                    (GameWeakFrom == 0 || a.GameWeak._365_GameWeakIdValue >= GameWeakFrom) &&
                                                    (GameWeakTo == 0 || a.GameWeak._365_GameWeakIdValue <= GameWeakTo) &&

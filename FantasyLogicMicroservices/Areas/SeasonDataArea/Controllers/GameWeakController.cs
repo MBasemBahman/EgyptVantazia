@@ -39,7 +39,10 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
         [Route(nameof(UpdateCurrentGameWeak))]
         public IActionResult UpdateCurrentGameWeak(int fk_GameWeak)
         {
-            _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.GamesDataHelper.UpdateCurrentGameWeak(fk_GameWeak));
+            var Date = new DateTime(2022, 12, 25);
+            var stringgg = Date.ToCronExpression();
+
+            //_ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.GamesDataHelper.UpdateCurrentGameWeak(fk_GameWeak));
 
             return Ok();
         }

@@ -25,15 +25,16 @@ namespace FantasyLogicMicroservices.Areas.AccountTeamArea.Controllers
         public IActionResult UpdateAccountTeamsPoints(
             [FromQuery] int fk_GameWeak,
             [FromQuery] int fk_AccountTeam,
+            [FromQuery] List<int> fk_Players,
             [FromQuery] bool inDebug)
         {
             if (inDebug)
             {
-                _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(fk_GameWeak, fk_AccountTeam, true);
+                _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(fk_GameWeak, fk_AccountTeam, fk_Players, inDebug);
             }
             else
             {
-                _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(fk_GameWeak, fk_AccountTeam, false));
+                _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(fk_GameWeak, fk_AccountTeam, fk_Players, inDebug));
             }
 
             return Ok();

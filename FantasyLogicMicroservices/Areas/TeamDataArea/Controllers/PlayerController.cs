@@ -1,6 +1,7 @@
 ﻿using FantasyLogic;
 using FantasyLogicMicroservices.Controllers;
 using Hangfire;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FantasyLogicMicroservices.Areas.TeamDataArea.Controllers
 {
@@ -27,15 +28,6 @@ namespace FantasyLogicMicroservices.Areas.TeamDataArea.Controllers
             _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.PlayerDataHelper.RunUpdatePlayers());
 
             RecurringJob.AddOrUpdate("UpdatePlayers", () => _fantasyUnitOfWork.PlayerDataHelper.RunUpdatePlayers(), "0 2 * * *", TimeZoneInfo.Utc);
-
-            return Ok();
-        }
-
-        [HttpPost]
-        [Route(nameof(UpdatePlayersStates))]
-        public IActionResult UpdatePlayersStates([FromQuery] int fk_GameWeak, [FromQuery] string _365_MatchId)
-        {
-            _fantasyUnitOfWork.PlayerStateCalc.RunPlayersStateCalculations(fk_GameWeak, _365_MatchId);
 
             return Ok();
         }

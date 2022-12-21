@@ -5,11 +5,15 @@ namespace IntegrationWith365.Entities.GameModels
     public class GameReturn
     {
         public Game Game { get; set; }
+
+        public string LastUpdateId { get; set; }
     }
 
     public class Game
     {
         public string StatusText { get; set; }
+
+        public DateTime StartTime { get; set; }
 
         public bool IsEnded => StatusText is "انتهت" or "Ended";
 

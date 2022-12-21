@@ -1,5 +1,7 @@
 using Hangfire;
 
+bool useHangfire = true;
+
 TenantConfig config = new(TenantEnvironments.Development);
 
 LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), config.NlogConfig));
@@ -32,7 +34,10 @@ builder.Services.AddControllers(opt =>
 });
 //builder.Services.ConfigureFirebase(config.AppSettings);
 builder.Services.ConfigureEmailSender(builder.Configuration);
-builder.Services.ConfigureHangfire(builder.Configuration);
+if (useHangfire)
+{
+    builder.Services.ConfigureHangfire(builder.Configuration);
+}
 
 WebApplication app = builder.Build();
 
@@ -61,12 +66,15 @@ app.ConfigureExceptionHandler(logger);
 
 app.UseRouting();
 
-app.UseHangfireDashboard("/schedulejobs", new DashboardOptions
+if (useHangfire)
 {
-    AppPath = "",
-    DashboardTitle = "schedule jobs",
-    Authorization = new[] { new HangfireAuthorizationFilter() }
-});
+    _ = app.UseHangfireDashboard("/schedulejobs", new DashboardOptions
+    {
+        AppPath = "",
+        DashboardTitle = "schedule jobs",
+        Authorization = new[] { new HangfireAuthorizationFilter() }
+    });
+}
 
 app.UseEndpoints(endpoints =>
 {

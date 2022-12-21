@@ -11,14 +11,19 @@ namespace FantasyLogic.Calculations
     public class PlayerStateCalc
     {
         private readonly UnitOfWork _unitOfWork;
+        private readonly AccountTeamCalc _accountTeamCalc;
+
+        private readonly string RecurringJobGameWeekPlayerId = "PlayerGameWeekStatesCalc-";
+        private readonly string RecurringJobSeasonPlayerId = "PlayerSeasonStatesCalc-";
 
         public PlayerStateCalc(UnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+            _accountTeamCalc = new(_unitOfWork);
         }
 
         #region Calculations
-        public void RunPlayersStateCalculations(int fk_GameWeak, string _365_MatchId)
+        public void RunPlayersStateCalculations(int fk_GameWeak, string _365_MatchId, List<int> fk_Players, bool inDebug)
         {
             SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
 
@@ -30,14 +35,11 @@ namespace FantasyLogic.Calculations
                                              }, otherLang: false)
                                              .Select(a => a.Id).ToList();
 
-            //PlayersStateCalculations(season.Id, gameWeaks, _365_MatchId);
-
-            _ = BackgroundJob.Enqueue(() => PlayersStateCalculations(season.Id, gameWeaks, _365_MatchId));
+            PlayersStateCalculations(season.Id, gameWeaks, _365_MatchId, fk_Players, inDebug);
         }
 
-        public void PlayersStateCalculations(int fk_Season, List<int> fk_GameWeaks, string _365_MatchId)
+        public void PlayersStateCalculations(int fk_Season, List<int> fk_GameWeaks, string _365_MatchId, List<int> fk_Players, bool inDebug)
         {
-            string jobId = null;
             List<int> players = null;
             int playerSelectionCount = 0;
             int playerCaptainCount = 0;
@@ -48,7 +50,8 @@ namespace FantasyLogic.Calculations
                 {
                     Fk_Season = fk_Season,
                     Fk_GameWeak = fk_GameWeak,
-                    _365_MatchId = _365_MatchId
+                    _365_MatchId = _365_MatchId,
+                    Fk_Players = fk_Players
                 }, otherLang: false)
                 .Select(a => a.Id)
                 .ToList();
@@ -58,34 +61,37 @@ namespace FantasyLogic.Calculations
                     playerSelectionCount = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
                     {
                         Fk_GameWeak = fk_GameWeak
-                    }, otherLang: false).Count();
+                    }, otherLang: false).Select(a => a.AccountTeamPlayer.Fk_Player).Distinct().Count();
 
                     playerCaptainCount = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
                     {
                         Fk_GameWeak = fk_GameWeak,
                         Fk_TeamPlayerType = (int)TeamPlayerTypeEnum.Captian
-                    }, otherLang: false).Count();
+                    }, otherLang: false).Select(a => a.AccountTeamPlayer.Fk_Player).Distinct().Count();
 
                     foreach (int player in players)
                     {
-                        //PlayerStateCalculations(player, 0, fk_GameWeak, playerSelectionCount, playerCaptainCount, jobId);
+                        if (inDebug)
+                        {
+                            PlayerStateCalculations(player, 0, fk_GameWeak, playerSelectionCount, playerCaptainCount, inDebug);
+                        }
+                        else
+                        {
+                            string recurringId = RecurringJobGameWeekPlayerId + $"{fk_GameWeak}-{player}";
 
-                        jobId = jobId.IsExisting()
-                            ? BackgroundJob.ContinueJobWith(jobId, () => PlayerStateCalculations(player, 0, fk_GameWeak, playerSelectionCount, playerCaptainCount, jobId))
-                            : BackgroundJob.Enqueue(() => PlayerStateCalculations(player, 0, fk_GameWeak, playerSelectionCount, playerCaptainCount, jobId));
+                            RecurringJob.AddOrUpdate(recurringId, () => PlayerStateCalculations(player, 0, fk_GameWeak, playerSelectionCount, playerCaptainCount, inDebug), CronExpression.EveryDayOfMonth(1, 8, 0), TimeZoneInfo.Utc);
+
+                            RecurringJobCustom.TriggerJob(recurringId);
+                        }
                     }
-
-                    jobId = jobId.IsExisting()
-                            ? BackgroundJob.ContinueJobWith(jobId, () => UpdateTop15(fk_GameWeak, 0))
-                            : BackgroundJob.Enqueue(() => UpdateTop15(fk_GameWeak, 0));
                 }
-
             }
 
             players = _unitOfWork.Team.GetPlayers(new PlayerParameters
             {
                 Fk_Season = fk_Season,
-                _365_MatchId = _365_MatchId
+                _365_MatchId = _365_MatchId,
+                Fk_Players = fk_Players
             }, otherLang: false)
                .Select(a => a.Id)
                .ToList();
@@ -105,26 +111,29 @@ namespace FantasyLogic.Calculations
 
                 foreach (int player in players)
                 {
-                    //PlayerStateCalculations(player, fk_Season, 0, playerSelectionCount, playerCaptainCount, jobId);
+                    if (inDebug)
+                    {
+                        PlayerStateCalculations(player, fk_Season, 0, playerSelectionCount, playerCaptainCount, inDebug);
+                    }
+                    else
+                    {
+                        string recurringId = RecurringJobSeasonPlayerId + $"{fk_Season}-{player}";
 
-                    jobId = jobId.IsExisting()
-                        ? BackgroundJob.ContinueJobWith(jobId, () => PlayerStateCalculations(player, fk_Season, 0, playerSelectionCount, playerCaptainCount, jobId))
-                        : BackgroundJob.Enqueue(() => PlayerStateCalculations(player, fk_Season, 0, playerSelectionCount, playerCaptainCount, jobId));
+                        RecurringJob.AddOrUpdate(recurringId, () => PlayerStateCalculations(player, fk_Season, 0, playerSelectionCount, playerCaptainCount, inDebug), CronExpression.EveryDayOfMonth(1, 8, 0), TimeZoneInfo.Utc);
+
+                        RecurringJobCustom.TriggerJob(recurringId);
+                    }
                 }
             }
-
-            jobId = jobId.IsExisting()
-                           ? BackgroundJob.ContinueJobWith(jobId, () => UpdateTop15(0, fk_Season))
-                           : BackgroundJob.Enqueue(() => UpdateTop15(0, fk_Season));
         }
 
-        public string PlayerStateCalculations(
+        public void PlayerStateCalculations(
             int fk_Player,
             int fk_Season,
             int fk_GameWeak,
             int playerSelectionCount,
             int playerCaptainCount,
-            string jobId)
+            bool inDebug)
         {
             List<int> scoreStates = new()
             {
@@ -173,9 +182,7 @@ namespace FantasyLogic.Calculations
                 }
             }
 
-            PlayerCalculations(fk_Player, fk_Season, fk_GameWeak, playerSelectionCount, playerCaptainCount);
-
-            return jobId;
+            PlayerCalculations(fk_Player, fk_Season, fk_GameWeak, playerSelectionCount, playerCaptainCount, inDebug);
         }
 
         public void PlayerCalculations(
@@ -183,7 +190,8 @@ namespace FantasyLogic.Calculations
             int fk_Season,
             int fk_GameWeak,
             int playerSelectionCount,
-            int playerCaptainCount)
+            int playerCaptainCount,
+            bool inDebug)
         {
             PlayerCustomStateResult playescore = _unitOfWork.Team.GetPlayerCustomStateResult(fk_Player, fk_Season, fk_GameWeak);
 
@@ -314,6 +322,18 @@ namespace FantasyLogic.Calculations
                 }
                 _unitOfWork.Save().Wait();
             }
+
+            //if (fk_GameWeak != 0)
+            //{
+            //    if (inDebug)
+            //    {
+            //        _accountTeamCalc.RunAccountTeamsCalculations(fk_GameWeak, 0, new List<int> { fk_Player }, inDebug);
+            //    }
+            //    else
+            //    {
+            //        _ = BackgroundJob.Enqueue(() => _accountTeamCalc.RunAccountTeamsCalculations(fk_GameWeak, 0, new List<int> { fk_Player }, inDebug));
+            //    }
+            //}
         }
 
         public async Task UpdateTop15(int fk_GameWeak, int fk_Season)

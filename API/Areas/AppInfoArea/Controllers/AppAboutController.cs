@@ -28,6 +28,7 @@ namespace API.Areas.AppInfoArea.Controllers
 
             AppAboutModel data = await _unitOfWork.AppInfo.GetAppAbouts(new RequestParameters(), otherLang).FirstOrDefaultAsync();
             data.ShowPayment = false;
+            data.ShowInvite = true;
 
             return data;
         }

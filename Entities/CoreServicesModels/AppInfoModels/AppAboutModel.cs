@@ -5,6 +5,9 @@
         [DisplayName(nameof(ShowPayment))]
         public bool ShowPayment { get; set; }
 
+        [DisplayName(nameof(ShowInvite))]
+        public bool ShowInvite { get; set; }
+
         [DisplayName(nameof(AboutCompany))]
         [DataType(DataType.MultilineText)]
         public string AboutCompany { get; set; }

@@ -46,6 +46,8 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public string AccountUserName { get; set; }
 
         public string DashboardSearch { get; set; }
+
+        public List<int> Fk_Players { get; set; }
     }
 
     public class AccountTeamGameWeakModel : AuditEntity

@@ -302,20 +302,13 @@ namespace CoreServices.Logic
                                        .Team
                                        .AwayGameWeaks.Any(b => b.Fk_GameWeak == a.Fk_GameWeak &&
                                                                b.StartTime <= DateTime.UtcNow.AddHours(2)),
-                           IsParticipate = a.AccountTeamPlayer
-                                       .Player
-                                       .Team
-                                       .HomeGameWeaks.Any(b => b.Fk_GameWeak == a.Fk_GameWeak &&
-                                                               b.StartTime <= DateTime.UtcNow.AddHours(2) &&
-                                                               b.PlayerGameWeaks.Any(c => c.Fk_Player == a.AccountTeamPlayer.Fk_Player &&
-                                                                                          (b.IsEnded == false || c.PlayerGameWeakScores.Any()))) ||
-                                       a.AccountTeamPlayer
-                                       .Player
-                                       .Team
-                                       .AwayGameWeaks.Any(b => b.Fk_GameWeak == a.Fk_GameWeak &&
-                                                               b.StartTime <= DateTime.UtcNow.AddHours(2) &&
-                                                               b.PlayerGameWeaks.Any(c => c.Fk_Player == a.AccountTeamPlayer.Fk_Player &&
-                                                                                          (b.IsEnded == false || c.PlayerGameWeakScores.Any()))),
+                           IsParticipate = _dBContext.PlayerGameWeaks.Any(b => b.Fk_Player == a.AccountTeamPlayer.Fk_Player &&
+                                                                               b.TeamGameWeak.Fk_GameWeak == a.Fk_GameWeak &&
+                                                                               b.TeamGameWeak.StartTime <= DateTime.UtcNow.AddHours(2) &&
+                                                                               (b.TeamGameWeak.IsEnded == false ||
+                                                                                b.TotalPoints != 0 ||
+                                                                                b.Ranking != 0 ||
+                                                                                b.PlayerGameWeakScores.Any())),
                            Top15 = a.AccountTeamPlayer
                                     .Player
                                     .PlayerGameWeakScoreStates

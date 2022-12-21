@@ -2,39 +2,24 @@
 
 namespace Contracts.Extensions
 {
-    public static class DateTimeExtensions
+    public static class CronExpression
     {
-        public static string ToShortDateTimeString(this DateTime value)
+        public static string EveryMinutes(int minute)
         {
-            return value.ToString("dd/MM/yyyy hh:mm tt");
+            return $"*/{minute} * * * *";
         }
 
-        public static DateTime ToEgypt(this DateTime value)
+        public static string EveryDayOfMonth(int day, int hour, int minute)
         {
-            return value.AddHours(2);
+            return $"{minute} {hour} {day} * *";
         }
 
-        public static string ToLongDateString(this DateTime value)
-        {
-            return value.ToString("dddd, dd MMMM yyyy");
-        }
-
-        public static string ToLongDateTimeString(this DateTime value)
-        {
-            return value.ToString("dddd, dd MMMM yyyy hh:mm tt");
-        }
-
-        public static string ToArabicFormat(this DateTime value)
-        {
-            return value.ToString("dddd, dd MMMM yyyy", new CultureInfo("ar-EG"));
-        }
-
-        public static string ToCronExpression(this DateTime value)
+        public static string ToString(DateTime value)
         {
             return value.ToString("mm HH dd MM") + " *";
         }
 
-        public static string ToCronExpression(this DateTime startDateTime, DateTime EndDateTime, int Minute)
+        public static string ToString(DateTime startDateTime, DateTime EndDateTime, int Minute)
         {
             List<string> mins = new();
             List<string> hours = new();

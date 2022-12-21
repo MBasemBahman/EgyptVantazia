@@ -315,7 +315,7 @@ namespace CoreServices.Logic
                            StartTime = a.StartTime,
                            _365_MatchId = a._365_MatchId,
                            IsDelayed = a.IsDelayed,
-                           JobId = a.JobId,
+                           LastUpdateId = a.LastUpdateId,
                            Away = new TeamModel
                            {
                                Name = otherLang ? a.Away.TeamLang.Name : a.Away.Name,

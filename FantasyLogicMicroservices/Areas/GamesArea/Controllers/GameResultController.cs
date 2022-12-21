@@ -24,9 +24,10 @@ namespace FantasyLogicMicroservices.Areas.GamesArea.Controllers
         [Route(nameof(UpdateGameResult))]
         public IActionResult UpdateGameResult(
             [FromQuery] TeamGameWeakParameters parameters,
-            [FromQuery] bool ignore365Points = false)
+            [FromQuery] bool inDebug,
+            [FromQuery] bool runAll)
         {
-            _fantasyUnitOfWork.GameResultDataHelper.RunUpdateGameResult(parameters, ignore365Points);
+            _fantasyUnitOfWork.GameResultDataHelper.RunUpdateGameResult(parameters, inDebug, runAll);
 
             return Ok();
         }

@@ -46,7 +46,7 @@ namespace API.Areas.PaymentArea.Controllers
 
             if (prevSubscription != null && !prevSubscription.IsValid)
             {
-                throw new Exception("You already get this subscription in this season!");
+                throw new Exception("لقد حصلت بالفعل على هذا الاشتراك في هذا الموسم!");
             }
 
             if (model.Fk_Subscription == (int)SubscriptionEnum.All)
@@ -58,7 +58,7 @@ namespace API.Areas.PaymentArea.Controllers
                     //NotEqualSubscriptionId = (int)SubscriptionEnum.Add3MillionsBank
                 }, otherLang: false).Any())
                 {
-                    throw new Exception("You can`t buy this subscription because you already have sub one in this season!");
+                    throw new Exception("لا يمكنك شراء هذا الاشتراك لأن لديك بالفعل اشتراك فرعي في هذا الموسم!");
                 }
             }
             else if (model.Fk_Subscription != (int)SubscriptionEnum.All)
@@ -70,7 +70,7 @@ namespace API.Areas.PaymentArea.Controllers
                     Fk_Subscription = (int)SubscriptionEnum.All
                 }, otherLang: false).Any())
                 {
-                    throw new Exception("You can`t buy this subscription because you already have super one in this season!");
+                    throw new Exception("لا يمكنك شراء هذا الاشتراك لأن لديك بالفعل اشتراك ممتاز في هذا الموسم!");
                 }
 
                 if (_unitOfWork.Account.GetAccountSubscriptions(new AccountSubscriptionParameters
@@ -80,18 +80,18 @@ namespace API.Areas.PaymentArea.Controllers
                     Fk_Subscription = model.Fk_Subscription
                 }, otherLang: false).Any())
                 {
-                    throw new Exception("You can`t buy this subscription because you already have one in this season!");
+                    throw new Exception("لا يمكنك شراء هذا الاشتراك لأن لديك اشتراكًا بالفعل في هذا الموسم!");
                 }
             }
 
             if (auth.PhoneNumber.IsEmpty())
             {
-                throw new Exception("Please add phone number!");
+                throw new Exception("من فضلك أضف رقم الهاتف فى حسابك");
             }
 
             if (auth.EmailAddress.IsEmpty())
             {
-                throw new Exception("Please add email address!");
+                throw new Exception("يرجى إضافة عنوان بريد إلكتروني فى حسابك");
             }
 
             if (model.PyamentType == PyamentTypeEnum.Wallet && model.WalletIdentifier.IsEmpty())

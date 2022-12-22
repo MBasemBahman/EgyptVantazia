@@ -48,6 +48,9 @@ namespace Entities.DBModels.SeasonModels
         [DisplayName(nameof(LastUpdateId))]
         public string LastUpdateId { get; set; }
 
+        [DisplayName(nameof(JobId))]
+        public string JobId { get; set; }
+
         [DisplayName(nameof(PlayerGameWeaks))]
         public IList<PlayerGameWeak> PlayerGameWeaks { get; set; }
     }

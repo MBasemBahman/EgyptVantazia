@@ -24,11 +24,7 @@ namespace FantasyLogicMicroservices.Areas.StandingsDataArea.Controllers
         [Route(nameof(UpdateStandings))]
         public IActionResult UpdateStandings()
         {
-            //_fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings();
-
             _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings());
-
-            RecurringJob.AddOrUpdate("UpdateStandings", () => _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings(), "0 4 * * *", TimeZoneInfo.Utc);
 
             return Ok();
         }

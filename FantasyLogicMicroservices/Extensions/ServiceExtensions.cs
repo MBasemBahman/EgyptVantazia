@@ -174,7 +174,7 @@ namespace FantasyLogicMicroservices.Extensions
                     DisableGlobalLocks = true,
                 }));
             // Add the processing server as IHostedService
-            _ = services.AddHangfireServer(a => a.WorkerCount = 5);
+            _ = services.AddHangfireServer(a => a.WorkerCount = 20);
         }
     }
 }

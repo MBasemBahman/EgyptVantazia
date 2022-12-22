@@ -72,7 +72,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 {
                     if (runAll || teamGameWeak.EndTime > DateTime.UtcNow.ToEgypt())
                     {
-                        RecurringJob.AddOrUpdate(RecurringJobMatchId + teamGameWeak._365_MatchId.ToString(), () => UpdateGameResult(teamGameWeak, scoreTypes, inDebug, runAll), CronExpression.EveryMinutes(15), TimeZoneInfo.Utc);
+                        RecurringJob.AddOrUpdate(RecurringJobMatchId + teamGameWeak._365_MatchId.ToString(), () => UpdateGameResult(teamGameWeak, scoreTypes, inDebug, runAll), CronExpression.EveryMinutes(5), TimeZoneInfo.Utc);
                     }
                 }
             }
@@ -376,6 +376,8 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                 }
 
                                 _gameResultLogic.UpdatePlayerStateScore(otherGoals, substitutions, rankingIndex, canGetCleanSheat, fk_ScoreType, Stat.Value, fk_PlayerPosition, fk_PlayerGameWeak);
+                                _unitOfWork.Save().Wait();
+
                             }
                         }
                     }
@@ -387,6 +389,8 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                             if (fk_ScoreType > 0)
                             {
                                 _gameResultLogic.UpdatePlayerEventScore(otherGoals, substitutions, rankingIndex, canGetCleanSheat, events, fk_ScoreType, fk_PlayerPosition, fk_PlayerGameWeak);
+                                _unitOfWork.Save().Wait();
+
                             }
                         }
                     }

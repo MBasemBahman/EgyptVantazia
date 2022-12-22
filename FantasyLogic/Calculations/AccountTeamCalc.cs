@@ -71,15 +71,19 @@ namespace FantasyLogic.Calculations
 
             foreach (var accountTeamGameWeak in accountTeamGameWeaks)
             {
+                if (accountTeamGameWeak.Id == 0 || accountTeamGameWeak.Fk_AccountTeam == 0)
+                {
+                    continue;
+                }
                 if (inDebug)
                 {
-                    AccountTeamPlayersCalculations(accountTeamGameWeak.Id, fk_AccountTeam, gameWeak, fk_Season);
+                    AccountTeamPlayersCalculations(accountTeamGameWeak.Id, accountTeamGameWeak.Fk_AccountTeam, gameWeak, fk_Season);
                 }
                 else
                 {
                     string recurringId = RecurringAccountGameWeakTeamId + $"{accountTeamGameWeak.Id}";
 
-                    RecurringJob.AddOrUpdate(recurringId, () => AccountTeamPlayersCalculations(accountTeamGameWeak.Id, fk_AccountTeam, gameWeak, fk_Season), CronExpression.EveryDayOfMonth(1, 8, 0), TimeZoneInfo.Utc);
+                    RecurringJob.AddOrUpdate(recurringId, () => AccountTeamPlayersCalculations(accountTeamGameWeak.Id, accountTeamGameWeak.Fk_AccountTeam, gameWeak, fk_Season), CronExpression.EveryDayOfMonth(1, 8, 0), TimeZoneInfo.Utc);
 
                     RecurringJobCustom.TriggerJob(recurringId);
                 }
@@ -460,6 +464,13 @@ namespace FantasyLogic.Calculations
             _unitOfWork.Save().Wait();
         }
 
+        public void RunUpdateAccountTeamGameWeakRanking()
+        {
+            GameWeakModel gameWeek = _unitOfWork.Season.GetCurrentGameWeak();
+
+            _ = BackgroundJob.Enqueue(() => UpdateAccountTeamGameWeakRanking(gameWeek, gameWeek.Fk_Season));
+        }
+
         public void UpdateAccountTeamGameWeakRanking(GameWeakModel gameWeak, int fk_Season)
         {
             List<AccountTeamRanking> accountTeamGameWeakRankings = new();
@@ -532,6 +543,13 @@ namespace FantasyLogic.Calculations
             AccountTeam accountTeam = _unitOfWork.AccountTeam.FindAccountTeambyId(fk_AccountTeam, trackChanges: true).Result;
             accountTeam.TotalPoints = totalPoints;
             _unitOfWork.Save().Wait();
+        }
+
+        public void RunUpdateAccountTeamRanking()
+        {
+            var season = _unitOfWork.Season.GetCurrentSeason();
+
+            _ = BackgroundJob.Enqueue(() => UpdateAccountTeamRanking(season.Id));
         }
 
         public void UpdateAccountTeamRanking(int fk_Season)

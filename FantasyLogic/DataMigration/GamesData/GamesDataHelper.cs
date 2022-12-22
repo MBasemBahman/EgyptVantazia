@@ -3,9 +3,7 @@ using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.SeasonModels;
-using FantasyLogic.Calculations;
 using FantasyLogic.DataMigration.PlayerScoreData;
-using FantasyLogic.DataMigration.StandingsData;
 using IntegrationWith365.Entities.GamesModels;
 using IntegrationWith365.Helpers;
 
@@ -105,11 +103,20 @@ namespace FantasyLogic.DataMigration.GamesData
             });
             await _unitOfWork.Save();
 
-            if (startTime > DateTime.UtcNow.ToEgypt()/* && startTime < DateTime.UtcNow.AddDays(10)*/)
+            if (startTime > DateTime.UtcNow.ToEgypt())
             {
+                TeamGameWeak match = await _unitOfWork.Season.FindTeamGameWeakby365Id(game.Id.ToString(), trackChanges: true);
+                if (match.JobId.IsExisting())
+                {
+                    _ = BackgroundJob.Delete(match.JobId);
+                }
+
                 GameResultDataHelper gameResultDataHelper = new(_unitOfWork, _365Services);
 
-                BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, false, false), startTime);
+                string jobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, false, false), startTime);
+
+                match.JobId = jobId;
+                _unitOfWork.Save().Wait();
             }
         }
 

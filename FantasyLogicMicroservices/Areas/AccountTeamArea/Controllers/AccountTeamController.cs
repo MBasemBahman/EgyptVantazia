@@ -1,4 +1,5 @@
-﻿using FantasyLogic;
+﻿using Entities.CoreServicesModels.SeasonModels;
+using FantasyLogic;
 using FantasyLogicMicroservices.Controllers;
 using Hangfire;
 
@@ -41,11 +42,28 @@ namespace FantasyLogicMicroservices.Areas.AccountTeamArea.Controllers
         }
 
         [HttpPost]
+        [Route(nameof(UpdateAccountTeamGameWeakRanking))]
+        public IActionResult UpdateAccountTeamGameWeakRanking(
+            [FromQuery] int fk_GameWeak,
+            [FromQuery] bool inDebug)
+        {
+            GameWeakModel gameWeek = _unitOfWork.Season.GetGameWeakbyId(fk_GameWeak, otherLang: false);
+
+            if (inDebug)
+            {
+                _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamGameWeakRanking(gameWeek, gameWeek.Fk_Season);
+            }
+            else
+            {
+                _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamGameWeakRanking(gameWeek, gameWeek.Fk_Season));
+            }
+            return Ok();
+        }
+
+        [HttpPost]
         [Route(nameof(UpdatePrivateLeaguesRanking))]
         public IActionResult UpdatePrivateLeaguesRanking()
         {
-            //_fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(fk_GameWeak);
-
             _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.PrivateLeagueClac.RunPrivateLeaguesRanking());
 
             return Ok();

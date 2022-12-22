@@ -26,8 +26,6 @@ namespace FantasyLogicMicroservices.Areas.TeamDataArea.Controllers
         {
             _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.TeamDataHelper.RunUpdateTeams());
 
-            RecurringJob.AddOrUpdate("UpdateTeams", () => _fantasyUnitOfWork.TeamDataHelper.RunUpdateTeams(), "0 1 * * *", TimeZoneInfo.Utc);
-
             return Ok();
         }
     }

@@ -24,11 +24,7 @@ namespace FantasyLogicMicroservices.Areas.GamesArea.Controllers
         [Route(nameof(UpdateGames))]
         public IActionResult UpdateGames()
         {
-            //_fantasyUnitOfWork.GamesDataHelper.RunUpdateGames();
-
             _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames());
-
-            RecurringJob.AddOrUpdate("UpdateGames", () => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames(), "0 3 * * *", TimeZoneInfo.Utc);
 
             return Ok();
         }

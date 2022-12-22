@@ -83,7 +83,8 @@ namespace Repository.DBModels.TeamModels
                     new PlayerPrice
                     {
                         BuyPrice = 5,
-                        SellPrice = 5
+                        SellPrice = 5,
+                        Fk_Team= entity.Fk_Team,
                     }
                 };
 

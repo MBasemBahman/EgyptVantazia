@@ -1218,4 +1218,10 @@
   <data name="PlayerGameWeakScore" xml:space="preserve">
     <value>Player Game Weak Scores</value>
   </data>
+  <data name="ShowInvite" xml:space="preserve">
+    <value>Show Invites</value>
+  </data>
+  <data name="ShowPayment" xml:space="preserve">
+    <value>Show Payments</value>
+  </data>
 </root>

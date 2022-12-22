@@ -65,6 +65,12 @@
         [Url]
         public string SnapChatUrl { get; set; }
 
+        [DisplayName(nameof(ShowPayment))]
+        public bool ShowPayment { get; set; }
+
+        [DisplayName(nameof(ShowInvite))]
+        public bool ShowInvite { get; set; }
+
         public AppAboutLang AppAboutLang { get; set; }
     }
 

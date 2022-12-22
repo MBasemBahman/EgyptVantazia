@@ -39,6 +39,8 @@ namespace CoreServices.Logic
                            CreatedBy = a.CreatedBy,
                            LastModifiedAt = a.LastModifiedAt,
                            LastModifiedBy = a.LastModifiedBy,
+                           ShowInvite = a.ShowInvite,
+                           ShowPayment = a.ShowPayment,
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

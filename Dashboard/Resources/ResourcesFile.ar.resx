@@ -1242,4 +1242,10 @@
   <data name="Teams Points" xml:space="preserve">
     <value>نقاط الفرق</value>
   </data>
+  <data name="ShowInvite" xml:space="preserve">
+    <value>إظهار الدعوات</value>
+  </data>
+  <data name="ShowPayment" xml:space="preserve">
+    <value>إظهار المدفوعات</value>
+  </data>
 </root>

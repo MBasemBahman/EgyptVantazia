@@ -203,7 +203,8 @@
                                                 <input asp-for="InstagramUrl" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("InstagramUrl"))" />
                                                 <span asp-validation-for="InstagramUrl" class="text-danger"></span>
                                             </div>
-                                        </div> <div class="col-md-4 col-12">
+                                        </div>
+                                        <div class="col-md-4 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="SnapChatUrl" class="form-label"></label>
                                                 <input asp-for="SnapChatUrl" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("SnapChatUrl"))" />
@@ -211,6 +212,27 @@
                                             </div>
                                         </div>
 
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="ShowPayment" class="form-label"></label>
+                                                <select asp-for="ShowPayment" class="select2 form-select">
+                                                    <option value="true">@Localizer.Get("Yes")</option>
+                                                    <option value="false">@Localizer.Get("No")</option>
+                                                </select>
+                                                <span asp-validation-for="ShowPayment" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="ShowInvite" class="form-label"></label>
+                                                <select asp-for="ShowInvite" class="select2 form-select">
+                                                    <option value="true">@Localizer.Get("Yes")</option>
+                                                    <option value="false">@Localizer.Get("No")</option>
+                                                </select>
+                                                <span asp-validation-for="ShowInvite" class="text-danger"></span>
+                                            </div>
+                                        </div>
 
                                         <hr />
                                         <div class="col-12">

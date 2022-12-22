@@ -2,12 +2,6 @@
 {
     public class AppAboutModel : AuditEntity
     {
-        [DisplayName(nameof(ShowPayment))]
-        public bool ShowPayment { get; set; }
-
-        [DisplayName(nameof(ShowInvite))]
-        public bool ShowInvite { get; set; }
-
         [DisplayName(nameof(AboutCompany))]
         [DataType(DataType.MultilineText)]
         public string AboutCompany { get; set; }
@@ -71,6 +65,11 @@
         [Url]
         public string SnapChatUrl { get; set; }
 
+        [DisplayName(nameof(ShowPayment))]
+        public bool ShowPayment { get; set; }
+
+        [DisplayName(nameof(ShowInvite))]
+        public bool ShowInvite { get; set; }
     }
 
     public class AppAboutCreateOrEditModel
@@ -137,6 +136,12 @@
         [DataType(DataType.Url)]
         [Url]
         public string SnapChatUrl { get; set; }
+
+        [DisplayName(nameof(ShowPayment))]
+        public bool ShowPayment { get; set; }
+
+        [DisplayName(nameof(ShowInvite))]
+        public bool ShowInvite { get; set; }
 
         public AppAboutLangModel AppAboutLang { get; set; }
     }

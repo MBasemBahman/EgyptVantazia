@@ -47,27 +47,27 @@
 
                                         <div class="col-md-12 col-12">
                                             <div class="mb-1">
-                                                <label class="form-label">@($"{Localizer.Get("AboutCompany")}"): </label> 
+                                                <label class="form-label">@($"{Localizer.Get("AboutCompany")}"): </label>
                                                 @Html.Raw(Model.AboutCompany)
                                             </div>
                                         </div>
 
 
-                                          <div class="col-md-12 col-12">
+                                        <div class="col-md-12 col-12">
                                             <div class="mb-1">
                                                 <label class="form-label">@($"{Localizer.Get("AboutApp")}"): </label>
                                                 @Html.Raw(Model.AboutApp)
                                             </div>
                                         </div>
 
-                                          <div class="col-md-12 col-12">
+                                        <div class="col-md-12 col-12">
                                             <div class="mb-1">
                                                 <label class="form-label">@($"{Localizer.Get("TermsAndConditions")}"): </label>
                                                 @Html.Raw(Model.TermsAndConditions)
                                             </div>
                                         </div>
 
-                                          <div class="col-md-12 col-12">
+                                        <div class="col-md-12 col-12">
                                             <div class="mb-1">
                                                 <label class="form-label">@($"{Localizer.Get("QuestionsAndAnswer")}"): </label>
                                                 @Html.Raw(Model.QuestionsAndAnswer)
@@ -81,14 +81,14 @@
                                             </div>
                                         </div>
 
-                                         <div class="col-md-12 col-12">
+                                        <div class="col-md-12 col-12">
                                             <div class="mb-1">
                                                 <label class="form-label">@($"{Localizer.Get("Subscriptions")}"): </label>
                                                 @Html.Raw(Model.Subscriptions)
                                             </div>
                                         </div>
 
-                                         <div class="col-md-12 col-12">
+                                        <div class="col-md-12 col-12">
                                             <div class="mb-1">
                                                 <label class="form-label">@($"{Localizer.Get("Prizes")}"): </label>
                                                 @Html.Raw(Model.Prizes)
@@ -116,10 +116,12 @@
                                         <div class="col-md-4 col-12">
                                             <div class="mb-1">
                                                 <label class="form-label">@($"{Localizer.Get("TwitterUrl")}") :</label>
-                                                @if(!string.IsNullOrEmpty(Model.TwitterUrl)){
+                                                @if (!string.IsNullOrEmpty(Model.TwitterUrl))
+                                                {
                                                     <a href="@Model.TwitterUrl" target="_blank">@Model.TwitterUrl</a>
                                                 }
-                                                else{
+                                                else
+                                                {
                                                     <span>-</span>
                                                 }
                                             </div>
@@ -137,14 +139,15 @@
                                                 }
                                             </div>
                                         </div>
-                                          <div class="col-md-4 col-12">
+                                        <div class="col-md-4 col-12">
                                             <div class="mb-1">
                                                 <label class="form-label">@($"{Localizer.Get("InstagramUrl")}") :</label>
                                                 @if (!string.IsNullOrEmpty(Model.InstagramUrl))
                                                 {
                                                     <a href="@Model.InstagramUrl" target="_blank">@Model.InstagramUrl</a>
                                                 }
-                                                else{
+                                                else
+                                                {
                                                     <span>-</span>
                                                 }
                                             </div>
@@ -159,6 +162,34 @@
                                                 else
                                                 {
                                                     <span>-</span>
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("ShowInvite")}") :</label>
+                                                @if (Model.ShowInvite)
+                                                {
+                                                    @Localizer.Get("Yes")
+                                                }
+                                                else
+                                                {
+                                                    @Localizer.Get("No")
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("ShowPayment")}") :</label>
+                                                @if (Model.ShowPayment)
+                                                {
+                                                    @Localizer.Get("Yes")
+                                                }
+                                                else
+                                                {
+                                                    @Localizer.Get("No")
                                                 }
                                             </div>
                                         </div>

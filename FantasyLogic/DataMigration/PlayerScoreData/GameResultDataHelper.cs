@@ -87,7 +87,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 GameId = teamGameWeak._365_MatchId.ParseToInt()
             });
 
-            bool matchEnded = inDebug || runAll ? false : teamGameWeak.EndTime < DateTime.UtcNow.ToEgypt();
+            bool matchEnded = inDebug || runAll ? false : match.IsEnded /*teamGameWeak.EndTime < DateTime.UtcNow.ToEgypt()*/;
 
             if (matchEnded)
             {
@@ -450,7 +450,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
 
         public DateTime StartTime { get; set; }
 
-        public DateTime EndTime => StartTime.AddHours(3);
+        public DateTime EndTime => StartTime.AddHours(4);
 
         public int Fk_Season { get; set; }
 

@@ -42,6 +42,7 @@ namespace API.Areas.PaymentArea.Controllers
                 Fk_Account = auth.Fk_Account,
                 Fk_Season = season.Id,
                 Id = model.Fk_Subscription,
+                IsActive = true
             }, otherLang: false).FirstOrDefault();
 
             if (prevSubscription != null && !prevSubscription.IsValid)
@@ -55,6 +56,7 @@ namespace API.Areas.PaymentArea.Controllers
                 {
                     Fk_Account = auth.Fk_Account,
                     Fk_Season = season.Id,
+                    IsActive = true
                     //NotEqualSubscriptionId = (int)SubscriptionEnum.Add3MillionsBank
                 }, otherLang: false).Any())
                 {
@@ -67,7 +69,8 @@ namespace API.Areas.PaymentArea.Controllers
                 {
                     Fk_Account = auth.Fk_Account,
                     Fk_Season = season.Id,
-                    Fk_Subscription = (int)SubscriptionEnum.All
+                    Fk_Subscription = (int)SubscriptionEnum.All,
+                    IsActive = true
                 }, otherLang: false).Any())
                 {
                     throw new Exception("لا يمكنك شراء هذا الاشتراك لأن لديك بالفعل اشتراك ممتاز في هذا الموسم!");
@@ -77,7 +80,8 @@ namespace API.Areas.PaymentArea.Controllers
                 {
                     Fk_Account = auth.Fk_Account,
                     Fk_Season = season.Id,
-                    Fk_Subscription = model.Fk_Subscription
+                    Fk_Subscription = model.Fk_Subscription,
+                    IsActive = true
                 }, otherLang: false).Any())
                 {
                     throw new Exception("لا يمكنك شراء هذا الاشتراك لأن لديك اشتراكًا بالفعل في هذا الموسم!");

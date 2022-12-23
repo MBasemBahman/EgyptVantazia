@@ -7,8 +7,7 @@ namespace ModelBuilderConfig.Configurations.AccountModels
     {
         public void Configure(EntityTypeBuilder<AccountSubscription> builder)
         {
-
-            _ = builder.HasIndex(a => new { a.Fk_Account, a.Fk_Season, a.Fk_Subscription }).IsUnique();
+            //_ = builder.HasIndex(a => new { a.Fk_Account, a.Fk_Season, a.Fk_Subscription }).IsUnique();
         }
     }
 }

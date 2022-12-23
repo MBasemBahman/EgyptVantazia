@@ -359,7 +359,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                 if (fk_ScoreType == (int)ScoreTypeEnum.Goals)
                                 {
                                     ScoreTypeDto eventType = scoreTypes.Where(a => a.Id == (int)ScoreTypeEnum.Goal_Event).SingleOrDefault();
-                                    List<EventType> result = eventResult.Where(a => eventType._365_TypeId == a.SubTypeId.ToString() && eventType._365_EventTypeId == a.Id.ToString()).ToList();
+                                    List<EventType> result = eventResult.Where(a => eventType._365_TypeId == a.Id.ToString() && eventType._365_EventTypeId == a.Id.ToString()).ToList();
                                     Stat.Value = result.Count.ToString();
                                 }
                                 else if (fk_ScoreType == (int)ScoreTypeEnum.Assists)

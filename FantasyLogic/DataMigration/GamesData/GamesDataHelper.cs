@@ -49,7 +49,7 @@ namespace FantasyLogic.DataMigration.GamesData
                 _365_GameWeakId = a._365_GameWeakId
             }).ToList();
 
-            List<Games> games = _gamesHelper.GetAllGames(season._365_SeasonId.ParseToInt()).Result.OrderBy(a => a.RoundNum).ThenBy(a => a.StartTimeVal).ToList();
+            List<Games> games = _gamesHelper.GetAllGames(season._365_SeasonId.ParseToInt()).Result.OrderByDescending(a => a.StartTimeVal).ToList();
 
             string jobId = null;
 
@@ -67,6 +67,10 @@ namespace FantasyLogic.DataMigration.GamesData
                         ? BackgroundJob.ContinueJobWith(jobId, () => UpdateGame(game, fk_Home, fk_Away, fk_GameWeak))
                         : BackgroundJob.Enqueue(() => UpdateGame(game, fk_Home, fk_Away, fk_GameWeak));
                 }
+                else
+                {
+
+                }
             }
 
             //UpdateGameWeakDeadline(season.Id).Wait();
@@ -79,15 +83,14 @@ namespace FantasyLogic.DataMigration.GamesData
         public async Task UpdateGame(Games game, int fk_Home, int fk_Away, int fk_GameWeak)
         {
             DateTime startTime = game.StartTimeVal;
-            bool isDelayed = false;
 
-            GameWeak checkGameWeek = _unitOfWork.Season.GetGameWeak(startTime);
+            //GameWeak checkGameWeek = _unitOfWork.Season.GetGameWeak(startTime);
 
-            if (checkGameWeek != null && checkGameWeek.Id != fk_GameWeak)
-            {
-                fk_GameWeak = checkGameWeek.Id;
-                isDelayed = true;
-            }
+            //if (checkGameWeek != null && checkGameWeek.Id != fk_GameWeak)
+            //{
+            //    fk_GameWeak = checkGameWeek.Id;
+            //    isDelayed = true;
+            //}
 
             _unitOfWork.Season.CreateTeamGameWeak(new TeamGameWeak
             {
@@ -99,7 +102,6 @@ namespace FantasyLogic.DataMigration.GamesData
                 _365_MatchId = game.Id.ToString(),
                 AwayScore = (int)game.AwayCompetitor.Score,
                 HomeScore = (int)game.HomeCompetitor.Score,
-                IsDelayed = isDelayed
             });
             await _unitOfWork.Save();
 

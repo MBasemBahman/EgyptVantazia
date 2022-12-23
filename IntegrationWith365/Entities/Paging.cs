@@ -8,8 +8,8 @@ namespace IntegrationWith365.Entities
 
         public string PreviousPage { get; set; }
 
-        public int NextAfterGame => int.Parse(NextPage.Between("aftergame=", "&direction"));
+        public int NextAfterGame => NextPage.IsEmpty() ? 0 : int.Parse(NextPage.Between("aftergame=", "&direction"));
 
-        public int PreviousAfterGame => int.Parse(PreviousPage.Between("aftergame=", "&direction"));
+        public int PreviousAfterGame => PreviousPage.IsEmpty() ? 0 : int.Parse(PreviousPage.Between("aftergame=", "&direction"));
     }
 }

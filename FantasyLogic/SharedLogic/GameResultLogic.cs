@@ -3,6 +3,7 @@ using Entities.DBModels.PlayerScoreModels;
 using FantasyLogic.Calculations;
 using IntegrationWith365.Entities.GameModels;
 using static Contracts.EnumData.DBModelsEnum;
+using static Entities.EnumData.LogicEnumData;
 
 namespace FantasyLogic.SharedLogic
 {
@@ -22,7 +23,7 @@ namespace FantasyLogic.SharedLogic
             List<Event> otherGoals, 
             List<EventType> substitutions, 
             int rankingIndex, 
-            bool canGetCleanSheat, 
+            PlayMinutesEnum playMinutes,
             int fk_ScoreType, 
             string value, 
             int fk_PlayerPosition, 
@@ -35,14 +36,14 @@ namespace FantasyLogic.SharedLogic
                 Value = value,
             };
 
-            _unitOfWork.PlayerScore.CreatePlayerGameWeakScore(_playerScoreCalc.GetPlayerScore(otherGoals, substitutions, score, rankingIndex, canGetCleanSheat, fk_PlayerPosition));
+            _unitOfWork.PlayerScore.CreatePlayerGameWeakScore(_playerScoreCalc.GetPlayerScore(otherGoals, substitutions, score, rankingIndex, playMinutes, fk_PlayerPosition));
         }
 
         public void UpdatePlayerEventScore(
             List<Event> otherGoals, 
             List<EventType> substitutions, 
-            int rankingIndex, 
-            bool canGetCleanSheat,
+            int rankingIndex,
+            PlayMinutesEnum playMinutes,
             EventType events, 
             int fk_ScoreType, 
             int fk_PlayerPosition, 
@@ -59,7 +60,7 @@ namespace FantasyLogic.SharedLogic
                     IsOut = events.IsOut,
                 };
 
-                _unitOfWork.PlayerScore.CreatePlayerGameWeakScore(_playerScoreCalc.GetPlayerScore(otherGoals, substitutions, score, rankingIndex, canGetCleanSheat, fk_PlayerPosition));
+                _unitOfWork.PlayerScore.CreatePlayerGameWeakScore(_playerScoreCalc.GetPlayerScore(otherGoals, substitutions, score, rankingIndex, playMinutes, fk_PlayerPosition));
             }
         }
         #endregion

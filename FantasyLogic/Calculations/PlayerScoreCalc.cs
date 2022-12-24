@@ -2,6 +2,7 @@
 using IntegrationWith365.Entities.GameModels;
 using System.Linq.Dynamic.Core;
 using static Contracts.EnumData.DBModelsEnum;
+using static Entities.EnumData.LogicEnumData;
 
 namespace FantasyLogic.Calculations
 {
@@ -19,9 +20,13 @@ namespace FantasyLogic.Calculations
             List<EventType> substitutions,
             PlayerGameWeakScore score,
             int rankingIndex,
-            bool canGetCleanSheat,
+            PlayMinutesEnum playMinutes,
             int fk_PlayerPosition)
         {
+            if (playMinutes == PlayMinutesEnum.NotPlayed)
+            {
+                return score;
+            }
             if (score.Fk_ScoreType == (int)ScoreTypeEnum.Minutes)
             {
                 score.FinalValue = score.Value.GetUntilOrEmpty("'").ParseToInt();
@@ -97,7 +102,7 @@ namespace FantasyLogic.Calculations
                 score.FinalValue = score.Value.ParseToInt();
                 score.Points = score.FinalValue * -2;
             }
-            else if (score.Fk_ScoreType == (int)ScoreTypeEnum.CleanSheet && canGetCleanSheat)
+            else if (score.Fk_ScoreType == (int)ScoreTypeEnum.CleanSheet && playMinutes == PlayMinutesEnum.PlayMoreThan60Min)
             {
                 if (otherGoals == null || !otherGoals.Any())
                 {
@@ -133,7 +138,7 @@ namespace FantasyLogic.Calculations
                     }
                     else
                     {
-                        if (canGetCleanSheat)
+                        if (playMinutes == PlayMinutesEnum.PlayMoreThan60Min)
                         {
                             score = CalcCleanSheet(score, fk_PlayerPosition);
                         }

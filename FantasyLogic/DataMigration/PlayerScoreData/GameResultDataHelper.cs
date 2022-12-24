@@ -7,8 +7,8 @@ using FantasyLogic.Calculations;
 using FantasyLogic.SharedLogic;
 using IntegrationWith365.Entities.GameModels;
 using IntegrationWith365.Entities.GamesModels;
-using System.Diagnostics;
 using static Contracts.EnumData.DBModelsEnum;
+using static Entities.EnumData.LogicEnumData;
 
 namespace FantasyLogic.DataMigration.PlayerScoreData
 {
@@ -302,19 +302,18 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                                       }).ToList());
                 }
 
-                bool canGetCleanSheat = await UpdatePlayerGameResult(otherGoals, substitutions, rankingIndex, player.Id, player.Fk_Team, player.Fk_PlayerPosition, teamGameWeak.Id, memberResult, eventResult, scoreTypes, assistCount);
+                PlayMinutesEnum playMinutes = await UpdatePlayerGameResult(otherGoals, substitutions, rankingIndex, player.Id, player.Fk_PlayerPosition, teamGameWeak.Id, memberResult, eventResult, scoreTypes, assistCount);
                 await _unitOfWork.Save();
 
-                await UpdateGameFinalResult(otherGoals, substitutions, canGetCleanSheat, rankingIndex, match.Id, player.Id, inDebug);
+                await UpdateGameFinalResult(otherGoals, substitutions, playMinutes, rankingIndex, match.Id, player.Id, inDebug);
             }
         }
 
-        public async Task<bool> UpdatePlayerGameResult(
+        public async Task<PlayMinutesEnum> UpdatePlayerGameResult(
             List<Event> otherGoals,
             List<EventType> substitutions,
             int rankingIndex,
             int fk_Player,
-            int fk_Team,
             int fk_PlayerPosition,
             int fk_TeamGameWeak,
             Member memberResult,
@@ -322,7 +321,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             List<ScoreTypeDto> scoreTypes,
             int assistCount)
         {
-            bool canGetCleanSheat = false;
+            var playMinutes = PlayMinutesEnum.NotPlayed;
 
             if (fk_Player > 0 && memberResult != null)
             {
@@ -347,7 +346,6 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                     _unitOfWork.PlayerScore.DeleteOldPlayerScores(fk_PlayerGameWeak);
                     _unitOfWork.Save().Wait();
 
-
                     if (memberResult.Stats != null && memberResult.Stats.Any())
                     {
                         List<Stat> states = memberResult.Stats.Where(a => a.Value != "0").ToList();
@@ -371,11 +369,15 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                     int value = Stat.Value.GetUntilOrEmpty("'").ParseToInt();
                                     if (value >= 60)
                                     {
-                                        canGetCleanSheat = true;
+                                        playMinutes = PlayMinutesEnum.PlayMoreThan60Min;
+                                    }
+                                    else if (value >= 1)
+                                    {
+                                        playMinutes = PlayMinutesEnum.Played;
                                     }
                                 }
 
-                                _gameResultLogic.UpdatePlayerStateScore(otherGoals, substitutions, rankingIndex, canGetCleanSheat, fk_ScoreType, Stat.Value, fk_PlayerPosition, fk_PlayerGameWeak);
+                                _gameResultLogic.UpdatePlayerStateScore(otherGoals, substitutions, rankingIndex, playMinutes, fk_ScoreType, Stat.Value, fk_PlayerPosition, fk_PlayerGameWeak);
                                 _unitOfWork.Save().Wait();
 
                             }
@@ -388,22 +390,21 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                             int fk_ScoreType = scoreTypes.Where(a => a._365_TypeId == events.SubTypeId.ToString() && a._365_EventTypeId == events.Id.ToString()).Select(a => a.Id).SingleOrDefault();
                             if (fk_ScoreType > 0)
                             {
-                                _gameResultLogic.UpdatePlayerEventScore(otherGoals, substitutions, rankingIndex, canGetCleanSheat, events, fk_ScoreType, fk_PlayerPosition, fk_PlayerGameWeak);
+                                _gameResultLogic.UpdatePlayerEventScore(otherGoals, substitutions, rankingIndex, playMinutes, events, fk_ScoreType, fk_PlayerPosition, fk_PlayerGameWeak);
                                 _unitOfWork.Save().Wait();
-
                             }
                         }
                     }
                 }
             }
 
-            return canGetCleanSheat;
+            return playMinutes;
         }
 
         public async Task UpdateGameFinalResult(
             List<Event> otherGoals,
             List<EventType> substitutions,
-            bool canGetCleanSheat,
+            PlayMinutesEnum playMinutes,
             int rankingIndex,
             int fk_TeamGameWeak,
             int fk_Player,
@@ -427,9 +428,9 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             {
                 foreach (PlayerGameWeakDto player in players)
                 {
-                    _gameResultLogic.UpdatePlayerStateScore(otherGoals, substitutions, rankingIndex, canGetCleanSheat, (int)ScoreTypeEnum.CleanSheet, "", player.Fk_PlayerPosition, player.Fk_PlayerGameWeak);
-                    _gameResultLogic.UpdatePlayerStateScore(otherGoals, substitutions, rankingIndex, canGetCleanSheat, (int)ScoreTypeEnum.ReceiveGoals, "", player.Fk_PlayerPosition, player.Fk_PlayerGameWeak);
-                    _gameResultLogic.UpdatePlayerStateScore(otherGoals, substitutions, rankingIndex, canGetCleanSheat, (int)ScoreTypeEnum.Ranking, "", player.Fk_PlayerPosition, player.Fk_PlayerGameWeak);
+                    _gameResultLogic.UpdatePlayerStateScore(otherGoals, substitutions, rankingIndex, playMinutes, (int)ScoreTypeEnum.CleanSheet, "", player.Fk_PlayerPosition, player.Fk_PlayerGameWeak);
+                    _gameResultLogic.UpdatePlayerStateScore(otherGoals, substitutions, rankingIndex, playMinutes, (int)ScoreTypeEnum.ReceiveGoals, "", player.Fk_PlayerPosition, player.Fk_PlayerGameWeak);
+                    _gameResultLogic.UpdatePlayerStateScore(otherGoals, substitutions, rankingIndex, playMinutes, (int)ScoreTypeEnum.Ranking, "", player.Fk_PlayerPosition, player.Fk_PlayerGameWeak);
                     await _gameResultLogic.UpdatePlayerGameWeakTotalPoints(player.Fk_PlayerGameWeak);
                 }
                 await _unitOfWork.Save();

@@ -37,5 +37,12 @@
             Top_11 = 5,
             TripleCaptain = 6
         }
+
+        public enum PlayMinutesEnum
+        {
+            NotPlayed,
+            Played,
+            PlayMoreThan60Min
+        }
     }
 }

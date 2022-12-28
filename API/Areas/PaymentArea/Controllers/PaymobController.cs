@@ -171,14 +171,11 @@ namespace API.Areas.PaymentArea.Controllers
             return returnUrl;
         }
 
-        [HttpPost]
-        [Route(nameof(TransactionProcessedCallbackAsync))]
+        [Route(nameof(TransactionProcessedCallback))]
         [AllowAll]
-        [ApiExplorerSettings(IgnoreApi = true)]
-        public async Task<IActionResult> TransactionProcessedCallbackAsync([FromBody] TransactionProcessedCallbackParameters parameters)
+        [HttpPost]
+        public async Task<IActionResult> TransactionProcessedCallback(TransactionProcessedCallbackParameters parameters)
         {
-            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
-
             WebhookServices.Send(parameters).Wait();
 
             if (parameters.Type == "TRANSACTION" && parameters.Obj.Success)
@@ -203,7 +200,7 @@ namespace API.Areas.PaymentArea.Controllers
 
                     int accountSubscriptionId = _unitOfWork.Account.GetAccountSubscriptions(new AccountSubscriptionParameters
                     {
-                        Order_id = parameters.Obj.Order_id
+                        Order_id = parameters.Obj.Order.Id.ToString()
                     }, otherLang: false).Select(a => a.Id).FirstOrDefault();
 
                     if (accountSubscriptionId > 0)
@@ -212,7 +209,7 @@ namespace API.Areas.PaymentArea.Controllers
                         accountSubscription.IsActive = true;
                         _unitOfWork.Save().Wait();
 
-                        AccountTeamModel currentTeam = _unitOfWork.AccountTeam.GetCurrentTeam(auth.Fk_Account, accountSubscription.Fk_Season);
+                        AccountTeamModel currentTeam = _unitOfWork.AccountTeam.GetCurrentTeam(accountSubscription.Fk_Account, accountSubscription.Fk_Season);
                         AccountTeam accounTeam = await _unitOfWork.AccountTeam.FindAccountTeambyId(currentTeam.Id, trackChanges: true);
 
                         if (accountSubscription.Fk_Subscription == (int)SubscriptionEnum.All)
@@ -253,14 +250,11 @@ namespace API.Areas.PaymentArea.Controllers
             return Ok();
         }
 
-        [HttpPost]
         [Route(nameof(TransactionResponseCallback))]
         [AllowAll]
-        [ApiExplorerSettings(IgnoreApi = true)]
-        public IActionResult TransactionResponseCallback([FromBody] TransactionProcessedCallbackParameters parameters)
+        [HttpGet]
+        public IActionResult TransactionResponseCallback(TransactionProcessedCallbackParameters parameters)
         {
-            WebhookServices.Send(parameters).Wait();
-
             return Ok();
         }
     }

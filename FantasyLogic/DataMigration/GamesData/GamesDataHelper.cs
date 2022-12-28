@@ -140,7 +140,7 @@ namespace FantasyLogic.DataMigration.GamesData
             {
                 if (teamGameWeak.Deadline > DateTime.MinValue)
                 {
-                    DateTime deadline = teamGameWeak.Deadline.AddMinutes(-90);
+                    DateTime deadline = teamGameWeak.Deadline.AddMinutes(-60);
 
                     GameWeak gameWeak = await _unitOfWork.Season.FindGameWeakbyId(teamGameWeak.Fk_GameWeak, trackChanges: true);
 
@@ -151,7 +151,7 @@ namespace FantasyLogic.DataMigration.GamesData
 
                     if (deadline > DateTime.UtcNow)
                     {
-                        gameWeak.JobId = BackgroundJob.Schedule(() => UpdateCurrentGameWeak(gameWeak.Id), deadline.AddHours(-2));
+                        gameWeak.JobId = BackgroundJob.Schedule(() => UpdateCurrentGameWeak(gameWeak.Id), deadline);
                     }
 
                     gameWeak.Deadline = deadline;

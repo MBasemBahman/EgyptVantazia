@@ -1,6 +1,6 @@
 using Hangfire;
 
-bool useHangfire = true;
+bool useHangfire = false;
 
 TenantConfig config = new(TenantEnvironments.Development);
 

@@ -68,7 +68,8 @@ namespace API.MappingProfileCls
 
             _ = CreateMap<SeasonModel, SeasonDto>();
             _ = CreateMap<GameWeakModel, GameWeakDto>();
-            _ = CreateMap<TeamGameWeakModel, TeamGameWeakDto>();
+            _ = CreateMap<TeamGameWeakModel, TeamGameWeakDto>()
+                .BeforeMap((s, d) => s.StartTime = s.StartTime.AddHours(2)); ;
 
             #endregion
 

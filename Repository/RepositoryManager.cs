@@ -1,6 +1,7 @@
 ﻿using Repository.DBModels.AccountModels;
 using Repository.DBModels.AccountTeamModels;
 using Repository.DBModels.AppInfoModels;
+using Repository.DBModels.AuditModels;
 using Repository.DBModels.DashboardAdministrationModels;
 using Repository.DBModels.LocationModels;
 using Repository.DBModels.LogModels;
@@ -115,6 +116,10 @@ namespace Repository
         private PlayerGameWeakScoreStateRepository _playerGameWeakScoreStateRepository;
         private PlayerSeasonScoreStateRepository _playerSeasonScoreStateRepository;
         private ScoreStateRepository _scoreStateRepository;
+        #endregion
+
+        #region AuditModels
+        private JobAuditRepository _jobAuditRepository;
         #endregion
 
 
@@ -538,6 +543,18 @@ namespace Repository
             {
                 _scoreStateRepository ??= new ScoreStateRepository(_dBContext);
                 return _scoreStateRepository;
+            }
+        }
+        #endregion
+
+        #region AuditModels
+
+        public JobAuditRepository JobAudit
+        {
+            get
+            {
+                _jobAuditRepository ??= new JobAuditRepository(_dBContext);
+                return _jobAuditRepository;
             }
         }
         #endregion

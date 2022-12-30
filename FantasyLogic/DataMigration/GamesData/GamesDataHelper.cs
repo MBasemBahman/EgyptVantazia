@@ -3,7 +3,9 @@ using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.SeasonModels;
+using FantasyLogic.Calculations;
 using FantasyLogic.DataMigration.PlayerScoreData;
+using FantasyLogic.SharedLogic;
 using IntegrationWith365.Entities.GamesModels;
 using IntegrationWith365.Helpers;
 
@@ -15,11 +17,20 @@ namespace FantasyLogic.DataMigration.GamesData
         private readonly UnitOfWork _unitOfWork;
         private readonly GamesHelper _gamesHelper;
 
-        public GamesDataHelper(UnitOfWork unitOfWork, _365Services _365Services)
+        private readonly GameResultLogic _gameResultLogic;
+        private readonly PlayerStateCalc _playerStateCalc;
+
+        public GamesDataHelper(
+            UnitOfWork unitOfWork,
+            _365Services _365Services)
         {
             this._365Services = _365Services;
             _unitOfWork = unitOfWork;
+
             _gamesHelper = new GamesHelper(unitOfWork, _365Services);
+
+            _gameResultLogic = new GameResultLogic(unitOfWork);
+            _playerStateCalc = new PlayerStateCalc(unitOfWork);
         }
 
         public void RunUpdateGames()

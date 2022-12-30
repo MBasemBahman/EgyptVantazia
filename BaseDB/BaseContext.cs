@@ -151,6 +151,7 @@ namespace BaseDB
 
         #region Audit Models
         public DbSet<Audit> Audits { get; set; }
+        public DbSet<JobAudit> JobAudits { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

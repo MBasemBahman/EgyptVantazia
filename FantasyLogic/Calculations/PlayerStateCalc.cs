@@ -3,6 +3,7 @@ using Entities.CoreServicesModels.PlayerScoreModels;
 using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
+using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.PlayerStateModels;
 using static Contracts.EnumData.DBModelsEnum;
 
@@ -12,13 +13,16 @@ namespace FantasyLogic.Calculations
     {
         private readonly UnitOfWork _unitOfWork;
         private readonly AccountTeamCalc _accountTeamCalc;
+        private readonly HangFireCustomJob _hangFireCustomJob;
 
-        private readonly string RecurringJobGameWeekPlayerId = "PlayerGameWeekStatesCalc-";
-        private readonly string RecurringJobSeasonPlayerId = "PlayerSeasonStatesCalc-";
+        private readonly string JobGameWeekPlayerId = "PlayerGameWeekStatesCalc-";
+        private readonly string JobSeasonPlayerId = "PlayerSeasonStatesCalc-";
 
-        public PlayerStateCalc(UnitOfWork unitOfWork)
+        public PlayerStateCalc(
+            UnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+            _hangFireCustomJob = new HangFireCustomJob(unitOfWork);
             _accountTeamCalc = new(_unitOfWork);
         }
 
@@ -77,11 +81,11 @@ namespace FantasyLogic.Calculations
                         }
                         else
                         {
-                            string recurringId = RecurringJobGameWeekPlayerId + $"{fk_GameWeak}-{player}";
+                            string recurringId = JobGameWeekPlayerId + $"{fk_GameWeak}-{player}";
 
-                            RecurringJob.AddOrUpdate(recurringId, () => PlayerStateCalculations(player, 0, fk_GameWeak, playerSelectionCount, playerCaptainCount, inDebug), CronExpression.EveryDayOfMonth(1, 8, 0), TimeZoneInfo.Utc);
+                            string hangfireJobId = BackgroundJob.Enqueue(() => PlayerStateCalculations(player, 0, fk_GameWeak, playerSelectionCount, playerCaptainCount, inDebug));
 
-                            RecurringJobCustom.TriggerJob(recurringId);
+                            _hangFireCustomJob.ReplaceJob(hangfireJobId, recurringId);
                         }
                     }
                 }
@@ -117,11 +121,11 @@ namespace FantasyLogic.Calculations
                     }
                     else
                     {
-                        string recurringId = RecurringJobSeasonPlayerId + $"{fk_Season}-{player}";
+                        string recurringId = JobSeasonPlayerId + $"{fk_Season}-{player}";
 
-                        RecurringJob.AddOrUpdate(recurringId, () => PlayerStateCalculations(player, fk_Season, 0, playerSelectionCount, playerCaptainCount, inDebug), CronExpression.EveryDayOfMonth(1, 8, 0), TimeZoneInfo.Utc);
+                        string hangfireJobId = BackgroundJob.Enqueue(() => PlayerStateCalculations(player, fk_Season, 0, playerSelectionCount, playerCaptainCount, inDebug));
 
-                        RecurringJobCustom.TriggerJob(recurringId);
+                        _hangFireCustomJob.ReplaceJob(hangfireJobId, recurringId);
                     }
                 }
             }

@@ -18,20 +18,20 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
         private readonly UnitOfWork _unitOfWork;
         private readonly GameResultLogic _gameResultLogic;
         private readonly PlayerStateCalc _playerStateCalc;
-
+        private readonly HangFireCustomJob _hangFireCustomJob;
 
         private readonly string RecurringJobMatchId = "UpdateMatch-";
-        private readonly string RecurringJobPlayerId = "UpdateMatchPlayer-";
+        private readonly string JobPlayerId = "UpdateMatchPlayer-";
 
-        private readonly string RecurringJobGameWeekPlayerId = "PlayerGameWeekStatesCalc-";
-        private readonly string RecurringJobSeasonPlayerId = "PlayerSeasonStatesCalc-";
-
-        public GameResultDataHelper(UnitOfWork unitOfWork, _365Services _365Services)
+        public GameResultDataHelper(
+            UnitOfWork unitOfWork,
+            _365Services _365Services)
         {
             this._365Services = _365Services;
             _unitOfWork = unitOfWork;
             _gameResultLogic = new GameResultLogic(unitOfWork);
-            _playerStateCalc = new(_unitOfWork);
+            _playerStateCalc = new PlayerStateCalc(unitOfWork);
+            _hangFireCustomJob = new HangFireCustomJob(unitOfWork);
         }
 
         public void RunUpdateGameResult(TeamGameWeakParameters parameters, bool inDebug, bool runAll)
@@ -122,14 +122,6 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 {
                     List<GameMember> allMembers = gameReturn.Game.Members;
 
-                    if (matchEnded)
-                    {
-                        foreach (int id in allMembers.Select(a => a.Id).ToList())
-                        {
-                            RecurringJob.RemoveIfExists(RecurringJobPlayerId + teamGameWeak._365_MatchId.ToString() + $"-{id}");
-                        }
-                    }
-
                     IQueryable<PlayerModel> playersQuary = _unitOfWork.Team.GetPlayers(new PlayerParameters
                     {
                         _365_PlayerIds = allMembers.Select(a => a.AthleteId.ToString()).ToList(),
@@ -144,18 +136,6 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                             Fk_PlayerPosition = a.Fk_PlayerPosition,
                             Fk_Team = a.Fk_Team
                         }).ToList();
-
-                        if (matchEnded)
-                        {
-                            foreach (int player in players.Select(a => a.Id).ToList())
-                            {
-                                string recurringGameWeekId = RecurringJobGameWeekPlayerId + $"{teamGameWeak.Fk_GameWeek}-{player}";
-                                string recurringSeasonId = RecurringJobSeasonPlayerId + $"{teamGameWeak.Fk_Season}-{player}";
-
-                                RecurringJob.RemoveIfExists(recurringGameWeekId);
-                                RecurringJob.RemoveIfExists(recurringSeasonId);
-                            }
-                        }
 
                         if (!matchEnded)
                         {
@@ -198,10 +178,11 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                         }
                                         else
                                         {
-                                            string recurringJobPlayerId = RecurringJobPlayerId + teamGameWeak._365_MatchId.ToString() + $"-{member.Id}";
+                                            string JobPlayerId = this.JobPlayerId + teamGameWeak._365_MatchId.ToString() + $"-{member.Id}";
 
-                                            RecurringJob.AddOrUpdate(recurringJobPlayerId, () => UpdatePlayerResult(gameReturn, member, player, rankingIndex, teamGameWeak, memberResult, scoreTypes, match, inDebug), CronExpression.EveryDayOfMonth(1, 8, 0), TimeZoneInfo.Utc);
-                                            RecurringJobCustom.TriggerJob(recurringJobPlayerId);
+                                            string hangfireJobId = BackgroundJob.Enqueue(() => UpdatePlayerResult(gameReturn, member, player, rankingIndex, teamGameWeak, memberResult, scoreTypes, match, inDebug));
+
+                                            _hangFireCustomJob.ReplaceJob(hangfireJobId, JobPlayerId);
                                         }
                                     }
                                 }

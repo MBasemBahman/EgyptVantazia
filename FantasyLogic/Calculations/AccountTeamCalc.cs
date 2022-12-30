@@ -10,13 +10,16 @@ namespace FantasyLogic.Calculations
     public class AccountTeamCalc
     {
         private readonly UnitOfWork _unitOfWork;
+        private readonly HangFireCustomJob _hangFireCustomJob;
 
-        private readonly string RecurringAccountGameWeakTeamId = "AccountTeamGameWeakCalc-";
-        private readonly string RecurringAccountTeamId = "AccountTeamCalc-";
+        private readonly string AccountGameWeakTeamId = "AccountTeamGameWeakCalc-";
+        private readonly string AccountTeamId = "AccountTeamCalc-";
 
-        public AccountTeamCalc(UnitOfWork unitOfWork)
+        public AccountTeamCalc(
+            UnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+            _hangFireCustomJob = new HangFireCustomJob(unitOfWork);
         }
 
         public void RunAccountTeamsCalculations(int fk_GameWeak, int fk_AccountTeam, List<int> fk_Players, bool inDebug = false)
@@ -81,11 +84,11 @@ namespace FantasyLogic.Calculations
                 }
                 else
                 {
-                    string recurringId = RecurringAccountGameWeakTeamId + $"{accountTeamGameWeak.Id}";
+                    string recurringId = AccountGameWeakTeamId + $"{accountTeamGameWeak.Id}";
 
-                    RecurringJob.AddOrUpdate(recurringId, () => AccountTeamPlayersCalculations(accountTeamGameWeak.Id, accountTeamGameWeak.Fk_AccountTeam, gameWeak, fk_Season), CronExpression.EveryDayOfMonth(1, 8, 0), TimeZoneInfo.Utc);
+                    string hangfireJobId = BackgroundJob.Enqueue(() => AccountTeamPlayersCalculations(accountTeamGameWeak.Id, accountTeamGameWeak.Fk_AccountTeam, gameWeak, fk_Season));
 
-                    RecurringJobCustom.TriggerJob(recurringId);
+                    _hangFireCustomJob.ReplaceJob(hangfireJobId, recurringId);
                 }
             }
 
@@ -99,11 +102,11 @@ namespace FantasyLogic.Calculations
                 }
                 else
                 {
-                    string recurringId = RecurringAccountTeamId + $"{accountTeam}";
+                    string recurringId = AccountTeamId + $"{accountTeam}";
 
-                    RecurringJob.AddOrUpdate(recurringId, () => UpdateAccountTeamPoints(accountTeam, fk_Season), CronExpression.EveryDayOfMonth(1, 8, 0), TimeZoneInfo.Utc);
+                    string hangfireJobId = BackgroundJob.Enqueue(() => UpdateAccountTeamPoints(accountTeam, fk_Season));
 
-                    RecurringJobCustom.TriggerJob(recurringId);
+                    _hangFireCustomJob.ReplaceJob(hangfireJobId, recurringId);
                 }
             }
 

@@ -1,4 +1,7 @@
 ﻿using BaseDB;
+using Dashboard.Areas.AccountTeamEntity.Models;
+using Entities.CoreServicesModels.AccountTeamModels;
+using Entities.DBModels.SeasonModels;
 
 namespace Dashboard.Areas.Dashboard.Controllers
 {
@@ -28,6 +31,13 @@ namespace Dashboard.Areas.Dashboard.Controllers
 
         public IActionResult Index()
         {
+
+
+            return View();
+        }
+
+        public IActionResult Test(int fk_GameWeak)
+        {
             //var players = _dBContext.AccountTeamPlayerGameWeaks
             //                        .Where(a => a.AccountTeamPlayer.Fk_AccountTeam == 112 &&
             //                                    a.Fk_GameWeak == 42)
@@ -38,7 +48,45 @@ namespace Dashboard.Areas.Dashboard.Controllers
             //});
             //_dBContext.SaveChanges();
 
-            return View();
+            var accountTeamGameWeaks = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
+            {
+                Fk_GameWeak = fk_GameWeak,
+            }, otherLang: false)
+                   .Select(a => new
+                   {
+                       a.Id,
+                       a.Fk_AccountTeam
+                   })
+                   .ToList();
+
+            foreach (var accountTeamGameWeak in accountTeamGameWeaks)
+            {
+                var players = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
+                {
+                    Fk_AccountTeam = accountTeamGameWeak.Fk_AccountTeam,
+                    Fk_GameWeak = fk_GameWeak,
+                    IsTransfer = false
+                }, otherLang: false).Select(a => new
+                {
+                    Fk_Player = a.AccountTeamPlayer.Fk_Player,
+                    Fk_PlayerPosition = a.AccountTeamPlayer.Player.Fk_PlayerPosition,
+                    Fk_AccountTeamPlayer = a.Fk_AccountTeamPlayer,
+                    Fk_TeamPlayerType = a.Fk_TeamPlayerType,
+                    Order = a.Order,
+                    IsPrimary = a.IsPrimary,
+                    IsParticipate = a.IsParticipate,
+                    IsPlayed = a.IsPlayed,
+                    Points = a.Points,
+                    PlayerName = a.AccountTeamPlayer.Player.Name
+                }).ToList();
+
+                if (players.Count > 0 && players.Count != 15)
+                {
+                    int count = players.Count;
+                }
+            }
+
+            return Ok();
         }
 
 

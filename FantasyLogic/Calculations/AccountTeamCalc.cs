@@ -686,4 +686,6 @@ public class AccountTeamPlayerGameWeakDto
     public double? Points { get; set; }
 
     public string PlayerName { get; set; }
+
+    public bool IsTransfare { get; set; }
 }

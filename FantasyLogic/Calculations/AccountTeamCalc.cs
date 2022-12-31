@@ -2,6 +2,7 @@
 using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.AccountTeamModels;
+using IntegrationWith365.Entities.GameModels;
 using System.Linq.Dynamic.Core;
 using static Contracts.EnumData.DBModelsEnum;
 
@@ -94,6 +95,7 @@ namespace FantasyLogic.Calculations
 
             List<int> accountTeams = accountTeamGameWeaks.GroupBy(a => a.Fk_AccountTeam).Select(a => a.Key).ToList();
 
+            string jobId = null;
             foreach (int accountTeam in accountTeams)
             {
                 if (inDebug)
@@ -107,15 +109,26 @@ namespace FantasyLogic.Calculations
                     string hangfireJobId = BackgroundJob.Enqueue(() => UpdateAccountTeamPoints(accountTeam, fk_Season));
 
                     _hangFireCustomJob.ReplaceJob(hangfireJobId, recurringId);
+
+                    jobId = hangfireJobId;
                 }
             }
 
-            //RecurringJob.AddOrUpdate(RecurringAccountGameWeakTeamId, () => UpdateAccountTeamGameWeakRanking(gameWeak, fk_Season), CronExpression.EveryDayOfMonth(1, 8, 0), TimeZoneInfo.Utc);
-            //RecurringJobCustom.TriggerJob(RecurringAccountGameWeakTeamId);
+            if (inDebug)
+            {
+                UpdateAccountTeamGameWeakRanking(gameWeak, fk_Season);
+                UpdateAccountTeamRanking(fk_Season);
+            }
+            else
+            {
+                jobId = jobId.IsExisting()
+                        ? BackgroundJob.ContinueJobWith(jobId, () => UpdateAccountTeamGameWeakRanking(gameWeak, fk_Season))
+                        : BackgroundJob.Enqueue(() => UpdateAccountTeamGameWeakRanking(gameWeak, fk_Season));
 
-            //RecurringJob.AddOrUpdate(RecurringAccountTeamId, () => UpdateAccountTeamRanking(fk_Season), CronExpression.EveryDayOfMonth(1, 8, 0), TimeZoneInfo.Utc);
-            //RecurringJobCustom.TriggerJob(RecurringAccountTeamId);
-
+                jobId = jobId.IsExisting()
+                            ? BackgroundJob.ContinueJobWith(jobId, () => UpdateAccountTeamRanking(fk_Season))
+                            : BackgroundJob.Enqueue(() => UpdateAccountTeamRanking(fk_Season));
+            }
         }
 
         public void AccountTeamPlayersCalculations(int fk_AccountTeamGameWeak, int fk_AccountTeam, GameWeakModel gameWeak, int fk_Season)
@@ -541,6 +554,7 @@ namespace FantasyLogic.Calculations
                 Fk_Season = fk_Season,
             }, otherLang: false)
                 .Select(a => a.TotalPoints ?? 0)
+                .ToList()
                 .Sum();
 
             AccountTeam accountTeam = _unitOfWork.AccountTeam.FindAccountTeambyId(fk_AccountTeam, trackChanges: true).Result;

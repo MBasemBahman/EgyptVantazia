@@ -51,6 +51,12 @@ namespace Entities.DBModels.SeasonModels
         [DisplayName(nameof(JobId))]
         public string JobId { get; set; }
 
+        [DisplayName(nameof(SecondJobId))]
+        public string SecondJobId { get; set; }
+
+        [DisplayName(nameof(ThirdJobId))]
+        public string ThirdJobId { get; set; }
+
         [DisplayName(nameof(PlayerGameWeaks))]
         public IList<PlayerGameWeak> PlayerGameWeaks { get; set; }
     }

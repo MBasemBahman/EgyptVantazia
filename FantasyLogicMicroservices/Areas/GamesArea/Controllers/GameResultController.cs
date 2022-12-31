@@ -24,10 +24,11 @@ namespace FantasyLogicMicroservices.Areas.GamesArea.Controllers
         [Route(nameof(UpdateGameResult))]
         public IActionResult UpdateGameResult(
             [FromQuery] TeamGameWeakParameters parameters,
+            [FromQuery] bool runBonus,
             [FromQuery] bool inDebug,
             [FromQuery] bool runAll)
         {
-            _fantasyUnitOfWork.GameResultDataHelper.RunUpdateGameResult(parameters, inDebug, runAll);
+            _fantasyUnitOfWork.GameResultDataHelper.RunUpdateGameResult(parameters, runBonus, inDebug, runAll);
 
             return Ok();
         }

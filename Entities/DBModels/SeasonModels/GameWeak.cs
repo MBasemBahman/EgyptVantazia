@@ -36,8 +36,14 @@ namespace Entities.DBModels.SeasonModels
         [DisplayName(nameof(Deadline))]
         public DateTime? Deadline { get; set; }
 
+        [DisplayName(nameof(EndTime))]
+        public DateTime? EndTime { get; set; }
+
         [DisplayName(nameof(JobId))]
         public string JobId { get; set; }
+
+        [DisplayName(nameof(EndTimeJobId))]
+        public string EndTimeJobId { get; set; }
 
         [DisplayName(nameof(TeamGameWeaks))]
         public IList<TeamGameWeak> TeamGameWeaks { get; set; }

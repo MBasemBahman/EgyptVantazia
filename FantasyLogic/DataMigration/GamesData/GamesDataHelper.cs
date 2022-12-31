@@ -16,9 +16,7 @@ namespace FantasyLogic.DataMigration.GamesData
         private readonly _365Services _365Services;
         private readonly UnitOfWork _unitOfWork;
         private readonly GamesHelper _gamesHelper;
-
-        private readonly GameResultLogic _gameResultLogic;
-        private readonly PlayerStateCalc _playerStateCalc;
+        private readonly AccountTeamCalc _accountTeamCalc;
 
         public GamesDataHelper(
             UnitOfWork unitOfWork,
@@ -29,8 +27,7 @@ namespace FantasyLogic.DataMigration.GamesData
 
             _gamesHelper = new GamesHelper(unitOfWork, _365Services);
 
-            _gameResultLogic = new GameResultLogic(unitOfWork);
-            _playerStateCalc = new PlayerStateCalc(unitOfWork);
+            _accountTeamCalc = new(_unitOfWork);
         }
 
         public void RunUpdateGames()
@@ -124,11 +121,26 @@ namespace FantasyLogic.DataMigration.GamesData
                     _ = BackgroundJob.Delete(match.JobId);
                 }
 
+                if (match.SecondJobId.IsExisting())
+                {
+                    _ = BackgroundJob.Delete(match.SecondJobId);
+                }
+
+                if (match.ThirdJobId.IsExisting())
+                {
+                    _ = BackgroundJob.Delete(match.ThirdJobId);
+                }
+
                 GameResultDataHelper gameResultDataHelper = new(_unitOfWork, _365Services);
 
-                string jobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, false, false), startTime);
+                string jobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, false, false, false), startTime);
+                string secondJobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, true, false, false), startTime.AddMinutes(120));
+                string thirdJobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, true, false, false), startTime.AddMinutes(150));
 
                 match.JobId = jobId;
+                match.SecondJobId = secondJobId;
+                match.ThirdJobId = thirdJobId;
+
                 _unitOfWork.Save().Wait();
             }
         }
@@ -143,7 +155,8 @@ namespace FantasyLogic.DataMigration.GamesData
                 .Select(a => new
                 {
                     Fk_GameWeak = a.Key,
-                    Deadline = a.Select(b => b.StartTime).OrderBy(b => b).FirstOrDefault()
+                    Deadline = a.Select(b => b.StartTime).OrderBy(b => b).FirstOrDefault(), // بداية الجوله
+                    EndTime = a.Select(b => b.StartTime).OrderByDescending(b => b).FirstOrDefault() // نهاية الجوله
                 })
                 .ToList();
 
@@ -166,6 +179,26 @@ namespace FantasyLogic.DataMigration.GamesData
                     }
 
                     gameWeak.Deadline = deadline;
+
+                    await _unitOfWork.Save();
+                }
+                if (teamGameWeak.EndTime > DateTime.MinValue)
+                {
+                    DateTime endTime = teamGameWeak.EndTime.AddHours(6);
+
+                    GameWeak gameWeak = await _unitOfWork.Season.FindGameWeakbyId(teamGameWeak.Fk_GameWeak, trackChanges: true);
+
+                    if (gameWeak.EndTimeJobId.IsExisting())
+                    {
+                        _ = BackgroundJob.Delete(gameWeak.EndTimeJobId);
+                    }
+
+                    if (endTime > DateTime.UtcNow)
+                    {
+                        gameWeak.EndTimeJobId = BackgroundJob.Schedule(() => _accountTeamCalc.RunAccountTeamsCalculations(gameWeak.Id, 0, null, false), endTime);
+                    }
+
+                    gameWeak.EndTime = endTime;
 
                     await _unitOfWork.Save();
                 }

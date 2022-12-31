@@ -86,6 +86,19 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         public double AverageGameWeakPoints { get; set; }
 
+        #region Ranking
+
+        [DisplayName(nameof(CurrentGameWeakGlobalRanking))]
+        public double CurrentGameWeakGlobalRanking { get; set; }
+
+        [DisplayName(nameof(CurrentGameWeakCountryRanking))]
+        public double CurrentGameWeakCountryRanking { get; set; }
+
+        [DisplayName(nameof(CurrentGameWeakFavouriteTeamRanking))]
+        public double CurrentGameWeakFavouriteTeamRanking { get; set; }
+
+        #endregion
+
         public AccountTeamGameWeakModel BestAccountTeamGameWeak { get; set; }
 
         public int TransferCount { get; set; }

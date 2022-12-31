@@ -43,7 +43,7 @@ namespace Entities.DBModels.AccountTeamModels
         #region Calculations
 
         [DisplayName(nameof(TotalPoints))]
-        public int TotalPoints { get; set; }
+        public int? TotalPoints { get; set; }
 
         [DisplayName(nameof(SeasonTotalPoints))]
         public double SeasonTotalPoints { get; set; }

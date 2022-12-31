@@ -87,7 +87,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 GameId = teamGameWeak._365_MatchId.ParseToInt()
             });
 
-            bool matchEnded = inDebug || runAll ? false : match.IsEnded /*teamGameWeak.EndTime < DateTime.UtcNow.ToEgypt()*/;
+            bool matchEnded = !inDebug && !runAll && match.IsEnded /*teamGameWeak.EndTime < DateTime.UtcNow.ToEgypt()*/;
 
             if (matchEnded)
             {
@@ -143,6 +143,11 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                             allMembersResults.AddRange(gameReturn.Game.HomeCompetitor.Lineups.Members);
                             allMembersResults.AddRange(gameReturn.Game.AwayCompetitor.Lineups.Members);
 
+                            allMembersResults.ForEach(a =>
+                            {
+                                a.AthleteId = allMembers.Where(b => b.Id == a.Id).Select(a => a.AthleteId).FirstOrDefault();
+                            });
+
                             List<int> membersRanking = allMembersResults.OrderByDescending(a => a.Ranking)
                                                                         .Skip(0)
                                                                         .Take(3)
@@ -161,7 +166,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                                        .SingleOrDefault();
                                 if (player != null)
                                 {
-                                    Member memberResult = allMembersResults.Where(a => a.Id == member.Id).SingleOrDefault();
+                                    Member memberResult = allMembersResults.Where(a => a.AthleteId == member.AthleteId).SingleOrDefault();
 
                                     int rankingIndex = 0;
 
@@ -330,6 +335,40 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                     if (memberResult.Stats != null && memberResult.Stats.Any())
                     {
                         List<Stat> states = memberResult.Stats.Where(a => a.Value != "0").ToList();
+
+                        var minsTypeId = 30;
+                        var goalsTypeId = 27;
+
+                        if (!states.Any(a => a.Type == goalsTypeId))
+                        {
+                            ScoreTypeDto eventType = scoreTypes.Where(a => a.Id == (int)ScoreTypeEnum.Goal_Event).SingleOrDefault();
+                            List<EventType> result = eventResult.Where(a => eventType._365_TypeId == a.Id.ToString() && eventType._365_EventTypeId == a.Id.ToString()).ToList();
+
+                            if (result.Count > 0)
+                            {
+                                states.Add(new Stat
+                                {
+                                    Type = goalsTypeId,
+                                    Value = result.Count.ToString(),
+                                    Name = "goals"
+                                });
+                            }
+                        }
+
+                        int value = states.Where(a => a.Type == minsTypeId)
+                                          .Select(a => a.Value)
+                                          .FirstOrDefault()
+                                          .GetUntilOrEmpty("'")
+                                          .ParseToInt();
+                        if (value >= 60)
+                        {
+                            playMinutes = PlayMinutesEnum.PlayMoreThan60Min;
+                        }
+                        else if (value >= 1)
+                        {
+                            playMinutes = PlayMinutesEnum.Played;
+                        }
+
                         foreach (Stat Stat in states)
                         {
                             int fk_ScoreType = scoreTypes.Where(a => a._365_TypeId == Stat.Type.ToString()).Select(a => a.Id).SingleOrDefault();
@@ -344,18 +383,6 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                 else if (fk_ScoreType == (int)ScoreTypeEnum.Assists)
                                 {
                                     Stat.Value = assistCount.ToString();
-                                }
-                                else if (fk_ScoreType == (int)ScoreTypeEnum.Minutes)
-                                {
-                                    int value = Stat.Value.GetUntilOrEmpty("'").ParseToInt();
-                                    if (value >= 60)
-                                    {
-                                        playMinutes = PlayMinutesEnum.PlayMoreThan60Min;
-                                    }
-                                    else if (value >= 1)
-                                    {
-                                        playMinutes = PlayMinutesEnum.Played;
-                                    }
                                 }
 
                                 _gameResultLogic.UpdatePlayerStateScore(otherGoals, substitutions, rankingIndex, playMinutes, fk_ScoreType, Stat.Value, fk_PlayerPosition, fk_PlayerGameWeak);

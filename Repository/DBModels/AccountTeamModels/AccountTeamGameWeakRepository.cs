@@ -47,7 +47,7 @@ namespace Repository.DBModels.AccountTeamModels
         {
             return FindByCondition(a => a.Fk_GameWeak == fk_GameWeak, trackChanges: false).Any() ?
                     FindByCondition(a => a.Fk_GameWeak == fk_GameWeak, trackChanges: false)
-                   .Select(a => a.TotalPoints)
+                   .Select(a => a.TotalPoints ?? 0)
                    .Average() : 0;
         }
 

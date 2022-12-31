@@ -451,7 +451,7 @@ namespace FantasyLogic.Calculations
                 Fk_Season = fk_Season,
                 _365_GameWeakId = (gameWeak._365_GameWeakId.ParseToInt() + 1).ToString()
             }, otherLang: false)
-                .Select(a => a.TotalPoints)
+                .Select(a => a.TotalPoints ?? 0)
                 .FirstOrDefault();
 
 
@@ -540,7 +540,7 @@ namespace FantasyLogic.Calculations
                 Fk_AccountTeam = fk_AccountTeam,
                 Fk_Season = fk_Season,
             }, otherLang: false)
-                .Select(a => a.TotalPoints)
+                .Select(a => a.TotalPoints ?? 0)
                 .Sum();
 
             AccountTeam accountTeam = _unitOfWork.AccountTeam.FindAccountTeambyId(fk_AccountTeam, trackChanges: true).Result;

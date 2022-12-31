@@ -56,7 +56,7 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public int Order { get; set; }
 
         [DisplayName(nameof(Points))]
-        public int Points { get; set; }
+        public int? Points { get; set; }
 
         [DisplayName(nameof(HavePoints))]
         public bool HavePoints { get; set; }

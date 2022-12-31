@@ -1,4 +1,6 @@
-﻿namespace Dashboard.Areas.Dashboard.Controllers
+﻿using BaseDB;
+
+namespace Dashboard.Areas.Dashboard.Controllers
 {
     [Area("Dashboard")]
     [Authorize(DashboardViewEnum.Home, AccessLevelEnum.View)]
@@ -8,21 +10,34 @@
         private readonly IMapper _mapper;
         private readonly UnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _environment;
+        private readonly BaseContext _dBContext;
 
         public HomeController(
             ILoggerManager logger,
             IMapper mapper,
             UnitOfWork unitOfWork,
-            IWebHostEnvironment environment)
+            IWebHostEnvironment environment,
+            BaseContext dBContext)
         {
             _logger = logger;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _environment = environment;
+            _dBContext = dBContext;
         }
 
         public IActionResult Index()
         {
+            //var players = _dBContext.AccountTeamPlayerGameWeaks
+            //                        .Where(a => a.AccountTeamPlayer.Fk_AccountTeam == 112 &&
+            //                                    a.Fk_GameWeak == 42)
+            //                        .ToList();
+            //players.ForEach(a =>
+            //{
+            //    a.Points = null;
+            //});
+            //_dBContext.SaveChanges();
+
             return View();
         }
 

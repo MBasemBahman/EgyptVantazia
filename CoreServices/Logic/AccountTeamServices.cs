@@ -5,7 +5,9 @@ using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountTeamModels;
+using Entities.DBModels.PlayerStateModels;
 using Entities.DBModels.SeasonModels;
+using static Contracts.EnumData.DBModelsEnum;
 using static Entities.EnumData.LogicEnumData;
 
 namespace CoreServices.Logic
@@ -79,12 +81,36 @@ namespace CoreServices.Logic
                            TripleCaptain = a.TripleCaptain,
                            WildCard = a.WildCard,
                            CurrentGameWeakPoints = a.AccountTeamGameWeaks
-                                                    .Where(a => a.GameWeak.IsCurrent == true)
-                                                    .Select(a => a.TotalPoints)
+                                                    .Where(b => b.GameWeak.IsCurrent == true)
+                                                    .Select(b => b.TotalPoints ?? b.AccountTeam
+                                                                                   .AccountTeamPlayers
+                                                                                   .SelectMany(c => c.AccountTeamPlayerGameWeaks)
+                                                                                   .Where(c => c.Fk_GameWeak == b.Fk_GameWeak &&
+                                                                                               c.IsTransfer == false &&
+                                                                                               c.IsPrimary == true)
+                                                                                   .SelectMany(c => c.AccountTeamPlayer
+                                                                                                     .Player
+                                                                                                     .PlayerGameWeakScoreStates
+                                                                                                     .Where(d => d.Fk_GameWeak == b.Fk_GameWeak &&
+                                                                                                                 d.Fk_ScoreState == (int)ScoreStateEnum.Total)
+                                                                                                     .Select(b => (int)b.Points))
+                                                                                   .Sum())
                                                     .FirstOrDefault(),
+                           CurrentGameWeakGlobalRanking = a.AccountTeamGameWeaks
+                                                           .Where(b => b.GameWeak.IsCurrent == true)
+                                                           .Select(b => b.GlobalRanking)
+                                                           .FirstOrDefault(),
+                           CurrentGameWeakCountryRanking = a.AccountTeamGameWeaks
+                                                           .Where(b => b.GameWeak.IsCurrent == true)
+                                                           .Select(b => b.CountryRanking)
+                                                           .FirstOrDefault(),
+                           CurrentGameWeakFavouriteTeamRanking = a.AccountTeamGameWeaks
+                                                           .Where(b => b.GameWeak.IsCurrent == true)
+                                                           .Select(b => b.FavouriteTeamRanking)
+                                                           .FirstOrDefault(),
                            PrevGameWeakPoints = a.AccountTeamGameWeaks
                                                  .Where(a => a.GameWeak.IsPrev == true)
-                                                 .Select(a => a.TotalPoints)
+                                                 .Select(a => a.TotalPoints ?? 0)
                                                  .FirstOrDefault(),
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
@@ -165,7 +191,19 @@ namespace CoreServices.Logic
                            LastModifiedAt = a.LastModifiedAt,
                            LastModifiedBy = a.LastModifiedBy,
                            FreeHit = a.FreeHit,
-                           TotalPoints = a.TotalPoints,
+                           TotalPoints = a.TotalPoints ?? a.AccountTeam
+                                                           .AccountTeamPlayers
+                                                           .SelectMany(c => c.AccountTeamPlayerGameWeaks)
+                                                           .Where(c => c.Fk_GameWeak == a.Fk_GameWeak &&
+                                                                       c.IsTransfer == false &&
+                                                                       c.IsPrimary == true)
+                                                           .SelectMany(c => c.AccountTeamPlayer
+                                                                             .Player
+                                                                             .PlayerGameWeakScoreStates
+                                                                             .Where(d => d.Fk_GameWeak == a.Fk_GameWeak &&
+                                                                                         d.Fk_ScoreState == (int)ScoreStateEnum.Total)
+                                                                             .Select(b => (int)b.Points))
+                                                           .Sum(),
                            PrevPoints = a.PrevPoints,
                            SeasonTotalPoints = a.SeasonTotalPoints,
                            WildCard = a.WildCard,
@@ -289,9 +327,15 @@ namespace CoreServices.Logic
                            IsPrimary = a.IsPrimary,
                            IsTransfer = a.IsTransfer,
                            Order = a.Order,
-                           Points = a.Points,
+                           Points = a.Points ?? a.AccountTeamPlayer
+                                                 .Player
+                                                 .PlayerGameWeakScoreStates
+                                                 .Where(b => b.Fk_GameWeak == a.Fk_GameWeak &&
+                                                             b.Fk_ScoreState == (int)ScoreStateEnum.Total)
+                                                 .Select(b => (int)b.Points)
+                                                 .FirstOrDefault(),
                            HavePoints = a.HavePoints,
-                           HavePointsInTotal = a.HavePointsInTotal,
+                           HavePointsInTotal = a.Points == null ? a.IsPrimary : a.HavePointsInTotal,
                            IsPlayed = a.AccountTeamPlayer
                                        .Player
                                        .Team
@@ -416,13 +460,19 @@ namespace CoreServices.Logic
                                            IsPrimary = b.IsPrimary,
                                            IsTransfer = b.IsTransfer,
                                            Order = b.Order,
-                                           Points = b.Points,
+                                           Points = b.Points ?? b.AccountTeamPlayer
+                                                                 .Player
+                                                                 .PlayerGameWeakScoreStates
+                                                                 .Where(c => c.Fk_GameWeak == b.Fk_GameWeak &&
+                                                                             c.Fk_ScoreState == (int)ScoreStateEnum.Total)
+                                                                 .Select(c => (int)c.Points)
+                                                                 .FirstOrDefault(),
                                            TeamPlayerType = new TeamPlayerTypeModel
                                            {
                                                Name = otherLang ? b.TeamPlayerType.TeamPlayerTypeLang.Name : b.TeamPlayerType.Name,
                                            },
                                            HavePoints = b.HavePoints,
-                                           HavePointsInTotal = b.HavePointsInTotal,
+                                           HavePointsInTotal = b.Points == null ? b.IsPrimary : b.HavePointsInTotal,
                                            IsPlayed = b.AccountTeamPlayer
                                                        .Player
                                                        .Team
@@ -453,13 +503,19 @@ namespace CoreServices.Logic
                                            IsPrimary = b.IsPrimary,
                                            IsTransfer = b.IsTransfer,
                                            Order = b.Order,
-                                           Points = b.Points,
+                                           Points = b.Points ?? b.AccountTeamPlayer
+                                                                 .Player
+                                                                 .PlayerGameWeakScoreStates
+                                                                 .Where(c => c.Fk_GameWeak == b.Fk_GameWeak &&
+                                                                             c.Fk_ScoreState == (int)ScoreStateEnum.Total)
+                                                                 .Select(c => (int)c.Points)
+                                                                 .FirstOrDefault(),
                                            TeamPlayerType = new TeamPlayerTypeModel
                                            {
                                                Name = otherLang ? b.TeamPlayerType.TeamPlayerTypeLang.Name : b.TeamPlayerType.Name,
                                            },
                                            HavePoints = b.HavePoints,
-                                           HavePointsInTotal = b.HavePointsInTotal,
+                                           HavePointsInTotal = b.Points == null ? b.IsPrimary : b.HavePointsInTotal,
                                            IsPlayed = b.AccountTeamPlayer
                                                        .Player
                                                        .Team
@@ -489,9 +545,15 @@ namespace CoreServices.Logic
                                            IsPrimary = b.IsPrimary,
                                            IsTransfer = b.IsTransfer,
                                            Order = b.Order,
-                                           Points = b.Points,
+                                           Points = b.Points ?? b.AccountTeamPlayer
+                                                                 .Player
+                                                                 .PlayerGameWeakScoreStates
+                                                                 .Where(c => c.Fk_GameWeak == b.Fk_GameWeak &&
+                                                                             c.Fk_ScoreState == (int)ScoreStateEnum.Total)
+                                                                 .Select(c => (int)c.Points)
+                                                                 .FirstOrDefault(),
                                            HavePoints = b.HavePoints,
-                                           HavePointsInTotal = b.HavePointsInTotal,
+                                           HavePointsInTotal = b.Points == null ? b.IsPrimary : b.HavePointsInTotal,
                                            IsPlayed = b.AccountTeamPlayer
                                                        .Player
                                                        .Team
@@ -644,7 +706,6 @@ namespace CoreServices.Logic
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);
         }
-
 
         public async Task<PagedList<AccountTeamPlayerModel>> GetAccountTeamPlayerPaged(
                   AccountTeamPlayerParameters parameters,

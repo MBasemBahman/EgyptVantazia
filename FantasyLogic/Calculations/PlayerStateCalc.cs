@@ -327,7 +327,7 @@ namespace FantasyLogic.Calculations
                 _unitOfWork.Save().Wait();
             }
 
-            if (fk_GameWeak != 0)
+            if (false && fk_GameWeak != 0)
             {
                 if (inDebug)
                 {

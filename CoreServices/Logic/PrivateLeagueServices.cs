@@ -114,11 +114,11 @@ namespace CoreServices.Logic
                                                           FavouriteTeamRanking = b.FavouriteTeamRanking,
                                                           CurrentGameWeakPoints = b.AccountTeamGameWeaks
                                                                                    .Where(a => a.GameWeak.IsCurrent == true)
-                                                                                   .Select(a => a.TotalPoints)
+                                                                                   .Select(a => a.TotalPoints ?? 0)
                                                                                    .FirstOrDefault(),
                                                           PrevGameWeakPoints = b.AccountTeamGameWeaks
                                                                                    .Where(a => a.GameWeak.IsPrev == true)
-                                                                                   .Select(a => a.TotalPoints)
+                                                                                   .Select(a => a.TotalPoints ?? 0)
                                                                                    .FirstOrDefault()
                                                       })
                                                       .FirstOrDefault()

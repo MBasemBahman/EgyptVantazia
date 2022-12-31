@@ -86,7 +86,7 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public double SeasonTotalPoints { get; set; }
 
         [DisplayName(nameof(TotalPoints))]
-        public int TotalPoints { get; set; }
+        public int? TotalPoints { get; set; }
 
         [DisplayName(nameof(PrevPoints))]
         public int PrevPoints { get; set; }

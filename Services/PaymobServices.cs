@@ -181,7 +181,7 @@ namespace Services
 
                 WalletPayResponse Data = JsonConvert.DeserializeObject<WalletPayResponse>(json);
 
-                redirect_url = Data.Redirect_url;
+                redirect_url = Data.Iframe_redirection_url;
             }
 
             return redirect_url;
@@ -424,6 +424,9 @@ namespace Services
 
         [JsonProperty(PropertyName = "redirect_url")]
         public string Redirect_url { get; set; }
+
+        [JsonProperty(PropertyName = "iframe_redirection_url")]
+        public string Iframe_redirection_url { get; set; }
     }
 
     public class KioskPayResponse

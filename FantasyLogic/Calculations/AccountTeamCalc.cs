@@ -302,7 +302,7 @@ namespace FantasyLogic.Calculations
                                                                             a.HavePointsInTotal &&
                                                                             a.IsParticipate == false) &&
                                                 playersFinalPoints.Count(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Defender &&
-                                                                              a.IsPrimary) > 3;
+                                                                              a.HavePointsInTotal) > 3;
 
                             if (havePointsInTotal)
                             {
@@ -335,7 +335,7 @@ namespace FantasyLogic.Calculations
                                                                        a.HavePointsInTotal &&
                                                                        a.IsParticipate == false) &&
                                                 playersFinalPoints.Count(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Attacker &&
-                                                                              a.IsPrimary) > 1;
+                                                                              a.HavePointsInTotal) > 1;
 
                             if (havePointsInTotal)
                             {
@@ -353,7 +353,7 @@ namespace FantasyLogic.Calculations
                                                                             a.HavePointsInTotal &&
                                                                             a.IsParticipate == false) &&
                                                 playersFinalPoints.Count(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Defender &&
-                                                                              a.IsPrimary) > 3;
+                                                                              a.HavePointsInTotal) > 3;
 
                             if (havePointsInTotal)
                             {
@@ -403,7 +403,7 @@ namespace FantasyLogic.Calculations
                                                                        a.HavePointsInTotal &&
                                                                        a.IsParticipate == false) &&
                                                 playersFinalPoints.Count(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Attacker &&
-                                                                              a.IsPrimary) > 1;
+                                                                              a.HavePointsInTotal) > 1;
 
                             if (havePointsInTotal)
                             {

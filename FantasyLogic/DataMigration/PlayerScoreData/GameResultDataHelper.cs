@@ -348,7 +348,8 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                         if (!states.Any(a => a.Type == goalsTypeId))
                         {
                             ScoreTypeDto eventType = scoreTypes.Where(a => a.Id == (int)ScoreTypeEnum.Goal_Event).SingleOrDefault();
-                            List<EventType> result = eventResult.Where(a => eventType._365_TypeId == a.Id.ToString() && eventType._365_EventTypeId == a.Id.ToString()).ToList();
+                            List<EventType> result = eventResult.Where(a => eventType._365_TypeId == a.Id.ToString() &&
+                                                                            a.SubTypeId.ToString() != "2").ToList(); // 2 Own Goal
 
                             if (result.Count > 0)
                             {
@@ -383,7 +384,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                 if (fk_ScoreType == (int)ScoreTypeEnum.Goals)
                                 {
                                     ScoreTypeDto eventType = scoreTypes.Where(a => a.Id == (int)ScoreTypeEnum.Goal_Event).SingleOrDefault();
-                                    List<EventType> result = eventResult.Where(a => eventType._365_TypeId == a.Id.ToString() && eventType._365_EventTypeId == a.Id.ToString()).ToList();
+                                    List<EventType> result = eventResult.Where(a => eventType._365_TypeId == a.Id.ToString() && a.SubTypeId.ToString() != "2").ToList();// 2 Own Goal
                                     Stat.Value = result.Count.ToString();
                                 }
                                 else if (fk_ScoreType == (int)ScoreTypeEnum.Assists)

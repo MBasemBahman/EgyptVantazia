@@ -74,8 +74,10 @@ namespace API.Areas.AccountTeamArea.Controllers
 
                 data.BestAccountTeamGameWeak = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
                 {
-                    Fk_GameWeak = currentGameWeak.Id
+                    Fk_GameWeak = currentGameWeak.Id,
+                    PointsFrom = 1
                 }, otherLang: otherLang)
+                    .Where(a => a.TotalPoints > 0)
                     .OrderByDescending(a => a.TotalPoints)
                     .FirstOrDefault();
             }

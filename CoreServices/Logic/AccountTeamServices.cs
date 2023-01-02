@@ -113,6 +113,7 @@ namespace CoreServices.Logic
                                                  .Select(a => a.TotalPoints ?? 0)
                                                  .FirstOrDefault(),
                        })
+                       .Where(a => parameters.FromCurrentGameWeakPoints == null || a.CurrentGameWeakPoints >= parameters.FromCurrentGameWeakPoints)
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);
         }

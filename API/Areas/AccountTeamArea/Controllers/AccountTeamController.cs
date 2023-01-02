@@ -40,6 +40,13 @@ namespace API.Areas.AccountTeamArea.Controllers
                 parameters.FromGlobalRanking = 1;
             }
 
+            if (parameters.OrderBy.Contains("currentGameWeakGlobalRanking") ||
+                parameters.OrderBy.Contains("currentGameWeakCountryRanking") ||
+                parameters.OrderBy.Contains("currentGameWeakFavouriteTeamRanking"))
+            {
+                parameters.FromCurrentGameWeakPoints = 1;
+            }
+
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             PagedList<AccountTeamModel> data = await _unitOfWork.AccountTeam.GetAccountTeamPaged(parameters, otherLang);

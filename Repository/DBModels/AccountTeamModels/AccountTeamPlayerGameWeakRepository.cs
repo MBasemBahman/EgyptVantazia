@@ -40,7 +40,7 @@ namespace Repository.DBModels.AccountTeamModels
                 Fk_GameWeak = fk_GameWeak
             }, trackChanges: true).ToList();
 
-            players.ForEach(a => a.Points = 0);
+            players.ForEach(a => a.Points = null);
         }
 
         public new void Create(AccountTeamPlayerGameWeak entity)

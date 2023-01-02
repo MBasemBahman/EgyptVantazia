@@ -40,6 +40,8 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public int? FromGlobalRanking { get; set; }
 
         public string DashboardSearch { get; set; }
+
+        public int FromCurrentGameWeakPoints { get; set; }
     }
 
     public class AccountTeamModel : AuditImageEntity

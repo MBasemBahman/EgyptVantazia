@@ -37,18 +37,18 @@ namespace API.Areas.PaymentArea.Controllers
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
             SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
 
-            //SubscriptionModel prevSubscription = _unitOfWork.Subscription.GetSubscriptions(new SubscriptionParameters
-            //{
-            //    Fk_Account = auth.Fk_Account,
-            //    Fk_Season = season.Id,
-            //    Id = model.Fk_Subscription,
-            //    IsActive = true
-            //}, otherLang: false).FirstOrDefault();
+            SubscriptionModel prevSubscription = _unitOfWork.Subscription.GetSubscriptions(new SubscriptionParameters
+            {
+                Fk_Account = auth.Fk_Account,
+                Fk_Season = season.Id,
+                Id = model.Fk_Subscription,
+                IsActive = true
+            }, otherLang: false).FirstOrDefault();
 
-            //if (prevSubscription != null && !prevSubscription.IsValid)
-            //{
-            //    throw new Exception("لقد حصلت بالفعل على هذا الاشتراك في هذا الموسم!");
-            //}
+            if (prevSubscription != null && !prevSubscription.IsValid)
+            {
+                throw new Exception("لقد حصلت بالفعل على هذا الاشتراك في هذا الموسم!");
+            }
 
             //if (model.Fk_Subscription == (int)SubscriptionEnum.All)
             //{

@@ -1,6 +1,7 @@
 ﻿using Entities.CoreServicesModels.AccountModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.AccountModels;
+using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.SeasonModels;
 using Entities.RequestFeatures;
 using Microsoft.AspNetCore.Http;
@@ -42,6 +43,8 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public string DashboardSearch { get; set; }
 
         public int? FromCurrentGameWeakPoints { get; set; }
+
+        public bool IncludeTotalPoints { get; set; }
     }
 
     public class AccountTeamModel : AuditImageEntity
@@ -80,7 +83,11 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         [DisplayName(nameof(FavouriteTeamRanking))]
         public double FavouriteTeamRanking { get; set; }
 
+        public int CurrentGameWeakTansfarePoints { get; set; }
+
         public int CurrentGameWeakPoints { get; set; }
+
+        public int Fk_AcountTeamGameWeek { get; set; }
 
         public int PrevGameWeakPoints { get; set; }
 
@@ -190,5 +197,16 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         [DisplayName(nameof(ImageFile))]
         public IFormFile ImageFile { get; set; }
+    }
+
+    public class AccountTeamCustemClac
+    {
+        public int? TotalPoints { get; set; }
+
+        public int BenchPoints { get; set; }
+
+        public int PrevPoints { get; set; }
+
+        public List<AccountTeamPlayerGameWeak> Players { get; set; }
     }
 }

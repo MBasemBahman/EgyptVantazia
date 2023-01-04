@@ -4,6 +4,7 @@ using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.PlayersTransfersModels;
+using FantasyLogic;
 using static Contracts.EnumData.DBModelsEnum;
 using static Entities.EnumData.LogicEnumData;
 
@@ -15,14 +16,19 @@ namespace API.Areas.AccountTeamArea.Controllers
     [Route("[area]/v{version:apiVersion}/[controller]")]
     public class AccountTeamPlayerController : ExtendControllerBase
     {
+        private readonly FantasyUnitOfWork _fantasyUnitOfWork;
+
         public AccountTeamPlayerController(
         ILoggerManager logger,
         IMapper mapper,
         UnitOfWork unitOfWork,
         LinkGenerator linkGenerator,
         IWebHostEnvironment environment,
-        IOptions<AppSettings> appSettings) : base(logger, mapper, unitOfWork, linkGenerator, environment, appSettings)
-        { }
+        IOptions<AppSettings> appSettings,
+        FantasyUnitOfWork fantasyUnitOfWork) : base(logger, mapper, unitOfWork, linkGenerator, environment, appSettings)
+        {
+            _fantasyUnitOfWork = fantasyUnitOfWork;
+        }
 
         [HttpGet]
         [Route(nameof(GetAccountTeamPlayers))]
@@ -69,6 +75,40 @@ namespace API.Areas.AccountTeamArea.Controllers
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             PagedList<AccountTeamPlayerModel> data = await _unitOfWork.AccountTeam.GetAccountTeamPlayerPaged(parameters, otherLang);
+
+            if (parameters.Fk_AccountTeam > 0)
+            {
+                var accountTeam = _unitOfWork.AccountTeam.GetAccountTeams(new AccountTeamParameters
+                {
+                    Id = parameters.Fk_AccountTeam,
+                }, otherLang).Select(a => new
+                {
+                    a.Fk_AcountTeamGameWeek
+                }).FirstOrDefault();
+
+                if (accountTeam != null && accountTeam.Fk_AcountTeamGameWeek > 0)
+                {
+                    AccountTeamCustemClac clac = _fantasyUnitOfWork.AccountTeamCalc.AccountTeamPlayersCalculations(accountTeam.Fk_AcountTeamGameWeek, parameters.Fk_AccountTeam, currentGamWeak, currentGamWeak.Fk_Season, false);
+                    if (clac != null && clac.Players != null && clac.Players.Any())
+                    {
+                        data.ForEach(player =>
+                        {
+                            {
+                                if (player.AccountTeamPlayerGameWeak != null &&
+                                    clac.Players.Any(a => a.Fk_AccountTeamPlayer == player.AccountTeamPlayerGameWeak.Fk_AccountTeamPlayer))
+                                {
+                                    var newVal = clac.Players.First(a => a.Fk_AccountTeamPlayer == player.AccountTeamPlayerGameWeak.Fk_AccountTeamPlayer);
+
+                                    player.AccountTeamPlayerGameWeak.IsPrimary = newVal.IsPrimary;
+                                    player.AccountTeamPlayerGameWeak.Points = newVal.Points;
+                                    player.AccountTeamPlayerGameWeak.HavePoints = newVal.HavePoints;
+                                    player.AccountTeamPlayerGameWeak.HavePointsInTotal = newVal.HavePointsInTotal;
+                                }
+                            }
+                        });
+                    }
+                }
+            }
 
             if (parameters.IsCurrent == true && !data.Any())
             {

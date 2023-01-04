@@ -80,9 +80,14 @@ namespace CoreServices.Logic
                            Top_11 = a.Top_11,
                            TripleCaptain = a.TripleCaptain,
                            WildCard = a.WildCard,
+                           Fk_AcountTeamGameWeek = a.AccountTeamGameWeaks
+                                                    .Where(b => b.GameWeak.IsCurrent == true)
+                                                    .Select(a => a.Id)
+                                                    .FirstOrDefault(),
                            CurrentGameWeakPoints = a.AccountTeamGameWeaks
                                                     .Where(b => b.GameWeak.IsCurrent == true)
-                                                    .Select(b => b.TotalPoints ?? b.AccountTeam
+                                                    .Select(b => parameters.IncludeTotalPoints == false ?
+                                                                 b.TotalPoints ?? 0 : b.AccountTeam
                                                                                    .AccountTeamPlayers
                                                                                    .SelectMany(c => c.AccountTeamPlayerGameWeaks)
                                                                                    .Where(c => c.Fk_GameWeak == b.Fk_GameWeak &&
@@ -99,6 +104,10 @@ namespace CoreServices.Logic
                            CurrentGameWeakGlobalRanking = a.AccountTeamGameWeaks
                                                            .Where(b => b.GameWeak.IsCurrent == true)
                                                            .Select(b => b.GlobalRanking)
+                                                           .FirstOrDefault(),
+                           CurrentGameWeakTansfarePoints = a.AccountTeamGameWeaks
+                                                           .Where(b => b.GameWeak.IsCurrent == true)
+                                                           .Select(b => b.TansfarePoints)
                                                            .FirstOrDefault(),
                            CurrentGameWeakCountryRanking = a.AccountTeamGameWeaks
                                                            .Where(b => b.GameWeak.IsCurrent == true)
@@ -144,7 +153,7 @@ namespace CoreServices.Logic
 
         public AccountTeamModel GetAccountTeambyId(int id, bool otherLang)
         {
-            return GetAccountTeams(new AccountTeamParameters { Id = id }, otherLang).FirstOrDefault();
+            return GetAccountTeams(new AccountTeamParameters { Id = id, IncludeTotalPoints = true }, otherLang).FirstOrDefault();
         }
 
         public int GetAccountTeamCount()

@@ -2,7 +2,6 @@
 using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.AccountTeamModels;
-using IntegrationWith365.Entities.GameModels;
 using System.Linq.Dynamic.Core;
 using static Contracts.EnumData.DBModelsEnum;
 
@@ -81,13 +80,13 @@ namespace FantasyLogic.Calculations
                 }
                 if (inDebug)
                 {
-                    AccountTeamPlayersCalculations(accountTeamGameWeak.Id, accountTeamGameWeak.Fk_AccountTeam, gameWeak, fk_Season);
+                    _ = AccountTeamPlayersCalculations(accountTeamGameWeak.Id, accountTeamGameWeak.Fk_AccountTeam, gameWeak, fk_Season, true);
                 }
                 else
                 {
                     string recurringId = AccountGameWeakTeamId + $"{accountTeamGameWeak.Id}";
 
-                    string hangfireJobId = BackgroundJob.Enqueue(() => AccountTeamPlayersCalculations(accountTeamGameWeak.Id, accountTeamGameWeak.Fk_AccountTeam, gameWeak, fk_Season));
+                    string hangfireJobId = BackgroundJob.Enqueue(() => AccountTeamPlayersCalculations(accountTeamGameWeak.Id, accountTeamGameWeak.Fk_AccountTeam, gameWeak, fk_Season, true));
 
                     _hangFireCustomJob.ReplaceJob(hangfireJobId, recurringId);
                 }
@@ -131,7 +130,7 @@ namespace FantasyLogic.Calculations
             }
         }
 
-        public void AccountTeamPlayersCalculations(int fk_AccountTeamGameWeak, int fk_AccountTeam, GameWeakModel gameWeak, int fk_Season)
+        public AccountTeamCustemClac AccountTeamPlayersCalculations(int fk_AccountTeamGameWeak, int fk_AccountTeam, GameWeakModel gameWeak, int fk_Season, bool saveChanges = true)
         {
             List<AccountTeamPlayersCalculationPoints> playersFinalPoints = new();
             List<AccountTeamPlayersCalculationPoints> flagListPoints = new();
@@ -443,19 +442,25 @@ namespace FantasyLogic.Calculations
 
             _unitOfWork.AccountTeam.ResetAccountTeamPlayerGameWeakPoints(fk_AccountTeam, gameWeak.Id);
 
+            List<AccountTeamPlayerGameWeak> playersGameWeekPoints = new();
+
             foreach (AccountTeamPlayersCalculationPoints playersFinalPoint in playersFinalPoints)
             {
-                _unitOfWork.AccountTeam.CreateAccountTeamPlayerGameWeak(new AccountTeamPlayerGameWeak
+                AccountTeamPlayerGameWeak accountTeamPlayerGameWeak = new()
                 {
                     Fk_GameWeak = gameWeak.Id,
                     Fk_AccountTeamPlayer = playersFinalPoint.Fk_AccountTeamPlayer,
                     Fk_TeamPlayerType = playersFinalPoint.Fk_TeamPlayerType,
                     Order = playersFinalPoint.Order,
+                    
                     IsPrimary = playersFinalPoint.IsPrimary,
                     Points = (int)playersFinalPoint.Points,
                     HavePoints = true,
                     HavePointsInTotal = playersFinalPoint.HavePointsInTotal
-                });
+                };
+
+                playersGameWeekPoints.Add(accountTeamPlayerGameWeak);
+                _unitOfWork.AccountTeam.CreateAccountTeamPlayerGameWeak(accountTeamPlayerGameWeak);
             }
 
             int prevPoints = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
@@ -477,7 +482,23 @@ namespace FantasyLogic.Calculations
             }
 
             accountTeamGameWeak.PrevPoints = prevPoints;
-            _unitOfWork.Save().Wait();
+
+            if (saveChanges)
+            {
+                _unitOfWork.Save().Wait();
+            }
+            else
+            {
+                return new AccountTeamCustemClac
+                {
+                    BenchPoints = accountTeamGameWeak.BenchPoints,
+                    PrevPoints = accountTeamGameWeak.PrevPoints,
+                    TotalPoints = accountTeamGameWeak.TotalPoints,
+                    Players = playersGameWeekPoints
+                };
+            }
+
+            return null;
         }
 
         public void RunUpdateAccountTeamGameWeakRanking()
@@ -564,7 +585,7 @@ namespace FantasyLogic.Calculations
 
         public void RunUpdateAccountTeamRanking()
         {
-            var season = _unitOfWork.Season.GetCurrentSeason();
+            SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
 
             _ = BackgroundJob.Enqueue(() => UpdateAccountTeamRanking(season.Id));
         }

@@ -2,6 +2,7 @@
 using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.AccountTeamModels;
+using FantasyLogic;
 using IntegrationWith365;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using static Entities.EnumData.LogicEnumData;
@@ -15,6 +16,7 @@ namespace API.Areas.AccountTeamArea.Controllers
     public class AccountTeamController : ExtendControllerBase
     {
         private readonly _365Services _365Services;
+        private readonly FantasyUnitOfWork _fantasyUnitOfWork;
 
         public AccountTeamController(
         ILoggerManager logger,
@@ -23,9 +25,11 @@ namespace API.Areas.AccountTeamArea.Controllers
         LinkGenerator linkGenerator,
         IWebHostEnvironment environment,
         _365Services _365Services,
-        IOptions<AppSettings> appSettings) : base(logger, mapper, unitOfWork, linkGenerator, environment, appSettings)
+        IOptions<AppSettings> appSettings,
+        FantasyUnitOfWork fantasyUnitOfWork) : base(logger, mapper, unitOfWork, linkGenerator, environment, appSettings)
         {
             this._365Services = _365Services;
+            _fantasyUnitOfWork = fantasyUnitOfWork;
         }
 
         [HttpGet]
@@ -66,6 +70,18 @@ namespace API.Areas.AccountTeamArea.Controllers
 
             AccountTeamModel data = _unitOfWork.AccountTeam.GetAccountTeambyId(id, otherLang);
 
+            if (data.Fk_AcountTeamGameWeek > 0)
+            {
+                GameWeakModel gameWeek = _unitOfWork.Season.GetCurrentGameWeak(otherLang: false);
+
+                AccountTeamCustemClac clac = _fantasyUnitOfWork.AccountTeamCalc.AccountTeamPlayersCalculations(data.Fk_AcountTeamGameWeek, id, gameWeek, gameWeek.Fk_Season, false);
+                if (clac != null)
+                {
+                    data.CurrentGameWeakPoints = clac.TotalPoints ?? 0;
+                    data.PrevGameWeakPoints = clac.PrevPoints;
+                }
+            }
+
             if (data != null && includeGameWeakPoints)
             {
                 GameWeakModel currentGameWeak = _unitOfWork.Season.GetCurrentGameWeak();
@@ -100,7 +116,6 @@ namespace API.Areas.AccountTeamArea.Controllers
             }
 
             AccountTeamModel currentTeam = _unitOfWork.AccountTeam.GetCurrentTeam(auth.Fk_Account, currentSeason.Id);
-
             if (currentTeam != null && includeGameWeakPoints)
             {
                 GameWeakModel currentGameWeak = _unitOfWork.Season.GetCurrentGameWeak();
@@ -271,7 +286,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                     GameWeakFrom = gameWeakFrom,
                     GameWeakTo = gameWeakTo,
                     FreeHit = true
-                }, otherLang: false).Count() >= 2)
+                }, otherLang: false).Count() >= 1)
                 {
                     throw new Exception("You already use card in this half of season!");
                 }
@@ -289,7 +304,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                     GameWeakFrom = gameWeakFrom,
                     GameWeakTo = gameWeakTo,
                     WildCard = true
-                }, otherLang: false).Count() >= 2)
+                }, otherLang: false).Count() >= 1)
                 {
                     throw new Exception("You already use card in this half of season!");
                 }

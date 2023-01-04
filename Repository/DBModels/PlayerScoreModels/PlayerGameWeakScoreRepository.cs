@@ -33,7 +33,8 @@ namespace Repository.DBModels.PlayerScoreModels
                            parameters.IsEnded,
                            parameters.RateFrom,
                            parameters.RateTo,
-                           parameters.DashboardSearch);
+                           parameters.DashboardSearch,
+                           parameters.IsCanNotEdit);
 
         }
 
@@ -48,12 +49,14 @@ namespace Repository.DBModels.PlayerScoreModels
             if (FindByCondition(a => a.Fk_PlayerGameWeak == entity.Fk_PlayerGameWeak && a.Fk_ScoreType == entity.Fk_ScoreType, trackChanges: false).Any())
             {
                 PlayerGameWeakScore oldEntity = FindByCondition(a => a.Fk_PlayerGameWeak == entity.Fk_PlayerGameWeak && a.Fk_ScoreType == entity.Fk_ScoreType, trackChanges: true).First();
-
-                oldEntity.Value = entity.Value;
-                oldEntity.FinalValue = entity.FinalValue;
-                oldEntity.GameTime = entity.GameTime;
-                oldEntity.Points = entity.Points;
-                oldEntity.IsOut = entity.IsOut;
+                if (!oldEntity.IsCanNotEdit)
+                {
+                    oldEntity.Value = entity.Value;
+                    oldEntity.FinalValue = entity.FinalValue;
+                    oldEntity.GameTime = entity.GameTime;
+                    oldEntity.Points = entity.Points;
+                    oldEntity.IsOut = entity.IsOut;
+                }
             }
             else
             {
@@ -81,7 +84,7 @@ namespace Repository.DBModels.PlayerScoreModels
 
         public void DeleteOldPlayerScores(int fk_PlayerGameWeak)
         {
-            List<PlayerGameWeakScore> data = FindByCondition(a => a.Fk_PlayerGameWeak == fk_PlayerGameWeak, trackChanges: true).ToList();
+            List<PlayerGameWeakScore> data = FindByCondition(a => a.Fk_PlayerGameWeak == fk_PlayerGameWeak && a.IsCanNotEdit == false, trackChanges: true).ToList();
             DBContext.PlayerGameWeakScores.RemoveRange(data);
         }
     }
@@ -111,7 +114,8 @@ public static class PlayerGameWeakScoreRepositoryExtension
          bool? isEnded,
          double rateFrom,
          double rateTo,
-         string dashboardSearch)
+         string dashboardSearch,
+         bool? isCanNotEdit)
     {
         return PlayerGameWeakScores.Where(a => (id == 0 || a.Id == id) &&
 
@@ -151,7 +155,8 @@ public static class PlayerGameWeakScoreRepositoryExtension
                                               (fk_Players == null || !fk_Players.Any() ||
                                                fk_Players.Contains(a.PlayerGameWeak.Fk_Player)) &&
                                               (fk_Season == 0 || a.PlayerGameWeak.TeamGameWeak.GameWeak.Fk_Season == fk_Season) &&
-                                              (isEnded == null || a.PlayerGameWeak.TeamGameWeak.IsEnded == isEnded)
+                                              (isEnded == null || a.PlayerGameWeak.TeamGameWeak.IsEnded == isEnded) &&
+                                              (isCanNotEdit == null || a.IsCanNotEdit == isCanNotEdit)
                                                );
     }
 }

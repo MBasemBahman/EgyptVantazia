@@ -18,6 +18,9 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
         public int Fk_Season { get; set; }
 
         public int Fk_GameWeak { get; set; }
+
+        [DisplayName(nameof(IsCanNotEdit))]
+        public bool? IsCanNotEdit { get; set; }
     }
 
     public class ScoreTypeModel : AuditLookUpEntity
@@ -41,6 +44,9 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
 
         [DisplayName(nameof(IsEvent))]
         public bool IsEvent { get; set; }
+
+        [DisplayName(nameof(IsCanNotEdit))]
+        public bool IsCanNotEdit { get; set; }
     }
 
     public class ScoreTypeCreateOrEditModel
@@ -67,6 +73,9 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
 
         [DisplayName(nameof(Fk_Player))]
         public int Fk_Player { get; set; }
+
+        [DisplayName(nameof(IsCanNotEdit))]
+        public bool IsCanNotEdit { get; set; }
 
         public ScoreTypeLangModel ScoreTypeLang { get; set; }
     }

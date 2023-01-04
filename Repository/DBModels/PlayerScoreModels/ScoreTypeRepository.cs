@@ -16,7 +16,8 @@ namespace Repository.DBModels.PlayerScoreModels
                            parameters._365_TypeId,
                            parameters.Ids,
                            parameters.IsEvent,
-                           parameters.HavePoints);
+                           parameters.HavePoints,
+                           parameters.IsCanNotEdit);
         }
 
         public async Task<ScoreType> FindById(int id, bool trackChanges)
@@ -39,6 +40,7 @@ namespace Repository.DBModels.PlayerScoreModels
                 oldEntity.IsEvent = entity.IsEvent;
                 oldEntity._365_EventTypeId = entity._365_EventTypeId;
                 oldEntity.ScoreTypeLang.Name = entity.ScoreTypeLang.Name;
+                oldEntity.IsCanNotEdit = entity.IsCanNotEdit;
             }
             else
             {
@@ -59,12 +61,14 @@ namespace Repository.DBModels.PlayerScoreModels
             string _365_TypeId,
             List<int> ids,
             bool? isEvent,
-            bool? havePoints)
+            bool? havePoints,
+            bool? isCanNotEdit)
         {
             return ScoreTypes.Where(a => (id == 0 || a.Id == id) &&
                                          (string.IsNullOrWhiteSpace(_365_TypeId) || a._365_TypeId == _365_TypeId) &&
                                          (ids == null || !ids.Any() || ids.Contains(a.Id)) &&
                                          (isEvent == null || a.IsEvent == isEvent) &&
+                                         (isCanNotEdit == null || a.IsCanNotEdit == isCanNotEdit) &&
                                          (havePoints == null || a.HavePoints == havePoints));
         }
 

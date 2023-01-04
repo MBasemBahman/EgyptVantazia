@@ -30,5 +30,8 @@
 
         [DisplayName(nameof(IsOut))]
         public bool? IsOut { get; set; }
+
+        [DisplayName(nameof(IsCanNotEdit))]
+        public bool IsCanNotEdit { get; set; }
     }
 }

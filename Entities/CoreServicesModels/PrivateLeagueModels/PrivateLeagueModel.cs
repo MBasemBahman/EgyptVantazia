@@ -1,4 +1,5 @@
-﻿using Entities.RequestFeatures;
+﻿using Entities.CoreServicesModels.SeasonModels;
+using Entities.RequestFeatures;
 
 namespace Entities.CoreServicesModels.PrivateLeagueModels
 {
@@ -13,6 +14,8 @@ namespace Entities.CoreServicesModels.PrivateLeagueModels
         public bool? HaveMembers { get; set; }
 
         public int Fk_Season { get; set; }
+
+        public int? Fk_GameWeak { get; set; }
     }
 
     public class PrivateLeagueModel : AuditEntity
@@ -31,6 +34,12 @@ namespace Entities.CoreServicesModels.PrivateLeagueModels
         public double MyPosition { get; set; }
 
         public bool IsAdmin { get; set; }
+
+        [DisplayName(nameof(GameWeak))]
+        public int? Fk_GameWeak { get; set; }
+
+        [DisplayName(nameof(GameWeak))]
+        public GameWeakModel GameWeak { get; set; }
     }
 
     public class PrivateLeagueCreateOrEditModel
@@ -39,7 +48,7 @@ namespace Entities.CoreServicesModels.PrivateLeagueModels
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
 
-
+        public int? Fk_GameWeak { get; set; }
     }
 
     public class PrivateLeagueCreateModel

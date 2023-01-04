@@ -28,7 +28,7 @@ namespace FantasyLogic.Calculations
             {
                 HaveMembers = true,
                 Fk_Season = fk_Season,
-            }).Select(a => a.Id).ToList();
+            }, false).Select(a => a.Id).ToList();
 
             string jobId = "";
             foreach (int privateLeagueId in privateLeagues)

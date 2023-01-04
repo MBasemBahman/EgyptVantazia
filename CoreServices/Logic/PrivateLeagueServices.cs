@@ -1,6 +1,7 @@
 ﻿using Entities.CoreServicesModels.AccountModels;
 using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.PrivateLeagueModels;
+using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.PrivateLeagueModels;
 
 namespace CoreServices.Logic
@@ -15,7 +16,7 @@ namespace CoreServices.Logic
         }
 
         #region PrivateLeague Services
-        public IQueryable<PrivateLeagueModel> GetPrivateLeagues(PrivateLeagueParameters parameters)
+        public IQueryable<PrivateLeagueModel> GetPrivateLeagues(PrivateLeagueParameters parameters, bool otherLang)
         {
             return _repository.PrivateLeague
                        .FindAll(parameters, trackChanges: false)
@@ -33,21 +34,32 @@ namespace CoreServices.Logic
                            MyPosition = a.PrivateLeagueMembers
                                          .Where(b => b.Fk_Account == parameters.Fk_Account)
                                          .Select(b => b.Ranking)
-                                         .FirstOrDefault()
+                                         .FirstOrDefault(),
+                           Fk_GameWeak = a.Fk_GameWeak,
+                           GameWeak = a.GameWeak != null ? new GameWeakModel
+                           {
+                               Name = otherLang ? a.GameWeak.GameWeakLang.Name : a.GameWeak.Name,
+                               _365_GameWeakId = a.GameWeak._365_GameWeakId,
+                               Fk_Season = a.GameWeak.Fk_Season,
+                               Season = new SeasonModel
+                               {
+                                   Name = otherLang ? a.GameWeak.Season.SeasonLang.Name : a.GameWeak.Season.Name
+                               }
+                           } : null
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);
         }
 
         public async Task<PagedList<PrivateLeagueModel>> GetPrivateLeaguePaged(
-                  PrivateLeagueParameters parameters)
+                  PrivateLeagueParameters parameters, bool otherLang)
         {
-            return await PagedList<PrivateLeagueModel>.ToPagedList(GetPrivateLeagues(parameters), parameters.PageNumber, parameters.PageSize);
+            return await PagedList<PrivateLeagueModel>.ToPagedList(GetPrivateLeagues(parameters, otherLang), parameters.PageNumber, parameters.PageSize);
         }
 
-        public Dictionary<string, string> GetPrivateLeagueLookUp(PrivateLeagueParameters parameters)
+        public Dictionary<string, string> GetPrivateLeagueLookUp(PrivateLeagueParameters parameters, bool otherLang)
         {
-            return GetPrivateLeagues(parameters).ToDictionary(a => a.Id.ToString(), a => a.Name);
+            return GetPrivateLeagues(parameters, otherLang).ToDictionary(a => a.Id.ToString(), a => a.Name);
         }
 
         public async Task<PrivateLeague> FindPrivateLeaguebyId(int id, bool trackChanges)
@@ -66,9 +78,9 @@ namespace CoreServices.Logic
             _repository.PrivateLeague.Delete(PrivateLeague);
         }
 
-        public PrivateLeagueModel GetPrivateLeaguebyId(int id)
+        public PrivateLeagueModel GetPrivateLeaguebyId(int id, bool otherLang)
         {
-            return GetPrivateLeagues(new PrivateLeagueParameters { Id = id }).FirstOrDefault();
+            return GetPrivateLeagues(new PrivateLeagueParameters { Id = id }, otherLang).FirstOrDefault();
         }
 
         public int GetPrivateLeagueCount()
@@ -93,6 +105,7 @@ namespace CoreServices.Logic
                            Fk_PrivateLeague = a.Fk_PrivateLeague,
                            IsAdmin = a.IsAdmin,
                            Ranking = a.Ranking,
+                           Points = a.Points,
                            Account = new AccountModel
                            {
                                ImageUrl = a.Account.StorageUrl + a.Account.ImageUrl,

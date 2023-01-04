@@ -107,6 +107,8 @@ namespace API.Areas.PrivateLeagueArea.Controllers
         public async Task<PrivateLeagueModel> JoinPrivateLeague(
         [FromQuery, BindRequired] string uniqueCode)
         {
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
             SeasonModel currentSeason = _unitOfWork.Season.GetCurrentSeason();
@@ -121,7 +123,7 @@ namespace API.Areas.PrivateLeagueArea.Controllers
                 throw new Exception("Please create your team!");
             }
 
-            int fk_PrivateLeague = _unitOfWork.PrivateLeague.GetPrivateLeagues(new PrivateLeagueParameters { UniqueCode = uniqueCode })
+            int fk_PrivateLeague = _unitOfWork.PrivateLeague.GetPrivateLeagues(new PrivateLeagueParameters { UniqueCode = uniqueCode }, otherLang)
                                               .Select(a => a.Id)
                                                .FirstOrDefault();
             if (fk_PrivateLeague == 0)
@@ -136,7 +138,7 @@ namespace API.Areas.PrivateLeagueArea.Controllers
             });
             await _unitOfWork.Save();
 
-            PrivateLeagueModel data = _unitOfWork.PrivateLeague.GetPrivateLeagues(new PrivateLeagueParameters { Id = fk_PrivateLeague }).FirstOrDefault();
+            PrivateLeagueModel data = _unitOfWork.PrivateLeague.GetPrivateLeagues(new PrivateLeagueParameters { Id = fk_PrivateLeague }, otherLang).FirstOrDefault();
 
             return data;
         }

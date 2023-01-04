@@ -7,6 +7,9 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
 {
     public class PlayerGameWeakScoreParameters : RequestParameters
     {
+        [DisplayName(nameof(IsCanNotEdit))]
+        public bool? IsCanNotEdit { get; set; }
+
         [DisplayName(nameof(PlayerGameWeak))]
         public int Fk_PlayerGameWeak { get; set; }
 
@@ -76,6 +79,9 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
 
         [DisplayName(nameof(IsOut))]
         public bool? IsOut { get; set; }
+
+        [DisplayName(nameof(IsCanNotEdit))]
+        public bool IsCanNotEdit { get; set; }
     }
 
     public class PlayerGameWeakScoreCreateOrEditModel
@@ -97,6 +103,9 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
         public double GameTime { get; set; }
 
         public int Id { get; set; }
+
+        [DisplayName(nameof(IsCanNotEdit))]
+        public bool IsCanNotEdit { get; set; }
     }
 
     public class PlayerTotalScoreModel

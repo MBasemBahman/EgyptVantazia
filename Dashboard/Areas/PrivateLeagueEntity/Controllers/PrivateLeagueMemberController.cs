@@ -63,7 +63,9 @@ namespace Dashboard.Areas.PrivateLeagueEntity.Controllers
         //helper methods
         private void SetViewData()
         {
-            ViewData["PrivateLeague"] = _unitOfWork.PrivateLeague.GetPrivateLeagueLookUp(new PrivateLeagueParameters());
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
+            ViewData["PrivateLeague"] = _unitOfWork.PrivateLeague.GetPrivateLeagueLookUp(new PrivateLeagueParameters(), otherLang);
         }
     }
 }

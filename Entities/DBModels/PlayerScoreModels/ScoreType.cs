@@ -19,6 +19,9 @@
         [DisplayName(nameof(HavePoints))]
         public bool HavePoints { get; set; }
 
+        [DisplayName(nameof(IsCanNotEdit))]
+        public bool IsCanNotEdit { get; set; }
+
         [DisplayName(nameof(IsEvent))]
         public bool IsEvent { get; set; }
 

@@ -39,7 +39,7 @@ namespace Dashboard.Areas.PrivateLeagueEntity.Controllers
         [HttpPost]
         public async Task<IActionResult> LoadTable([FromBody] PrivateLeagueFilter dtParameters)
         {
-
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
             PrivateLeagueParameters parameters = new()
             {
                 SearchColumns = "Id,Name"
@@ -47,7 +47,7 @@ namespace Dashboard.Areas.PrivateLeagueEntity.Controllers
 
             _ = _mapper.Map(dtParameters, parameters);
 
-            PagedList<PrivateLeagueModel> data = await _unitOfWork.PrivateLeague.GetPrivateLeaguePaged(parameters);
+            PagedList<PrivateLeagueModel> data = await _unitOfWork.PrivateLeague.GetPrivateLeaguePaged(parameters, otherLang);
 
             List<PrivateLeagueDto> resultDto = _mapper.Map<List<PrivateLeagueDto>>(data);
 
@@ -60,9 +60,10 @@ namespace Dashboard.Areas.PrivateLeagueEntity.Controllers
 
         public IActionResult Details(int id)
         {
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             PrivateLeagueDto data = _mapper.Map<PrivateLeagueDto>(_unitOfWork.PrivateLeague
-                                                           .GetPrivateLeaguebyId(id));
+                                                           .GetPrivateLeaguebyId(id, otherLang));
 
             return View(data);
         }

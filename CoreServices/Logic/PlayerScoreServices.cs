@@ -34,6 +34,7 @@ namespace CoreServices.Logic
                            HavePoints = x.HavePoints,
                            IsEvent = x.IsEvent,
                            _365_EventTypeId = x._365_EventTypeId,
+                           IsCanNotEdit = x.IsCanNotEdit
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);
@@ -150,7 +151,8 @@ namespace CoreServices.Logic
                                                        {
                                                            Name = otherLang ? b.ScoreType.ScoreTypeLang.Name : b.ScoreType.Name,
                                                        },
-                                                       IsOut = b.IsOut
+                                                       IsOut = b.IsOut,
+                                                       IsCanNotEdit = b.IsCanNotEdit
                                                    })
                                                    .ToList() : null
                        })
@@ -284,6 +286,7 @@ namespace CoreServices.Logic
                            FinalValue = a.FinalValue,
                            Fk_Team = a.PlayerGameWeak.Player.Fk_Team,
                            IsOut = a.IsOut,
+                           IsCanNotEdit = a.IsCanNotEdit,
                            ScoreType = new ScoreTypeModel
                            {
                                Name = otherLang ? a.ScoreType.ScoreTypeLang.Name : a.ScoreType.Name,

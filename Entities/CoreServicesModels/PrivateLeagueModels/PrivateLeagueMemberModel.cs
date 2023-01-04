@@ -12,6 +12,10 @@ namespace Entities.CoreServicesModels.PrivateLeagueModels
         public int Fk_PrivateLeague { get; set; }
 
         public bool? IsAdmin { get; set; }
+
+        public int? FromPoints { get; set; }
+
+        public int? ToPoints { get; set; }
     }
 
     public class PrivateLeagueMemberModel : AuditEntity
@@ -32,6 +36,9 @@ namespace Entities.CoreServicesModels.PrivateLeagueModels
 
         [DisplayName(nameof(Ranking))]
         public double Ranking { get; set; }
+
+        [DisplayName(nameof(Points))]
+        public int? Points { get; set; }
     }
 
     public class PrivateLeagueMemberCreateModel

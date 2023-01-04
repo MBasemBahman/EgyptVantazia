@@ -253,7 +253,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                     GameWeakFrom = gameWeakFrom,
                     GameWeakTo = gameWeakTo,
                     BenchBoost = true
-                }, otherLang: false).Any())
+                }, otherLang: false).Count() >= 2)
                 {
                     throw new Exception("You already use card in this half of season!");
                 }
@@ -271,7 +271,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                     GameWeakFrom = gameWeakFrom,
                     GameWeakTo = gameWeakTo,
                     FreeHit = true
-                }, otherLang: false).Any())
+                }, otherLang: false).Count() >= 2)
                 {
                     throw new Exception("You already use card in this half of season!");
                 }
@@ -289,7 +289,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                     GameWeakFrom = gameWeakFrom,
                     GameWeakTo = gameWeakTo,
                     WildCard = true
-                }, otherLang: false).Any())
+                }, otherLang: false).Count() >= 2)
                 {
                     throw new Exception("You already use card in this half of season!");
                 }
@@ -307,7 +307,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                     GameWeakFrom = gameWeakFrom,
                     GameWeakTo = gameWeakTo,
                     DoubleGameWeak = true
-                }, otherLang: false).Any())
+                }, otherLang: false).Count() >= 2)
                 {
                     throw new Exception("You already use card in this half of season!");
                 }
@@ -325,7 +325,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                     GameWeakFrom = gameWeakFrom,
                     GameWeakTo = gameWeakTo,
                     Top_11 = true
-                }, otherLang: false).Any())
+                }, otherLang: false).Count() >= 2)
                 {
                     throw new Exception("You already use card in this half of season!");
                 }
@@ -343,7 +343,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                     GameWeakFrom = gameWeakFrom,
                     GameWeakTo = gameWeakTo,
                     TripleCaptain = true
-                }, otherLang: false).Any())
+                }, otherLang: false).Count() >= 2)
                 {
                     throw new Exception("You already use card in this half of season!");
                 }

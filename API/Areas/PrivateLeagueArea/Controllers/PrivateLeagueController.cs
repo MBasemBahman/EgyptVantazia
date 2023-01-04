@@ -27,11 +27,13 @@ namespace API.Areas.PrivateLeagueArea.Controllers
         public async Task<IEnumerable<PrivateLeagueModel>> GetPrivateLeagues(
         [FromQuery] PrivateLeagueParameters parameters)
         {
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
             parameters.Fk_Account = auth.Fk_Account;
 
-            PagedList<PrivateLeagueModel> data = await _unitOfWork.PrivateLeague.GetPrivateLeaguePaged(parameters);
+            PagedList<PrivateLeagueModel> data = await _unitOfWork.PrivateLeague.GetPrivateLeaguePaged(parameters, otherLang);
 
             SetPagination(data.MetaData, parameters);
 
@@ -43,7 +45,9 @@ namespace API.Areas.PrivateLeagueArea.Controllers
         public PrivateLeagueModel GetPrivateLeagueById(
         [FromQuery, BindRequired] int id)
         {
-            PrivateLeagueModel data = _unitOfWork.PrivateLeague.GetPrivateLeaguebyId(id);
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
+            PrivateLeagueModel data = _unitOfWork.PrivateLeague.GetPrivateLeaguebyId(id, otherLang);
 
             return data;
         }
@@ -53,8 +57,10 @@ namespace API.Areas.PrivateLeagueArea.Controllers
         public PrivateLeagueModel GetPrivateLeagueByUniqueCode(
         [FromQuery, BindRequired] string uniqueCode)
         {
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
             PrivateLeagueModel data = _unitOfWork.PrivateLeague
-                                                 .GetPrivateLeagues(new PrivateLeagueParameters { UniqueCode = uniqueCode }).FirstOrDefault();
+                                                 .GetPrivateLeagues(new PrivateLeagueParameters { UniqueCode = uniqueCode }, otherLang).FirstOrDefault();
 
             return data ?? throw new Exception("The code is incorrect!");
         }
@@ -63,6 +69,8 @@ namespace API.Areas.PrivateLeagueArea.Controllers
         [Route(nameof(Create))]
         public async Task<PrivateLeagueModel> Create([FromBody] PrivateLeagueCreateModel model)
         {
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
             SeasonModel currentSeason = _unitOfWork.Season.GetCurrentSeason();
@@ -104,7 +112,7 @@ namespace API.Areas.PrivateLeagueArea.Controllers
             _unitOfWork.PrivateLeague.CreatePrivateLeague(privateLeague);
             await _unitOfWork.Save();
 
-            return _unitOfWork.PrivateLeague.GetPrivateLeaguebyId(privateLeague.Id);
+            return _unitOfWork.PrivateLeague.GetPrivateLeaguebyId(privateLeague.Id, otherLang);
         }
 
         [HttpPut]
@@ -113,6 +121,8 @@ namespace API.Areas.PrivateLeagueArea.Controllers
             [FromQuery, BindRequired] int id,
             [FromBody] PrivateLeagueCreateModel model)
         {
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
             if (id <= 0)
             {
                 throw new Exception("Not Valid!");
@@ -128,7 +138,7 @@ namespace API.Areas.PrivateLeagueArea.Controllers
 
             await _unitOfWork.Save();
 
-            return _unitOfWork.PrivateLeague.GetPrivateLeaguebyId(privateLeague.Id);
+            return _unitOfWork.PrivateLeague.GetPrivateLeaguebyId(privateLeague.Id, otherLang);
         }
 
         [HttpDelete]

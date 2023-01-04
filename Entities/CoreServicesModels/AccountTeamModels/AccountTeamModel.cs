@@ -41,7 +41,7 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         public string DashboardSearch { get; set; }
 
-        public int FromCurrentGameWeakPoints { get; set; }
+        public int? FromCurrentGameWeakPoints { get; set; }
     }
 
     public class AccountTeamModel : AuditImageEntity

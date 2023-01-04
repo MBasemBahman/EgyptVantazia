@@ -1,4 +1,6 @@
-﻿using Entities.CoreServicesModels.PrivateLeagueModels;
+﻿using Dashboard.Areas.SeasonEntity.Models;
+using Entities.CoreServicesModels.PrivateLeagueModels;
+using Entities.CoreServicesModels.SeasonModels;
 using System.ComponentModel;
 
 namespace Dashboard.Areas.PrivateLeagueEntity.Models
@@ -15,5 +17,8 @@ namespace Dashboard.Areas.PrivateLeagueEntity.Models
 
         [DisplayName(nameof(LastModifiedAt))]
         public new string LastModifiedAt { get; set; }
+
+        [DisplayName(nameof(GameWeak))]
+        public new GameWeakDto GameWeak { get; set; }
     }
 }

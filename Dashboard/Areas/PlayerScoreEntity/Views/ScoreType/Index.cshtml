@@ -88,6 +88,7 @@
                                             <th>@Html.DisplayNameFor(model => row._365_EventTypeId)</th>
                                             <th>@Html.DisplayNameFor(model => row.HavePoints)</th>
                                             <th>@Html.DisplayNameFor(model => row.IsEvent)</th>
+                                            <th>@Html.DisplayNameFor(model => row.IsCanNotEdit)</th>
                                             <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
                                             <th>
                                                 @Html.DisplayNameFor(model => row.Id)
@@ -158,6 +159,16 @@
                               } else {
                                   return '@Localizer.Get("No")'
                               }
+                            }
+                        },
+                        {
+                            data: "isCanNotEdit",
+                            render: function (data) {
+                                if (data) {
+                                    return '@Localizer.Get("Yes")'
+                                } else {
+                                    return '@Localizer.Get("No")'
+                                }
                             }
                         },
                         { data: "createdAt" },

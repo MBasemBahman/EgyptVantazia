@@ -85,6 +85,8 @@
                                             </th>
                                             <th>@Html.DisplayNameFor(model => row.Name)</th>
                                             <th>@Html.DisplayNameFor(model => row.MemberCount)</th>
+                                            <th>@Html.DisplayNameFor(model => row.GameWeak)</th>
+
                                             <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
                                             <th>
                                                 @Html.DisplayNameFor(model => row.Id)
@@ -127,6 +129,16 @@
                         { data: "id" },
                         {data:"name"},
                         {data:"memberCount"},
+                        {
+                            data: "gameWeak", orderable: false, render: function (data) {
+                                if (data != null && data.length > 0) {
+                                    return data.name;
+                                }
+
+                                return '@Localizer.Get("Not Found")';
+                            }
+                        },
+
                         { data: "createdAt" },
                         { data: "id" },
                     ]

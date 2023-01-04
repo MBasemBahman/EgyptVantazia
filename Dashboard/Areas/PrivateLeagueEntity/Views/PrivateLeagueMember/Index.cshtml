@@ -77,6 +77,7 @@
                                             <th>@Html.DisplayNameFor(model => row.Account)</th>
                                             <th>@Html.DisplayNameFor(model => row.PrivateLeague)</th>
                                             <th>@Html.DisplayNameFor(model => row.Ranking)</th>
+                                            <th>@Html.DisplayNameFor(model => row.Points)</th>
                                             <th>@Html.DisplayNameFor(model => row.IsAdmin)</th>
                                             <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
                                             <th>
@@ -149,6 +150,16 @@
                         },
                         { data: "privateLeague.name" },
                         { data: "ranking" },
+                        { data: "points" ,
+                        render :function(data){
+                            if(data!=null){
+                                return data;
+                            }
+                            else{
+                                return '-';
+                            }
+                        }
+                        },
                         {
                             data: "isAdmin",
                             render: function (data, type, row) {

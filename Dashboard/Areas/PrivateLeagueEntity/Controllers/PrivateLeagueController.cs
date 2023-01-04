@@ -1,7 +1,10 @@
 ﻿using Dashboard.Areas.PrivateLeagueEntity.Models;
 using Entities.CoreServicesModels.PrivateLeagueModels;
+using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.PrivateLeagueModels;
 using Entities.RequestFeatures;
+using static Entities.EnumData.LogicEnumData;
+
 namespace Dashboard.Areas.PrivateLeagueEntity.Controllers
 {
     [Area("PrivateLeagueEntity")]
@@ -80,6 +83,12 @@ namespace Dashboard.Areas.PrivateLeagueEntity.Controllers
                                                 await _unitOfWork.PrivateLeague.FindPrivateLeaguebyId(id, trackChanges: false));
             }
 
+            model.Fk_Season = model.Fk_GameWeak != null
+           ? _unitOfWork.Season.GetGameWeakbyId((int)model.Fk_GameWeak, otherLang: false).Fk_Season
+           : _unitOfWork.Season.GetSeasons(new SeasonParameters(), otherLang: false).Any()
+               ? _unitOfWork.Season.GetSeasons(new SeasonParameters(), otherLang: false).FirstOrDefault().Id
+               : 0;
+            SetViewData(model.Fk_Season);
             return View(model);
         }
 
@@ -91,10 +100,14 @@ namespace Dashboard.Areas.PrivateLeagueEntity.Controllers
 
             if (!ModelState.IsValid)
             {
+                SetViewData(model.Fk_Season);
+
                 return View(model);
             }
             try
             {
+                model.Fk_GameWeak = model.Fk_GameWeak > 0 ? model.Fk_GameWeak : null;
+
 
                 UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
                 PrivateLeague dataDB = new();
@@ -126,6 +139,8 @@ namespace Dashboard.Areas.PrivateLeagueEntity.Controllers
                 ViewData[ViewDataConstants.Error] = _logger.LogError(HttpContext.Request, ex).ErrorMessage;
             }
 
+            SetViewData(model.Fk_Season);
+
             return View(model);
         }
 
@@ -150,6 +165,20 @@ namespace Dashboard.Areas.PrivateLeagueEntity.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // helper methods
+        private void SetViewData( int fk_Season)
+        {
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
+            ViewData["GameWeak"] = _unitOfWork.Season.GetGameWeakLookUp(new GameWeakParameters()
+            {
+                Fk_Season = fk_Season
+            }, otherLang);
+            ViewData["Season"] = _unitOfWork.Season.GetSeasonLookUp(new SeasonParameters(), otherLang);
+            ViewData["NewsType"] = Enum.GetValues(typeof(NewsTypeEnum))
+               .Cast<NewsTypeEnum>()
+               .ToDictionary(a => ((int)a).ToString(), a => a.ToString());
+        }
 
     }
 }

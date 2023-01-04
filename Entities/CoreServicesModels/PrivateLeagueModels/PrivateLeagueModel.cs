@@ -1,4 +1,5 @@
 ﻿using Entities.CoreServicesModels.SeasonModels;
+using Entities.DBModels.SeasonModels;
 using Entities.RequestFeatures;
 
 namespace Entities.CoreServicesModels.PrivateLeagueModels
@@ -47,8 +48,11 @@ namespace Entities.CoreServicesModels.PrivateLeagueModels
         [DisplayName($"{nameof(Name)}")]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
-
+        [DisplayName(nameof(GameWeak))]
         public int? Fk_GameWeak { get; set; }
+
+        [DisplayName(nameof(Season))]
+        public int Fk_Season { get; set; }
     }
 
     public class PrivateLeagueCreateModel

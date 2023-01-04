@@ -95,6 +95,16 @@
                                             </div>
                                         </div>
 
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@Localizer.Get("IsCanNotEdit")</label>
+                                                <select class="form-control" asp-for="IsCanNotEdit">
+                                                    <option value="true">@Localizer.Get("Yes")</option>
+                                                    <option value="false">@Localizer.Get("No")</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
                                         <div class="col-md-12 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="Description" class="form-label"></label>

@@ -141,11 +141,17 @@
   <data name="Payments have something wrong. try again later!" xml:space="preserve">
     <value>المدفوعات بها شيء خاطئ. حاول مرة أخرى في وقت لاحق!</value>
   </data>
+  <data name="Please add an email address to your account!" xml:space="preserve">
+    <value>يرجى إضافة عنوان بريد إلكتروني فى حسابك!</value>
+  </data>
   <data name="Please add email address!" xml:space="preserve">
     <value>الرجاء إضافة عنوان البريد الإلكتروني الخاص بك!</value>
   </data>
   <data name="Please add phone number!" xml:space="preserve">
     <value>الرجاء إضافة رقم هاتفك!</value>
+  </data>
+  <data name="Please add the phone number to your account!" xml:space="preserve">
+    <value>من فضلك أضف رقم الهاتف فى حسابك!</value>
   </data>
   <data name="Please add wallet number!" xml:space="preserve">
     <value>الرجاء إضافة رقم محفظتك!</value>
@@ -179,6 +185,9 @@
   </data>
   <data name="You already get this subscription in this season!" xml:space="preserve">
     <value>لقد حصلت بالفعل على هذا الاشتراك هذا الموسم!</value>
+  </data>
+  <data name="You already got that subscription for this season!" xml:space="preserve">
+    <value>لقد حصلت بالفعل على هذا الاشتراك في هذا الموسم!</value>
   </data>
   <data name="You already use card in this gameweek!" xml:space="preserve">
     <value>لقد استخدمت البطاقة بالفعل في أسبوع اللعبة هذا!</value>

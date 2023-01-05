@@ -33,7 +33,8 @@ namespace Repository.DBModels.AccountTeamModels
                            parameters.AccountFullName,
                            parameters.AccountUserName,
                            parameters.DashboardSearch,
-                           parameters.Fk_Players);
+                           parameters.Fk_Players,
+                           parameters.Fk_PrivateLeague);
 
         }
 
@@ -92,7 +93,8 @@ namespace Repository.DBModels.AccountTeamModels
             string AccountFullName,
             string AccountUserName,
             string dashboardSearch,
-            List<int> fk_Players)
+            List<int> fk_Players,
+            int fk_PrivateLeague)
         {
             return AccountTeamGameWeaks.Where(a => (id == 0 || a.Id == id) &&
 
@@ -110,6 +112,9 @@ namespace Repository.DBModels.AccountTeamModels
                                                                (Fk_GameWeak == 0 || b.AccountTeamPlayerGameWeaks.Any(c => c.Fk_GameWeak == Fk_GameWeak && c.IsTransfer == false)))) &&
 
                                                    (Fk_AccountTeam == 0 || a.Fk_AccountTeam == Fk_AccountTeam) &&
+
+                                                   (fk_PrivateLeague == 0 || a.AccountTeam.Account.PrivateLeagueMembers.Any(b => b.Fk_PrivateLeague == fk_PrivateLeague)) &&
+
                                                    (GameWeakFrom == 0 || a.GameWeak._365_GameWeakIdValue >= GameWeakFrom) &&
                                                    (GameWeakTo == 0 || a.GameWeak._365_GameWeakIdValue <= GameWeakTo) &&
                                                    (pointsFrom == null || a.TotalPoints >= pointsFrom) &&

@@ -76,7 +76,7 @@ namespace API.Areas.AccountTeamArea.Controllers
 
             PagedList<AccountTeamPlayerModel> data = await _unitOfWork.AccountTeam.GetAccountTeamPlayerPaged(parameters, otherLang);
 
-            if (parameters.Fk_AccountTeam > 0)
+            if (parameters.Fk_AccountTeam > 0 && parameters.IsNextGameWeak == false)
             {
                 var accountTeam = _unitOfWork.AccountTeam.GetAccountTeams(new AccountTeamParameters
                 {

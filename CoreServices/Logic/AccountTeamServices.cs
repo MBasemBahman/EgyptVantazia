@@ -316,6 +316,11 @@ namespace CoreServices.Logic
             return _repository.AccountTeamGameWeak.GetAverageGameWeakPoints(fk_GameWeak);
         }
 
+        public List<AccountTeamModel> GetPrivateLeaguesPoints(int fk_Season, int fk_PrivateLeague, int _365_GameWeakIdValue)
+        {
+            return _repository.AccountTeam.GetPrivateLeaguesPoints(fk_Season, fk_PrivateLeague, _365_GameWeakIdValue);
+        }
+
         #endregion
 
         #region AccountTeamPlayerGameWeak Services

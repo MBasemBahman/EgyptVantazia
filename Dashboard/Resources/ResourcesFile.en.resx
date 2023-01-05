@@ -1224,4 +1224,7 @@
   <data name="ShowPayment" xml:space="preserve">
     <value>Show Payments</value>
   </data>
+  <data name="IsCanNotEdit" xml:space="preserve">
+    <value>It can't be modified</value>
+  </data>
 </root>

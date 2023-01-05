@@ -14,48 +14,53 @@ namespace FantasyLogic.Calculations
             _unitOfWork = unitOfWork;
         }
 
-        public void RunPrivateLeaguesRanking()
+        public void RunPrivateLeaguesRanking(bool indebug = false)
         {
             SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
 
-            //UpdatePrivateLeaguesRanking(season.Id);
-            _ = BackgroundJob.Enqueue(() => UpdatePrivateLeaguesRanking(season.Id));
-        }
-
-        public void UpdatePrivateLeaguesRanking(int fk_Season)
-        {
-            List<int> privateLeagues = _unitOfWork.PrivateLeague.GetPrivateLeagues(new PrivateLeagueParameters
+            if (indebug)
             {
-                HaveMembers = true,
-                Fk_Season = fk_Season,
-            }, false).Select(a => a.Id).ToList();
-
-            string jobId = "";
-            foreach (int privateLeagueId in privateLeagues)
+                UpdatePrivateLeaguesRanking(season.Id, indebug);
+            }
+            else
             {
-                //UpdatePrivateLeaguesRanking(fk_Season, privateLeagueId, jobId);
-
-                jobId = jobId.IsExisting()
-                            ? BackgroundJob.ContinueJobWith(jobId, () => UpdatePrivateLeaguesRanking(fk_Season, privateLeagueId, jobId))
-                            : BackgroundJob.Enqueue(() => UpdatePrivateLeaguesRanking(fk_Season, privateLeagueId, jobId));
+                _ = BackgroundJob.Enqueue(() => UpdatePrivateLeaguesRanking(season.Id, indebug));
             }
         }
 
-        public string UpdatePrivateLeaguesRanking(int fk_Season, int fk_PrivateLeague, string jobId)
+        public void UpdatePrivateLeaguesRanking(int fk_Season, bool indebug)
+        {
+            var privateLeagues = _unitOfWork.PrivateLeague.GetPrivateLeagues(new PrivateLeagueParameters
+            {
+                HaveMembers = true,
+                Fk_Season = fk_Season,
+            }, false).Select(a => new
+            {
+                a.Id,
+                _365_GameWeakIdValue = a.Fk_GameWeak > 0 ? a.GameWeak._365_GameWeakIdValue : 0
+            }).ToList();
+
+            string jobId = "";
+            foreach (var privateLeague in privateLeagues)
+            {
+                if (indebug)
+                {
+                    UpdatePrivateLeaguesRanking(fk_Season, privateLeague.Id, privateLeague._365_GameWeakIdValue, jobId);
+                }
+                else
+                {
+                    jobId = jobId.IsExisting()
+                            ? BackgroundJob.ContinueJobWith(jobId, () => UpdatePrivateLeaguesRanking(fk_Season, privateLeague.Id, privateLeague._365_GameWeakIdValue, jobId))
+                            : BackgroundJob.Enqueue(() => UpdatePrivateLeaguesRanking(fk_Season, privateLeague.Id, privateLeague._365_GameWeakIdValue, jobId));
+                }
+            }
+        }
+
+        public string UpdatePrivateLeaguesRanking(int fk_Season, int fk_PrivateLeague, int _365_GameWeakIdValue, string jobId)
         {
             int ranking = 1;
 
-            var accountTeams = _unitOfWork.AccountTeam.GetAccountTeams(new AccountTeamParameters
-            {
-                Fk_Season = fk_Season,
-                Fk_PrivateLeague = fk_PrivateLeague
-            }, otherLang: false)
-                .OrderByDescending(a => a.TotalPoints)
-                .Select(a => new
-                {
-                    a.Fk_Account,
-                })
-                .ToList();
+            var accountTeams = _unitOfWork.AccountTeam.GetPrivateLeaguesPoints(fk_Season, fk_PrivateLeague, _365_GameWeakIdValue);
 
             foreach (var accountTeam in accountTeams)
             {
@@ -63,7 +68,8 @@ namespace FantasyLogic.Calculations
                 {
                     Fk_Account = accountTeam.Fk_Account,
                     Fk_PrivateLeague = fk_PrivateLeague,
-                    Ranking = ranking++
+                    Ranking = ranking++,
+                    Points = accountTeam.TotalPoints
                 });
             }
 

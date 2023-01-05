@@ -47,7 +47,7 @@ namespace API.Areas.PaymentArea.Controllers
 
             if (prevSubscription != null && !prevSubscription.IsValid)
             {
-                throw new Exception("لقد حصلت بالفعل على هذا الاشتراك في هذا الموسم!");
+                throw new Exception("You already got that subscription for this season!");
             }
 
             //if (model.Fk_Subscription == (int)SubscriptionEnum.All)
@@ -90,12 +90,12 @@ namespace API.Areas.PaymentArea.Controllers
 
             if (auth.PhoneNumber.IsEmpty())
             {
-                throw new Exception("من فضلك أضف رقم الهاتف فى حسابك");
+                throw new Exception("Please add the phone number to your account!");
             }
 
             if (auth.EmailAddress.IsEmpty())
             {
-                throw new Exception("يرجى إضافة عنوان بريد إلكتروني فى حسابك");
+                throw new Exception("Please add an email address to your account!");
             }
 
             if (model.PyamentType == PyamentTypeEnum.Wallet && model.WalletIdentifier.IsEmpty())

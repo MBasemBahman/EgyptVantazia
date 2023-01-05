@@ -1248,4 +1248,7 @@
   <data name="ShowPayment" xml:space="preserve">
     <value>إظهار المدفوعات</value>
   </data>
+  <data name="IsCanNotEdit" xml:space="preserve">
+    <value>غير متاح تعديله</value>
+  </data>
 </root>

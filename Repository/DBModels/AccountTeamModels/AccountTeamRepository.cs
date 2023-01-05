@@ -53,6 +53,23 @@ namespace Repository.DBModels.AccountTeamModels
 
             base.Create(entity);
         }
+
+        public List<AccountTeamModel> GetPrivateLeaguesPoints(int fk_Season, int fk_PrivateLeague, int _365_GameWeakIdValue)
+        {
+            return FindByCondition(a => a.Fk_Season == fk_Season &&
+                                        a.Account.PrivateLeagueMembers.Any(b => b.Fk_PrivateLeague == fk_PrivateLeague) &&
+                                        a.AccountTeamGameWeaks.Any(b => b.GameWeak._365_GameWeakIdValue >= _365_GameWeakIdValue), trackChanges: false)
+                   .Select(a => new AccountTeamModel
+                   {
+                       Fk_Account = a.Fk_Account,
+                       TotalPoints = a.AccountTeamGameWeaks
+                                      .Where(b => b.GameWeak._365_GameWeakIdValue >= _365_GameWeakIdValue)
+                                      .Select(b => b.TotalPoints ?? 0)
+                                      .Sum()
+                   })
+                   .OrderByDescending(a => a.TotalPoints)
+                   .ToList();
+        }
     }
 
     public static class AccountTeamRepositoryExtension
@@ -87,10 +104,10 @@ namespace Repository.DBModels.AccountTeamModels
                                             a.Season.Name.Contains(dashboardSearch) ||
                                             a.Name.Contains(dashboardSearch)) &&
 
-                                           (Fk_GameWeak == 0 || a.AccountTeamGameWeaks.Any(a => a.Fk_GameWeak == Fk_GameWeak) ) &&
+                                           (Fk_GameWeak == 0 || a.AccountTeamGameWeaks.Any(a => a.Fk_GameWeak == Fk_GameWeak)) &&
                                            (pointsFrom == null || a.TotalPoints >= pointsFrom) &&
                                            (pointsTo == null || a.TotalPoints <= pointsTo) &&
-                                           
+
                                            (CurrentSeason == null || a.Season.IsCurrent == CurrentSeason) &&
                                            (FromTotalPoints == null || a.TotalPoints >= FromTotalPoints) &&
                                            (FromGlobalRanking == null || a.GlobalRanking >= FromGlobalRanking) &&

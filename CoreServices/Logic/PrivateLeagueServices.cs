@@ -41,6 +41,7 @@ namespace CoreServices.Logic
                                Name = otherLang ? a.GameWeak.GameWeakLang.Name : a.GameWeak.Name,
                                _365_GameWeakId = a.GameWeak._365_GameWeakId,
                                Fk_Season = a.GameWeak.Fk_Season,
+                               _365_GameWeakIdValue = a.GameWeak._365_GameWeakIdValue,
                                Season = new SeasonModel
                                {
                                    Name = otherLang ? a.GameWeak.Season.SeasonLang.Name : a.GameWeak.Season.Name
@@ -120,7 +121,7 @@ namespace CoreServices.Logic
                                                           Name = b.Name,
                                                           IsVip = b.IsVip,
                                                           TotalMoney = b.TotalMoney,
-                                                          TotalPoints = b.TotalPoints,
+                                                          TotalPoints = /*b.TotalPoints*/ a.Points ?? 0,
                                                           ImageUrl = b.StorageUrl + b.ImageUrl,
                                                           CountryRanking = b.CountryRanking,
                                                           GlobalRanking = b.GlobalRanking,

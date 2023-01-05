@@ -5,6 +5,7 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 {
     public class AccountTeamGameWeakParameters : RequestParameters
     {
+        public int Fk_PrivateLeague { get; set; }
         public int Fk_AccountTeam { get; set; }
 
         public int Fk_GameWeak { get; set; }

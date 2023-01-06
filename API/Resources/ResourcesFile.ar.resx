@@ -171,8 +171,26 @@
   <data name="The players must be distinct!" xml:space="preserve">
     <value>يجب أن يكون اللاعبون مختلفين!</value>
   </data>
+  <data name="The team must have 1 goalkeeper on the pitch!" xml:space="preserve">
+    <value>يجب أن يكون لدى الفريق حارس مرمى واحد على أرض الملعب!</value>
+  </data>
+  <data name="The team must have 11 players on the pitch!" xml:space="preserve">
+    <value>يجب أن يكون لدى الفريق 11 لاعباً على أرض الملعب!</value>
+  </data>
   <data name="The team must have 15 players!" xml:space="preserve">
     <value>يجب أن يضم الفريق 15 لاعبًا!</value>
+  </data>
+  <data name="The team must have 4 players on the bench!" xml:space="preserve">
+    <value>يجب أن يكون لدى الفريق 4 لاعبين على مقاعد البدلاء!</value>
+  </data>
+  <data name="The team must have at least 1 attacker on the pitch!" xml:space="preserve">
+    <value>يجب أن يكون لدى الفريق مهاجم واحد على الأقل في الملعب!</value>
+  </data>
+  <data name="The team must have at least 3 defenders on the pitch!" xml:space="preserve">
+    <value>يجب أن يكون لدى الفريق 3 مدافعين على الأقل على أرض الملعب!</value>
+  </data>
+  <data name="The team must have max 2 defenders on the bench!" xml:space="preserve">
+    <value>يجب أن يكون لدى الفريق مدافعين كحد أقصى على مقاعد البدلاء!</value>
   </data>
   <data name="The transfer is not successful. The number of players sold is not the same as the number of players bought!" xml:space="preserve">
     <value>النقل غير ناجح. عدد اللاعبين المباعين يختلف عن عدد اللاعبين الذين تم شراؤهم!</value>

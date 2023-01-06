@@ -60,6 +60,8 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         public int Fk_TeamPlayerType { get; set; }
 
+        public int Fk_PlayerPosition { get; set; }
+
         public int Fk_Player { get; set; }
 
         public int Order { get; set; }
@@ -71,8 +73,19 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         public int Fk_TeamPlayerType { get; set; }
 
+        public int Fk_PlayerPosition { get; set; }
+
         public int Fk_AccountTeamPlayer { get; set; }
 
         public int Order { get; set; }
+    }
+
+    public class AccountTeamCheckStructureModel
+    {
+        public bool IsPrimary { get; set; }
+
+        public int Fk_TeamPlayerType { get; set; }
+
+        public int Fk_PlayerPosition { get; set; }
     }
 }

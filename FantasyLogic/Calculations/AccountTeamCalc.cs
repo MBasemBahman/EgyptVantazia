@@ -249,6 +249,8 @@ namespace FantasyLogic.Calculations
                 {
                     havePointsInTotal = false;
 
+                    AccountTeamPlayersCalculationPoints changedPlayer = null;
+
                     if (player.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper)
                     {
                         havePointsInTotal = playersFinalPoints.Any(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper &&
@@ -257,6 +259,11 @@ namespace FantasyLogic.Calculations
                                                                          a.IsParticipate == false);
                         if (havePointsInTotal)
                         {
+                            changedPlayer = playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper &&
+                                                          a.IsPrimary &&
+                                                          a.HavePointsInTotal &&
+                                                          a.IsParticipate == false);
+
                             playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper &&
                                                           a.IsPrimary &&
                                                           a.HavePointsInTotal &&
@@ -272,6 +279,11 @@ namespace FantasyLogic.Calculations
 
                         if (havePointsInTotal)
                         {
+                            changedPlayer = playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Attacker &&
+                                                          a.IsPrimary &&
+                                                          a.HavePointsInTotal &&
+                                                          a.IsParticipate == false);
+
                             playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Attacker &&
                                                           a.IsPrimary &&
                                                           a.HavePointsInTotal &&
@@ -287,6 +299,12 @@ namespace FantasyLogic.Calculations
 
                             if (havePointsInTotal)
                             {
+
+                                changedPlayer = playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Midfielder &&
+                                                              a.IsPrimary &&
+                                                              a.HavePointsInTotal &&
+                                                              a.IsParticipate == false);
+
                                 playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Midfielder &&
                                                               a.IsPrimary &&
                                                               a.HavePointsInTotal &&
@@ -305,6 +323,11 @@ namespace FantasyLogic.Calculations
 
                             if (havePointsInTotal)
                             {
+                                changedPlayer = playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Defender &&
+                                                              a.IsPrimary &&
+                                                              a.HavePointsInTotal &&
+                                                              a.IsParticipate == false);
+
                                 playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Defender &&
                                                               a.IsPrimary &&
                                                               a.HavePointsInTotal &&
@@ -321,6 +344,11 @@ namespace FantasyLogic.Calculations
 
                         if (havePointsInTotal)
                         {
+
+                            changedPlayer = playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Midfielder &&
+                                                          a.IsPrimary &&
+                                                          a.HavePointsInTotal &&
+                                                          a.IsParticipate == false);
                             playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Midfielder &&
                                                           a.IsPrimary &&
                                                           a.HavePointsInTotal &&
@@ -338,6 +366,11 @@ namespace FantasyLogic.Calculations
 
                             if (havePointsInTotal)
                             {
+                                changedPlayer = playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Attacker &&
+                                                              a.IsPrimary &&
+                                                              a.HavePointsInTotal &&
+                                                              a.IsParticipate == false);
+
                                 playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Attacker &&
                                                               a.IsPrimary &&
                                                               a.HavePointsInTotal &&
@@ -356,6 +389,11 @@ namespace FantasyLogic.Calculations
 
                             if (havePointsInTotal)
                             {
+                                changedPlayer = playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Defender &&
+                                                              a.IsPrimary &&
+                                                              a.HavePointsInTotal &&
+                                                              a.IsParticipate == false);
+
                                 playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Defender &&
                                                               a.IsPrimary &&
                                                               a.HavePointsInTotal &&
@@ -372,6 +410,11 @@ namespace FantasyLogic.Calculations
 
                         if (havePointsInTotal)
                         {
+                            changedPlayer = playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Defender &&
+                                                          a.IsPrimary &&
+                                                          a.HavePointsInTotal &&
+                                                          a.IsParticipate == false);
+
                             playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Defender &&
                                                           a.IsPrimary &&
                                                           a.HavePointsInTotal &&
@@ -388,6 +431,12 @@ namespace FantasyLogic.Calculations
 
                             if (havePointsInTotal)
                             {
+
+                                changedPlayer = playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Midfielder &&
+                                                              a.IsPrimary &&
+                                                              a.HavePointsInTotal &&
+                                                              a.IsParticipate == false);
+
                                 playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Midfielder &&
                                                               a.IsPrimary &&
                                                               a.HavePointsInTotal &&
@@ -406,6 +455,11 @@ namespace FantasyLogic.Calculations
 
                             if (havePointsInTotal)
                             {
+                                changedPlayer = playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Attacker &&
+                                                              a.IsPrimary &&
+                                                              a.HavePointsInTotal &&
+                                                              a.IsParticipate == false);
+
                                 playersFinalPoints.First(a => a.Fk_PlayerPosition == (int)PlayerPositionEnum.Attacker &&
                                                               a.IsPrimary &&
                                                               a.HavePointsInTotal &&
@@ -452,7 +506,7 @@ namespace FantasyLogic.Calculations
                     Fk_AccountTeamPlayer = playersFinalPoint.Fk_AccountTeamPlayer,
                     Fk_TeamPlayerType = playersFinalPoint.Fk_TeamPlayerType,
                     Order = playersFinalPoint.Order,
-                    
+
                     IsPrimary = playersFinalPoint.IsPrimary,
                     Points = (int)playersFinalPoint.Points,
                     HavePoints = true,
@@ -472,14 +526,13 @@ namespace FantasyLogic.Calculations
                 .Select(a => a.TotalPoints ?? 0)
                 .FirstOrDefault();
 
+            if (accountTeamGameWeak.DoubleGameWeak)
+            {
+                totalPoints *= 2;
+            }
 
             accountTeamGameWeak.TotalPoints = (int)totalPoints + accountTeamGameWeak.TansfarePoints;
             accountTeamGameWeak.BenchPoints = (int)benchPoints;
-
-            if (accountTeamGameWeak.DoubleGameWeak)
-            {
-                accountTeamGameWeak.TotalPoints *= 2;
-            }
 
             accountTeamGameWeak.PrevPoints = prevPoints;
 

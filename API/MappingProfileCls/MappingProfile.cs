@@ -49,6 +49,10 @@ namespace API.MappingProfileCls
 
             _ = CreateMap<AccountEditModel, Account>();
 
+            _ = CreateMap<AccountTeamPlayerUpdateModel, AccountTeamCheckStructureModel>();
+            _ = CreateMap<AccountTeamPlayerCreateModel, AccountTeamCheckStructureModel>();
+
+
             #endregion
 
             #region UserModels

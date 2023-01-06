@@ -1251,4 +1251,10 @@
   <data name="IsCanNotEdit" xml:space="preserve">
     <value>غير متاح تعديله</value>
   </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>الاحصائيات</value>
+  </data>
+  <data name="Add statistics" xml:space="preserve">
+    <value>اضف احصائيات</value>
+  </data>
 </root>

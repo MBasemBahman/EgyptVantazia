@@ -1227,4 +1227,10 @@
   <data name="IsCanNotEdit" xml:space="preserve">
     <value>It can't be modified</value>
   </data>
+  <data name="Statistics" xml:space="preserve">
+    <value>Statistics</value>
+  </data>
+  <data name="Add statistics" xml:space="preserve">
+    <value>Add Statistics</value>
+  </data>
 </root>

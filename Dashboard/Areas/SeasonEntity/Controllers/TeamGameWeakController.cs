@@ -74,6 +74,27 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
 
             return Json(dataTableManager.ReturnTable(dataTableResult));
         }
+        
+        [HttpGet]
+        public IActionResult AddScore(int fk_Team, int fk_PlayerGameWeak)
+        {
+            PlayerGameWeakScoreDto model = new PlayerGameWeakScoreDto
+            {
+                Fk_PlayerGameWeak = fk_PlayerGameWeak,
+                Fk_Team = fk_Team
+            };
+
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            ViewData["ScoreType"] = _unitOfWork.PlayerScore.GetScoreTypesLookUp(new ScoreTypeParameters(), otherLang);
+
+            return View(model);
+        }
+        
+        [HttpPost]
+        public IActionResult AddScore(PlayerGameWeakScoreDto playerGameWeakScoreDto)
+        {
+            return NoContent();
+        }
 
         public IActionResult ScoreDetails(int fk_Player, int fk_TeamGameWeak)
         {

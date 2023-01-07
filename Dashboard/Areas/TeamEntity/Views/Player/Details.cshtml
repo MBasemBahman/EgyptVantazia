@@ -47,33 +47,37 @@
             </div>
         </div>
         
+        <hr/>
+        
         <div class="card-body">
+            <a class="btn btn-primary update_account_team_points">@Localizer.Get("UpdateGameTeamPoints")</a>
+            <hr/>
             <div class="d-flex justify-content-between align-items-start">
                 <span class="badge bg-light-primary">@Html.DisplayNameFor(model => Model.PlayerPrices)</span>
             </div>
-            <br />
+            <br/>
 
             @if (Model.PlayerPrices != null && Model.PlayerPrices.Any())
             {
                 <table class="table">
                     <thead>
-                        <tr>
-                         <th>@Html.DisplayNameFor(model => playerPrice.Team)</th>
-                            <th>@Html.DisplayNameFor(model => playerPrice.BuyPrice)</th>
-                            <th>@Html.DisplayNameFor(model => playerPrice.SellPrice)</th>
-                        </tr>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => playerPrice.Team)</th>
+                        <th>@Html.DisplayNameFor(model => playerPrice.BuyPrice)</th>
+                        <th>@Html.DisplayNameFor(model => playerPrice.SellPrice)</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.PlayerPrices)
-                        {
-                            <tr>
-                                <td>
-                                    <a href="/TeamEntity/Team/Profile/@item.Fk_Team" target="_blank">@item.Team.Name</a>
-                                </td>
-                                <td>@item.BuyPrice</td>
-                                <td>@item.SellPrice</td>
-                            </tr>
-                        }
+                    @foreach (var item in Model.PlayerPrices)
+                    {
+                        <tr>
+                            <td>
+                                <a href="/TeamEntity/Team/Profile/@item.Fk_Team" target="_blank">@item.Team.Name</a>
+                            </td>
+                            <td>@item.BuyPrice</td>
+                            <td>@item.SellPrice</td>
+                        </tr>
+                    }
                     </tbody>
                 </table>
             }
@@ -153,3 +157,31 @@
       
     </div>
 </div>
+
+<partial name="_PlayerModals" view-data="ViewData" />
+
+@section scripts
+{
+    <script>
+        // start update_account_team_points
+        $(document).on("click", ".update_account_team_points", function(e) {
+          e.preventDefault();
+          
+          $(".update_account_team_points_modal").modal('show');
+        });
+        
+        $(document).on("click", ".update_account_team_points_submit", function (e) {
+            $.ajax({
+                url: '@Url.ActionLink("UpdateAccountTeamPoints", "Home", new {area = "Dashboard"})',
+                method: 'post',
+                data: {
+                  fk_TeamGameWeak: '@Model.Id',
+                },
+                success: function(data) {
+                  $("#success").modal('show');
+                }
+            }); 
+        });
+        // end update_account_team_points
+    </script>
+}

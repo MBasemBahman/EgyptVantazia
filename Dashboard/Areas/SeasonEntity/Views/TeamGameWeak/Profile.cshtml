@@ -113,52 +113,54 @@
                         <hr />
 
                         <div class="card-body" style="overflow-x: auto">
+                            <a class="btn btn-primary update_game_result">@Localizer.Get("UpdateGameResult")</a>
+                            <hr>
                             <div class="d-flex justify-content-between align-items-start">
                                 <span class="badge bg-light-primary">@Html.DisplayNameFor(model => Model.HomeTeamPlayers)</span>
                             </div>
-                            <br />
+                            <br/>
 
                             @if (Model.HomeTeamPlayers != null && Model.HomeTeamPlayers.Any())
                             {
                                 <table class="table">
                                     <thead>
-                                        <tr>
-                                            <th>@Localizer.Get("Name")</th>
-                                            <th>@Localizer.Get("Ranking")</th>
-                                            <th>@Localizer.Get("TotalPoints")</th>
-                                            <th>@Localizer.Get("PlayerGameWeakScore")</th>
-                                            <th>@Localizer.Get("Statistics")</th>
-                                            <th>@Localizer.Get("PlayerGameWeakScoreState")</th>
-                                        </tr>
+                                    <tr>
+                                        <th>@Localizer.Get("Name")</th>
+                                        <th>@Localizer.Get("Ranking")</th>
+                                        <th>@Localizer.Get("TotalPoints")</th>
+                                        <th>@Localizer.Get("PlayerGameWeakScore")</th>
+                                        <th>@Localizer.Get("Statistics")</th>
+                                        <th>@Localizer.Get("PlayerGameWeakScoreState")</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var item in Model.HomeTeamPlayers)
-                                        {
-                                            <tr>
-                                                <td>
-                                                    <a href="/TeamEntity/Player/Profile?id=@item.Player.Id" target="_blank">
-                                                        @item.Player.Name
-                                                    </a>
-                                                </td>
-                                                <td>@item.Ranking</td>
-                                                <td>@item.TotalPoints</td>
-                                                <td>
-                                                    <a class="modalbtn" href="/SeasonEntity/TeamGameWeak/ScoreDetails?fk_Player=@item.Player.Id&fk_TeamGameWeak=@Model.Id">
-                                                        @Localizer.Get("Click to View")
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <a class="modalbtn" href="/SeasonEntity/TeamGameWeak/AddScore?fk_Team=@Model.Fk_Home&fk_PlayerGameWeak=@Model.Id">
-                                                        @Localizer.Get("Add statistics")
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <a class="modalbtn" href="/SeasonEntity/TeamGameWeak/ScoreStateDetails?fk_Player=@item.Player.Id&fk_GameWeak=@Model.Fk_GameWeak">
-                                                        @Localizer.Get("Click to View")
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        }
+                                    @foreach (var item in Model.HomeTeamPlayers)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <a href="/TeamEntity/Player/Profile?id=@item.Player.Id" target="_blank">
+                                                    @item.Player.Name
+                                                </a>
+                                            </td>
+                                            <td>@item.Ranking</td>
+                                            <td>@item.TotalPoints</td>
+                                            <td>
+                                                <a class="modalbtn" href="/SeasonEntity/TeamGameWeak/ScoreDetails?fk_Player=@item.Player.Id&fk_TeamGameWeak=@Model.Id">
+                                                    @Localizer.Get("Click to View")
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a class="modalbtn" href="/SeasonEntity/TeamGameWeak/AddScore?fk_Team=@Model.Fk_Home&fk_PlayerGameWeak=@Model.Id">
+                                                    @Localizer.Get("Add statistics")
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a class="modalbtn" href="/SeasonEntity/TeamGameWeak/ScoreStateDetails?fk_Player=@item.Player.Id&fk_GameWeak=@Model.Fk_GameWeak">
+                                                    @Localizer.Get("Click to View")
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
                                     </tbody>
                                 </table>
                             }
@@ -258,7 +260,7 @@
     </div>
 </div>
 
-
+<partial name="_TeamGameWeakModals" view-data="ViewData" />
 
 @section scripts{
     <script>
@@ -289,6 +291,53 @@
             $('.form-content').load(href);
             $("#Modal").modal("show");
         });
+        
+        // start update_game_result
+        $(document).on("click", ".update_game_result", function(e) {
+          e.preventDefault();
+          
+          $(".update_game_result_modal").modal('show');
+        });
+        
+        $(document).on("click", ".update_game_result_submit", function (e) {
+            let _365_MatchId = $("input[name=_365_MatchId]").val();
+            let runBonus = $("select[name=RunBonus]").val();
+            
+            $.ajax({
+                url: '@Url.ActionLink("UpdateGameResult", "Home", new {area = "Dashboard"})',
+                method: 'post',
+                data: {
+                  fk_TeamGameWeak: '@Model.Id',
+                  _365_MatchId: _365_MatchId,
+                  runBonus: runBonus
+                },
+                success: function(data) {
+                  $("#success").modal('show');
+                }
+            }); 
+        });
+        // end update_game_result
+        
+        // start update_account_team_points
+        $(document).on("click", ".update_account_team_points", function(e) {
+          e.preventDefault();
+          
+          $(".update_account_team_points_modal").modal('show');
+        });
+        
+        $(document).on("click", ".update_account_team_points_submit", function (e) {
+            $.ajax({
+                url: '@Url.ActionLink("UpdateAccountTeamPoints", "Home", new {area = "Dashboard"})',
+                method: 'post',
+                data: {
+                  fk_Player: '@Model.Id',
+                },
+                success: function(data) {
+                  $("#success").modal('show');
+                }
+            }); 
+        });
+        // end update_account_team_points
     </script>
 
 }

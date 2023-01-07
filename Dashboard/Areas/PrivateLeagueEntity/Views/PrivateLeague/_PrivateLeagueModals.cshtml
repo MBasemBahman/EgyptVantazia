@@ -1,0 +1,33 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Entities.CoreServicesModels.SeasonModels
+@{
+    GameWeakModel current = (GameWeakModel)ViewData["CurrentGameWeak"];
+}
+
+<div class="modal fade text-start text-center update_private_league_ranking_modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalScrollableTitle">@Localizer.Get("UpdatePrivateLeagueRanking")</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12 col-12">
+
+                        <div asp-validation-summary="All" class="text-danger">@ViewData["Error"]</div>
+                        <div class="row mb-1">
+                            <input type="hidden" name="FK_PrivateLeague" value="0" />
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary me-1 update_private_league_ranking_submit" data-bs-dismiss="modal">@Localizer.Get("Submit")</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

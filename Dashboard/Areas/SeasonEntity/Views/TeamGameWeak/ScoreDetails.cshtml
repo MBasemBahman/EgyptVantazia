@@ -24,6 +24,7 @@
                             <th>@Localizer.Get("GameTime")</th>
                             <th>@Localizer.Get("IsOut")</th>
                             <th>@Localizer.Get("IsCanNotEdit")</th>
+                            <th>@Localizer.Get("Delete")</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,6 +38,11 @@
                                 <td>@playerScore.GameTime</td>
                                 <td>@(playerScore.IsOut == true? @Localizer.Get("Yes") : @Localizer.Get(""))</td>
                                 <td>@(playerScore.IsCanNotEdit == true? @Localizer.Get("Yes") : @Localizer.Get(""))</td>
+                                <td>
+                                    <a class="btn btn-danger delete_player_score" data-id="@playerScore.Id">
+                                        @Localizer.Get("Delete")
+                                    </a>
+                                </td>
                             </tr>
                         }
                     </tbody>
@@ -52,3 +58,22 @@
   
 </div>
 
+@section scripts
+{
+    <script>
+        $(document).on("click", ".delete_player_score", function() {
+          if (confirm("are you sure ?")) {
+            let id = $(this).data('id');
+                        
+            $.ajax({
+              url: "@Url.ActionLink("Delete", "PlayerGameWeakScore", new { area = "PlayerScoreEntity" })",
+              method: "post",
+              data: {id: id},
+              success: function() {
+                $("#success").modal('show');
+              }
+            });
+          }
+        });
+    </script>
+}

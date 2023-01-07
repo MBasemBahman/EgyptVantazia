@@ -151,7 +151,7 @@ namespace Dashboard.Areas.Dashboard.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateGameResult(int fk_GameWeak, int _365_MatchId, bool runBonus)
+        public IActionResult UpdateGameResult(int fk_GameWeak, int _365_MatchId, bool runBonus, int fk_TeamGameWeak)
         {
             return NoContent();
         }
@@ -169,7 +169,8 @@ namespace Dashboard.Areas.Dashboard.Controllers
         }
         
         [HttpPost]
-        public IActionResult UpdateAccountTeamPoints(int fk_GameWeak)
+        public IActionResult UpdateAccountTeamPoints(int fk_GameWeak, int fk_AccountTeamGameWeak, 
+            int fk_Player, int fk_TeamGameWeak)
         {
             return NoContent();
         }

@@ -1,4 +1,5 @@
 ﻿using Entities.CoreServicesModels.PlayerScoreModels;
+using Entities.DBModels.PlayerScoreModels;
 using System.ComponentModel;
 
 namespace Dashboard.Areas.PlayerScoreEntity.Models
@@ -37,5 +38,23 @@ namespace Dashboard.Areas.PlayerScoreEntity.Models
 
         [DisplayName(nameof(ScoreType))]
         public new ScoreTypeDto ScoreType { get; set; }
+    }
+
+    public class PlayerGameWeakScoreCreateDto
+    {
+        [DisplayName(nameof(Fk_PlayerGameWeak))]
+        public int Fk_PlayerGameWeak { get; set; }
+
+        [DisplayName(nameof(ScoreType))]
+        public int Fk_ScoreType { get; set; }
+
+        [DisplayName(nameof(FinalValue))]
+        public int FinalValue { get; set; }
+
+        [DisplayName(nameof(GameTime))]
+        public double GameTime { get; set; }
+
+        [DisplayName(nameof(Points))]
+        public int Points { get; set; }
     }
 }

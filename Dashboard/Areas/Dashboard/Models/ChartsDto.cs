@@ -55,6 +55,6 @@
     {
         public string label { get; set; }
         public decimal value { get; set; }
-        public int Id { get; set; }
+        public string Id { get; set; }
     }
 }

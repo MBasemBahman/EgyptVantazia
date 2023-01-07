@@ -55,6 +55,10 @@ namespace CoreServices.Logic
 
         public Dictionary<string, string> GetScoreTypesLookUp(ScoreTypeParameters parameters, bool otherLang)
         {
+            if (parameters.IncludeTypeName)
+            {
+                return GetScoreTypes(parameters, otherLang).ToDictionary(a => a.Id.ToString(), a => a.IsEvent ? $"{a.Name} (حدث)" : $"{a.Name} (قيمة)");
+            }
             return GetScoreTypes(parameters, otherLang).ToDictionary(a => a.Id.ToString(), a => a.Name);
         }
         public void CreateScoreType(ScoreType ScoreType)

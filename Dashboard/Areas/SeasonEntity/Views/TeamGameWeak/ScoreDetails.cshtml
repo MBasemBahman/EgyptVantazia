@@ -22,7 +22,9 @@
                             <th>@Localizer.Get("FinalValue")</th>
                             <th>@Localizer.Get("Points")</th>
                             <th>@Localizer.Get("GameTime")</th>
-                         </tr>
+                            <th>@Localizer.Get("IsOut")</th>
+                            <th>@Localizer.Get("IsCanNotEdit")</th>
+                        </tr>
                     </thead>
                     <tbody>
                         @foreach (var playerScore in Model)
@@ -33,6 +35,8 @@
                                 <td>@playerScore.FinalValue</td>
                                 <td>@playerScore.Points</td>
                                 <td>@playerScore.GameTime</td>
+                                <td>@(playerScore.IsOut == true? @Localizer.Get("Yes") : @Localizer.Get(""))</td>
+                                <td>@(playerScore.IsCanNotEdit == true? @Localizer.Get("Yes") : @Localizer.Get(""))</td>
                             </tr>
                         }
                     </tbody>

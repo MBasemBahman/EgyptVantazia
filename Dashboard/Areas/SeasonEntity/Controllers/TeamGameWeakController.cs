@@ -5,6 +5,7 @@ using Entities.CoreServicesModels.PlayerScoreModels;
 using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
+using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.SeasonModels;
 using Entities.RequestFeatures;
 
@@ -74,26 +75,44 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
 
             return Json(dataTableManager.ReturnTable(dataTableResult));
         }
-        
+
         [HttpGet]
         public IActionResult AddScore(int fk_Team, int fk_PlayerGameWeak)
         {
-            PlayerGameWeakScoreDto model = new PlayerGameWeakScoreDto
+            PlayerGameWeakScoreDto model = new()
             {
                 Fk_PlayerGameWeak = fk_PlayerGameWeak,
                 Fk_Team = fk_Team
             };
 
-            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
-            ViewData["ScoreType"] = _unitOfWork.PlayerScore.GetScoreTypesLookUp(new ScoreTypeParameters(), otherLang);
+            PlayerGameWeakScoreCreateDto resultDto = _mapper.Map<PlayerGameWeakScoreCreateDto>(model);
 
-            return View(model);
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            ViewData["ScoreType"] = _unitOfWork.PlayerScore.GetScoreTypesLookUp(new ScoreTypeParameters { HavePoints = true, IncludeTypeName = true }, otherLang);
+
+            return View(resultDto);
         }
-        
+
         [HttpPost]
-        public IActionResult AddScore(PlayerGameWeakScoreDto playerGameWeakScoreDto)
+        public IActionResult AddScore(PlayerGameWeakScoreCreateDto model)
         {
-            return NoContent();
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            _unitOfWork.PlayerScore.CreatePlayerGameWeakScore(new PlayerGameWeakScore
+            {
+                Fk_PlayerGameWeak = model.Fk_PlayerGameWeak,
+                Fk_ScoreType = model.Fk_ScoreType,
+                FinalValue = model.FinalValue,
+                Value = model.FinalValue.ToString(),
+                GameTime = model.GameTime,
+                IsCanNotEdit = true,
+                IsOut = model.Fk_ScoreType == (int)ScoreTypeEnum.Substitution_Event ? true : null,
+                Points = model.Points,
+                CreatedBy = auth.UserName
+            });
+            //_unitOfWork.Save().Wait();
+
+            return Ok();
         }
 
         public IActionResult ScoreDetails(int fk_Player, int fk_TeamGameWeak)
@@ -239,6 +258,12 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
+        public IActionResult UpdateGameResult(string _365_MatchId)
+        {
+            return View();
+        }
+
         // helper methods
         private void SetViewData(int returnPage, int id, int fk_Season, bool otherLang)
         {
@@ -250,10 +275,6 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
             }, otherLang);
             ViewData["Season"] = _unitOfWork.Season.GetSeasonLookUp(new SeasonParameters(), otherLang);
             ViewData["Team"] = _unitOfWork.Team.GetTeamLookUp(new TeamParameters(), otherLang);
-
-
         }
-
-
     }
 }

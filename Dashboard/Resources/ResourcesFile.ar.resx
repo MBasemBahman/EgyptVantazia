@@ -1257,4 +1257,13 @@
   <data name="Add statistics" xml:space="preserve">
     <value>اضف احصائيات</value>
   </data>
+  <data name="IsOut" xml:space="preserve">
+    <value>خروج من الملعب</value>
+  </data>
+  <data name="Update Games" xml:space="preserve">
+    <value>تحديث جدول الدوري</value>
+  </data>
+  <data name="Update Standings" xml:space="preserve">
+    <value>تحديث ترتيب الأندية</value>
+  </data>
 </root>

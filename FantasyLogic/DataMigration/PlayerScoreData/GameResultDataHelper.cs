@@ -72,6 +72,10 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 {
                     UpdateGameResult(teamGameWeak, scoreTypes, runBonus, inDebug, runAll).Wait();
                 }
+                if (runAll)
+                {
+                    _ = BackgroundJob.Enqueue(() => UpdateGameResult(teamGameWeak, scoreTypes, runBonus, inDebug, runAll));
+                }
                 else
                 {
                     if (runAll || teamGameWeak.EndTime > DateTime.UtcNow.ToEgypt())

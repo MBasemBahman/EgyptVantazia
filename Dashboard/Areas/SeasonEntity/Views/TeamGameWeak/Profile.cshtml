@@ -3,10 +3,10 @@
     ViewData["Title"] = $"{Localizer.Get("TeamGameWeak Profile")}";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.useModels = true;
-    
+
     var profileItem = new TeamGameWeak();
     int returnItem = ViewData["returnItem"] != null ? (int)ViewData["returnItem"] : (int)TeamGameWeakProfileItems.Details;
-    bool ltr = ViewData["otherLang"]!=null ? (bool)ViewData["otherLang"] : false;
+    bool ltr = ViewData["otherLang"] != null ? (bool)ViewData["otherLang"] : false;
     string views = (string)ContextAccessor.HttpContext.Request.Cookies[ViewDataConstants.Views];
 
     List<int> viewList = new List<int>();
@@ -15,12 +15,10 @@
     {
         viewList = views.Split(",").Select(Int32.Parse).ToList();
     }
-
-    
 }
 
 @section styles{
-<link rel="stylesheet" type="text/css" href="~/app-assets/css@(ltr?"":"-rtl")/pages/page-profile.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css@(ltr?"":"-rtl")/pages/page-profile.css">
 }
 
 <div class="app-content content">
@@ -49,7 +47,7 @@
         <div class="content-body">
 
             <div id="user-profile">
-                
+
                 <section id="profile-info">
                     <div class="row">
 
@@ -79,12 +77,6 @@
                                         <a href="/SeasonEntity/Season/Profile/@Model.GameWeak.Fk_Season" target="_blank">@Model.GameWeak.Season.Name</a>
                                     </dd>
 
-                                    @* <dt class="col-sm-4 mb-1"> *@
-                                    @*     <a href="/TeamEntity/Player/Index?Fk_Team=@Model.Fk_Home&Fk_GameWeak=@Model.Fk_GameWeak" target="_blank">@Localizer.Get("Home Players")</a> *@
-                                    @* </dt> *@
-                                    @* *@
-                                    @* <dd class="col-sm-8 mb-1"></dd> *@
-
                                     <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.HomeScore):</dt>
                                     <dd class="col-sm-8 mb-1">@Model.HomeScore</dd>
 
@@ -107,12 +99,6 @@
                                     <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.GameWeak):</dt>
                                     <dd class="col-sm-8 mb-1">@Model.GameWeak.Name</dd>
 
-                                    @* <dt class="col-sm-4 mb-1"> *@
-                                    @*     <a href="/TeamEntity/Player/Index?Fk_Team=@Model.Fk_Away" target="_blank">@Localizer.Get("Away Players")</a> *@
-                                    @* </dt> *@
-                                    @* *@
-                                    @* <dd class="col-sm-8 mb-1"></dd> *@
-                                    @* *@
                                     <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.AwayScore):</dt>
                                     <dd class="col-sm-8 mb-1">@Model.AwayScore</dd>
 
@@ -124,53 +110,55 @@
                             </div>
                         </div>
 
-                        <hr/>
+                        <hr />
 
                         <div class="card-body" style="overflow-x: auto">
                             <div class="d-flex justify-content-between align-items-start">
                                 <span class="badge bg-light-primary">@Html.DisplayNameFor(model => Model.HomeTeamPlayers)</span>
                             </div>
-                            <br/>
+                            <br />
 
                             @if (Model.HomeTeamPlayers != null && Model.HomeTeamPlayers.Any())
                             {
                                 <table class="table">
                                     <thead>
-                                    <tr>
-                                        <th>@Localizer.Get("Name")</th>
-                                        <th>@Localizer.Get("Ranking")</th>
-                                        <th>@Localizer.Get("TotalPoints")</th>
-                                        <th>@Localizer.Get("PlayerGameWeakScore")</th>
-                                        <th>@Localizer.Get("Statistics")</th>
-                                        <th>@Localizer.Get("PlayerGameWeakScoreState")</th>
-                                    </tr>
+                                        <tr>
+                                            <th>@Localizer.Get("Name")</th>
+                                            <th>@Localizer.Get("Ranking")</th>
+                                            <th>@Localizer.Get("TotalPoints")</th>
+                                            <th>@Localizer.Get("PlayerGameWeakScore")</th>
+                                            <th>@Localizer.Get("Statistics")</th>
+                                            <th>@Localizer.Get("PlayerGameWeakScoreState")</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach (var item in Model.HomeTeamPlayers)
-                                    {
-                                        <tr>
-                                            <td>
-                                                @item.Player.Name
-                                            </td>
-                                            <td>@item.Ranking</td>
-                                            <td>@item.TotalPoints</td>
-                                            <td>
-                                                <a class="modalbtn" href="/SeasonEntity/TeamGameWeak/ScoreDetails?fk_Player=@item.Player.Id&fk_TeamGameWeak=@Model.Id">
-                                                    @Localizer.Get("Click to View")
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a class="modalbtn" href="/SeasonEntity/TeamGameWeak/AddScore?fk_Team=@Model.Fk_Home&fk_PlayerGameWeak=@Model.Id">
-                                                    @Localizer.Get("Add statistics")
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a class="modalbtn" href="/SeasonEntity/TeamGameWeak/ScoreStateDetails?fk_Player=@item.Player.Id&fk_GameWeak=@Model.Fk_GameWeak">
-                                                    @Localizer.Get("Click to View")
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    }
+                                        @foreach (var item in Model.HomeTeamPlayers)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <a href="/TeamEntity/Player/Profile?id=@item.Player.Id" target="_blank">
+                                                        @item.Player.Name
+                                                    </a>
+                                                </td>
+                                                <td>@item.Ranking</td>
+                                                <td>@item.TotalPoints</td>
+                                                <td>
+                                                    <a class="modalbtn" href="/SeasonEntity/TeamGameWeak/ScoreDetails?fk_Player=@item.Player.Id&fk_TeamGameWeak=@Model.Id">
+                                                        @Localizer.Get("Click to View")
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="modalbtn" href="/SeasonEntity/TeamGameWeak/AddScore?fk_Team=@Model.Fk_Home&fk_PlayerGameWeak=@Model.Id">
+                                                        @Localizer.Get("Add statistics")
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="modalbtn" href="/SeasonEntity/TeamGameWeak/ScoreStateDetails?fk_Player=@item.Player.Id&fk_GameWeak=@Model.Fk_GameWeak">
+                                                        @Localizer.Get("Click to View")
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
                                     </tbody>
                                 </table>
                             }
@@ -180,43 +168,54 @@
 
                             }
                         </div>
-                        <hr/>
+                        <hr />
                         <div class="card-body" style="overflow-x: auto">
                             <div class="d-flex justify-content-between align-items-start">
                                 <span class="badge bg-light-primary">@Html.DisplayNameFor(model => Model.AwayTeamPlayers)</span>
                             </div>
-                            <br/>
+                            <br />
 
                             @if (Model.AwayTeamPlayers != null && Model.AwayTeamPlayers.Any())
                             {
                                 <table class="table">
                                     <thead>
-                                    <tr>
-                                        <th>@Localizer.Get("Name")</th>
-                                        <th>@Localizer.Get("Ranking")</th>
-                                        <th>@Localizer.Get("TotalPoints")</th>
-                                        <th>@Localizer.Get("PlayerGameWeakScoreState")</th>
-                                    </tr>
+                                        <tr>
+                                            <th>@Localizer.Get("Name")</th>
+                                            <th>@Localizer.Get("Ranking")</th>
+                                            <th>@Localizer.Get("TotalPoints")</th>
+                                            <th>@Localizer.Get("PlayerGameWeakScore")</th>
+                                            <th>@Localizer.Get("Statistics")</th>
+                                            <th>@Localizer.Get("PlayerGameWeakScoreState")</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach (var item in Model.AwayTeamPlayers)
-                                    {
-                                        <tr>
-
-                                            <td>
-                                                <a class="modalbtn" href="/SeasonEntity/TeamGameWeak/ScoreDetails?fk_Player=@item.Player.Id&fk_TeamGameWeak=@Model.Id">
-                                                    @item.Player.Name
-                                                </a>
-                                            </td>
-                                            <td>@item.Ranking</td>
-                                            <td>@item.TotalPoints</td>
-                                            <td>
-                                                <a class="modalbtn" href="/SeasonEntity/TeamGameWeak/ScoreStateDetails?fk_Player=@item.Player.Id&fk_GameWeak=@Model.Fk_GameWeak">
-                                                    @Localizer.Get("Click to View")
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    }
+                                        @foreach (var item in Model.AwayTeamPlayers)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <a href="/TeamEntity/Player/Profile?id=@item.Player.Id" target="_blank">
+                                                        @item.Player.Name
+                                                    </a>
+                                                </td>
+                                                <td>@item.Ranking</td>
+                                                <td>@item.TotalPoints</td>
+                                                <td>
+                                                    <a class="modalbtn" href="/SeasonEntity/TeamGameWeak/ScoreDetails?fk_Player=@item.Player.Id&fk_TeamGameWeak=@Model.Id">
+                                                        @Localizer.Get("Click to View")
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="modalbtn" href="/SeasonEntity/TeamGameWeak/AddScore?fk_Team=@Model.Fk_Home&fk_PlayerGameWeak=@Model.Id">
+                                                        @Localizer.Get("Add statistics")
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="modalbtn" href="/SeasonEntity/TeamGameWeak/ScoreStateDetails?fk_Player=@item.Player.Id&fk_GameWeak=@Model.Fk_GameWeak">
+                                                        @Localizer.Get("Click to View")
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
                                     </tbody>
                                 </table>
                             }
@@ -227,7 +226,7 @@
                             }
                         </div>
 
-                        <hr/>
+                        <hr />
                         <div class="row">
                             <div class="col-xl-7 col-12">
                                 <dl class="row mb-0">
@@ -262,34 +261,34 @@
 
 
 @section scripts{
-<script>
-    $(document).ready(function () {
-        $(".navigation navigation-main ul li .active").each(function () {
-            $(this).removeClass("active");
-        });
+    <script>
+        $(document).ready(function () {
+            $(".navigation navigation-main ul li .active").each(function () {
+                $(this).removeClass("active");
+            });
 
-        $("#d1").load($(".tab-item.active").eq(0).attr("id"));
+            $("#d1").load($(".tab-item.active").eq(0).attr("id"));
             $("#TeamGameWeakList").addClass("active");
 
-        $(".tab-item").each(function(){
-            $(this).on('click',function(){
-                $("#d1").load($(this).attr('id'));
-                $(".active").each(function(){
-                    $(this).removeClass("active");
-                });
-                $(this).addClass("active");
+            $(".tab-item").each(function () {
+                $(this).on('click', function () {
+                    $("#d1").load($(this).attr('id'));
+                    $(".active").each(function () {
+                        $(this).removeClass("active");
+                    });
+                    $(this).addClass("active");
                     $("#TeamGameWeakList").addClass("active");
-            });
-        })
+                });
+            })
 
         });
-    
-    $('body').on('click', '.modalbtn', function () {
-        event.preventDefault();
-        var href = $(this).attr('href');
-        $('.form-content').load(href);
-        $("#Modal").modal("show");
-    });
-</script>
+
+        $('body').on('click', '.modalbtn', function () {
+            event.preventDefault();
+            var href = $(this).attr('href');
+            $('.form-content').load(href);
+            $("#Modal").modal("show");
+        });
+    </script>
 
 }

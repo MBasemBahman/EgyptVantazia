@@ -404,11 +404,6 @@ namespace Dashboard.MappingProfileCls
             #endregion
 
 
-
-
-
-
-
             #region Account Team Game Weak
             _ = CreateMap<AccountTeamGameWeakModel, AccountTeamGameWeakDto>();
             #endregion
@@ -602,6 +597,12 @@ namespace Dashboard.MappingProfileCls
             _ = CreateMap<PlayerSeasonScoreStateFilter, PlayerSeasonScoreStateParameters>();
 
             #endregion
+
+            #endregion
+
+            #region ScoreStype
+
+            _ = CreateMap<PlayerGameWeakScoreDto, PlayerGameWeakScoreCreateDto>();
 
             #endregion
 

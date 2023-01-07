@@ -21,6 +21,8 @@ namespace Entities.CoreServicesModels.PlayerScoreModels
 
         [DisplayName(nameof(IsCanNotEdit))]
         public bool? IsCanNotEdit { get; set; }
+
+        public bool IncludeTypeName { get; set; }
     }
 
     public class ScoreTypeModel : AuditLookUpEntity

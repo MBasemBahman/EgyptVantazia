@@ -31,6 +31,8 @@ namespace Dashboard.Extensions
         {
             _ = services.AddScoped<IJwtUtils, JwtUtils>();
             _ = services.AddScoped<IAuthenticationManager, AuthenticationManager>();
+            _ = services.AddScoped<ServicesHttpClient, ServicesHttpClient>();
+            _ = services.AddScoped<UpdateResultsUtils, UpdateResultsUtils>();
         }
 
         public static void ConfigureSqlContext(this IServiceCollection services,

@@ -1,4 +1,4 @@
-﻿@model Dashboard.Areas.PlayerScoreEntity.Models.PlayerGameWeakScoreDto
+﻿@model Dashboard.Areas.PlayerScoreEntity.Models.PlayerGameWeakScoreCreateDto
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -9,49 +9,58 @@
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
-    
-        <div class="row">
+
+    <div class="row">
         <div class="col-xl-12 col-12">
-           
+
             <div asp-validation-summary="All" class="text-danger">@ViewData["Error"]</div>
             <div class="row mb-1">
-                    <div class="col-md-12 col-12">
-                        <div class="mb-1">
-                            <label asp-for="Fk_ScoreType" class="form-label"></label>
-                            <select asp-for="Fk_ScoreType" class="select2 form-select" asp-items="@(new SelectList(ViewData["ScoreType"] as Dictionary<string,string>,"Key","Value"))">
-                            </select>
-                            <span asp-validation-for="Fk_ScoreType" class="text-danger"></span>
-                        </div>
+                <div class="col-md-12 col-12">
+                    <div class="mb-1">
+                        <label asp-for="Fk_ScoreType" class="form-label"></label>
+                        <select asp-for="Fk_ScoreType" class="select2 form-select" asp-items="@(new SelectList(ViewData["ScoreType"] as Dictionary<string,string>,"Key","Value"))">
+                        </select>
+                        <span asp-validation-for="Fk_ScoreType" class="text-danger"></span>
                     </div>
-                    <div class="col-md-12 col-12">
-                        <div class="mb-1">
-                            <label asp-for="Points" class="form-label"></label>
-                            <input asp-for="Points" class="form-control" required placeholder="@Localizer.Get("Enter")  @(Localizer.Get("Points"))" />
-                            <span asp-validation-for="Points" class="text-danger"></span>
-                        </div>
+                </div>
+
+                <div class="col-md-6 col-12">
+                    <div class="mb-1">
+                        <label asp-for="FinalValue" class="form-label"></label>
+                        <input asp-for="FinalValue" required class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("FinalValue"))" />
+                        <span asp-validation-for="FinalValue" class="text-danger"></span>
                     </div>
-                    
-                    <div class="col-md-12 col-12">
-                        <div class="mb-1">
-                            <label asp-for="FinalValue" class="form-label"></label>
-                            <input asp-for="FinalValue" required class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("FinalValue"))" />
-                            <span asp-validation-for="FinalValue" class="text-danger"></span>
-                        </div>
+                </div>
+
+                <div class="col-md-6 col-12">
+                    <div class="mb-1">
+                        <label asp-for="GameTime" class="form-label"></label>
+                        <input asp-for="GameTime" required class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("GameTime"))" />
+                        <span asp-validation-for="GameTime" class="text-danger"></span>
                     </div>
+                </div>
+
+                <div class="col-md-12 col-12">
+                    <div class="mb-1">
+                        <label asp-for="Points" class="form-label"></label>
+                        <input asp-for="Points" class="form-control" required placeholder="@Localizer.Get("Enter")  @(Localizer.Get("Points"))" />
+                        <span asp-validation-for="Points" class="text-danger"></span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary me-1 submit_btn" data-bs-dismiss="modal">@Localizer.Get("Submit")</button>
 
                 </div>
-                
-                <div class="row">
-                    <div class="col-12">
-                        <button type="submit" class="btn btn-primary me-1 submit_btn" data-bs-dismiss="modal">@Localizer.Get("Submit")</button>
-                        
-                    </div>
-                </div>
+            </div>
 
         </div>
-      
+
     </div>
-    
+
 </div>
 
 @section scripts
@@ -59,11 +68,11 @@
     <script>
         $(document).on("click", ".submit_btn", function(e) {
             e.preventDefault();
-            
+
             let fk_ScoreType = $("select[name=Fk_ScoreType]").val();
             let points = $("input[name=Points]").val();
             let finalValue = $("input[name=FinalValue]").val();
-            
+
           $.ajax({
               url: '@Url.ActionLink("AddScore", "TeamGameWeak")',
               method: 'post',

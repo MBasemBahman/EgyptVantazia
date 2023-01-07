@@ -8,6 +8,7 @@ builder.Configuration.AddJsonFile(config.AppSettings);
 // Add services to the container.
 
 builder.Services.ConfigureCors();
+builder.Services.AddHttpClient();
 builder.Services.ConfigureLoggerService();
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.ConfigureRepositoryManager();

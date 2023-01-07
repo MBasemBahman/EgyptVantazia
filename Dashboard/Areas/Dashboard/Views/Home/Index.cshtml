@@ -1,6 +1,10 @@
-﻿@{
+﻿@model List<ChartDto>
+@{
     ViewData["Title"] = Localizer.Get("Home");
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ViewBag.useCharts = true;
+    ViewBag.useModels = true;
 
     string views = (string)ContextAccessor.HttpContext.Request.Cookies[ViewDataConstants.Views];
 
@@ -31,9 +35,73 @@
                 <div class="col-12">
                     <div class="card text-center">
                         <div class="card-body">
-                          
-                                <img src="~/dashboard.png" alt="dashboard" class="img-fluid" />
-                            
+
+                            <a id="UpdateStandings" class="btn btn-primary"> @Localizer.Get("Update Standings") </a>
+                            <a id="UpdateGames" class="btn btn-primary"> @Localizer.Get("Update Games") </a>
+
+                            <section id="ajax-charts">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="">
+                                            <div class="card-body">
+                                                <div class="row">
+
+                                                    @if (Model != null && Model.Any())
+                                                    {
+                                                        <div class="row">
+                                                            @foreach (var chart in Model.Where(a => a.Type == ChartTypeEnum.Donut))
+                                                            {
+                                                                <div class="col-md-4 col-12 mt-2">
+                                                                    <div class="">
+                                                                        <div class="flex-column align-items-start">
+                                                                            <h4 class="card-title mb-75 text-center">@Localizer.Get(chart.Text)</h4>
+                                                                        </div>
+                                                                        <div class="">
+                                                                            <div id="@chart.Key" class="Donut" style="letter-spacing: normal;"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                        <div class="row">
+                                                            @foreach (var chart in Model.Where(a => a.Type == ChartTypeEnum.Column))
+                                                            {
+                                                                <div class="col-md-12">
+                                                                    <div class="card">
+                                                                        <div class="card-header flex-column align-items-start">
+                                                                            <h4 class="card-title mb-75">@Localizer.Get(chart.Text)</h4>
+                                                                        </div>
+                                                                        <div class="card-body">
+                                                                            <div id="@chart.Key" class="Column" style="letter-spacing: normal;"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                        <div class="row">
+                                                            @foreach (var chart in Model.Where(a => a.Type == ChartTypeEnum.Bar))
+                                                            {
+                                                                <div class="col-md-12">
+                                                                    <div class="card">
+                                                                        <div class="card-header flex-column align-items-start">
+                                                                            <h4 class="card-title mb-75">@Localizer.Get(chart.Text)</h4>
+                                                                        </div>
+                                                                        <div class="card-body">
+                                                                            <div id="@chart.Key" class="Bar" style="letter-spacing: normal;"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </section>
+
                         </div>
                     </div>
                 </div>
@@ -42,3 +110,39 @@
     </div>
 </div>
 <!-- END: Content-->
+@section scripts {
+    <script src="~/apis/charts.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            LoadCharts();
+
+            $(document).on("click", "#UpdateStandings", function(e) {
+             $.ajax({
+                 url: '@Url.ActionLink("UpdateStandings", "Home")',
+                 method: 'post',
+                 success: function(data) {
+                     $("#success").modal('show');
+                 },
+                 error: function (result) {
+                     $("#success").modal('show');
+                 }
+             });
+            });
+
+            $(document).on("click", "#UpdateGames", function(e) {
+             $.ajax({
+                 url: '@Url.ActionLink("UpdateGames", "Home")',
+                 method: 'post',
+                 success: function(data) {
+                     $("#success").modal('show');
+                 },
+                 error: function (result) {
+                     $("#success").modal('show');
+                 }
+             });
+        });
+
+        });
+    </script>
+}

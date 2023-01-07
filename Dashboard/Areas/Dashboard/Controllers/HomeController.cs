@@ -1,7 +1,12 @@
 ﻿using BaseDB;
 using Dashboard.Areas.AccountTeamEntity.Models;
+using Dashboard.Areas.Dashboard.Models;
+using Entities.CoreServicesModels.AccountModels;
 using Entities.CoreServicesModels.AccountTeamModels;
+using Entities.DBModels.AccountModels;
+using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.SeasonModels;
+using NLog.Filters;
 
 namespace Dashboard.Areas.Dashboard.Controllers
 {
@@ -14,81 +19,42 @@ namespace Dashboard.Areas.Dashboard.Controllers
         private readonly UnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _environment;
         private readonly BaseContext _dBContext;
+        private readonly ILocalizationManager _Localizer;
+        private readonly UpdateResultsUtils _updateResultsUtils;
 
         public HomeController(
             ILoggerManager logger,
             IMapper mapper,
             UnitOfWork unitOfWork,
             IWebHostEnvironment environment,
-            BaseContext dBContext)
+            BaseContext dBContext, 
+            ILocalizationManager localizer,
+            UpdateResultsUtils updateResultsUtils)
         {
             _logger = logger;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _environment = environment;
             _dBContext = dBContext;
+            _Localizer = localizer;
+            _updateResultsUtils = updateResultsUtils;
         }
 
         public IActionResult Index()
         {
-
-
-            return View();
-        }
-
-        public IActionResult Test(int fk_GameWeak)
-        {
-            //var players = _dBContext.AccountTeamPlayerGameWeaks
-            //                        .Where(a => a.AccountTeamPlayer.Fk_AccountTeam == 112 &&
-            //                                    a.Fk_GameWeak == 42)
-            //                        .ToList();
-            //players.ForEach(a =>
-            //{
-            //    a.Points = null;
-            //});
-            //_dBContext.SaveChanges();
-
-            var accountTeamGameWeaks = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
+            List<ChartDto> charts = new()
             {
-                Fk_GameWeak = fk_GameWeak,
-            }, otherLang: false)
-                   .Select(a => new
-                   {
-                       a.Id,
-                       a.Fk_AccountTeam
-                   })
-                   .ToList();
-
-            foreach (var accountTeamGameWeak in accountTeamGameWeaks)
-            {
-                var players = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
+                new ChartDto
                 {
-                    Fk_AccountTeam = accountTeamGameWeak.Fk_AccountTeam,
-                    Fk_GameWeak = fk_GameWeak,
-                    IsTransfer = false
-                }, otherLang: false).Select(a => new
-                {
-                    Fk_Player = a.AccountTeamPlayer.Fk_Player,
-                    Fk_PlayerPosition = a.AccountTeamPlayer.Player.Fk_PlayerPosition,
-                    Fk_AccountTeamPlayer = a.Fk_AccountTeamPlayer,
-                    Fk_TeamPlayerType = a.Fk_TeamPlayerType,
-                    Order = a.Order,
-                    IsPrimary = a.IsPrimary,
-                    IsParticipate = a.IsParticipate,
-                    IsPlayed = a.IsPlayed,
-                    Points = a.Points,
-                    PlayerName = a.AccountTeamPlayer.Player.Name
-                }).ToList();
-
-                if (players.Count > 0 && players.Count != 15)
-                {
-                    int count = players.Count;
+                    Key = nameof(Accounts),
+                    Text = nameof(Accounts),
+                    Url = "/",
+                    Type = ChartTypeEnum.Donut
                 }
-            }
+            };
 
-            return Ok();
+            return View(charts);
         }
-
 
         [AllowAnonymous]
         public IActionResult SetSettings()
@@ -124,46 +90,60 @@ namespace Dashboard.Areas.Dashboard.Controllers
             return View();
         }
 
-        private void AddBulkData(int fk_AccountTeam, List<int> fk_GameWeeks)
+        #region Charts
+
+        [HttpPost]
+        public JsonResult Accounts()
         {
-            Entities.CoreServicesModels.AccountTeamModels.AccountTeamGameWeakModel accountTeamGame = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new Entities.CoreServicesModels.AccountTeamModels.AccountTeamGameWeakParameters
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
+            int accountsCount = _unitOfWork.Account.GetAccountsCount();
+            int accountTeamCount = _unitOfWork.AccountTeam.GetAccountTeamCount();
+
+            List<ChartItemDto> data = new()
             {
-                Fk_AccountTeam = fk_AccountTeam
-            }, false).FirstOrDefault();
-            if (accountTeamGame != null)
+                new()
+                {
+                    label = _Localizer.Get("Accounts"),
+                    value = accountsCount,
+                    Id = "AccountEntity/Account/Index"
+                },
+                new()
+                {
+                    label = _Localizer.Get("AccountTeams"),
+                    value = accountTeamCount,
+                    Id = "AccountTeamEntity/AccountTeam/Index"
+                },
+            };
+
+
+            return Json(new DonutChartDto
             {
-                List<Entities.CoreServicesModels.AccountTeamModels.AccountTeamPlayerGameWeakModel> players = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new Entities.CoreServicesModels.AccountTeamModels.AccountTeamPlayerGameWeakParameters
-                {
-                    Fk_AccountTeam = fk_AccountTeam,
-                    IsTransfer = false
-                }, false).ToList();
-
-                if (players.Any() && players.Count == 15)
-                {
-                    foreach (int fk_GameWeek in fk_GameWeeks)
-                    {
-                        _unitOfWork.AccountTeam.CreateAccountTeamGameWeak(new Entities.DBModels.AccountTeamModels.AccountTeamGameWeak
-                        {
-                            Fk_AccountTeam = fk_AccountTeam,
-                            Fk_GameWeak = fk_GameWeek,
-                        });
-
-                        foreach (Entities.CoreServicesModels.AccountTeamModels.AccountTeamPlayerGameWeakModel player in players)
-                        {
-                            _unitOfWork.AccountTeam.CreateAccountTeamPlayerGameWeak(new Entities.DBModels.AccountTeamModels.AccountTeamPlayerGameWeak
-                            {
-                                Fk_AccountTeamPlayer = player.Fk_AccountTeamPlayer,
-                                Fk_GameWeak = fk_GameWeek,
-                                Fk_TeamPlayerType = player.Fk_TeamPlayerType,
-                                IsPrimary = player.IsPrimary,
-                                Order = player.Order,
-                            });
-                        }
-                    }
-                    _unitOfWork.Save().Wait();
-                }
-            }
-
+                Key = nameof(Accounts),
+                Labels = data.Select(a => a.label).ToList(),
+                Series = data.Select(a => a.value).ToList(),
+                Total = data.Select(a => a.value).Sum(),
+                Urls = data.Select(a => a.Id).ToList()
+            });
         }
+
+        #endregion
+
+        #region Update Results
+        
+        [HttpPost]
+        public IActionResult UpdateStandings()
+        {
+            _updateResultsUtils.UpdateStandings();
+            return Ok();
+        }
+
+        [HttpPost]
+        public IActionResult UpdateGames()
+        {
+            _updateResultsUtils.UpdateGames();
+            return Ok();
+        }
+        #endregion
     }
 }

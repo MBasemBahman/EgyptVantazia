@@ -3,6 +3,7 @@ using Dashboard.Areas.AccountTeamEntity.Models;
 using Dashboard.Areas.Dashboard.Models;
 using Entities.CoreServicesModels.AccountModels;
 using Entities.CoreServicesModels.AccountTeamModels;
+using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.AccountModels;
 using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.SeasonModels;
@@ -52,7 +53,11 @@ namespace Dashboard.Areas.Dashboard.Controllers
                     Type = ChartTypeEnum.Donut
                 }
             };
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
+            ViewData["CurrentGameWeak"] = _unitOfWork.Season.GetCurrentGameWeak(otherLang);
+            ViewData["GameWeak"] = _unitOfWork.Season.GetGameWeakLookUp(new GameWeakParameters(), otherLang);
+            
             return View(charts);
         }
 
@@ -144,6 +149,31 @@ namespace Dashboard.Areas.Dashboard.Controllers
             _updateResultsUtils.UpdateGames();
             return Ok();
         }
+
+        [HttpPost]
+        public IActionResult UpdateGameResult(int fk_GameWeak, int _365_MatchId, bool runBonus)
+        {
+            return NoContent();
+        }
+        
+        [HttpPost]
+        public IActionResult UpdateAccountTeamGameWeakRanking(int fk_GameWeak)
+        {
+            return NoContent();
+        }
+        
+        [HttpPost]
+        public IActionResult UpdatePrivateLeagueRanking(int fk_GameWeak)
+        {
+            return NoContent();
+        }
+        
+        [HttpPost]
+        public IActionResult UpdateAccountTeamPoints(int fk_GameWeak)
+        {
+            return NoContent();
+        }
+        
         #endregion
     }
 }

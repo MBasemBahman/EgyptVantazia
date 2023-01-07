@@ -1,0 +1,175 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Entities.CoreServicesModels.SeasonModels
+@{
+    GameWeakModel current = (GameWeakModel)ViewData["CurrentGameWeak"];
+}
+
+<div class="modal fade text-start text-center update_game_result_modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalScrollableTitle">@Localizer.Get("UpdateGameResult")</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12 col-12">
+
+                        <div asp-validation-summary="All" class="text-danger">@ViewData["Error"]</div>
+                        <div class="row mb-1">
+                            <div class="col-md-12 col-12">
+                                <div class="mb-1">
+                                    <label class="form-label">@Localizer.Get("GameWeak")</label>
+                                    <select name="Fk_GameWeak" class="select2 form-select">
+                                        @foreach (KeyValuePair<string, string> gameWeak in (Dictionary<string, string>)ViewData["GameWeak"])
+                                        {
+                                            <option selected="@(current.Id.ToString() == gameWeak.Key)" value="@gameWeak.Key">@gameWeak.Value</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        
+                            <div class="col-md-12 col-12">
+                                <div class="mb-1">
+                                    <label class="form-label">@Localizer.Get("_365_MatchId")</label>
+                                    <input name="_365_MatchId" class="form-control" />
+                                </div>
+                            </div>
+                        
+                            <div class="col-md-12 col-12">
+                                <div class="mb-1">
+                                    <label class="form-label">@Localizer.Get("RunBonus")</label>
+                                    <select name="RunBonus" class="select2 form-select">
+                                        <option value="true">@Localizer.Get("Yes")</option>
+                                        <option value="false">@Localizer.Get("No")</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary me-1 update_game_result_submit" data-bs-dismiss="modal">@Localizer.Get("Submit")</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade text-start text-center update_account_team_game_weak_ranking_modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalScrollableTitle">@Localizer.Get("UpdateGameResult")</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12 col-12">
+
+                        <div asp-validation-summary="All" class="text-danger">@ViewData["Error"]</div>
+                        <div class="row mb-1">
+                            <div class="col-md-12 col-12">
+                                <div class="mb-1">
+                                    <label class="form-label">@Localizer.Get("GameWeak")</label>
+                                    <select name="Fk_GameWeak" class="select2 form-select">
+                                        @foreach (KeyValuePair<string, string> gameWeak in (Dictionary<string, string>)ViewData["GameWeak"])
+                                        {
+                                            <option selected="@(current.Id.ToString() == gameWeak.Key)" value="@gameWeak.Key">@gameWeak.Value</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary me-1 update_account_team_game_weak_ranking_submit" data-bs-dismiss="modal">@Localizer.Get("Submit")</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade text-start text-center update_private_league_ranking_modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalScrollableTitle">@Localizer.Get("UpdatePrivateLeagueRanking")</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12 col-12">
+
+                        <div asp-validation-summary="All" class="text-danger">@ViewData["Error"]</div>
+                        <div class="row mb-1">
+                            <div class="col-md-12 col-12">
+                                <div class="mb-1">
+                                    <label class="form-label">@Localizer.Get("GameWeak")</label>
+                                    <select name="Fk_GameWeak" class="select2 form-select">
+                                        @foreach (KeyValuePair<string, string> gameWeak in (Dictionary<string, string>)ViewData["GameWeak"])
+                                        {
+                                            <option selected="@(current.Id.ToString() == gameWeak.Key)" value="@gameWeak.Key">@gameWeak.Value</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary me-1 update_private_league_ranking_submit" data-bs-dismiss="modal">@Localizer.Get("Submit")</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade text-start text-center update_account_team_points_modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalScrollableTitle">@Localizer.Get("UpdateAccountTeamPoints")</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-12 col-12">
+
+                        <div asp-validation-summary="All" class="text-danger">@ViewData["Error"]</div>
+                        <div class="row mb-1">
+                            <div class="col-md-12 col-12">
+                                <div class="mb-1">
+                                    <label class="form-label">@Localizer.Get("GameWeak")</label>
+                                    <select name="Fk_GameWeak" class="select2 form-select">
+                                        @foreach (KeyValuePair<string, string> gameWeak in (Dictionary<string, string>)ViewData["GameWeak"])
+                                        {
+                                            <option selected="@(current.Id.ToString() == gameWeak.Key)" value="@gameWeak.Key">@gameWeak.Value</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary me-1 update_account_team_points_submit" data-bs-dismiss="modal">@Localizer.Get("Submit")</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

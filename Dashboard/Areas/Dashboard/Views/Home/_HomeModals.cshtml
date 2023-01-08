@@ -64,7 +64,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalScrollableTitle">@Localizer.Get("UpdateGameResult")</h5>
+                <h5 class="modal-title" id="exampleModalScrollableTitle">@Localizer.Get("UpdateAccountTeamGameWeakRanking")</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -113,13 +113,13 @@
                         <div class="row mb-1">
                             <div class="col-md-12 col-12">
                                 <div class="mb-1">
-                                    <label class="form-label">@Localizer.Get("GameWeak")</label>
-                                    <select name="Fk_GameWeak" class="select2 form-select">
+                                    @*<label class="form-label">@Localizer.Get("GameWeak")</label>*@
+                                    @*<select name="Fk_GameWeak" class="select2 form-select">
                                         @foreach (KeyValuePair<string, string> gameWeak in (Dictionary<string, string>)ViewData["GameWeak"])
                                         {
                                             <option selected="@(current.Id.ToString() == gameWeak.Key)" value="@gameWeak.Key">@gameWeak.Value</option>
                                         }
-                                    </select>
+                                    </select>*@
                                 </div>
                             </div>
                         </div>

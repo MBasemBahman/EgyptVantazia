@@ -15,6 +15,8 @@
     {
         viewList = views.Split(",").Select(Int32.Parse).ToList();
     }
+
+    ViewData["_365_MatchId"] = Model._365_MatchId;
 }
 
 @section styles{
@@ -260,7 +262,7 @@
     </div>
 </div>
 
-<partial name="_TeamGameWeakModals" view-data="ViewData" />
+<partial name="_TeamGameWeakModals" view-data="ViewData"  />
 
 @section scripts{
     <script>

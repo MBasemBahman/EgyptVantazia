@@ -775,7 +775,7 @@
     <value>اسم قصير بالانجليزية</value>
   </data>
   <data name="_365_PlayerId" xml:space="preserve">
-    <value>Integration Id</value>
+    <value>الرقم المرجعي</value>
   </data>
   <data name="Add Game Weak" xml:space="preserve">
     <value>أضافة أسبوع</value>
@@ -796,7 +796,7 @@
     <value>المواسم</value>
   </data>
   <data name="_365_SeasonId" xml:space="preserve">
-    <value>Integration Id</value>
+    <value>الرقم المرجعي</value>
   </data>
   <data name="AwayScore" xml:space="preserve">
     <value>نتيجة الفريق الضيف</value>
@@ -895,13 +895,13 @@
     <value>عدد اللاعبون</value>
   </data>
   <data name="_365_PositionId" xml:space="preserve">
-    <value>Integration Id</value>
+    <value>الرقم المرجعي</value>
   </data>
   <data name="_365_TypeId" xml:space="preserve">
-    <value>Integration Id</value>
+    <value>الرقم المرجعي</value>
   </data>
   <data name="_365_TeamId" xml:space="preserve">
-    <value>Integration Id</value>
+    <value>الرقم المرجعي</value>
   </data>
   <data name="ShortName" xml:space="preserve">
     <value>أسم قصير</value>
@@ -910,7 +910,7 @@
     <value>الأعضاء</value>
   </data>
   <data name="_365_GameWeakId" xml:space="preserve">
-    <value>Integration Id</value>
+    <value>الرقم المرجعي</value>
   </data>
   <data name="AccountFullName" xml:space="preserve">
     <value>اسم الحساب بالكامل</value>
@@ -1234,7 +1234,7 @@
     <value>نقاط البيع والشراء</value>
   </data>
   <data name="_365_MatchId" xml:space="preserve">
-    <value>Integration ID</value>
+    <value>الرقم المرجعي</value>
   </data>
   <data name="PlayerGameWeakScore" xml:space="preserve">
     <value>اهداف واحصائيات اللاعب</value>
@@ -1265,5 +1265,23 @@
   </data>
   <data name="Update Standings" xml:space="preserve">
     <value>تحديث ترتيب الأندية</value>
+  </data>
+  <data name="Integration ID" xml:space="preserve">
+    <value>الرقم المرجعي</value>
+  </data>
+  <data name="RunBonus" xml:space="preserve">
+    <value>احتساب نقاط البونص</value>
+  </data>
+  <data name="UpdateGameResult" xml:space="preserve">
+    <value>تحديث نتيجة المباراة</value>
+  </data>
+  <data name="UpdateAccountTeamGameWeakRanking" xml:space="preserve">
+    <value>تحديث الترتيب الاسبوعي لفرق الفانتازي</value>
+  </data>
+  <data name="UpdatePrivateLeagueRanking" xml:space="preserve">
+    <value>تحديث ترتيب الدوري الخاص</value>
+  </data>
+  <data name="UpdateAccountTeamPoints" xml:space="preserve">
+    <value>تحديث نقاط فرق الفانتازي</value>
   </data>
 </root>

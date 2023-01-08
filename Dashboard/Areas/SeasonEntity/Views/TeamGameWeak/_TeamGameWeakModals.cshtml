@@ -20,14 +20,14 @@
                             <div class="col-md-12 col-12">
                                 <div class="mb-1">
                                     <label class="form-label">@Localizer.Get("_365_MatchId")</label>
-                                    <input name="_365_MatchId" class="form-control" />
+                                    <input name="_365_MatchId"value="@ViewData["_365_MatchId"]" class="form-control text-center" />
                                 </div>
                             </div>
                         
                             <div class="col-md-12 col-12">
                                 <div class="mb-1">
                                     <label class="form-label">@Localizer.Get("RunBonus")</label>
-                                    <select name="RunBonus" class="select2 form-select">
+                                    <select name="RunBonus" class="select2 form-select text-center">
                                         <option value="true">@Localizer.Get("Yes")</option>
                                         <option value="false">@Localizer.Get("No")</option>
                                     </select>

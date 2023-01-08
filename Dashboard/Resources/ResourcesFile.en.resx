@@ -949,22 +949,22 @@
     <value>Your new password must be different from previously used passwords</value>
   </data>
   <data name="_365_GameWeakId" xml:space="preserve">
-    <value>Integration Id</value>
+    <value>Reference No</value>
   </data>
   <data name="_365_PlayerId" xml:space="preserve">
-    <value>Integration Id</value>
+    <value>Reference No</value>
   </data>
   <data name="_365_PositionId" xml:space="preserve">
-    <value>Integration Id</value>
+    <value>Reference No</value>
   </data>
   <data name="_365_SeasonId" xml:space="preserve">
-    <value>Integration Id</value>
+    <value>Reference No</value>
   </data>
   <data name="_365_TeamId" xml:space="preserve">
-    <value>Integration Id</value>
+    <value>Reference No</value>
   </data>
   <data name="_365_TypeId" xml:space="preserve">
-    <value>Integration Id</value>
+    <value>Reference No</value>
   </data>
   <data name="_Details" xml:space="preserve">
     <value>Details</value>
@@ -1232,5 +1232,23 @@
   </data>
   <data name="Add statistics" xml:space="preserve">
     <value>Add Statistics</value>
+  </data>
+  <data name="Integration ID" xml:space="preserve">
+    <value>Reference No</value>
+  </data>
+  <data name="RunBonus" xml:space="preserve">
+    <value>Bonus points calculation</value>
+  </data>
+  <data name="UpdateGameResult" xml:space="preserve">
+    <value>Update game results</value>
+  </data>
+  <data name="UpdateAccountTeamGameWeakRanking" xml:space="preserve">
+    <value>Update the weekly ranking of the fantasy teams</value>
+  </data>
+  <data name="UpdatePrivateLeagueRanking" xml:space="preserve">
+    <value>Update private league ranking</value>
+  </data>
+  <data name="UpdateAccountTeamPoints" xml:space="preserve">
+    <value>Fantasy squad points update</value>
   </data>
 </root>

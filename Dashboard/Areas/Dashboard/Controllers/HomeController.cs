@@ -4,8 +4,10 @@ using Dashboard.Areas.Dashboard.Models;
 using Entities.CoreServicesModels.AccountModels;
 using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.SeasonModels;
+using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountModels;
 using Entities.DBModels.AccountTeamModels;
+using Entities.DBModels.DashboardAdministrationModels;
 using Entities.DBModels.SeasonModels;
 using NLog.Filters;
 
@@ -28,7 +30,7 @@ namespace Dashboard.Areas.Dashboard.Controllers
             IMapper mapper,
             UnitOfWork unitOfWork,
             IWebHostEnvironment environment,
-            BaseContext dBContext, 
+            BaseContext dBContext,
             ILocalizationManager localizer,
             UpdateResultsUtils updateResultsUtils)
         {
@@ -45,19 +47,19 @@ namespace Dashboard.Areas.Dashboard.Controllers
         {
             List<ChartDto> charts = new()
             {
-                new ChartDto
-                {
-                    Key = nameof(Accounts),
-                    Text = nameof(Accounts),
-                    Url = "/",
-                    Type = ChartTypeEnum.Donut
-                }
+                //new ChartDto
+                //{
+                //    Key = nameof(Accounts),
+                //    Text = nameof(Accounts),
+                //    Url = "/",
+                //    Type = ChartTypeEnum.Donut
+                //}
             };
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             ViewData["CurrentGameWeak"] = _unitOfWork.Season.GetCurrentGameWeak(otherLang);
             ViewData["GameWeak"] = _unitOfWork.Season.GetGameWeakLookUp(new GameWeakParameters(), otherLang);
-            
+
             return View(charts);
         }
 
@@ -135,46 +137,98 @@ namespace Dashboard.Areas.Dashboard.Controllers
         #endregion
 
         #region Update Results
-        
+
         [HttpPost]
         public IActionResult UpdateStandings()
         {
-            _updateResultsUtils.UpdateStandings();
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            if (auth.Fk_DashboardAdministrationRole == (int)DashboardAdministrationRoleEnum.Developer ||
+                auth.Fk_DashboardAdministrationRole == (int)DashboardAdministrationRoleEnum.Onwer)
+            {
+                _updateResultsUtils.UpdateStandings();
+            }
             return Ok();
         }
 
         [HttpPost]
         public IActionResult UpdateGames()
         {
-            _updateResultsUtils.UpdateGames();
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+            if (auth.Fk_DashboardAdministrationRole == (int)DashboardAdministrationRoleEnum.Developer ||
+                auth.Fk_DashboardAdministrationRole == (int)DashboardAdministrationRoleEnum.Onwer)
+            {
+                _updateResultsUtils.UpdateGames();
+            }
             return Ok();
         }
 
         [HttpPost]
-        public IActionResult UpdateGameResult(int fk_GameWeak, int _365_MatchId, bool runBonus, int fk_TeamGameWeak)
+        public IActionResult UpdateGameResult(int fk_GameWeak, string _365_MatchId, bool runBonus, int fk_TeamGameWeak)
         {
-            return NoContent();
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+            if (auth.Fk_DashboardAdministrationRole == (int)DashboardAdministrationRoleEnum.Developer ||
+                auth.Fk_DashboardAdministrationRole == (int)DashboardAdministrationRoleEnum.Onwer)
+            {
+                _updateResultsUtils.UpdateGameResult(fk_GameWeak, fk_TeamGameWeak, _365_MatchId, runBonus);
+            }
+            return Ok();
         }
-        
+
         [HttpPost]
         public IActionResult UpdateAccountTeamGameWeakRanking(int fk_GameWeak)
         {
-            return NoContent();
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+            if (auth.Fk_DashboardAdministrationRole == (int)DashboardAdministrationRoleEnum.Developer ||
+                auth.Fk_DashboardAdministrationRole == (int)DashboardAdministrationRoleEnum.Onwer)
+            {
+                _updateResultsUtils.UpdateAccountTeamGameWeakRanking(fk_GameWeak);
+            }
+            return Ok();
         }
-        
+
         [HttpPost]
-        public IActionResult UpdatePrivateLeagueRanking(int fk_GameWeak)
+        public IActionResult UpdatePrivateLeagueRanking(int fk_GameWeak, int id)
         {
-            return NoContent();
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+            if (auth.Fk_DashboardAdministrationRole == (int)DashboardAdministrationRoleEnum.Developer ||
+                auth.Fk_DashboardAdministrationRole == (int)DashboardAdministrationRoleEnum.Onwer)
+            {
+                _updateResultsUtils.UpdatePrivateLeagueRanking(fk_GameWeak, id);
+            }
+            return Ok();
         }
-        
+
         [HttpPost]
-        public IActionResult UpdateAccountTeamPoints(int fk_GameWeak, int fk_AccountTeamGameWeak, 
-            int fk_Player, int fk_TeamGameWeak)
+        public IActionResult UpdateAccountTeamPoints(
+            int fk_GameWeak,
+            int fk_AccountTeamGameWeak,
+            int fk_Player,
+            int fk_TeamGameWeak)
         {
-            return NoContent();
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+            if (auth.Fk_DashboardAdministrationRole == (int)DashboardAdministrationRoleEnum.Developer ||
+                auth.Fk_DashboardAdministrationRole == (int)DashboardAdministrationRoleEnum.Onwer)
+            {
+                List<int> fk_Players = new();
+                if (fk_TeamGameWeak > 0)
+                {
+                    fk_Players = _unitOfWork.Team.GetPlayers(new PlayerParameters
+                    {
+                        Fk_TeamGameWeak = fk_TeamGameWeak
+                    }, false).Select(a => a.Id).ToList();
+                }
+                if (fk_Player > 0)
+                {
+                    fk_Players.Add(fk_Player);
+                }
+
+                _updateResultsUtils.UpdateAccountTeamPoints(fk_GameWeak, fk_AccountTeamGameWeak, fk_Players);
+            }
+
+            return Ok();
         }
-        
+
         #endregion
     }
 }

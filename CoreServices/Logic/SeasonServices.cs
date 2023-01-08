@@ -264,8 +264,9 @@ namespace CoreServices.Logic
         public Dictionary<string, string> GetGameWeakLookUp(GameWeakParameters parameters, bool otherLang)
         {
             return GetGameWeaks(parameters, otherLang)
-                .OrderByDescending(a => a._365_GameWeakId).ToDictionary(a => a.Id.ToString(), a => a.Name);
+                .OrderBy(a => a._365_GameWeakIdValue).ToDictionary(a => a.Id.ToString(), a => a.Name);
         }
+        
         public void CreateGameWeak(GameWeak GameWeak)
         {
             _repository.GameWeak.Create(GameWeak);

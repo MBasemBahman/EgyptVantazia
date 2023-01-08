@@ -57,16 +57,16 @@
                                     <h4 class="card-title"> @ViewData["Title"]</h4>
 
                                 </div>
-                                    <p class="m-2 demo-inline-spacing">
-                                <a class="btn btn-primary me-1" data-bs-toggle="collapse" href="#AdvancedFilter" role="button" aria-expanded="false" aria-controls="AdvancedFilter">
-                                    <i data-feather='filter'></i>
-                                    @Localizer.Get("Advanced Search")
-                                </a>
+                                <p class="m-2 demo-inline-spacing">
+                                    <a class="btn btn-primary me-1" data-bs-toggle="collapse" href="#AdvancedFilter" role="button" aria-expanded="false" aria-controls="AdvancedFilter">
+                                        <i data-feather='filter'></i>
+                                        @Localizer.Get("Advanced Search")
+                                    </a>
 
-                            </p>
-                            @{
-                                await Html.RenderPartialAsync("../TeamGameWeak/Filter", Model, ViewData);
-                            }
+                                </p>
+                                @{
+                                    await Html.RenderPartialAsync("../TeamGameWeak/Filter", Model, ViewData);
+                                }
 
                                 <div class="card-datatable">
                                     <table class="datatables datatables-ajax table table-responsive table">
@@ -125,64 +125,54 @@
 }
 else
 {
-                <section id="ajax-datatable">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-header border-bottom">
-                                    <h4 class="card-title"> @ViewData["Title"]</h4>
+    <section id="ajax-datatable">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header border-bottom">
+                        <h4 class="card-title"> @ViewData["Title"]</h4>
 
-                                </div>
-
-                                <div class="card-datatable">
-                                    <table class="datatables datatables-ajax table table-responsive table">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    @Html.DisplayNameFor(model => row.Id)
-
-                                                    <a id="profile" asp-action="Profile">
-                                                    </a>
-
-                                                </th>
-                                                <th>@Localizer.Get("HomeTeam")</th>
-                                                <th>@Localizer.Get("AwayTeam")</th>
-                                                <th>@Html.DisplayNameFor(model => row.GameWeak.Season)</th>
-                                                <th>@Html.DisplayNameFor(model => row._365_MatchId)</th>
-                                                <th>@Html.DisplayNameFor(model => row.GameWeak)</th>
-                                                <th>@Html.DisplayNameFor(model => row.HomeScore)</th>
-                                                <th>@Html.DisplayNameFor(model => row.AwayScore)</th>
-                                                <th>@Html.DisplayNameFor(model => row.StartTime)</th>
-                                                <th>@Html.DisplayNameFor(model => row.IsEnded)</th>
-                                                <th>@Html.DisplayNameFor(model => row.IsDelayed)</th>
-                                                <th>
-                                                    @Html.DisplayNameFor(model => row.Id)
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-                </section>
+
+                    <div class="card-datatable">
+                        <table class="datatables datatables-ajax table table-responsive table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => row.Id)
+
+                                        <a id="profile" asp-action="Profile">
+                                        </a>
+
+                                    </th>
+                                    <th>@Localizer.Get("HomeTeam")</th>
+                                    <th>@Localizer.Get("AwayTeam")</th>
+                                    <th>@Html.DisplayNameFor(model => row.GameWeak.Season)</th>
+                                    <th>@Html.DisplayNameFor(model => row._365_MatchId)</th>
+                                    <th>@Html.DisplayNameFor(model => row.GameWeak)</th>
+                                    <th>@Html.DisplayNameFor(model => row.HomeScore)</th>
+                                    <th>@Html.DisplayNameFor(model => row.AwayScore)</th>
+                                    <th>@Html.DisplayNameFor(model => row.StartTime)</th>
+                                    <th>@Html.DisplayNameFor(model => row.IsEnded)</th>
+                                    <th>@Html.DisplayNameFor(model => row.IsDelayed)</th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => row.Id)
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 }
 <!-- END: Content-->
 @section scripts{
-    <script src="~/apis/charts.js"></script>
     <script src="~/apis/site.js"></script>
     <script>
-        $(document).ready(function () {
-
-            $("#Fk_Season").on("change", function () {
-                getGameWeak($("#Fk_GameWeak"), $(this).val(), false);
-            });
-        });
-    </script>
-    <script>
-
-        function LoadTable() {
+         function LoadTable() {
             var dt_ajax_table = $('.datatables');
             if (dt_ajax_table.length) {
                 var dt_ajax = dt_ajax_table.dataTable({
@@ -203,7 +193,7 @@ else
                             data.ToTime = $("#ToTime").length > 0 ? $("#ToTime").val() : '@Model.ToTime';
                             data.IsEnded = $("#IsEnded").length > 0 ? $("#IsEnded").val() : '@Model.IsEnded';
                             data.DashboardSearch = $("#DataTables_Table_0_filter input").val();
-                            
+
                             return JSON.stringify(data);
                         }
                     },
@@ -215,7 +205,6 @@ else
                             orderable: false,
                             render: function (data, type, row) {
                                 var span = '';
-
                                 if (data.imageUrl != null) {
 
                                     return '<div class="d-flex justify-content-left align-items-center"><div class= "avatar-wrapper" ><div class="avatar me-1">'
@@ -270,8 +259,6 @@ else
 
                             }
                         },
-
-
                         { data: "gameWeak.season.name", orderable: false, },
                         { data: "_365_MatchId", orderable: false, },
                         { data: "gameWeak.name", orderable: false, },
@@ -304,16 +291,18 @@ else
                     event.preventDefault();
                     dt_ajax_table.DataTable().draw();
                 });
-
-
             }
         };
 
-
-
         $(document).ready(function () {
-            LoadTable();
 
+
+
+            $("#Fk_Season").on("change", function () {
+                getGameWeak($("#Fk_GameWeak"), $(this).val(), false);
+            });
+
+            LoadTable();
         });
     </script>
 }

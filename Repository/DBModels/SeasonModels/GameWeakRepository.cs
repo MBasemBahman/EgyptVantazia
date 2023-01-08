@@ -82,6 +82,18 @@ namespace Repository.DBModels.SeasonModels
                    .OrderByDescending(a => a._365_GameWeakIdValue)
                    .FirstOrDefault();
         }
+
+        public bool CheckIfGameWeakEnded(int fk_GameWeak)
+        {
+            if (!DBContext.TeamGameWeaks.Any(a => a.Fk_GameWeak == fk_GameWeak))
+            {
+                return false;
+            }
+            return DBContext.TeamGameWeaks
+                            .Where(a => a.Fk_GameWeak == fk_GameWeak)
+                            .OrderByDescending(a => a.StartTime)
+                            .FirstOrDefault().IsEnded;
+        }
     }
 
     public static class GameWeakRepositoryExtension

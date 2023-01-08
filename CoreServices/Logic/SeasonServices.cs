@@ -291,6 +291,11 @@ namespace CoreServices.Logic
         {
             return _repository.GameWeak.Count();
         }
+
+        public bool CheckIfGameWeakEnded(int fk_GameWeak)
+        {
+            return _repository.GameWeak.CheckIfGameWeakEnded(fk_GameWeak);
+        }
         #endregion
 
         #region TeamGameWeak Services
@@ -342,11 +347,11 @@ namespace CoreServices.Logic
                                    Name = otherLang ? a.GameWeak.Season.SeasonLang.Name : a.GameWeak.Season.Name
                                },
                            },
-
                            HomeTeamPlayers = a.PlayerGameWeaks
                                .Where(b => b.Player.Fk_Team == a.Fk_Home).Select(b =>
                                    new PlayerGameWeak
                                    {
+                                       Id = b.Id,
                                        Player = new Player
                                        {
                                            Id = b.Fk_Player,
@@ -355,11 +360,11 @@ namespace CoreServices.Logic
                                        Ranking = b.Ranking,
                                        TotalPoints = b.TotalPoints,
                                    }).ToList(),
-
                            AwayTeamPlayers = a.PlayerGameWeaks
                                .Where(b => b.Player.Fk_Team == a.Fk_Away).Select(b =>
                                    new PlayerGameWeak
                                    {
+                                       Id = b.Id,
                                        Player = new Player
                                        {
                                            Id = b.Fk_Player,

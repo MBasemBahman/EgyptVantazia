@@ -107,13 +107,13 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 _ = BackgroundJob.Enqueue(() => _playerStateCalc.UpdateTop15(teamGameWeak.Fk_GameWeek, teamGameWeak.Fk_Season));
             }
 
-            if (!inDebug && !runAll)
-            {
-                if (match.LastUpdateId == gameReturn.LastUpdateId)
-                {
-                    return;
-                }
-            }
+            //if (!inDebug && !runAll)
+            //{
+            //    if (match.LastUpdateId == gameReturn.LastUpdateId)
+            //    {
+            //        return;
+            //    }
+            //}
 
             if (gameReturn != null && gameReturn.Game != null &&
                 gameReturn.Game.AwayCompetitor != null &&

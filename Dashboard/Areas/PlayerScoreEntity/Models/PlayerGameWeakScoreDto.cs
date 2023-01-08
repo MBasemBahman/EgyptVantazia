@@ -56,5 +56,8 @@ namespace Dashboard.Areas.PlayerScoreEntity.Models
 
         [DisplayName(nameof(Points))]
         public int Points { get; set; }
+
+        [DisplayName(nameof(IsOut))]
+        public bool? IsOut { get; set; }
     }
 }

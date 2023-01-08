@@ -77,20 +77,15 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddScore(int fk_Team, int fk_PlayerGameWeak)
+        public IActionResult AddScore(int fk_PlayerGameWeak)
         {
-            PlayerGameWeakScoreDto model = new()
-            {
-                Fk_PlayerGameWeak = fk_PlayerGameWeak,
-                Fk_Team = fk_Team
-            };
-
-            PlayerGameWeakScoreCreateDto resultDto = _mapper.Map<PlayerGameWeakScoreCreateDto>(model);
-
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
             ViewData["ScoreType"] = _unitOfWork.PlayerScore.GetScoreTypesLookUp(new ScoreTypeParameters { HavePoints = true, IncludeTypeName = true }, otherLang);
 
-            return View(resultDto);
+            return View(new PlayerGameWeakScoreCreateDto
+            {
+                Fk_PlayerGameWeak = fk_PlayerGameWeak,
+            });
         }
 
         [HttpPost]
@@ -106,11 +101,11 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
                 Value = model.FinalValue.ToString(),
                 GameTime = model.GameTime,
                 IsCanNotEdit = true,
-                IsOut = model.Fk_ScoreType == (int)ScoreTypeEnum.Substitution_Event ? true : null,
+                IsOut = model.IsOut,
                 Points = model.Points,
                 CreatedBy = auth.UserName
             });
-            //_unitOfWork.Save().Wait();
+            _unitOfWork.Save().Wait();
 
             return Ok();
         }

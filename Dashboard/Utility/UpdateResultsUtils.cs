@@ -19,5 +19,10 @@
         {
             _servicesHttp.OnPost("​Games​/v1​/Games​/UpdateGames", null).Wait();
         }
+
+        public void UpdateGameResult(int fk_GameWeak, int fk_TeamGameWeak)
+        {
+            _servicesHttp.OnPost("​​/Games​/v1​/GameResult​/UpdateGameResult", null).Wait();
+        }
     }
 }

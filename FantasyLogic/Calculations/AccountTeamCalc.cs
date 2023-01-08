@@ -132,6 +132,8 @@ namespace FantasyLogic.Calculations
 
         public AccountTeamCustemClac AccountTeamPlayersCalculations(int fk_AccountTeamGameWeak, int fk_AccountTeam, GameWeakModel gameWeak, int fk_Season, bool saveChanges = true)
         {
+            bool gameWeakEnd = _unitOfWork.Season.CheckIfGameWeakEnded(gameWeak.Id);
+
             List<AccountTeamPlayersCalculationPoints> playersFinalPoints = new();
             List<AccountTeamPlayersCalculationPoints> flagListPoints = new();
 
@@ -243,7 +245,8 @@ namespace FantasyLogic.Calculations
 
                 double points = player.Points.Value * captianPoints;
 
-                if (player.IsPrimary == false &&
+                if (gameWeakEnd &&
+                    player.IsPrimary == false &&
                     accountTeamGameWeak.BenchBoost == false &&
                     accountTeamGameWeak.Top_11 == false)
                 {

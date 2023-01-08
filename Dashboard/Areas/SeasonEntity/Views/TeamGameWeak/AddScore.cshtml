@@ -15,6 +15,7 @@
 
             <div asp-validation-summary="All" class="text-danger">@ViewData["Error"]</div>
             <div class="row mb-1">
+                <input type="hidden" asp-for="@Model.Fk_PlayerGameWeak" value="" />
                 <div class="col-md-12 col-12">
                     <div class="mb-1">
                         <label asp-for="Fk_ScoreType" class="form-label"></label>
@@ -24,7 +25,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-6 col-12">
+                <div class="col-md-4 col-12">
                     <div class="mb-1">
                         <label asp-for="FinalValue" class="form-label"></label>
                         <input asp-for="FinalValue" required class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("FinalValue"))" />
@@ -32,11 +33,22 @@
                     </div>
                 </div>
 
-                <div class="col-md-6 col-12">
+                <div class="col-md-4 col-12">
                     <div class="mb-1">
                         <label asp-for="GameTime" class="form-label"></label>
                         <input asp-for="GameTime" required class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("GameTime"))" />
                         <span asp-validation-for="GameTime" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-12">
+                    <div class="mb-1">
+                        <label asp-for="IsOut" class="form-label"></label>
+                        <select name="RunBonus" class="select2 form-select">
+                            <option></option>
+                            <option value="true">@Localizer.Get("Yes")</option>
+                            <option value="false">@Localizer.Get("No")</option>
+                        </select>
                     </div>
                 </div>
 
@@ -68,20 +80,27 @@
     <script>
         $(document).on("click", ".submit_btn", function(e) {
             e.preventDefault();
+            debugger;
+
+            let fk_PlayerGameWeak = @Model.Fk_PlayerGameWeak;
 
             let fk_ScoreType = $("select[name=Fk_ScoreType]").val();
+            let isOut = $("select[name=IsOut]").val();
+
             let points = $("input[name=Points]").val();
             let finalValue = $("input[name=FinalValue]").val();
 
-          $.ajax({
+            $.ajax({
               url: '@Url.ActionLink("AddScore", "TeamGameWeak")',
               method: 'post',
               data: {
-                fk_ScoreType: fk_ScoreType,
-                points: points,
-                finalValue: finalValue
+                  fk_ScoreType: fk_ScoreType,
+                  points: points,
+                  finalValue: finalValue,
+                  isOut: isOut,
+                  fk_PlayerGameWeak: fk_PlayerGameWeak,
               },
-              success: function(data) {
+              success: function(result) {
                 $("#success").modal('show');
               }
           });

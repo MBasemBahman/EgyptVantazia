@@ -67,7 +67,6 @@ namespace Dashboard.MappingProfileCls
             CreateMap<TimeSpan?, string>().ConvertUsing(new TimeSpanNullableTypeConverter());
             CreateMap<string, List<string>>().ConvertUsing(new ListOfStringTypeConverter());
 
-
             _ = CreateMap<DtParameters, RequestParameters>()
                 .ForMember(dest => dest.SearchTerm, opt => opt.MapFrom(src => src.Search == null ? "" : src.Search.Value))
                 .ForMember(dest => dest.OrderBy, opt =>

@@ -101,7 +101,6 @@ namespace Repository.DBModels.AccountTeamModels
                                            (string.IsNullOrEmpty(dashboardSearch) ||
                                             a.Id.ToString().Contains(dashboardSearch) ||
                                             a.Account.FullName.Contains(dashboardSearch) ||
-                                            a.Season.Name.Contains(dashboardSearch) ||
                                             a.Name.Contains(dashboardSearch)) &&
 
                                            (Fk_GameWeak == 0 || a.AccountTeamGameWeaks.Any(a => a.Fk_GameWeak == Fk_GameWeak)) &&

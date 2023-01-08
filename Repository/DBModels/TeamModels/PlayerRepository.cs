@@ -24,6 +24,7 @@ namespace Repository.DBModels.TeamModels
                            parameters.CreatedAtTo,
                            parameters._365_PlayerIds,
                            parameters.Fk_TeamGameWeak_Ignored,
+                           parameters.Fk_TeamGameWeak,
                            parameters.Fk_Players,
                            parameters.BuyPriceFrom,
                            parameters.BuyPriceTo,
@@ -174,6 +175,7 @@ namespace Repository.DBModels.TeamModels
             DateTime? createdAtTo,
             List<string> _365_PlayerIds,
             int fk_TeamGameWeak_Ignored,
+            int fk_TeamGameWeak,
             List<int> fk_Players,
             double? buyPriceFrom,
             double? buyPriceTo,
@@ -197,6 +199,7 @@ namespace Repository.DBModels.TeamModels
                                       (createdAtFrom == null || a.CreatedAt >= createdAtFrom) &&
                                       (createdAtTo == null || a.CreatedAt <= createdAtTo) &&
                                       (fk_TeamGameWeak_Ignored == 0 || !a.PlayerGameWeaks.Any(b => b.Fk_TeamGameWeak == fk_TeamGameWeak_Ignored)) &&
+                                      (fk_TeamGameWeak == 0 || a.PlayerGameWeaks.Any(b => b.Fk_TeamGameWeak == fk_TeamGameWeak)) &&
                                       (Fk_PlayerPosition == 0 || a.Fk_PlayerPosition == Fk_PlayerPosition) &&
                                       (_365_PlayerIds == null || !_365_PlayerIds.Any() || _365_PlayerIds.Contains(a._365_PlayerId)) &&
                                       (string.IsNullOrWhiteSpace(_365_PlayerId) || a._365_PlayerId == _365_PlayerId) &&

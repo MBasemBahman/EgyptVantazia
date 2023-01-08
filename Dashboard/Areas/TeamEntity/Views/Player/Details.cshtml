@@ -50,7 +50,7 @@
         <hr/>
         
         <div class="card-body">
-            <a class="btn btn-primary update_account_team_points">@Localizer.Get("UpdateGameTeamPoints")</a>
+            <a class="btn btn-primary update_account_team_points">@Localizer.Get("UpdateAccountTeamPoints")</a>
             <hr/>
             <div class="d-flex justify-content-between align-items-start">
                 <span class="badge bg-light-primary">@Html.DisplayNameFor(model => Model.PlayerPrices)</span>
@@ -175,7 +175,7 @@
                 url: '@Url.ActionLink("UpdateAccountTeamPoints", "Home", new {area = "Dashboard"})',
                 method: 'post',
                 data: {
-                  fk_TeamGameWeak: '@Model.Id',
+                  fk_Player: '@Model.Id',
                 },
                 success: function(data) {
                   $("#success").modal('show');

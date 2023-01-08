@@ -218,9 +218,7 @@
                 $.ajax({
                     url: '@Url.ActionLink("UpdatePrivateLeagueRanking", "Home", new {area = "Dashboard"})',
                     method: 'post',
-                    data: {
-                      fk_GameWeak: fk_GameWeak,
-                    },
+                    data: {},
                     success: function(data) {
                       $("#success").modal('show');
                     }

@@ -92,7 +92,7 @@
 
                                 </div>
                                 <div class="card-body" style="overflow-x: auto">
-                                    <a class="btn btn-primary update_account_team_points">@Localizer.Get("UpdateGameTeamPoints")</a>
+                                    <a class="btn btn-primary update_account_team_points">@Localizer.Get("UpdateAccountTeamPoints")</a>
                                     <hr>
                                     <div class="d-flex justify-content-between align-items-start">
                                         <span class="badge bg-light-primary">@Html.DisplayNameFor(model => Model.AccountTeamGameWeaks)</span>
@@ -288,7 +288,6 @@
         // start update_account_team_points
         $(document).on("click", ".update_account_team_points", function(e) {
           e.preventDefault();
-          
           $(".update_account_team_points_modal").modal('show');
         });
         

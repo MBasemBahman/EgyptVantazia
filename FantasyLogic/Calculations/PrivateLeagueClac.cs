@@ -14,26 +14,28 @@ namespace FantasyLogic.Calculations
             _unitOfWork = unitOfWork;
         }
 
-        public void RunPrivateLeaguesRanking(bool indebug = false)
+        public void RunPrivateLeaguesRanking(int? fk_GameWeak, int id, bool indebug = false)
         {
             SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
 
             if (indebug)
             {
-                UpdatePrivateLeaguesRanking(season.Id, indebug);
+                UpdatePrivateLeaguesRanking(season.Id, fk_GameWeak, id, indebug);
             }
             else
             {
-                _ = BackgroundJob.Enqueue(() => UpdatePrivateLeaguesRanking(season.Id, indebug));
+                _ = BackgroundJob.Enqueue(() => UpdatePrivateLeaguesRanking(season.Id, fk_GameWeak, id, indebug));
             }
         }
 
-        public void UpdatePrivateLeaguesRanking(int fk_Season, bool indebug)
+        public void UpdatePrivateLeaguesRanking(int fk_Season, int? fk_GameWeak, int id, bool indebug)
         {
             var privateLeagues = _unitOfWork.PrivateLeague.GetPrivateLeagues(new PrivateLeagueParameters
             {
                 HaveMembers = true,
                 Fk_Season = fk_Season,
+                Fk_GameWeak = fk_GameWeak,
+                Id = id,
             }, false).Select(a => new
             {
                 a.Id,

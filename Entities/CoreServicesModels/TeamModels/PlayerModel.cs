@@ -25,6 +25,8 @@ namespace Entities.CoreServicesModels.TeamModels
 
         public int Fk_TeamGameWeak_Ignored { get; set; }
 
+        public int Fk_TeamGameWeak { get; set; }
+
         public int Fk_ScoreType { get; set; }
 
         public bool IncludeScore { get; set; }

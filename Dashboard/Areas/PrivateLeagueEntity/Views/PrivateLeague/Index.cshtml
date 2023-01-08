@@ -54,45 +54,45 @@
                                 <h4 class="card-title"> @ViewData["Title"]</h4>
 
                             </div>
-                       
+
                             <div class="card-datatable">
                                 <table class="datatables datatables-ajax table table-responsive table">
                                     <thead>
-                                    <tr>
-                                        <th>
-                                            @Html.DisplayNameFor(model => row.Id)
+                                        <tr>
+                                            <th>
+                                                @Html.DisplayNameFor(model => row.Id)
 
-                                            <a id="details" asp-action="Details">
-                                            </a>
-
-                                            @if (accessLevel.CreateAccess)
-                                            {
-                                                <a id="create" asp-action="CreateOrEdit">
+                                                <a id="details" asp-action="Details">
                                                 </a>
-                                            }
 
-                                            @if (accessLevel.EditAccess)
-                                            {
-                                                <a id="edit" asp-action="CreateOrEdit">
-                                                </a>
-                                            }
-                                            @if (accessLevel.DeleteAccess)
-                                            {
-                                                <a id="delete" asp-action="Delete">
-                                                </a>
-                                            }
+                                                @if (accessLevel.CreateAccess)
+                                                {
+                                                    <a id="create" asp-action="CreateOrEdit">
+                                                    </a>
+                                                }
 
-                                        </th>
-                                        <th>@Html.DisplayNameFor(model => row.Name)</th>
-                                        <th>@Html.DisplayNameFor(model => row.MemberCount)</th>
-                                        <th>@Localizer.Get("UpdateGameResult")</th>
-                                        <th>@Html.DisplayNameFor(model => row.GameWeak)</th>
+                                                @if (accessLevel.EditAccess)
+                                                {
+                                                    <a id="edit" asp-action="CreateOrEdit">
+                                                    </a>
+                                                }
+                                                @if (accessLevel.DeleteAccess)
+                                                {
+                                                    <a id="delete" asp-action="Delete">
+                                                    </a>
+                                                }
 
-                                        <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
-                                        <th>
-                                            @Html.DisplayNameFor(model => row.Id)
-                                        </th>
-                                    </tr>
+                                            </th>
+                                            <th>@Html.DisplayNameFor(model => row.Name)</th>
+                                            <th>@Html.DisplayNameFor(model => row.MemberCount)</th>
+                                            <th>@Localizer.Get("UpdatePrivateLeagueRanking")</th>
+                                            <th>@Html.DisplayNameFor(model => row.GameWeak)</th>
+
+                                            <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => row.Id)
+                                            </th>
+                                        </tr>
                                     </thead>
                                 </table>
                             </div>
@@ -133,9 +133,11 @@
                         { data: "id" },
                         { data:"name" },
                         { data:"memberCount" },
-                        { data:"id", render: function(data) {
+                        {
+                            data: "id",
+                            render: function (data) {
                           return `<a class="btn btn-primary update_private_league_ranking" data-id="${data}">
-                                @Localizer.Get("UpdateGameResult")
+                                @Localizer.Get("UpdatePrivateLeagueRanking")
                             </a>`;
                         } },
                         {
@@ -173,31 +175,30 @@
             LoadTable();
 
         });
-        
+
         // start update_private_league_ranking
         $(document).on("click", ".update_private_league_ranking", function(e) {
           e.preventDefault();
-          
-          let fk_PrivateLeague = $(this).data("id");
-          
-          $("input[name=FK_PrivateLeague]").val(fk_PrivateLeague);
-          
+
+            let id = $(this).data("id");
+
+            $("input[name=id]").val(id);
+
           $(".update_private_league_ranking_modal").modal('show');
         });
-        
+
         $(document).on("click", ".update_private_league_ranking_submit", function (e) {
-            let fk_GameWeak = $("select[name=Fk_GameWeak]").val();
-            
+            let id = $("input[name=id]").val();
             $.ajax({
                 url: '@Url.ActionLink("UpdatePrivateLeagueRanking", "Home", new {area = "Dashboard"})',
                 method: 'post',
                 data: {
-                  fk_GameWeak: fk_GameWeak,
+                    id: id,
                 },
                 success: function(data) {
                   $("#success").modal('show');
                 }
-            }); 
+            });
         });
         // end update_private_league_ranking
     </script>

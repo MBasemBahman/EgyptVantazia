@@ -62,15 +62,18 @@ namespace FantasyLogicMicroservices.Areas.AccountTeamArea.Controllers
 
         [HttpPost]
         [Route(nameof(UpdatePrivateLeaguesRanking))]
-        public IActionResult UpdatePrivateLeaguesRanking([FromQuery] bool indebug)
+        public IActionResult UpdatePrivateLeaguesRanking(
+            [FromQuery] bool indebug,
+            [FromQuery] int? fk_GameWeak,
+            [FromQuery] int id)
         {
             if (indebug)
             {
-                _fantasyUnitOfWork.PrivateLeagueClac.RunPrivateLeaguesRanking(indebug);
+                _fantasyUnitOfWork.PrivateLeagueClac.RunPrivateLeaguesRanking(fk_GameWeak, id, indebug);
             }
             else
             {
-                _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.PrivateLeagueClac.RunPrivateLeaguesRanking(indebug));
+                _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.PrivateLeagueClac.RunPrivateLeaguesRanking(fk_GameWeak, id, indebug));
             }
 
             return Ok();

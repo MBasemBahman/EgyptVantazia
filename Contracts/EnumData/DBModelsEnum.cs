@@ -12,6 +12,7 @@
         public enum DashboardAdministrationRoleEnum
         {
             Developer = 1,
+            Onwer = 2
         }
 
         public enum DashboardViewEnum

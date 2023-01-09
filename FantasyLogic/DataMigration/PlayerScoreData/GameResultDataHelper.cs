@@ -95,12 +95,11 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 GameId = teamGameWeak._365_MatchId.ParseToInt()
             });
 
-            bool matchEnded = !inDebug && !runAll && match.IsEnded /*teamGameWeak.EndTime < DateTime.UtcNow.ToEgypt()*/;
+            bool matchEnded = !inDebug && !runAll && !runBonus && match.IsEnded /*teamGameWeak.EndTime < DateTime.UtcNow.ToEgypt()*/;
 
             if (matchEnded)
             {
                 RecurringJob.RemoveIfExists(RecurringJobMatchId + teamGameWeak._365_MatchId.ToString());
-
             }
             if (matchEnded || runAll)
             {
@@ -144,6 +143,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                             Fk_PlayerPosition = a.Fk_PlayerPosition,
                             Fk_Team = a.Fk_Team
                         }).ToList();
+
 
                         if (!matchEnded)
                         {

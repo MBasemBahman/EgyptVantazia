@@ -306,7 +306,7 @@
             let runBonus = $("select[name=RunBonus]").val();
             
             $.ajax({
-                url: '@Url.ActionLink("UpdateGameResult", "Home", new {area = "Dashboard"})',
+                url: '@Url.Action("UpdateGameResult", "Home", new {area = "Dashboard"})',
                 method: 'post',
                 data: {
                   fk_TeamGameWeak: '@Model.Id',
@@ -329,7 +329,7 @@
         
         $(document).on("click", ".update_account_team_points_submit", function (e) {
             $.ajax({
-                url: '@Url.ActionLink("UpdateAccountTeamPoints", "Home", new {area = "Dashboard"})',
+                url: '@Url.Action("UpdateAccountTeamPoints", "Home", new {area = "Dashboard"})',
                 method: 'post',
                 data: {
                   fk_Player: '@Model.Id',

@@ -190,7 +190,7 @@
         $(document).on("click", ".update_private_league_ranking_submit", function (e) {
             let id = $("input[name=id]").val();
             $.ajax({
-                url: '@Url.ActionLink("UpdatePrivateLeagueRanking", "Home", new {area = "Dashboard"})',
+                url: '@Url.Action("UpdatePrivateLeagueRanking", "Home", new {area = "Dashboard"})',
                 method: 'post',
                 data: {
                     id: id,

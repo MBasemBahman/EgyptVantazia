@@ -184,12 +184,12 @@ namespace API.Areas.PlayerTransferArea.Controllers
                     });
                 }
 
-                int totalPrice = 0;
+                double totalPrice = 0;
                 int index = 0;
                 int freeTransfer = currentTeam.FreeTransfer;
                 foreach (PlayerTransferBuyModel player in model.BuyPlayers)
                 {
-                    int price = (int)prices.Where(a => a.Id == player.Fk_Player).Select(a => a.BuyPrice).FirstOrDefault();
+                    double price = prices.Where(a => a.Id == player.Fk_Player).Select(a => a.BuyPrice).FirstOrDefault();
 
                     _unitOfWork.PlayerTransfers.CreatePlayerTransfer(new PlayerTransfer
                     {

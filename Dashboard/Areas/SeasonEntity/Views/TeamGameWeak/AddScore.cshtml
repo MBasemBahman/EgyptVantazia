@@ -91,7 +91,7 @@
             let finalValue = $("input[name=FinalValue]").val();
 
             $.ajax({
-              url: '@Url.ActionLink("AddScore", "TeamGameWeak")',
+              url: '@Url.Action("AddScore", "TeamGameWeak")',
               method: 'post',
               data: {
                   fk_ScoreType: fk_ScoreType,

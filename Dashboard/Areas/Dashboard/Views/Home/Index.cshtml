@@ -129,7 +129,7 @@
 
             $(document).on("click", "#UpdateStandings", function(e) {
              $.ajax({
-                 url: '@Url.ActionLink("UpdateStandings", "Home")',
+                 url: '@Url.Action("UpdateStandings", "Home")',
                  method: 'post',
                  success: function(data) {
                      $("#success").modal('show');
@@ -142,7 +142,7 @@
 
             $(document).on("click", "#UpdateGames", function(e) {
              $.ajax({
-                 url: '@Url.ActionLink("UpdateGames", "Home")',
+                 url: '@Url.Action("UpdateGames", "Home")',
                  method: 'post',
                  success: function(data) {
                      $("#success").modal('show');
@@ -168,7 +168,7 @@
                 let runBonus = $("select[name=RunBonus]").val();
                 
                 $.ajax({
-                    url: '@Url.ActionLink("UpdateGameResult", "Home", new {area = "Dashboard"})',
+                    url: '@Url.Action("UpdateGameResult", "Home", new {area = "Dashboard"})',
                     method: 'post',
                     data: {
                       fk_GameWeak: fk_GameWeak,
@@ -193,7 +193,7 @@
                 let fk_GameWeak = $("select[name=Fk_GameWeak]").val();
                 
                 $.ajax({
-                    url: '@Url.ActionLink("UpdateAccountTeamGameWeakRanking", "Home", new {area = "Dashboard"})',
+                    url: '@Url.Action("UpdateAccountTeamGameWeakRanking", "Home", new {area = "Dashboard"})',
                     method: 'post',
                     data: {
                       fk_GameWeak: fk_GameWeak,
@@ -216,7 +216,7 @@
                 let fk_GameWeak = $("select[name=Fk_GameWeak]").val();
                 
                 $.ajax({
-                    url: '@Url.ActionLink("UpdatePrivateLeagueRanking", "Home", new {area = "Dashboard"})',
+                    url: '@Url.Action("UpdatePrivateLeagueRanking", "Home", new {area = "Dashboard"})',
                     method: 'post',
                     data: {},
                     success: function(data) {
@@ -237,7 +237,7 @@
                 let fk_GameWeak = $("select[name=Fk_GameWeak]").val();
                 
                 $.ajax({
-                    url: '@Url.ActionLink("UpdateAccountTeamPoints", "Home", new {area = "Dashboard"})',
+                    url: '@Url.Action("UpdateAccountTeamPoints", "Home", new {area = "Dashboard"})',
                     method: 'post',
                     data: {
                       fk_GameWeak: fk_GameWeak,

@@ -101,43 +101,45 @@ namespace Dashboard.Areas.AccountSubscriptionEntity.Controllers
             }
             try
             {
-
-                SubscriptionModel prevSubscription = _unitOfWork.Subscription.GetSubscriptions(new SubscriptionParameters
+                if (model.IsActive)
                 {
-                    Fk_Account = model.Fk_Account,
-                    Fk_Season = model.Fk_Season,
-                    Id = model.Fk_Subscription,
-                }, otherLang: false).FirstOrDefault();
-
-                if (prevSubscription != null && !prevSubscription.IsValid)
-                {
-                    throw new Exception("Account already get this subscription in this season!");
-                }
-
-                if (model.Fk_Subscription == (int)SubscriptionEnum.All)
-                {
-                    if (_unitOfWork.Account.GetAccountSubscriptions(new AccountSubscriptionParameters
+                    SubscriptionModel prevSubscription = _unitOfWork.Subscription.GetSubscriptions(new SubscriptionParameters
                     {
                         Fk_Account = model.Fk_Account,
                         Fk_Season = model.Fk_Season,
-                        //NotEqualSubscriptionId = (int)SubscriptionEnum.Add3MillionsBank
-                    }, otherLang: false).Any())
+                        Id = model.Fk_Subscription,
+                    }, otherLang: false).FirstOrDefault();
+
+                    if (prevSubscription != null && !prevSubscription.IsValid)
                     {
-                        throw new Exception("Account can`t buy this subscription because you already have sub one in this season!");
+                        throw new Exception("Account already get this subscription in this season!");
                     }
                 }
-                else if (model.Fk_Subscription != (int)SubscriptionEnum.All)
-                {
-                    if (_unitOfWork.Account.GetAccountSubscriptions(new AccountSubscriptionParameters
-                    {
-                        Fk_Account = model.Fk_Account,
-                        Fk_Season = model.Fk_Season,
-                        Fk_Subscription = (int)SubscriptionEnum.All
-                    }, otherLang: false).Any())
-                    {
-                        throw new Exception("Account can`t buy this subscription because you already have super one in this season!");
-                    }
-                }
+
+                //if (model.Fk_Subscription == (int)SubscriptionEnum.All)
+                //{
+                //    if (_unitOfWork.Account.GetAccountSubscriptions(new AccountSubscriptionParameters
+                //    {
+                //        Fk_Account = model.Fk_Account,
+                //        Fk_Season = model.Fk_Season,
+                //        //NotEqualSubscriptionId = (int)SubscriptionEnum.Add3MillionsBank
+                //    }, otherLang: false).Any())
+                //    {
+                //        throw new Exception("Account can`t buy this subscription because you already have sub one in this season!");
+                //    }
+                //}
+                //else if (model.Fk_Subscription != (int)SubscriptionEnum.All)
+                //{
+                //    if (_unitOfWork.Account.GetAccountSubscriptions(new AccountSubscriptionParameters
+                //    {
+                //        Fk_Account = model.Fk_Account,
+                //        Fk_Season = model.Fk_Season,
+                //        Fk_Subscription = (int)SubscriptionEnum.All
+                //    }, otherLang: false).Any())
+                //    {
+                //        throw new Exception("Account can`t buy this subscription because you already have super one in this season!");
+                //    }
+                //}
 
                 UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
                 AccountSubscription accountSubscriptionDB = new();

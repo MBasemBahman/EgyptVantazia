@@ -133,7 +133,7 @@ namespace FantasyLogic.DataMigration.GamesData
 
                 GameResultDataHelper gameResultDataHelper = new(_unitOfWork, _365Services);
 
-                string jobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, false, false, false,false), startTime);
+                string jobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, false, false, false, false), startTime);
                 string secondJobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, true, false, false, false), startTime.AddMinutes(90));
                 string thirdJobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, true, false, false, false), startTime.AddMinutes(120));
                 BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, false, false, false, true), startTime.AddMinutes(123));
@@ -284,6 +284,8 @@ namespace FantasyLogic.DataMigration.GamesData
 
                 if (accountTeamGameWeakModel != null)
                 {
+                    bool freeHit = accountTeamGameWeakModel.FreeHit;
+
                     if (accountTeamGameWeakModel.FreeHit ||
                         _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
                         {
@@ -296,6 +298,7 @@ namespace FantasyLogic.DataMigration.GamesData
 
                         do
                         {
+
                             prevPlayers = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
                             {
                                 Fk_GameWeak = fk_PrevGameWeak,
@@ -312,8 +315,9 @@ namespace FantasyLogic.DataMigration.GamesData
                             })
                             .ToList();
 
-                            if (prevPlayers.Count < 15)
+                            if (freeHit || prevPlayers.Count < 15)
                             {
+                                freeHit = false;
                                 prev_365_GameWeakId--;
 
                                 fk_PrevGameWeak = _unitOfWork.Season.GetGameWeaks(new GameWeakParameters

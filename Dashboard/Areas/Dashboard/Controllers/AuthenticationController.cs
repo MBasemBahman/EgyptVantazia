@@ -22,51 +22,6 @@
         [AllowAnonymous]
         public async Task<IActionResult> Login()
         {
-            //var accounTeamsGameWeaks = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new Entities.CoreServicesModels.AccountTeamModels.AccountTeamGameWeakParameters
-            //{
-            //    Fk_Account = 66
-            //}, false).ToList();
-
-            //foreach (var accounTeamsGameWeak in accounTeamsGameWeaks)
-            //{
-            //    var gameweaks = _unitOfWork.Season.GetGameWeaks(new Entities.CoreServicesModels.SeasonModels.GameWeakParameters
-            //    {
-            //        GameWeakTo = (accounTeamsGameWeak.GameWeak._365_GameWeakId_Parsed - 1).Value
-            //    }, false).ToList();
-
-            //    var players = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new Entities.CoreServicesModels.AccountTeamModels.AccountTeamPlayerGameWeakParameters
-            //    {
-            //        Fk_AccountTeam = accounTeamsGameWeak.Fk_AccountTeam,
-            //        Fk_GameWeak = accounTeamsGameWeak.Fk_GameWeak,
-            //        IsTransfer = false
-            //    }, false).ToList();
-
-            //    if (players.Any() && players.Count == 15)
-            //    {
-            //        foreach (var gameweak in gameweaks)
-            //        {
-            //            _unitOfWork.AccountTeam.CreateAccountTeamGameWeak(new Entities.DBModels.AccountTeamModels.AccountTeamGameWeak
-            //            {
-            //                Fk_AccountTeam = accounTeamsGameWeak.Fk_AccountTeam,
-            //                Fk_GameWeak = gameweak.Id
-            //            });
-
-            //            foreach (var player in players)
-            //            {
-            //                _unitOfWork.AccountTeam.CreateAccountTeamPlayerGameWeak(new Entities.DBModels.AccountTeamModels.AccountTeamPlayerGameWeak
-            //                {
-            //                    Fk_AccountTeamPlayer = player.Fk_AccountTeamPlayer,
-            //                    Fk_GameWeak = gameweak.Id,
-            //                    Fk_TeamPlayerType = player.Fk_TeamPlayerType,
-            //                    IsPrimary = player.IsPrimary,
-            //                    Order = player.Order,
-            //                });
-            //            }
-            //        }
-            //        _unitOfWork.Save().Wait();
-            //    }
-            //}
-
             string refreshToken = Request.Cookies[HeadersConstants.SetRefresh];
 
             try

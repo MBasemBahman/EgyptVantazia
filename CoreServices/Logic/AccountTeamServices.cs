@@ -450,6 +450,11 @@ namespace CoreServices.Logic
         {
             return _repository.AccountTeamPlayerGameWeak.Count();
         }
+
+        public void ResetAccountTeamPlayer(int fk_AccountTeam, int fk_GameWeak)
+        {
+            _repository.AccountTeamPlayerGameWeak.ResetAccountTeamPlayer(fk_AccountTeam, fk_GameWeak);
+        }
         #endregion
 
         #region AccountTeamPlayer Services

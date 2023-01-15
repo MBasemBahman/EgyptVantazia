@@ -34,6 +34,12 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
         [Route(nameof(UpdateRecurringJob))]
         public IActionResult UpdateRecurringJob()
         {
+            //_unitOfWork.AccountTeam.ResetAccountTeamPlayer(3958, 58);
+            //_unitOfWork.Save().Wait();
+
+            //_fantasyUnitOfWork.GamesDataHelper.TransferAccountTeamPlayers(3958, 58, 51, 13, 5).Wait();
+            //_unitOfWork.Save().Wait();
+
             WeeklyRecurringJob();
             DailyRecurringJob();
 

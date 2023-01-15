@@ -61,6 +61,17 @@ namespace Repository.DBModels.AccountTeamModels
                 base.Create(entity);
             }
         }
+
+        public void ResetAccountTeamPlayer(int fk_AccountTeam, int fk_GameWeak)
+        {
+            List<AccountTeamPlayerGameWeak> players = FindAll(new AccountTeamPlayerGameWeakParameters
+            {
+                Fk_AccountTeam = fk_AccountTeam,
+                Fk_GameWeak = fk_GameWeak
+            }, trackChanges: true).ToList();
+
+            players.ForEach(a => Delete(a));
+        }
     }
 
     public static class AccountTeamPlayerGameWeakRepositoryExtension

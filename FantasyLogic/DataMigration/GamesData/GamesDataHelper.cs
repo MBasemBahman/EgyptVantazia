@@ -284,7 +284,17 @@ namespace FantasyLogic.DataMigration.GamesData
 
                 if (accountTeamGameWeakModel != null)
                 {
-                    bool freeHit = accountTeamGameWeakModel.FreeHit;
+                    bool freeHit = false;
+
+                    if (_unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
+                    {
+                        Fk_GameWeak = fk_PrevGameWeak,
+                        Fk_AccountTeam = fk_AccounTeam,
+                        FreeHit = true,
+                    }, otherLang: false).Any())
+                    {
+                        freeHit = true;
+                    }
 
                     if (accountTeamGameWeakModel.FreeHit ||
                         _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters

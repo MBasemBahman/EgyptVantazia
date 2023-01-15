@@ -38,7 +38,8 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             TeamGameWeakParameters parameters,
             bool runBonus,
             bool inDebug,
-            bool runAll)
+            bool runAll,
+            bool stopAll)
         {
             SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
 
@@ -70,23 +71,23 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             {
                 if (inDebug)
                 {
-                    UpdateGameResult(teamGameWeak, scoreTypes, runBonus, inDebug, runAll).Wait();
+                    UpdateGameResult(teamGameWeak, scoreTypes, runBonus, inDebug, runAll, stopAll).Wait();
                 }
                 if (runAll)
                 {
-                    _ = BackgroundJob.Enqueue(() => UpdateGameResult(teamGameWeak, scoreTypes, runBonus, inDebug, runAll));
+                    _ = BackgroundJob.Enqueue(() => UpdateGameResult(teamGameWeak, scoreTypes, runBonus, inDebug, runAll, stopAll));
                 }
                 else
                 {
                     if (runAll || teamGameWeak.EndTime > DateTime.UtcNow.ToEgypt())
                     {
-                        RecurringJob.AddOrUpdate(RecurringJobMatchId + teamGameWeak._365_MatchId.ToString(), () => UpdateGameResult(teamGameWeak, scoreTypes, runBonus, inDebug, runAll), CronExpression.EveryMinutes(5), TimeZoneInfo.Utc);
+                        RecurringJob.AddOrUpdate(RecurringJobMatchId + teamGameWeak._365_MatchId.ToString(), () => UpdateGameResult(teamGameWeak, scoreTypes, runBonus, inDebug, runAll, stopAll), CronExpression.EveryMinutes(5), TimeZoneInfo.Utc);
                     }
                 }
             }
         }
 
-        public async Task UpdateGameResult(TeamGameWeakDto teamGameWeak, List<ScoreTypeDto> scoreTypes, bool runBonus, bool inDebug, bool runAll)
+        public async Task UpdateGameResult(TeamGameWeakDto teamGameWeak, List<ScoreTypeDto> scoreTypes, bool runBonus, bool inDebug, bool runAll, bool stopAll)
         {
             TeamGameWeak match = await _unitOfWork.Season.FindTeamGameWeakbyId(teamGameWeak.Id, trackChanges: true);
 
@@ -97,7 +98,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
 
             bool matchEnded = !inDebug && !runAll && !runBonus && match.IsEnded /*teamGameWeak.EndTime < DateTime.UtcNow.ToEgypt()*/;
 
-            if (matchEnded)
+            if (matchEnded || stopAll)
             {
                 RecurringJob.RemoveIfExists(RecurringJobMatchId + teamGameWeak._365_MatchId.ToString());
             }

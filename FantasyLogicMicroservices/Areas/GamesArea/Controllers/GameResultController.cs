@@ -26,9 +26,10 @@ namespace FantasyLogicMicroservices.Areas.GamesArea.Controllers
             [FromQuery] TeamGameWeakParameters parameters,
             [FromQuery] bool runBonus,
             [FromQuery] bool inDebug,
-            [FromQuery] bool runAll)
+            [FromQuery] bool runAll,
+            [FromQuery] bool stopAll)
         {
-            _fantasyUnitOfWork.GameResultDataHelper.RunUpdateGameResult(parameters, runBonus, inDebug, runAll);
+            _fantasyUnitOfWork.GameResultDataHelper.RunUpdateGameResult(parameters, runBonus, inDebug, runAll, stopAll);
 
             return Ok();
         }

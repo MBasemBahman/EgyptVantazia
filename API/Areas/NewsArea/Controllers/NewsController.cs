@@ -26,6 +26,7 @@ namespace API.Areas.NewsArea.Controllers
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
+            parameters.OrderBy = "id desc";
             parameters.GetAttachments = true;
 
             PagedList<NewsModel> data = await _unitOfWork.News.GetNewsPaged(parameters, otherLang);

@@ -403,7 +403,11 @@ namespace CoreServices.Logic
                                   CreatedAt = a.CreatedAt,
                                   TransactionId = a.TransactionId,
                                   Fk_Account = a.Fk_Account,
-                                  Amount = a.Amount
+                                  Amount = a.Amount,
+                                  Account = new AccountModel
+                                  {
+                                      Name = a.Account.FullName
+                                  }
                               })
                               .Search(parameters.SearchColumns, parameters.SearchTerm)
                               .Sort(parameters.OrderBy);

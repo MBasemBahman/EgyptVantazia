@@ -345,13 +345,13 @@ namespace CoreServices.Logic
                 }
             }
 
-            if (PlayerGameWeakScore.Fk_ScoreType == (int)ScoreTypeEnum.Ranking)
-            {
-                if (PlayerGameWeakScore.Points <= 0)
-                {
-                    return;
-                }
-            }
+            // if (PlayerGameWeakScore.Fk_ScoreType == (int)ScoreTypeEnum.Ranking)
+            // {
+            //     if (PlayerGameWeakScore.Points <= 0)
+            //     {
+            //         return;
+            //     }
+            // }
 
             if (PlayerGameWeakScore.Fk_ScoreType == (int)ScoreTypeEnum.CleanSheet)
             {

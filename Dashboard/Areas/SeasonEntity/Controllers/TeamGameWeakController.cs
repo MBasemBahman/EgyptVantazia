@@ -89,7 +89,7 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddScore(PlayerGameWeakScoreCreateDto model)
+        public async Task<ActionResult> AddScore(PlayerGameWeakScoreCreateDto model)
         {
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
@@ -105,7 +105,7 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
                 Points = model.Points,
                 CreatedBy = auth.UserName
             });
-            _unitOfWork.Save().Wait();
+            await _unitOfWork.Save();
 
             return Ok();
         }

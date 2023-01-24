@@ -44,7 +44,7 @@
                 <div class="col-md-4 col-12">
                     <div class="mb-1">
                         <label asp-for="IsOut" class="form-label"></label>
-                        <select name="RunBonus" class="select2 form-select">
+                        <select asp-for="IsOut" class="select2 form-select">
                             <option></option>
                             <option value="true">@Localizer.Get("Yes")</option>
                             <option value="false">@Localizer.Get("No")</option>
@@ -80,9 +80,8 @@
     <script>
         $(document).on("click", ".submit_btn", function(e) {
             e.preventDefault();
-            debugger;
-
-            let fk_PlayerGameWeak = @Model.Fk_PlayerGameWeak;
+            
+            let fk_PlayerGameWeak = '@Model.Fk_PlayerGameWeak';
 
             let fk_ScoreType = $("select[name=Fk_ScoreType]").val();
             let isOut = $("select[name=IsOut]").val();

@@ -2,6 +2,7 @@
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.SeasonModels;
 using FantasyLogic;
+using FantasyLogic.Calculations;
 using FantasyLogicMicroservices.Controllers;
 using Hangfire;
 using Hangfire.Storage;
@@ -58,7 +59,7 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
         private void DailyRecurringJob()
         {
             //// At 01:00 AM
-            //RecurringJob.AddOrUpdate("RemoveOldRecurringJob", () => RemoveOldRecurringJob(), "0 1 * * *", TimeZoneInfo.Utc);
+            RecurringJob.AddOrUpdate("RunAccountTeamsCalculations", () => _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(0, 0, null, false), "0 1 * * *", TimeZoneInfo.Utc);
 
             // At 02:00 AM
             //RecurringJob.AddOrUpdate("UpdateAccountTeamGameWeakRanking", () => _fantasyUnitOfWork.AccountTeamCalc.RunUpdateAccountTeamGameWeakRanking(), "0 2 * * *", TimeZoneInfo.Utc);

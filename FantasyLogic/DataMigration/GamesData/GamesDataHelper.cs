@@ -136,7 +136,7 @@ namespace FantasyLogic.DataMigration.GamesData
                 string jobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, false, false, false, false), startTime);
                 string secondJobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, true, false, false, false), startTime.AddMinutes(90));
                 string thirdJobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, true, false, false, false), startTime.AddMinutes(120));
-                BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, false, false, false, true), startTime.AddMinutes(123));
+                BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, false, false, false, true), startTime.AddMinutes(130));
 
                 match.JobId = jobId;
                 match.SecondJobId = secondJobId;
@@ -183,26 +183,26 @@ namespace FantasyLogic.DataMigration.GamesData
 
                     await _unitOfWork.Save();
                 }
-                if (teamGameWeak.EndTime > DateTime.MinValue)
-                {
-                    DateTime endTime = teamGameWeak.EndTime.AddHours(6);
+                //if (teamGameWeak.EndTime > DateTime.MinValue)
+                //{
+                //    DateTime endTime = teamGameWeak.EndTime.AddHours(6);
 
-                    GameWeak gameWeak = await _unitOfWork.Season.FindGameWeakbyId(teamGameWeak.Fk_GameWeak, trackChanges: true);
+                //    GameWeak gameWeak = await _unitOfWork.Season.FindGameWeakbyId(teamGameWeak.Fk_GameWeak, trackChanges: true);
 
-                    if (gameWeak.EndTimeJobId.IsExisting())
-                    {
-                        _ = BackgroundJob.Delete(gameWeak.EndTimeJobId);
-                    }
+                //    if (gameWeak.EndTimeJobId.IsExisting())
+                //    {
+                //        _ = BackgroundJob.Delete(gameWeak.EndTimeJobId);
+                //    }
 
-                    if (endTime > DateTime.UtcNow)
-                    {
-                        gameWeak.EndTimeJobId = BackgroundJob.Schedule(() => _accountTeamCalc.RunAccountTeamsCalculations(gameWeak.Id, 0, null, false), endTime);
-                    }
+                //    if (endTime > DateTime.UtcNow)
+                //    {
+                //        gameWeak.EndTimeJobId = BackgroundJob.Schedule(() => _accountTeamCalc.RunAccountTeamsCalculations(gameWeak.Id, 0, null, false), endTime);
+                //    }
 
-                    gameWeak.EndTime = endTime;
+                //    gameWeak.EndTime = endTime;
 
-                    await _unitOfWork.Save();
-                }
+                //    await _unitOfWork.Save();
+                //}
             }
         }
 

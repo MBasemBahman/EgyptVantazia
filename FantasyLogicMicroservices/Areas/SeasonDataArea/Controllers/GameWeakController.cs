@@ -31,6 +31,16 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
             this._365Services = _365Services;
         }
 
+
+        [HttpPost]
+        [Route(nameof(UpdateCurrentGameWeak))]
+        public IActionResult UpdateCurrentGameWeak(int id)
+        {
+            _fantasyUnitOfWork.GamesDataHelper.UpdateCurrentGameWeak(id).Wait();
+
+            return Ok();
+        }
+
         [HttpPost]
         [Route(nameof(UpdateRecurringJob))]
         public IActionResult UpdateRecurringJob()

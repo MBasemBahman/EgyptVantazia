@@ -35,6 +35,12 @@ namespace Entities.CoreServicesModels.TeamModels
 
         public List<int> Fk_ScoreStatesForGameWeak { get; set; }
 
+        public int Fk_ScoreStateForCustomOrder { get; set; }
+
+        public bool CustomOrderInSeasonList { get; set; }
+
+        public bool CustomOrderDesc { get; set; }
+
         public int Fk_Season { get; set; }
 
         public int Fk_SeasonForScores { get; set; }
@@ -101,9 +107,17 @@ namespace Entities.CoreServicesModels.TeamModels
 
         public int? Top15 { get; set; }
 
+        public PlayerSeasonScoreStateModel SeasonScoreState { get; set; }
+
+        public bool HaveSeasonScoreState { get; set; }
+
         public List<PlayerSeasonScoreStateModel> SeasonScoreStates { get; set; }
 
         public List<PlayerGameWeakScoreStateModel> GameWeakScoreStates { get; set; }
+
+        public PlayerGameWeakScoreStateModel GameWeakScoreState { get; set; }
+
+        public bool HaveGameWeakScoreState { get; set; }
 
         public IList<TeamModel> NextMatches { get; set; }
 

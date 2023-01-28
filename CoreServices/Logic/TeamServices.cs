@@ -1,6 +1,7 @@
 ﻿using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
+using Entities.DBModels.PlayerStateModels;
 using Entities.DBModels.TeamModels;
 using static Contracts.EnumData.DBModelsEnum;
 using static Entities.EnumData.LogicEnumData;
@@ -181,99 +182,240 @@ namespace CoreServices.Logic
         public IQueryable<PlayerModel> GetPlayers(PlayerParameters parameters,
                 bool otherLang)
         {
-            return _repository.Player
-                       .FindAll(parameters, trackChanges: false)
-                       .Select(a => new PlayerModel
-                       {
-                           Id = a.Id,
-                           CreatedAt = a.CreatedAt,
-                           CreatedBy = a.CreatedBy,
-                           LastModifiedAt = a.LastModifiedAt,
-                           LastModifiedBy = a.LastModifiedBy,
-                           _365_PlayerId = a._365_PlayerId,
-                           Name = otherLang ? a.PlayerLang.Name : a.Name,
-                           IsActive = a.IsActive,
-                           ShortName = otherLang ? a.PlayerLang.ShortName : a.ShortName,
-                           ImageUrl = !string.IsNullOrEmpty(a.ImageUrl) ? a.StorageUrl + a.ImageUrl : a.Team.ShirtStorageUrl + a.Team.ShirtImageUrl,
-                           Fk_PlayerPosition = a.Fk_PlayerPosition,
-                           Fk_Team = a.Fk_Team,
-                           PlayerNumber = a.PlayerNumber,
-                           Age = a.Age,
-                           Top15 = a.PlayerSeasonScoreStates
-                                    .Where(b => b.Season.IsCurrent && b.Top15 != null)
-                                    .Select(b => b.Top15)
-                                    .FirstOrDefault(),
-                           PlayerPosition = new PlayerPositionModel
-                           {
-                               Name = otherLang ? a.PlayerPosition.PlayerPositionLang.Name : a.PlayerPosition.Name,
-                               ShortName = otherLang ? a.PlayerPosition.PlayerPositionLang.ShortName : a.PlayerPosition.ShortName,
-                               ImageUrl = a.PlayerPosition.StorageUrl + a.PlayerPosition.ImageUrl,
-                               _365_PositionId = a.PlayerPosition._365_PositionId
-                           },
-                           Team = new TeamModel
-                           {
-                               Name = otherLang ? a.Team.TeamLang.Name : a.Team.Name,
-                               ShortName = otherLang ? a.Team.TeamLang.ShortName : a.Team.ShortName,
-                               ImageUrl = a.Team.StorageUrl + a.Team.ImageUrl,
-                               ShirtImageUrl = a.Team.ShirtStorageUrl + a.Team.ShirtImageUrl,
-                               _365_TeamId = a.Team._365_TeamId
-                           },
-                           BuyPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault(),
-                           SellPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.SellPrice).FirstOrDefault(),
-                           SeasonScoreStates = parameters.IncludeScore && parameters.Fk_SeasonForScores > 0 ?
-                                               a.PlayerSeasonScoreStates
-                                                .Where(b => b.Fk_Season == parameters.Fk_SeasonForScores &&
-                                                            (parameters.Fk_ScoreStatesForSeason == null ||
-                                                             !parameters.Fk_ScoreStatesForSeason.Any() ||
-                                                             parameters.Fk_ScoreStatesForSeason.Contains(b.Fk_ScoreState)))
-                                                .Select(b => new PlayerSeasonScoreStateModel
-                                                {
-                                                    Id = b.Id,
-                                                    Fk_Player = b.Fk_Player,
-                                                    Points = b.Points,
-                                                    Percent = b.Percent,
-                                                    Value = b.Value,
-                                                    Fk_ScoreState = b.Fk_ScoreState,
-                                                    Fk_Season = b.Fk_Season,
-                                                    LastModifiedAt = b.LastModifiedAt,
-                                                    ScoreState = new ScoreStateModel
-                                                    {
-                                                        Id = b.Fk_ScoreState,
-                                                        Name = otherLang ? b.ScoreState.ScoreStateLang.Name : b.ScoreState.Name,
-                                                    }
-                                                })
-                                                .ToList() : null,
-                           GameWeakScoreStates = parameters.IncludeScore && parameters.Fk_GameWeakForScores > 0 ?
-                                               a.PlayerGameWeakScoreStates
-                                                .Where(b => b.Fk_GameWeak == parameters.Fk_GameWeakForScores &&
-                                                            (parameters.Fk_ScoreStatesForGameWeak == null ||
-                                                             !parameters.Fk_ScoreStatesForGameWeak.Any() ||
-                                                             parameters.Fk_ScoreStatesForGameWeak.Contains(b.Fk_ScoreState)))
-                                                .Select(b => new PlayerGameWeakScoreStateModel
-                                                {
-                                                    Id = b.Id,
-                                                    Fk_Player = b.Fk_Player,
-                                                    Points = b.Points,
-                                                    Percent = b.Percent,
-                                                    Value = b.Value,
-                                                    Fk_ScoreState = b.Fk_ScoreState,
-                                                    Fk_GameWeak = b.Fk_GameWeak,
-                                                    LastModifiedAt = b.LastModifiedAt,
-                                                    GameWeak = new GameWeakModel
-                                                    {
-                                                        Id = b.Fk_GameWeak,
-                                                        Name = otherLang ? b.GameWeak.GameWeakLang.Name : b.GameWeak.Name,
-                                                    },
-                                                    ScoreState = new ScoreStateModel
-                                                    {
-                                                        Id = b.Fk_ScoreState,
-                                                        Name = otherLang ? b.ScoreState.ScoreStateLang.Name : b.ScoreState.Name,
-                                                    }
-                                                })
-                                                .ToList() : null
-                       })
-                       .Search(parameters.SearchColumns, parameters.SearchTerm)
-                       .Sort(parameters.OrderBy);
+            IQueryable<PlayerModel> quary = _repository.Player
+                                   .FindAll(parameters, trackChanges: false)
+                                   .Select(a => new PlayerModel
+                                   {
+                                       Id = a.Id,
+                                       CreatedAt = a.CreatedAt,
+                                       CreatedBy = a.CreatedBy,
+                                       LastModifiedAt = a.LastModifiedAt,
+                                       LastModifiedBy = a.LastModifiedBy,
+                                       _365_PlayerId = a._365_PlayerId,
+                                       Name = otherLang ? a.PlayerLang.Name : a.Name,
+                                       IsActive = a.IsActive,
+                                       ShortName = otherLang ? a.PlayerLang.ShortName : a.ShortName,
+                                       ImageUrl = !string.IsNullOrEmpty(a.ImageUrl) ? a.StorageUrl + a.ImageUrl : a.Team.ShirtStorageUrl + a.Team.ShirtImageUrl,
+                                       Fk_PlayerPosition = a.Fk_PlayerPosition,
+                                       Fk_Team = a.Fk_Team,
+                                       PlayerNumber = a.PlayerNumber,
+                                       Age = a.Age,
+                                       Top15 = a.PlayerSeasonScoreStates
+                                                .Where(b => b.Season.IsCurrent && b.Top15 != null)
+                                                .Select(b => b.Top15)
+                                                .FirstOrDefault(),
+                                       PlayerPosition = new PlayerPositionModel
+                                       {
+                                           Name = otherLang ? a.PlayerPosition.PlayerPositionLang.Name : a.PlayerPosition.Name,
+                                           ShortName = otherLang ? a.PlayerPosition.PlayerPositionLang.ShortName : a.PlayerPosition.ShortName,
+                                           ImageUrl = a.PlayerPosition.StorageUrl + a.PlayerPosition.ImageUrl,
+                                           _365_PositionId = a.PlayerPosition._365_PositionId
+                                       },
+                                       Team = new TeamModel
+                                       {
+                                           Name = otherLang ? a.Team.TeamLang.Name : a.Team.Name,
+                                           ShortName = otherLang ? a.Team.TeamLang.ShortName : a.Team.ShortName,
+                                           ImageUrl = a.Team.StorageUrl + a.Team.ImageUrl,
+                                           ShirtImageUrl = a.Team.ShirtStorageUrl + a.Team.ShirtImageUrl,
+                                           _365_TeamId = a.Team._365_TeamId
+                                       },
+                                       BuyPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault(),
+                                       SellPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.SellPrice).FirstOrDefault(),
+                                       SeasonScoreStates = parameters.IncludeScore && parameters.Fk_SeasonForScores > 0 ?
+                                                           a.PlayerSeasonScoreStates
+                                                            .Where(b => b.Fk_Season == parameters.Fk_SeasonForScores &&
+                                                                        (parameters.Fk_ScoreStatesForSeason == null ||
+                                                                         !parameters.Fk_ScoreStatesForSeason.Any() ||
+                                                                         parameters.Fk_ScoreStatesForSeason.Contains(b.Fk_ScoreState)))
+                                                            .Select(b => new PlayerSeasonScoreStateModel
+                                                            {
+                                                                Id = b.Id,
+                                                                Fk_Player = b.Fk_Player,
+                                                                Points = b.Points,
+                                                                Percent = b.Percent,
+                                                                Value = b.Value,
+                                                                Fk_ScoreState = b.Fk_ScoreState,
+                                                                Fk_Season = b.Fk_Season,
+                                                                LastModifiedAt = b.LastModifiedAt,
+                                                                ScoreState = new ScoreStateModel
+                                                                {
+                                                                    Id = b.Fk_ScoreState,
+                                                                    Name = otherLang ? b.ScoreState.ScoreStateLang.Name : b.ScoreState.Name,
+                                                                }
+                                                            })
+                                                            .ToList() : null,
+                                       SeasonScoreState = parameters.IncludeScore &&
+                                                          parameters.Fk_SeasonForScores > 0 &&
+                                                          parameters.CustomOrderInSeasonList &&
+                                                          parameters.Fk_ScoreStateForCustomOrder > 0 ?
+                                                           a.PlayerSeasonScoreStates
+                                                            .Where(b => b.Fk_Season == parameters.Fk_SeasonForScores &&
+                                                                        b.Fk_ScoreState == parameters.Fk_ScoreStateForCustomOrder &&
+                                                                        (parameters.Fk_ScoreStatesForSeason == null ||
+                                                                         !parameters.Fk_ScoreStatesForSeason.Any() ||
+                                                                         parameters.Fk_ScoreStatesForSeason.Contains(b.Fk_ScoreState)))
+                                                            .Select(b => new PlayerSeasonScoreStateModel
+                                                            {
+                                                                Points = b.Points,
+                                                                Percent = b.Percent,
+                                                                Value = b.Value,
+                                                            })
+                                                            .FirstOrDefault() : null,
+                                       HaveSeasonScoreState = parameters.IncludeScore &&
+                                                          parameters.Fk_SeasonForScores > 0 &&
+                                                          parameters.CustomOrderInSeasonList &&
+                                                          parameters.Fk_ScoreStateForCustomOrder > 0 ?
+                                                           a.PlayerSeasonScoreStates
+                                                            .Any(b => b.Fk_Season == parameters.Fk_SeasonForScores &&
+                                                                        b.Fk_ScoreState == parameters.Fk_ScoreStateForCustomOrder &&
+                                                                        (parameters.Fk_ScoreStatesForSeason == null ||
+                                                                         !parameters.Fk_ScoreStatesForSeason.Any() ||
+                                                                         parameters.Fk_ScoreStatesForSeason.Contains(b.Fk_ScoreState))) : false,
+                                       GameWeakScoreStates = parameters.IncludeScore && parameters.Fk_GameWeakForScores > 0 ?
+                                                           a.PlayerGameWeakScoreStates
+                                                            .Where(b => b.Fk_GameWeak == parameters.Fk_GameWeakForScores &&
+                                                                        (parameters.Fk_ScoreStatesForGameWeak == null ||
+                                                                         !parameters.Fk_ScoreStatesForGameWeak.Any() ||
+                                                                         parameters.Fk_ScoreStatesForGameWeak.Contains(b.Fk_ScoreState)))
+                                                            .Select(b => new PlayerGameWeakScoreStateModel
+                                                            {
+                                                                Id = b.Id,
+                                                                Fk_Player = b.Fk_Player,
+                                                                Points = b.Points,
+                                                                Percent = b.Percent,
+                                                                Value = b.Value,
+                                                                Fk_ScoreState = b.Fk_ScoreState,
+                                                                Fk_GameWeak = b.Fk_GameWeak,
+                                                                LastModifiedAt = b.LastModifiedAt,
+                                                                GameWeak = new GameWeakModel
+                                                                {
+                                                                    Id = b.Fk_GameWeak,
+                                                                    Name = otherLang ? b.GameWeak.GameWeakLang.Name : b.GameWeak.Name,
+                                                                },
+                                                                ScoreState = new ScoreStateModel
+                                                                {
+                                                                    Id = b.Fk_ScoreState,
+                                                                    Name = otherLang ? b.ScoreState.ScoreStateLang.Name : b.ScoreState.Name,
+                                                                }
+                                                            })
+                                                            .ToList() : null,
+                                       GameWeakScoreState = parameters.IncludeScore &&
+                                                            parameters.Fk_GameWeakForScores > 0 &&
+                                                            parameters.CustomOrderInSeasonList == false &&
+                                                            parameters.Fk_ScoreStateForCustomOrder > 0 ?
+                                                            a.PlayerGameWeakScoreStates
+                                                            .Where(b => b.Fk_GameWeak == parameters.Fk_GameWeakForScores &&
+                                                                        b.Fk_ScoreState == parameters.Fk_ScoreStateForCustomOrder &&
+                                                                        (parameters.Fk_ScoreStatesForGameWeak == null ||
+                                                                         !parameters.Fk_ScoreStatesForGameWeak.Any() ||
+                                                                         parameters.Fk_ScoreStatesForGameWeak.Contains(b.Fk_ScoreState)))
+                                                            .Select(b => new PlayerGameWeakScoreStateModel
+                                                            {
+                                                                Points = b.Points,
+                                                                Percent = b.Percent,
+                                                                Value = b.Value,
+                                                            })
+                                                            .FirstOrDefault() : null,
+                                       HaveGameWeakScoreState = parameters.IncludeScore &&
+                                                            parameters.Fk_GameWeakForScores > 0 &&
+                                                            parameters.CustomOrderInSeasonList == false &&
+                                                            parameters.Fk_ScoreStateForCustomOrder > 0 ?
+                                                            a.PlayerGameWeakScoreStates
+                                                            .Any(b => b.Fk_GameWeak == parameters.Fk_GameWeakForScores &&
+                                                                        b.Fk_ScoreState == parameters.Fk_ScoreStateForCustomOrder &&
+                                                                        (parameters.Fk_ScoreStatesForGameWeak == null ||
+                                                                         !parameters.Fk_ScoreStatesForGameWeak.Any() ||
+                                                                         parameters.Fk_ScoreStatesForGameWeak.Contains(b.Fk_ScoreState))) : false
+                                   })
+                                   .Search(parameters.SearchColumns, parameters.SearchTerm);
+
+            if (parameters.Fk_ScoreStateForCustomOrder > 0)
+            {
+                if (parameters.CustomOrderInSeasonList)
+                {
+                    quary = quary.Where(a => a.HaveSeasonScoreState);
+
+                    if (parameters.Fk_ScoreStateForCustomOrder == (int)ScoreStateEnum.Total)
+                    {
+                        if (parameters.CustomOrderDesc)
+                        {
+                            quary = quary.OrderByDescending(a => a.SeasonScoreState.Points);
+                        }
+                        else
+                        {
+                            quary = quary.OrderBy(a => a.SeasonScoreState.Points);
+                        }
+                    }
+                    else if (parameters.Fk_ScoreStateForCustomOrder == (int)ScoreStateEnum.PlayerSelection)
+                    {
+                        if (parameters.CustomOrderDesc)
+                        {
+                            quary = quary.OrderByDescending(a => a.SeasonScoreState.Percent);
+                        }
+                        else
+                        {
+                            quary = quary.OrderBy(a => a.SeasonScoreState.Percent);
+                        }
+                    }
+                    else if (parameters.Fk_ScoreStateForCustomOrder == (int)ScoreStateEnum.BuyingCount ||
+                             parameters.Fk_ScoreStateForCustomOrder == (int)ScoreStateEnum.SellingCount)
+                    {
+
+                        if (parameters.CustomOrderDesc)
+                        {
+                            quary = quary.OrderByDescending(a => a.SeasonScoreState.Value);
+                        }
+                        else
+                        {
+                            quary = quary.OrderBy(a => a.SeasonScoreState.Value);
+                        }
+                    }
+                }
+                else
+                {
+                    quary = quary.Where(a => a.HaveGameWeakScoreState);
+
+                    if (parameters.Fk_ScoreStateForCustomOrder == (int)ScoreStateEnum.Total)
+                    {
+                        if (parameters.CustomOrderDesc)
+                        {
+                            quary = quary.OrderByDescending(a => a.GameWeakScoreState.Points);
+                        }
+                        else
+                        {
+                            quary = quary.OrderBy(a => a.GameWeakScoreState.Points);
+                        }
+                    }
+                    else if (parameters.Fk_ScoreStateForCustomOrder == (int)ScoreStateEnum.PlayerSelection)
+                    {
+                        if (parameters.CustomOrderDesc)
+                        {
+                            quary = quary.OrderByDescending(a => a.GameWeakScoreState.Percent);
+                        }
+                        else
+                        {
+                            quary = quary.OrderBy(a => a.GameWeakScoreState.Percent);
+                        }
+                    }
+                    else if (parameters.Fk_ScoreStateForCustomOrder == (int)ScoreStateEnum.BuyingCount ||
+                             parameters.Fk_ScoreStateForCustomOrder == (int)ScoreStateEnum.SellingCount)
+                    {
+                        if (parameters.CustomOrderDesc)
+                        {
+                            quary = quary.OrderByDescending(a => a.GameWeakScoreState.Value);
+                        }
+                        else
+                        {
+                            quary = quary.OrderBy(a => a.GameWeakScoreState.Value);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                quary = quary.Sort(parameters.OrderBy);
+            }
+            return quary;
         }
 
 

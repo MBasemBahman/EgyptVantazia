@@ -167,14 +167,18 @@ namespace FantasyLogicMicroservices.Extensions
                 .UseSqlServerStorage(configuration.GetConnectionString("HangfireConnection"), new SqlServerStorageOptions
                 {
                     CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
-                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                    SlidingInvisibilityTimeout = TimeSpan.FromHours(1),
                     QueuePollInterval = TimeSpan.Zero,
                     UseRecommendedIsolationLevel = true,
                     UsePageLocksOnDequeue = true,
                     DisableGlobalLocks = true,
+                    JobExpirationCheckInterval = TimeSpan.Zero,
                 }));
             // Add the processing server as IHostedService
-            _ = services.AddHangfireServer(a => a.WorkerCount = 20);
+            _ = services.AddHangfireServer(a =>
+            {
+                a.WorkerCount = 20;
+            });
         }
     }
 }

@@ -237,6 +237,7 @@ namespace CoreServices.Logic
                            TripleCaptain = a.TripleCaptain,
                            GameWeak = new GameWeakModel
                            {
+                               Id = a.GameWeak.Id,
                                Name = otherLang ? a.GameWeak.GameWeakLang.Name : a.GameWeak.Name,
                                _365_GameWeakId = a.GameWeak._365_GameWeakId,
                                Fk_Season = a.GameWeak.Fk_Season,
@@ -245,6 +246,28 @@ namespace CoreServices.Logic
                                    Name = otherLang ? a.GameWeak.Season.SeasonLang.Name : a.GameWeak.Season.Name
                                }
                            },
+                           NextGameWeak = parameters.IncludeNextAndPrevGameWeek && a.AccountTeam.AccountTeamGameWeaks.Any(b => b.GameWeak._365_GameWeakId == (a.GameWeak._365_GameWeakIdValue + 1).ToString()) ?
+                           a.AccountTeam
+                            .AccountTeamGameWeaks
+                            .Where(b => b.GameWeak._365_GameWeakId == (a.GameWeak._365_GameWeakIdValue + 1).ToString())
+                            .Select(b => new GameWeakModel
+                            {
+                                Id = b.GameWeak.Id,
+                                Name = otherLang ? b.GameWeak.GameWeakLang.Name : b.GameWeak.Name,
+                                _365_GameWeakId = b.GameWeak._365_GameWeakId,
+                                Fk_Season = b.GameWeak.Fk_Season
+                            }).FirstOrDefault() : null,
+                           PrevGameWeak = parameters.IncludeNextAndPrevGameWeek && a.AccountTeam.AccountTeamGameWeaks.Any(b => b.GameWeak._365_GameWeakId == (a.GameWeak._365_GameWeakIdValue - 1).ToString()) ?
+                           a.AccountTeam
+                            .AccountTeamGameWeaks
+                            .Where(b => b.GameWeak._365_GameWeakId == (a.GameWeak._365_GameWeakIdValue - 1).ToString())
+                            .Select(b => new GameWeakModel
+                            {
+                                Id = b.GameWeak.Id,
+                                Name = otherLang ? b.GameWeak.GameWeakLang.Name : b.GameWeak.Name,
+                                _365_GameWeakId = b.GameWeak._365_GameWeakId,
+                                Fk_Season = b.GameWeak.Fk_Season
+                            }).FirstOrDefault() : null,
                            AccountTeam = new AccountTeamModel
                            {
                                Id = a.Fk_AccountTeam,

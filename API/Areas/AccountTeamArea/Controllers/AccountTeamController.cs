@@ -64,17 +64,29 @@ namespace API.Areas.AccountTeamArea.Controllers
         [Route(nameof(GetAccountTeamById))]
         public AccountTeamModel GetAccountTeamById(
         [FromQuery, BindRequired] int id,
-        [FromQuery] bool includeGameWeakPoints)
+        [FromQuery] bool includeGameWeakPoints,
+        [FromQuery] int fk_GameWeak)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             AccountTeamModel data = _unitOfWork.AccountTeam.GetAccountTeambyId(id, otherLang);
+            GameWeakModel gameWeak = null;
+
+            if (fk_GameWeak == 0)
+            {
+                if (data.Fk_AcountTeamGameWeek > 0 || includeGameWeakPoints)
+                {
+                    gameWeak = _unitOfWork.Season.GetCurrentGameWeak();
+
+                    fk_GameWeak = gameWeak.Id;
+                }
+            }
 
             if (data.Fk_AcountTeamGameWeek > 0)
             {
-                GameWeakModel gameWeek = _unitOfWork.Season.GetCurrentGameWeak(otherLang: false);
+                gameWeak ??= _unitOfWork.Season.GetGameWeakbyId(fk_GameWeak, otherLang);
 
-                AccountTeamCustemClac clac = _fantasyUnitOfWork.AccountTeamCalc.AccountTeamPlayersCalculations(data.Fk_AcountTeamGameWeek, id, gameWeek, gameWeek.Fk_Season, false);
+                AccountTeamCustemClac clac = _fantasyUnitOfWork.AccountTeamCalc.AccountTeamPlayersCalculations(data.Fk_AcountTeamGameWeek, id, gameWeak, gameWeak.Fk_Season, false);
                 if (clac != null)
                 {
                     data.CurrentGameWeakPoints = clac.TotalPoints ?? 0;
@@ -84,13 +96,11 @@ namespace API.Areas.AccountTeamArea.Controllers
 
             if (data != null && includeGameWeakPoints)
             {
-                GameWeakModel currentGameWeak = _unitOfWork.Season.GetCurrentGameWeak();
-
-                data.AverageGameWeakPoints = _unitOfWork.AccountTeam.GetAverageGameWeakPoints(currentGameWeak.Id);
+                data.AverageGameWeakPoints = _unitOfWork.AccountTeam.GetAverageGameWeakPoints(fk_GameWeak);
 
                 data.BestAccountTeamGameWeak = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
                 {
-                    Fk_GameWeak = currentGameWeak.Id,
+                    Fk_GameWeak = fk_GameWeak,
                     PointsFrom = 1
                 }, otherLang: otherLang)
                     .Where(a => a.TotalPoints > 0)

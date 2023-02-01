@@ -40,14 +40,9 @@ namespace FantasyLogic.Calculations
                                                  _365_GameWeakId = a._365_GameWeakId
                                              }).ToList();
 
-            AccountTeamsCalculations(gameWeaks, season.Id, fk_AccountTeam, fk_Players, inDebug);
-        }
-
-        public void AccountTeamsCalculations(List<GameWeakModel> gameWeaks, int fk_Season, int fk_AccountTeam, List<int> fk_Players, bool inDebug)
-        {
             foreach (GameWeakModel gameWeak in gameWeaks)
             {
-                AccountTeamGameWeakCalculations(gameWeak, fk_Season, fk_AccountTeam, fk_Players, inDebug);
+                AccountTeamGameWeakCalculations(gameWeak, season.Id, fk_AccountTeam, fk_Players, inDebug);
             }
         }
 

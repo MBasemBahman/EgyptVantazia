@@ -86,7 +86,7 @@ namespace Entities.DBModels.AccountTeamModels
         public IList<AccountTeamPlayer> AccountTeamPlayers { get; set; }
 
         [DisplayName(nameof(AccountTeamGameWeaks))]
-        public IList<AccountTeamGameWeak> AccountTeamGameWeaks { get; set; }
+        public List<AccountTeamGameWeak> AccountTeamGameWeaks { get; set; }
 
         [DisplayName(nameof(PlayerTransfers))]
         public IList<PlayerTransfer> PlayerTransfers { get; set; }

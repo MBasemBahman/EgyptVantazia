@@ -49,6 +49,8 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public string DashboardSearch { get; set; }
 
         public List<int> Fk_Players { get; set; }
+
+        public bool IncludeNextAndPrevGameWeek { get; set; }
     }
 
     public class AccountTeamGameWeakModel : AuditEntity
@@ -64,6 +66,12 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         [DisplayName(nameof(GameWeak))]
         public GameWeakModel GameWeak { get; set; }
+
+        [DisplayName(nameof(PrevGameWeak))]
+        public GameWeakModel PrevGameWeak { get; set; }
+
+        [DisplayName(nameof(NextGameWeak))]
+        public GameWeakModel NextGameWeak { get; set; }
 
         [DisplayName(nameof(BenchBoost))]
         public bool BenchBoost { get; set; }

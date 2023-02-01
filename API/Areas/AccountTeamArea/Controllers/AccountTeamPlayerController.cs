@@ -33,13 +33,28 @@ namespace API.Areas.AccountTeamArea.Controllers
 
         [HttpGet]
         [Route(nameof(GetAccountTeamPlayers))]
-        [AllowAll]
         public async Task<IEnumerable<AccountTeamPlayerModel>> GetAccountTeamPlayers(
         [FromQuery] AccountTeamPlayerParameters parameters)
         {
-            SeasonModel currentSeason = _unitOfWork.Season.GetCurrentSeason();
-            GameWeakModel currentGamWeak = _unitOfWork.Season.GetCurrentGameWeak();
-            GameWeakModel nextGameWeak = _unitOfWork.Season.GetNextGameWeak();
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
+            GameWeakModel currentGamWeak = null;
+            GameWeakModel nextGameWeak = null;
+
+            if (parameters.Fk_GameWeak > 0)
+            {
+                currentGamWeak = _unitOfWork.Season.GetGameWeakbyId(parameters.Fk_GameWeak, otherLang);
+
+                nextGameWeak = _unitOfWork.Season.GetGameWeaks(new GameWeakParameters
+                {
+                    _365_GameWeakId = (currentGamWeak._365_GameWeakIdValue + 1).ToString()
+                }, otherLang).FirstOrDefault();
+            }
+            else
+            {
+                currentGamWeak = _unitOfWork.Season.GetCurrentGameWeak();
+                nextGameWeak = _unitOfWork.Season.GetNextGameWeak();
+            }
 
             parameters.IsTransfer = false;
 
@@ -69,12 +84,11 @@ namespace API.Areas.AccountTeamArea.Controllers
             {
                 if (parameters.Fk_GameWeakForScore == 0)
                 {
-                    parameters.Fk_SeasonForScore = currentSeason.Id;
+                    parameters.Fk_SeasonForScore = currentGamWeak.Fk_Season;
                     parameters.Fk_GameWeakForScore = currentGamWeak.Id;
                 }
             }
 
-            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             PagedList<AccountTeamPlayerModel> data = await _unitOfWork.AccountTeam.GetAccountTeamPlayerPaged(parameters, otherLang);
 
@@ -333,7 +347,7 @@ namespace API.Areas.AccountTeamArea.Controllers
             {
                 throw new Exception("The team must have 15 players!");
             }
-            
+
             if (Players.Count(a => a.IsPrimary) != 11)
             {
                 throw new Exception("The team must have 11 players on the pitch!");

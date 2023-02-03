@@ -15,6 +15,8 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public int Fk_Season { get; set; }
         public int Fk_GameWeak { get; set; }
 
+        public int Fk_AccountTeamForOrder { get; set; }
+
         public double? PointsFrom { get; set; }
         public double? PointsTo { get; set; }
         public bool? CurrentSeason { get; set; }
@@ -74,14 +76,27 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         [DisplayName(nameof(IsVip))]
         public bool IsVip { get; set; }
 
+        #region Ranking
+
         [DisplayName(nameof(GlobalRanking))]
         public double GlobalRanking { get; set; }
+
+        [DisplayName(nameof(GlobalRankingUpdatedAt))]
+        public DateTime? GlobalRankingUpdatedAt { get; set; }
 
         [DisplayName(nameof(CountryRanking))]
         public double CountryRanking { get; set; }
 
+        [DisplayName(nameof(CountryRankingUpdatedAt))]
+        public DateTime? CountryRankingUpdatedAt { get; set; }
+
         [DisplayName(nameof(FavouriteTeamRanking))]
         public double FavouriteTeamRanking { get; set; }
+
+        [DisplayName(nameof(FavouriteTeamRankingUpdatedAt))]
+        public DateTime? FavouriteTeamRankingUpdatedAt { get; set; }
+
+        #endregion
 
         public int CurrentGameWeakTansfarePoints { get; set; }
 
@@ -208,5 +223,23 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public int PrevPoints { get; set; }
 
         public List<AccountTeamPlayerGameWeak> Players { get; set; }
+    }
+
+    public class RankingModel
+    {
+        public int Id { get; set; }
+
+        public int Rank { get; set; }
+    }
+
+    public class AccountTeamRanking
+    {
+        public int Id { get; set; }
+        public int Fk_Country { get; set; }
+        public int Fk_FavouriteTeam { get; set; }
+        public int CountryRanking { get; set; }
+        public int FavouriteTeamRanking { get; set; }
+        public int GlobalRanking { get; set; }
+        public int TotalPoints { get; set; }
     }
 }

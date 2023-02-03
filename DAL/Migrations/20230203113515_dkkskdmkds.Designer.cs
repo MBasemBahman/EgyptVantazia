@@ -4,6 +4,7 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20230203113515_dkkskdmkds")]
+    partial class dkkskdmkds
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -321,9 +323,6 @@ namespace DAL.Migrations
                     b.Property<double>("CountryRanking")
                         .HasColumnType("float");
 
-                    b.Property<DateTime?>("CountryRankingUpdatedAt")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
@@ -339,9 +338,6 @@ namespace DAL.Migrations
                     b.Property<double>("FavouriteTeamRanking")
                         .HasColumnType("float");
 
-                    b.Property<DateTime?>("FavouriteTeamRankingUpdatedAt")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("Fk_AccountTeam")
                         .HasColumnType("int");
 
@@ -353,9 +349,6 @@ namespace DAL.Migrations
 
                     b.Property<double>("GlobalRanking")
                         .HasColumnType("float");
-
-                    b.Property<DateTime?>("GlobalRankingUpdatedAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("LastModifiedAt")
                         .ValueGeneratedOnAdd()
@@ -3933,7 +3926,7 @@ namespace DAL.Migrations
                             EmailAddress = "user@mail.com",
                             LastModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Developer",
-                            Password = "$2a$11$zD/Y1zvD48JyflKd/VkRvOK7FdQZ1MzhlmNaqMU7oVdO8bBtWUQHO",
+                            Password = "$2a$11$Dvkx4.FOmOYnL6beB.Sm2e00ddD5Dq7Vg2hJ/Hz0zuNW6RDztNFna",
                             UserName = "Developer"
                         });
                 });

@@ -552,15 +552,9 @@ namespace FantasyLogic.Calculations
             return null;
         }
 
-        public void RunUpdateAccountTeamGameWeakRanking()
-        {
-            GameWeakModel gameWeek = _unitOfWork.Season.GetCurrentGameWeak();
-
-            _ = BackgroundJob.Enqueue(() => UpdateAccountTeamGameWeakRanking(gameWeek, gameWeek.Fk_Season));
-        }
-
         public void UpdateAccountTeamGameWeakRanking(GameWeakModel gameWeak, int fk_Season)
         {
+            return;
             List<AccountTeamRanking> accountTeamGameWeakRankings = new();
             int ranking = 1;
 
@@ -634,15 +628,9 @@ namespace FantasyLogic.Calculations
             _unitOfWork.Save().Wait();
         }
 
-        public void RunUpdateAccountTeamRanking()
-        {
-            SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
-
-            _ = BackgroundJob.Enqueue(() => UpdateAccountTeamRanking(season.Id));
-        }
-
         public void UpdateAccountTeamRanking(int fk_Season)
         {
+            return;
             GameWeakModel currentGameWeak = _unitOfWork.Season.GetCurrentGameWeak();
 
             List<AccountTeamRanking> accountTeamRankings = new();

@@ -70,6 +70,105 @@ namespace Repository.DBModels.AccountTeamModels
                    .OrderByDescending(a => a.TotalPoints)
                    .ToList();
         }
+
+        public void UpdateRank(int id)
+        {
+            DateTime lasUpdate = DateTime.UtcNow.AddHours(-24).Date;
+
+            var accountTeamModel = FindByCondition(a => a.Id == id, trackChanges: false)
+                                   .Select(a => new
+                                   {
+                                       a.Id,
+
+                                       a.GlobalRanking,
+                                       a.GlobalRankingUpdatedAt,
+
+                                       a.CountryRanking,
+                                       a.CountryRankingUpdatedAt,
+
+                                       a.FavouriteTeamRanking,
+                                       a.FavouriteTeamRankingUpdatedAt,
+
+                                       a.Account.Fk_Country,
+                                       a.Account.Fk_FavouriteTeam
+
+                                   }).First();
+
+            var accounts = FindByCondition(a => true, trackChanges: false)
+                           .OrderByDescending(a => a.TotalPoints)
+                           .Select(a => new
+                           {
+                               a.Id,
+                               a.TotalPoints,
+                               a.Account.Fk_FavouriteTeam,
+                               a.Account.Fk_Country
+                           })
+                           .ToList();
+
+            AccountTeam accountTeam = FindById(id, trackChanges: true).Result;
+
+            if (accountTeamModel.GlobalRankingUpdatedAt == null ||
+                accountTeamModel.GlobalRankingUpdatedAt < lasUpdate)
+            {
+                int rank = accounts
+                           .Select((item, index) => new
+                           {
+                               item.Id,
+                               index
+                           })
+                           .Where(a => a.Id == id)
+                           .FirstOrDefault().index + 1;
+
+                if (rank != accountTeamModel.GlobalRanking)
+                {
+                    accountTeam.GlobalRanking = rank;
+                    accountTeam.GlobalRankingUpdatedAt = DateTime.UtcNow;
+                }
+            }
+
+            if (accountTeamModel.CountryRankingUpdatedAt == null ||
+               accountTeamModel.CountryRankingUpdatedAt < lasUpdate)
+            {
+                int rank = accounts
+                           .Where(a => a.Fk_Country == accountTeamModel.Fk_Country)
+                           .Select((item, index) => new
+                           {
+                               item.Id,
+                               index
+                           })
+                           .Where(a => a.Id == id)
+                           .FirstOrDefault().index + 1;
+
+                if (rank != accountTeamModel.CountryRanking)
+                {
+                    accountTeam.CountryRanking = rank;
+                    accountTeam.CountryRankingUpdatedAt = DateTime.UtcNow;
+                }
+            }
+
+            if (accountTeamModel.FavouriteTeamRankingUpdatedAt == null ||
+               accountTeamModel.FavouriteTeamRankingUpdatedAt < lasUpdate)
+            {
+                int rank = accounts
+                           .Where(a => a.Fk_FavouriteTeam == accountTeamModel.Fk_FavouriteTeam)
+                           .Select((item, index) => new
+                           {
+                               item.Id,
+                               index
+                           })
+                           .Where(a => a.Id == id)
+                           .FirstOrDefault().index + 1;
+
+                if (rank != accountTeamModel.FavouriteTeamRanking)
+                {
+                    accountTeam.FavouriteTeamRanking = rank;
+                    accountTeam.FavouriteTeamRankingUpdatedAt = DateTime.UtcNow;
+                }
+            }
+
+
+            _ = DBContext.SaveChanges();
+        }
     }
 
     public static class AccountTeamRepositoryExtension

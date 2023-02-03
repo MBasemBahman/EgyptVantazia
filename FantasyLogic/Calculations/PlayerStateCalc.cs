@@ -326,18 +326,6 @@ namespace FantasyLogic.Calculations
                 }
                 _unitOfWork.Save().Wait();
             }
-
-            if (false && fk_GameWeak != 0)
-            {
-                if (inDebug)
-                {
-                    _accountTeamCalc.RunAccountTeamsCalculations(fk_GameWeak, 0, new List<int> { fk_Player }, inDebug);
-                }
-                else
-                {
-                    _ = BackgroundJob.Enqueue(() => _accountTeamCalc.RunAccountTeamsCalculations(fk_GameWeak, 0, new List<int> { fk_Player }, inDebug));
-                }
-            }
         }
 
         public async Task UpdateTop15(int fk_GameWeak, int fk_Season)

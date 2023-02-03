@@ -37,11 +37,30 @@ namespace API.Areas.AccountTeamArea.Controllers
         public async Task<IEnumerable<AccountTeamModel>> GetAccountTeams(
         [FromQuery] AccountTeamParameters parameters)
         {
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
             if (parameters.OrderBy.Contains("globalRanking") ||
                 parameters.OrderBy.Contains("countryRanking") ||
                 parameters.OrderBy.Contains("favouriteTeamRanking"))
             {
                 parameters.FromGlobalRanking = 1;
+
+                if (parameters.OrderBy.Contains("globalRanking"))
+                {
+                    parameters.OrderBy = "totalPoints desc";
+                }
+
+                if (parameters.OrderBy.Contains("countryRanking"))
+                {
+                    parameters.Fk_Country = auth.Fk_Country;
+                    parameters.OrderBy = "totalPoints desc";
+                }
+
+                if (parameters.OrderBy.Contains("favouriteTeamRanking"))
+                {
+                    parameters.Fk_FavouriteTeam = auth.Fk_FavouriteTeam;
+                    parameters.OrderBy = "totalPoints desc";
+                }
             }
 
             if (parameters.OrderBy.Contains("currentGameWeakGlobalRanking") ||
@@ -49,6 +68,23 @@ namespace API.Areas.AccountTeamArea.Controllers
                 parameters.OrderBy.Contains("currentGameWeakFavouriteTeamRanking"))
             {
                 parameters.FromCurrentGameWeakPoints = 1;
+
+                if (parameters.OrderBy.Contains("currentGameWeakGlobalRanking"))
+                {
+                    parameters.OrderBy = "currentGameWeakPoints desc";
+                }
+
+                if (parameters.OrderBy.Contains("currentGameWeakCountryRanking"))
+                {
+                    parameters.Fk_Country = auth.Fk_Country;
+                    parameters.OrderBy = "currentGameWeakPoints desc";
+                }
+
+                if (parameters.OrderBy.Contains("currentGameWeakFavouriteTeamRanking"))
+                {
+                    parameters.Fk_FavouriteTeam = auth.Fk_FavouriteTeam;
+                    parameters.OrderBy = "currentGameWeakPoints desc";
+                }
             }
 
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
@@ -74,13 +110,14 @@ namespace API.Areas.AccountTeamArea.Controllers
 
             if (fk_GameWeak == 0)
             {
-                if (data.Fk_AcountTeamGameWeek > 0 || includeGameWeakPoints)
-                {
-                    gameWeak = _unitOfWork.Season.GetCurrentGameWeak();
+                gameWeak = _unitOfWork.Season.GetCurrentGameWeak();
 
-                    fk_GameWeak = gameWeak.Id;
-                }
+                fk_GameWeak = gameWeak.Id;
             }
+
+            _unitOfWork.AccountTeam.UpdateAccountTeamRank(id);
+
+            _unitOfWork.AccountTeam.UpdateAccountTeamGameWeakRank(id, fk_GameWeak);
 
             if (data.Fk_AcountTeamGameWeek > 0)
             {

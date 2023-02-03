@@ -67,11 +67,20 @@ namespace Entities.DBModels.AccountTeamModels
         [DisplayName(nameof(GlobalRanking))]
         public double GlobalRanking { get; set; }
 
+        [DisplayName(nameof(GlobalRankingUpdatedAt))]
+        public DateTime? GlobalRankingUpdatedAt { get; set; }
+
         [DisplayName(nameof(CountryRanking))]
         public double CountryRanking { get; set; }
 
+        [DisplayName(nameof(CountryRankingUpdatedAt))]
+        public DateTime? CountryRankingUpdatedAt { get; set; }
+
         [DisplayName(nameof(FavouriteTeamRanking))]
         public double FavouriteTeamRanking { get; set; }
+
+        [DisplayName(nameof(FavouriteTeamRankingUpdatedAt))]
+        public DateTime? FavouriteTeamRankingUpdatedAt { get; set; }
 
         #endregion
     }

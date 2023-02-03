@@ -5,7 +5,6 @@ using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountTeamModels;
-using Entities.DBModels.PlayerStateModels;
 using Entities.DBModels.SeasonModels;
 using static Contracts.EnumData.DBModelsEnum;
 using static Entities.EnumData.LogicEnumData;
@@ -54,9 +53,12 @@ namespace CoreServices.Logic
                            IsVip = a.IsVip,
                            TotalPoints = a.TotalPoints,
                            ImageUrl = a.StorageUrl + a.ImageUrl,
-                           CountryRanking = a.CountryRanking,
                            GlobalRanking = a.GlobalRanking,
+                           GlobalRankingUpdatedAt = a.GlobalRankingUpdatedAt,
+                           CountryRanking = a.CountryRanking,
+                           CountryRankingUpdatedAt = a.CountryRankingUpdatedAt,
                            FavouriteTeamRanking = a.FavouriteTeamRanking,
+                           FavouriteTeamRankingUpdatedAt = a.FavouriteTeamRankingUpdatedAt,
                            AccounTeamGameWeakCount = a.AccountTeamGameWeaks.Count,
                            Season = new SeasonModel
                            {
@@ -135,6 +137,10 @@ namespace CoreServices.Logic
             return await PagedList<AccountTeamModel>.ToPagedList(GetAccountTeams(parameters, otherLang), parameters.PageNumber, parameters.PageSize);
         }
 
+        public void UpdateAccountTeamRank(int id)
+        {
+            _repository.AccountTeam.UpdateRank(id);
+        }
         public async Task<AccountTeam> FindAccountTeambyId(int id, bool trackChanges)
         {
             return await _repository.AccountTeam.FindById(id, trackChanges);
@@ -226,9 +232,12 @@ namespace CoreServices.Logic
                            TansfareCount = a.AccountTeam.PlayerTransfers.Count(b => b.Fk_GameWeak == a.Fk_GameWeak && b.TransferTypeEnum == TransferTypeEnum.Buying),
                            Top_11 = a.Top_11,
                            GlobalRanking = a.GlobalRanking,
+                           GlobalRankingUpdatedAt = a.GlobalRankingUpdatedAt,
                            SeasonGlobalRanking = a.SeasonGlobalRanking,
                            CountryRanking = a.CountryRanking,
+                           CountryRankingUpdatedAt = a.CountryRankingUpdatedAt,
                            FavouriteTeamRanking = a.FavouriteTeamRanking,
+                           FavouriteTeamRankingUpdatedAt = a.FavouriteTeamRankingUpdatedAt,
                            AvailableBenchBoost = !a.BenchBoost,
                            AvailableDoubleGameWeak = !a.DoubleGameWeak,
                            AvailableFreeHit = !a.FreeHit,
@@ -298,6 +307,12 @@ namespace CoreServices.Logic
         {
             return await PagedList<AccountTeamGameWeakModel>.ToPagedList(GetAccountTeamGameWeaks(parameters, otherLang), parameters.PageNumber, parameters.PageSize);
         }
+
+        public void UpdateAccountTeamGameWeakRank(int fk_AccountTeam, int fk_GameWeek)
+        {
+            _repository.AccountTeamGameWeak.UpdateRank(fk_AccountTeam, fk_GameWeek);
+        }
+
 
         public async Task<AccountTeamGameWeak> FindAccountTeamGameWeakbyId(int id, bool trackChanges)
         {

@@ -327,44 +327,47 @@ namespace CoreServices.Logic
             return await _repository.PlayerGameWeakScore.FindById(id, trackChanges);
         }
 
-        public void CreatePlayerGameWeakScore(PlayerGameWeakScore PlayerGameWeakScore)
+        public void CreatePlayerGameWeakScore(PlayerGameWeakScore PlayerGameWeakScore, bool ignoreCheck = false)
         {
-            if (PlayerGameWeakScore.Value == "0")
+            if (ignoreCheck)
             {
-                return;
-            }
-
-            if (PlayerGameWeakScore.Fk_ScoreType is
-                    ((int)ScoreTypeEnum.Goal_Event) or
-                    ((int)ScoreTypeEnum.Substitution_Event) or
-                    ((int)ScoreTypeEnum.PenaltyKick_Event))
-            {
-                if (PlayerGameWeakScore.GameTime <= 0)
+                if (PlayerGameWeakScore.Value == "0")
                 {
                     return;
                 }
-            }
 
-            // if (PlayerGameWeakScore.Fk_ScoreType == (int)ScoreTypeEnum.Ranking)
-            // {
-            //     if (PlayerGameWeakScore.Points <= 0)
-            //     {
-            //         return;
-            //     }
-            // }
-
-            if (PlayerGameWeakScore.Fk_ScoreType == (int)ScoreTypeEnum.CleanSheet)
-            {
-                if (PlayerGameWeakScore.Points <= 0)
+                if (PlayerGameWeakScore.Fk_ScoreType is
+                        ((int)ScoreTypeEnum.Goal_Event) or
+                        ((int)ScoreTypeEnum.Substitution_Event) or
+                        ((int)ScoreTypeEnum.PenaltyKick_Event))
                 {
-                    return;
+                    if (PlayerGameWeakScore.GameTime <= 0)
+                    {
+                        return;
+                    }
                 }
-            }
-            if (PlayerGameWeakScore.Fk_ScoreType == (int)ScoreTypeEnum.ReceiveGoals)
-            {
-                if (PlayerGameWeakScore.Points >= 0)
+
+                if (PlayerGameWeakScore.Fk_ScoreType == (int)ScoreTypeEnum.Ranking)
                 {
-                    return;
+                    if (PlayerGameWeakScore.Points <= 0)
+                    {
+                        return;
+                    }
+                }
+
+                if (PlayerGameWeakScore.Fk_ScoreType == (int)ScoreTypeEnum.CleanSheet)
+                {
+                    if (PlayerGameWeakScore.Points <= 0)
+                    {
+                        return;
+                    }
+                }
+                if (PlayerGameWeakScore.Fk_ScoreType == (int)ScoreTypeEnum.ReceiveGoals)
+                {
+                    if (PlayerGameWeakScore.Points >= 0)
+                    {
+                        return;
+                    }
                 }
             }
 

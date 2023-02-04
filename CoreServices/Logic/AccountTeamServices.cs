@@ -5,6 +5,7 @@ using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountTeamModels;
+using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.SeasonModels;
 using static Contracts.EnumData.DBModelsEnum;
 using static Entities.EnumData.LogicEnumData;
@@ -405,7 +406,7 @@ namespace CoreServices.Logic
                                                                                (b.TeamGameWeak.IsEnded == false ||
                                                                                 b.TotalPoints != 0 ||
                                                                                 b.Ranking != 0 ||
-                                                                                b.PlayerGameWeakScores.Any())),
+                                                                                b.PlayerGameWeakScores.Any(c => c.Fk_ScoreType == (int)ScoreTypeEnum.Minutes))),
                            Top15 = a.AccountTeamPlayer
                                     .Player
                                     .PlayerGameWeakScoreStates

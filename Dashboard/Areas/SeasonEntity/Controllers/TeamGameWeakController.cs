@@ -103,8 +103,8 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
                 IsCanNotEdit = true,
                 IsOut = model.IsOut,
                 Points = model.Points,
-                CreatedBy = auth.UserName
-            });
+                CreatedBy = auth.UserName,
+            }, ignoreCheck: true);
             await _unitOfWork.Save();
 
             return Ok();

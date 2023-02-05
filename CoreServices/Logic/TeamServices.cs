@@ -259,6 +259,7 @@ namespace CoreServices.Logic
                                                                 Points = b.Points,
                                                                 Percent = b.Percent,
                                                                 Value = b.Value,
+                                                                Fk_ScoreState = b.Fk_ScoreState,
                                                             })
                                                             .FirstOrDefault() : null,
                                        HaveSeasonScoreState = parameters.IncludeScore &&
@@ -333,7 +334,7 @@ namespace CoreServices.Logic
             {
                 if (parameters.CustomOrderInSeasonList)
                 {
-                    quary = quary.Where(a => a.HaveSeasonScoreState);
+                    quary = quary.Where(a => a.HaveSeasonScoreState == true);
 
                     if (parameters.Fk_ScoreStateForCustomOrder == (int)ScoreStateEnum.Total)
                     {
@@ -360,7 +361,6 @@ namespace CoreServices.Logic
                     else if (parameters.Fk_ScoreStateForCustomOrder == (int)ScoreStateEnum.BuyingCount ||
                              parameters.Fk_ScoreStateForCustomOrder == (int)ScoreStateEnum.SellingCount)
                     {
-
                         if (parameters.CustomOrderDesc)
                         {
                             quary = quary.OrderByDescending(a => a.SeasonScoreState.Value);
@@ -373,7 +373,7 @@ namespace CoreServices.Logic
                 }
                 else
                 {
-                    quary = quary.Where(a => a.HaveGameWeakScoreState);
+                    quary = quary.Where(a => a.HaveGameWeakScoreState == true);
 
                     if (parameters.Fk_ScoreStateForCustomOrder == (int)ScoreStateEnum.Total)
                     {

@@ -179,6 +179,10 @@ namespace FantasyLogic.Calculations
 
             AccountTeamGameWeak accountTeamGameWeak = _unitOfWork.AccountTeam.FindAccountTeamGameWeakbyId(fk_AccountTeamGameWeak, trackChanges: true).Result;
 
+            if (accountTeamGameWeak == null)
+            {
+                return null; 
+            }
             players.ForEach(player => player.Points = playersPoints.Where(points => points.Fk_Player == player.Fk_Player).Select(a => a.Points).FirstOrDefault());
 
             int playerPrimaryAndPlayed = 11;

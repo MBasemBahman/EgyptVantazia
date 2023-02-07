@@ -42,6 +42,8 @@ namespace API.Areas.PlayerScoreArea.Controllers
                 (int)ScoreTypeEnum.Ranking,
             };
 
+            parameters.CheckHaveValue = true;
+
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             PagedList<PlayerGameWeakScoreModel> data = await _unitOfWork.PlayerScore.GetPlayerGameWeakScorePaged(parameters, otherLang);

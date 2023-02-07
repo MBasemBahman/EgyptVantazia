@@ -1,5 +1,6 @@
 ﻿using Entities.CoreServicesModels.PlayerScoreModels;
 using Entities.DBModels.PlayerScoreModels;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using static Contracts.EnumData.DBModelsEnum;
 
 namespace Repository.DBModels.PlayerScoreModels
@@ -34,7 +35,8 @@ namespace Repository.DBModels.PlayerScoreModels
                            parameters.RateFrom,
                            parameters.RateTo,
                            parameters.DashboardSearch,
-                           parameters.IsCanNotEdit);
+                           parameters.IsCanNotEdit,
+                           parameters.CheckHaveValue);
 
         }
 
@@ -46,6 +48,10 @@ namespace Repository.DBModels.PlayerScoreModels
 
         public new void Create(PlayerGameWeakScore entity)
         {
+            if (entity.IsCanNotEdit == false && entity.Value.IsEmpty() && entity.FinalValue == 0 && entity.Points == 0 && entity.GameTime == 0)
+            {
+                return;
+            }
             if (FindByCondition(a => a.Fk_PlayerGameWeak == entity.Fk_PlayerGameWeak && a.Fk_ScoreType == entity.Fk_ScoreType, trackChanges: false).Any())
             {
                 PlayerGameWeakScore oldEntity = FindByCondition(a => a.Fk_PlayerGameWeak == entity.Fk_PlayerGameWeak && a.Fk_ScoreType == entity.Fk_ScoreType, trackChanges: true).First();
@@ -115,9 +121,17 @@ public static class PlayerGameWeakScoreRepositoryExtension
          double rateFrom,
          double rateTo,
          string dashboardSearch,
-         bool? isCanNotEdit)
+         bool? isCanNotEdit,
+         bool checkHaveValue)
     {
         return PlayerGameWeakScores.Where(a => (id == 0 || a.Id == id) &&
+
+                                               (checkHaveValue == false ||
+                                                a.IsCanNotEdit == true ||
+                                                !(string.IsNullOrEmpty(a.Value) &&
+                                                 a.FinalValue == 0 &&
+                                                 a.Points == 0 &&
+                                                 a.GameTime == 0)) &&
 
                                                (string.IsNullOrEmpty(dashboardSearch) ||
                                                 a.Id.ToString().Contains(dashboardSearch) ||

@@ -239,14 +239,9 @@ namespace FantasyLogic.DataMigration.GamesData
                                          .Select(a => a.Id)
                                          .ToList();
 
-            string jobId = "";
             foreach (int accounTeam in accounTeams)
             {
-                //TransferAccountTeamPlayers(accounTeam, fk_CurrentGameWeak, fk_PrevGameWeak, prev_365_GameWeakId, fk_Season).Wait();
-
-                jobId = jobId.IsExisting()
-                        ? BackgroundJob.ContinueJobWith(jobId, () => TransferAccountTeamPlayers(accounTeam, fk_CurrentGameWeak, fk_PrevGameWeak, prev_365_GameWeakId, fk_Season))
-                        : BackgroundJob.Enqueue(() => TransferAccountTeamPlayers(accounTeam, fk_CurrentGameWeak, fk_PrevGameWeak, prev_365_GameWeakId, fk_Season));
+                BackgroundJob.Enqueue(() => TransferAccountTeamPlayers(accounTeam, fk_CurrentGameWeak, fk_PrevGameWeak, prev_365_GameWeakId, fk_Season));
             }
         }
 

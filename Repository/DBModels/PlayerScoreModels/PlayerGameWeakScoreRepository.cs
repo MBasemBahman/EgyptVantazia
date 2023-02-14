@@ -128,10 +128,9 @@ public static class PlayerGameWeakScoreRepositoryExtension
 
                                                (checkHaveValue == false ||
                                                 a.IsCanNotEdit == true ||
-                                                !(string.IsNullOrEmpty(a.Value) &&
-                                                 a.FinalValue == 0 &&
-                                                 a.Points == 0 &&
-                                                 a.GameTime == 0)) &&
+                                                a.FinalValue != 0 ||
+                                                a.Points != 0 ||
+                                                a.GameTime != 0) &&
 
                                                (string.IsNullOrEmpty(dashboardSearch) ||
                                                 a.Id.ToString().Contains(dashboardSearch) ||

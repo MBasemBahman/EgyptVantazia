@@ -24,6 +24,11 @@ namespace FantasyLogic.Calculations
 
         public void RunAccountTeamsCalculations(int fk_GameWeak, int fk_AccountTeam, List<int> fk_Players, bool inDebug = false)
         {
+            if (inDebug == false && fk_GameWeak == 0 && fk_AccountTeam == 0)
+            {
+                fk_GameWeak = _unitOfWork.Season.GetCurrentGameWeak().Id;
+            }
+
             SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
             GameWeakModel nextGameWeek = _unitOfWork.Season.GetNextGameWeak();
 
@@ -181,7 +186,7 @@ namespace FantasyLogic.Calculations
 
             if (accountTeamGameWeak == null)
             {
-                return null; 
+                return null;
             }
             players.ForEach(player => player.Points = playersPoints.Where(points => points.Fk_Player == player.Fk_Player).Select(a => a.Points).FirstOrDefault());
 

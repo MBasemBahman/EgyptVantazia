@@ -175,7 +175,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                                        .SingleOrDefault();
                                 if (player != null)
                                 {
-                                    Member memberResult = allMembersResults.Where(a => a.AthleteId == member.AthleteId).SingleOrDefault();
+                                    Member memberResult = allMembersResults.Where(a => a.AthleteId == member.AthleteId).LastOrDefault();
 
                                     int rankingIndex = 0;
 

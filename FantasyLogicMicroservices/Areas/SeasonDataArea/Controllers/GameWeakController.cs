@@ -1,13 +1,9 @@
 ﻿using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.TeamModels;
-using Entities.DBModels.SeasonModels;
 using FantasyLogic;
-using FantasyLogic.Calculations;
 using FantasyLogicMicroservices.Controllers;
 using Hangfire;
-using Hangfire.Storage;
 using IntegrationWith365;
-using System.Diagnostics;
 
 namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
 {
@@ -108,14 +104,14 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
         [ApiExplorerSettings(IgnoreApi = true)]
         public void RemoveAccountTeamRecurringJob()
         {
-            var accountTeams = _unitOfWork.AccountTeam.GetAccountTeams(new AccountTeamParameters(), false).Select(a => a.Id).ToList();
-            foreach (var accountTeam in accountTeams)
+            List<int> accountTeams = _unitOfWork.AccountTeam.GetAccountTeams(new AccountTeamParameters(), false).Select(a => a.Id).ToList();
+            foreach (int accountTeam in accountTeams)
             {
                 RecurringJob.RemoveIfExists($"AccountTeamCalc-{accountTeam}");
             }
 
-            var accountTeamGameWeaks = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters(), false).Select(a => a.Id).ToList();
-            foreach (var accountTeamGameWeak in accountTeamGameWeaks)
+            List<int> accountTeamGameWeaks = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters(), false).Select(a => a.Id).ToList();
+            foreach (int accountTeamGameWeak in accountTeamGameWeaks)
             {
                 RecurringJob.RemoveIfExists($"AccountTeamGameWeakCalc-{accountTeamGameWeak}");
             }
@@ -124,14 +120,14 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
         [ApiExplorerSettings(IgnoreApi = true)]
         public void RemovePlayersRecurringJob()
         {
-            var gameWeek = _unitOfWork.Season.GetCurrentGameWeak();
+            Entities.CoreServicesModels.SeasonModels.GameWeakModel gameWeek = _unitOfWork.Season.GetCurrentGameWeak();
 
-            var players = _unitOfWork.Team.GetPlayers(new PlayerParameters
+            List<int> players = _unitOfWork.Team.GetPlayers(new PlayerParameters
             {
                 Fk_GameWeak = gameWeek.Id
             }, false).Select(a => a.Id).ToList();
 
-            foreach (var player in players)
+            foreach (int player in players)
             {
                 RecurringJob.RemoveIfExists($"PlayerGameWeekStatesCalc-{gameWeek.Id}-{player}");
             }

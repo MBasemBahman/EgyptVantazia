@@ -258,6 +258,16 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
         {
             return View();
         }
+        
+        [HttpPost]
+        public async Task<ActionResult> UpdateTeamsPlayers(int fk_TeamGameWeak)
+        {
+            _unitOfWork.Season.UpdateTeamGameWeakPlayers(fk_TeamGameWeak);
+
+            await _unitOfWork.Save();
+            
+            return NoContent();
+        }
 
         // helper methods
         private void SetViewData(int returnPage, int id, int fk_Season, bool otherLang)

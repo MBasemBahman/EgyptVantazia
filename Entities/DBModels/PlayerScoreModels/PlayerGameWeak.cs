@@ -27,6 +27,9 @@ namespace Entities.DBModels.PlayerScoreModels
 
         [DisplayName(nameof(TotalPoints))]
         public int TotalPoints { get; set; }
+        
+        [DisplayName(nameof(IsCanNotEdit))]
+        public bool IsCanNotEdit { get; set; }
 
         [DisplayName(nameof(PlayerGameWeakScores))]
         public IList<PlayerGameWeakScore> PlayerGameWeakScores { get; set; }

@@ -15,10 +15,23 @@
     border-radius: 30px
 }
 
-    .btn-primary:hover {
-        box-shadow: 2px 2px 7px 0px rgba(167,167,167,.6705882353) !important;
-        transform: translateY(-2px)
-    }
+.btn-primary:hover {
+    box-shadow: 2px 2px 7px 0px rgba(167,167,167,.6705882353) !important;
+    transform: translateY(-2px)
+}
+
+.btn-info {
+    background: linear-gradient(82deg, #D4AED7 11%, #D4AEDE 27%);
+    border-color: rgba(0,0,0,0) !important;
+    color: #fff !important;
+    transition: all .2s ease-in-out;
+    border-radius: 30px
+}
+
+.btn-info:hover {
+    box-shadow: 2px 2px 7px 0px rgba(167,167,167,.6705882353) !important;
+    transform: translateY(-2px)
+}
 
 .main-menu.menu-light .navigation > li ul .active {
     background: linear-gradient(90deg, #D4AF37 3%, #D4AF37 96%);

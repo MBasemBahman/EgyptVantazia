@@ -1,4 +1,5 @@
-﻿using Entities.CoreServicesModels.SeasonModels;
+﻿using Entities.CoreServicesModels.PlayerScoreModels;
+using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.SeasonModels;
@@ -360,6 +361,7 @@ namespace CoreServices.Logic
                                        },
                                        Ranking = b.Ranking,
                                        TotalPoints = b.TotalPoints,
+                                       IsCanNotEdit = b.IsCanNotEdit
                                    }).ToList(),
                            AwayTeamPlayers = a.PlayerGameWeaks
                                .Where(b => b.Player.Fk_Team == a.Fk_Away).Select(b =>
@@ -373,6 +375,7 @@ namespace CoreServices.Logic
                                        },
                                        Ranking = b.Ranking,
                                        TotalPoints = b.TotalPoints,
+                                       IsCanNotEdit = b.IsCanNotEdit
                                    }).ToList(),
 
                        })
@@ -417,6 +420,65 @@ namespace CoreServices.Logic
         public TeamGameWeakModel GetTeamGameWeakbyId(int id, bool otherLang)
         {
             return GetTeamGameWeaks(new TeamGameWeakParameters { Id = id }, otherLang).FirstOrDefault();
+        }
+
+        public void UpdateTeamGameWeakPlayers(int fk_TeamGameWeak)
+        {
+            TeamGameWeakModel teamGameWeak = GetTeamGameWeakbyId(fk_TeamGameWeak, otherLang: false);
+
+            List<int> playersGameWeakIds = _repository.PlayerGameWeak
+                .FindAll(new PlayerGameWeakParameters
+                {
+                    Fk_TeamGameWeak = fk_TeamGameWeak
+                }, trackChanges: false).Select(a => a.Fk_Player).ToList();
+
+            #region Add Home Players
+
+            List<Player> homePlayers = _repository.Player.FindAll(new PlayerParameters
+            {
+                Fk_Team = teamGameWeak.Fk_Home
+            }, trackChanges: false).ToList();
+            
+            foreach (var player in homePlayers)
+            {
+                if (!playersGameWeakIds.Contains(player.Id))
+                {
+                    _repository.PlayerGameWeak.Create(new PlayerGameWeak
+                    {
+                        Fk_Player = player.Id,
+                        Fk_TeamGameWeak = teamGameWeak.Id,
+                        Ranking = 0,
+                        TotalPoints = 0,
+                        IsCanNotEdit = true
+                    });
+                }
+            }
+
+            #endregion
+
+            #region Add Away Players
+            
+            List<Player> awayPlayers = _repository.Player.FindAll(new PlayerParameters
+            {
+                Fk_Team = teamGameWeak.Fk_Away
+            }, trackChanges: false).ToList();
+            
+            foreach (var player in awayPlayers)
+            {
+                if (!playersGameWeakIds.Contains(player.Id))
+                {
+                    _repository.PlayerGameWeak.Create(new PlayerGameWeak
+                    {
+                        Fk_Player = player.Id,
+                        Fk_TeamGameWeak = teamGameWeak.Id,
+                        Ranking = 0,
+                        TotalPoints = 0,
+                        IsCanNotEdit = true
+                    });
+                }
+            }
+
+            #endregion
         }
 
         public int GetTeamGameWeakCount()

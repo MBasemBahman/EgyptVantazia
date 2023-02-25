@@ -1251,4 +1251,10 @@
   <data name="UpdateAccountTeamPoints" xml:space="preserve">
     <value>Fantasy squad points update</value>
   </data>
+  <data name="UpdateTeamsPlayers" xml:space="preserve">
+    <value>Update Players</value>
+  </data>
+  <data name="IsCantEdit" xml:space="preserve">
+    <value>Can Edit ?</value>
+  </data>
 </root>

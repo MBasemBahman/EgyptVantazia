@@ -1284,4 +1284,10 @@
   <data name="UpdateAccountTeamPoints" xml:space="preserve">
     <value>تحديث نقاط فرق الفانتازي</value>
   </data>
+  <data name="UpdateTeamsPlayers" xml:space="preserve">
+    <value>تحديث لاعبين الفرق</value>
+  </data>
+  <data name="IsCantEdit" xml:space="preserve">
+    <value>قابل للتعديل</value>
+  </data>
 </root>

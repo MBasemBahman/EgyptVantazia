@@ -16,6 +16,7 @@ PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER
     transform: translateY(-2px);
   }
 }
+
 .btn-primary {
   background: linear-gradient(90deg, #D4AF37 3%, #D4AF37 96%);
   border-color: transparent !important;
@@ -27,6 +28,19 @@ PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER
     transform: translateY(-2px);
   }
 }
+
+.btn-info {
+  background: linear-gradient(82deg, #D4AED7 11%, #D4AEDE 27%);
+  border-color: transparent !important;
+  color: #fff !important;
+  transition: all 0.2s ease-in-out;
+  border-radius: 30px;
+  &:hover {
+    box-shadow: 2px 2px 7px 0px #a7a7a7ab !important;
+    transform: translateY(-2px);
+  }
+}
+
 .main-menu.menu-light .navigation > li ul .active {
   background: linear-gradient(90deg, #D4AF37 3%, #D4AF37 96%);
   border-radius: 30px;

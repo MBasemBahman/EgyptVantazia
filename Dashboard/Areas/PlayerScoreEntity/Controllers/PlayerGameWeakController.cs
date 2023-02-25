@@ -207,6 +207,18 @@ namespace Dashboard.Areas.PlayerScoreEntity.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+        
+        [HttpPost]
+        public async Task<ActionResult> UpdatePlayerGameWeakRanking(int fk_PlayerGameWeak, double ranking)
+        {
+            PlayerGameWeak playerGameWeak = await _unitOfWork.PlayerScore.FindPlayerGameWeakbyId(fk_PlayerGameWeak, trackChanges: true);
+
+            playerGameWeak.Ranking = ranking;
+
+            await _unitOfWork.Save();
+            
+            return NoContent();
+        }
 
         // helper methods
         private void SetViewData(int fk_Season, bool otherLang)

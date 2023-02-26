@@ -130,7 +130,6 @@
                                     <tr>
                                         <th>@Localizer.Get("Name")</th>
                                         <th>@Localizer.Get("Ranking")</th>
-                                        <th>@Localizer.Get("TotalPoints")</th>
                                         <th>@Localizer.Get("IsCantEdit")</th>
                                         <th>@Localizer.Get("PlayerGameWeakScore")</th>
                                         <th>@Localizer.Get("Statistics")</th>
@@ -149,7 +148,6 @@
                                             <td>
                                                 <input type="text" class="form-control player_ranking_input" data-fk_playergameweak="@item.Id" value="@item.Ranking" />
                                             </td>
-                                            <td>@item.TotalPoints</td>
                                             <td>
                                                 <span class="badge bg-@(!item.IsCanNotEdit ? "success" : "danger")">
                                                     @Localizer.Get((!item.IsCanNotEdit ? "Yes" : "No"))
@@ -195,7 +193,6 @@
                                         <tr>
                                             <th>@Localizer.Get("Name")</th>
                                             <th>@Localizer.Get("Ranking")</th>
-                                            <th>@Localizer.Get("TotalPoints")</th>
                                             <th>@Localizer.Get("IsCantEdit")</th>
                                             <th>@Localizer.Get("PlayerGameWeakScore")</th>
                                             <th>@Localizer.Get("Statistics")</th>
@@ -214,7 +211,6 @@
                                                 <td>
                                                     <input type="text" class="form-control player_ranking_input" data-fk_playergameweak="@item.Id" value="@item.Ranking" />
                                                 </td>
-                                                <td>@item.TotalPoints</td>
                                                 <td>
                                                     <span class="badge bg-@(!item.IsCanNotEdit ? "success" : "danger")">
                                                         @Localizer.Get((!item.IsCanNotEdit ? "Yes" : "No"))

@@ -252,12 +252,6 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
-        [HttpGet]
-        public IActionResult UpdateGameResult(string _365_MatchId)
-        {
-            return View();
-        }
         
         [HttpPost]
         public async Task<ActionResult> UpdateTeamsPlayers(int fk_TeamGameWeak)

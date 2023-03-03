@@ -149,6 +149,7 @@ namespace CoreServices.Logic
                     dataDb.IsCurrent = data.IsCurrent;
                     dataDb.IsNext = data.IsNext;
                     dataDb.IsPrev = data.IsPrev;
+                    dataDb.Deadline = data.Deadline;
                 }
             }
             return season;
@@ -267,7 +268,7 @@ namespace CoreServices.Logic
             return GetGameWeaks(parameters, otherLang)
                 .OrderBy(a => a._365_GameWeakIdValue).ToDictionary(a => a.Id.ToString(), a => a.Name);
         }
-        
+
         public void CreateGameWeak(GameWeak GameWeak)
         {
             _repository.GameWeak.Create(GameWeak);
@@ -322,6 +323,7 @@ namespace CoreServices.Logic
                            StartTime = a.StartTime,
                            _365_MatchId = a._365_MatchId,
                            IsDelayed = a.IsDelayed,
+                           IsCanNotEdit = a.IsCanNotEdit,
                            LastUpdateId = a.LastUpdateId,
                            Away = new TeamModel
                            {
@@ -438,7 +440,7 @@ namespace CoreServices.Logic
             {
                 Fk_Team = teamGameWeak.Fk_Home
             }, trackChanges: false).ToList();
-            
+
             foreach (var player in homePlayers)
             {
                 if (!playersGameWeakIds.Contains(player.Id))
@@ -457,12 +459,12 @@ namespace CoreServices.Logic
             #endregion
 
             #region Add Away Players
-            
+
             List<Player> awayPlayers = _repository.Player.FindAll(new PlayerParameters
             {
                 Fk_Team = teamGameWeak.Fk_Away
             }, trackChanges: false).ToList();
-            
+
             foreach (var player in awayPlayers)
             {
                 if (!playersGameWeakIds.Contains(player.Id))

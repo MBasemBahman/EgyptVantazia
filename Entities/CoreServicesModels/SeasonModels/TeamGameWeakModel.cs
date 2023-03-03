@@ -87,6 +87,9 @@ namespace Entities.CoreServicesModels.SeasonModels
         [DisplayName(nameof(IsDelayed))]
         public bool IsDelayed { get; set; }
 
+        [DisplayName(nameof(IsCanNotEdit))]
+        public bool IsCanNotEdit { get; set; }
+
         public string LastUpdateId { get; set; }
 
         [DisplayName(nameof(HomeTeamPlayers))]
@@ -123,6 +126,9 @@ namespace Entities.CoreServicesModels.SeasonModels
 
         [DisplayName(nameof(IsDelayed))]
         public bool IsDelayed { get; set; }
+
+        [DisplayName(nameof(IsCanNotEdit))]
+        public bool IsCanNotEdit { get; set; }
 
         [DisplayName(nameof(_365_MatchId))]
         public string _365_MatchId { get; set; }

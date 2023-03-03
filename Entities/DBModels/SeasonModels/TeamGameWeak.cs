@@ -57,6 +57,9 @@ namespace Entities.DBModels.SeasonModels
         [DisplayName(nameof(ThirdJobId))]
         public string ThirdJobId { get; set; }
 
+        [DisplayName(nameof(IsCanNotEdit))]
+        public bool IsCanNotEdit { get; set; }
+
         [DisplayName(nameof(PlayerGameWeaks))]
         public IList<PlayerGameWeak> PlayerGameWeaks { get; set; }
     }

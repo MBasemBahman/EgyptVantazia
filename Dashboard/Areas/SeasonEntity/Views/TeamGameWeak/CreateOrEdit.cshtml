@@ -48,7 +48,7 @@
                                     <div class="row mb-1">
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
-                                                <label  class="form-label">@Localizer.Get("HomeTeam")</label>
+                                                <label class="form-label">@Localizer.Get("HomeTeam")</label>
                                                 <select asp-for="Fk_Home" class="select2 form-select" asp-items="@(new SelectList(ViewData["Team"] as Dictionary<string,string>,"Key","Value"))">
                                                 </select>
                                                 <span asp-validation-for="Fk_Home" class="text-danger"></span>
@@ -97,34 +97,43 @@
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="StartTime" class="form-label"></label>
-                                                <input type="text" value="@(Model.StartTime.ToString("yyyy-MM-dd"))" id="fp-default" name="StartTime" class="form-control flatpickr-basic flatpickr-input active" placeholder="YYYY-MM-DD" readonly="readonly">
+                                                <input asp-for="StartTime" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"StartTime"))" />
                                                 <span asp-validation-for="StartTime" class="text-danger"></span>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
-                                                <label asp-for="StartTime" class="form-label"></label>
-                                                <input type="text" value="@(Model.StartTime.ToString("yyyy-MM-dd"))" id="fp-default" name="StartTime" class="form-control flatpickr-basic flatpickr-input active" placeholder="YYYY-MM-DD" readonly="readonly">
-                                                <span asp-validation-for="StartTime" class="text-danger"></span>
+                                                <label asp-for="_365_MatchId" class="form-label"></label>
+                                                <input asp-for="_365_MatchId" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"_365_MatchId"))" />
+                                                <span asp-validation-for="_365_MatchId" class="text-danger"></span>
                                             </div>
                                         </div>
-                                        
-                                        <div class="col-md-6 col-12">
+
+                                        <div class="col-md-4 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="IsEnded" class="form-check-label" for="IsEnded"></label>
                                                 <input asp-for="IsEnded" class="form-check-input" />
                                                 <span asp-validation-for="IsEnded" class="text-danger"></span>
                                             </div>
                                         </div>
-                                        
-                                        <div class="col-md-6 col-12">
+
+                                        <div class="col-md-4 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="IsDelayed" class="form-check-label" for="IsDelayed"></label>
                                                 <input asp-for="IsDelayed" class="form-check-input" />
                                                 <span asp-validation-for="IsDelayed" class="text-danger"></span>
                                             </div>
                                         </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="IsCanNotEdit" class="form-check-label" for="IsCanNotEdit"></label>
+                                                <input asp-for="IsCanNotEdit" class="form-check-input" />
+                                                <span asp-validation-for="IsCanNotEdit" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
                                     </div>
 
                                     <hr />

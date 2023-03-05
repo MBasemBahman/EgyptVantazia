@@ -309,16 +309,16 @@ namespace API.Areas.AccountTeamArea.Controllers
                     throw new Exception("You not have valid card!");
                 }
 
-                if (_unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
-                {
-                    Fk_AccountTeam = currentTeam.Id,
-                    GameWeakFrom = gameWeakFrom,
-                    GameWeakTo = gameWeakTo,
-                    BenchBoost = true
-                }, otherLang: false).Count() >= 2)
-                {
-                    throw new Exception("You already use card in this half of season!");
-                }
+                //if (_unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
+                //{
+                //    Fk_AccountTeam = currentTeam.Id,
+                //    GameWeakFrom = gameWeakFrom,
+                //    GameWeakTo = gameWeakTo,
+                //    BenchBoost = true
+                //}, otherLang: false).Count() >= 2)
+                //{
+                //    throw new Exception("You already use card in this half of season!");
+                //}
             }
             else if (cardTypeEnum == CardTypeEnum.FreeHit)
             {
@@ -327,16 +327,16 @@ namespace API.Areas.AccountTeamArea.Controllers
                     throw new Exception("You not have valid card!");
                 }
 
-                if (_unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
-                {
-                    Fk_AccountTeam = currentTeam.Id,
-                    GameWeakFrom = gameWeakFrom,
-                    GameWeakTo = gameWeakTo,
-                    FreeHit = true
-                }, otherLang: false).Count() >= 1)
-                {
-                    throw new Exception("You already use card in this half of season!");
-                }
+                //if (_unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
+                //{
+                //    Fk_AccountTeam = currentTeam.Id,
+                //    GameWeakFrom = gameWeakFrom,
+                //    GameWeakTo = gameWeakTo,
+                //    FreeHit = true
+                //}, otherLang: false).Count() >= 1)
+                //{
+                //    throw new Exception("You already use card in this half of season!");
+                //}
             }
             else if (cardTypeEnum == CardTypeEnum.WildCard)
             {
@@ -345,16 +345,16 @@ namespace API.Areas.AccountTeamArea.Controllers
                     throw new Exception("You not have valid card!");
                 }
 
-                if (_unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
-                {
-                    Fk_AccountTeam = currentTeam.Id,
-                    GameWeakFrom = gameWeakFrom,
-                    GameWeakTo = gameWeakTo,
-                    WildCard = true
-                }, otherLang: false).Count() >= 1)
-                {
-                    throw new Exception("You already use card in this half of season!");
-                }
+                //if (_unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
+                //{
+                //    Fk_AccountTeam = currentTeam.Id,
+                //    GameWeakFrom = gameWeakFrom,
+                //    GameWeakTo = gameWeakTo,
+                //    WildCard = true
+                //}, otherLang: false).Count() >= 1)
+                //{
+                //    throw new Exception("You already use card in this half of season!");
+                //}
             }
             else if (cardTypeEnum == CardTypeEnum.DoubleGameWeak)
             {
@@ -363,16 +363,16 @@ namespace API.Areas.AccountTeamArea.Controllers
                     throw new Exception("You not have valid card!");
                 }
 
-                if (_unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
-                {
-                    Fk_AccountTeam = currentTeam.Id,
-                    GameWeakFrom = gameWeakFrom,
-                    GameWeakTo = gameWeakTo,
-                    DoubleGameWeak = true
-                }, otherLang: false).Count() >= 2)
-                {
-                    throw new Exception("You already use card in this half of season!");
-                }
+                //if (_unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
+                //{
+                //    Fk_AccountTeam = currentTeam.Id,
+                //    GameWeakFrom = gameWeakFrom,
+                //    GameWeakTo = gameWeakTo,
+                //    DoubleGameWeak = true
+                //}, otherLang: false).Count() >= 2)
+                //{
+                //    throw new Exception("You already use card in this half of season!");
+                //}
             }
             else if (cardTypeEnum == CardTypeEnum.Top_11)
             {
@@ -381,16 +381,16 @@ namespace API.Areas.AccountTeamArea.Controllers
                     throw new Exception("You not have valid card!");
                 }
 
-                if (_unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
-                {
-                    Fk_AccountTeam = currentTeam.Id,
-                    GameWeakFrom = gameWeakFrom,
-                    GameWeakTo = gameWeakTo,
-                    Top_11 = true
-                }, otherLang: false).Count() >= 2)
-                {
-                    throw new Exception("You already use card in this half of season!");
-                }
+                //if (_unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
+                //{
+                //    Fk_AccountTeam = currentTeam.Id,
+                //    GameWeakFrom = gameWeakFrom,
+                //    GameWeakTo = gameWeakTo,
+                //    Top_11 = true
+                //}, otherLang: false).Count() >= 2)
+                //{
+                //    throw new Exception("You already use card in this half of season!");
+                //}
             }
             else if (cardTypeEnum == CardTypeEnum.TripleCaptain)
             {
@@ -399,16 +399,16 @@ namespace API.Areas.AccountTeamArea.Controllers
                     throw new Exception("You not have valid card!");
                 }
 
-                if (_unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
-                {
-                    Fk_AccountTeam = currentTeam.Id,
-                    GameWeakFrom = gameWeakFrom,
-                    GameWeakTo = gameWeakTo,
-                    TripleCaptain = true
-                }, otherLang: false).Count() >= 2)
-                {
-                    throw new Exception("You already use card in this half of season!");
-                }
+                //if (_unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
+                //{
+                //    Fk_AccountTeam = currentTeam.Id,
+                //    GameWeakFrom = gameWeakFrom,
+                //    GameWeakTo = gameWeakTo,
+                //    TripleCaptain = true
+                //}, otherLang: false).Count() >= 2)
+                //{
+                //    throw new Exception("You already use card in this half of season!");
+                //}
             }
 
             AccountTeamGameWeak accountTeamGameWeak = await _unitOfWork.AccountTeam.FindAccountTeamGameWeakbyId(teamGameWeak.Id, trackChanges: true);

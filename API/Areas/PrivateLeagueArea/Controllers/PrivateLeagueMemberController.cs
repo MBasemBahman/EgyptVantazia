@@ -42,45 +42,6 @@ namespace API.Areas.PrivateLeagueArea.Controllers
             return data;
         }
 
-        [HttpPost]
-        [Route(nameof(Create))]
-        public async Task<bool> Create([FromBody] PrivateLeagueMemberCreateModel model)
-        {
-            if (model.Fk_PrivateLeague <= 0)
-            {
-                throw new Exception("Not Valid!");
-            }
-
-            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
-
-            if (!_unitOfWork.PrivateLeague.GetPrivateLeagueMembers(new PrivateLeagueMemberParameters
-            {
-                Fk_Account = auth.Fk_Account,
-                Fk_PrivateLeague = model.Fk_PrivateLeague,
-                IsAdmin = true
-            }).Any())
-            {
-                throw new Exception("Not Auth!");
-            }
-
-            if (model.Fk_Accounts != null && model.Fk_Accounts.Any())
-            {
-                foreach (int fk_Account in model.Fk_Accounts)
-                {
-                    _unitOfWork.PrivateLeague.CreatePrivateLeagueMember(new PrivateLeagueMember
-                    {
-                        Fk_Account = fk_Account,
-                        Fk_PrivateLeague = model.Fk_PrivateLeague,
-                        CreatedBy = auth.Name
-                    });
-                }
-            }
-
-            await _unitOfWork.Save();
-
-            return true;
-        }
-
         [HttpDelete]
         [Route(nameof(Delete))]
         public async Task<bool> Delete([FromQuery, BindRequired] int id)

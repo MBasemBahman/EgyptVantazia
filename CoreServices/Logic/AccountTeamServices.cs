@@ -84,11 +84,11 @@ namespace CoreServices.Logic
                            TripleCaptain = a.TripleCaptain,
                            WildCard = a.WildCard,
                            Fk_AcountTeamGameWeek = a.AccountTeamGameWeaks
-                                                    .Where(b => b.GameWeak.IsCurrent == true)
+                                                    .Where(b => parameters.Fk_GameWeak > 0 ? b.Fk_GameWeak == parameters.Fk_GameWeak : b.GameWeak.IsCurrent == true)
                                                     .Select(a => a.Id)
                                                     .FirstOrDefault(),
                            CurrentGameWeakPoints = a.AccountTeamGameWeaks
-                                                    .Where(b => b.GameWeak.IsCurrent == true)
+                                                    .Where(b => parameters.Fk_GameWeak > 0 ? b.Fk_GameWeak == parameters.Fk_GameWeak : b.GameWeak.IsCurrent == true)
                                                     .Select(b => parameters.IncludeTotalPoints == false ?
                                                                  b.TotalPoints ?? 0 : b.AccountTeam
                                                                                    .AccountTeamPlayers
@@ -105,19 +105,19 @@ namespace CoreServices.Logic
                                                                                    .Sum())
                                                     .FirstOrDefault(),
                            CurrentGameWeakGlobalRanking = a.AccountTeamGameWeaks
-                                                           .Where(b => b.GameWeak.IsCurrent == true)
+                                                           .Where(b => parameters.Fk_GameWeak > 0 ? b.Fk_GameWeak == parameters.Fk_GameWeak : b.GameWeak.IsCurrent == true)
                                                            .Select(b => b.GlobalRanking)
                                                            .FirstOrDefault(),
                            CurrentGameWeakTansfarePoints = a.AccountTeamGameWeaks
-                                                           .Where(b => b.GameWeak.IsCurrent == true)
+                                                           .Where(b => parameters.Fk_GameWeak > 0 ? b.Fk_GameWeak == parameters.Fk_GameWeak : b.GameWeak.IsCurrent == true)
                                                            .Select(b => b.TansfarePoints)
                                                            .FirstOrDefault(),
                            CurrentGameWeakCountryRanking = a.AccountTeamGameWeaks
-                                                           .Where(b => b.GameWeak.IsCurrent == true)
+                                                           .Where(b => parameters.Fk_GameWeak > 0 ? b.Fk_GameWeak == parameters.Fk_GameWeak : b.GameWeak.IsCurrent == true)
                                                            .Select(b => b.CountryRanking)
                                                            .FirstOrDefault(),
                            CurrentGameWeakFavouriteTeamRanking = a.AccountTeamGameWeaks
-                                                           .Where(b => b.GameWeak.IsCurrent == true)
+                                                           .Where(b => parameters.Fk_GameWeak > 0 ? b.Fk_GameWeak == parameters.Fk_GameWeak : b.GameWeak.IsCurrent == true)
                                                            .Select(b => b.FavouriteTeamRanking)
                                                            .FirstOrDefault(),
                            PrevGameWeakPoints = a.AccountTeamGameWeaks

@@ -25,6 +25,11 @@ namespace API.Areas.PlayerScoreArea.Controllers
         public async Task<IEnumerable<PlayerGameWeakScoreModel>> GetPlayerGameWeakScores(
         [FromQuery] PlayerGameWeakScoreParameters parameters)
         {
+            if (parameters.Fk_TeamGameWeak == 0)
+            {
+                return new List<PlayerGameWeakScoreModel>();
+            }
+
             parameters.Fk_ScoreTypes = new List<int>
             {
                 (int)ScoreTypeEnum.Minutes,

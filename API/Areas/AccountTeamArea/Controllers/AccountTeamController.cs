@@ -105,7 +105,11 @@ namespace API.Areas.AccountTeamArea.Controllers
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
-            AccountTeamModel data = _unitOfWork.AccountTeam.GetAccountTeambyId(id, otherLang);
+            AccountTeamModel data = _unitOfWork.AccountTeam.GetAccountTeams(new AccountTeamParameters
+            {
+                Id = id,
+                Fk_GameWeak = fk_GameWeak
+            }, otherLang).FirstOrDefault();
             GameWeakModel gameWeak = null;
 
             if (fk_GameWeak == 0)

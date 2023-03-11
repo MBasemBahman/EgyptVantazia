@@ -4,7 +4,6 @@ using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.PlayersTransfersModels;
-using Entities.DBModels.TeamModels;
 using FantasyLogic;
 using static Contracts.EnumData.DBModelsEnum;
 using static Entities.EnumData.LogicEnumData;
@@ -90,7 +89,6 @@ namespace API.Areas.AccountTeamArea.Controllers
                 }
             }
 
-
             PagedList<AccountTeamPlayerModel> data = await _unitOfWork.AccountTeam.GetAccountTeamPlayerPaged(parameters, otherLang);
 
             if (parameters.Fk_AccountTeam > 0 && parameters.IsNextGameWeak != true)
@@ -98,6 +96,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                 var accountTeam = _unitOfWork.AccountTeam.GetAccountTeams(new AccountTeamParameters
                 {
                     Id = parameters.Fk_AccountTeam,
+                    Fk_GameWeak = parameters.Fk_GameWeak
                 }, otherLang).Select(a => new
                 {
                     a.Fk_AcountTeamGameWeek

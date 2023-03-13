@@ -44,5 +44,10 @@
             Played,
             PlayMoreThan60Min
         }
+
+        public enum NotificationOpenTypeEnum
+        {
+            Home
+        }
     }
 }

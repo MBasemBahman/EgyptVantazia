@@ -24,7 +24,8 @@
             AccountTeam,
             PlayerState,
             Payment,
-            Subscription
+            Subscription,
+            Notification
         }
 
         public enum TenantViews

@@ -26,6 +26,7 @@ namespace CoreServices
         private TeamServices _teamServices;
         private SubscriptionServices _subscriptionServices;
         private AuditServices _auditServices;
+        private NotificationServices _notificationServices;
 
         public UnitOfWork(RepositoryManager repository, BaseContext dBContext)
         {
@@ -183,6 +184,15 @@ namespace CoreServices
             {
                 _auditServices ??= new AuditServices(_repository);
                 return _auditServices;
+            }
+        }
+
+        public NotificationServices Notification
+        {
+            get
+            {
+                _notificationServices ??= new NotificationServices(_repository);
+                return _notificationServices;
             }
         }
     }

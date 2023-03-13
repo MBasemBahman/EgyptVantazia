@@ -6,6 +6,7 @@ using Repository.DBModels.DashboardAdministrationModels;
 using Repository.DBModels.LocationModels;
 using Repository.DBModels.LogModels;
 using Repository.DBModels.NewsModels;
+using Repository.DBModels.NotificationModels;
 using Repository.DBModels.PlayerScoreModels;
 using Repository.DBModels.PlayerStateModels;
 using Repository.DBModels.PlayersTransfersModels;
@@ -120,6 +121,10 @@ namespace Repository
 
         #region AuditModels
         private JobAuditRepository _jobAuditRepository;
+        #endregion
+
+        #region NotificationModels
+        private NotificationRepository _notificationRepository;
         #endregion
 
 
@@ -555,6 +560,18 @@ namespace Repository
             {
                 _jobAuditRepository ??= new JobAuditRepository(_dBContext);
                 return _jobAuditRepository;
+            }
+        }
+        #endregion
+
+        #region NotificationModels
+
+        public NotificationRepository Notification
+        {
+            get
+            {
+                _notificationRepository ??= new NotificationRepository(_dBContext);
+                return _notificationRepository;
             }
         }
         #endregion

@@ -6,6 +6,7 @@ using Entities.DBModels.DashboardAdministrationModels;
 using Entities.DBModels.LocationModels;
 using Entities.DBModels.LogModels;
 using Entities.DBModels.NewsModels;
+using Entities.DBModels.NotificationModels;
 using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.PlayerStateModels;
 using Entities.DBModels.PlayersTransfersModels;
@@ -152,6 +153,10 @@ namespace BaseDB
         #region Audit Models
         public DbSet<Audit> Audits { get; set; }
         public DbSet<JobAudit> JobAudits { get; set; }
+        #endregion
+
+        #region Notification
+        public DbSet<Notification> Notifications { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

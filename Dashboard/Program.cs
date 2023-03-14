@@ -19,7 +19,7 @@ builder.Services.ConfigureSqlContext(builder.Configuration, config);
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 builder.Services.ConfigureViews();
 builder.Services.ConfigureSessionAndCookie();
-//builder.Services.ConfigureFirebase(config.AppSettings);
+builder.Services.ConfigureFirebase(config.AppSettings);
 //builder.Services.ConfigureEmailSender(builder.Configuration);
 
 WebApplication app = builder.Build();

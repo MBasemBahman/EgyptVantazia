@@ -1302,4 +1302,10 @@
   <data name="ExpireAt" xml:space="preserve">
     <value>موعد الانتهاء</value>
   </data>
+  <data name="OpenType" xml:space="preserve">
+    <value>الصفحه</value>
+  </data>
+  <data name="OpenValue" xml:space="preserve">
+    <value>القيمة</value>
+  </data>
 </root>

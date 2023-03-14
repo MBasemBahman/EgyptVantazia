@@ -247,6 +247,20 @@
                     </a>
                 </li>
             }
+        
+        @if (viewList.Contains((int)DashboardViewEnum.Notification))
+            {
+                <li id="NotificationList" class="@(active == DashboardViewEnum.Notification.ToString()?"active":"") nav-item">
+                    <a class="d-flex align-items-center"
+                       asp-action="Index" asp-area="NotificationEntity"
+                       asp-controller="Notification">
+                        <i data-feather="bell"></i>
+                        <span class="menu-title text-truncate">
+                            @Localizer.Get("Notifications")
+                        </span>
+                    </a>
+                </li>
+            }
 
             @if (viewList.Contains((int)DashboardViewEnum.Season))
             {

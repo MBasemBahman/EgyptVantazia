@@ -50,5 +50,13 @@
 			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 		</Content>
 	</ItemGroup>
+
+	<ItemGroup>
+	  <AdditionalFiles Include="Areas\NotificationEntity\Views\Notification\CreateOrEdit.cshtml" />
+	  <AdditionalFiles Include="Areas\NotificationEntity\Views\Notification\Delete.cshtml" />
+	  <AdditionalFiles Include="Areas\NotificationEntity\Views\Notification\Details.cshtml" />
+	  <AdditionalFiles Include="Areas\NotificationEntity\Views\Notification\Index.cshtml" />
+	  <AdditionalFiles Include="Areas\NotificationEntity\Views\_ViewImports.cshtml" />
+	</ItemGroup>
 	
 </Project>

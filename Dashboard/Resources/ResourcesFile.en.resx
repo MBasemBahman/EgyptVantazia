@@ -1257,4 +1257,16 @@
   <data name="IsCantEdit" xml:space="preserve">
     <value>Can Edit ?</value>
   </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
+  <data name="Notification" xml:space="preserve">
+    <value>Notification</value>
+  </data>
+  <data name="ShowAt" xml:space="preserve">
+    <value>Show At</value>
+  </data>
+  <data name="ExpireAt" xml:space="preserve">
+    <value>Expire At</value>
+  </data>
 </root>

@@ -50,6 +50,12 @@ namespace CoreServices.Logic
         {
             return await _repository.Notification.FindById(id, trackChanges);
         }
+        
+        public async Task<string> UploadNotificationImage(string rootPath, IFormFile file)
+        {
+            FileUploader uploader = new(rootPath);
+            return await uploader.UploudFile(file, "Uploud/Notification");
+        }
 
         public void CreateNotification(Notification Notification)
         {

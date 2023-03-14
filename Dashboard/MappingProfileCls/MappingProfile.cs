@@ -6,6 +6,7 @@ using Dashboard.Areas.DashboardAdministration.Models;
 using Dashboard.Areas.Location.Models;
 using Dashboard.Areas.LogEntity.Models;
 using Dashboard.Areas.NewsEntity.Models;
+using Dashboard.Areas.NotificationEntity.Models;
 using Dashboard.Areas.PaymentEntity.Models;
 using Dashboard.Areas.PlayerScoreEntity.Models;
 using Dashboard.Areas.PlayerStateEntity.Models;
@@ -23,6 +24,7 @@ using Entities.CoreServicesModels.AppInfoModels;
 using Entities.CoreServicesModels.LocationModels;
 using Entities.CoreServicesModels.LogModels;
 using Entities.CoreServicesModels.NewsModels;
+using Entities.CoreServicesModels.NotificationModels;
 using Entities.CoreServicesModels.PlayerScoreModels;
 using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.PlayerTransfersModels;
@@ -39,6 +41,7 @@ using Entities.DBModels.AppInfoModels;
 using Entities.DBModels.DashboardAdministrationModels;
 using Entities.DBModels.LocationModels;
 using Entities.DBModels.NewsModels;
+using Entities.DBModels.NotificationModels;
 using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.PlayerStateModels;
 using Entities.DBModels.PrivateLeagueModels;
@@ -599,6 +602,23 @@ namespace Dashboard.MappingProfileCls
 
             #endregion
 
+            #region Notification
+            _ = CreateMap<Notification, NotificationCreateOrEditModel>();
+
+            _ = CreateMap<NotificationCreateOrEditModel, Notification>()
+                .ForMember(dest => dest.ImageUrl, opt => opt.Ignore())
+                .ForMember(dest => dest.StorageUrl, opt => opt.Ignore());
+
+            _ = CreateMap<NotificationModel, NotificationDto>();
+
+            _ = CreateMap<NotificationFilter, NotificationParameters>();
+
+            _ = CreateMap<NotificationLangModel, NotificationLang>();
+
+            _ = CreateMap<NotificationLang, NotificationLangModel>();
+
+            #endregion
+            
             #region ScoreStype
 
             _ = CreateMap<PlayerGameWeakScoreDto, PlayerGameWeakScoreCreateDto>();

@@ -1290,4 +1290,16 @@
   <data name="IsCantEdit" xml:space="preserve">
     <value>قابل للتعديل</value>
   </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>الاشعارات</value>
+  </data>
+  <data name="Notification" xml:space="preserve">
+    <value>اشعار</value>
+  </data>
+  <data name="ShowAt" xml:space="preserve">
+    <value>موعد الاظهار</value>
+  </data>
+  <data name="ExpireAt" xml:space="preserve">
+    <value>موعد الانتهاء</value>
+  </data>
 </root>

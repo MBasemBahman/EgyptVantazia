@@ -54,7 +54,8 @@
             AccountSubscription = 35,
             Payment = 36,
             AccountTeamPlayer = 38,
-            AccountTeamGameWeak = 39
+            AccountTeamGameWeak = 39,
+            Notification = 40
         }
 
         public enum ScoreTypeEnum

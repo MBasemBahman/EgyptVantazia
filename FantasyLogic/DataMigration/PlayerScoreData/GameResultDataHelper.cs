@@ -102,7 +102,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             {
                 RecurringJob.RemoveIfExists(RecurringJobMatchId + teamGameWeak._365_MatchId.ToString());
             }
-            if (runBonus || matchEnded || runAll)
+            if (true || runBonus || matchEnded || runAll)
             {
                 _ = BackgroundJob.Enqueue(() => _playerStateCalc.UpdateTop15(teamGameWeak.Fk_GameWeek, teamGameWeak.Fk_Season));
             }

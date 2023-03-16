@@ -149,33 +149,37 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                         if (!matchEnded)
                         {
                             List<Member> allMembersResults = new();
+
                             allMembersResults.AddRange(gameReturn.Game.HomeCompetitor.Lineups.Members);
                             allMembersResults.AddRange(gameReturn.Game.AwayCompetitor.Lineups.Members);
 
                             allMembersResults.ForEach(a =>
                             {
-                                a.AthleteId = allMembers.Where(b => b.Id == a.Id).Select(a => a.AthleteId).FirstOrDefault();
+                                a.AthleteId = allMembers.Where(b => b.Id == a.Id)
+                                                        .Select(a => a.AthleteId)
+                                                        .FirstOrDefault();
                             });
 
                             List<int> membersRanking = runBonus ? allMembersResults.OrderByDescending(a => a.Ranking)
-                                                                        .Skip(0)
-                                                                        .Take(3)
-                                                                        .Select(a => a.Id)
-                                                                        .ToList() : null;
+                                                                                   .Skip(0)
+                                                                                   .Take(3)
+                                                                                   .Select(a => a.Id)
+                                                                                   .ToList() : null;
 
                             foreach (GameMember member in allMembers)
                             {
                                 PlayerDto player = players.Where(a => a._365_PlayerId == member.AthleteId.ToString())
-                                                       .Select(a => new PlayerDto
-                                                       {
-                                                           Id = a.Id,
-                                                           Fk_PlayerPosition = a.Fk_PlayerPosition,
-                                                           Fk_Team = a.Fk_Team
-                                                       })
-                                                       .SingleOrDefault();
+                                                          .Select(a => new PlayerDto
+                                                          {
+                                                              Id = a.Id,
+                                                              Fk_PlayerPosition = a.Fk_PlayerPosition,
+                                                              Fk_Team = a.Fk_Team
+                                                          })
+                                                          .SingleOrDefault();
                                 if (player != null)
                                 {
-                                    Member memberResult = allMembersResults.Where(a => a.AthleteId == member.AthleteId).LastOrDefault();
+                                    Member memberResult = allMembersResults.Where(a => a.AthleteId == member.AthleteId)
+                                                                           .LastOrDefault();
 
                                     int rankingIndex = 0;
 

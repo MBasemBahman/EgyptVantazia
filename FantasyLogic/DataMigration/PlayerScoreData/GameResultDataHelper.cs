@@ -89,6 +89,9 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
 
         public async Task UpdateGameResult(TeamGameWeakDto teamGameWeak, List<ScoreTypeDto> scoreTypes, bool runBonus, bool inDebug, bool runAll, bool stopAll)
         {
+
+            runBonus = true;
+
             TeamGameWeak match = await _unitOfWork.Season.FindTeamGameWeakbyId(teamGameWeak.Id, trackChanges: true);
 
             GameReturn gameReturn = await _365Services.GetGame(new _365GameParameters
@@ -102,18 +105,26 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             {
                 RecurringJob.RemoveIfExists(RecurringJobMatchId + teamGameWeak._365_MatchId.ToString());
             }
-            if (true || runBonus || matchEnded || runAll)
+
+            if (runBonus || matchEnded || runAll)
             {
-                _ = BackgroundJob.Enqueue(() => _playerStateCalc.UpdateTop15(teamGameWeak.Fk_GameWeek, teamGameWeak.Fk_Season));
+                if (inDebug)
+                {
+                    await _playerStateCalc.UpdateTop15(teamGameWeak.Fk_GameWeek, teamGameWeak.Fk_Season);
+                }
+                else
+                {
+                    _ = BackgroundJob.Enqueue(() => _playerStateCalc.UpdateTop15(teamGameWeak.Fk_GameWeek, teamGameWeak.Fk_Season));
+                }
             }
 
-            //if (!inDebug && !runAll)
-            //{
-            //    if (match.LastUpdateId == gameReturn.LastUpdateId)
-            //    {
-            //        return;
-            //    }
-            //}
+            if (!inDebug && !runAll)
+            {
+                if (match.LastUpdateId == gameReturn.LastUpdateId)
+                {
+                    return;
+                }
+            }
 
             if (gameReturn != null && gameReturn.Game != null &&
                 gameReturn.Game.AwayCompetitor != null &&
@@ -160,11 +171,21 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                                         .FirstOrDefault();
                             });
 
-                            List<int> membersRanking = runBonus ? allMembersResults.OrderByDescending(a => a.Ranking)
-                                                                                   .Skip(0)
-                                                                                   .Take(3)
-                                                                                   .Select(a => a.Id)
-                                                                                   .ToList() : null;
+                            List<double> rankings = runBonus ? allMembersResults.OrderByDescending(a => a.Ranking)
+                                                                                .Skip(0)
+                                                                                .Take(3)
+                                                                                .Select(a => a.Ranking)
+                                                                                .ToList() : null;
+
+                            var membersRanking = runBonus && rankings != null && rankings.Any() ? allMembersResults.Where(a => rankings.Contains(a.Ranking))
+                                                                             .Select(a => new
+                                                                             {
+                                                                                 a.Id,
+                                                                                 index = (rankings.IndexOf(a.Ranking) + 1),
+                                                                                 a.Ranking
+                                                                             })
+                                                                             .ToList() : null;
+
 
                             foreach (GameMember member in allMembers)
                             {
@@ -185,9 +206,9 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
 
                                     if (membersRanking != null &&
                                         membersRanking.Any() &&
-                                        membersRanking.Contains(member.Id))
+                                        membersRanking.Any(a => a.Id == member.Id))
                                     {
-                                        rankingIndex = membersRanking.IndexOf(member.Id) + 1;
+                                        rankingIndex = membersRanking.Where(a => a.Id == member.Id).Select(a => a.index).FirstOrDefault();
                                     }
 
                                     if (memberResult != null)

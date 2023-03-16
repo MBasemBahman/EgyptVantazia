@@ -15,17 +15,19 @@ namespace Dashboard.Areas.NotificationEntity.Controllers
         private readonly UnitOfWork _unitOfWork;
         private readonly LinkGenerator _linkGenerator;
         private readonly IWebHostEnvironment _environment;
+        private readonly IFirebaseNotificationManager _notificationManager;
 
         public NotificationController(ILoggerManager logger, IMapper mapper,
                 UnitOfWork unitOfWork,
                  LinkGenerator linkGenerator,
-                 IWebHostEnvironment environment)
+                 IWebHostEnvironment environment, IFirebaseNotificationManager notificationManager)
         {
             _logger = logger;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _linkGenerator = linkGenerator;
             _environment = environment;
+            _notificationManager = notificationManager;
         }
 
         public IActionResult Index()
@@ -103,7 +105,10 @@ namespace Dashboard.Areas.NotificationEntity.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(DashboardViewEnum.Notification, AccessLevelEnum.CreateOrEdit)]
-        public async Task<IActionResult> CreateOrEdit(int id, NotificationCreateOrEditModel model)
+        public async Task<IActionResult> CreateOrEdit(
+            int id,
+            NotificationCreateOrEditModel model,
+            bool sendNotification)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
@@ -146,6 +151,19 @@ namespace Dashboard.Areas.NotificationEntity.Controllers
                 }
 
                 await _unitOfWork.Save();
+
+                if (sendNotification)
+                {
+                    _notificationManager.SendToTopic(new FirebaseNotificationModel
+                    {
+                        MessageHeading = dataDB.Title,
+                        MessageContent = dataDB.Description,
+                        ImgUrl = dataDB.StorageUrl + dataDB.ImageUrl,
+                        OpenType = dataDB.OpenType.ToString(),
+                        OpenValue = dataDB.OpenValue,
+                        Topic = "all"
+                    }).Wait();
+                }
 
                 return RedirectToAction(nameof(Index));
             }

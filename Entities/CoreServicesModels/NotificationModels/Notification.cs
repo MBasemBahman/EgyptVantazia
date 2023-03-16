@@ -62,6 +62,9 @@ namespace Entities.CoreServicesModels.NotificationModels
         public DateTime? ExpireAt { get; set; }
 
         public NotificationLangModel NotificationLang { get; set; }
+
+        [DisplayName(nameof(SendNotification))]
+        public bool SendNotification { get; set; }
     }
 
     public class NotificationLangModel

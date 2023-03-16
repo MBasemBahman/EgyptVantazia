@@ -1308,4 +1308,7 @@
   <data name="OpenValue" xml:space="preserve">
     <value>القيمة</value>
   </data>
+  <data name="Push Notification" xml:space="preserve">
+    <value>إرسال إشعار</value>
+  </data>
 </root>

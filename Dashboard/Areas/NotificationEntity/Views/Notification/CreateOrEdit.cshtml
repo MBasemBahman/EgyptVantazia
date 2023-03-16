@@ -78,7 +78,7 @@
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="Description" class="form-label"></label>
-                                                <textarea asp-for="Description" class="form-control" rows="2" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Description{PropertyAttributeConstants.ArLang}"))" ></textarea>
+                                                <textarea asp-for="Description" class="form-control" rows="2" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Description{PropertyAttributeConstants.ArLang}"))"></textarea>
                                                 <span asp-validation-for="Description" class="text-danger"></span>
                                             </div>
                                         </div>
@@ -94,7 +94,7 @@
                                             <div class="mb-1">
                                                 <label asp-for="OpenType" class="form-label"></label>
                                                 <select asp-for="OpenType" class="form-control">
-                                                    @foreach (var openType in (LogicEnumData.NotificationOpenTypeEnum[]) Enum.GetValues(typeof(LogicEnumData.NotificationOpenTypeEnum)))
+                                                    @foreach (var openType in (LogicEnumData.NotificationOpenTypeEnum[])Enum.GetValues(typeof(LogicEnumData.NotificationOpenTypeEnum)))
                                                     {
                                                         <option value="@((int)@openType)">@openType</option>
                                                     }
@@ -109,7 +109,7 @@
                                                 <span asp-validation-for="OpenValue" class="text-danger"></span>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="ShowAt" class="form-label"></label>
@@ -117,7 +117,7 @@
                                                 <span asp-validation-for="ShowAt" class="text-danger"></span>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="ExpireAt" class="form-label"></label>
@@ -126,7 +126,16 @@
                                             </div>
                                         </div>
 
-                                        
+                                        <div class="col-md-3 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="SendNotification" class="form-label">@Localizer.Get("Push Notification")</label>
+                                                <select asp-for="SendNotification" class="form-control">
+                                                    <option value="false">@Localizer.Get("No")</option>
+                                                    <option value="true">@Localizer.Get("Yes")</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
                                     </div>
 
                                     <hr />

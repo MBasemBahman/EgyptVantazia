@@ -256,7 +256,7 @@ namespace CoreServices.Logic
                                    Name = otherLang ? a.GameWeak.Season.SeasonLang.Name : a.GameWeak.Season.Name
                                }
                            },
-                           NextGameWeak = parameters.IncludeNextAndPrevGameWeek && a.AccountTeam.AccountTeamGameWeaks.Any(b => b.GameWeak._365_GameWeakId == (a.GameWeak._365_GameWeakIdValue + 1).ToString()) ?
+                           NextGameWeak = a.GameWeak.IsCurrent == false && parameters.IncludeNextAndPrevGameWeek && a.AccountTeam.AccountTeamGameWeaks.Any(b => b.GameWeak._365_GameWeakId == (a.GameWeak._365_GameWeakIdValue + 1).ToString()) ?
                            a.AccountTeam
                             .AccountTeamGameWeaks
                             .Where(b => b.GameWeak._365_GameWeakId == (a.GameWeak._365_GameWeakIdValue + 1).ToString())

@@ -1311,4 +1311,7 @@
   <data name="Push Notification" xml:space="preserve">
     <value>إرسال إشعار</value>
   </data>
+  <data name="TiktokUrl" xml:space="preserve">
+    <value>رابط التيك توك</value>
+  </data>
 </root>

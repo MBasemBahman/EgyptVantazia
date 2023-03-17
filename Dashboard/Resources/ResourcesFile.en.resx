@@ -1269,4 +1269,7 @@
   <data name="ExpireAt" xml:space="preserve">
     <value>Expire At</value>
   </data>
+  <data name="TiktokUrl" xml:space="preserve">
+    <value>Tiktok Url</value>
+  </data>
 </root>

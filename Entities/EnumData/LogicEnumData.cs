@@ -47,7 +47,11 @@
 
         public enum NotificationOpenTypeEnum
         {
-            Home
+            Home,
+            News,
+            PlayerProfile,
+            MatchProfile,
+            DeadLine
         }
     }
 }

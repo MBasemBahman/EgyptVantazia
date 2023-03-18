@@ -134,6 +134,7 @@ namespace API.Controllers
             } while (_unitOfWork.Account.GetAccounts(new AccountParameters { RefCode = account.RefCode }, otherLang: false).Any());
 
             user.Account = account;
+            user.Account.ShowAds = true;
 
             await _unitOfWork.User.CreateUser(user);
             await _unitOfWork.Save();

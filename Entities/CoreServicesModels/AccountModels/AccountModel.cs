@@ -45,7 +45,8 @@ namespace Entities.CoreServicesModels.AccountModels
 
         public string RefCode { get; set; }
 
-
+        [DisplayName(nameof(ShowAds))]
+        public bool? ShowAds { get; set; }
     }
 
     public class AccountModel : AuditImageEntity
@@ -110,6 +111,9 @@ namespace Entities.CoreServicesModels.AccountModels
 
         [DisplayName(nameof(AccountRefCodeCount))]
         public int AccountRefCodeCount { get; set; }
+
+        [DisplayName(nameof(ShowAds))]
+        public bool ShowAds { get; set; }
     }
 
     public class AccountEditModel
@@ -164,5 +168,8 @@ namespace Entities.CoreServicesModels.AccountModels
 
         [DisplayName(nameof(RefCodeCount))]
         public int RefCodeCount { get; set; }
+
+        [DisplayName(nameof(ShowAds))]
+        public bool ShowAds { get; set; }
     }
 }

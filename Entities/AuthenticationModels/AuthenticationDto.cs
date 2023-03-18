@@ -115,6 +115,8 @@ namespace Entities.AuthenticationModels
         [DisplayName(nameof(RefCodeCount))]
         public int RefCodeCount { get; set; }
 
+        public bool ShowAds { get; set; }
+
         public int Fk_AccountTeam { get; set; }
         public int Fk_Country { get; set; }
         public int Fk_FavouriteTeam { get; set; }

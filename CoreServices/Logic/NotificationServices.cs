@@ -29,8 +29,6 @@ namespace CoreServices.Logic
                            Title = otherLang ? x.NotificationLang.Title : x.Title,
                            Description = otherLang ? x.NotificationLang.Description : x.Description,
                            OpenType = x.OpenType,
-                           ShowAt = x.ShowAt,
-                           ExpireAt = x.ExpireAt,
                            ImageUrl = x.StorageUrl + x.ImageUrl,
                            OpenValue = x.OpenValue,
                        })

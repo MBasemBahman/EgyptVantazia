@@ -19,14 +19,6 @@ namespace Entities.DBModels.NotificationModels
         [DisplayName(nameof(OpenValue))]
         public string OpenValue { get; set; }
 
-        [DisplayName(nameof(ShowAt))]
-        [DataType(DataType.DateTime)]
-        public DateTime? ShowAt { get; set; }
-
-        [DisplayName(nameof(ExpireAt))]
-        [DataType(DataType.DateTime)]
-        public DateTime? ExpireAt { get; set; }
-
         public NotificationLang NotificationLang { get; set; }
     }
 

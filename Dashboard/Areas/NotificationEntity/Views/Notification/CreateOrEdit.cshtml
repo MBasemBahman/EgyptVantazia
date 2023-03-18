@@ -110,22 +110,6 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6 col-12">
-                                            <div class="mb-1">
-                                                <label asp-for="ShowAt" class="form-label"></label>
-                                                <input asp-for="ShowAt" type="date" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"ShowAt"))" />
-                                                <span asp-validation-for="ShowAt" class="text-danger"></span>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 col-12">
-                                            <div class="mb-1">
-                                                <label asp-for="ExpireAt" class="form-label"></label>
-                                                <input asp-for="ExpireAt" type="date" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"ExpireAt"))" />
-                                                <span asp-validation-for="ExpireAt" class="text-danger"></span>
-                                            </div>
-                                        </div>
-
                                         <div class="col-md-3 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="SendNotification" class="form-label">@Localizer.Get("Push Notification")</label>

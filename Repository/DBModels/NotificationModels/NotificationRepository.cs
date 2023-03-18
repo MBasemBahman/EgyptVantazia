@@ -14,7 +14,6 @@ namespace Repository.DBModels.NotificationModels
         {
             return FindByCondition(a => true, trackChanges)
                    .Filter(parameters.Id,
-                           parameters.IsActive,
                            parameters.OpenTypes);
         }
 
@@ -42,14 +41,12 @@ namespace Repository.DBModels.NotificationModels
         public static IQueryable<Notification> Filter(
             this IQueryable<Notification> Notifications,
             int id,
-            bool isActive,
-            List<NotificationOpenTypeEnum> OpenTypes)
+            List<NotificationOpenTypeEnum> openTypes)
         {
             DateTime now = DateTime.UtcNow.AddHours(2);
             return Notifications.Where(a => (id == 0 || a.Id == id) &&
-                                         (isActive == false || (a.ExpireAt == null || a.ExpireAt >= now) &&
-                                                                (a.ShowAt == null || a.ShowAt <= now)) &&
-                                         (OpenTypes == null || !OpenTypes.Any() || OpenTypes.Contains(a.OpenType)));
+                                            (openTypes == null || !openTypes.Any() ||
+                                             openTypes.Contains(a.OpenType)));
         }
 
     }

@@ -150,6 +150,7 @@ namespace API.Utility
                 userAuthenticated.Fk_AccountTeam = account.Fk_AccountTeam;
                 userAuthenticated.RefCode = account.RefCode;
                 userAuthenticated.RefCodeCount = account.RefCodeCount;
+                userAuthenticated.ShowAds = account.ShowAds;
             }
             return userAuthenticated;
         }

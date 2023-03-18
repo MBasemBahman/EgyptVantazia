@@ -57,6 +57,9 @@ namespace Entities.DBModels.AccountModels
         [DisplayName(nameof(RefCodeCount))]
         public int RefCodeCount { get; set; }
 
+        [DisplayName(nameof(ShowAds))]
+        public bool ShowAds { get; set; }
+
         [DisplayName(nameof(AccountTeams))]
         public IList<AccountTeam> AccountTeams { get; set; }
 

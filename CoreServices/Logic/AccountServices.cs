@@ -47,6 +47,7 @@ namespace CoreServices.Logic
                                   PhoneNumberTwo = a.PhoneNumberTwo,
                                   RefCode = a.RefCode,
                                   RefCodeCount = a.RefCodeCount,
+                                  ShowAds = a.ShowAds,
                                   AccountRefCodeCount = a.RefAccountsRefCode != null ? a.RefAccountsRefCode.Count : 0,
                                   Fk_AccountTeam = a.AccountTeams
                                                     .Where(a => a.Season.IsCurrent)

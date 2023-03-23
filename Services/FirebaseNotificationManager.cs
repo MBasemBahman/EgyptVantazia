@@ -1,4 +1,5 @@
-﻿using Entities.ServicesModels;
+﻿using Contracts.Extensions;
+using Entities.ServicesModels;
 using FirebaseAdmin.Messaging;
 using Newtonsoft.Json;
 
@@ -30,7 +31,7 @@ namespace Services
             Dictionary<string, string> Extra = new()
             {
                 { "OpenType", model.OpenType.ToString()},
-                { "OpenValue", model.OpenValue.ToString()},
+                { "OpenValue", model.OpenValue.IsExisting()? model.OpenValue.ToString() : ""},
             };
 
             Dictionary<string, string> Data = new()

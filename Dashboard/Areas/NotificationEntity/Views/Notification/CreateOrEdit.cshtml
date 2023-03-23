@@ -6,7 +6,7 @@
     ViewBag.useForm = true;
     ViewBag.useDatePicker = true;
     ViewBag.useImageUploud = true;
-
+    int id = ViewData["id"] != null ? (int)ViewData["id"] : 0;
 }
 
 <!-- BEGIN: Content-->
@@ -42,6 +42,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <form class="form" asp-action="CreateOrEdit" enctype="multipart/form-data">
+                                    <input type="hidden" asp-for="OpenValue" />
                                     <div asp-validation-summary="All" class="text-danger">@ViewData["Error"]</div>
                                     <div class="d-flex">
                                         <a href="#" class="me-25">
@@ -93,23 +94,105 @@
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="OpenType" class="form-label"></label>
-                                                <select asp-for="OpenType" class="form-control">
+                                                @if(id == 0)
+                                                {
+                                                      <select asp-for="OpenType" class="form-control">
+                                                    @foreach (var openType in (LogicEnumData.NotificationOpenTypeEnum[])Enum.GetValues(typeof(LogicEnumData.NotificationOpenTypeEnum)))
+                                                    {
+                                                        <option value="@((int)@openType)">@openType</option>
+                                                    }
+                                                    </select>
+                                                }
+                                                else
+                                                {
+                                                      <select disabled asp-for="OpenType" class="form-control">
                                                     @foreach (var openType in (LogicEnumData.NotificationOpenTypeEnum[])Enum.GetValues(typeof(LogicEnumData.NotificationOpenTypeEnum)))
                                                     {
                                                         <option value="@((int)@openType)">@openType</option>
                                                     }
                                                 </select>
+                                                <input type="hidden" asp-for="OpenType">
+                                                }
                                                 <span asp-validation-for="OpenType" class="text-danger"></span>
                                             </div>
                                         </div>
+
+                                     
+                                    </div>
+
+                                    <div style="display:none" class="row" id="News_Div">
+                                        <div class="col-md-12 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@Localizer.Get("News")</label>
+                                                <select class="form-control" id="Fk_News" asp-items="@(new SelectList(ViewData["News"] as Dictionary<string,string>,"Key","Value"))">
+                                                    <option value="0">@Localizer.Get("Select")</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div style="display:none" class="row" id="GameWeak_Div">
+                                        <div class="col-md-12 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@Localizer.Get("GameWeak")</label>
+                                                <select class="form-control" id="Fk_GameWeak" asp-items="@(new SelectList(ViewData["GameWeak"] as Dictionary<string,string>,"Key","Value"))">
+                                                    <option value="0">@Localizer.Get("Select")</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div style="display:none" class="row" id="Match_Div">
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
-                                                <label asp-for="OpenValue" class="form-label"></label>
-                                                <input asp-for="OpenValue" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"OpenValue"))" />
-                                                <span asp-validation-for="OpenValue" class="text-danger"></span>
+                                                <label class="form-label">@Localizer.Get("GameWeak")</label>
+                                                <select class="form-control" id="Fk_GameWeak_Match" asp-items="@(new SelectList(ViewData["GameWeak"] as Dictionary<string,string>,"Key","Value"))">
+                                                    <option value="0">@Localizer.Get("Select")</option>
+                                                </select>
                                             </div>
                                         </div>
 
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@Localizer.Get("Team")</label>
+                                                <select class="form-control" id="Fk_Team_Match" asp-items="@(new SelectList(ViewData["Team"] as Dictionary<string,string>,"Key","Value"))">
+                                                    <option value="0">@Localizer.Get("Select")</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@Localizer.Get("TeamGameWeak")</label>
+                                                <select class="form-control" id="Fk_TeamGameWeak">
+                                                    <option value="0">@Localizer.Get("Select")</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div style="display:none" class="row" id="Palyer_Div">
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@Localizer.Get("Team")</label>
+                                                <select class="form-control" id="Fk_Team_Player" asp-items="@(new SelectList(ViewData["Team"] as Dictionary<string,string>,"Key","Value"))">
+                                                    <option value="0">@Localizer.Get("Select")</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@Localizer.Get("Player")</label>
+                                                <select class="form-control" id="Fk_Player">
+                                                    <option value="0">@Localizer.Get("Select")</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
                                         <div class="col-md-3 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="SendNotification" class="form-label">@Localizer.Get("Push Notification")</label>
@@ -121,7 +204,6 @@
                                         </div>
 
                                     </div>
-
                                     <hr />
                                     <div class="row">
                                         <div class="col-12">
@@ -144,3 +226,73 @@
 
     </div>
 </div>
+@section scripts{
+        <script src="~/apis/site.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $("#OpenType").on('change', function () {
+                $("#OpenValue").val('');
+                $("#Fk_News").val('0');
+                $("#Fk_GameWeak").val('0');
+                $("#Fk_Player").val('0');
+                $("#Fk_TeamGameWeak").val('0');
+                $("#Fk_Team_Player").val('0');
+                $("#Fk_Team_Match").val('0');
+                $("#Fk_GameWeak_Match").val('0');
+                $("#Fk_Player").find('option').not(':first').remove();
+                $("#Fk_TeamGameWeak").find('option').not(':first').remove();
+                $("#News_Div").css('display','none');
+                $("#GameWeak_Div").css('display', 'none');
+                $("#Match_Div").css('display', 'none');
+                $("#Palyer_Div").css('display', 'none');
+               var value =  $("#OpenType").val();
+
+               if(value == @((int)LogicEnumData.NotificationOpenTypeEnum.DeadLine)){
+                   $("#GameWeak_Div").css('display', '');
+               }
+               
+              else if(value == @((int)LogicEnumData.NotificationOpenTypeEnum.PlayerProfile)){
+                    $("#Palyer_Div").css('display', '');
+               }
+
+                 else if(value == @((int)LogicEnumData.NotificationOpenTypeEnum.MatchProfile)){
+                    $("#Match_Div").css('display', '');
+               }
+                else if (value == @((int)LogicEnumData.NotificationOpenTypeEnum.News)) {
+                    $("#News_Div").css('display', '');
+                }
+            });
+            $("#Fk_News").on('change', function () {
+                $("#OpenValue").val($("#Fk_News").val())
+            });
+
+            $("#Fk_GameWeak").on('change', function () {
+                $("#OpenValue").val($("#Fk_GameWeak").val())
+            });
+
+            $("#Fk_TeamGameWeak").on('change', function () {
+                $("#OpenValue").val($("#Fk_TeamGameWeak").val())
+            });
+
+            $("#Fk_Player").on('change', function () {
+                $("#OpenValue").val($("#Fk_Player").val())
+            });
+
+            $("#Fk_Team_Player").on('change', function () {
+                getPlayers($("#Fk_Player"), $(this).val(), false);
+            });
+
+            $("#Fk_Team_Match").on('change', function () {
+                getTeamGameWeak($("#Fk_TeamGameWeak"), $("#Fk_Team_Match").val(), $("#Fk_GameWeak_Match").val(), false);
+            });
+
+            $("#Fk_GameWeak_Match").on('change', function () {
+                getTeamGameWeak($("#Fk_TeamGameWeak"), $("#Fk_Team_Match").val(), $("#Fk_GameWeak_Match").val(), false);
+            });
+
+        });
+
+    </script>
+}

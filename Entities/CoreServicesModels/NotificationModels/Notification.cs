@@ -49,6 +49,8 @@ namespace Entities.CoreServicesModels.NotificationModels
 
         [DisplayName(nameof(SendNotification))]
         public bool SendNotification { get; set; }
+
+
     }
 
     public class NotificationLangModel

@@ -98,7 +98,7 @@ namespace Dashboard.Areas.NotificationEntity.Controllers
                 model.StorageUrl = _linkGenerator.GetUriByAction(HttpContext).GetBaseUri(HttpContext.Request.RouteValues["area"].ToString());
             }
 
-            SetViewData(otherLang);
+            SetViewData(otherLang, id);
             return View(model);
         }
 
@@ -114,7 +114,7 @@ namespace Dashboard.Areas.NotificationEntity.Controllers
 
             if (!ModelState.IsValid)
             {
-                SetViewData(otherLang);
+                SetViewData(otherLang,id);
 
                 return View(model);
             }
@@ -172,7 +172,7 @@ namespace Dashboard.Areas.NotificationEntity.Controllers
                 ViewData[ViewDataConstants.Error] = _logger.LogError(HttpContext.Request, ex).ErrorMessage;
             }
 
-            SetViewData(otherLang);
+            SetViewData(otherLang,id);
 
             return View(model);
         }
@@ -196,11 +196,27 @@ namespace Dashboard.Areas.NotificationEntity.Controllers
         }
 
         // helper methods
-        private void SetViewData(bool otherLang)
+        private void SetViewData(bool otherLang,int id = 0)
         {
+            ViewData["id"] = id;
             ViewData["AppView"] = Enum.GetValues(typeof(AppViewEnum))
                 .Cast<AppViewEnum>()
                 .ToDictionary(a => ((int)a).ToString(), a => a.ToString());
+
+            ViewData["News"] = _unitOfWork.News.GetNews(new Entities.CoreServicesModels.NewsModels.NewsParameters
+            {
+
+            }, otherLang).OrderByDescending(a => a.CreatedAt).ToDictionary(a => a.Id.ToString(),a=>a.Title);
+
+            ViewData["GameWeak"] = _unitOfWork.Season.GetGameWeakLookUp(new Entities.CoreServicesModels.SeasonModels.GameWeakParameters
+            {
+
+            },otherLang);
+
+            ViewData["Team"] = _unitOfWork.Team.GetTeamLookUp(new Entities.CoreServicesModels.TeamModels.TeamParameters
+            {
+
+            }, otherLang);
         }
 
 

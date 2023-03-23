@@ -124,7 +124,7 @@
                                         <div class="col-md-12 col-12">
                                             <div class="mb-1">
                                                 <label class="form-label">@Localizer.Get("News")</label>
-                                                <select class="form-control" id="Fk_News" asp-items="@(new SelectList(ViewData["News"] as Dictionary<string,string>,"Key","Value"))">
+                                                <select class="form-control select2" id="Fk_News" asp-items="@(new SelectList(ViewData["News"] as Dictionary<string,string>,"Key","Value"))">
                                                     <option value="0">@Localizer.Get("Select")</option>
                                                 </select>
                                             </div>
@@ -135,7 +135,7 @@
                                         <div class="col-md-12 col-12">
                                             <div class="mb-1">
                                                 <label class="form-label">@Localizer.Get("GameWeak")</label>
-                                                <select class="form-control" id="Fk_GameWeak" asp-items="@(new SelectList(ViewData["GameWeak"] as Dictionary<string,string>,"Key","Value"))">
+                                                <select class="form-control select2" id="Fk_GameWeak" asp-items="@(new SelectList(ViewData["GameWeak"] as Dictionary<string,string>,"Key","Value"))">
                                                     <option value="0">@Localizer.Get("Select")</option>
                                                 </select>
                                             </div>
@@ -146,7 +146,7 @@
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label class="form-label">@Localizer.Get("GameWeak")</label>
-                                                <select class="form-control" id="Fk_GameWeak_Match" asp-items="@(new SelectList(ViewData["GameWeak"] as Dictionary<string,string>,"Key","Value"))">
+                                                <select class="form-control select2" id="Fk_GameWeak_Match" asp-items="@(new SelectList(ViewData["GameWeak"] as Dictionary<string,string>,"Key","Value"))">
                                                     <option value="0">@Localizer.Get("Select")</option>
                                                 </select>
                                             </div>
@@ -155,7 +155,7 @@
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label class="form-label">@Localizer.Get("Team")</label>
-                                                <select class="form-control" id="Fk_Team_Match" asp-items="@(new SelectList(ViewData["Team"] as Dictionary<string,string>,"Key","Value"))">
+                                                <select class="form-control select2" id="Fk_Team_Match" asp-items="@(new SelectList(ViewData["Team"] as Dictionary<string,string>,"Key","Value"))">
                                                     <option value="0">@Localizer.Get("Select")</option>
                                                 </select>
                                             </div>
@@ -164,7 +164,7 @@
                                         <div class="col-md-12 col-12">
                                             <div class="mb-1">
                                                 <label class="form-label">@Localizer.Get("TeamGameWeak")</label>
-                                                <select class="form-control" id="Fk_TeamGameWeak">
+                                                <select class="form-control select2" id="Fk_TeamGameWeak">
                                                     <option value="0">@Localizer.Get("Select")</option>
                                                 </select>
                                             </div>
@@ -176,7 +176,7 @@
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label class="form-label">@Localizer.Get("Team")</label>
-                                                <select class="form-control" id="Fk_Team_Player" asp-items="@(new SelectList(ViewData["Team"] as Dictionary<string,string>,"Key","Value"))">
+                                                <select class="form-control select2" id="Fk_Team_Player" asp-items="@(new SelectList(ViewData["Team"] as Dictionary<string,string>,"Key","Value"))">
                                                     <option value="0">@Localizer.Get("Select")</option>
                                                 </select>
                                             </div>
@@ -185,7 +185,7 @@
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label class="form-label">@Localizer.Get("Player")</label>
-                                                <select class="form-control" id="Fk_Player">
+                                                <select class="form-control select2" id="Fk_Player">
                                                     <option value="0">@Localizer.Get("Select")</option>
                                                 </select>
                                             </div>

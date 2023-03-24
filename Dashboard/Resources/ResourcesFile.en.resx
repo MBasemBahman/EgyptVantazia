@@ -1272,4 +1272,7 @@
   <data name="TiktokUrl" xml:space="preserve">
     <value>Tiktok Url</value>
   </data>
+  <data name="Invalid token" xml:space="preserve">
+    <value>The login expired, please log in again!</value>
+  </data>
 </root>

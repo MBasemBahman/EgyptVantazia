@@ -1314,4 +1314,7 @@
   <data name="TiktokUrl" xml:space="preserve">
     <value>رابط التيك توك</value>
   </data>
+  <data name="Invalid token" xml:space="preserve">
+    <value>انتهت صلاحية تسجيل الدخول ، يرجى تسجيل الدخول مرة أخرى!</value>
+  </data>
 </root>

@@ -1,4 +1,5 @@
-﻿using FantasyLogic.Calculations;
+﻿using Contracts.Services;
+using FantasyLogic.Calculations;
 using FantasyLogic.DataMigration.GamesData;
 using FantasyLogic.DataMigration.PlayerScoreData;
 using FantasyLogic.DataMigration.SeasonData;
@@ -11,11 +12,13 @@ namespace FantasyLogic
     {
         private readonly _365Services _365Services;
         private readonly UnitOfWork _unitOfWork;
+        private readonly IFirebaseNotificationManager _notificationManager;
 
-        public FantasyUnitOfWork(UnitOfWork unitOfWork, _365Services _365Services)
+        public FantasyUnitOfWork(UnitOfWork unitOfWork, _365Services _365Services, IFirebaseNotificationManager firebaseNotificationManager)
         {
             this._365Services = _365Services;
             _unitOfWork = unitOfWork;
+            _notificationManager = firebaseNotificationManager;
         }
 
         #region Private
@@ -101,7 +104,7 @@ namespace FantasyLogic
         {
             get
             {
-                _gamesDataHelper ??= new GamesDataHelper(_unitOfWork, _365Services);
+                _gamesDataHelper ??= new GamesDataHelper(_unitOfWork, _365Services, _notificationManager);
                 return _gamesDataHelper;
             }
         }

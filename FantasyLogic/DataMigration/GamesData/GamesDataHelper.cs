@@ -1,13 +1,17 @@
-﻿using Entities.CoreServicesModels.AccountTeamModels;
+﻿using Contracts.Services;
+using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountTeamModels;
+using Entities.DBModels.NotificationModels;
 using Entities.DBModels.SeasonModels;
+using Entities.ServicesModels;
 using FantasyLogic.Calculations;
 using FantasyLogic.DataMigration.PlayerScoreData;
-using FantasyLogic.SharedLogic;
 using IntegrationWith365.Entities.GamesModels;
 using IntegrationWith365.Helpers;
+using Services;
+using static Entities.EnumData.LogicEnumData;
 
 namespace FantasyLogic.DataMigration.GamesData
 {
@@ -17,10 +21,12 @@ namespace FantasyLogic.DataMigration.GamesData
         private readonly UnitOfWork _unitOfWork;
         private readonly GamesHelper _gamesHelper;
         private readonly AccountTeamCalc _accountTeamCalc;
+        private readonly IFirebaseNotificationManager _notificationManager;
 
         public GamesDataHelper(
             UnitOfWork unitOfWork,
-            _365Services _365Services)
+            _365Services _365Services,
+            IFirebaseNotificationManager firebaseNotificationManager)
         {
             this._365Services = _365Services;
             _unitOfWork = unitOfWork;
@@ -28,6 +34,8 @@ namespace FantasyLogic.DataMigration.GamesData
             _gamesHelper = new GamesHelper(unitOfWork, _365Services);
 
             _accountTeamCalc = new(_unitOfWork);
+
+            _notificationManager = firebaseNotificationManager;
         }
 
         public void RunUpdateGames()
@@ -172,10 +180,16 @@ namespace FantasyLogic.DataMigration.GamesData
                     {
                         _ = BackgroundJob.Delete(gameWeak.JobId);
                     }
+                    if (gameWeak.SecondJobId.IsExisting())
+                    {
+                        _ = BackgroundJob.Delete(gameWeak.SecondJobId);
+                    }
 
                     if (deadline > DateTime.UtcNow)
                     {
                         gameWeak.JobId = BackgroundJob.Schedule(() => UpdateCurrentGameWeak(gameWeak.Id), deadline);
+
+                        gameWeak.SecondJobId = BackgroundJob.Schedule(() => SendNotificationForGameWeakDeadLine(gameWeak.Id), deadline.AddMinutes(-60));
                     }
 
                     gameWeak.Deadline = deadline;
@@ -230,6 +244,34 @@ namespace FantasyLogic.DataMigration.GamesData
 
             //TransferAccountTeamPlayers(nextGameWeak.Id, gameWeak.Id, gameWeak._365_GameWeakId.ParseToInt(), nextGameWeak.Fk_Season);
             _ = BackgroundJob.Enqueue(() => TransferAccountTeamPlayers(nextGameWeak.Id, gameWeak.Id, gameWeak._365_GameWeakId.ParseToInt(), nextGameWeak.Fk_Season));
+        }
+
+        public async Task SendNotificationForGameWeakDeadLine(int id)
+        {
+            Notification notification = new ()
+            {
+                Title = "باقي على نهاية الجوله ساعه",
+                Description = " إلحق ضبط تشكيلتك",
+                OpenType = NotificationOpenTypeEnum.DeadLine,
+                OpenValue = id.ToString(),
+                NotificationLang = new NotificationLang
+                {
+                    Title = "باقي على نهاية الجوله ساعه",
+                    Description = " إلحق ضبط تشكيلتك",
+                }
+            };
+            _unitOfWork.Notification.CreateNotification(notification);
+            await _unitOfWork.Save();
+
+            _notificationManager.SendToTopic(new FirebaseNotificationModel
+            {
+                MessageHeading = notification.Title,
+                MessageContent = notification.Description,
+                ImgUrl = notification.StorageUrl + notification.ImageUrl,
+                OpenType = notification.OpenType.ToString(),
+                OpenValue = notification.OpenValue,
+                Topic = "all"
+            }).Wait();
         }
 
         public void TransferAccountTeamPlayers(int fk_CurrentGameWeak, int fk_PrevGameWeak, int prev_365_GameWeakId, int fk_Season)

@@ -37,7 +37,7 @@ builder.Services.AddControllers(opt =>
 {
     _ = opt.Filters.Add(typeof(GlobalModelStateValidatorAttribute));
 });
-//builder.Services.ConfigureFirebase(config.AppSettings);
+builder.Services.ConfigureFirebase(config.AppSettings);
 builder.Services.ConfigureEmailSender(builder.Configuration);
 builder.Services.ConfigurePaymob(builder.Configuration);
 //builder.Services.ConfigureHangfire(builder.Configuration);

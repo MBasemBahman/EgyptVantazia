@@ -135,19 +135,6 @@ namespace API.Extensions
             _ = services.AddSingleton<ILocalizationManager, LocalizationManager>();
         }
 
-        public static void ConfigureFirebase(this IServiceCollection services,
-            string appSettingsFile)
-        {
-            JToken jAppSettings = JToken.Parse(File.ReadAllText(Path.Combine(Environment.CurrentDirectory, appSettingsFile)));
-
-            _ = FirebaseApp.Create(new AppOptions()
-            {
-                Credential = GoogleCredential.FromJson(jAppSettings["GoogleCredential"].ToString())
-            });
-
-            _ = services.AddScoped<IFirebaseNotificationManager, FirebaseNotificationManager>();
-        }
-
         public static void ConfigureEmailSender(this IServiceCollection services,
             IConfiguration configuration)
         {
@@ -217,6 +204,19 @@ namespace API.Extensions
 
             _ = services.AddSingleton(config);
             _ = services.AddScoped<PaymobServices>();
+        }
+
+        public static void ConfigureFirebase(this IServiceCollection services,
+            string appSettingsFile)
+        {
+            JToken jAppSettings = JToken.Parse(File.ReadAllText(Path.Combine(Environment.CurrentDirectory, appSettingsFile)));
+
+            _ = FirebaseApp.Create(new AppOptions()
+            {
+                Credential = GoogleCredential.FromJson(jAppSettings["GoogleCredential"].ToString())
+            });
+
+            _ = services.AddScoped<IFirebaseNotificationManager, FirebaseNotificationManager>();
         }
     }
 }

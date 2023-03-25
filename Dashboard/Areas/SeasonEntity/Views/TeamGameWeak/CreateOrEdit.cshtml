@@ -97,7 +97,7 @@
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="StartTime" class="form-label"></label>
-                                                <input asp-for="StartTime" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"StartTime"))" />
+                                                <input asp-for="StartTime" class="form-control flatpickr-date-time" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"StartTime"))" />
                                                 <span asp-validation-for="StartTime" class="text-danger"></span>
                                             </div>
                                         </div>

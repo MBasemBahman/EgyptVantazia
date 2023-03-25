@@ -77,7 +77,7 @@ namespace Dashboard.Extensions
                     new CultureInfo("ar")
                 };
                 options.DefaultRequestCulture = new RequestCulture(culture: "en", uiCulture: "ar");
-                options.SupportedCultures = supportedCultures;
+                //options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
             });
 

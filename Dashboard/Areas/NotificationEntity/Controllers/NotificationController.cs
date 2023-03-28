@@ -160,7 +160,7 @@ namespace Dashboard.Areas.NotificationEntity.Controllers
                         MessageContent = dataDB.Description,
                         ImgUrl = dataDB.StorageUrl + dataDB.ImageUrl,
                         OpenType = dataDB.OpenType.ToString(),
-                        OpenValue = dataDB.OpenValue,
+                        OpenValue = dataDB.OpenValue.IsEmpty()? "0" : dataDB.OpenValue,
                         Topic = model.Topic
                     }).Wait();
                 }

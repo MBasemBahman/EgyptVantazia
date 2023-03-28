@@ -161,7 +161,7 @@ namespace Dashboard.Areas.NotificationEntity.Controllers
                         ImgUrl = dataDB.StorageUrl + dataDB.ImageUrl,
                         OpenType = dataDB.OpenType.ToString(),
                         OpenValue = dataDB.OpenValue,
-                        Topic = "all"
+                        Topic = model.Topic
                     }).Wait();
                 }
 

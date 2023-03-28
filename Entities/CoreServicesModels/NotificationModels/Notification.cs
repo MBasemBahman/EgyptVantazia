@@ -45,6 +45,9 @@ namespace Entities.CoreServicesModels.NotificationModels
         [DisplayName(nameof(OpenValue))]
         public string OpenValue { get; set; }
 
+        [DisplayName(nameof(Topic))]
+        public string Topic { get; set; }
+
         public NotificationLangModel NotificationLang { get; set; }
 
         [DisplayName(nameof(SendNotification))]

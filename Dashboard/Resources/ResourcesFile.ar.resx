@@ -1317,4 +1317,7 @@
   <data name="Invalid token" xml:space="preserve">
     <value>انتهت صلاحية تسجيل الدخول ، يرجى تسجيل الدخول مرة أخرى!</value>
   </data>
+  <data name="Test" xml:space="preserve">
+    <value>تجريبي</value>
+  </data>
 </root>

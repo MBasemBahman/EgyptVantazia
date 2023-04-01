@@ -65,7 +65,7 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
         private void DailyRecurringJob()
         {
             //// At 01:00 AM
-            RecurringJob.AddOrUpdate("RunAccountTeamsCalculations", () => _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(0, 0, null, false), "0 1 * * *", TimeZoneInfo.Utc);
+            RecurringJob.AddOrUpdate("RunAccountTeamsCalculations", () => _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(0, 0, null, false), "0 */12 * * *", TimeZoneInfo.Utc);
 
             // At 02:00 AM
             //RecurringJob.AddOrUpdate("UpdateAccountTeamGameWeakRanking", () => _fantasyUnitOfWork.AccountTeamCalc.RunUpdateAccountTeamGameWeakRanking(), "0 2 * * *", TimeZoneInfo.Utc);
@@ -74,13 +74,13 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
             //RecurringJob.AddOrUpdate("UpdateAccountTeamRanking", () => _fantasyUnitOfWork.AccountTeamCalc.RunUpdateAccountTeamRanking(), "0 3 * * *", TimeZoneInfo.Utc);
 
             // At 04:00 AM
-            RecurringJob.AddOrUpdate("UpdatePrivateLeaguesRanking", () => _fantasyUnitOfWork.PrivateLeagueClac.RunPrivateLeaguesRanking(null, 0, false), "0 4 * * *", TimeZoneInfo.Utc);
+            RecurringJob.AddOrUpdate("UpdatePrivateLeaguesRanking", () => _fantasyUnitOfWork.PrivateLeagueClac.RunPrivateLeaguesRanking(null, 0, false), "0 */14 * * *", TimeZoneInfo.Utc);
 
             // At 05:00 AM
-            RecurringJob.AddOrUpdate("UpdateGames", () => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames(), "0 5 * * *", TimeZoneInfo.Utc);
+            RecurringJob.AddOrUpdate("UpdateGames", () => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames(), "0 */6 * * *", TimeZoneInfo.Utc);
 
             // At 06:00 AM
-            RecurringJob.AddOrUpdate("UpdateStandings", () => _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings(), "0 6 * * *", TimeZoneInfo.Utc);
+            RecurringJob.AddOrUpdate("UpdateStandings", () => _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings(), "0 */9 * * *", TimeZoneInfo.Utc);
 
         }
 

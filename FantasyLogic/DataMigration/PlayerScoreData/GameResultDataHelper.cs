@@ -90,8 +90,6 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
         public async Task UpdateGameResult(TeamGameWeakDto teamGameWeak, List<ScoreTypeDto> scoreTypes, bool runBonus, bool inDebug, bool runAll, bool stopAll)
         {
 
-            runBonus = true;
-
             TeamGameWeak match = await _unitOfWork.Season.FindTeamGameWeakbyId(teamGameWeak.Id, trackChanges: true);
 
             GameReturn gameReturn = await _365Services.GetGame(new _365GameParameters

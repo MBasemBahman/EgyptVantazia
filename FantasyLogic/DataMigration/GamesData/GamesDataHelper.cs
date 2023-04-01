@@ -143,7 +143,7 @@ namespace FantasyLogic.DataMigration.GamesData
 
                 string jobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, false, false, false, false), startTime);
                 string secondJobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, true, false, false, false), startTime.AddMinutes(120));
-                string thirdJobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, true, false, false, true), startTime.AddMinutes(130));
+                string thirdJobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, true, false, false, true), startTime.AddMinutes(200));
 
                 match.JobId = jobId;
                 match.SecondJobId = secondJobId;

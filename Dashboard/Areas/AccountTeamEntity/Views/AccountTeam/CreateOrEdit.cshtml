@@ -67,7 +67,7 @@
                                                 <span asp-validation-for="Name" class="text-danger"></span>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="col-md-4 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="TotalPoints" class="form-label"></label>
@@ -75,7 +75,7 @@
                                                 <span asp-validation-for="TotalPoints" class="text-danger"></span>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="col-md-4 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="TotalMoney" class="form-label"></label>
@@ -83,7 +83,7 @@
                                                 <span asp-validation-for="TotalMoney" class="text-danger"></span>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="col-md-12 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="Fk_Season" class="form-label"></label>
@@ -92,6 +92,85 @@
                                             </div>
                                         </div>
 
+                                        <div class="divider">
+                                            <div class="divider-text">@Localizer.Get("Cards")</div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="BenchBoost" class="form-label"></label>
+                                                <input asp-for="BenchBoost" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("BenchBoost"))" />
+                                                <span asp-validation-for="BenchBoost" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="FreeHit" class="form-label"></label>
+                                                <input asp-for="FreeHit" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("FreeHit"))" />
+                                                <span asp-validation-for="FreeHit" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="WildCard" class="form-label"></label>
+                                                <input asp-for="WildCard" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("WildCard"))" />
+                                                <span asp-validation-for="WildCard" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="DoubleGameWeak" class="form-label"></label>
+                                                <input asp-for="DoubleGameWeak" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("DoubleGameWeak"))" />
+                                                <span asp-validation-for="DoubleGameWeak" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Top_11" class="form-label"></label>
+                                                <input asp-for="Top_11" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("Top_11"))" />
+                                                <span asp-validation-for="Top_11" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="FreeTransfer" class="form-label"></label>
+                                                <input asp-for="FreeTransfer" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("FreeTransfer"))" />
+                                                <span asp-validation-for="FreeTransfer" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="TripleCaptain" class="form-label"></label>
+                                                <input asp-for="TripleCaptain" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("TripleCaptain"))" />
+                                                <span asp-validation-for="TripleCaptain" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="divider">
+                                            <div class="divider-text">@Localizer.Get("Ranking")</div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="GlobalRanking" class="form-label"></label>
+                                                <input asp-for="GlobalRanking" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("GlobalRanking"))" />
+                                                <span asp-validation-for="GlobalRanking" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="CountryRanking" class="form-label"></label>
+                                                <input asp-for="CountryRanking" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("CountryRanking"))" />
+                                                <span asp-validation-for="CountryRanking" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="FavouriteTeamRanking" class="form-label"></label>
+                                                <input asp-for="FavouriteTeamRanking" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("FavouriteTeamRanking"))" />
+                                                <span asp-validation-for="FavouriteTeamRanking" class="text-danger"></span>
+                                            </div>
+                                        </div>
                                     </div>
                                     
                                     <hr />

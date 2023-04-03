@@ -1320,4 +1320,13 @@
   <data name="Test" xml:space="preserve">
     <value>تجريبي</value>
   </data>
+  <data name="Cards" xml:space="preserve">
+    <value>الكروت</value>
+  </data>
+  <data name="DoubleGameWeak" xml:space="preserve">
+    <value>Double Game Weak</value>
+  </data>
+  <data name="TripleCaptain" xml:space="preserve">
+    <value>Triple Captain</value>
+  </data>
 </root>

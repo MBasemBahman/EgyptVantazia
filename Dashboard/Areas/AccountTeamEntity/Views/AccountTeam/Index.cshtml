@@ -73,10 +73,16 @@
 
                                                     <a id="profile" asp-action="Profile">
                                                     </a>
-                                                    
+
                                                     @if (Model.Fk_Account != 0 && accessLevel.CreateAccess)
                                                     {
                                                         <a id="create" asp-action="Profile">
+                                                        </a>
+                                                    }
+
+                                                    @if (accessLevel.EditAccess)
+                                                    {
+                                                        <a id="edit" asp-action="CreateOrEdit">
                                                         </a>
                                                     }
 

@@ -1275,4 +1275,10 @@
   <data name="Invalid token" xml:space="preserve">
     <value>The login expired, please log in again!</value>
   </data>
+  <data name="DoubleGameWeak" xml:space="preserve">
+    <value>Double Game Weak</value>
+  </data>
+  <data name="TripleCaptain" xml:space="preserve">
+    <value>Triple Captain</value>
+  </data>
 </root>

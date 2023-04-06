@@ -28,6 +28,9 @@ namespace Entities.CoreServicesModels.AccountTeamModels
     }
     public class AccountTeamPlayerGameWeakModel : AuditEntity
     {
+
+        public string PlayerName { get; set; }
+
         [DisplayName(nameof(AccountTeamPlayer))]
         public int Fk_AccountTeamPlayer { get; set; }
 

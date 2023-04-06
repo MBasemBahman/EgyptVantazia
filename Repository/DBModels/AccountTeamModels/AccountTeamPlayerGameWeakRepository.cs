@@ -43,6 +43,22 @@ namespace Repository.DBModels.AccountTeamModels
             players.ForEach(a => a.Points = null);
         }
 
+        public void ResetTeamPlayers(int fk_AccountTeam, int fk_GameWeak, int fk_AccountTeamGameWeak)
+        {
+
+            AccountTeamGameWeak accountTeamGameWeak = DBContext.AccountTeamGameWeaks
+                                               .Where(a => a.Id == fk_AccountTeamGameWeak && a.TansfarePoints < 0)
+                                               .FirstOrDefault();
+            if (accountTeamGameWeak != null)
+            {
+                accountTeamGameWeak.TansfarePoints = 0;
+            }
+
+            List<AccountTeamPlayerGameWeak> players = FindByCondition(a => a.Fk_GameWeak == fk_GameWeak && a.AccountTeamPlayer.Fk_AccountTeam == fk_AccountTeam, trackChanges: true).ToList();
+
+            players.ForEach(player => Delete(player));
+        }
+
         public new void Create(AccountTeamPlayerGameWeak entity)
         {
             if (FindByCondition(a => a.Fk_AccountTeamPlayer == entity.Fk_AccountTeamPlayer && a.Fk_GameWeak == entity.Fk_GameWeak, false).Any())

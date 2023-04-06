@@ -30,9 +30,9 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
 
         [HttpPost]
         [Route(nameof(UpdateCurrentGameWeak))]
-        public IActionResult UpdateCurrentGameWeak(int id)
+        public IActionResult UpdateCurrentGameWeak(int id, bool resetTeam)
         {
-            _fantasyUnitOfWork.GamesDataHelper.UpdateCurrentGameWeak(id).Wait();
+            _fantasyUnitOfWork.GamesDataHelper.UpdateCurrentGameWeak(id, resetTeam).Wait();
 
             return Ok();
         }

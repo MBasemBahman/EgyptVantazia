@@ -381,6 +381,7 @@ namespace CoreServices.Logic
                            IsPrimary = a.IsPrimary,
                            IsTransfer = a.IsTransfer,
                            Order = a.Order,
+                           PlayerName = a.AccountTeamPlayer.Player.Name,
                            Points = a.Points ?? a.AccountTeamPlayer
                                                  .Player
                                                  .PlayerGameWeakScoreStates
@@ -467,6 +468,11 @@ namespace CoreServices.Logic
         public void CreateAccountTeamPlayerGameWeak(AccountTeamPlayerGameWeak AccountTeamPlayerGameWeak)
         {
             _repository.AccountTeamPlayerGameWeak.Create(AccountTeamPlayerGameWeak);
+        }
+
+        public void ResetTeamPlayers(int fk_AccountTeam, int fk_GameWeak, int fk_AccountTeamGameWeak)
+        {
+            _repository.AccountTeamPlayerGameWeak.ResetTeamPlayers(fk_AccountTeam, fk_GameWeak, fk_AccountTeamGameWeak);
         }
 
         public void ResetAccountTeamPlayerGameWeakPoints(int fk_AccountTeam, int fk_GameWeak)

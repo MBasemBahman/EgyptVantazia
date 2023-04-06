@@ -187,7 +187,7 @@ namespace FantasyLogic.DataMigration.GamesData
 
                     if (deadline > DateTime.UtcNow)
                     {
-                        gameWeak.JobId = BackgroundJob.Schedule(() => UpdateCurrentGameWeak(gameWeak.Id), deadline);
+                        gameWeak.JobId = BackgroundJob.Schedule(() => UpdateCurrentGameWeak(gameWeak.Id, false), deadline);
 
                         gameWeak.SecondJobId = BackgroundJob.Schedule(() => SendNotificationForGameWeakDeadLine(gameWeak.Id), deadline.AddMinutes(-60));
                     }
@@ -218,8 +218,11 @@ namespace FantasyLogic.DataMigration.GamesData
                 //}
             }
         }
-
         public async Task UpdateCurrentGameWeak(int id)
+        {
+            await UpdateCurrentGameWeak(id, resetTeam: false);
+        }
+        public async Task UpdateCurrentGameWeak(int id, bool resetTeam)
         {
             _unitOfWork.Season.ResetCurrentGameWeaks();
             await _unitOfWork.Save();
@@ -242,13 +245,13 @@ namespace FantasyLogic.DataMigration.GamesData
                 await _unitOfWork.Save();
             }
 
-            //TransferAccountTeamPlayers(nextGameWeak.Id, gameWeak.Id, gameWeak._365_GameWeakId.ParseToInt(), nextGameWeak.Fk_Season);
-            _ = BackgroundJob.Enqueue(() => TransferAccountTeamPlayers(nextGameWeak.Id, gameWeak.Id, gameWeak._365_GameWeakId.ParseToInt(), nextGameWeak.Fk_Season));
+            //TransferAccountTeamPlayers(nextGameWeak.Id, gameWeak.Id, gameWeak._365_GameWeakId.ParseToInt(), nextGameWeak.Fk_Season, resetTeam);
+            _ = BackgroundJob.Enqueue(() => TransferAccountTeamPlayers(nextGameWeak.Id, gameWeak.Id, gameWeak._365_GameWeakId.ParseToInt(), nextGameWeak.Fk_Season, resetTeam));
         }
 
         public async Task SendNotificationForGameWeakDeadLine(int id)
         {
-            Notification notification = new ()
+            Notification notification = new()
             {
                 Title = "باقي على نهاية الجوله ساعه",
                 Description = " إلحق ضبط تشكيلتك",
@@ -274,7 +277,7 @@ namespace FantasyLogic.DataMigration.GamesData
             }).Wait();
         }
 
-        public void TransferAccountTeamPlayers(int fk_CurrentGameWeak, int fk_PrevGameWeak, int prev_365_GameWeakId, int fk_Season)
+        public void TransferAccountTeamPlayers(int fk_CurrentGameWeak, int fk_PrevGameWeak, int prev_365_GameWeakId, int fk_Season, bool resetTeam)
         {
             List<int> accounTeams = _unitOfWork.AccountTeam
                                          .GetAccountTeams(new AccountTeamParameters(), otherLang: false)
@@ -283,11 +286,13 @@ namespace FantasyLogic.DataMigration.GamesData
 
             foreach (int accounTeam in accounTeams)
             {
-                BackgroundJob.Enqueue(() => TransferAccountTeamPlayers(accounTeam, fk_CurrentGameWeak, fk_PrevGameWeak, prev_365_GameWeakId, fk_Season));
+                //TransferAccountTeamPlayers(accounTeam, fk_CurrentGameWeak, fk_PrevGameWeak, prev_365_GameWeakId, fk_Season, resetTeam).Wait();
+
+                BackgroundJob.Enqueue(() => TransferAccountTeamPlayers(accounTeam, fk_CurrentGameWeak, fk_PrevGameWeak, prev_365_GameWeakId, fk_Season, resetTeam));
             }
         }
 
-        public async Task TransferAccountTeamPlayers(int fk_AccounTeam, int fk_CurrentGameWeak, int fk_PrevGameWeak, int prev_365_GameWeakId, int fk_Season)
+        public async Task TransferAccountTeamPlayers(int fk_AccounTeam, int fk_CurrentGameWeak, int fk_PrevGameWeak, int prev_365_GameWeakId, int fk_Season, bool resetTeam)
         {
             int players = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
             {
@@ -332,7 +337,8 @@ namespace FantasyLogic.DataMigration.GamesData
                         freeHit = true;
                     }
 
-                    if (accountTeamGameWeakModel.FreeHit ||
+                    if (resetTeam ||
+                        accountTeamGameWeakModel.FreeHit ||
                         _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
                         {
                             Fk_GameWeak = fk_CurrentGameWeak,
@@ -344,7 +350,6 @@ namespace FantasyLogic.DataMigration.GamesData
 
                         do
                         {
-
                             prevPlayers = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
                             {
                                 Fk_GameWeak = fk_PrevGameWeak,
@@ -358,6 +363,7 @@ namespace FantasyLogic.DataMigration.GamesData
                                 IsPrimary = a.IsPrimary,
                                 Order = a.Order,
                                 Points = a.Points,
+                                PlayerName = a.PlayerName
                             })
                             .ToList();
 
@@ -382,6 +388,9 @@ namespace FantasyLogic.DataMigration.GamesData
 
                         if (prevPlayers.Any())
                         {
+                            _unitOfWork.AccountTeam.ResetTeamPlayers(fk_AccounTeam, fk_CurrentGameWeak, accountTeamGameWeakModel.Id);
+                            await _unitOfWork.Save();
+
                             foreach (AccountTeamPlayerGameWeakModel player in prevPlayers)
                             {
                                 _unitOfWork.AccountTeam.CreateAccountTeamPlayerGameWeak(new AccountTeamPlayerGameWeak

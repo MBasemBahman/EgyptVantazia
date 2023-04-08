@@ -47,7 +47,7 @@ namespace FantasyLogic.Calculations
 
             foreach (GameWeakModel gameWeak in gameWeaks)
             {
-                AccountTeamGameWeakCalculations(gameWeak, season.Id, fk_AccountTeam, fk_Players, inDebug);
+                BackgroundJob.Enqueue(() => AccountTeamGameWeakCalculations(gameWeak, season.Id, fk_AccountTeam, fk_Players, inDebug));
             }
         }
 
@@ -113,21 +113,21 @@ namespace FantasyLogic.Calculations
                 }
             }
 
-            if (inDebug)
-            {
-                UpdateAccountTeamGameWeakRanking(gameWeak, fk_Season);
-                UpdateAccountTeamRanking(fk_Season);
-            }
-            else
-            {
-                jobId = jobId.IsExisting()
-                        ? BackgroundJob.ContinueJobWith(jobId, () => UpdateAccountTeamGameWeakRanking(gameWeak, fk_Season))
-                        : BackgroundJob.Enqueue(() => UpdateAccountTeamGameWeakRanking(gameWeak, fk_Season));
+            //if (inDebug)
+            //{
+            //    UpdateAccountTeamGameWeakRanking(gameWeak, fk_Season);
+            //    UpdateAccountTeamRanking(fk_Season);
+            //}
+            //else
+            //{
+            //    jobId = jobId.IsExisting()
+            //            ? BackgroundJob.ContinueJobWith(jobId, () => UpdateAccountTeamGameWeakRanking(gameWeak, fk_Season))
+            //            : BackgroundJob.Enqueue(() => UpdateAccountTeamGameWeakRanking(gameWeak, fk_Season));
 
-                jobId = jobId.IsExisting()
-                            ? BackgroundJob.ContinueJobWith(jobId, () => UpdateAccountTeamRanking(fk_Season))
-                            : BackgroundJob.Enqueue(() => UpdateAccountTeamRanking(fk_Season));
-            }
+            //    jobId = jobId.IsExisting()
+            //                ? BackgroundJob.ContinueJobWith(jobId, () => UpdateAccountTeamRanking(fk_Season))
+            //                : BackgroundJob.Enqueue(() => UpdateAccountTeamRanking(fk_Season));
+            //}
         }
 
         public AccountTeamCustemClac AccountTeamPlayersCalculations(int fk_AccountTeamGameWeak, int fk_AccountTeam, GameWeakModel gameWeak, int fk_Season, bool saveChanges = true)
@@ -563,7 +563,6 @@ namespace FantasyLogic.Calculations
 
         public void UpdateAccountTeamGameWeakRanking(GameWeakModel gameWeak, int fk_Season)
         {
-            return;
             List<AccountTeamRanking> accountTeamGameWeakRankings = new();
             int ranking = 1;
 
@@ -639,7 +638,6 @@ namespace FantasyLogic.Calculations
 
         public void UpdateAccountTeamRanking(int fk_Season)
         {
-            return;
             GameWeakModel currentGameWeak = _unitOfWork.Season.GetCurrentGameWeak();
 
             List<AccountTeamRanking> accountTeamRankings = new();

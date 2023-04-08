@@ -177,7 +177,7 @@ namespace FantasyLogicMicroservices.Extensions
             // Add the processing server as IHostedService
             _ = services.AddHangfireServer(a =>
             {
-                a.WorkerCount = 20;
+                a.WorkerCount = 30;
             });
         }
     }

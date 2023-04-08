@@ -155,7 +155,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                         }).ToList();
 
 
-                        if (!matchEnded)
+                        if (!matchEnded || runAll || runBonus)
                         {
                             List<Member> allMembersResults = new();
 
@@ -168,6 +168,8 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                                         .Select(a => a.AthleteId)
                                                         .FirstOrDefault();
                             });
+
+                            allMembersResults = allMembersResults.Where(a => a.Ranking > 0 && a.Stats != null).ToList();
 
                             List<double> rankings = runBonus ? allMembersResults.OrderByDescending(a => a.Ranking)
                                                                                 .Skip(0)
@@ -183,7 +185,6 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                                                                  a.Ranking
                                                                              })
                                                                              .ToList() : null;
-
 
                             foreach (GameMember member in allMembers)
                             {

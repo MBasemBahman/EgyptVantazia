@@ -65,7 +65,7 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
         private void DailyRecurringJob()
         {
             //// At 01:00 AM
-            RecurringJob.AddOrUpdate("RunAccountTeamsCalculations", () => _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(0, 0, null, false), "0 */12 * * *", TimeZoneInfo.Utc);
+            RecurringJob.AddOrUpdate("RunAccountTeamsCalculations", () => _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(0, 0, null, false), "0 */8 * * *", TimeZoneInfo.Utc);
 
             // At 02:00 AM
             //RecurringJob.AddOrUpdate("UpdateAccountTeamGameWeakRanking", () => _fantasyUnitOfWork.AccountTeamCalc.RunUpdateAccountTeamGameWeakRanking(), "0 2 * * *", TimeZoneInfo.Utc);

@@ -116,13 +116,13 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 }
             }
 
-            if (!inDebug && !runAll)
-            {
-                if (match.LastUpdateId == gameReturn.LastUpdateId)
-                {
-                    return;
-                }
-            }
+            //if (!inDebug && !runAll)
+            //{
+            //    if (match.LastUpdateId == gameReturn.LastUpdateId)
+            //    {
+            //        return;
+            //    }
+            //}
 
             if (gameReturn != null && gameReturn.Game != null &&
                 gameReturn.Game.AwayCompetitor != null &&
@@ -154,81 +154,75 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                             Fk_Team = a.Fk_Team
                         }).ToList();
 
+                        List<Member> allMembersResults = new();
 
-                        if (!matchEnded || runAll || runBonus)
+                        allMembersResults.AddRange(gameReturn.Game.HomeCompetitor.Lineups.Members);
+                        allMembersResults.AddRange(gameReturn.Game.AwayCompetitor.Lineups.Members);
+
+                        allMembersResults.ForEach(a =>
                         {
-                            List<Member> allMembersResults = new();
+                            a.AthleteId = allMembers.Where(b => b.Id == a.Id)
+                                                    .Select(a => a.AthleteId)
+                                                    .FirstOrDefault();
+                        });
 
-                            allMembersResults.AddRange(gameReturn.Game.HomeCompetitor.Lineups.Members);
-                            allMembersResults.AddRange(gameReturn.Game.AwayCompetitor.Lineups.Members);
+                        allMembersResults = allMembersResults.Where(a => a.Ranking > 0 && a.Stats != null).ToList();
 
-                            allMembersResults.ForEach(a =>
+                        List<double> rankings = runBonus ? allMembersResults.OrderByDescending(a => a.Ranking)
+                                                                            .Skip(0)
+                                                                            .Take(3)
+                                                                            .Select(a => a.Ranking)
+                                                                            .ToList() : null;
+
+                        var membersRanking = runBonus && rankings != null && rankings.Any() ? allMembersResults.Where(a => rankings.Contains(a.Ranking))
+                                                                         .Select(a => new
+                                                                         {
+                                                                             a.Id,
+                                                                             index = (rankings.IndexOf(a.Ranking) + 1),
+                                                                             a.Ranking
+                                                                         })
+                                                                         .ToList() : null;
+
+                        foreach (GameMember member in allMembers)
+                        {
+                            PlayerDto player = players.Where(a => a._365_PlayerId == member.AthleteId.ToString())
+                                                      .Select(a => new PlayerDto
+                                                      {
+                                                          Id = a.Id,
+                                                          Fk_PlayerPosition = a.Fk_PlayerPosition,
+                                                          Fk_Team = a.Fk_Team
+                                                      })
+                                                      .SingleOrDefault();
+                            if (player != null)
                             {
-                                a.AthleteId = allMembers.Where(b => b.Id == a.Id)
-                                                        .Select(a => a.AthleteId)
-                                                        .FirstOrDefault();
-                            });
+                                Member memberResult = allMembersResults.Where(a => a.AthleteId == member.AthleteId)
+                                                                       .LastOrDefault();
 
-                            allMembersResults = allMembersResults.Where(a => a.Ranking > 0 && a.Stats != null).ToList();
+                                int rankingIndex = 0;
 
-                            List<double> rankings = runBonus ? allMembersResults.OrderByDescending(a => a.Ranking)
-                                                                                .Skip(0)
-                                                                                .Take(3)
-                                                                                .Select(a => a.Ranking)
-                                                                                .ToList() : null;
-
-                            var membersRanking = runBonus && rankings != null && rankings.Any() ? allMembersResults.Where(a => rankings.Contains(a.Ranking))
-                                                                             .Select(a => new
-                                                                             {
-                                                                                 a.Id,
-                                                                                 index = (rankings.IndexOf(a.Ranking) + 1),
-                                                                                 a.Ranking
-                                                                             })
-                                                                             .ToList() : null;
-
-                            foreach (GameMember member in allMembers)
-                            {
-                                PlayerDto player = players.Where(a => a._365_PlayerId == member.AthleteId.ToString())
-                                                          .Select(a => new PlayerDto
-                                                          {
-                                                              Id = a.Id,
-                                                              Fk_PlayerPosition = a.Fk_PlayerPosition,
-                                                              Fk_Team = a.Fk_Team
-                                                          })
-                                                          .SingleOrDefault();
-                                if (player != null)
+                                if (membersRanking != null &&
+                                    membersRanking.Any() &&
+                                    membersRanking.Any(a => a.Id == member.Id))
                                 {
-                                    Member memberResult = allMembersResults.Where(a => a.AthleteId == member.AthleteId)
-                                                                           .LastOrDefault();
+                                    rankingIndex = membersRanking.Where(a => a.Id == member.Id).Select(a => a.index).FirstOrDefault();
+                                }
 
-                                    int rankingIndex = 0;
-
-                                    if (membersRanking != null &&
-                                        membersRanking.Any() &&
-                                        membersRanking.Any(a => a.Id == member.Id))
+                                if (memberResult != null)
+                                {
+                                    if (inDebug)
                                     {
-                                        rankingIndex = membersRanking.Where(a => a.Id == member.Id).Select(a => a.index).FirstOrDefault();
+                                        UpdatePlayerResult(gameReturn, member, player, rankingIndex, teamGameWeak, memberResult, scoreTypes, match, inDebug).Wait();
                                     }
-
-                                    if (memberResult != null)
+                                    else
                                     {
-                                        if (inDebug)
-                                        {
-                                            UpdatePlayerResult(gameReturn, member, player, rankingIndex, teamGameWeak, memberResult, scoreTypes, match, inDebug).Wait();
-                                        }
-                                        else
-                                        {
-                                            string JobPlayerId = this.JobPlayerId + teamGameWeak._365_MatchId.ToString() + $"-{member.Id}";
+                                        string JobPlayerId = this.JobPlayerId + teamGameWeak._365_MatchId.ToString() + $"-{member.Id}";
 
-                                            string hangfireJobId = BackgroundJob.Enqueue(() => UpdatePlayerResult(gameReturn, member, player, rankingIndex, teamGameWeak, memberResult, scoreTypes, match, inDebug));
+                                        string hangfireJobId = BackgroundJob.Enqueue(() => UpdatePlayerResult(gameReturn, member, player, rankingIndex, teamGameWeak, memberResult, scoreTypes, match, inDebug));
 
-                                            _hangFireCustomJob.ReplaceJob(hangfireJobId, JobPlayerId);
-                                        }
+                                        _hangFireCustomJob.ReplaceJob(hangfireJobId, JobPlayerId);
                                     }
                                 }
                             }
-
-
                         }
                     }
                 }

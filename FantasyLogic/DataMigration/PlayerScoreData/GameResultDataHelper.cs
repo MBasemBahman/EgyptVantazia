@@ -3,6 +3,7 @@ using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.SeasonModels;
+using Entities.DBModels.TeamModels;
 using FantasyLogic.Calculations;
 using FantasyLogic.SharedLogic;
 using IntegrationWith365.Entities.GameModels;
@@ -166,7 +167,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                                     .FirstOrDefault();
                         });
 
-                        allMembersResults = allMembersResults.Where(a => a.Ranking > 0 && a.Stats != null).ToList();
+                        allMembersResults = allMembersResults.Where(a => a.Stats != null).ToList();
 
                         List<double> rankings = runBonus ? allMembersResults.OrderByDescending(a => a.Ranking)
                                                                             .Skip(0)
@@ -225,6 +226,15 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                             }
                         }
                     }
+                }
+                else
+                {
+                    var players = _unitOfWork.PlayerScore.GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
+                    {
+                        Fk_GameWeak = match.Fk_GameWeak,
+                        Fk_TeamGameWeak = match.Id
+                    }, otherLang: false).Select(a => a.PlayerGameWeak.Fk_Player).ToList();
+                    _playerStateCalc.RunPlayersStateCalculations(match.Fk_GameWeak, match._365_MatchId, players, inDebug);
                 }
             }
         }

@@ -47,7 +47,14 @@ namespace FantasyLogic.Calculations
 
             foreach (GameWeakModel gameWeak in gameWeaks)
             {
-                BackgroundJob.Enqueue(() => AccountTeamGameWeakCalculations(gameWeak, season.Id, fk_AccountTeam, fk_Players, inDebug));
+                if (inDebug)
+                {
+                    AccountTeamGameWeakCalculations(gameWeak, season.Id, fk_AccountTeam, fk_Players, inDebug);
+                }
+                else
+                {
+                    BackgroundJob.Enqueue(() => AccountTeamGameWeakCalculations(gameWeak, season.Id, fk_AccountTeam, fk_Players, inDebug));
+                }
             }
         }
 

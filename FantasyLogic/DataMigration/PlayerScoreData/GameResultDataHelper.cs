@@ -90,7 +90,6 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
 
         public async Task UpdateGameResult(TeamGameWeakDto teamGameWeak, List<ScoreTypeDto> scoreTypes, bool runBonus, bool inDebug, bool runAll, bool stopAll)
         {
-
             TeamGameWeak match = await _unitOfWork.Season.FindTeamGameWeakbyId(teamGameWeak.Id, trackChanges: true);
 
             GameReturn gameReturn = await _365Services.GetGame(new _365GameParameters
@@ -99,6 +98,8 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             });
 
             bool matchEnded = !inDebug && !runAll && !runBonus && match.IsEnded /*teamGameWeak.EndTime < DateTime.UtcNow.ToEgypt()*/;
+
+            runBonus = runBonus || gameReturn.Game.IsEnded;
 
             if (matchEnded || stopAll)
             {

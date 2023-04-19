@@ -35,6 +35,8 @@ namespace API.Areas.TeamArea.Controllers
                 }
             }
 
+            parameters.IsActive = true;
+
             PagedList<PlayerModel> data = await _unitOfWork.Team.GetPlayerPaged(parameters, otherLang);
 
             SetPagination(data.MetaData, parameters);

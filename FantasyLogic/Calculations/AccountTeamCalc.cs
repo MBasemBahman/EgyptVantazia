@@ -163,6 +163,8 @@ namespace FantasyLogic.Calculations
                 IsPrimary = a.IsPrimary,
                 IsParticipate = a.IsParticipate,
                 IsPlayed = a.IsPlayed,
+                IsDelayed = a.IsDelayed,
+                NotHaveMatch = a.NotHaveMatch,
                 Points = a.Points,
                 PlayerName = a.AccountTeamPlayer.Player.Name
             }).ToList()
@@ -186,7 +188,9 @@ namespace FantasyLogic.Calculations
                 })
             .ToList();
 
-            bool captianPointsFlag = players.Any(a => a.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian && a.IsPlayed);
+            bool captianPointsFlag = players.Any(a => a.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian && (a.IsPlayed ||
+                                                                                                                 a.IsDelayed ||
+                                                                                                                 a.NotHaveMatch));
             bool havePointsInTotal = true;
 
             AccountTeamGameWeak accountTeamGameWeak = _unitOfWork.AccountTeam.FindAccountTeamGameWeakbyId(fk_AccountTeamGameWeak, trackChanges: true).Result;
@@ -205,7 +209,12 @@ namespace FantasyLogic.Calculations
             }
             else
             {
-                playerPrimaryAndPlayed = accountTeamGameWeak.BenchBoost ? players.Count(a => a.IsParticipate) : players.Count(a => a.IsPrimary && a.IsPlayed);
+                playerPrimaryAndPlayed = accountTeamGameWeak.BenchBoost ? players.Count(a => a.IsParticipate) : players.Count(a => a.IsPrimary &&
+                                                                                                                                  (a.IsPlayed ||
+                                                                                                                                   a.IsDelayed ||
+                                                                                                                                   a.NotHaveMatch));
+
+                playerPrimaryAndPlayed = playerPrimaryAndPlayed > 11 ? 11 : playerPrimaryAndPlayed;
             }
 
             foreach (AccountTeamPlayerGameWeakDto player in players)
@@ -757,6 +766,11 @@ public class AccountTeamPlayerGameWeakDto
     public bool IsPrimary { get; set; }
     public bool IsParticipate { get; set; }
     public bool IsPlayed { get; set; }
+
+    public bool IsDelayed { get; set; }
+
+    public bool NotHaveMatch { get; set; }
+
     public double? Points { get; set; }
 
     public string PlayerName { get; set; }

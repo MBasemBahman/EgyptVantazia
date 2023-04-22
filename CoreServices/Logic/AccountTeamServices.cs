@@ -401,6 +401,24 @@ namespace CoreServices.Logic
                                        .Team
                                        .AwayGameWeaks.Any(b => b.Fk_GameWeak == a.Fk_GameWeak &&
                                                                b.StartTime <= DateTime.UtcNow.AddHours(2)),
+                           IsDelayed = a.AccountTeamPlayer
+                                       .Player
+                                       .Team
+                                       .HomeGameWeaks.Any(b => b.Fk_GameWeak == a.Fk_GameWeak &&
+                                                               b.IsDelayed) ||
+                                       a.AccountTeamPlayer
+                                       .Player
+                                       .Team
+                                       .AwayGameWeaks.Any(b => b.Fk_GameWeak == a.Fk_GameWeak &&
+                                                               b.IsDelayed),
+                           NotHaveMatch = !a.AccountTeamPlayer
+                                           .Player
+                                           .Team
+                                           .HomeGameWeaks.Any(b => b.Fk_GameWeak == a.Fk_GameWeak) &&
+                                          !a.AccountTeamPlayer
+                                           .Player
+                                           .Team
+                                           .AwayGameWeaks.Any(b => b.Fk_GameWeak == a.Fk_GameWeak),
                            IsParticipate = _dBContext.PlayerGameWeaks.Any(b => b.Fk_Player == a.AccountTeamPlayer.Fk_Player &&
                                                                                b.TeamGameWeak.Fk_GameWeak == a.Fk_GameWeak &&
                                                                                b.TeamGameWeak.StartTime <= DateTime.UtcNow.AddHours(2) &&

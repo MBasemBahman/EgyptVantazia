@@ -69,6 +69,10 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         public bool IsPlayed { get; set; }
 
+        public bool IsDelayed { get; set; }
+
+        public bool NotHaveMatch { get; set; }
+
         public bool IsParticipate { get; set; }
 
         public int? Top15 { get; set; }

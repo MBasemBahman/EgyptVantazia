@@ -1,4 +1,5 @@
-﻿using Entities.DBModels.PlayerScoreModels;
+﻿using Entities.CoreServicesModels.PlayerScoreModels;
+using Entities.DBModels.PlayerScoreModels;
 using IntegrationWith365.Entities.GameModels;
 using System.Linq.Dynamic.Core;
 using static Contracts.EnumData.DBModelsEnum;
@@ -148,6 +149,7 @@ namespace FantasyLogic.Calculations
             else if (score.Fk_ScoreType == (int)ScoreTypeEnum.Ranking)
             {
                 score.FinalValue = rankingIndex;
+
                 if (score.FinalValue == 1)
                 {
                     score.Points = 3;

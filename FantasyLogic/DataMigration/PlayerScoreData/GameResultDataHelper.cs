@@ -176,14 +176,17 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                                                             .Select(a => a.Ranking)
                                                                             .ToList() : null;
 
-                        var membersRanking = runBonus && rankings != null && rankings.Any() ? allMembersResults.Where(a => rankings.Contains(a.Ranking))
-                                                                         .Select(a => new
-                                                                         {
-                                                                             a.Id,
-                                                                             index = (rankings.IndexOf(a.Ranking) + 1),
-                                                                             a.Ranking
-                                                                         })
-                                                                         .ToList() : null;
+                        var membersRanking = runBonus && 
+                                             rankings != null && 
+                                             rankings.Any() ? allMembersResults
+                                                              .Where(a => rankings.Contains(a.Ranking))
+                                                              .Select(a => new
+                                                              {
+                                                                  a.Id,
+                                                                  index = (rankings.IndexOf(a.Ranking) + 1),
+                                                                  a.Ranking
+                                                              })
+                                                              .ToList() : null;
 
                         foreach (GameMember member in allMembers)
                         {
@@ -206,7 +209,9 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                     membersRanking.Any() &&
                                     membersRanking.Any(a => a.Id == member.Id))
                                 {
-                                    rankingIndex = membersRanking.Where(a => a.Id == member.Id).Select(a => a.index).FirstOrDefault();
+                                    rankingIndex = membersRanking.Where(a => a.Id == member.Id)
+                                                                 .Select(a => a.index)
+                                                                 .FirstOrDefault();
                                 }
 
                                 if (memberResult != null)

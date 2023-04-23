@@ -10,7 +10,7 @@ namespace Dashboard.Utility
         public UpdateResultsUtils(ServicesHttpClient servicesHttp)
         {
             _servicesHttp = servicesHttp;
-            _servicesHttp.BaseUri = "https://fantasy-hangfirev2.azurewebsites.net/";
+            _servicesHttp.BaseUri = "https://egypt-fantasy-automate.azurewebsites.net/";
         }
 
         public void UpdateStandings()

@@ -23,7 +23,7 @@
                                     <select name="Fk_GameWeak" class="select2 form-select">
                                         @foreach (KeyValuePair<string, string> gameWeak in (Dictionary<string, string>)ViewData["GameWeak"])
                                         {
-                                            <option selected="@(current.Id.ToString() == gameWeak.Key)" value="@gameWeak.Key">@gameWeak.Value</option>
+                                            <option selected="@(current!=null&& current.Id.ToString() == gameWeak.Key)" value="@gameWeak.Key">@gameWeak.Value</option>
                                         }
                                     </select>
                                 </div>

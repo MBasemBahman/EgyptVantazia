@@ -132,9 +132,14 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             {
                 match.LastUpdateId = gameReturn.LastUpdateId;
                 match.IsEnded = gameReturn.Game.IsEnded;
-                match.StartTime = gameReturn.Game.StartTime;
                 match.AwayScore = (int)gameReturn.Game.AwayCompetitor.Score;
                 match.HomeScore = (int)gameReturn.Game.HomeCompetitor.Score;
+
+                if (!match.IsCanNotEdit)
+                {
+                    match.StartTime = gameReturn.Game.StartTime;
+                }
+
                 await _unitOfWork.Save();
 
                 if (gameReturn.Game.Members != null && gameReturn.Game.Members.Any())

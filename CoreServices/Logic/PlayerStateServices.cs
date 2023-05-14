@@ -97,6 +97,11 @@ namespace CoreServices.Logic
             return _repository.PlayerGameWeakScoreState.Count();
         }
 
+        public void ResetGameWeakPlayerScores(int fk_Player, int fk_GameWeak)
+        {
+            _repository.PlayerGameWeakScoreState.DeleteOldPlayerScores(fk_Player, fk_GameWeak);
+        }
+
         #endregion
 
         #region PlayerSeasonScoreState Services
@@ -180,6 +185,11 @@ namespace CoreServices.Logic
         public int GetPlayerSeasonScoreStateCount()
         {
             return _repository.PlayerSeasonScoreState.Count();
+        }
+
+        public void ResetSeasonPlayerScores(int fk_Player, int fk_Season)
+        {
+            _repository.PlayerSeasonScoreState.DeleteOldPlayerScores(fk_Player, fk_Season);
         }
 
         #endregion

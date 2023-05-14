@@ -187,7 +187,7 @@ namespace FantasyLogic.DataMigration.GamesData
 
                     if (deadline > DateTime.UtcNow)
                     {
-                        gameWeak.JobId = BackgroundJob.Schedule(() => UpdateCurrentGameWeak(gameWeak.Id, false), deadline);
+                        gameWeak.JobId = BackgroundJob.Schedule(() => UpdateCurrentGameWeak(gameWeak.Id, false, 0, false, false), deadline);
 
                         gameWeak.SecondJobId = BackgroundJob.Schedule(() => SendNotificationForGameWeakDeadLine(gameWeak.Id), deadline.AddMinutes(-60));
                     }
@@ -222,31 +222,45 @@ namespace FantasyLogic.DataMigration.GamesData
         {
             await UpdateCurrentGameWeak(id, resetTeam: false);
         }
-        public async Task UpdateCurrentGameWeak(int id, bool resetTeam)
+        public async Task UpdateCurrentGameWeak(int id, bool resetTeam, int fk_AccounTeam = 0, bool inDebug = false, bool skipReset = false)
         {
-            _unitOfWork.Season.ResetCurrentGameWeaks();
-            await _unitOfWork.Save();
+            if (!skipReset)
+            {
+                _unitOfWork.Season.ResetCurrentGameWeaks();
+                await _unitOfWork.Save();
+            }
 
             GameWeak gameWeak = await _unitOfWork.Season.FindGameWeakbyId(id, trackChanges: true);
-            gameWeak.IsCurrent = true;
-            await _unitOfWork.Save();
+
+            if (!skipReset)
+            {
+                gameWeak.IsCurrent = true;
+                await _unitOfWork.Save();
+            }
+
 
             GameWeak nextGameWeak = await _unitOfWork.Season.FindGameWeakby365Id((gameWeak._365_GameWeakId.ParseToInt() + 1).ToString(), gameWeak.Fk_Season, trackChanges: true);
-            if (nextGameWeak != null)
+            if (!skipReset && nextGameWeak != null)
             {
                 nextGameWeak.IsNext = true;
                 await _unitOfWork.Save();
             }
 
             GameWeak prevGameWeak = await _unitOfWork.Season.FindGameWeakby365Id((gameWeak._365_GameWeakId.ParseToInt() - 1).ToString(), gameWeak.Fk_Season, trackChanges: true);
-            if (prevGameWeak != null)
+            if (!skipReset && prevGameWeak != null)
             {
                 prevGameWeak.IsPrev = true;
                 await _unitOfWork.Save();
             }
 
-            //TransferAccountTeamPlayers(nextGameWeak.Id, gameWeak.Id, gameWeak._365_GameWeakId.ParseToInt(), nextGameWeak.Fk_Season, resetTeam);
-            _ = BackgroundJob.Enqueue(() => TransferAccountTeamPlayers(nextGameWeak.Id, gameWeak.Id, gameWeak._365_GameWeakId.ParseToInt(), nextGameWeak.Fk_Season, resetTeam));
+            if (inDebug)
+            {
+                TransferAccountTeamPlayers(nextGameWeak.Id, gameWeak.Id, gameWeak._365_GameWeakId.ParseToInt(), nextGameWeak.Fk_Season, resetTeam, fk_AccounTeam, inDebug);
+            }
+            else
+            {
+                _ = BackgroundJob.Enqueue(() => TransferAccountTeamPlayers(nextGameWeak.Id, gameWeak.Id, gameWeak._365_GameWeakId.ParseToInt(), nextGameWeak.Fk_Season, resetTeam, fk_AccounTeam, inDebug));
+            }
         }
 
         public async Task SendNotificationForGameWeakDeadLine(int id)
@@ -277,18 +291,26 @@ namespace FantasyLogic.DataMigration.GamesData
             }).Wait();
         }
 
-        public void TransferAccountTeamPlayers(int fk_CurrentGameWeak, int fk_PrevGameWeak, int prev_365_GameWeakId, int fk_Season, bool resetTeam)
+        public void TransferAccountTeamPlayers(int fk_CurrentGameWeak, int fk_PrevGameWeak, int prev_365_GameWeakId, int fk_Season, bool resetTeam, int fk_AccounTeam, bool inDebug)
         {
             List<int> accounTeams = _unitOfWork.AccountTeam
-                                         .GetAccountTeams(new AccountTeamParameters(), otherLang: false)
+                                         .GetAccountTeams(new AccountTeamParameters
+                                         {
+                                             Id = fk_AccounTeam
+                                         }, otherLang: false)
                                          .Select(a => a.Id)
                                          .ToList();
 
             foreach (int accounTeam in accounTeams)
             {
-                //TransferAccountTeamPlayers(accounTeam, fk_CurrentGameWeak, fk_PrevGameWeak, prev_365_GameWeakId, fk_Season, resetTeam).Wait();
-
-                BackgroundJob.Enqueue(() => TransferAccountTeamPlayers(accounTeam, fk_CurrentGameWeak, fk_PrevGameWeak, prev_365_GameWeakId, fk_Season, resetTeam));
+                if (inDebug)
+                {
+                    TransferAccountTeamPlayers(accounTeam, fk_CurrentGameWeak, fk_PrevGameWeak, prev_365_GameWeakId, fk_Season, resetTeam).Wait();
+                }
+                else
+                {
+                    BackgroundJob.Enqueue(() => TransferAccountTeamPlayers(accounTeam, fk_CurrentGameWeak, fk_PrevGameWeak, prev_365_GameWeakId, fk_Season, resetTeam));
+                }
             }
         }
 

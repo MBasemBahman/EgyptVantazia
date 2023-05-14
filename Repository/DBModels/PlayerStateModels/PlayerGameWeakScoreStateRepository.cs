@@ -1,4 +1,5 @@
 ﻿using Entities.CoreServicesModels.PlayerStateModels;
+using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.PlayerStateModels;
 
 namespace Repository.DBModels.PlayerStateModels
@@ -67,6 +68,12 @@ namespace Repository.DBModels.PlayerStateModels
             {
                 base.Create(entity);
             }
+        }
+
+        public void DeleteOldPlayerScores(int fk_Player, int fk_GameWeak)
+        {
+            List<PlayerGameWeakScoreState> data = FindByCondition(a => a.Fk_Player == fk_Player && a.Fk_GameWeak == fk_GameWeak, trackChanges: true).ToList();
+            DBContext.PlayerGameWeakScoreStates.RemoveRange(data);
         }
 
     }

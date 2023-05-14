@@ -65,6 +65,12 @@ namespace Repository.DBModels.PlayerStateModels
                 base.Create(entity);
             }
         }
+
+        public void DeleteOldPlayerScores(int fk_Player, int fk_Season)
+        {
+            List<PlayerSeasonScoreState> data = FindByCondition(a => a.Fk_Player == fk_Player && a.Fk_Season == fk_Season, trackChanges: true).ToList();
+            DBContext.PlayerSeasonScoreStates.RemoveRange(data);
+        }
     }
 
     public static class PlayerSeasonScoreStateRepositoryExtension

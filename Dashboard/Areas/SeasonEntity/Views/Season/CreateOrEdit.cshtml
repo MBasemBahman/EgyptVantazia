@@ -26,12 +26,12 @@
                                 <li class="breadcrumb-item">
                                     @if (returnPage == (int)SeasonReturnPage.SeasonProfile)
                                     {
-                                    <a href="/SeasonEntity/Season/Profile/@id">@Localizer.Get("Season Profile")</a>
+                                        <a href="/SeasonEntity/Season/Profile/@id">@Localizer.Get("Season Profile")</a>
                                     }
 
                                     else
                                     {
-                                    <a href="/SeasonEntity/Season/Index">@Localizer.Get("Seasons")</a>
+                                        <a href="/SeasonEntity/Season/Index">@Localizer.Get("Seasons")</a>
                                     }
                                 </li>
                                 <li class="breadcrumb-item active">
@@ -115,176 +115,176 @@
                                             <div data-repeater-list="GameWeaks" class="mb-2">
                                                 @if (Model.GameWeaks != null && Model.GameWeaks.Any())
                                                 {
-                                                @for (int i = 0; i < Model.GameWeaks.Count; i++)
+                                                    @for (int i = 0; i < Model.GameWeaks.Count; i++)
                                                     {
-                                                <div data-repeater-item class="data-repeater mb-2">
-                                                    <div class="row d-flex align-items-end">
-                                                        <input type="hidden" asp-for="GameWeaks[i].Id" class="game-id">
+                                                        <div data-repeater-item class="data-repeater mb-2">
+                                                            <div class="row d-flex align-items-end">
 
+                                                                <input type="hidden" asp-for="GameWeaks[i].Id" class="game-id">
 
-                                                        <div class="col-md-1 col-12">
-                                                            <div class="mb-1">
-                                                                <label class="form-label">@Localizer.Get("Id")</label>
-                                                                <input class="form-control game-id-show-only" disabled value="@Model.GameWeaks[i].Id" placeholder="@Localizer.Get("Enter") @Localizer.Get("Id")">
+                                                                <div class="col-md-3 col-12">
+                                                                    <div class="mb-1">
+                                                                        <label class="form-label">@Localizer.Get("Id")</label>
+                                                                        <input class="form-control game-id-show-only" disabled value="@Model.GameWeaks[i].Id" placeholder="@Localizer.Get("Enter") @Localizer.Get("Id")">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-3 col-12">
+                                                                    <div class="mb-1">
+                                                                        <label class="form-label">@Localizer.Get("Name Arabic")</label>
+                                                                        <input asp-for="GameWeaks[i].Name" class="form-control game-name" placeholder="@Localizer.Get("Enter") @Localizer.Get("Name Arabic")">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-3 col-12">
+                                                                    <div class="mb-1">
+                                                                        <label class="form-label">@Localizer.Get("Name English")</label>
+                                                                        <input asp-for="GameWeaks[i].NameEn" class="form-control game-name-en" placeholder="@Localizer.Get("Enter") @Localizer.Get("Name English")">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-3 col-12">
+                                                                    <div class="mb-1">
+                                                                        <label class="form-label">@Localizer.Get("_365_GameWeakId")</label>
+                                                                        <input asp-for="GameWeaks[i]._365_GameWeakId" class="form-control gameid365" placeholder="@Localizer.Get("Enter") @Localizer.Get("_365_GameWeakId")">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-3 col-12">
+                                                                    <div class="mb-1">
+                                                                        <label class="form-label">@Localizer.Get("Deadline")</label>
+                                                                        <input type="datetime" asp-for="GameWeaks[i].Deadline" class="form-control flatpickr-date-time" placeholder="@Localizer.Get("Enter") @Localizer.Get("Deadline")">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-3 col-12">
+                                                                    <div class="mb-1">
+                                                                        <label asp-for="GameWeaks[i].IsPrev" class="form-label"></label>
+                                                                        <select class="form-control" asp-for="GameWeaks[i].IsPrev">
+                                                                            <option value="true">@Localizer.Get("Yes")</option>
+                                                                            <option value="false">@Localizer.Get("No")</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-3 col-12">
+                                                                    <div class="mb-1">
+                                                                        <label asp-for="GameWeaks[i].IsCurrent" class="form-label"></label>
+                                                                        <select class="form-control" asp-for="GameWeaks[i].IsCurrent">
+                                                                            <option value="true">@Localizer.Get("Yes")</option>
+                                                                            <option value="false">@Localizer.Get("No")</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-3 col-12">
+                                                                    <div class="mb-1">
+                                                                        <label asp-for="GameWeaks[i].IsNext" class="form-label"></label>
+                                                                        <select class="form-control" asp-for="GameWeaks[i].IsNext">
+                                                                            <option value="true">@Localizer.Get("Yes")</option>
+                                                                            <option value="false">@Localizer.Get("No")</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-1 col-12 mb-50">
+                                                                    <div class="mb-1">
+                                                                        <button class="remove-btn  btn btn-outline-danger text-nowrap px-1" data-repeater-delete
+                                                                                type="button">
+                                                                            <i data-feather="x" class="me-25"></i>
+                                                                            <span>@Localizer.Get("Remove")</span>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                                <hr />
                                                             </div>
                                                         </div>
-                                                        
-                                                        <div class="col-md-3 col-12">
-                                                            <div class="mb-1">
-                                                                <label class="form-label">@Localizer.Get("Name Arabic")</label>
-                                                                <input asp-for="GameWeaks[i].Name" class="form-control game-name" placeholder="@Localizer.Get("Enter") @Localizer.Get("Name Arabic")">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-3 col-12">
-                                                            <div class="mb-1">
-                                                                <label class="form-label">@Localizer.Get("Name English")</label>
-                                                                <input asp-for="GameWeaks[i].NameEn" class="form-control game-name-en" placeholder="@Localizer.Get("Enter") @Localizer.Get("Name English")">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-3 col-12">
-                                                            <div class="mb-1">
-                                                                <label class="form-label">@Localizer.Get("_365_GameWeakId")</label>
-                                                                <input asp-for="GameWeaks[i]._365_GameWeakId" class="form-control gameid365" placeholder="@Localizer.Get("Enter") @Localizer.Get("_365_GameWeakId")">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-3 col-12">
-                                                            <div class="mb-1">
-                                                                <label class="form-label">@Localizer.Get("Deadline")</label>
-                                                                <input type="datetime" asp-for="GameWeaks[i].Deadline" class="form-control flatpickr-date-time" placeholder="@Localizer.Get("Enter") @Localizer.Get("Deadline")">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-3 col-12">
-                                                            <div class="mb-1">
-                                                                <label asp-for="GameWeaks[i].IsPrev" class="form-label"></label>
-                                                                <select class="form-control" asp-for="GameWeaks[i].IsPrev">
-                                                                    <option value="true">@Localizer.Get("Yes")</option>
-                                                                    <option value="false">@Localizer.Get("No")</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-3 col-12">
-                                                            <div class="mb-1">
-                                                                <label asp-for="GameWeaks[i].IsCurrent" class="form-label"></label>
-                                                                <select class="form-control" asp-for="GameWeaks[i].IsCurrent">
-                                                                    <option value="true">@Localizer.Get("Yes")</option>
-                                                                    <option value="false">@Localizer.Get("No")</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-3 col-12">
-                                                            <div class="mb-1">
-                                                                <label asp-for="GameWeaks[i].IsNext" class="form-label"></label>
-                                                                <select class="form-control" asp-for="GameWeaks[i].IsNext">
-                                                                    <option value="true">@Localizer.Get("Yes")</option>
-                                                                    <option value="false">@Localizer.Get("No")</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-1 col-12 mb-50">
-                                                            <div class="mb-1">
-                                                                <button class="remove-btn  btn btn-outline-danger text-nowrap px-1" data-repeater-delete
-                                                                        type="button">
-                                                                    <i data-feather="x" class="me-25"></i>
-                                                                    <span>@Localizer.Get("Remove")</span>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                        <hr />
-                                                    </div>
-                                                </div>
                                                     }
                                                 }
                                                 else
                                                 {
 
-                                                <div data-repeater-item class="data-repeater mb-2">
-                                                    <div class="row d-flex align-items-end">
-                                                        <input type="hidden" name=".Id" class="game-id">
-                                                        
-                                                        <div class="col-md-1 col-12">
-                                                            <div class="mb-1">
-                                                                <label class="form-label">@Localizer.Get("Id")</label>
-                                                                <input class="form-control game-id-show-only" value="0" disabled placeholder="@Localizer.Get("Enter") @Localizer.Get("Id")">
+                                                    <div data-repeater-item class="data-repeater mb-2">
+                                                        <div class="row d-flex align-items-end">
+                                                            <input type="hidden" name=".Id" class="game-id">
+
+                                                            <div class="col-md-3 col-12">
+                                                                <div class="mb-1">
+                                                                    <label class="form-label">@Localizer.Get("Id")</label>
+                                                                    <input class="form-control game-id-show-only" value="0" disabled placeholder="@Localizer.Get("Enter") @Localizer.Get("Id")">
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        
-                                                        <div class="col-md-3 col-12">
-                                                            <div class="mb-1">
-                                                                <label class="form-label">@Localizer.Get("Name Arabic")</label>
-                                                                <input name=".Name" class="form-control game-name" placeholder="@Localizer.Get("Enter") @Localizer.Get("Name Arabic")">
+
+                                                            <div class="col-md-3 col-12">
+                                                                <div class="mb-1">
+                                                                    <label class="form-label">@Localizer.Get("Name Arabic")</label>
+                                                                    <input name=".Name" class="form-control game-name" placeholder="@Localizer.Get("Enter") @Localizer.Get("Name Arabic")">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3 col-12">
+                                                                <div class="mb-1">
+                                                                    <label class="form-label">@Localizer.Get("Name English")</label>
+                                                                    <input name=".NameEn" class="form-control game-name-en" placeholder="@Localizer.Get("Enter") @Localizer.Get("Name English")">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3 col-12">
+                                                                <div class="mb-1">
+                                                                    <label class="form-label">@Localizer.Get("_365_GameWeakId")</label>
+                                                                    <input name="._365_GameWeakId" class="form-control gameid365" placeholder="@Localizer.Get("Enter") @Localizer.Get("_365_GameWeakId")">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3 col-12">
+                                                                <div class="mb-1">
+                                                                    <label class="form-label">@Localizer.Get("Deadline")</label>
+                                                                    <input type="datetime" name=".Deadline" class="form-control flatpickr-date-time" placeholder="@Localizer.Get("Enter") @Localizer.Get("Deadline")" value="@DateTime.Now">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3 col-12">
+                                                                <div class="mb-1">
+                                                                    <label class="form-label">@Localizer.Get("IsPrev")</label>
+                                                                    <select class="form-control" name=".IsPrev">
+                                                                        <option value="true">@Localizer.Get("Yes")</option>
+                                                                        <option value="false">@Localizer.Get("No")</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3 col-12">
+                                                                <div class="mb-1">
+                                                                    <label class="form-label">@Localizer.Get("IsCurrent")</label>
+                                                                    <select class="form-control" name=".IsCurrent">
+                                                                        <option value="true">@Localizer.Get("Yes")</option>
+                                                                        <option value="false">@Localizer.Get("No")</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3 col-12">
+                                                                <div class="mb-1">
+                                                                    <label class="form-label">@Localizer.Get("IsNext")</label>
+                                                                    <select class="form-control" name=".IsNext">
+                                                                        <option value="true">@Localizer.Get("Yes")</option>
+                                                                        <option value="false">@Localizer.Get("No")</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-1 col-12 mb-50">
+                                                                <div class="mb-1">
+                                                                    <button class="remove-btn  btn btn-outline-danger text-nowrap px-1" data-repeater-delete newRepeater
+                                                                            type="button">
+                                                                        <i data-feather="x" class="me-25"></i>
+                                                                        <span>@Localizer.Get("Remove")</span>
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-3 col-12">
-                                                            <div class="mb-1">
-                                                                <label class="form-label">@Localizer.Get("Name English")</label>
-                                                                <input name=".NameEn" class="form-control game-name-en" placeholder="@Localizer.Get("Enter") @Localizer.Get("Name English")">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-3 col-12">
-                                                            <div class="mb-1">
-                                                                <label class="form-label">@Localizer.Get("_365_GameWeakId")</label>
-                                                                <input name="._365_GameWeakId" class="form-control gameid365" placeholder="@Localizer.Get("Enter") @Localizer.Get("_365_GameWeakId")">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-3 col-12">
-                                                            <div class="mb-1">
-                                                                <label class="form-label">@Localizer.Get("Deadline")</label>
-                                                                <input type="datetime" name=".Deadline" class="form-control flatpickr-date-time" placeholder="@Localizer.Get("Enter") @Localizer.Get("Deadline")" value="@DateTime.Now">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-3 col-12">
-                                                            <div class="mb-1">
-                                                                <label class="form-label">@Localizer.Get("IsPrev")</label>
-                                                                <select class="form-control" name=".IsPrev">
-                                                                    <option value="true">@Localizer.Get("Yes")</option>
-                                                                    <option value="false">@Localizer.Get("No")</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-3 col-12">
-                                                            <div class="mb-1">
-                                                                <label class="form-label">@Localizer.Get("IsCurrent")</label>
-                                                                <select class="form-control" name=".IsCurrent">
-                                                                    <option value="true">@Localizer.Get("Yes")</option>
-                                                                    <option value="false">@Localizer.Get("No")</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-3 col-12">
-                                                            <div class="mb-1">
-                                                                <label class="form-label">@Localizer.Get("IsNext")</label>
-                                                                <select class="form-control" name=".IsNext">
-                                                                    <option value="true">@Localizer.Get("Yes")</option>
-                                                                    <option value="false">@Localizer.Get("No")</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-1 col-12 mb-50">
-                                                            <div class="mb-1">
-                                                                <button class="remove-btn  btn btn-outline-danger text-nowrap px-1" data-repeater-delete newRepeater
-                                                                        type="button">
-                                                                    <i data-feather="x" class="me-25"></i>
-                                                                    <span>@Localizer.Get("Remove")</span>
-                                                                </button>
-                                                            </div>
-                                                        </div>
                                                     </div>
-
-                                                </div>
                                                 }
                                             </div>
 
@@ -309,12 +309,12 @@
                                             <button type="reset" class="btn btn-outline-secondary me-1">@Localizer.Get("Reset")</button>
                                             @if (returnPage == (int)SeasonReturnPage.SeasonProfile)
                                             {
-                                            <a asp-action="Profile" asp-route-id="@id" class="btn btn-warning"> @Localizer.Get("Back") </a>
+                                                <a asp-action="Profile" asp-route-id="@id" class="btn btn-warning"> @Localizer.Get("Back") </a>
                                             }
 
                                             else
                                             {
-                                            <a asp-action="Index" class="btn btn-warning"> @Localizer.Get("Back") </a>
+                                                <a asp-action="Index" class="btn btn-warning"> @Localizer.Get("Back") </a>
                                             }
 
                                         </div>

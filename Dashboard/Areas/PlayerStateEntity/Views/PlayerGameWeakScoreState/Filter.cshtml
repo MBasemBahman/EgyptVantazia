@@ -3,6 +3,7 @@
     ViewData["Title"] = Localizer.Get("Advanced Search");
     ViewBag.emptyLayout = true;
 
+    bool isProfile = ViewData["ProfileLayOut"] != null ? (bool)ViewData["ProfileLayOut"] : false;
 }
 
 
@@ -15,45 +16,48 @@
         <form asp-action="LoadTable" class="filter">
 
             <div class="row g-1 mb-md-1">
+                @if (!isProfile)
+                {
+                    <div class="col-md-12 col-12">
+                        <div class="mb-1">
+                            <label asp-for="Fk_Players" class="form-label">@Localizer.Get("Players")</label>
+                            <select asp-for="Fk_Players" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["Player"] as Dictionary<string, string>, "Key", "Value"))">
+                            </select>
+                        </div>
+                    </div>
+                }
+
                 <div class="col-md-12 col-12">
                     <div class="mb-1">
-                        <label asp-for="Fk_Players" class="form-label">@Localizer.Get("Players")</label>
-                        <select asp-for="Fk_Players" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["Player"] as Dictionary<string,string>,"Key","Value"))">
+                        <label asp-for="Fk_ScoreStates" class="form-label">@Localizer.Get("ScoreStates")</label>
+                        <select asp-for="Fk_ScoreStates" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["ScoreState"] as Dictionary<string, string>, "Key", "Value"))">
                         </select>
                     </div>
                 </div>
 
                 <div class="col-md-12 col-12">
                     <div class="mb-1">
-                        <label asp-for="Fk_ScoreStates" class="form-label">@Localizer.Get("ScoreStates")</label>
-                        <select asp-for="Fk_ScoreStates" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["ScoreState"] as Dictionary<string,string>,"Key","Value"))">
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="col-md-12 col-12">
-                    <div class="mb-1">
                         <label asp-for="Fk_GameWeaks" class="form-label">@Localizer.Get("GameWeak")</label>
-                        <select asp-for="Fk_GameWeaks" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["GameWeak"] as Dictionary<string,string>,"Key","Value"))">
+                        <select asp-for="Fk_GameWeaks" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["GameWeak"] as Dictionary<string, string>, "Key", "Value"))">
                         </select>
                     </div>
                 </div>
 
                 <div class="col-md-6 col-12">
-                        <div class="mb-1">
-                            <label asp-for="PercentFrom" class="form-label">@Localizer.Get("PercentFrom")</label>
-                            <input type="text" class="form-control" asp-for="PercentFrom">
-                        </div>
+                    <div class="mb-1">
+                        <label asp-for="PercentFrom" class="form-label">@Localizer.Get("PercentFrom")</label>
+                        <input type="text" class="form-control" asp-for="PercentFrom">
                     </div>
-    
-                    <div class="col-md-6 col-12">
-                        <div class="mb-1">
-                            <label asp-for="PercentTo" class="form-label">@Localizer.Get("PercentTo")</label>
-                            <input type="text" class="form-control" asp-for="PercentTo">
-                        </div>
-                    </div>
-    
                 </div>
+
+                <div class="col-md-6 col-12">
+                    <div class="mb-1">
+                        <label asp-for="PercentTo" class="form-label">@Localizer.Get("PercentTo")</label>
+                        <input type="text" class="form-control" asp-for="PercentTo">
+                    </div>
+                </div>
+
+            </div>
                 <div class="row g-1 mb-md-1">
         
                     <div class="col-md-6 col-12">

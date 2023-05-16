@@ -1,4 +1,5 @@
 ﻿using Dashboard.Areas.TeamEntity.Models;
+using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.TeamModels;
 using Entities.RequestFeatures;
@@ -81,6 +82,8 @@ namespace Dashboard.Areas.TeamEntity.Controllers
                 _unitOfWork.Team.GetPlayerPrices(new PlayerPriceParameters { Fk_Player = id }, otherLang)
                 );
 
+            ViewData["GameWeak"] = _unitOfWork.Season.GetGameWeakLookUp(new GameWeakParameters(), otherLang);
+            
             return View(data);
         }
 

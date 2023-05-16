@@ -3,6 +3,7 @@
     ViewData["Title"] = Localizer.Get("Advanced Search");
     ViewBag.emptyLayout = true;
 
+    bool isProfile = ViewData["ProfileLayOut"] != null ? (bool)ViewData["ProfileLayOut"] : false;
 }
 
 
@@ -15,21 +16,24 @@
         <form asp-action="LoadTable" class="filter">
 
             <div class="row g-1 mb-md-1">
-                <div class="col-md-12 col-12">
-                    <div class="mb-1">
-                        <label asp-for="Fk_Players" class="form-label">@Localizer.Get("Fk_Players")</label>
-                        <select asp-for="Fk_Players" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["Players"] as Dictionary<string,string>,"Key","Value"))">
-                        </select>
+                @if (!isProfile)
+                {
+                    <div class="col-md-12 col-12">
+                        <div class="mb-1">
+                            <label asp-for="Fk_Players" class="form-label">@Localizer.Get("Fk_Players")</label>
+                            <select asp-for="Fk_Players" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["Players"] as Dictionary<string,string>,"Key","Value"))">
+                            </select>
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-md-12 col-12">
-                    <div class="mb-1">
-                        <label asp-for="Fk_Teams" class="form-label">@Localizer.Get("Teams")</label>
-                        <select asp-for="Fk_Teams" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["Team"] as Dictionary<string,string>,"Key","Value"))">
-                        </select>
+                    <div class="col-md-12 col-12">
+                        <div class="mb-1">
+                            <label asp-for="Fk_Teams" class="form-label">@Localizer.Get("Teams")</label>
+                            <select asp-for="Fk_Teams" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["Team"] as Dictionary<string,string>,"Key","Value"))">
+                            </select>
+                        </div>
                     </div>
-                </div>
+                }
                 
                 <div class="col-md-12 col-12">
                     <div class="mb-1">

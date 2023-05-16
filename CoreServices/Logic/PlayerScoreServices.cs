@@ -308,6 +308,13 @@ namespace CoreServices.Logic
                                _365_PlayerId = a.PlayerGameWeak._365_PlayerId,
                                Ranking = a.PlayerGameWeak.Ranking,
                                Fk_Player = a.PlayerGameWeak.Fk_Player,
+                               TeamGameWeak = new TeamGameWeakModel
+                               {
+                                   GameWeak = new GameWeakModel
+                                   {
+                                       Name = a.PlayerGameWeak.TeamGameWeak.GameWeak.Name
+                                   }
+                               }
                            },
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)

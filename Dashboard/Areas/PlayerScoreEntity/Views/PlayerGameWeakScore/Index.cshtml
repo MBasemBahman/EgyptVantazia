@@ -83,6 +83,7 @@
                                                     }
 
                                                 </th>
+                                                <th>@Html.DisplayNameFor(model => row.PlayerGameWeak.TeamGameWeak.GameWeak)</th>
                                                 <th>@Html.DisplayNameFor(model => row.PlayerGameWeak.Player)</th>
                                                 <th>@Html.DisplayNameFor(model => row.ScoreType)</th>
                                                 <th>@Html.DisplayNameFor(model => row.Points)</th>
@@ -142,6 +143,7 @@ else
                                                     }
 
                                                 </th>
+                                                <th>@Html.DisplayNameFor(model => row.PlayerGameWeak.TeamGameWeak.GameWeak)</th>
                                                 <th>@Html.DisplayNameFor(model => row.PlayerGameWeak.Player)</th>
                                                 <th>@Html.DisplayNameFor(model => row.ScoreType)</th>
                                                 <th>@Html.DisplayNameFor(model => row.Points)</th>
@@ -198,6 +200,7 @@ else
                     // Columns Setups
                     columns: [
                         { data: "id" },
+                        { data: "playerGameWeak.teamGameWeak.gameWeak.name", orderable: false },
                         { data: "playerGameWeak.player.name", orderable: false },
                         { data: "scoreType.name", orderable: false },
                         { data: "points" },

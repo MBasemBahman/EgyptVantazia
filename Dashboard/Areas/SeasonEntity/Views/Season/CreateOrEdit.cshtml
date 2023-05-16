@@ -122,6 +122,13 @@
                                                         <input type="hidden" asp-for="GameWeaks[i].Id" class="game-id">
 
 
+                                                        <div class="col-md-1 col-12">
+                                                            <div class="mb-1">
+                                                                <label class="form-label">@Localizer.Get("Id")</label>
+                                                                <input class="form-control game-id-show-only" disabled value="@Model.GameWeaks[i].Id" placeholder="@Localizer.Get("Enter") @Localizer.Get("Id")">
+                                                            </div>
+                                                        </div>
+                                                        
                                                         <div class="col-md-3 col-12">
                                                             <div class="mb-1">
                                                                 <label class="form-label">@Localizer.Get("Name Arabic")</label>
@@ -200,7 +207,14 @@
                                                 <div data-repeater-item class="data-repeater mb-2">
                                                     <div class="row d-flex align-items-end">
                                                         <input type="hidden" name=".Id" class="game-id">
-
+                                                        
+                                                        <div class="col-md-1 col-12">
+                                                            <div class="mb-1">
+                                                                <label class="form-label">@Localizer.Get("Id")</label>
+                                                                <input class="form-control game-id-show-only" value="0" disabled placeholder="@Localizer.Get("Enter") @Localizer.Get("Id")">
+                                                            </div>
+                                                        </div>
+                                                        
                                                         <div class="col-md-3 col-12">
                                                             <div class="mb-1">
                                                                 <label class="form-label">@Localizer.Get("Name Arabic")</label>
@@ -323,6 +337,7 @@
 
         function resetRepeaterData() {
             $(".game-id").last().val('0');
+            $(".game-id-show-only").last().val('0');
             $(".game-name").last().val('');
             $(".game-name-en").last().val('');
             $(".gameid365").last().val('');

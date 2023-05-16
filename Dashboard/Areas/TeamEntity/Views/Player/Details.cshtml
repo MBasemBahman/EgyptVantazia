@@ -176,6 +176,7 @@
                 method: 'post',
                 data: {
                   fk_Player: '@Model.Id',
+                  fk_GameWeak: $('select[name=Fk_GameWeak]').val()
                 },
                 success: function(data) {
                   $("#success").modal('show');

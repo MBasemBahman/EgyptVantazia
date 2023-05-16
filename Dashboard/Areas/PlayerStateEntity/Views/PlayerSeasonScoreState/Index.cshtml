@@ -176,8 +176,8 @@ else
     <script>
         function LoadTable() {
           var dt_ajax_table = $('.datatables');
-          if (dt_ajax_table.length) {
-                  var dt_ajax = dt_ajax_table.dataTable({
+          if ($('.datatables').length) {
+                  var dt_ajax = $('.datatables').dataTable({
                       // Ajax Filter
                       ajax: {
                           url: '@Url.Action("LoadTable")',
@@ -220,7 +220,7 @@ else
                   
                   $('body').on('submit', '.filter', function () {
                       event.preventDefault();
-                      dt_ajax_table.DataTable().draw();
+                      $('.datatables').DataTable().draw();
                   });
               }
         }

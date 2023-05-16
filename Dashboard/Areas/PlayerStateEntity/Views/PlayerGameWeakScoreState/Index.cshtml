@@ -61,7 +61,7 @@
                             }
                             
                             <div class="card-datatable">
-                                <table class="datatables datatables-ajax table table-responsive table">
+                                <table class="datatables player_gameweak_state_score_datatables datatables-ajax table table-responsive table">
                                     <thead>
                                         <tr>
                                             <th>
@@ -130,7 +130,7 @@ else
                             }
                             
                             <div class="card-datatable">
-                                <table class="datatables datatables-ajax table table-responsive table">
+                                <table class="datatables player_gameweak_state_score_datatables datatables-ajax table table-responsive table">
                                     <thead>
                                         <tr>
                                             <th>
@@ -224,10 +224,15 @@ else
                                       })
                                   });
                                   
-                $('body').on('submit', '.filter', function () {
-                                      event.preventDefault();
-                                      dt_ajax_table.DataTable().draw();
-                      });
+                // $(document).on('submit', '.player_gameweak_state_score_filter', function (e) {
+                //       e.preventDefault();
+                //       ('.player_gameweak_state_score_datatables').DataTable().draw();
+                // });
+                
+                $(document).on('click', '.player_gameweak_state_score_filter', function (e) {
+                      e.preventDefault();
+                      $('.player_gameweak_state_score_datatables').DataTable().draw();
+                });
             }
         }
     

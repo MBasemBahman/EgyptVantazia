@@ -61,6 +61,16 @@ namespace API.Areas.AccountTeamArea.Controllers
             {
                 parameters.FromDeadLine = currentGamWeak.Deadline;
                 parameters.ToDeadLine = nextGameWeak.Deadline;
+
+                if (parameters.ToDeadLine == null)
+                {
+                    parameters.ToDeadLine = _unitOfWork.Season.GetTeamGameWeaks(new TeamGameWeakParameters
+                    {
+                        Fk_GameWeak = currentGamWeak.Id
+                    }, otherLang: false).OrderByDescending(a => a.StartTime)
+                                        .Select(a => a.StartTime.AddHours(2))
+                                        .FirstOrDefault();
+                }
             }
 
             if (parameters.IsCurrent == true)
@@ -77,6 +87,16 @@ namespace API.Areas.AccountTeamArea.Controllers
 
                     parameters.FromDeadLine = nextGameWeak.Deadline;
                     parameters.ToDeadLine = nextNextGameWeak.Deadline;
+
+                    if (parameters.ToDeadLine == null)
+                    {
+                        parameters.ToDeadLine = _unitOfWork.Season.GetTeamGameWeaks(new TeamGameWeakParameters
+                        {
+                            Fk_GameWeak = nextGameWeak.Id
+                        }, otherLang: false).OrderByDescending(a => a.StartTime)
+                                            .Select(a => a.StartTime.AddHours(2))
+                                            .FirstOrDefault();
+                    }
                 }
             }
 

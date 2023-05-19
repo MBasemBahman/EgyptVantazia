@@ -1,4 +1,6 @@
-﻿@model List<ChartDto>
+﻿@using Entities.DBModels.DashboardAdministrationModels
+@using Entities.AuthenticationModels
+@model List<ChartDto>
 @{
     ViewData["Title"] = Localizer.Get("Home");
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -14,6 +16,8 @@
     {
         viewList = views.Split(",").Select(Int32.Parse).ToList();
     }
+    
+    int dashboardRole = ((UserAuthenticatedDto)ViewData["auth"]).Fk_DashboardAdministrationRole;
 }
 
 <!-- BEGIN: Content-->
@@ -35,14 +39,21 @@
                 <div class="col-12">
                     <div class="card text-center">
                         <div class="card-body">
-
-                            <a id="UpdateStandings" class="btn btn-primary"> @Localizer.Get("Update Standings") </a>
-                            <a id="UpdateGames" class="btn btn-primary"> @Localizer.Get("Update Games") </a>
+                                
+                            @if (dashboardRole == (int)DashboardAdministrationRoleEnum.Developer)
+                            {
+                                <a id="UpdateStandings" class="btn btn-primary"> @Localizer.Get("Update Standings") </a>
+                                <a id="UpdateGames" class="btn btn-primary"> @Localizer.Get("Update Games") </a>
+                            }
                             
                             @* Start Updating Modals *@
-                            <a class="btn btn-primary update_game_result"> @Localizer.Get("UpdateGameResult") </a>
-                            <a class="btn btn-primary update_account_team_game_weak_ranking"> @Localizer.Get("UpdateAccountTeamGameWeakRanking") </a>
-                            <a class="btn btn-primary update_private_league_ranking"> @Localizer.Get("UpdatePrivateLeagueRanking") </a>
+                            @if (dashboardRole == (int)DashboardAdministrationRoleEnum.Developer)
+                            {
+                                <a class="btn btn-primary update_game_result"> @Localizer.Get("UpdateGameResult") </a>
+                                <a class="btn btn-primary update_account_team_game_weak_ranking"> @Localizer.Get("UpdateAccountTeamGameWeakRanking") </a>
+                                <a class="btn btn-primary update_private_league_ranking"> @Localizer.Get("UpdatePrivateLeagueRanking") </a>
+                            }
+                            
                             <a class="btn btn-primary update_account_team_points"> @Localizer.Get("UpdateAccountTeamPoints") </a>
                             @* End Updating Modals *@
 

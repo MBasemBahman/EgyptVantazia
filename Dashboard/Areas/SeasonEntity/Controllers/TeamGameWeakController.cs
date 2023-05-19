@@ -148,7 +148,8 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
             ViewData["returnItem"] = returnItem;
             ViewData["otherLang"] = otherLang;
 
-
+            ViewData["auth"] = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+            
             return View(data);
         }
 

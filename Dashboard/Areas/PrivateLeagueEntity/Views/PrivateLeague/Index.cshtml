@@ -1,4 +1,6 @@
-﻿@model PrivateLeagueFilter
+﻿@using Entities.DBModels.DashboardAdministrationModels
+@using Entities.AuthenticationModels
+@model PrivateLeagueFilter
 @{
     ViewData["Title"] = Localizer.Get("PrivateLeagues");
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -12,6 +14,8 @@
     var accessLevel = (DashboardAccessLevelModel)ViewData[ViewDataConstants.AccessLevel];
 
     var row = new PrivateLeagueDto();
+    
+    int dashboardRole = ((UserAuthenticatedDto)ViewData["auth"]).Fk_DashboardAdministrationRole;
 }
 
 <!-- BEGIN: Content-->
@@ -85,7 +89,10 @@
                                             </th>
                                             <th>@Html.DisplayNameFor(model => row.Name)</th>
                                             <th>@Html.DisplayNameFor(model => row.MemberCount)</th>
-                                            <th>@Localizer.Get("UpdatePrivateLeagueRanking")</th>
+                                            @if (dashboardRole == (int)DashboardAdministrationRoleEnum.Developer)
+                                            {
+                                                <th>@Localizer.Get("UpdatePrivateLeagueRanking")</th>
+                                            }
                                             <th>@Html.DisplayNameFor(model => row.GameWeak)</th>
 
                                             <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
@@ -133,13 +140,18 @@
                         { data: "id" },
                         { data:"name" },
                         { data:"memberCount" },
+                        @if (dashboardRole == (int)DashboardAdministrationRoleEnum.Developer)
                         {
-                            data: "id",
-                            render: function (data) {
-                          return `<a class="btn btn-primary update_private_league_ranking" data-id="${data}">
-                                @Localizer.Get("UpdatePrivateLeagueRanking")
-                            </a>`;
-                        } },
+                            <Text>
+                                {
+                                    data: "id",
+                                    render: function (data) {
+                                  return `<a class="btn btn-primary update_private_league_ranking" data-id="${data}">
+                                        @Localizer.Get("UpdatePrivateLeagueRanking")
+                                    </a>`;
+                                } },
+                            </Text>   
+                        }
                         {
                             data: "gameWeak",
                             render: function (data) {

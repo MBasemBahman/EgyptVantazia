@@ -1,4 +1,6 @@
-﻿@model TeamGameWeakDto
+﻿@using Entities.DBModels.DashboardAdministrationModels
+@using Entities.AuthenticationModels
+@model TeamGameWeakDto
 @{
     ViewData["Title"] = $"{Localizer.Get("TeamGameWeak Profile")}";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -17,9 +19,12 @@
     }
 
     ViewData["_365_MatchId"] = Model._365_MatchId;
+    
+    int dashboardRole = ((UserAuthenticatedDto)ViewData["auth"]).Fk_DashboardAdministrationRole;
 }
 
-@section styles{
+@section styles
+{
     <link rel="stylesheet" type="text/css" href="~/app-assets/css@(ltr?"":"-rtl")/pages/page-profile.css">
 }
 
@@ -114,9 +119,12 @@
                         <hr />
 
                         <div class="card-body" style="overflow-x: auto">
-                            <a class="btn btn-primary update_game_result">@Localizer.Get("UpdateGameResult")</a>
-                            <a class="btn btn-info update_teams_players">@Localizer.Get("UpdateTeamsPlayers")</a>
-                            <hr>
+                            @if (dashboardRole == (int)DashboardAdministrationRoleEnum.Developer)
+                            {
+                                <a class="btn btn-primary update_game_result">@Localizer.Get("UpdateGameResult")</a>
+                                <a class="btn btn-info update_teams_players">@Localizer.Get("UpdateTeamsPlayers")</a>
+                                <hr>
+                            }
                             <div class="d-flex justify-content-between align-items-start">
                                 <span class="badge bg-light-primary">@Html.DisplayNameFor(model => Model.HomeTeamPlayers)</span>
                             </div>

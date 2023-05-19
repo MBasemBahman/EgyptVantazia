@@ -36,6 +36,9 @@ namespace Dashboard.Areas.PrivateLeagueEntity.Controllers
             PrivateLeagueFilter filter = new();
 
             ViewData[ViewDataConstants.AccessLevel] = (DashboardAccessLevelModel)Request.HttpContext.Items[ViewDataConstants.AccessLevel];
+            
+            ViewData["auth"] = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+            
             return View(filter);
         }
 

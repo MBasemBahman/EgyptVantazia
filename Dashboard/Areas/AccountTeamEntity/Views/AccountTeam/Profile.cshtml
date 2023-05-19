@@ -1,5 +1,5 @@
 ﻿@model AccountTeamDto
-
+@using Entities.AuthenticationModels
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     var accountTeamGameWeak = new AccountTeamGameWeakDto();
@@ -8,6 +8,8 @@
     var playerTransfer = new PlayerTransferDto();
     ViewData["Title"] = Localizer.Get("Account Teams");
     ViewBag.useModels = true;
+    
+    int dashboardRole = ((UserAuthenticatedDto)ViewData["auth"]).Fk_DashboardAdministrationRole;
 }
 
 
@@ -92,8 +94,11 @@
 
                                 </div>
                                 <div class="card-body" style="overflow-x: auto">
+                                @if (dashboardRole == (int)DashboardAdministrationRoleEnum.Developer)
+                                {
                                     <a class="btn btn-primary update_account_team_points">@Localizer.Get("UpdateAccountTeamPoints")</a>
                                     <hr>
+                                }
                                     <div class="d-flex justify-content-between align-items-start">
                                         <span class="badge bg-light-primary">@Html.DisplayNameFor(model => Model.AccountTeamGameWeaks)</span>
                                     </div>

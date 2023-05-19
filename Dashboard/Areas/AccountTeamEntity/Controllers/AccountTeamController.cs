@@ -91,6 +91,7 @@ namespace Dashboard.Areas.AccountTeamEntity.Controllers
                     Fk_AccountTeam = id
                 }, otherLang));
 
+            ViewData["auth"] = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
             return View(data);
         }

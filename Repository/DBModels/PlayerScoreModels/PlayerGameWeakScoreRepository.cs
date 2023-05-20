@@ -90,7 +90,8 @@ namespace Repository.DBModels.PlayerScoreModels
 
         public void DeleteOldPlayerScores(int fk_PlayerGameWeak)
         {
-            List<PlayerGameWeakScore> data = FindByCondition(a => a.Fk_PlayerGameWeak == fk_PlayerGameWeak && a.IsCanNotEdit == false, trackChanges: true).ToList();
+            List<PlayerGameWeakScore> data = FindByCondition(a => a.Fk_PlayerGameWeak == fk_PlayerGameWeak && 
+                                                                  a.IsCanNotEdit == false, trackChanges: true).ToList();
             DBContext.PlayerGameWeakScores.RemoveRange(data);
         }
     }

@@ -53,6 +53,21 @@ namespace Repository.DBModels.PlayerScoreModels
                 base.Create(entity);
             }
         }
+
+        public void ResetPlayerGameWeak(int fk_TeamGameWeak, int fk_Player, int fk_GameWeak, int fk_Team)
+        {
+            if (fk_TeamGameWeak > 0 ||
+                (fk_GameWeak > 0 && fk_Player > 0) ||
+                (fk_GameWeak > 0 && fk_Team > 0))
+            {
+                List<PlayerGameWeak> data = FindByCondition(a => (fk_TeamGameWeak == 0 || a.Fk_TeamGameWeak == fk_TeamGameWeak) &&
+                                           (fk_Player == 0 || a.Fk_Player == fk_Player) &&
+                                           (fk_GameWeak == 0 || a.TeamGameWeak.Fk_GameWeak == fk_GameWeak) &&
+                                           (fk_Team == 0 || a.Player.Fk_Team == fk_Team),
+                                           trackChanges: true).ToList();
+                Delete(data);
+            }
+        }
     }
 
     public static class PlayerGameWeakRepositoryExtension

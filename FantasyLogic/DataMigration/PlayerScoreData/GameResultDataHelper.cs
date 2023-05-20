@@ -181,8 +181,8 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                                                             .Select(a => a.Ranking)
                                                                             .ToList() : null;
 
-                        var membersRanking = runBonus && 
-                                             rankings != null && 
+                        var membersRanking = runBonus &&
+                                             rankings != null &&
                                              rankings.Any() ? allMembersResults
                                                               .Where(a => rankings.Contains(a.Ranking))
                                                               .Select(a => new
@@ -245,7 +245,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                         Fk_GameWeak = match.Fk_GameWeak,
                         Fk_TeamGameWeak = match.Id
                     }, otherLang: false).Select(a => a.PlayerGameWeak.Fk_Player).ToList();
-                    _playerStateCalc.RunPlayersStateCalculations(match.Fk_GameWeak, match._365_MatchId, players, inDebug);
+                    _playerStateCalc.RunPlayersStateCalculations(match.Fk_GameWeak, match._365_MatchId, players, null, false, inDebug);
                 }
             }
         }
@@ -497,7 +497,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 int fk_GameWeak = players.First().Fk_GameWeak;
                 string _365_MatchId = players.First()._365_MatchId;
 
-                _playerStateCalc.RunPlayersStateCalculations(fk_GameWeak, _365_MatchId, players.Select(a => a.Fk_Player).ToList(), inDebug);
+                _playerStateCalc.RunPlayersStateCalculations(fk_GameWeak, _365_MatchId, players.Select(a => a.Fk_Player).ToList(), null, false, inDebug);
             }
         }
     }

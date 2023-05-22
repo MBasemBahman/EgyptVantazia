@@ -40,8 +40,9 @@ namespace Repository.DBModels.DashboardAdministrationModels
             int fk_DashboardView)
         {
             return DashboardAccessLevels.Where(a => (id == 0 || a.Id == id) &&
-                                               (fk_DashboardAdministrationRole == 0 || a.Premissions.Any(b => b.Fk_DashboardAdministrationRole == fk_DashboardAdministrationRole)) &&
-                                               (fk_DashboardAdministrationRole == 0 || a.Premissions.Any(b => b.Fk_DashboardView == fk_DashboardView)));
+                        (fk_DashboardAdministrationRole == 0 || fk_DashboardView == 0 || a.Premissions.Any(b => b.Fk_DashboardAdministrationRole == fk_DashboardAdministrationRole && b.Fk_DashboardView == fk_DashboardView)) &&
+                        (fk_DashboardAdministrationRole == 0 || a.Premissions.Any(b => b.Fk_DashboardAdministrationRole == fk_DashboardAdministrationRole)) &&
+                        (fk_DashboardView == 0 || a.Premissions.Any(b => b.Fk_DashboardView == fk_DashboardView)));
         }
     }
 }

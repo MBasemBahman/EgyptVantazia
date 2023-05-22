@@ -32,5 +32,10 @@
         {
             _ = DBContext.Set<T>().Remove(entity);
         }
+
+        public void Delete(List<T> entities)
+        {
+            DBContext.Set<T>().RemoveRange(entities);
+        }
     }
 }

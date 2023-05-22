@@ -10,6 +10,9 @@ namespace Entities.CoreServicesModels.TeamModels
         [DisplayName(nameof(Team))]
         public int Fk_Team { get; set; }
 
+        [DisplayName(nameof(Team))]
+        public List<int> Fk_Teams { get; set; }
+
         [DisplayName(nameof(PlayerPosition))]
         public int Fk_PlayerPosition { get; set; }
 

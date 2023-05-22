@@ -26,6 +26,7 @@
             _ = app.UseSwagger();
             _ = app.UseSwaggerUI(c =>
             {
+                c.SwaggerEndpoint($"/swagger/Handling/swagger.json", "Handling");
                 c.SwaggerEndpoint($"/swagger/Season/swagger.json", "Season");
                 c.SwaggerEndpoint($"/swagger/Standings/swagger.json", "Standings");
                 c.SwaggerEndpoint($"/swagger/Team/swagger.json", "Team");

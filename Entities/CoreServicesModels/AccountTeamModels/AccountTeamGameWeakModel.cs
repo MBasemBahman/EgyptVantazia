@@ -50,6 +50,8 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         public List<int> Fk_Players { get; set; }
 
+        public List<int> Fk_Teams { get; set; }
+
         public bool IncludeNextAndPrevGameWeek { get; set; }
     }
 

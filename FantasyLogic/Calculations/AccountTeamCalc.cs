@@ -22,7 +22,7 @@ namespace FantasyLogic.Calculations
             _hangFireCustomJob = new HangFireCustomJob(unitOfWork);
         }
 
-        public void RunAccountTeamsCalculations(int fk_GameWeak, int fk_AccountTeam, List<int> fk_Players, bool inDebug = false)
+        public void RunAccountTeamsCalculations(int fk_GameWeak, int fk_AccountTeam, List<int> fk_Players, List<int> fk_Teams, bool inDebug = false)
         {
             if (inDebug == false && fk_GameWeak == 0 && fk_AccountTeam == 0)
             {
@@ -49,23 +49,24 @@ namespace FantasyLogic.Calculations
             {
                 if (inDebug)
                 {
-                    AccountTeamGameWeakCalculations(gameWeak, season.Id, fk_AccountTeam, fk_Players, inDebug);
+                    AccountTeamGameWeakCalculations(gameWeak, season.Id, fk_AccountTeam, fk_Players, fk_Teams, inDebug);
                 }
                 else
                 {
-                    BackgroundJob.Enqueue(() => AccountTeamGameWeakCalculations(gameWeak, season.Id, fk_AccountTeam, fk_Players, inDebug));
+                    BackgroundJob.Enqueue(() => AccountTeamGameWeakCalculations(gameWeak, season.Id, fk_AccountTeam, fk_Players, fk_Teams, inDebug));
                 }
             }
         }
 
-        public void AccountTeamGameWeakCalculations(GameWeakModel gameWeak, int fk_Season, int fk_AccountTeam, List<int> fk_Players, bool inDebug)
+        public void AccountTeamGameWeakCalculations(GameWeakModel gameWeak, int fk_Season, int fk_AccountTeam, List<int> fk_Players, List<int> fk_Teams, bool inDebug)
         {
             var accountTeamGameWeaks = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
             {
                 Fk_Season = fk_Season,
                 Fk_GameWeak = gameWeak.Id,
                 Fk_AccountTeam = fk_AccountTeam,
-                Fk_Players = fk_Players
+                Fk_Players = fk_Players,
+                Fk_Teams = fk_Teams
             }, otherLang: false)
                     .Select(a => new
                     {
@@ -575,6 +576,20 @@ namespace FantasyLogic.Calculations
             }
 
             return null;
+        }
+
+        public void RunUpdateAccountTeamGameWeakRanking()
+        {
+            var gameWeak = _unitOfWork.Season.GetCurrentGameWeak();
+
+            BackgroundJob.Enqueue(() => UpdateAccountTeamGameWeakRanking(gameWeak, gameWeak.Fk_Season));
+        }
+
+        public void RunUpdateAccountTeamRanking()
+        {
+            var gameWeak = _unitOfWork.Season.GetCurrentGameWeak();
+
+            BackgroundJob.Enqueue(() => UpdateAccountTeamRanking(gameWeak.Fk_Season));
         }
 
         public void UpdateAccountTeamGameWeakRanking(GameWeakModel gameWeak, int fk_Season)

@@ -97,9 +97,9 @@ namespace CoreServices.Logic
             return _repository.PlayerGameWeakScoreState.Count();
         }
 
-        public void ResetGameWeakPlayerScores(int fk_Player, int fk_GameWeak)
+        public void ResetPlayerGameWeakScoreState(int fk_Player, int fk_GameWeak, int fk_Team)
         {
-            _repository.PlayerGameWeakScoreState.DeleteOldPlayerScores(fk_Player, fk_GameWeak);
+            _repository.PlayerGameWeakScoreState.ResetPlayerGameWeakScoreState(fk_Player, fk_GameWeak, fk_Team);
         }
 
         #endregion

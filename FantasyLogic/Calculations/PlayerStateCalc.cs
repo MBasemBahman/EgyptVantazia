@@ -27,11 +27,12 @@ namespace FantasyLogic.Calculations
         }
 
         #region Calculations
-        public void RunPlayersStateCalculations(int fk_GameWeak, string _365_MatchId, List<int> fk_Players, bool inDebug)
+        public void RunPlayersStateCalculations(int fk_GameWeak, string _365_MatchId, List<int> fk_Players, List<int> fk_Teams, bool ignoreGameWeaks, bool inDebug)
         {
             SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
 
-            List<int> gameWeaks = _unitOfWork.Season
+            List<int> gameWeaks = ignoreGameWeaks ? new List<int>() :
+                                             _unitOfWork.Season
                                              .GetGameWeaks(new GameWeakParameters
                                              {
                                                  Fk_Season = season.Id,
@@ -39,10 +40,10 @@ namespace FantasyLogic.Calculations
                                              }, otherLang: false)
                                              .Select(a => a.Id).ToList();
 
-            PlayersStateCalculations(season.Id, gameWeaks, _365_MatchId, fk_Players, inDebug);
+            PlayersStateCalculations(season.Id, gameWeaks, _365_MatchId, fk_Players, fk_Teams, inDebug);
         }
 
-        public void PlayersStateCalculations(int fk_Season, List<int> fk_GameWeaks, string _365_MatchId, List<int> fk_Players, bool inDebug)
+        public void PlayersStateCalculations(int fk_Season, List<int> fk_GameWeaks, string _365_MatchId, List<int> fk_Players, List<int> fk_Teams, bool inDebug)
         {
             List<int> players = null;
             int playerSelectionCount = 0;
@@ -95,7 +96,8 @@ namespace FantasyLogic.Calculations
             {
                 Fk_Season = fk_Season,
                 _365_MatchId = _365_MatchId,
-                Fk_Players = fk_Players
+                Fk_Players = fk_Players,
+                Fk_Teams = fk_Teams,
             }, otherLang: false)
                .Select(a => a.Id)
                .ToList();

@@ -267,6 +267,11 @@ namespace CoreServices.Logic
                                    .Select(a => a.Fk_Player).ToList();
         }
 
+        public void ResetPlayerGameWeak(int fk_TeamGameWeak, int fk_Player, int fk_GameWeak, int fk_Team)
+        {
+            _repository.PlayerGameWeak.ResetPlayerGameWeak(fk_TeamGameWeak, fk_Player, fk_GameWeak, fk_Team);
+        }
+
         #endregion
 
         #region PlayerGameWeakScore Services

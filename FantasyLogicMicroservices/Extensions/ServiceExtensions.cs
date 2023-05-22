@@ -101,6 +101,7 @@ namespace FantasyLogicMicroservices.Extensions
                     Example = new OpenApiString("yyyy-MM-ddThh:mm:ss")
                 });
 
+                c.SwaggerDoc("Handling", new OpenApiInfo { Title = "Handling" });
                 c.SwaggerDoc("Season", new OpenApiInfo { Title = "Season" });
                 c.SwaggerDoc("Standings", new OpenApiInfo { Title = "Standings" });
                 c.SwaggerDoc("Team", new OpenApiInfo { Title = "Team" });

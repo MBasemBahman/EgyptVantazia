@@ -15,6 +15,7 @@ namespace Repository.DBModels.TeamModels
             return FindByCondition(a => true, trackChanges)
                    .Filter(parameters.Id,
                            parameters.Fk_Team,
+                           parameters.Fk_Teams,
                            parameters.Fk_GameWeak,
                            parameters.Fk_Season,
                            parameters.Fk_GameWeaks,
@@ -166,6 +167,7 @@ namespace Repository.DBModels.TeamModels
             this IQueryable<Player> Players,
             int id,
             int Fk_Team,
+            List<int> Fk_Teams,
             int Fk_GameWeak,
             int Fk_Season,
             List<int> Fk_GameWeaks,
@@ -187,6 +189,7 @@ namespace Repository.DBModels.TeamModels
         {
             return Players.Where(a => (id == 0 || a.Id == id) &&
                                       (Fk_Team == 0 || a.Fk_Team == Fk_Team) &&
+                                      (Fk_Teams == null || !Fk_Teams.Any() || Fk_Teams.Contains(a.Fk_Team)) &&
                                       (string.IsNullOrWhiteSpace(_365_MatchId) || a.PlayerGameWeaks.Any(b => b.TeamGameWeak._365_MatchId == _365_MatchId)) &&
                                       (isActive == null || a.IsActive == isActive) &&
                                       (buyPriceFrom == null || a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault() >= buyPriceFrom) &&

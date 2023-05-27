@@ -238,14 +238,26 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                         }
                     }
                 }
-                else
+                if (gameReturn.Game.Members == null ||
+                     !gameReturn.Game.Members.Any() ||
+                     runBonus ||
+                     matchEnded ||
+                     runAll)
                 {
                     var players = _unitOfWork.PlayerScore.GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
                     {
                         Fk_GameWeak = match.Fk_GameWeak,
                         Fk_TeamGameWeak = match.Id
                     }, otherLang: false).Select(a => a.PlayerGameWeak.Fk_Player).ToList();
-                    _playerStateCalc.RunPlayersStateCalculations(match.Fk_GameWeak, match._365_MatchId, players, null, false, inDebug);
+
+                    if (inDebug)
+                    {
+                        _playerStateCalc.RunPlayersStateCalculations(match.Fk_GameWeak, match._365_MatchId, players, null, false, inDebug);
+                    }
+                    else
+                    {
+                        _ = BackgroundJob.Enqueue(() => _playerStateCalc.RunPlayersStateCalculations(match.Fk_GameWeak, match._365_MatchId, players, null, false, inDebug));
+                    }
                 }
             }
         }

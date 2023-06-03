@@ -214,6 +214,7 @@ namespace Dashboard.Areas.PlayerScoreEntity.Controllers
             PlayerGameWeak playerGameWeak = await _unitOfWork.PlayerScore.FindPlayerGameWeakbyId(fk_PlayerGameWeak, trackChanges: true);
 
             playerGameWeak.Ranking = ranking;
+            playerGameWeak.IsCanNotEdit = true;
 
             await _unitOfWork.Save();
             

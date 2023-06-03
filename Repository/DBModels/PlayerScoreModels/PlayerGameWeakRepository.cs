@@ -42,7 +42,7 @@ namespace Repository.DBModels.PlayerScoreModels
             {
                 PlayerGameWeak oldEntity = FindByCondition(a => a.Fk_TeamGameWeak == entity.Fk_TeamGameWeak && a.Fk_Player == entity.Fk_Player, trackChanges: true).First();
 
-                if (entity.IsCanNotEdit == false)
+                if (oldEntity.IsCanNotEdit == false)
                 {
                     oldEntity.Ranking = entity.Ranking;
                 }

@@ -19,7 +19,9 @@ namespace Repository.DBModels.PrivateLeagueModels
                            parameters.IsAdmin,
                            parameters.Fk_Season,
                            parameters.FromPoints,
-                           parameters.ToPoints);
+                           parameters.ToPoints,
+                           parameters.HaveTeam,
+                           parameters.IgnoreZeroPoints);
         }
 
         public async Task<PrivateLeagueMember> FindById(int id, bool trackChanges)
@@ -54,9 +56,13 @@ namespace Repository.DBModels.PrivateLeagueModels
             bool? IsAdmin,
             int Fk_Season,
             int? fromPoints,
-            int? toPoints)
+            int? toPoints,
+            bool haveTeam,
+            bool ignoreZeroPoints)
         {
             return PrivateLeagueMembers.Where(a => (id == 0 || a.Id == id) &&
+                                                   (haveTeam == false || a.Account.AccountTeams.Any(b => b.AccountTeamGameWeaks.Any())) &&
+                                                   (ignoreZeroPoints == false || a.Points > 0) &&
                                                    (fromPoints == null || a.Points >= fromPoints) &&
                                                    (toPoints == null || a.Points <= toPoints) &&
                                                    (Fk_Account == 0 || a.Fk_Account == Fk_Account) &&

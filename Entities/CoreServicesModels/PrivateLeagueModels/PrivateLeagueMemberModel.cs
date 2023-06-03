@@ -16,6 +16,10 @@ namespace Entities.CoreServicesModels.PrivateLeagueModels
         public int? FromPoints { get; set; }
 
         public int? ToPoints { get; set; }
+
+        public bool HaveTeam { get; set; }
+
+        public bool IgnoreZeroPoints { get; set; }
     }
 
     public class PrivateLeagueMemberModel : AuditEntity

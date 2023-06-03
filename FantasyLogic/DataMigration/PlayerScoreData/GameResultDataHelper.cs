@@ -175,7 +175,8 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
 
                         allMembersResults = allMembersResults.Where(a => a.Stats != null).ToList();
 
-                        List<double> rankings = runBonus ? allMembersResults.OrderByDescending(a => a.Ranking)
+                        List<double> rankings = runBonus ? allMembersResults.Where(a => a.Ranking > 0)
+                                                                            .OrderByDescending(a => a.Ranking)
                                                                             .Skip(0)
                                                                             .Take(3)
                                                                             .Select(a => a.Ranking)

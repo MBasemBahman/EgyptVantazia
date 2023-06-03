@@ -150,7 +150,11 @@ namespace FantasyLogic.Calculations
             {
                 score.FinalValue = rankingIndex;
 
-                if (score.FinalValue == 1)
+                if (score.FinalValue == 0)
+                {
+                    score.Points = 0;
+                }
+                else if (score.FinalValue == 1)
                 {
                     score.Points = 3;
                 }

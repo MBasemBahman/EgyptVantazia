@@ -68,7 +68,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                     {
                         Fk_GameWeak = currentGamWeak.Id
                     }, otherLang: false).OrderByDescending(a => a.StartTime)
-                                        .Select(a => a.StartTime.AddHours(2))
+                                        .Select(a => a.StartTime.AddHours(3))
                                         .FirstOrDefault();
                 }
             }
@@ -94,7 +94,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                         {
                             Fk_GameWeak = nextGameWeak.Id
                         }, otherLang: false).OrderByDescending(a => a.StartTime)
-                                            .Select(a => a.StartTime.AddHours(2))
+                                            .Select(a => a.StartTime.AddHours(3))
                                             .FirstOrDefault();
                     }
                 }

@@ -54,7 +54,7 @@ namespace API.Areas.SeasonArea.Controllers
         [Route(nameof(GetNextGameWeakDeadLine))]
         public string GetNextGameWeakDeadLine()
         {
-            string dataDto = _mapper.Map<string>(_unitOfWork.Season.GetFirstTeamGameWeakMatchDate().Value.AddHours(2));
+            string dataDto = _mapper.Map<string>(_unitOfWork.Season.GetFirstTeamGameWeakMatchDate().Value.AddHours(3));
             return dataDto;
         }
 

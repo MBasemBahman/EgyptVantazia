@@ -348,6 +348,7 @@ namespace CoreServices.Logic
                                Name = otherLang ? a.DashboardAdministrationRole.DashboardAdministrationRoleLang.Name : a.DashboardAdministrationRole.Name
                            },
                            JobTitle = a.JobTitle,
+                           CanDeploy = a.CanDeploy
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

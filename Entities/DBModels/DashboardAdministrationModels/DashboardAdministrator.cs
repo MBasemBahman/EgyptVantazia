@@ -15,6 +15,8 @@ namespace Entities.DBModels.DashboardAdministrationModels
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string JobTitle { get; set; }
 
+        public bool CanDeploy { get; set; }
+        
         [ForeignKey(nameof(DashboardAdministrationRole))]
         [DisplayName(nameof(DashboardAdministrationRole))]
         public int Fk_DashboardAdministrationRole { get; set; }

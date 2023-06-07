@@ -89,8 +89,19 @@
                                                 <span asp-validation-for="DashboardAdministrator.Fk_DashboardAdministrationRole" class="text-danger"></span>
                                             </div>
                                         </div>
+                                        
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="DashboardAdministrator.CanDeploy" class="form-label"></label>
+                                                <select asp-for="DashboardAdministrator.CanDeploy" class="select2 form-select">
+                                                    <option value="true">@Localizer.Get("Yes")</option>
+                                                    <option value="false">@Localizer.Get("No")</option>
+                                                </select>
+                                                <span asp-validation-for="DashboardAdministrator.CanDeploy" class="text-danger"></span>
+                                            </div>
+                                        </div>
 
-                                  
+
                                         <hr />
                                         <div class="col-12">
                                             <button type="submit" class="btn btn-primary me-1">@Localizer.Get("Submit")</button>

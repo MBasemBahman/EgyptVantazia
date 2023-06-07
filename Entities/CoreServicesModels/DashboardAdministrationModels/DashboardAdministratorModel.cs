@@ -23,6 +23,9 @@ namespace Entities.CoreServicesModels.DashboardAdministrationModels
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string JobTitle { get; set; }
 
+        [DisplayName(nameof(CanDeploy))]
+        public bool CanDeploy { get; set; }
+        
         [DisplayName(nameof(DashboardAdministrationRole))]
         public int Fk_DashboardAdministrationRole { get; set; }
 
@@ -38,5 +41,8 @@ namespace Entities.CoreServicesModels.DashboardAdministrationModels
 
         [DisplayName("DashboardAdministrationRole")]
         public int Fk_DashboardAdministrationRole { get; set; }
+        
+        [DisplayName(nameof(CanDeploy))]
+        public bool CanDeploy { get; set; }
     }
 }

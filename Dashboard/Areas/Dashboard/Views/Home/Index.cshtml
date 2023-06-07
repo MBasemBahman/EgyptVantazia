@@ -16,7 +16,7 @@
     {
         viewList = views.Split(",").Select(Int32.Parse).ToList();
     }
-    
+
     int dashboardRole = ((UserAuthenticatedDto)ViewData["auth"]).Fk_DashboardAdministrationRole;
 }
 
@@ -39,23 +39,13 @@
                 <div class="col-12">
                     <div class="card text-center">
                         <div class="card-body">
-                                
-                            @* @if (dashboardRole == (int)DashboardAdministrationRoleEnum.Developer) *@
-                            @* { *@
-                                <a id="UpdateStandings" class="btn btn-primary"> @Localizer.Get("Update Standings") </a>
-                                <a id="UpdateGames" class="btn btn-primary"> @Localizer.Get("Update Games") </a>
-                            // }
-                            
-                            @* Start Updating Modals *@
-                            @* @if (dashboardRole == (int)DashboardAdministrationRoleEnum.Developer) *@
-                            @* { *@
-                                <a class="btn btn-primary update_game_result"> @Localizer.Get("UpdateGameResult") </a>
-                                <a class="btn btn-primary update_account_team_game_weak_ranking"> @Localizer.Get("UpdateAccountTeamGameWeakRanking") </a>
-                                <a class="btn btn-primary update_private_league_ranking"> @Localizer.Get("UpdatePrivateLeagueRanking") </a>
-                                <a class="btn btn-primary update_account_team_points"> @Localizer.Get("UpdateAccountTeamPoints") </a>
-                            @* } *@
-                            
-                            @* End Updating Modals *@
+
+                            <a id="UpdateStandings" class="btn btn-primary"> @Localizer.Get("Update Standings") </a>
+                            <a id="UpdateGames" class="btn btn-primary"> @Localizer.Get("Update Games") </a>
+                            <a class="btn btn-primary update_game_result"> @Localizer.Get("UpdateGameResult") </a>
+                            <a class="btn btn-primary update_account_team_game_weak_ranking"> @Localizer.Get("UpdateAccountTeamGameWeakRanking") </a>
+                            <a class="btn btn-primary update_private_league_ranking"> @Localizer.Get("UpdatePrivateLeagueRanking") </a>
+                            <a class="btn btn-primary update_account_team_points"> @Localizer.Get("UpdateAccountTeamPoints") </a>
 
                             <section id="ajax-charts">
                                 <div class="row">
@@ -138,128 +128,128 @@
 
             LoadCharts();
 
-            $(document).on("click", "#UpdateStandings", function(e) {
-             $.ajax({
-                 url: '@Url.Action("UpdateStandings", "Home")',
-                 method: 'post',
-                 success: function(data) {
-                     $("#success").modal('show');
-                 },
-                 error: function (result) {
-                     $("#success").modal('show');
-                 }
-             });
+            $(document).on("click", "#UpdateStandings", function (e) {
+                $.ajax({
+                    url: '@Url.Action("UpdateStandings", "Home")',
+                    method: 'post',
+                    success: function (data) {
+                        $("#success").modal('show');
+                    },
+                    error: function (result) {
+                        $("#success").modal('show');
+                    }
+                });
             });
 
-            $(document).on("click", "#UpdateGames", function(e) {
-             $.ajax({
-                 url: '@Url.Action("UpdateGames", "Home")',
-                 method: 'post',
-                 success: function(data) {
-                     $("#success").modal('show');
-                 },
-                 error: function (result) {
-                     $("#success").modal('show');
-                 }
-             });
-        });
+            $(document).on("click", "#UpdateGames", function (e) {
+                $.ajax({
+                    url: '@Url.Action("UpdateGames", "Home")',
+                    method: 'post',
+                    success: function (data) {
+                        $("#success").modal('show');
+                    },
+                    error: function (result) {
+                        $("#success").modal('show');
+                    }
+                });
+            });
 
             // Start Updating Modals
-            
+
             // start update_game_result
-            $(document).on("click", ".update_game_result", function(e) {
-              e.preventDefault();
-              
-              $(".update_game_result_modal").modal('show');
+            $(document).on("click", ".update_game_result", function (e) {
+                e.preventDefault();
+
+                $(".update_game_result_modal").modal('show');
             });
-            
+
             $(document).on("click", ".update_game_result_submit", function (e) {
                 let fk_GameWeak = $("select[name=Fk_GameWeak]").val();
                 let _365_MatchId = $("input[name=_365_MatchId]").val();
                 let runBonus = $("select[name=RunBonus]").val();
-                
+
                 $.ajax({
                     url: '@Url.Action("UpdateGameResult", "Home", new {area = "Dashboard"})',
                     method: 'post',
                     data: {
-                      fk_GameWeak: fk_GameWeak,
-                      _365_MatchId: _365_MatchId,
-                      runBonus: runBonus
+                        fk_GameWeak: fk_GameWeak,
+                        _365_MatchId: _365_MatchId,
+                        runBonus: runBonus
                     },
-                    success: function(data) {
-                      $("#success").modal('show');
+                    success: function (data) {
+                        $("#success").modal('show');
                     }
-                }); 
+                });
             });
             // end update_game_result
-            
+
             // start update_account_team_game_weak_ranking
-            $(document).on("click", ".update_account_team_game_weak_ranking", function(e) {
-              e.preventDefault();
-              
-              $(".update_account_team_game_weak_ranking_modal").modal('show');
+            $(document).on("click", ".update_account_team_game_weak_ranking", function (e) {
+                e.preventDefault();
+
+                $(".update_account_team_game_weak_ranking_modal").modal('show');
             });
-            
+
             $(document).on("click", ".update_account_team_game_weak_ranking_submit", function (e) {
                 let fk_GameWeak = $("select[name=Fk_GameWeak]").val();
-                
+
                 $.ajax({
                     url: '@Url.Action("UpdateAccountTeamGameWeakRanking", "Home", new {area = "Dashboard"})',
                     method: 'post',
                     data: {
-                      fk_GameWeak: fk_GameWeak,
+                        fk_GameWeak: fk_GameWeak,
                     },
-                    success: function(data) {
-                      $("#success").modal('show');
+                    success: function (data) {
+                        $("#success").modal('show');
                     }
-                }); 
+                });
             });
             // end update_account_team_game_weak_ranking
-            
+
             // start update_private_league_ranking
-            $(document).on("click", ".update_private_league_ranking", function(e) {
-              e.preventDefault();
-              
-              $(".update_private_league_ranking_modal").modal('show');
+            $(document).on("click", ".update_private_league_ranking", function (e) {
+                e.preventDefault();
+
+                $(".update_private_league_ranking_modal").modal('show');
             });
-            
+
             $(document).on("click", ".update_private_league_ranking_submit", function (e) {
                 let fk_GameWeak = $("select[name=Fk_GameWeak]").val();
-                
+
                 $.ajax({
                     url: '@Url.Action("UpdatePrivateLeagueRanking", "Home", new {area = "Dashboard"})',
                     method: 'post',
                     data: {},
-                    success: function(data) {
-                      $("#success").modal('show');
+                    success: function (data) {
+                        $("#success").modal('show');
                     }
-                }); 
+                });
             });
             // end update_private_league_ranking
-            
+
             // start update_account_team_points
-            $(document).on("click", ".update_account_team_points", function(e) {
-              e.preventDefault();
-              
-              $(".update_account_team_points_modal").modal('show');
+            $(document).on("click", ".update_account_team_points", function (e) {
+                e.preventDefault();
+
+                $(".update_account_team_points_modal").modal('show');
             });
-            
+
             $(document).on("click", ".update_account_team_points_submit", function (e) {
                 let fk_GameWeak = $("select[name=Fk_GameWeak]").val();
-                
+
                 $.ajax({
                     url: '@Url.Action("UpdateAccountTeamPoints", "Home", new {area = "Dashboard"})',
                     method: 'post',
                     data: {
-                      fk_GameWeak: fk_GameWeak,
+                        fk_GameWeak: fk_GameWeak,
                     },
-                    success: function(data) {
-                      $("#success").modal('show');
+                    success: function (data) {
+                        $("#success").modal('show');
                     }
-                }); 
+                });
             });
             // end update_account_team_points
-            
+
             // End Updating Modals
         });
     </script>

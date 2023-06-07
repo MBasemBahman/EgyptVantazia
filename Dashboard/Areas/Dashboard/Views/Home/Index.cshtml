@@ -40,20 +40,20 @@
                     <div class="card text-center">
                         <div class="card-body">
                                 
-                            @if (dashboardRole == (int)DashboardAdministrationRoleEnum.Developer)
-                            {
+                            @* @if (dashboardRole == (int)DashboardAdministrationRoleEnum.Developer) *@
+                            @* { *@
                                 <a id="UpdateStandings" class="btn btn-primary"> @Localizer.Get("Update Standings") </a>
                                 <a id="UpdateGames" class="btn btn-primary"> @Localizer.Get("Update Games") </a>
-                            }
+                            // }
                             
                             @* Start Updating Modals *@
-                            @if (dashboardRole == (int)DashboardAdministrationRoleEnum.Developer)
-                            {
+                            @* @if (dashboardRole == (int)DashboardAdministrationRoleEnum.Developer) *@
+                            @* { *@
                                 <a class="btn btn-primary update_game_result"> @Localizer.Get("UpdateGameResult") </a>
                                 <a class="btn btn-primary update_account_team_game_weak_ranking"> @Localizer.Get("UpdateAccountTeamGameWeakRanking") </a>
                                 <a class="btn btn-primary update_private_league_ranking"> @Localizer.Get("UpdatePrivateLeagueRanking") </a>
                                 <a class="btn btn-primary update_account_team_points"> @Localizer.Get("UpdateAccountTeamPoints") </a>
-                            }
+                            @* } *@
                             
                             @* End Updating Modals *@
 

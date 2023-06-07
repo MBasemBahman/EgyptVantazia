@@ -89,10 +89,10 @@
                                             </th>
                                             <th>@Html.DisplayNameFor(model => row.Name)</th>
                                             <th>@Html.DisplayNameFor(model => row.MemberCount)</th>
-                                            @if (dashboardRole == (int)DashboardAdministrationRoleEnum.Developer)
-                                            {
+                                            @* @if (dashboardRole == (int)DashboardAdministrationRoleEnum.Developer) *@
+                                            @* { *@
                                                 <th>@Localizer.Get("UpdatePrivateLeagueRanking")</th>
-                                            }
+                                            @* } *@
                                             <th>@Html.DisplayNameFor(model => row.GameWeak)</th>
 
                                             <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
@@ -140,9 +140,8 @@
                         { data: "id" },
                         { data:"name" },
                         { data:"memberCount" },
-                        @if (dashboardRole == (int)DashboardAdministrationRoleEnum.Developer)
-                        {
-                            <Text>
+                        
+                        
                                 {
                                     data: "id",
                                     render: function (data) {
@@ -150,8 +149,8 @@
                                         @Localizer.Get("UpdatePrivateLeagueRanking")
                                     </a>`;
                                 } },
-                            </Text>   
-                        }
+                           
+                        
                         {
                             data: "gameWeak",
                             render: function (data) {

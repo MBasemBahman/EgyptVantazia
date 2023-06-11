@@ -61,6 +61,25 @@ namespace FantasyLogicMicroservices.Areas.AccountTeamArea.Controllers
         }
 
         [HttpPost]
+        [Route(nameof(UpdateAccountTeamRanking))]
+        public IActionResult UpdateAccountTeamRanking(
+           [FromQuery] int fk_GameWeak,
+           [FromQuery] bool inDebug)
+        {
+            GameWeakModel gameWeek = _unitOfWork.Season.GetGameWeakbyId(fk_GameWeak, otherLang: false);
+
+            if (inDebug)
+            {
+                _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamRanking(gameWeek.Fk_Season);
+            }
+            else
+            {
+                _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamRanking(gameWeek.Fk_Season));
+            }
+            return Ok();
+        }
+
+        [HttpPost]
         [Route(nameof(UpdatePrivateLeaguesRanking))]
         public IActionResult UpdatePrivateLeaguesRanking(
             [FromQuery] bool indebug,

@@ -44,7 +44,9 @@ namespace Repository.DBModels.SeasonModels
 
         public void ResetCurrent()
         {
-            List<GameWeak> gameWeaks = FindByCondition(a => true, trackChanges: true).ToList();
+            List<GameWeak> gameWeaks = FindByCondition(a => a.IsCurrent ||
+                                                            a.IsPrev ||
+                                                            a.IsNext, trackChanges: true).ToList();
             gameWeaks.ForEach(a =>
             {
                 a.IsCurrent = false;

@@ -578,20 +578,6 @@ namespace FantasyLogic.Calculations
             return null;
         }
 
-        public void RunUpdateAccountTeamGameWeakRanking()
-        {
-            var gameWeak = _unitOfWork.Season.GetCurrentGameWeak();
-
-            BackgroundJob.Enqueue(() => UpdateAccountTeamGameWeakRanking(gameWeak, gameWeak.Fk_Season));
-        }
-
-        public void RunUpdateAccountTeamRanking()
-        {
-            var gameWeak = _unitOfWork.Season.GetCurrentGameWeak();
-
-            BackgroundJob.Enqueue(() => UpdateAccountTeamRanking(gameWeak.Fk_Season));
-        }
-
         public void UpdateAccountTeamGameWeakRanking(GameWeakModel gameWeak, int fk_Season)
         {
             List<AccountTeamRanking> accountTeamGameWeakRankings = new();

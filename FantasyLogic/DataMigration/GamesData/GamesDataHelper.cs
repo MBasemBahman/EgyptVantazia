@@ -196,26 +196,6 @@ namespace FantasyLogic.DataMigration.GamesData
 
                     await _unitOfWork.Save();
                 }
-                //if (teamGameWeak.EndTime > DateTime.MinValue)
-                //{
-                //    DateTime endTime = teamGameWeak.EndTime.AddHours(6);
-
-                //    GameWeak gameWeak = await _unitOfWork.Season.FindGameWeakbyId(teamGameWeak.Fk_GameWeak, trackChanges: true);
-
-                //    if (gameWeak.EndTimeJobId.IsExisting())
-                //    {
-                //        _ = BackgroundJob.Delete(gameWeak.EndTimeJobId);
-                //    }
-
-                //    if (endTime > DateTime.UtcNow)
-                //    {
-                //        gameWeak.EndTimeJobId = BackgroundJob.Schedule(() => _accountTeamCalc.RunAccountTeamsCalculations(gameWeak.Id, 0, null, false), endTime);
-                //    }
-
-                //    gameWeak.EndTime = endTime;
-
-                //    await _unitOfWork.Save();
-                //}
             }
         }
         public async Task UpdateCurrentGameWeak(int id)
@@ -237,7 +217,6 @@ namespace FantasyLogic.DataMigration.GamesData
                 gameWeak.IsCurrent = true;
                 await _unitOfWork.Save();
             }
-
 
             GameWeak nextGameWeak = await _unitOfWork.Season.FindGameWeakby365Id((gameWeak._365_GameWeakId.ParseToInt() + 1).ToString(), gameWeak.Fk_Season, trackChanges: true);
             if (!skipReset && nextGameWeak != null)

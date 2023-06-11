@@ -35,7 +35,8 @@
   // Date & TIme
   if (dateTimePickr.length) {
     dateTimePickr.flatpickr({
-      enableTime: true
+      enableTime: true,
+      dateFormat: 'Y-m-d h:i K', // Format to display selected date and time with AM/PM
     });
   }
 

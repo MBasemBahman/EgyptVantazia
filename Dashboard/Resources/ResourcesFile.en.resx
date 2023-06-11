@@ -1276,7 +1276,7 @@
     <value>The login expired, please log in again!</value>
   </data>
   <data name="DoubleGameWeak" xml:space="preserve">
-    <value>Double Game Weak</value>
+    <value>Double Points</value>
   </data>
   <data name="TripleCaptain" xml:space="preserve">
     <value>Triple Captain</value>
@@ -1289,5 +1289,8 @@
   </data>
   <data name="PhoneNumberTwo" xml:space="preserve">
     <value>Other Phone Number</value>
+  </data>
+  <data name="AccountSubscriptionCount" xml:space="preserve">
+    <value>Account Count</value>
   </data>
 </root>

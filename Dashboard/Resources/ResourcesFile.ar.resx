@@ -1324,7 +1324,7 @@
     <value>الكروت</value>
   </data>
   <data name="DoubleGameWeak" xml:space="preserve">
-    <value>Double Game Weak</value>
+    <value>Double Points</value>
   </data>
   <data name="TripleCaptain" xml:space="preserve">
     <value>Triple Captain</value>
@@ -1337,5 +1337,8 @@
   </data>
   <data name="PhoneNumberTwo" xml:space="preserve">
     <value>رقم هاتف أخر</value>
+  </data>
+  <data name="AccountSubscriptionCount" xml:space="preserve">
+    <value>عدد الحسابات</value>
   </data>
 </root>

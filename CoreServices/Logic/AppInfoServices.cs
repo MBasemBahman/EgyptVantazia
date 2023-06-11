@@ -34,6 +34,7 @@ namespace CoreServices.Logic
                            FacebookUrl = a.FacebookUrl,
                            InstagramUrl = a.InstagramUrl,
                            SnapChatUrl = a.SnapChatUrl,
+                           TelegramUrl = a.TelegramUrl,
                            TiktokUrl = a.TiktokUrl,
                            Id = a.Id,
                            CreatedAt = a.CreatedAt,

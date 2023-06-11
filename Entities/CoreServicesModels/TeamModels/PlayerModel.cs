@@ -66,6 +66,8 @@ namespace Entities.CoreServicesModels.TeamModels
 
         public bool? IsActive { get; set; }
 
+        public bool? InExternalTeam { get; set; }
+
         public string _365_MatchId { get; set; }
     }
 
@@ -107,6 +109,9 @@ namespace Entities.CoreServicesModels.TeamModels
 
         [DisplayName(nameof(IsActive))]
         public bool IsActive { get; set; }
+
+        [DisplayName(nameof(InExternalTeam))]
+        public bool InExternalTeam { get; set; }
 
         public int? Top15 { get; set; }
 
@@ -169,6 +174,9 @@ namespace Entities.CoreServicesModels.TeamModels
 
         [DisplayName(nameof(IsActive))]
         public bool IsActive { get; set; }
+
+        [DisplayName(nameof(InExternalTeam))]
+        public bool InExternalTeam { get; set; }
 
         [DisplayName(nameof(PlayerPrices))]
         public List<PlayerPriceCreateOrEditModel> PlayerPrices { get; set; }

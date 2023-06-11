@@ -132,8 +132,8 @@
                                                 <span asp-validation-for="Fk_PlayerPosition" class="text-danger"></span>
                                             </div>
                                         </div>
-                                        
-                                        <div class="col-md-12 col-12">
+
+                                        <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="IsActive" class="form-label"></label>
                                                 <select asp-for="IsActive" class="select2 form-select">
@@ -143,6 +143,17 @@
                                                 <span asp-validation-for="IsActive" class="text-danger"></span>
                                             </div>
                                         </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="InExternalTeam" class="form-label"></label>
+                                                <select asp-for="InExternalTeam" class="select2 form-select">
+                                                    <option value="true">@Localizer.Get("Yes")</option>
+                                                    <option value="false">@Localizer.Get("No")</option>
+                                                </select>
+                                                <span asp-validation-for="InExternalTeam" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
                                         @if (returnPage == (int)PlayerReturnPage.TeamProfile)
                                         {
                                             <input type="hidden" asp-for="Fk_Team">
@@ -177,7 +188,7 @@
                                                                 <div class="col-md-3 col-12">
                                                                     <div class="mb-1">
                                                                         <label class="form-label">@Localizer.Get("Team")</label>
-                                                                        <select disabled  asp-for="PlayerPrices[i].Fk_Team" class=" form-select player-price-team" asp-items="@(new SelectList(ViewData["Team"] as Dictionary<string,string>,"Key","Value"))">
+                                                                        <select disabled asp-for="PlayerPrices[i].Fk_Team" class=" form-select player-price-team" asp-items="@(new SelectList(ViewData["Team"] as Dictionary<string,string>,"Key","Value"))">
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -201,7 +212,7 @@
                                                                 <div class="col-md-1 col-12 mb-50">
                                                                     <div class="mb-1">
                                                                         <button class="remove-btn  btn btn-outline-danger text-nowrap px-1" data-repeater-delete
-                                                                        type="button">
+                                                                                type="button">
                                                                             <i data-feather="x" class="me-25"></i>
                                                                             <span>@Localizer.Get("Remove")</span>
                                                                         </button>
@@ -244,7 +255,7 @@
                                                             <div class="col-md-1 col-12 mb-50">
                                                                 <div class="mb-1">
                                                                     <button class="remove-btn  btn btn-outline-danger text-nowrap px-1" data-repeater-delete newRepeater
-                                                                        type="button">
+                                                                            type="button">
                                                                         <i data-feather="x" class="me-25"></i>
                                                                         <span>@Localizer.Get("Remove")</span>
                                                                     </button>
@@ -308,9 +319,9 @@
 
         function resetRepeaterData() {
             $(".price-id").last().val('0');
-           $(".player-price-team").last().val($("#Fk_Team").val()).change();
-           $(".buy-price").last().val('0');
-           $(".sell-price").last().val('0');
+            $(".player-price-team").last().val($("#Fk_Team").val()).change();
+            $(".buy-price").last().val('0');
+            $(".sell-price").last().val('0');
 
         }
 
@@ -323,15 +334,15 @@
                 setTimeout(resetRepeaterData, 500)
             });
 
-            $("#Fk_Team").on('change',function(){
-                $('.price-id').each(function(){
-                        console.log($(this).val());
+            $("#Fk_Team").on('change', function () {
+                $('.price-id').each(function () {
+                    console.log($(this).val());
 
-                  if($(this).val() == '0'){
+                    if ($(this).val() == '0') {
                         var index = $(".price-id").index($(this));
                         console.log(index);
                         $(".player-price-team").eq(index).val($("#Fk_Team").val())
-                  }
+                    }
                 });
             });
         });

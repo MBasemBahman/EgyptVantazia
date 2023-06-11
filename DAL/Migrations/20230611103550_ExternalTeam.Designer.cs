@@ -4,6 +4,7 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20230611103550_ExternalTeam")]
+    partial class ExternalTeam
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -668,9 +670,6 @@ namespace DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Subscriptions")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TelegramUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TermsAndConditions")
@@ -4066,7 +4065,7 @@ namespace DAL.Migrations
                             IsExternalLogin = false,
                             LastModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Developer",
-                            Password = "$2a$11$h5DbOIbHTgXSqKcEkbTSwuDydYXK1rk3dIUscWpfxvkNDCx2DKBZW",
+                            Password = "$2a$11$o8t.pRqLs4vgcRPKwGk8VuDK91soOY0ESk.lhMV9lthBOwSCDm3zy",
                             UserName = "Developer"
                         });
                 });

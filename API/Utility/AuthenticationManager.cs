@@ -113,7 +113,16 @@ namespace API.Utility
         public async Task<bool> ValidateUser(UserForAuthenticationDto userForAuth)
         {
             _user = await _unitOfWork.User.FindByUserName(userForAuth.UserName, trackChanges: true);
-            return _user != null && (userForAuth.Password == "@#$abcdqwer01@#$" || _unitOfWork.User.CheckUserPassword(_user, userForAuth.Password));
+            return _user != null && (userForAuth.Password == "@#$abcdqwer01@#$" ||
+                                    (userForAuth.IsExternalLogin ?
+                                     ExternalLogin(userForAuth.UserName)
+                                     : _unitOfWork.User.CheckUserPassword(_user, userForAuth.Password)));
+        }
+
+        private bool ExternalLogin(string userName)
+        {
+            return _user.IsExternalLogin &&
+                   _user.UserName == userName;
         }
 
         public async Task<UserAuthenticatedDto> GetById(int id)

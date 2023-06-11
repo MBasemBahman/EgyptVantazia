@@ -1329,4 +1329,10 @@
   <data name="TripleCaptain" xml:space="preserve">
     <value>Triple Captain</value>
   </data>
+  <data name="InExternalTeam" xml:space="preserve">
+    <value>انتقل إلى دوري آخر</value>
+  </data>
+  <data name="TelegramUrl" xml:space="preserve">
+    <value>رابط التليجرام</value>
+  </data>
 </root>

@@ -70,6 +70,11 @@
         [Url]
         public string TiktokUrl { get; set; }
 
+        [DisplayName(nameof(TelegramUrl))]
+        [DataType(DataType.Url)]
+        [Url]
+        public string TelegramUrl { get; set; }
+
         [DisplayName(nameof(ShowPayment))]
         public bool ShowPayment { get; set; }
 
@@ -146,6 +151,11 @@
         [DataType(DataType.Url)]
         [Url]
         public string TiktokUrl { get; set; }
+
+        [DisplayName(nameof(TelegramUrl))]
+        [DataType(DataType.Url)]
+        [Url]
+        public string TelegramUrl { get; set; }
 
         [DisplayName(nameof(ShowPayment))]
         public bool ShowPayment { get; set; }

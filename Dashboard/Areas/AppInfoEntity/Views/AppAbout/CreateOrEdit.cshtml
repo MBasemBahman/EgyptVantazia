@@ -222,6 +222,14 @@
 
                                         <div class="col-md-4 col-12">
                                             <div class="mb-1">
+                                                <label asp-for="TelegramUrl" class="form-label"></label>
+                                                <input asp-for="TelegramUrl" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("TelegramUrl"))" />
+                                                <span asp-validation-for="TelegramUrl" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
                                                 <label asp-for="ShowPayment" class="form-label"></label>
                                                 <select asp-for="ShowPayment" class="select2 form-select">
                                                     <option value="true">@Localizer.Get("Yes")</option>

@@ -32,7 +32,8 @@ namespace Repository.DBModels.TeamModels
                            parameters.SellPriceFrom,
                            parameters.SellPriceTo,
                            parameters.IsActive,
-                           parameters._365_MatchId);
+                           parameters._365_MatchId,
+                           parameters.InExternalTeam);
         }
 
         public async Task<Player> FindById(int id, bool trackChanges)
@@ -184,7 +185,8 @@ namespace Repository.DBModels.TeamModels
             double? sellPriceFrom,
             double? sellPriceTo,
             bool? isActive,
-            string _365_MatchId)
+            string _365_MatchId,
+            bool? inExternalTeam)
 
         {
             return Players.Where(a => (id == 0 || a.Id == id) &&
@@ -192,6 +194,7 @@ namespace Repository.DBModels.TeamModels
                                       (Fk_Teams == null || !Fk_Teams.Any() || Fk_Teams.Contains(a.Fk_Team)) &&
                                       (string.IsNullOrWhiteSpace(_365_MatchId) || a.PlayerGameWeaks.Any(b => b.TeamGameWeak._365_MatchId == _365_MatchId)) &&
                                       (isActive == null || a.IsActive == isActive) &&
+                                      (inExternalTeam == null || a.InExternalTeam == inExternalTeam) &&
                                       (buyPriceFrom == null || a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault() >= buyPriceFrom) &&
                                       (buyPriceTo == null || a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault() <= buyPriceTo) &&
                                       (sellPriceFrom == null || a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.SellPrice).FirstOrDefault() >= sellPriceFrom) &&

@@ -1281,4 +1281,10 @@
   <data name="TripleCaptain" xml:space="preserve">
     <value>Triple Captain</value>
   </data>
+  <data name="InExternalTeam" xml:space="preserve">
+    <value>Transferred to another league</value>
+  </data>
+  <data name="TelegramUrl" xml:space="preserve">
+    <value>Telegram Url</value>
+  </data>
 </root>

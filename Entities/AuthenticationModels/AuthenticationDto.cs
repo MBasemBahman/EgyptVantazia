@@ -72,6 +72,10 @@ namespace Entities.AuthenticationModels
         [DataType(DataType.Password)]
         [DisplayName(nameof(Password))]
         public string Password { get; set; }
+
+        [DisplayName(nameof(IsExternalLogin))]
+        [DefaultValue(false)]
+        public bool IsExternalLogin { get; set; }
     }
 
     public class UserForTokenDto

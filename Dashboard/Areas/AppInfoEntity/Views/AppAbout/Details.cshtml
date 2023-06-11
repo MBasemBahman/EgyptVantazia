@@ -181,6 +181,20 @@
 
                                         <div class="col-md-4 col-12">
                                             <div class="mb-1">
+                                                <label class="form-label">@($"{Localizer.Get("TelegramUrl")}") :</label>
+                                                @if (!string.IsNullOrEmpty(Model.TelegramUrl))
+                                                {
+                                                    <a href="@Model.TelegramUrl" target="_blank">@Model.TelegramUrl</a>
+                                                }
+                                                else
+                                                {
+                                                    <span>-</span>
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
                                                 <label class="form-label">@($"{Localizer.Get("ShowInvite")}") :</label>
                                                 @if (Model.ShowInvite)
                                                 {

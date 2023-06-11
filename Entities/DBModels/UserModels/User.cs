@@ -29,6 +29,10 @@ namespace Entities.DBModels.UserModels
         [DisplayName(nameof(PhoneNumber))]
         public string PhoneNumber { get; set; }
 
+        [DisplayName(nameof(IsExternalLogin))]
+        [DefaultValue(false)]
+        public bool IsExternalLogin { get; set; }
+
         [DisplayName(nameof(Culture))]
         public string Culture { get; set; }
 

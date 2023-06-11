@@ -40,6 +40,9 @@ namespace Entities.DBModels.TeamModels
         [DisplayName(nameof(IsActive))]
         public bool IsActive { get; set; }
 
+        [DisplayName(nameof(InExternalTeam))]
+        public bool InExternalTeam { get; set; }
+
         [DisplayName(nameof(PlayerGameWeaks))]
         public IList<PlayerGameWeak> PlayerGameWeaks { get; set; }
 

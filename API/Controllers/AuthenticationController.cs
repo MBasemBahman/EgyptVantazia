@@ -128,18 +128,10 @@ namespace API.Controllers
 
             Account account = _mapper.Map<Account>(model.Account);
 
-            do
-            {
-                account.RefCode = RandomGenerator.GenerateString(2) + RandomGenerator.GenerateInteger(2, 00, 99) + RandomGenerator.GenerateString(1);
-            } while (_unitOfWork.Account.GetAccounts(new AccountParameters { RefCode = account.RefCode }, otherLang: false).Any());
-
             user.Account = account;
             user.Account.ShowAds = true;
 
             await _unitOfWork.User.CreateUser(user);
-            await _unitOfWork.Save();
-
-            await _unitOfWork.Account.CreateAccountRefCode(model.Account.RefCode, user.Account.Id);
             await _unitOfWork.Save();
 
             UserAuthenticatedDto auth = await _authManager.Authenticate(new UserForAuthenticationDto

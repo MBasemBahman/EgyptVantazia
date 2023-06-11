@@ -1287,4 +1287,7 @@
   <data name="TelegramUrl" xml:space="preserve">
     <value>Telegram Url</value>
   </data>
+  <data name="PhoneNumberTwo" xml:space="preserve">
+    <value>Other Phone Number</value>
+  </data>
 </root>

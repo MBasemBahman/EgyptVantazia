@@ -45,10 +45,7 @@ namespace CoreServices.Logic
                                   Fk_FavouriteTeam = a.Fk_FavouriteTeam,
                                   Fk_Nationality = a.Fk_Nationality,
                                   PhoneNumberTwo = a.PhoneNumberTwo,
-                                  RefCode = a.RefCode,
-                                  RefCodeCount = a.RefCodeCount,
                                   ShowAds = a.ShowAds,
-                                  AccountRefCodeCount = a.RefAccountsRefCode != null ? a.RefAccountsRefCode.Count : 0,
                                   Fk_AccountTeam = a.AccountTeams
                                                     .Where(a => a.Season.IsCurrent)
                                                     .Select(a => a.Id)
@@ -198,123 +195,6 @@ namespace CoreServices.Logic
             _repository.User.Delete(user);
 
         }
-        #endregion
-
-        #region Account RefCode Services
-
-        public IQueryable<AccountRefCodeModel> GetAccountRefCodes(
-            AccountRefCodeParameters parameters)
-        {
-            return _repository.AccountRefCode
-                              .FindAll(parameters, trackChanges: false)
-                              .Select(a => new AccountRefCodeModel
-                              {
-                                  Id = a.Id,
-                                  CreatedAt = a.CreatedAt,
-                                  Fk_NewAccount = a.Fk_NewAccount,
-                                  Fk_RefAccount = a.Fk_RefAccount
-                              })
-                              .Search(parameters.SearchColumns, parameters.SearchTerm)
-                              .Sort(parameters.OrderBy);
-        }
-
-        public async Task<PagedList<AccountRefCodeModel>> GetAccountRefCodesPaged(
-            AccountRefCodeParameters parameters)
-        {
-            return await PagedList<AccountRefCodeModel>.ToPagedList(GetAccountRefCodes(parameters), parameters.PageNumber, parameters.PageSize);
-        }
-
-        public async Task<AccountRefCode> FindAccountRefCodeById(int id, bool trackChanges)
-        {
-            return await _repository.AccountRefCode.FindById(id, trackChanges);
-        }
-
-        public AccountRefCodeModel GetAccountRefCodebyId(int id)
-        {
-            return GetAccountRefCodes(new AccountRefCodeParameters { Id = id }).FirstOrDefault();
-        }
-
-        public void CreateAccountRefCode(AccountRefCode account)
-        {
-            _repository.AccountRefCode.Create(account);
-        }
-
-        public async Task CreateAccountRefCode(string refCode, int fk_NewAccount)
-        {
-            if (refCode.IsExisting() && fk_NewAccount > 0)
-            {
-                var refAccount = GetAccounts(new AccountParameters
-                {
-                    RefCode = refCode
-                }, otherLang: false).Select(a => new
-                {
-                    a.RefCode,
-                    a.RefCodeCount,
-                    a.Id
-                }).FirstOrDefault();
-
-                if (refAccount != null)
-                {
-                    CreateAccountRefCode(new AccountRefCode
-                    {
-                        Fk_NewAccount = fk_NewAccount,
-                        Fk_RefAccount = refAccount.Id
-                    });
-
-                    Account account = await FindAccountById(refAccount.Id, trackChanges: true);
-                    account.RefCodeCount++;
-
-                    if (account.RefCodeCount == 10)
-                    {
-                        Season season = _repository.Season.FindAll(new SeasonParameters
-                        {
-                            IsCurrent = true
-                        }, trackChanges: false).First();
-
-                        if (!_repository.AccountSubscription.FindAll(new AccountSubscriptionParameters
-                        {
-                            Fk_Account = account.Id,
-                            Fk_Season = season.Id,
-                            NotEqualSubscriptionId = (int)SubscriptionEnum.Add3MillionsBank
-                        }, trackChanges: false).Any())
-                        {
-                            CreateAccountSubscription(new AccountSubscription
-                            {
-                                Fk_Account = account.Id,
-                                Fk_Subscription = (int)SubscriptionEnum.All,
-                                IsAction = true,
-                                Fk_Season = season.Id,
-                                IsActive = true,
-                            });
-                            account.RefCodeCount = 0;
-
-                            int accountTeamId = _repository.AccountTeam.FindAll(new AccountTeamParameters
-                            {
-                                Fk_Account = account.Id,
-                                Fk_Season = season.Id,
-                            }, trackChanges: false).Select(a => a.Id).FirstOrDefault();
-
-                            if (accountTeamId > 0)
-                            {
-                                AccountTeam accounTeam = await _repository.AccountTeam.FindById(accountTeamId, trackChanges: true);
-                                accounTeam.TripleCaptain++;
-                                accounTeam.DoubleGameWeak++;
-                                accounTeam.BenchBoost++;
-                                accounTeam.Top_11++;
-                                accounTeam.IsVip = true;
-                                accounTeam.TotalMoney += 3;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        public int GetAccountRefCodesCount()
-        {
-            return _repository.AccountRefCode.Count();
-        }
-
         #endregion
 
         #region Account Subscription Services

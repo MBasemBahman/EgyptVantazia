@@ -1335,4 +1335,7 @@
   <data name="TelegramUrl" xml:space="preserve">
     <value>رابط التليجرام</value>
   </data>
+  <data name="PhoneNumberTwo" xml:space="preserve">
+    <value>رقم هاتف أخر</value>
+  </data>
 </root>

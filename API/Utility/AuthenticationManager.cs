@@ -157,8 +157,6 @@ namespace API.Utility
                 userAuthenticated.Fk_Country = account.Fk_Country;
                 userAuthenticated.Fk_FavouriteTeam = account.Fk_FavouriteTeam;
                 userAuthenticated.Fk_AccountTeam = account.Fk_AccountTeam;
-                userAuthenticated.RefCode = account.RefCode;
-                userAuthenticated.RefCodeCount = account.RefCodeCount;
                 userAuthenticated.ShowAds = account.ShowAds;
             }
             return userAuthenticated;

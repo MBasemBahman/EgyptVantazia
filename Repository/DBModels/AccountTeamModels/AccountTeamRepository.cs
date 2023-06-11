@@ -30,7 +30,8 @@ namespace Repository.DBModels.AccountTeamModels
                            parameters.Fk_FavouriteTeam,
                            parameters.FromTotalPoints,
                            parameters.FromGlobalRanking,
-                           parameters.DashboardSearch);
+                           parameters.DashboardSearch,
+                           parameters.Fk_AccountTeams);
         }
 
         public async Task<AccountTeam> FindById(int id, bool trackChanges)
@@ -192,7 +193,8 @@ namespace Repository.DBModels.AccountTeamModels
             int Fk_FavouriteTeam,
             int? FromTotalPoints,
             int? FromGlobalRanking,
-            string dashboardSearch)
+            string dashboardSearch,
+            List<int> fk_AccountTeams)
 
         {
             return AccountTeams.Where(a => (id == 0 || a.Id == id) &&
@@ -218,7 +220,9 @@ namespace Repository.DBModels.AccountTeamModels
                                            (CreatedAtTo == null || a.CreatedAt <= CreatedAtTo) &&
                                            (string.IsNullOrWhiteSpace(AccountUserName) || a.Account.User.UserName.ToLower().Contains(AccountUserName)) &&
                                            (string.IsNullOrWhiteSpace(AccountFullName) || a.Account.FullName.ToLower().Contains(AccountFullName)) &&
-                                           (Fk_Season == 0 || a.Fk_Season == Fk_Season));
+                                           (Fk_Season == 0 || a.Fk_Season == Fk_Season) &&
+                                           
+                                           (fk_AccountTeams == null || !fk_AccountTeams.Any() || fk_AccountTeams.Contains(a.Id)) );
         }
 
     }

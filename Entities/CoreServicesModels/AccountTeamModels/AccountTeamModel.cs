@@ -10,6 +10,7 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 {
     public class AccountTeamParameters : RequestParameters
     {
+        public List<int> Fk_AccountTeams { get; set; }
         public int Fk_Account { get; set; }
         public int Fk_User { get; set; }
         public int Fk_Season { get; set; }

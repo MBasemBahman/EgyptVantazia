@@ -116,6 +116,17 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
                 model.StorageUrl = _linkGenerator.GetUriByAction(HttpContext).GetBaseUri(HttpContext.Request.RouteValues["area"].ToString());
             }
 
+            if (model.GameWeaks != null && model.GameWeaks.Any())
+            {
+                model.GameWeaks.ForEach(a =>
+                {
+                    if (a.Deadline != null)
+                    {
+                        a.Deadline = a.Deadline.Value.AddHours(3);
+                    }
+                });
+            }
+
             SetViewData(returnPage, id, otherLang);
             return View(model);
         }
@@ -135,6 +146,16 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
             }
             try
             {
+                if (model.GameWeaks != null && model.GameWeaks.Any())
+                {
+                    model.GameWeaks.ForEach(a =>
+                    {
+                        if (a.Deadline != null)
+                        {
+                            a.Deadline = a.Deadline.Value.AddHours(-3);
+                        }
+                    });
+                }
 
                 UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
                 Season dataDB = new();

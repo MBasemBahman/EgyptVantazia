@@ -50,6 +50,7 @@ namespace CoreServices.Logic
                                ImageUrl = !string.IsNullOrEmpty(a.Player.ImageUrl) ? a.Player.StorageUrl + a.Player.ImageUrl : a.Player.Team.ShirtStorageUrl + a.Player.Team.ShirtImageUrl,
                                _365_PlayerId = a.Player._365_PlayerId,
                                Fk_Team = a.Player.Fk_Team,
+                               InExternalTeam = a.Player.InExternalTeam,
                                Team = new TeamModel
                                {
                                    Name = otherLang ? a.Player.Team.TeamLang.Name : a.Player.Team.Name,

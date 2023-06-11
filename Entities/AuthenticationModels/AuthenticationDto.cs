@@ -24,6 +24,10 @@ namespace Entities.AuthenticationModels
 
         [DisplayName(nameof(Culture))]
         public string Culture { get; set; }
+
+        [DisplayName(nameof(IsExternalLogin))]
+        [DefaultValue(false)]
+        public bool IsExternalLogin { get; set; }
     }
 
     public class UserForEditCultureDto

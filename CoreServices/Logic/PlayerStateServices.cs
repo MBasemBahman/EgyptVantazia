@@ -40,6 +40,7 @@ namespace CoreServices.Logic
                            Player = new PlayerModel
                            {
                                Id = a.Fk_Player,
+                               InExternalTeam = a.Player.InExternalTeam,
                                Name = otherLang ? a.Player.PlayerLang.Name : a.Player.Name,
                                ShortName = otherLang ? a.Player.PlayerLang.ShortName : a.Player.ShortName,
                            },
@@ -129,6 +130,7 @@ namespace CoreServices.Logic
                            Player = new PlayerModel
                            {
                                Id = a.Fk_Player,
+                               InExternalTeam = a.Player.InExternalTeam,
                                Name = otherLang ? a.Player.PlayerLang.Name : a.Player.Name,
                                ShortName = otherLang ? a.Player.PlayerLang.ShortName : a.Player.ShortName,
                                ImageUrl = !string.IsNullOrEmpty(a.Player.ImageUrl) ? a.Player.StorageUrl + a.Player.ImageUrl : a.Player.Team.ShirtStorageUrl + a.Player.Team.ShirtImageUrl,
@@ -219,6 +221,7 @@ namespace CoreServices.Logic
                                          .Select(playerScore => new PlayerModel
                                          {
                                              Id = playerScore.Player.Id,
+                                             InExternalTeam = playerScore.Player.InExternalTeam,
                                              Name = otherLang ? playerScore.Player.PlayerLang.Name : playerScore.Player.Name,
                                              ShortName = otherLang ? playerScore.Player.PlayerLang.ShortName : playerScore.Player.ShortName,
                                              ImageUrl = !string.IsNullOrEmpty(playerScore.Player.ImageUrl) ? playerScore.Player.StorageUrl + playerScore.Player.ImageUrl : playerScore.Player.Team.ShirtStorageUrl + playerScore.Player.Team.ShirtImageUrl,
@@ -263,6 +266,7 @@ namespace CoreServices.Logic
                                          .Select(playerScore => new PlayerModel
                                          {
                                              Id = playerScore.Player.Id,
+                                             InExternalTeam = playerScore.Player.InExternalTeam,
                                              Name = otherLang ? playerScore.Player.PlayerLang.Name : playerScore.Player.Name,
                                              ShortName = otherLang ? playerScore.Player.PlayerLang.ShortName : playerScore.Player.ShortName,
                                              ImageUrl = !string.IsNullOrEmpty(playerScore.Player.ImageUrl) ? playerScore.Player.StorageUrl + playerScore.Player.ImageUrl : playerScore.Player.Team.ShirtStorageUrl + playerScore.Player.Team.ShirtImageUrl,

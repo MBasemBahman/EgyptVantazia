@@ -177,6 +177,12 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
                     : 0;
 
             SetViewData(returnPage, id, model.Fk_Season, otherLang);
+
+            if (model.StartTime > DateTime.MinValue)
+            {
+                model.StartTime = model.StartTime.AddHours(3);
+            }
+
             return View(model);
         }
 
@@ -198,6 +204,9 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
 
                 UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
                 TeamGameWeak dataDB = new();
+
+                model.StartTime = model.StartTime.AddHours(-3);
+
                 if (id == 0)
                 {
                     dataDB = _mapper.Map<TeamGameWeak>(model);

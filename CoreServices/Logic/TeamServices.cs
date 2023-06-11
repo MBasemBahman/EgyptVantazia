@@ -553,7 +553,8 @@ namespace CoreServices.Logic
                                Name = otherLang ? a.Player.PlayerLang.Name : a.Player.Name,
                                ShortName = otherLang ? a.Player.PlayerLang.ShortName : a.Player.ShortName,
                                ImageUrl = !string.IsNullOrEmpty(a.Player.ImageUrl) ? a.Player.StorageUrl + a.Player.ImageUrl : a.Player.Team.ShirtStorageUrl + a.Player.Team.ShirtImageUrl,
-                               _365_PlayerId = a.Player._365_PlayerId
+                               _365_PlayerId = a.Player._365_PlayerId,
+                               InExternalTeam = a.Player.InExternalTeam,
                            },
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)

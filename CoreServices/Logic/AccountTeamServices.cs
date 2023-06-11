@@ -452,6 +452,7 @@ namespace CoreServices.Logic
                                Player = new PlayerModel
                                {
                                    Id = a.AccountTeamPlayer.Fk_Player,
+                                   InExternalTeam = a.AccountTeamPlayer.Player.InExternalTeam,
                                    Fk_PlayerPosition = a.AccountTeamPlayer.Player.Fk_PlayerPosition,
                                    Name = otherLang ? a.AccountTeamPlayer.Player.PlayerLang.Name : a.AccountTeamPlayer.Player.Name,
                                    ShortName = otherLang ? a.AccountTeamPlayer.Player.PlayerLang.ShortName : a.AccountTeamPlayer.Player.ShortName,
@@ -669,6 +670,7 @@ namespace CoreServices.Logic
                                _365_PlayerId = a.Player._365_PlayerId,
                                Fk_Team = a.Player.Fk_Team,
                                Fk_PlayerPosition = a.Player.Fk_PlayerPosition,
+                               InExternalTeam = a.Player.InExternalTeam,
                                Top15 = a.Player
                                         .PlayerSeasonScoreStates
                                         .Where(b => b.Season.IsCurrent && b.Top15 != null)

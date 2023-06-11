@@ -37,7 +37,7 @@
                                     </li>
 
                                 </ol>
-                                
+
                             </div>
                         </div>
 
@@ -140,7 +140,7 @@ else
                                             <a id="create" asp-action="CreateOrEdit" asp-route-fk_Account="@Model.Fk_Account">
                                             </a>
                                         }
-                                        
+
                                         @if (Model.Fk_Account != 0 && accessLevel.EditAccess)
                                         {
                                             <a id="edit" asp-action="CreateOrEdit">
@@ -190,15 +190,15 @@ else
                         data: function (data) {
                             data.Fk_Account = @Model.Fk_Account;
                             data.Fk_Season = $("#Fk_Season").length > 0 ? $("#Fk_Season").val() : @Model.Fk_Season
-                            data.Fk_GameWeak = $("#Fk_GameWeak").length > 0 ? $("#Fk_GameWeak").val() : @Model.Fk_GameWeak
-                            data.CreatedAtFrom = $("#CreatedAtFrom").length > 0 ? $("#CreatedAtFrom").val() : '@Model.CreatedAtFrom'
+                                data.Fk_GameWeak = $("#Fk_GameWeak").length > 0 ? $("#Fk_GameWeak").val() : @Model.Fk_GameWeak
+                                    data.CreatedAtFrom = $("#CreatedAtFrom").length > 0 ? $("#CreatedAtFrom").val() : '@Model.CreatedAtFrom'
                             data.CreatedAtTo = $("#CreatedAtTo").length > 0 ? $("#CreatedAtTo").val() : '@Model.CreatedAtTo'
                             data.AccountUserName = $("#AccountUserName").length > 0 ? $("#AccountUserName").val() : '@Model.AccountUserName'
                             data.AccountFullName = $("#AccountFullName").length > 0 ? $("#AccountFullName").val() : '@Model.AccountFullName'
                             data.DashboardSearch = $("#DataTables_Table_0_filter input").val();
                             data.PointsFrom = $("#PointsFrom").length > 0 ? $("#PointsFrom").val() : null;
                             data.PointsTo = $("#PointsTo").length > 0 ? $("#PointsTo").val() : null;
-                                                        
+
                             return JSON.stringify(data);
                         }
                     },
@@ -267,13 +267,15 @@ else
                         },
                         { data: "totalPoints" },
                         { data: "totalMoney" },
-                        { data: "isVip", render: function(data) {
-                          if (data) {
-                              return '@Localizer.Get("Yes")';
-                          } else {
-                              return '@Localizer.Get("No")';
-                          }
-                        } },
+                        {
+                            data: "isVip", render: function (data) {
+                                if (data) {
+                                    return '@Localizer.Get("Yes")';
+                                } else {
+                                    return '@Localizer.Get("No")';
+                                }
+                            }
+                        },
                         { data: "globalRanking" },
                         { data: "countryRanking" },
                         { data: "favouriteTeamRanking" },

@@ -1,4 +1,5 @@
-﻿using Entities.CoreServicesModels.SeasonModels;
+﻿using Entities.CoreServicesModels.AccountTeamModels;
+using Entities.CoreServicesModels.SeasonModels;
 using FantasyLogic;
 using FantasyLogicMicroservices.Controllers;
 using Hangfire;
@@ -94,6 +95,24 @@ namespace FantasyLogicMicroservices.Areas.AccountTeamArea.Controllers
             {
                 _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.PrivateLeagueClac.RunPrivateLeaguesRanking(fk_GameWeak, id, indebug));
             }
+
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route(nameof(UpdateAccountTeamUpdateCards))]
+        public IActionResult UpdateAccountTeamUpdateCards(
+            [FromQuery] bool indebug,
+            [FromBody] AccountTeamsUpdateCards model)
+        {
+            //if (indebug)
+            //{
+            //    _unitOfWork.AccountTeam.UpdateAccountTeamGameWeakRank
+            //}
+            //else
+            //{
+            //    _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.PrivateLeagueClac.RunPrivateLeaguesRanking(fk_GameWeak, id, indebug));
+            //}
 
             return Ok();
         }

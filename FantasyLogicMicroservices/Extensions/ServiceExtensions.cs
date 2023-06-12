@@ -149,15 +149,6 @@ namespace FantasyLogicMicroservices.Extensions
             _ = services.AddScoped<IFirebaseNotificationManager, FirebaseNotificationManager>();
         }
 
-        public static void ConfigureEmailSender(this IServiceCollection services,
-            IConfiguration configuration)
-        {
-            EmailConfiguration emailConfig = configuration.GetSection("EmailConfiguration")
-                                           .Get<EmailConfiguration>();
-            _ = services.AddSingleton(emailConfig);
-            _ = services.AddScoped<IEmailSender, EmailSender>();
-        }
-
         public static void ConfigureHangfire(this IServiceCollection services,
            IConfiguration configuration)
         {
@@ -171,7 +162,6 @@ namespace FantasyLogicMicroservices.Extensions
                     SlidingInvisibilityTimeout = TimeSpan.FromHours(1),
                     QueuePollInterval = TimeSpan.Zero,
                     UseRecommendedIsolationLevel = true,
-                    UsePageLocksOnDequeue = true,
                     DisableGlobalLocks = true,
                     JobExpirationCheckInterval = TimeSpan.Zero,
                 }));

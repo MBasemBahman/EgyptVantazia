@@ -20,7 +20,6 @@ builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSet
 builder.Services.ConfigureViews();
 builder.Services.ConfigureSessionAndCookie();
 builder.Services.ConfigureFirebase(config.AppSettings);
-//builder.Services.ConfigureEmailSender(builder.Configuration);
 
 WebApplication app = builder.Build();
 

@@ -12,7 +12,6 @@ namespace API.Controllers
     public class AuthenticationController : ExtendControllerBase
     {
         private readonly IAuthenticationManager _authManager;
-        private readonly IEmailSender _emailSender;
 
         public AuthenticationController(
         ILoggerManager logger,
@@ -21,11 +20,9 @@ namespace API.Controllers
         LinkGenerator linkGenerator,
         IWebHostEnvironment environment,
         IAuthenticationManager authManager,
-        IEmailSender emailSender,
         IOptions<AppSettings> appSettings) : base(logger, mapper, unitOfWork, linkGenerator, environment, appSettings)
         {
             _authManager = authManager;
-            _emailSender = emailSender;
         }
 
         [HttpPost]
@@ -188,8 +185,6 @@ namespace API.Controllers
                 verification
             };
 
-            //await SendVerification(user.EmailAddress, user.Verifications.Single().Code);
-
             await _unitOfWork.Save();
 
             return verification.Code;
@@ -310,20 +305,6 @@ namespace API.Controllers
             await _authManager.RevokeToken(model.Token, IpAddress());
 
             return true;
-        }
-
-        // Helper Methods
-        private async Task SendVerification(string emailAddress, string code)
-        {
-            if (!string.IsNullOrWhiteSpace(emailAddress))
-            {
-                bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
-
-                string template = otherLang ? "email" : "email-rtl";
-
-                EmailMessage message = new(new string[] { emailAddress }, "Verification", code, _environment.WebRootPath, $"/Templates/EmailTemplateV2/Verify/{template}.html");
-                await _emailSender.SendHtmlEmail(message);
-            }
         }
     }
 }

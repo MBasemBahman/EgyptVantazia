@@ -284,4 +284,49 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public int GlobalRanking { get; set; }
         public int TotalPoints { get; set; }
     }
+
+    public class AccountTeamsUpdateCards : AccountTeamUpdateCards
+    {
+        [DisplayName(nameof(Fk_AccounTeams))]
+        public List<int> Fk_AccounTeams { get; set; }
+    }
+
+    public class AccountTeamUpdateCards
+    {
+        #region Cards
+
+        [DisplayName(nameof(BenchBoost))]
+        [DefaultValue(0)]
+        public int BenchBoost { get; set; }
+
+        [DisplayName(nameof(FreeHit))]
+        [DefaultValue(0)]
+        public int FreeHit { get; set; }
+
+        [DisplayName(nameof(WildCard))]
+        [DefaultValue(0)]
+        public int WildCard { get; set; }
+
+        [DisplayName(nameof(DoubleGameWeak))]
+        [DefaultValue(0)]
+        public int DoubleGameWeak { get; set; }
+
+        [DisplayName(nameof(Top_11))]
+        [DefaultValue(0)]
+        public int Top_11 { get; set; }
+
+        [DisplayName(nameof(FreeTransfer))]
+        [DefaultValue(0)]
+        public int FreeTransfer { get; set; }
+
+        [DisplayName(nameof(TripleCaptain))]
+        [DefaultValue(0)]
+        public int TripleCaptain { get; set; }
+
+        #endregion
+
+        [DisplayName(nameof(Fk_AccounTeam))]
+        public int Fk_AccounTeam { get; set; }
+    }
+
 }

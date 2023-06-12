@@ -135,15 +135,6 @@ namespace API.Extensions
             _ = services.AddSingleton<ILocalizationManager, LocalizationManager>();
         }
 
-        public static void ConfigureEmailSender(this IServiceCollection services,
-            IConfiguration configuration)
-        {
-            EmailConfiguration emailConfig = configuration.GetSection("EmailConfiguration")
-                                           .Get<EmailConfiguration>();
-            _ = services.AddSingleton(emailConfig);
-            _ = services.AddScoped<IEmailSender, EmailSender>();
-        }
-
         public static void ConfigureRequestsLimit(this IServiceCollection services)
         {
             // needed to store rate limit counters and ip rules
@@ -172,28 +163,6 @@ namespace API.Extensions
             _ = services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
             _ = services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
             _ = services.AddInMemoryRateLimiting();
-        }
-
-        public static void ConfigureHangfire(this IServiceCollection services,
-           IConfiguration configuration)
-        {
-            _ = services.AddHangfire(config => config
-                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
-                .UseSimpleAssemblyNameTypeSerializer()
-                .UseRecommendedSerializerSettings()
-                .UseSqlServerStorage(configuration.GetConnectionString("HangfireConnection"), new SqlServerStorageOptions
-                {
-                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
-                    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
-                    QueuePollInterval = TimeSpan.Zero,
-                    UseRecommendedIsolationLevel = true,
-                    UsePageLocksOnDequeue = true,
-                    DisableGlobalLocks = true
-                }));
-            // Add the processing server as IHostedService
-            _ = services.AddHangfireServer();
-
-            //_ = services.AddScoped<HangfireManager>();
         }
 
         public static void ConfigurePaymob(this IServiceCollection services,

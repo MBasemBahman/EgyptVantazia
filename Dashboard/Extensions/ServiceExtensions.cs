@@ -57,14 +57,6 @@ namespace Dashboard.Extensions
         {
             _ = services.AddResponseCaching();
         }
-        public static void ConfigureEmailSender(this IServiceCollection services,
-          IConfiguration configuration)
-        {
-            EmailConfiguration emailConfig = configuration.GetSection("EmailConfiguration")
-                                           .Get<EmailConfiguration>();
-            _ = services.AddSingleton(emailConfig);
-            _ = services.AddScoped<IEmailSender, EmailSender>();
-        }
         public static void ConfigureLocalization(this IServiceCollection services)
         {
             _ = services.AddLocalization(options => options.ResourcesPath = "Resources");

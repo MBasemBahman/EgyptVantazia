@@ -360,6 +360,23 @@ namespace CoreServices.Logic
             return _repository.AccountTeam.GetPrivateLeaguesPoints(fk_Season, fk_PrivateLeague, _365_GameWeakIdValue);
         }
 
+        public void UpdateAccountTeamUpdateCards(AccountTeamsUpdateCards updateCards)
+        {
+            if (updateCards.Fk_AccounTeams == null || !updateCards.Fk_AccounTeams.Any())
+            {
+                updateCards.Fk_AccounTeams = _repository.AccountTeam.FindAll(new AccountTeamParameters(), trackChanges: false).Select(a => a.Id).ToList();
+            }
+
+            updateCards.Fk_AccounTeams.ForEach(a =>
+            {
+                
+            });
+        }
+        public void UpdateAccountTeamUpdateCards(AccountTeamUpdateCards updateCards)
+        {
+
+        }
+
         #endregion
 
         #region AccountTeamPlayerGameWeak Services

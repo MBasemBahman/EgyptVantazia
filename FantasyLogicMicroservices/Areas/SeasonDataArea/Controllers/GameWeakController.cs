@@ -65,32 +65,32 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
         private void DailyRecurringJob()
         {
             //// At 01:00 AM
-            RecurringJob.AddOrUpdate("RunAccountTeamsCalculations", () => _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(0, 0, null, null, false), "0 */8 * * *", TimeZoneInfo.Utc);
+            RecurringJob.AddOrUpdate("RunAccountTeamsCalculations", () => _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(0, 0, null, null, false), "0 */8 * * *");
 
             // At 02:00 AM
-            //RecurringJob.AddOrUpdate("UpdateAccountTeamGameWeakRanking", () => _fantasyUnitOfWork.AccountTeamCalc.RunUpdateAccountTeamGameWeakRanking(), "0 2 * * *", TimeZoneInfo.Utc);
+            //RecurringJob.AddOrUpdate("UpdateAccountTeamGameWeakRanking", () => _fantasyUnitOfWork.AccountTeamCalc.RunUpdateAccountTeamGameWeakRanking(), "0 2 * * *");
 
             // At 03:00 AM
-            //RecurringJob.AddOrUpdate("UpdateAccountTeamRanking", () => _fantasyUnitOfWork.AccountTeamCalc.RunUpdateAccountTeamRanking(), "0 3 * * *", TimeZoneInfo.Utc);
+            //RecurringJob.AddOrUpdate("UpdateAccountTeamRanking", () => _fantasyUnitOfWork.AccountTeamCalc.RunUpdateAccountTeamRanking(), "0 3 * * *");
 
             // At 04:00 AM
-            RecurringJob.AddOrUpdate("UpdatePrivateLeaguesRanking", () => _fantasyUnitOfWork.PrivateLeagueClac.RunPrivateLeaguesRanking(null, 0, false), "0 */14 * * *", TimeZoneInfo.Utc);
+            RecurringJob.AddOrUpdate("UpdatePrivateLeaguesRanking", () => _fantasyUnitOfWork.PrivateLeagueClac.RunPrivateLeaguesRanking(null, 0, false), "0 */14 * * *");
 
             // At 05:00 AM
-            RecurringJob.AddOrUpdate("UpdateGames", () => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames(), "0 */6 * * *", TimeZoneInfo.Utc);
+            RecurringJob.AddOrUpdate("UpdateGames", () => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames(), "0 */6 * * *");
 
             // At 06:00 AM
-            RecurringJob.AddOrUpdate("UpdateStandings", () => _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings(), "0 */9 * * *", TimeZoneInfo.Utc);
+            RecurringJob.AddOrUpdate("UpdateStandings", () => _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings(), "0 */9 * * *");
 
         }
 
         private void WeeklyRecurringJob()
         {
             // At 07:00 AM, only on Friday
-            RecurringJob.AddOrUpdate("UpdateTeams", () => _fantasyUnitOfWork.TeamDataHelper.RunUpdateTeams(), "0 7 * * 5", TimeZoneInfo.Utc);
+            RecurringJob.AddOrUpdate("UpdateTeams", () => _fantasyUnitOfWork.TeamDataHelper.RunUpdateTeams(), "0 7 * * 5");
 
             // At 08:00 AM, only on Friday
-            RecurringJob.AddOrUpdate("UpdatePlayers", () => _fantasyUnitOfWork.PlayerDataHelper.RunUpdatePlayers(), "0 8 * * 5", TimeZoneInfo.Utc);
+            RecurringJob.AddOrUpdate("UpdatePlayers", () => _fantasyUnitOfWork.PlayerDataHelper.RunUpdatePlayers(), "0 8 * * 5");
         }
 
         [ApiExplorerSettings(IgnoreApi = true)]

@@ -33,7 +33,6 @@ builder.Services.AddControllers(opt =>
     _ = opt.Filters.Add(typeof(GlobalModelStateValidatorAttribute));
 });
 builder.Services.ConfigureFirebase(config.AppSettings);
-builder.Services.ConfigureEmailSender(builder.Configuration);
 if (useHangfire)
 {
     builder.Services.ConfigureHangfire(builder.Configuration);

@@ -74,9 +74,12 @@ namespace Repository.DBModels.AccountTeamModels
 
         public void UpdateRank(int id)
         {
-            DateTime lasUpdate = DateTime.UtcNow.AddHours(-24).Date;
+            DateTime lasUpdate = DateTime.UtcNow.AddDays(-1).Date;
 
-            var accountTeamModel = FindByCondition(a => a.Id == id, trackChanges: false)
+            var accountTeamModel = FindByCondition(a => a.Id == id &&
+                                                        (a.GlobalRankingUpdatedAt < lasUpdate ||
+                                                         a.CountryRankingUpdatedAt < lasUpdate ||
+                                                         a.FavouriteTeamRankingUpdatedAt < lasUpdate), trackChanges: false)
                                    .Select(a => new
                                    {
                                        a.Id,
@@ -93,7 +96,12 @@ namespace Repository.DBModels.AccountTeamModels
                                        a.Account.Fk_Country,
                                        a.Account.Fk_FavouriteTeam
 
-                                   }).First();
+                                   }).FirstOrDefault();
+
+            if (accountTeamModel == null)
+            {
+                return;
+            }
 
             var accounts = FindByCondition(a => true, trackChanges: false)
                            .OrderByDescending(a => a.TotalPoints)
@@ -221,8 +229,8 @@ namespace Repository.DBModels.AccountTeamModels
                                            (string.IsNullOrWhiteSpace(AccountUserName) || a.Account.User.UserName.ToLower().Contains(AccountUserName)) &&
                                            (string.IsNullOrWhiteSpace(AccountFullName) || a.Account.FullName.ToLower().Contains(AccountFullName)) &&
                                            (Fk_Season == 0 || a.Fk_Season == Fk_Season) &&
-                                           
-                                           (fk_AccountTeams == null || !fk_AccountTeams.Any() || fk_AccountTeams.Contains(a.Id)) );
+
+                                           (fk_AccountTeams == null || !fk_AccountTeams.Any() || fk_AccountTeams.Contains(a.Id)));
         }
 
     }

@@ -102,6 +102,15 @@ namespace CoreServices.Logic
                        .FirstOrDefault();
         }
 
+        public int GetCurrentSeasonId()
+        {
+            return _repository.Season
+                       .FindAll(new SeasonParameters { IsCurrent = true }, trackChanges: false)
+                       .OrderByDescending(a => a.Id)
+                       .Select(a => a.Id)
+                       .FirstOrDefault();
+        }
+
         public Season AddSeasonGameWeaks(Season season, List<GameWeakCreateOrEditModel> gameWeaks)
         {
 
@@ -209,6 +218,20 @@ namespace CoreServices.Logic
                        .Sort(parameters.OrderBy);
         }
 
+        public IQueryable<GameWeakModelForCalc> GetGameWeaksForCalc(GameWeakParameters parameters)
+        {
+            return _repository.GameWeak
+                       .FindAll(parameters, trackChanges: false)
+                       .Select(a => new GameWeakModelForCalc
+                       {
+                           Id = a.Id,
+                           _365_GameWeakId = a._365_GameWeakId,
+                           Fk_Season = a.Fk_Season,
+                           _365_GameWeakIdValue = a._365_GameWeakIdValue,
+                           Deadline = a.Deadline,
+                       });
+        }
+
         public IQueryable<GameWeak> GetGameWeaks(GameWeakParameters parameters)
         {
             return _repository.GameWeak
@@ -218,7 +241,24 @@ namespace CoreServices.Logic
         public GameWeakModel GetCurrentGameWeak(bool otherLang = false)
         {
             return GetGameWeaks(new GameWeakParameters { IsCurrent = true, IsCurrentSeason = true }, otherLang: otherLang)
+                .OrderByDescending(a => a.Order)
+                   .FirstOrDefault();
+        }
+
+        public GameWeakModelForCalc GetCurrentGameWeak()
+        {
+            return GetGameWeaksForCalc(new GameWeakParameters
+            {
+                IsCurrent = true,
+                IsCurrentSeason = true
+            }).FirstOrDefault();
+        }
+
+        public int GetCurrentGameWeakId()
+        {
+            return GetGameWeaks(new GameWeakParameters { IsCurrent = true, IsCurrentSeason = true }, otherLang: false)
                    .OrderByDescending(a => a.Order)
+                   .Select(a => a.Id)
                    .FirstOrDefault();
         }
 
@@ -230,15 +270,34 @@ namespace CoreServices.Logic
             }, otherLang: otherLang).FirstOrDefault();
         }
 
-        public GameWeakModel GetNextNextGameWeak(bool otherLang = false)
+
+        public GameWeakModelForCalc GetNextGameWeak()
         {
-            GameWeakModel next = GetNextGameWeak();
+            return GetGameWeaksForCalc(new GameWeakParameters
+            {
+                IsNext = true
+            }).FirstOrDefault();
+        }
+
+        public int GetNextGameWeakId()
+        {
+            return GetGameWeaks(new GameWeakParameters
+            {
+                IsNext = true
+            }, otherLang: false)
+                .Select(a => a.Id)
+                .FirstOrDefault();
+        }
+
+        public GameWeakModelForCalc GetNextNextGameWeak(bool otherLang = false)
+        {
+            GameWeakModelForCalc next = GetNextGameWeak();
 
             return next != null
-                ? GetGameWeaks(new GameWeakParameters
+                ? GetGameWeaksForCalc(new GameWeakParameters
                 {
                     _365_GameWeakId = (next._365_GameWeakIdValue + 1).ToString()
-                }, otherLang: otherLang).FirstOrDefault()
+                }).FirstOrDefault()
                 : null;
         }
 
@@ -248,6 +307,16 @@ namespace CoreServices.Logic
             {
                 IsPrev = true
             }, otherLang: otherLang).FirstOrDefault();
+        }
+
+        public int GetPrevGameWeakId()
+        {
+            return GetGameWeaks(new GameWeakParameters
+            {
+                IsPrev = true
+            }, otherLang: false)
+                .Select(a => a.Id)
+                .FirstOrDefault();
         }
 
         public async Task<PagedList<GameWeakModel>> GetGameWeakPaged(
@@ -429,7 +498,13 @@ namespace CoreServices.Logic
 
         public DateTime? GetFirstTeamGameWeakMatchDate()
         {
-            return GetNextGameWeak().Deadline.Value.AddHours(-2);
+            return _repository.GameWeak
+                      .FindAll(new GameWeakParameters
+                      {
+                          IsNext = true
+                      }, trackChanges: false)
+                      .Select(a => a.Deadline.Value.AddHours(-2))
+                      .FirstOrDefault();
         }
 
         public void CreateTeamGameWeak(TeamGameWeak TeamGameWeak)

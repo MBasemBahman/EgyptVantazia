@@ -110,7 +110,8 @@ namespace API.Areas.AccountTeamArea.Controllers
                 Id = id,
                 Fk_GameWeak = fk_GameWeak
             }, otherLang).FirstOrDefault();
-            GameWeakModel gameWeak = null;
+
+            GameWeakModelForCalc gameWeak = null;
 
             if (fk_GameWeak == 0)
             {
@@ -125,7 +126,10 @@ namespace API.Areas.AccountTeamArea.Controllers
 
             if (data.Fk_AcountTeamGameWeek > 0)
             {
-                gameWeak ??= _unitOfWork.Season.GetGameWeakbyId(fk_GameWeak, otherLang);
+                gameWeak ??= _unitOfWork.Season.GetGameWeaksForCalc(new GameWeakParameters
+                {
+                    Id = fk_GameWeak
+                }).FirstOrDefault();
 
                 AccountTeamCustemClac clac = _fantasyUnitOfWork.AccountTeamCalc.AccountTeamPlayersCalculations(data.Fk_AcountTeamGameWeek, id, gameWeak, gameWeak.Fk_Season, false);
                 if (clac != null)
@@ -142,7 +146,6 @@ namespace API.Areas.AccountTeamArea.Controllers
                 data.BestAccountTeamGameWeak = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
                 {
                     Fk_GameWeak = fk_GameWeak,
-                    PointsFrom = 1
                 }, otherLang: otherLang)
                     .Where(a => a.TotalPoints > 0)
                     .OrderByDescending(a => a.TotalPoints)
@@ -160,23 +163,25 @@ namespace API.Areas.AccountTeamArea.Controllers
 
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
-            SeasonModelForCalc currentSeason = _unitOfWork.Season.GetCurrentSeason();
-            if (currentSeason == null)
+            int currentSeasonId = _unitOfWork.Season.GetCurrentSeasonId();
+            if (currentSeasonId > 0)
             {
                 throw new Exception("Season not started yet!");
             }
 
-            AccountTeamModel currentTeam = _unitOfWork.AccountTeam.GetCurrentTeam(auth.Fk_Account, currentSeason.Id);
+            AccountTeamModel currentTeam = _unitOfWork.AccountTeam.GetCurrentTeam(auth.Fk_Account, currentSeasonId);
+
             if (currentTeam != null && includeGameWeakPoints)
             {
-                GameWeakModel currentGameWeak = _unitOfWork.Season.GetCurrentGameWeak();
+                int currentGameWeakId = _unitOfWork.Season.GetCurrentGameWeakId();
 
-                currentTeam.AverageGameWeakPoints = _unitOfWork.AccountTeam.GetAverageGameWeakPoints(currentGameWeak.Id);
+                currentTeam.AverageGameWeakPoints = _unitOfWork.AccountTeam.GetAverageGameWeakPoints(currentGameWeakId);
 
                 currentTeam.BestAccountTeamGameWeak = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
                 {
-                    Fk_GameWeak = currentGameWeak.Id
+                    Fk_GameWeak = currentGameWeakId
                 }, otherLang: otherLang)
+                    .Where(a => a.TotalPoints > 0)
                     .OrderByDescending(a => a.TotalPoints)
                     .FirstOrDefault();
             }
@@ -194,7 +199,7 @@ namespace API.Areas.AccountTeamArea.Controllers
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
             SeasonModelForCalc currentSeason = _unitOfWork.Season.GetCurrentSeason();
-            GameWeakModel nextGameWeak = _unitOfWork.Season.GetNextGameWeak();
+            int nextGameWeakId = _unitOfWork.Season.GetNextGameWeakId();
 
             AccountTeam accountTeam = _mapper.Map<AccountTeam>(model);
             accountTeam.CreatedBy = auth.Name;
@@ -204,7 +209,7 @@ namespace API.Areas.AccountTeamArea.Controllers
             {
                 new AccountTeamGameWeak
                 {
-                    Fk_GameWeak = nextGameWeak.Id,
+                    Fk_GameWeak = nextGameWeakId,
                 }
             };
 
@@ -253,26 +258,34 @@ namespace API.Areas.AccountTeamArea.Controllers
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
             _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
-            SeasonModelForCalc currentSeason = _unitOfWork.Season.GetCurrentSeason();
-            if (currentSeason == null)
+            int currentSeasonId = _unitOfWork.Season.GetCurrentSeasonId();
+            if (currentSeasonId > 0)
             {
                 throw new Exception("Season not started yet!");
             }
 
-            GameWeakModel nextGameWeak = _unitOfWork.Season.GetNextGameWeak();
+            GameWeakModelForCalc nextGameWeak = _unitOfWork.Season.GetNextGameWeak();
             if (nextGameWeak == null || nextGameWeak._365_GameWeakId_Parsed == null)
             {
                 throw new Exception("Game Weak not started yet!");
             }
 
-            AccountTeamModel currentTeam = _unitOfWork.AccountTeam.GetCurrentTeam(auth.Fk_Account, currentSeason.Id);
+            AccountTeamModelForCalc currentTeam = _unitOfWork.AccountTeam.GetAccountTeamsForCalc(new AccountTeamParameters
+            {
+                Fk_Account = auth.Fk_Account,
+                Fk_Season = currentSeasonId
+            }).FirstOrDefault();
             if (currentTeam == null)
             {
                 throw new Exception("Please create your team!");
             }
 
-            AccountTeamGameWeakModel teamGameWeak = _unitOfWork.AccountTeam.GetTeamGameWeak(auth.Fk_Account, nextGameWeak.Id);
-            if (currentTeam == null)
+            AccountTeamGameWeakModelForCalc teamGameWeak = _unitOfWork.AccountTeam.GetAccountTeamGameWeaksForCalc(new AccountTeamGameWeakParameters
+            {
+                Fk_Account = auth.Fk_Account,
+                Fk_GameWeak = nextGameWeak.Id
+            }).FirstOrDefault();
+            if (teamGameWeak == null)
             {
                 throw new Exception("Game Weak not started yet!");
             }
@@ -282,7 +295,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                 _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
                 {
                     Fk_AccountTeam = currentTeam.Id,
-                }, otherLang: false).Count() == 1)
+                }).Count() == 1)
             {
                 throw new Exception("You cannot activate this card, because you in first gameweek!");
             }
@@ -297,13 +310,8 @@ namespace API.Areas.AccountTeamArea.Controllers
                 throw new Exception("You already use card in this gameweek!");
             }
 
-            int gameWeakFrom = 1;
-            int gameWeakTo = 17;
-
             if (nextGameWeak._365_GameWeakId_Parsed >= 18)
             {
-                gameWeakFrom = 18;
-                gameWeakTo = 34;
             }
 
             if (cardTypeEnum == CardTypeEnum.BenchBoost)
@@ -465,26 +473,34 @@ namespace API.Areas.AccountTeamArea.Controllers
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
             _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
-            SeasonModelForCalc currentSeason = _unitOfWork.Season.GetCurrentSeason();
-            if (currentSeason == null)
+            int currentSeasonId = _unitOfWork.Season.GetCurrentSeasonId();
+            if (currentSeasonId > 0)
             {
                 throw new Exception("Season not started yet!");
             }
 
-            GameWeakModel nextGameWeak = _unitOfWork.Season.GetNextGameWeak();
+            GameWeakModelForCalc nextGameWeak = _unitOfWork.Season.GetNextGameWeak();
             if (nextGameWeak == null || nextGameWeak._365_GameWeakId_Parsed == null)
             {
                 throw new Exception("Game Weak not started yet!");
             }
 
-            AccountTeamModel currentTeam = _unitOfWork.AccountTeam.GetCurrentTeam(auth.Fk_Account, currentSeason.Id);
+            AccountTeamModelForCalc currentTeam = _unitOfWork.AccountTeam.GetAccountTeamsForCalc(new AccountTeamParameters
+            {
+                Fk_Account = auth.Fk_Account,
+                Fk_Season = currentSeasonId
+            }).FirstOrDefault();
             if (currentTeam == null)
             {
                 throw new Exception("Please create your team!");
             }
 
-            AccountTeamGameWeakModel teamGameWeak = _unitOfWork.AccountTeam.GetTeamGameWeak(auth.Fk_Account, nextGameWeak.Id);
-            if (currentTeam == null)
+            AccountTeamGameWeakModelForCalc teamGameWeak = _unitOfWork.AccountTeam.GetAccountTeamGameWeaksForCalc(new AccountTeamGameWeakParameters
+            {
+                Fk_Account = auth.Fk_Account,
+                Fk_GameWeak = nextGameWeak.Id
+            }).FirstOrDefault();
+            if (teamGameWeak == null)
             {
                 throw new Exception("Game Weak not started yet!");
             }

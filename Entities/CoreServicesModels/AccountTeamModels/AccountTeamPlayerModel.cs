@@ -5,6 +5,7 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 {
     public class AccountTeamPlayerParameters : RequestParameters
     {
+        public List<int> Ids { get; set; }
         public int Fk_Account { get; set; }
         public int Fk_AccountTeam { get; set; }
         public int Fk_Player { get; set; }

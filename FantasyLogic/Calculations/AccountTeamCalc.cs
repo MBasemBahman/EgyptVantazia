@@ -30,22 +30,17 @@ namespace FantasyLogic.Calculations
             }
 
             SeasonModelForCalc season = _unitOfWork.Season.GetCurrentSeason();
-            GameWeakModel nextGameWeek = _unitOfWork.Season.GetNextGameWeak();
+            GameWeakModelForCalc nextGameWeek = _unitOfWork.Season.GetNextGameWeak();
 
-            List<GameWeakModel> gameWeaks = _unitOfWork.Season
-                                             .GetGameWeaks(new GameWeakParameters
+            List<GameWeakModelForCalc> gameWeaks = _unitOfWork.Season
+                                             .GetGameWeaksForCalc(new GameWeakParameters
                                              {
                                                  Fk_Season = season.Id,
                                                  Id = fk_GameWeak,
                                                  GameWeakTo = nextGameWeek._365_GameWeakIdValue
-                                             }, otherLang: false)
-                                             .Select(a => new GameWeakModel
-                                             {
-                                                 Id = a.Id,
-                                                 _365_GameWeakId = a._365_GameWeakId
                                              }).ToList();
 
-            foreach (GameWeakModel gameWeak in gameWeaks)
+            foreach (GameWeakModelForCalc gameWeak in gameWeaks)
             {
                 if (inDebug)
                 {
@@ -58,7 +53,7 @@ namespace FantasyLogic.Calculations
             }
         }
 
-        public void AccountTeamGameWeakCalculations(GameWeakModel gameWeak, int fk_Season, int fk_AccountTeam, List<int> fk_Players, List<int> fk_Teams, bool inDebug)
+        public void AccountTeamGameWeakCalculations(GameWeakModelForCalc gameWeak, int fk_Season, int fk_AccountTeam, List<int> fk_Players, List<int> fk_Teams, bool inDebug)
         {
             var accountTeamGameWeaks = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
             {
@@ -138,7 +133,7 @@ namespace FantasyLogic.Calculations
             //}
         }
 
-        public AccountTeamCustemClac AccountTeamPlayersCalculations(int fk_AccountTeamGameWeak, int fk_AccountTeam, GameWeakModel gameWeak, int fk_Season, bool saveChanges = true)
+        public AccountTeamCustemClac AccountTeamPlayersCalculations(int fk_AccountTeamGameWeak, int fk_AccountTeam, GameWeakModelForCalc gameWeak, int fk_Season, bool saveChanges = true)
         {
             bool gameWeakEnd = _unitOfWork.Season.CheckIfGameWeakEnded(gameWeak.Id);
 
@@ -655,7 +650,7 @@ namespace FantasyLogic.Calculations
 
         public void UpdateAccountTeamRanking(int fk_Season)
         {
-            GameWeakModel currentGameWeak = _unitOfWork.Season.GetCurrentGameWeak();
+            int currentGameWeak = _unitOfWork.Season.GetCurrentGameWeakId();
 
             List<AccountTeamRanking> accountTeamRankings = new();
             int ranking = 1;
@@ -711,7 +706,7 @@ namespace FantasyLogic.Calculations
                 accountTeam.CountryRanking = accountTeamRanking.CountryRanking;
                 accountTeam.FavouriteTeamRanking = accountTeamRanking.FavouriteTeamRanking;
 
-                AccountTeamGameWeakModel accountTeamGameWeakModel = _unitOfWork.AccountTeam.GetTeamGameWeak(accountTeam.Fk_Account, currentGameWeak.Id);
+                AccountTeamGameWeakModel accountTeamGameWeakModel = _unitOfWork.AccountTeam.GetTeamGameWeak(accountTeam.Fk_Account, currentGameWeak);
 
                 if (accountTeamGameWeakModel != null)
                 {

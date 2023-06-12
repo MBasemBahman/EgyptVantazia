@@ -84,16 +84,17 @@ namespace API.Areas.PrivateLeagueArea.Controllers
             {
                 throw new Exception("Please create your team!");
             }
-            GameWeakModel nextGameWeak = _unitOfWork.Season.GetNextGameWeak();
 
-            if (nextGameWeak == null)
+            int nextGameWeakId = _unitOfWork.Season.GetNextGameWeakId();
+
+            if (nextGameWeakId > 0)
             {
                 throw new Exception("You can`t create league in last game week!");
             }
 
             PrivateLeague privateLeague = _mapper.Map<PrivateLeague>(model);
             privateLeague.CreatedBy = auth.Name;
-            privateLeague.Fk_GameWeak = nextGameWeak.Id;
+            privateLeague.Fk_GameWeak = nextGameWeakId;
             privateLeague.PrivateLeagueMembers = new List<PrivateLeagueMember>
             {
                 new PrivateLeagueMember

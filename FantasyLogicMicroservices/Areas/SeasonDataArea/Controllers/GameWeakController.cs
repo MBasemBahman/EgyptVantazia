@@ -120,16 +120,16 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
         [ApiExplorerSettings(IgnoreApi = true)]
         public void RemovePlayersRecurringJob()
         {
-            Entities.CoreServicesModels.SeasonModels.GameWeakModel gameWeek = _unitOfWork.Season.GetCurrentGameWeak();
+            int gameWeek = _unitOfWork.Season.GetCurrentGameWeakId();
 
             List<int> players = _unitOfWork.Team.GetPlayers(new PlayerParameters
             {
-                Fk_GameWeak = gameWeek.Id
+                Fk_GameWeak = gameWeek
             }, false).Select(a => a.Id).ToList();
 
             foreach (int player in players)
             {
-                RecurringJob.RemoveIfExists($"PlayerGameWeekStatesCalc-{gameWeek.Id}-{player}");
+                RecurringJob.RemoveIfExists($"PlayerGameWeekStatesCalc-{gameWeek}-{player}");
             }
         }
     }

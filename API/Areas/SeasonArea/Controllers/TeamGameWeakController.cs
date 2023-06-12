@@ -27,8 +27,8 @@ namespace API.Areas.SeasonArea.Controllers
         {
             if (parameters.NextGameWeak)
             {
-                GameWeakModel gameWeak = _unitOfWork.Season.GetNextGameWeak();
-                parameters.Fk_GameWeak = gameWeak.Id;
+                int gameWeakId = _unitOfWork.Season.GetNextGameWeakId();
+                parameters.Fk_GameWeak = gameWeakId;
             }
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 

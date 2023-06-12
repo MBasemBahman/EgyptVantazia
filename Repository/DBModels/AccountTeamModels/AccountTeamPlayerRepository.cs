@@ -13,6 +13,7 @@ namespace Repository.DBModels.AccountTeamModels
         {
             return FindByCondition(a => true, trackChanges)
                    .Filter(parameters.Id,
+                           parameters.Ids,
                            parameters.Fk_Account,
                            parameters.Fk_AccountTeam,
                            parameters.Fk_Player,
@@ -72,6 +73,7 @@ namespace Repository.DBModels.AccountTeamModels
         public static IQueryable<AccountTeamPlayer> Filter(
             this IQueryable<AccountTeamPlayer> AccountTeamPlayers,
             int id,
+            List<int> ids,
             int Fk_Account,
             int Fk_AccountTeam,
             int Fk_Player,
@@ -93,6 +95,7 @@ namespace Repository.DBModels.AccountTeamModels
                                                  (IsNextGameWeak == null || (IsNextGameWeak == true ? a.AccountTeamPlayerGameWeaks.Any(b => b.GameWeak.IsNext) : !a.AccountTeamPlayerGameWeaks.Any(b => b.GameWeak.IsNext))) &&
                                                  (Fk_Account == 0 || a.AccountTeam.Fk_Account == Fk_Account) &&
                                                  (Fk_AccountTeam == 0 || a.Fk_AccountTeam == Fk_AccountTeam) &&
+                                                 (ids == null || !ids.Any() || ids.Contains(a.Id)) &&
                                                  (Fk_Season == 0 || a.AccountTeam.Fk_Season == Fk_Season) &&
                                                  (Fk_Player == 0 || a.Fk_Player == Fk_Player));
 

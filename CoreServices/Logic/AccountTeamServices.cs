@@ -130,6 +130,36 @@ namespace CoreServices.Logic
                        .Sort(parameters.OrderBy);
         }
 
+        public int GetCurrentAcountTeamGameWeek(AccountTeamParameters parameters)
+        {
+            return _repository.AccountTeam
+                       .FindAll(parameters, trackChanges: false)
+                       .Select(a => a.AccountTeamGameWeaks
+                                                    .Where(b => parameters.Fk_GameWeak > 0 ? b.Fk_GameWeak == parameters.Fk_GameWeak : b.GameWeak.IsCurrent == true)
+                                                    .Select(a => a.Id)
+                                                    .FirstOrDefault()
+                       )
+                       .FirstOrDefault();
+        }
+
+        public IQueryable<AccountTeamModelForCalc> GetAccountTeamsForCalc(AccountTeamParameters parameters)
+        {
+            return _repository.AccountTeam
+                       .FindAll(parameters, trackChanges: false)
+                       .Select(a => new AccountTeamModelForCalc
+                       {
+                           Id = a.Id,
+                           FreeTransfer = a.FreeTransfer,
+                           BenchBoost = a.BenchBoost,
+                           DoubleGameWeak = a.DoubleGameWeak,
+                           FreeHit = a.FreeHit,
+                           Top_11 = a.Top_11,
+                           TripleCaptain = a.TripleCaptain,
+                           WildCard = a.WildCard,
+                           TotalMoney = a.TotalMoney,
+                       });
+        }
+
         public IQueryable<AccountTeam> GetAccountTeams(AccountTeamParameters parameters)
         {
             return _repository.AccountTeam
@@ -180,15 +210,6 @@ namespace CoreServices.Logic
                 Fk_Account = fk_Account,
                 Fk_Season = fk_Season
             }, otherLang: false).FirstOrDefault();
-        }
-
-        public IQueryable<AccountTeamModel> GetCurrentTeam(int fk_User)
-        {
-            return GetAccountTeams(new AccountTeamParameters()
-            {
-                Fk_User = fk_User,
-                CurrentSeason = true
-            }, otherLang: false);
         }
 
         public async Task<string> UploadAccountTeamImage(string rootPath, IFormFile file)
@@ -304,6 +325,22 @@ namespace CoreServices.Logic
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);
+        }
+
+        public IQueryable<AccountTeamGameWeakModelForCalc> GetAccountTeamGameWeaksForCalc(AccountTeamGameWeakParameters parameters)
+        {
+            return _repository.AccountTeamGameWeak
+                       .FindAll(parameters, trackChanges: false)
+                       .Select(a => new AccountTeamGameWeakModelForCalc
+                       {
+                           Id = a.Id,
+                           FreeHit = a.FreeHit,
+                           WildCard = a.WildCard,
+                           BenchBoost = a.BenchBoost,
+                           DoubleGameWeak = a.DoubleGameWeak,
+                           Top_11 = a.Top_11,
+                           TripleCaptain = a.TripleCaptain,
+                       });
         }
 
         public IQueryable<AccountTeamGameWeak> GetAccountTeamGameWeaks(AccountTeamGameWeakParameters parameters)
@@ -822,6 +859,12 @@ namespace CoreServices.Logic
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);
+        }
+
+        public IQueryable<AccountTeamPlayer> GetAccountTeamPlayers(AccountTeamPlayerParameters parameters)
+        {
+            return _repository.AccountTeamPlayer
+                       .FindAll(parameters, trackChanges: false);
         }
 
         public async Task<PagedList<AccountTeamPlayerModel>> GetAccountTeamPlayerPaged(

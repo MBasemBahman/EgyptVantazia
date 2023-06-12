@@ -37,17 +37,20 @@ namespace API.Areas.AccountTeamArea.Controllers
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
-            GameWeakModel currentGamWeak = null;
-            GameWeakModel nextGameWeak = null;
+            GameWeakModelForCalc currentGamWeak = null;
+            GameWeakModelForCalc nextGameWeak = null;
 
             if (parameters.Fk_GameWeak > 0)
             {
-                currentGamWeak = _unitOfWork.Season.GetGameWeakbyId(parameters.Fk_GameWeak, otherLang);
+                currentGamWeak = _unitOfWork.Season.GetGameWeaksForCalc(new GameWeakParameters
+                {
+                    Id = parameters.Fk_GameWeak
+                }).FirstOrDefault();
 
-                nextGameWeak = _unitOfWork.Season.GetGameWeaks(new GameWeakParameters
+                nextGameWeak = _unitOfWork.Season.GetGameWeaksForCalc(new GameWeakParameters
                 {
                     _365_GameWeakId = (currentGamWeak._365_GameWeakIdValue + 1).ToString()
-                }, otherLang).FirstOrDefault();
+                }).FirstOrDefault();
             }
             else
             {
@@ -67,9 +70,9 @@ namespace API.Areas.AccountTeamArea.Controllers
                     parameters.ToDeadLine = _unitOfWork.Season.GetTeamGameWeaks(new TeamGameWeakParameters
                     {
                         Fk_GameWeak = currentGamWeak.Id
-                    }, otherLang: false).OrderByDescending(a => a.StartTime)
-                                        .Select(a => a.StartTime.AddHours(3))
-                                        .FirstOrDefault();
+                    }).OrderByDescending(a => a.StartTime)
+                      .Select(a => a.StartTime.AddHours(3))
+                      .FirstOrDefault();
                 }
             }
 
@@ -83,7 +86,7 @@ namespace API.Areas.AccountTeamArea.Controllers
 
                 if (parameters.IncludeNextMatch)
                 {
-                    GameWeakModel nextNextGameWeak = _unitOfWork.Season.GetNextNextGameWeak();
+                    GameWeakModelForCalc nextNextGameWeak = _unitOfWork.Season.GetNextNextGameWeak();
 
                     parameters.FromDeadLine = nextGameWeak.Deadline;
                     parameters.ToDeadLine = nextNextGameWeak.Deadline;
@@ -93,9 +96,9 @@ namespace API.Areas.AccountTeamArea.Controllers
                         parameters.ToDeadLine = _unitOfWork.Season.GetTeamGameWeaks(new TeamGameWeakParameters
                         {
                             Fk_GameWeak = nextGameWeak.Id
-                        }, otherLang: false).OrderByDescending(a => a.StartTime)
-                                            .Select(a => a.StartTime.AddHours(3))
-                                            .FirstOrDefault();
+                        }).OrderByDescending(a => a.StartTime)
+                          .Select(a => a.StartTime.AddHours(3))
+                          .FirstOrDefault();
                     }
                 }
             }
@@ -113,18 +116,15 @@ namespace API.Areas.AccountTeamArea.Controllers
 
             if (parameters.Fk_AccountTeam > 0 && parameters.IsNextGameWeak != true)
             {
-                var accountTeam = _unitOfWork.AccountTeam.GetAccountTeams(new AccountTeamParameters
+                int acountTeamGameWeek = _unitOfWork.AccountTeam.GetCurrentAcountTeamGameWeek(new AccountTeamParameters
                 {
                     Id = parameters.Fk_AccountTeam,
                     Fk_GameWeak = parameters.Fk_GameWeak
-                }, otherLang).Select(a => new
-                {
-                    a.Fk_AcountTeamGameWeek
-                }).FirstOrDefault();
+                });
 
-                if (accountTeam != null && accountTeam.Fk_AcountTeamGameWeek > 0)
+                if (acountTeamGameWeek > 0)
                 {
-                    AccountTeamCustemClac clac = _fantasyUnitOfWork.AccountTeamCalc.AccountTeamPlayersCalculations(accountTeam.Fk_AcountTeamGameWeek, parameters.Fk_AccountTeam, currentGamWeak, currentGamWeak.Fk_Season, false);
+                    AccountTeamCustemClac clac = _fantasyUnitOfWork.AccountTeamCalc.AccountTeamPlayersCalculations(acountTeamGameWeek, parameters.Fk_AccountTeam, currentGamWeak, currentGamWeak.Fk_Season, false);
                     if (clac != null && clac.Players != null && clac.Players.Any())
                     {
                         data.ForEach(player =>
@@ -149,8 +149,8 @@ namespace API.Areas.AccountTeamArea.Controllers
             if (parameters.IsCurrent == true && !data.Any())
             {
                 parameters.IsCurrent = false;
-                GameWeakModel gameWeak = _unitOfWork.Season.GetPrevGameWeak();
-                parameters.Fk_GameWeak = gameWeak.Id;
+                int prevGameWeak = _unitOfWork.Season.GetPrevGameWeakId();
+                parameters.Fk_GameWeak = prevGameWeak;
 
                 data = await _unitOfWork.AccountTeam.GetAccountTeamPlayerPaged(parameters, otherLang);
             }
@@ -167,31 +167,39 @@ namespace API.Areas.AccountTeamArea.Controllers
             _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
-            SeasonModelForCalc currentSeason = _unitOfWork.Season.GetCurrentSeason();
-            if (currentSeason == null)
+            int currentSeason = _unitOfWork.Season.GetCurrentSeasonId();
+            if (currentSeason > 0)
             {
                 throw new Exception("Season not started yet!");
             }
 
-            GameWeakModel nextGameWeak = _unitOfWork.Season.GetNextGameWeak();
-            if (nextGameWeak == null)
+            int nextGameWeakId = _unitOfWork.Season.GetNextGameWeakId();
+            if (nextGameWeakId > 0)
             {
                 throw new Exception("Game Weak not started yet!");
             }
 
-            AccountTeamModel currentTeam = _unitOfWork.AccountTeam.GetCurrentTeam(auth.Fk_Account, currentSeason.Id);
+            AccountTeamModelForCalc currentTeam = _unitOfWork.AccountTeam.GetAccountTeamsForCalc(new AccountTeamParameters
+            {
+                Fk_Account = auth.Fk_Account,
+                Fk_Season = currentSeason
+            }).FirstOrDefault();
             if (currentTeam == null)
             {
                 throw new Exception("Please create your team!");
             }
 
-            AccountTeamGameWeakModel teamGameWeak = _unitOfWork.AccountTeam.GetTeamGameWeak(auth.Fk_Account, nextGameWeak.Id);
+            AccountTeamGameWeakModelForCalc teamGameWeak = _unitOfWork.AccountTeam.GetAccountTeamGameWeaksForCalc(new AccountTeamGameWeakParameters
+            {
+                Fk_Account = auth.Fk_Account,
+                Fk_GameWeak = nextGameWeakId
+            }).FirstOrDefault();
             if (teamGameWeak == null)
             {
                 _unitOfWork.AccountTeam.CreateAccountTeamGameWeak(new AccountTeamGameWeak
                 {
                     Fk_AccountTeam = currentTeam.Id,
-                    Fk_GameWeak = nextGameWeak.Id
+                    Fk_GameWeak = nextGameWeakId
                 });
             }
 
@@ -202,32 +210,32 @@ namespace API.Areas.AccountTeamArea.Controllers
 
             if (model.Players != null && model.Players.Any())
             {
+                List<int> fk_Players = model.Players.Select(a => a.Fk_Player).ToList();
+
+                var playerInfos = _unitOfWork.Team.GetPlayers(new PlayerParameters
+                {
+                    Fk_Players = fk_Players,
+                }).Select(a => new
+                {
+                    a.Id,
+                    a.Fk_PlayerPosition,
+                    BuyPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault(),
+                    SellPrice = a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.SellPrice).FirstOrDefault(),
+                }).ToList();
+
+                if (playerInfos.Select(a => a.BuyPrice).Sum() > currentTeam.TotalMoney)
+                {
+                    throw new Exception("You not have enough money!");
+                }
+
                 model.Players.ForEach(a =>
                 {
-                    a.Fk_PlayerPosition = _unitOfWork.AccountTeam.GetAccountTeamPlayers(new AccountTeamPlayerParameters
-                    {
-                        Fk_Player = a.Fk_Player
-                    }, false).Select(b => b.Player.Fk_PlayerPosition).First();
+                    a.Fk_PlayerPosition = playerInfos.Where(b => b.Id == a.Fk_Player).Select(b => b.Fk_PlayerPosition).First();
                 });
 
                 List<AccountTeamCheckStructureModel> players = _mapper.Map<List<AccountTeamCheckStructureModel>>(model.Players);
 
                 CheckPlayerStructure(players);
-
-                var prices = _unitOfWork.Team.GetPlayers(new PlayerParameters
-                {
-                    Fk_Players = model.Players.Select(a => a.Fk_Player).ToList(),
-                }, otherLang: false)
-                    .Select(a => new
-                    {
-                        a.Id,
-                        a.BuyPrice
-                    }).ToList();
-
-                if (prices.Select(a => a.BuyPrice).Sum() > currentTeam.TotalMoney)
-                {
-                    throw new Exception("You not have enough money!");
-                }
 
                 double totalPrice = 0;
 
@@ -236,12 +244,12 @@ namespace API.Areas.AccountTeamArea.Controllers
 
                 foreach (AccountTeamPlayerCreateModel player in model.Players.OrderByDescending(a => a.IsPrimary).ThenBy(a => a.Order))
                 {
-                    double price = prices.Where(a => a.Id == player.Fk_Player).Select(a => a.BuyPrice).FirstOrDefault();
+                    double price = playerInfos.Where(a => a.Id == player.Fk_Player).Select(a => a.BuyPrice).FirstOrDefault();
 
                     _unitOfWork.PlayerTransfers.CreatePlayerTransfer(new PlayerTransfer
                     {
                         Fk_AccountTeam = currentTeam.Id,
-                        Fk_GameWeak = nextGameWeak.Id,
+                        Fk_GameWeak = nextGameWeakId,
                         Fk_Player = player.Fk_Player,
                         TransferTypeEnum = TransferTypeEnum.Buying,
                         Cost = price
@@ -266,7 +274,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                         {
                             new AccountTeamPlayerGameWeak
                             {
-                                Fk_GameWeak = nextGameWeak.Id,
+                                Fk_GameWeak = nextGameWeakId,
                                 Fk_TeamPlayerType = player.Fk_TeamPlayerType,
                                 IsPrimary = player.IsPrimary,
                                 Order = player.Order
@@ -293,31 +301,39 @@ namespace API.Areas.AccountTeamArea.Controllers
             _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
-            SeasonModelForCalc currentSeason = _unitOfWork.Season.GetCurrentSeason();
-            if (currentSeason == null)
+            int currentSeason = _unitOfWork.Season.GetCurrentSeasonId();
+            if (currentSeason > 0)
             {
                 throw new Exception("Season not started yet!");
             }
 
-            GameWeakModel nextGameWeak = _unitOfWork.Season.GetNextGameWeak();
-            if (nextGameWeak == null)
+            int nextGameWeakId = _unitOfWork.Season.GetNextGameWeakId();
+            if (nextGameWeakId > 0)
             {
                 throw new Exception("Game Weak not started yet!");
             }
 
-            AccountTeamModel currentTeam = _unitOfWork.AccountTeam.GetCurrentTeam(auth.Fk_Account, currentSeason.Id);
+            AccountTeamModelForCalc currentTeam = _unitOfWork.AccountTeam.GetAccountTeamsForCalc(new AccountTeamParameters
+            {
+                Fk_Account = auth.Fk_Account,
+                Fk_Season = currentSeason
+            }).FirstOrDefault();
             if (currentTeam == null)
             {
                 throw new Exception("Please create your team!");
             }
 
-            AccountTeamGameWeakModel teamGameWeak = _unitOfWork.AccountTeam.GetTeamGameWeak(auth.Fk_Account, nextGameWeak.Id);
+            AccountTeamGameWeakModelForCalc teamGameWeak = _unitOfWork.AccountTeam.GetAccountTeamGameWeaksForCalc(new AccountTeamGameWeakParameters
+            {
+                Fk_Account = auth.Fk_Account,
+                Fk_GameWeak = nextGameWeakId
+            }).FirstOrDefault();
             if (teamGameWeak == null)
             {
                 _unitOfWork.AccountTeam.CreateAccountTeamGameWeak(new AccountTeamGameWeak
                 {
                     Fk_AccountTeam = currentTeam.Id,
-                    Fk_GameWeak = nextGameWeak.Id
+                    Fk_GameWeak = nextGameWeakId
                 });
             }
 
@@ -332,12 +348,20 @@ namespace API.Areas.AccountTeamArea.Controllers
 
             if (model.Players != null && model.Players.Any())
             {
+                List<int> fk_Players = model.Players.Select(a => a.Fk_AccountTeamPlayer).ToList();
+
+                var playerInfos = _unitOfWork.AccountTeam.GetAccountTeamPlayers(new AccountTeamPlayerParameters
+                {
+                    Ids = fk_Players,
+                }).Select(a => new
+                {
+                    a.Id,
+                    a.Player.Fk_PlayerPosition,
+                }).ToList();
+
                 model.Players.ForEach(a =>
                 {
-                    a.Fk_PlayerPosition = _unitOfWork.AccountTeam.GetAccountTeamPlayers(new AccountTeamPlayerParameters
-                    {
-                        Id = a.Fk_AccountTeamPlayer
-                    }, false).Select(b => b.Player.Fk_PlayerPosition).First();
+                    a.Fk_PlayerPosition = playerInfos.Where(b => b.Id == a.Fk_AccountTeamPlayer).Select(b => b.Fk_PlayerPosition).First();
                 });
 
                 List<AccountTeamCheckStructureModel> players = _mapper.Map<List<AccountTeamCheckStructureModel>>(model.Players);
@@ -348,7 +372,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                 {
                     _unitOfWork.AccountTeam.CreateAccountTeamPlayerGameWeak(new AccountTeamPlayerGameWeak
                     {
-                        Fk_GameWeak = nextGameWeak.Id,
+                        Fk_GameWeak = nextGameWeakId,
                         Fk_AccountTeamPlayer = player.Fk_AccountTeamPlayer,
                         Fk_TeamPlayerType = player.Fk_TeamPlayerType,
                         IsPrimary = player.IsPrimary,

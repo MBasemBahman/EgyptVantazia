@@ -173,6 +173,46 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public int AccounTeamGameWeakCount { get; set; }
     }
 
+    public class AccountTeamModelForCalc
+    {
+        public int Id { get; set; }
+
+        [DisplayName(nameof(TotalMoney))]
+        public double TotalMoney { get; set; }
+
+        #region Cards
+
+        [DisplayName(nameof(BenchBoost))]
+        [DefaultValue(0)]
+        public int BenchBoost { get; set; }
+
+        [DisplayName(nameof(FreeHit))]
+        [DefaultValue(0)]
+        public int FreeHit { get; set; }
+
+        [DisplayName(nameof(WildCard))]
+        [DefaultValue(0)]
+        public int WildCard { get; set; }
+
+        [DisplayName(nameof(DoubleGameWeak))]
+        [DefaultValue(0)]
+        public int DoubleGameWeak { get; set; }
+
+        [DisplayName(nameof(Top_11))]
+        [DefaultValue(0)]
+        public int Top_11 { get; set; }
+
+        [DisplayName(nameof(FreeTransfer))]
+        [DefaultValue(0)]
+        public int FreeTransfer { get; set; }
+
+        [DisplayName(nameof(TripleCaptain))]
+        [DefaultValue(0)]
+        public int TripleCaptain { get; set; }
+
+        #endregion
+    }
+
     public class AccountTeamCreateOrEditModel
     {
         [DisplayName(nameof(Account))]

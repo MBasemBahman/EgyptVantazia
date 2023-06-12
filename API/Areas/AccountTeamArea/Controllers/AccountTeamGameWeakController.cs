@@ -27,17 +27,17 @@ namespace API.Areas.AccountTeamArea.Controllers
 
             if (parameters.GetCurrentGameWeak)
             {
-                parameters.Fk_GameWeak = _unitOfWork.Season.GetCurrentGameWeak(otherLang: false).Id;
+                parameters.Fk_GameWeak = _unitOfWork.Season.GetCurrentGameWeakId();
             }
 
             if (parameters.GetPrevGameWeak)
             {
-                parameters.Fk_GameWeak = _unitOfWork.Season.GetPrevGameWeak(otherLang: false).Id;
+                parameters.Fk_GameWeak = _unitOfWork.Season.GetPrevGameWeakId();
             }
 
             if (parameters.GetNextGameWeak)
             {
-                parameters.Fk_GameWeak = _unitOfWork.Season.GetNextGameWeak(otherLang: false).Id;
+                parameters.Fk_GameWeak = _unitOfWork.Season.GetNextGameWeakId();
             }
 
             PagedList<AccountTeamGameWeakModel> data = await _unitOfWork.AccountTeam.GetAccountTeamGameWeakPaged(parameters, otherLang);

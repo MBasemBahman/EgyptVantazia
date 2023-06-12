@@ -156,5 +156,20 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         public bool FreeHit { get; set; }
 
+        [DisplayName(nameof(BenchBoost))]
+        public bool BenchBoost { get; set; }
+
+        [DisplayName(nameof(WildCard))]
+        public bool WildCard { get; set; }
+
+        [DisplayName(nameof(DoubleGameWeak))]
+        public bool DoubleGameWeak { get; set; }
+
+        [DisplayName(nameof(Top_11))]
+        public bool Top_11 { get; set; }
+
+        [DisplayName(nameof(TripleCaptain))]
+        public bool TripleCaptain { get; set; }
+
     }
 }

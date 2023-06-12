@@ -51,8 +51,8 @@ namespace API.Areas.PlayerTransferArea.Controllers
                 throw new Exception("Season not started yet!");
             }
 
-            GameWeakModel nextGameWeak = _unitOfWork.Season.GetNextGameWeak();
-            if (nextGameWeak == null)
+            int nextGameWeakId = _unitOfWork.Season.GetNextGameWeakId();
+            if (nextGameWeakId > 0)
             {
                 throw new Exception("Game Weak not started yet!");
             }
@@ -63,7 +63,7 @@ namespace API.Areas.PlayerTransferArea.Controllers
                 throw new Exception("Please create your team!");
             }
 
-            AccountTeamGameWeakModel teamGameWeak = _unitOfWork.AccountTeam.GetTeamGameWeak(auth.Fk_Account, nextGameWeak.Id);
+            AccountTeamGameWeakModel teamGameWeak = _unitOfWork.AccountTeam.GetTeamGameWeak(auth.Fk_Account, nextGameWeakId);
             if (teamGameWeak == null)
             {
                 throw new Exception("Game Weak not started yet!");
@@ -158,7 +158,7 @@ namespace API.Areas.PlayerTransferArea.Controllers
                         _unitOfWork.PlayerTransfers.CreatePlayerTransfer(new PlayerTransfer
                         {
                             Fk_AccountTeam = currentTeam.Id,
-                            Fk_GameWeak = nextGameWeak.Id,
+                            Fk_GameWeak = nextGameWeakId,
                             Fk_Player = player.Fk_Player,
                             Cost = price,
                             TransferTypeEnum = TransferTypeEnum.Selling
@@ -180,7 +180,7 @@ namespace API.Areas.PlayerTransferArea.Controllers
                     _unitOfWork.AccountTeam.CreateAccountTeamGameWeak(new AccountTeamGameWeak
                     {
                         Fk_AccountTeam = currentTeam.Id,
-                        Fk_GameWeak = nextGameWeak.Id
+                        Fk_GameWeak = nextGameWeakId
                     });
                 }
 
@@ -194,7 +194,7 @@ namespace API.Areas.PlayerTransferArea.Controllers
                     _unitOfWork.PlayerTransfers.CreatePlayerTransfer(new PlayerTransfer
                     {
                         Fk_AccountTeam = currentTeam.Id,
-                        Fk_GameWeak = nextGameWeak.Id,
+                        Fk_GameWeak = nextGameWeakId,
                         Fk_Player = player.Fk_Player,
                         TransferTypeEnum = TransferTypeEnum.Buying,
                         Cost = price,
@@ -211,7 +211,7 @@ namespace API.Areas.PlayerTransferArea.Controllers
                         {
                             new AccountTeamPlayerGameWeak
                             {
-                                Fk_GameWeak = nextGameWeak.Id,
+                                Fk_GameWeak = nextGameWeakId,
                                 Fk_TeamPlayerType = sellPlayer.Fk_TeamPlayerType,
                                 IsPrimary = sellPlayer.IsPrimary,
                                 Order = sellPlayer.Order,
@@ -227,7 +227,7 @@ namespace API.Areas.PlayerTransferArea.Controllers
                 accountTeam.TotalMoney -= totalPrice;
                 accountTeam.FreeTransfer = freeTransfer;
 
-                teamGameWeak ??= _unitOfWork.AccountTeam.GetTeamGameWeak(auth.Fk_Account, nextGameWeak.Id);
+                teamGameWeak ??= _unitOfWork.AccountTeam.GetTeamGameWeak(auth.Fk_Account, nextGameWeakId);
 
                 if (teamGameWeak.WildCard == false &&
                     teamGameWeak.FreeHit == false)

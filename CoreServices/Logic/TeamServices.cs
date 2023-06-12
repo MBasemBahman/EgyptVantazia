@@ -425,6 +425,13 @@ namespace CoreServices.Logic
             return quary;
         }
 
+        public IQueryable<Player> GetPlayers(PlayerParameters parameters)
+        {
+            IQueryable<Player> quary = _repository.Player
+                                   .FindAll(parameters, trackChanges: false);
+            
+            return quary;
+        }
 
         public async Task<PagedList<PlayerModel>> GetPlayerPaged(
                   PlayerParameters parameters,

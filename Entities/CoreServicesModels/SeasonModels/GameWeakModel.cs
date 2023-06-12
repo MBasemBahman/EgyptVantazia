@@ -82,6 +82,24 @@ namespace Entities.CoreServicesModels.SeasonModels
 
     }
 
+    public class GameWeakModelForCalc
+    {
+        public int Id { get; set; }
+
+        public int Fk_Season { get; set; }
+
+        public DateTime? Deadline { get; set; }
+
+        [DisplayName(nameof(_365_GameWeakId))]
+        public string _365_GameWeakId { get; set; }
+
+        [DisplayName(nameof(_365_GameWeakIdValue))]
+        public int _365_GameWeakIdValue { get; set; }
+
+        [DisplayName(nameof(_365_GameWeakId_Parsed))]
+        public int? _365_GameWeakId_Parsed => string.IsNullOrWhiteSpace(_365_GameWeakId) ? null : int.Parse(_365_GameWeakId);
+    }
+
     public class GameWeakCreateOrEditModel
     {
         [DisplayName($"{nameof(Name)}{PropertyAttributeConstants.ArLang}")]

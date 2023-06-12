@@ -70,9 +70,13 @@ namespace Repository.DBModels.AccountTeamModels
 
         public void UpdateRank(int fk_AccountTeam, int fk_GameWeek)
         {
-            DateTime lasUpdate = DateTime.UtcNow.AddHours(-24).Date;
+            DateTime lasUpdate = DateTime.UtcNow.AddDays(-1).Date;
 
-            var accountTeamModel = FindByCondition(a => a.Fk_AccountTeam == fk_AccountTeam && a.Fk_GameWeak == fk_GameWeek, trackChanges: false)
+            var accountTeamModel = FindByCondition(a => a.Fk_AccountTeam == fk_AccountTeam && 
+                                                        a.Fk_GameWeak == fk_GameWeek &&
+                                                        (a.GlobalRankingUpdatedAt < lasUpdate ||
+                                                         a.CountryRankingUpdatedAt < lasUpdate ||
+                                                         a.FavouriteTeamRankingUpdatedAt < lasUpdate), trackChanges: false)
                                    .Select(a => new
                                    {
                                        a.Id,

@@ -1,0 +1,180 @@
+@model AccountTeamEditCardModel
+@{
+    ViewData["Title"] = $"{Localizer.Get("CreateOrEdit")} {Localizer.Get("Account Teams")}";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.useForm = true;
+    ViewBag.useImageUploud = true;
+    ViewBag.userFormRepeater = true;
+
+    List<AccountTeamModel> accountTeams = ViewData["AccountTeams"] != null ? 
+        (List<AccountTeamModel>)ViewData["AccountTeams"] : new List<AccountTeamModel>();
+}
+
+<!-- BEGIN: Content-->
+<div class="app-content content ">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row">
+            <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h2 class="content-header-title float-start mb-0">@ViewData["Title"]</h2>
+                        <div class="breadcrumb-wrapper">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    @Localizer.Get("Account Profile")
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    @ViewData["Title"]
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-body">
+            <section id="multiple-column-form">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form class="form" asp-action="EditAccountTeamsCards" enctype="multipart/form-data">
+                                    <div asp-validation-summary="All" class="text-danger">@ViewData["Error"]</div>
+                                    
+                                    <div class="row mb-1">
+                                        
+                                        <div class="divider">
+                                            <div class="divider-text">@Localizer.Get("Cards")</div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="BenchBoost" class="form-label"></label>
+                                                <input asp-for="BenchBoost" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("BenchBoost"))" />
+                                                <span asp-validation-for="BenchBoost" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="FreeHit" class="form-label"></label>
+                                                <input asp-for="FreeHit" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("FreeHit"))" />
+                                                <span asp-validation-for="FreeHit" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="WildCard" class="form-label"></label>
+                                                <input asp-for="WildCard" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("WildCard"))" />
+                                                <span asp-validation-for="WildCard" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="DoubleGameWeak" class="form-label"></label>
+                                                <input asp-for="DoubleGameWeak" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("DoubleGameWeak"))" />
+                                                <span asp-validation-for="DoubleGameWeak" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Top_11" class="form-label"></label>
+                                                <input asp-for="Top_11" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("Top_11"))" />
+                                                <span asp-validation-for="Top_11" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="FreeTransfer" class="form-label"></label>
+                                                <input asp-for="FreeTransfer" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("FreeTransfer"))" />
+                                                <span asp-validation-for="FreeTransfer" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="TripleCaptain" class="form-label"></label>
+                                                <input asp-for="TripleCaptain" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("TripleCaptain"))" />
+                                                <span asp-validation-for="TripleCaptain" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                    <hr />
+                                    
+                                    @if (accountTeams.Count > 0)
+                                    {
+                                        <table class="table table-responsive">
+                                            <thead>
+                                                <tr>
+                                                    <td>@Localizer.Get("Account")</td>
+                                                    <td>@Localizer.Get("Season")</td>
+                                                    <td>@Localizer.Get("Name")</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{ int i = 0;}
+                                                @foreach (var accountTeam in accountTeams)
+                                                {
+                                                    <input type="hidden" name="Fk_AccountTeams[]" value="@accountTeam.Id" />
+                                                    <tr>
+                                                        <td>@accountTeam.Account.FullName</td>
+                                                        <td>@accountTeam.Season.Name</td>
+                                                        <td>@accountTeam.Name</td>
+                                                    </tr>
+                                                    i++; 
+                                                }
+                                            </tbody>
+                                        </table>
+                                        <hr/>
+                                    }
+                                    
+                                    
+                                    
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary me-1">@Localizer.Get("Submit")</button>
+                                            <button type="reset" class="btn btn-outline-secondary me-1">@Localizer.Get("Reset")</button>
+                                            @* <a asp-action="Profile" asp-route-id="@Model.Fk_Account" class="btn btn-warning"> @Localizer.Get("Back") </a> *@
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+</div>
+
+@section scripts{
+    <script>
+
+        function resetRepeaterData() {
+            $(".game-id").last().val('0');
+           $(".game-name").last().val('');
+           $(".game-name-en").last().val('');
+           $(".gameid365").last().val('');
+
+        }
+
+        $(document).ready(function () {
+            $('button[data-repeater-delete][newRepeater]').each(function () {
+                $(this).click();
+            });
+
+            $("#add-new-btn").on('click', function () {
+                setTimeout(resetRepeaterData, 500)
+            });
+
+        });
+
+    </script>
+}

@@ -51,7 +51,12 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header border-bottom">
-                                    <h4 class="card-title"> @ViewData["Title"]</h4>
+                                    <h4 class="card-title">
+                                        @ViewData["Title"] | 
+                                        <a href="#" class="edit_cards_anchor">
+                                            @Localizer.Get("Edit Cards")
+                                        </a>
+                                    </h4>
                                 </div>
                                 <p class="m-2 demo-inline-spacing">
                                     <a class="btn btn-primary me-1" data-bs-toggle="collapse" href="#AdvancedFilter" role="button" aria-expanded="false" aria-controls="AdvancedFilter">
@@ -68,6 +73,7 @@
                                     <table class="datatables datatables-ajax table table-responsive table">
                                         <thead>
                                             <tr>
+                                                <th><input type="checkbox" class="selectAllAccountTeams form-check-input" value="" /></th>
                                                 <th>
                                                     @Html.DisplayNameFor(model => row.Id)
 
@@ -121,7 +127,11 @@ else
             <div class="col-12">
                 <div class="card">
                     <div class="card-header border-bottom">
-                        <h4 class="card-title"> @ViewData["Title"]</h4>
+                        <h4 class="card-title">@ViewData["Title"] | 
+                            <a href="#" class="edit_cards_anchor">
+                                @Localizer.Get("Edit Cards")
+                            </a>
+                        </h4>
 
                     </div>
 
@@ -129,6 +139,7 @@ else
                         <table class="datatables datatables-ajax table table-responsive table">
                             <thead>
                                 <tr>
+                                    <th><input type="checkbox" class="selectAllAccountTeams form-check-input" value="" /></th>
                                     <th>
                                         @Html.DisplayNameFor(model => row.Id)
 
@@ -204,6 +215,16 @@ else
                     },
                     // Columns Setups
                     columns: [
+                        {
+                            data: "id",
+                            'targets': 0,
+                            'searchable': false,
+                            'orderable': false,
+                            'className': 'dt-body-center',
+                            'render': function (data, type, full, meta){
+                                return '<input type="checkbox" class="form-check-input" name="fk_AccountTeams[]" value="' + $('<div/>').text(data).html() + '">';
+                            }
+                        },
                         { data: "id" },
                         {
                             data: "account",
@@ -293,11 +314,20 @@ else
                     event.preventDefault();
                     dt_ajax_table.DataTable().draw();
                 });
-
+                
+                $(document).on("click", ".selectAllAccountTeams", function() {
+                   $('input:checkbox').prop('checked', this.checked);
+                });
+                
+                $(document).on("click", ".edit_cards_anchor", function(e) {
+                    e.preventDefault();
+                    
+                   let fk_AccountTeams = $('input[name="fk_AccountTeams[]"]:checked').map(function(){return $(this).val();}).get();
+                   window.location.href = '/AccountTeamEntity/AccountTeam/EditAccountTeamsCards?fk_AccountTeams='+fk_AccountTeams;
+                });
 
             }
         };
-
 
 
         $(document).ready(function () {

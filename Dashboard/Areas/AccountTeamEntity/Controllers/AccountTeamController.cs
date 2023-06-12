@@ -64,6 +64,43 @@ namespace Dashboard.Areas.AccountTeamEntity.Controllers
 
             return Json(dataTableManager.ReturnTable(dataTableResult));
         }
+        
+        [Authorize(DashboardViewEnum.AccountTeam, AccessLevelEnum.CreateOrEdit)]
+        public IActionResult EditAccountTeamsCards([FromQuery] string fk_AccountTeams)
+        {
+            List<int> fk_AccountTeamsIds = !string.IsNullOrEmpty(fk_AccountTeams) ? 
+                fk_AccountTeams.Split(",").Select(int.Parse).ToList() : new List<int>();
+
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
+            if (fk_AccountTeamsIds.Any())
+            {
+                ViewData["AccountTeams"] = _unitOfWork.AccountTeam.GetAccountTeams(new AccountTeamParameters
+                {
+                    Fk_AccountTeams = fk_AccountTeamsIds
+                }, otherLang).ToList();    
+            }
+
+            AccountTeamEditCardModel model = new AccountTeamEditCardModel
+            {
+                BenchBoost = 0,
+                FreeHit = 0,
+                WildCard = 0,
+                DoubleGameWeak = 0,
+                Top_11 = 0,
+                FreeTransfer = 0,
+                TripleCaptain = 0
+            };
+            
+            return View(model);
+        }
+        
+        [HttpPost]
+        [Authorize(DashboardViewEnum.Player, AccessLevelEnum.CreateOrEdit)]
+        public async Task<IActionResult> EditAccountTeamsCards(List<int> fk_AccountTeams, AccountTeamEditCardModel model)
+        {
+            return View();
+        }
 
         public IActionResult Profile(int id)
         {

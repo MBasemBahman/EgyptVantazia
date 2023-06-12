@@ -1293,4 +1293,7 @@
   <data name="AccountSubscriptionCount" xml:space="preserve">
     <value>Account Count</value>
   </data>
+  <data name="Edit Cards" xml:space="preserve">
+    <value>Edit Cards</value>
+  </data>
 </root>

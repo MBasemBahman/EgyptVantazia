@@ -1341,4 +1341,7 @@
   <data name="AccountSubscriptionCount" xml:space="preserve">
     <value>عدد الحسابات</value>
   </data>
+  <data name="Edit Cards" xml:space="preserve">
+    <value>تعديل الكروت</value>
+  </data>
 </root>

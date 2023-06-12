@@ -26,6 +26,7 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public int GameWeakFrom { get; set; }
         public int GameWeakTo { get; set; }
     }
+    
     public class AccountTeamPlayerGameWeakModel : AuditEntity
     {
 
@@ -76,5 +77,15 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public bool IsParticipate { get; set; }
 
         public int? Top15 { get; set; }
+    }
+
+    public class AccountTeamPlayerGameWeakModelForCalc
+    {
+        public int Fk_AccountTeamPlayer { get; set; }
+        public int Fk_TeamPlayerType { get; set; }
+        public bool IsPrimary { get; set; }
+        public int Order { get; set; }
+        public int? Points { get; set; }
+        public string PlayerName { get; set; }
     }
 }

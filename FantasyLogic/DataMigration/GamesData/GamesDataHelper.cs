@@ -40,26 +40,24 @@ namespace FantasyLogic.DataMigration.GamesData
 
         public void RunUpdateGames()
         {
-            List<TeamDto> teams = _unitOfWork.Team.GetTeams(new TeamParameters
-            {
-            }, otherLang: false).Select(a => new TeamDto
-            {
-                Id = a.Id,
-                _365_TeamId = a._365_TeamId
-            }).ToList();
+            List<TeamModelForCalc> teams = _unitOfWork.Team.GetTeams(new TeamParameters { })
+                                             .Select(a => new TeamModelForCalc
+                                             {
+                                                 Id = a.Id,
+                                                 _365_TeamId = a._365_TeamId
+                                             }).ToList();
 
-            //UpdateGames(teams);
             _ = BackgroundJob.Enqueue(() => UpdateGames(teams));
         }
 
-        public void UpdateGames(List<TeamDto> teams)
+        public void UpdateGames(List<TeamModelForCalc> teams)
         {
-            SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
+            SeasonModelForCalc season = _unitOfWork.Season.GetCurrentSeason();
 
-            List<GameWeakDto> gameWeaks = _unitOfWork.Season.GetGameWeaks(new GameWeakParameters
+            List<GameWeakModelForCalc> gameWeaks = _unitOfWork.Season.GetGameWeaks(new GameWeakParameters
             {
                 Fk_Season = season.Id
-            }, otherLang: false).Select(a => new GameWeakDto
+            }).Select(a => new GameWeakModelForCalc
             {
                 Id = a.Id,
                 _365_GameWeakId = a._365_GameWeakId
@@ -77,19 +75,11 @@ namespace FantasyLogic.DataMigration.GamesData
 
                 if (fk_GameWeak > 0)
                 {
-                    //UpdateGame(game, fk_Home, fk_Away, fk_GameWeak).Wait();
-
                     jobId = jobId.IsExisting()
                         ? BackgroundJob.ContinueJobWith(jobId, () => UpdateGame(game, fk_Home, fk_Away, fk_GameWeak))
                         : BackgroundJob.Enqueue(() => UpdateGame(game, fk_Home, fk_Away, fk_GameWeak));
                 }
-                else
-                {
-
-                }
             }
-
-            //UpdateGameWeakDeadline(season.Id).Wait();
 
             jobId = jobId.IsExisting()
                     ? BackgroundJob.ContinueJobWith(jobId, () => UpdateGameWeakDeadline(season.Id))
@@ -99,14 +89,6 @@ namespace FantasyLogic.DataMigration.GamesData
         public async Task UpdateGame(Games game, int fk_Home, int fk_Away, int fk_GameWeak)
         {
             DateTime startTime = game.StartTimeVal;
-
-            //GameWeak checkGameWeek = _unitOfWork.Season.GetGameWeak(startTime);
-
-            //if (checkGameWeek != null && checkGameWeek.Id != fk_GameWeak)
-            //{
-            //    fk_GameWeak = checkGameWeek.Id;
-            //    isDelayed = true;
-            //}
 
             _unitOfWork.Season.CreateTeamGameWeak(new TeamGameWeak
             {
@@ -158,15 +140,14 @@ namespace FantasyLogic.DataMigration.GamesData
             var teamGameWeaks = _unitOfWork.Season.GetTeamGameWeaks(new TeamGameWeakParameters
             {
                 Fk_Season = fk_Season
-            }, otherLang: false)
-                .GroupBy(a => a.Fk_GameWeak)
-                .Select(a => new
-                {
-                    Fk_GameWeak = a.Key,
-                    Deadline = a.Select(b => b.StartTime).OrderBy(b => b).FirstOrDefault(), // بداية الجوله
-                    EndTime = a.Select(b => b.StartTime).OrderByDescending(b => b).FirstOrDefault() // نهاية الجوله
-                })
-                .ToList();
+            }).GroupBy(a => a.Fk_GameWeak)
+              .Select(a => new
+              {
+                  Fk_GameWeak = a.Key,
+                  Deadline = a.Select(b => b.StartTime).OrderBy(b => b).FirstOrDefault(), // بداية الجوله
+                  EndTime = a.Select(b => b.StartTime).OrderByDescending(b => b).FirstOrDefault() // نهاية الجوله
+              })
+              .ToList();
 
             foreach (var teamGameWeak in teamGameWeaks)
             {
@@ -207,28 +188,31 @@ namespace FantasyLogic.DataMigration.GamesData
             if (!skipReset)
             {
                 _unitOfWork.Season.ResetCurrentGameWeaks();
-                await _unitOfWork.Save();
             }
 
-            GameWeak gameWeak = await _unitOfWork.Season.FindGameWeakbyId(id, trackChanges: true);
-
+            GameWeak gameWeak = await _unitOfWork.Season.FindGameWeakbyId(id, trackChanges: !skipReset);
             if (!skipReset)
             {
                 gameWeak.IsCurrent = true;
-                await _unitOfWork.Save();
             }
 
-            GameWeak nextGameWeak = await _unitOfWork.Season.FindGameWeakby365Id((gameWeak._365_GameWeakId.ParseToInt() + 1).ToString(), gameWeak.Fk_Season, trackChanges: true);
+            GameWeak nextGameWeak = await _unitOfWork.Season.FindGameWeakby365Id((gameWeak._365_GameWeakId.ParseToInt() + 1).ToString(), gameWeak.Fk_Season, trackChanges: !skipReset);
             if (!skipReset && nextGameWeak != null)
             {
                 nextGameWeak.IsNext = true;
-                await _unitOfWork.Save();
             }
 
-            GameWeak prevGameWeak = await _unitOfWork.Season.FindGameWeakby365Id((gameWeak._365_GameWeakId.ParseToInt() - 1).ToString(), gameWeak.Fk_Season, trackChanges: true);
-            if (!skipReset && prevGameWeak != null)
+            if (!skipReset)
             {
-                prevGameWeak.IsPrev = true;
+                GameWeak prevGameWeak = await _unitOfWork.Season.FindGameWeakby365Id((gameWeak._365_GameWeakId.ParseToInt() - 1).ToString(), gameWeak.Fk_Season, trackChanges: !skipReset);
+                if (prevGameWeak != null)
+                {
+                    prevGameWeak.IsPrev = true;
+                }
+            }
+
+            if (!skipReset)
+            {
                 await _unitOfWork.Save();
             }
 
@@ -276,7 +260,7 @@ namespace FantasyLogic.DataMigration.GamesData
                                          .GetAccountTeams(new AccountTeamParameters
                                          {
                                              Id = fk_AccounTeam
-                                         }, otherLang: false)
+                                         })
                                          .Select(a => a.Id)
                                          .ToList();
 
@@ -300,7 +284,7 @@ namespace FantasyLogic.DataMigration.GamesData
                 Fk_GameWeak = fk_PrevGameWeak,
                 Fk_AccountTeam = fk_AccounTeam,
                 IsTransfer = false
-            }, otherLang: false).Count();
+            }).Count();
 
             if (players != 0)
             {
@@ -308,7 +292,7 @@ namespace FantasyLogic.DataMigration.GamesData
                 {
                     Fk_GameWeak = fk_CurrentGameWeak,
                     Fk_AccountTeam = fk_AccounTeam
-                }, otherLang: false).Any())
+                }).Any())
                 {
                     _unitOfWork.AccountTeam.CreateAccountTeamGameWeak(new AccountTeamGameWeak
                     {
@@ -318,11 +302,15 @@ namespace FantasyLogic.DataMigration.GamesData
                     await _unitOfWork.Save();
                 }
 
-                AccountTeamGameWeakModel accountTeamGameWeakModel = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
+                AccountTeamGameWeakModelForCalc accountTeamGameWeakModel = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
                 {
                     Fk_GameWeak = fk_CurrentGameWeak,
                     Fk_AccountTeam = fk_AccounTeam
-                }, otherLang: false).FirstOrDefault();
+                }).Select(a => new AccountTeamGameWeakModelForCalc
+                {
+                    Id = a.Id,
+                    FreeHit = a.FreeHit,
+                }).FirstOrDefault();
 
                 if (accountTeamGameWeakModel != null)
                 {
@@ -333,7 +321,7 @@ namespace FantasyLogic.DataMigration.GamesData
                         Fk_GameWeak = fk_PrevGameWeak,
                         Fk_AccountTeam = fk_AccounTeam,
                         FreeHit = true,
-                    }, otherLang: false).Any())
+                    }).Any())
                     {
                         freeHit = true;
                     }
@@ -345,7 +333,7 @@ namespace FantasyLogic.DataMigration.GamesData
                             Fk_GameWeak = fk_CurrentGameWeak,
                             Fk_AccountTeam = fk_AccounTeam,
                             IsTransfer = false
-                        }, otherLang: false).Count() < 15)
+                        }).Count() < 15)
                     {
                         List<AccountTeamPlayerGameWeakModel> prevPlayers = new();
 
@@ -356,7 +344,7 @@ namespace FantasyLogic.DataMigration.GamesData
                                 Fk_GameWeak = fk_PrevGameWeak,
                                 Fk_AccountTeam = fk_AccounTeam,
                                 IsTransfer = false
-                            }, otherLang: false)
+                            })
                             .Select(a => new AccountTeamPlayerGameWeakModel
                             {
                                 Fk_AccountTeamPlayer = a.Fk_AccountTeamPlayer,
@@ -364,7 +352,7 @@ namespace FantasyLogic.DataMigration.GamesData
                                 IsPrimary = a.IsPrimary,
                                 Order = a.Order,
                                 Points = a.Points,
-                                PlayerName = a.PlayerName
+                                PlayerName = a.AccountTeamPlayer.Player.Name
                             })
                             .ToList();
 
@@ -376,9 +364,7 @@ namespace FantasyLogic.DataMigration.GamesData
                                 fk_PrevGameWeak = _unitOfWork.Season.GetGameWeaks(new GameWeakParameters
                                 {
                                     _365_GameWeakId = prev_365_GameWeakId.ToString()
-                                }, otherLang: false)
-                                    .Select(a => a.Id)
-                                    .FirstOrDefault();
+                                }).Select(a => a.Id).FirstOrDefault();
                             }
                             else
                             {
@@ -412,14 +398,14 @@ namespace FantasyLogic.DataMigration.GamesData
     }
 
 
-    public class GameWeakDto
+    public class GameWeakModelForCalc
     {
         public int Id { get; set; }
 
         public string _365_GameWeakId { get; set; }
     }
 
-    public class TeamDto
+    public class TeamModelForCalc
     {
         public int Id { get; set; }
 

@@ -29,7 +29,7 @@ namespace FantasyLogic.Calculations
                 fk_GameWeak = _unitOfWork.Season.GetCurrentGameWeak().Id;
             }
 
-            SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
+            SeasonModelForCalc season = _unitOfWork.Season.GetCurrentSeason();
             GameWeakModel nextGameWeek = _unitOfWork.Season.GetNextGameWeak();
 
             List<GameWeakModel> gameWeaks = _unitOfWork.Season

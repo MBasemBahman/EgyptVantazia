@@ -16,7 +16,7 @@ namespace FantasyLogic.Calculations
 
         public void RunPrivateLeaguesRanking(int? fk_GameWeak, int id, bool indebug = false)
         {
-            SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
+            SeasonModelForCalc season = _unitOfWork.Season.GetCurrentSeason();
 
             if (indebug)
             {

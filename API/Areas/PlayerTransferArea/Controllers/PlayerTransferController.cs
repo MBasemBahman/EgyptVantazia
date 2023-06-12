@@ -45,7 +45,7 @@ namespace API.Areas.PlayerTransferArea.Controllers
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
-            SeasonModel currentSeason = _unitOfWork.Season.GetCurrentSeason();
+            SeasonModelForCalc currentSeason = _unitOfWork.Season.GetCurrentSeason();
             if (currentSeason == null)
             {
                 throw new Exception("Season not started yet!");

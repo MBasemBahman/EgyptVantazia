@@ -35,7 +35,7 @@ namespace API.Areas.PaymentArea.Controllers
         public async Task<string> RequestPayment([FromBody] RequestPaymentDto model)
         {
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
-            SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
+            SeasonModelForCalc season = _unitOfWork.Season.GetCurrentSeason();
 
             SubscriptionModel prevSubscription = _unitOfWork.Subscription.GetSubscriptions(new SubscriptionParameters
             {

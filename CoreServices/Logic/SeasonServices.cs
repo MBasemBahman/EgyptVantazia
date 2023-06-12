@@ -89,6 +89,19 @@ namespace CoreServices.Logic
                    .FirstOrDefault();
         }
 
+        public SeasonModelForCalc GetCurrentSeason()
+        {
+            return _repository.Season
+                       .FindAll(new SeasonParameters { IsCurrent = true }, trackChanges: false)
+                       .Select(a => new SeasonModelForCalc
+                       {
+                           Id = a.Id,
+                           _365_SeasonId = a._365_SeasonId
+                       })
+                       .OrderByDescending(a => a.Id)
+                       .FirstOrDefault();
+        }
+
         public Season AddSeasonGameWeaks(Season season, List<GameWeakCreateOrEditModel> gameWeaks)
         {
 
@@ -194,6 +207,12 @@ namespace CoreServices.Logic
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);
+        }
+
+        public IQueryable<GameWeak> GetGameWeaks(GameWeakParameters parameters)
+        {
+            return _repository.GameWeak
+                       .FindAll(parameters, trackChanges: false);
         }
 
         public GameWeakModel GetCurrentGameWeak(bool otherLang = false)
@@ -385,6 +404,11 @@ namespace CoreServices.Logic
                        .Sort(parameters.OrderBy);
         }
 
+        public IQueryable<TeamGameWeak> GetTeamGameWeaks(TeamGameWeakParameters parameters)
+        {
+            return _repository.TeamGameWeak
+                       .FindAll(parameters, trackChanges: false);
+        }
 
         public async Task<PagedList<TeamGameWeakModel>> GetTeamGameWeakPaged(
                   TeamGameWeakParameters parameters,

@@ -26,7 +26,7 @@ namespace FantasyLogic.DataMigration.StandingsData
                 _365_TeamId = a._365_TeamId
             }).ToList();
 
-            SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
+            SeasonModelForCalc season = _unitOfWork.Season.GetCurrentSeason();
 
             _ = BackgroundJob.Enqueue(() => UpdateSeasonStandings(teams, season._365_SeasonId.ParseToInt(), season.Id));
         }

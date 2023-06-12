@@ -17,7 +17,7 @@ namespace FantasyLogic.DataMigration.SeasonData
 
         public void RunUpdateGameWeaks()
         {
-            SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
+            SeasonModelForCalc season = _unitOfWork.Season.GetCurrentSeason();
 
             _ = BackgroundJob.Enqueue(() => UpdateSeasonGameWeaks(season.Id, season._365_SeasonId.ParseToInt()));
         }

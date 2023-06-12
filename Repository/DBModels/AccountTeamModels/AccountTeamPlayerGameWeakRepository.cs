@@ -45,10 +45,9 @@ namespace Repository.DBModels.AccountTeamModels
 
         public void ResetTeamPlayers(int fk_AccountTeam, int fk_GameWeak, int fk_AccountTeamGameWeak)
         {
-
             AccountTeamGameWeak accountTeamGameWeak = DBContext.AccountTeamGameWeaks
-                                               .Where(a => a.Id == fk_AccountTeamGameWeak && a.TansfarePoints < 0)
-                                               .FirstOrDefault();
+                                                               .Where(a => a.Id == fk_AccountTeamGameWeak && a.TansfarePoints < 0)
+                                                               .FirstOrDefault();
             if (accountTeamGameWeak != null)
             {
                 accountTeamGameWeak.TansfarePoints = 0;

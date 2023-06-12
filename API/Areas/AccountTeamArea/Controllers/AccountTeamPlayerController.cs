@@ -167,7 +167,7 @@ namespace API.Areas.AccountTeamArea.Controllers
             _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
-            SeasonModel currentSeason = _unitOfWork.Season.GetCurrentSeason();
+            SeasonModelForCalc currentSeason = _unitOfWork.Season.GetCurrentSeason();
             if (currentSeason == null)
             {
                 throw new Exception("Season not started yet!");
@@ -293,7 +293,7 @@ namespace API.Areas.AccountTeamArea.Controllers
             _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
-            SeasonModel currentSeason = _unitOfWork.Season.GetCurrentSeason();
+            SeasonModelForCalc currentSeason = _unitOfWork.Season.GetCurrentSeason();
             if (currentSeason == null)
             {
                 throw new Exception("Season not started yet!");

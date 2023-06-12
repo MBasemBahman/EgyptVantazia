@@ -149,4 +149,12 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         [DisplayName(nameof(FavouriteTeamRankingUpdatedAt))]
         public DateTime? FavouriteTeamRankingUpdatedAt { get; set; }
     }
+
+    public class AccountTeamGameWeakModelForCalc
+    {
+        public int Id { get; set; }
+
+        public bool FreeHit { get; set; }
+
+    }
 }

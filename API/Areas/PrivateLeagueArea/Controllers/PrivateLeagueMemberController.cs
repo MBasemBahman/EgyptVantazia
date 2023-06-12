@@ -32,7 +32,7 @@ namespace API.Areas.PrivateLeagueArea.Controllers
                 throw new Exception("Not Valid!");
             }
 
-            SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
+            SeasonModelForCalc season = _unitOfWork.Season.GetCurrentSeason();
             parameters.Fk_Season = season.Id;
             parameters.HaveTeam = true;
             parameters.IgnoreZeroPoints = true;
@@ -74,7 +74,7 @@ namespace API.Areas.PrivateLeagueArea.Controllers
 
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
-            SeasonModel currentSeason = _unitOfWork.Season.GetCurrentSeason();
+            SeasonModelForCalc currentSeason = _unitOfWork.Season.GetCurrentSeason();
             if (currentSeason == null)
             {
                 throw new Exception("Season not started yet!");

@@ -24,6 +24,13 @@ namespace Entities.CoreServicesModels.SeasonModels
         public bool IsCurrent { get; set; }
     }
 
+    public class SeasonModelForCalc
+    {
+        public int Id { get; set; }
+
+        public string _365_SeasonId { get; set; }
+    }
+
     public class SeasonCreateOrEditModel
     {
         public SeasonCreateOrEditModel()

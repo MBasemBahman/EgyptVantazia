@@ -160,7 +160,7 @@ namespace API.Areas.AccountTeamArea.Controllers
 
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
-            SeasonModel currentSeason = _unitOfWork.Season.GetCurrentSeason();
+            SeasonModelForCalc currentSeason = _unitOfWork.Season.GetCurrentSeason();
             if (currentSeason == null)
             {
                 throw new Exception("Season not started yet!");
@@ -193,7 +193,7 @@ namespace API.Areas.AccountTeamArea.Controllers
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
-            SeasonModel currentSeason = _unitOfWork.Season.GetCurrentSeason();
+            SeasonModelForCalc currentSeason = _unitOfWork.Season.GetCurrentSeason();
             GameWeakModel nextGameWeak = _unitOfWork.Season.GetNextGameWeak();
 
             AccountTeam accountTeam = _mapper.Map<AccountTeam>(model);
@@ -253,7 +253,7 @@ namespace API.Areas.AccountTeamArea.Controllers
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
             _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
-            SeasonModel currentSeason = _unitOfWork.Season.GetCurrentSeason();
+            SeasonModelForCalc currentSeason = _unitOfWork.Season.GetCurrentSeason();
             if (currentSeason == null)
             {
                 throw new Exception("Season not started yet!");
@@ -465,7 +465,7 @@ namespace API.Areas.AccountTeamArea.Controllers
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
             _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
-            SeasonModel currentSeason = _unitOfWork.Season.GetCurrentSeason();
+            SeasonModelForCalc currentSeason = _unitOfWork.Season.GetCurrentSeason();
             if (currentSeason == null)
             {
                 throw new Exception("Season not started yet!");

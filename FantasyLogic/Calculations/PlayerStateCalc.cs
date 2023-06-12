@@ -29,7 +29,7 @@ namespace FantasyLogic.Calculations
         #region Calculations
         public void RunPlayersStateCalculations(int fk_GameWeak, string _365_MatchId, List<int> fk_Players, List<int> fk_Teams, bool ignoreGameWeaks, bool inDebug)
         {
-            SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
+            SeasonModelForCalc season = _unitOfWork.Season.GetCurrentSeason();
 
             List<int> gameWeaks = ignoreGameWeaks ? new List<int>() :
                                              _unitOfWork.Season

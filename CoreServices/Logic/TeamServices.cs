@@ -18,6 +18,12 @@ namespace CoreServices.Logic
         }
 
         #region Team Services
+
+        public IQueryable<Team> GetTeams(TeamParameters parameters)
+        {
+            return _repository.Team.FindAll(parameters, trackChanges: false);
+        }
+
         public IQueryable<TeamModel> GetTeams(TeamParameters parameters,
                 bool otherLang)
         {

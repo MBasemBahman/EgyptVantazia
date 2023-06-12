@@ -130,6 +130,11 @@ namespace CoreServices.Logic
                        .Sort(parameters.OrderBy);
         }
 
+        public IQueryable<AccountTeam> GetAccountTeams(AccountTeamParameters parameters)
+        {
+            return _repository.AccountTeam
+                       .FindAll(parameters, trackChanges: false);
+        }
 
         public async Task<PagedList<AccountTeamModel>> GetAccountTeamPaged(
                   AccountTeamParameters parameters,
@@ -301,6 +306,11 @@ namespace CoreServices.Logic
                        .Sort(parameters.OrderBy);
         }
 
+        public IQueryable<AccountTeamGameWeak> GetAccountTeamGameWeaks(AccountTeamGameWeakParameters parameters)
+        {
+            return _repository.AccountTeamGameWeak
+                       .FindAll(parameters, trackChanges: false);
+        }
 
         public async Task<PagedList<AccountTeamGameWeakModel>> GetAccountTeamGameWeakPaged(
                   AccountTeamGameWeakParameters parameters,
@@ -369,7 +379,7 @@ namespace CoreServices.Logic
 
             updateCards.Fk_AccounTeams.ForEach(a =>
             {
-                
+
             });
         }
         public void UpdateAccountTeamUpdateCards(AccountTeamUpdateCards updateCards)
@@ -488,6 +498,11 @@ namespace CoreServices.Logic
                        .Sort(parameters.OrderBy);
         }
 
+        public IQueryable<AccountTeamPlayerGameWeak> GetAccountTeamPlayerGameWeaks(AccountTeamPlayerGameWeakParameters parameters)
+        {
+            return _repository.AccountTeamPlayerGameWeak
+                       .FindAll(parameters, trackChanges: false);
+        }
 
         public async Task<PagedList<AccountTeamPlayerGameWeakModel>> GetAccountTeamPlayerGameWeakPaged(
                   AccountTeamPlayerGameWeakParameters parameters,

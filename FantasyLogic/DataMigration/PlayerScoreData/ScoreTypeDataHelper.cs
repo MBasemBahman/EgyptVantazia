@@ -18,7 +18,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
 
         public void RunUpdateStates(int delayMinutes)
         {
-            SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
+            SeasonModelForCalc season = _unitOfWork.Season.GetCurrentSeason();
 
             List<string> teamGameWeaks = _unitOfWork.Season.GetTeamGameWeaks(new TeamGameWeakParameters
             {

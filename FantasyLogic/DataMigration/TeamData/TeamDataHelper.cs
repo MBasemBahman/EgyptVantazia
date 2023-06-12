@@ -18,7 +18,7 @@ namespace FantasyLogic.DataMigration.TeamData
 
         public void RunUpdateTeams()
         {
-            SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
+            SeasonModelForCalc season = _unitOfWork.Season.GetCurrentSeason();
 
             int _365_SeasonId = season._365_SeasonId.ParseToInt();
 

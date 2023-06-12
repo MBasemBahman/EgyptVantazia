@@ -42,7 +42,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             bool runAll,
             bool stopAll)
         {
-            SeasonModel season = _unitOfWork.Season.GetCurrentSeason();
+            SeasonModelForCalc season = _unitOfWork.Season.GetCurrentSeason();
 
             parameters.Fk_Season = season.Id;
 

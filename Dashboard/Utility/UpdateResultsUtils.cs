@@ -1,4 +1,5 @@
-﻿using System.Collections.Specialized;
+﻿using Entities.CoreServicesModels.AccountTeamModels;
+using System.Collections.Specialized;
 using System.Web;
 
 namespace Dashboard.Utility
@@ -93,6 +94,15 @@ namespace Dashboard.Utility
             string queryString = query.ToString();
 
             _servicesHttp.OnPost("AccountTeam/v1/AccountTeam/UpdatePrivateLeaguesRanking?" + queryString, null).Wait();
+        }
+
+        public void UpdateAccountTeamUpdateCards(AccountTeamsUpdateCards updateCards)
+        {
+            NameValueCollection query = HttpUtility.ParseQueryString(string.Empty);
+
+            string queryString = query.ToString();
+
+            _servicesHttp.OnPost("AccountTeam/v1/AccountTeam/UpdateAccountTeamUpdateCards?" + queryString, updateCards).Wait();
         }
 
     }

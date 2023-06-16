@@ -178,6 +178,64 @@ namespace Repository.DBModels.AccountTeamModels
 
             _ = DBContext.SaveChanges();
         }
+
+        public void UpdateAccountTeamUpdateCards(AccountTeamsUpdateCards updateCards)
+        {
+            if (updateCards.Fk_AccounTeam > 0)
+            {
+                AccountTeam accounTeam = FindByCondition(a => a.Id == updateCards.Fk_AccounTeam, trackChanges: true).FirstOrDefault();
+
+                if (accounTeam != null)
+                {
+                    UpdateAccountTeamUpdateCards(updateCards, accounTeam);
+                }
+            }
+            else if (updateCards.Fk_AccounTeams != null && updateCards.Fk_AccounTeams.Any())
+            {
+                List<AccountTeam> accounTeams = FindByCondition(a => updateCards.Fk_AccounTeams.Contains(a.Id), trackChanges: true).ToList();
+
+                accounTeams.ForEach(accounTeam => UpdateAccountTeamUpdateCards(updateCards, accounTeam));
+            }
+            else
+            {
+                List<AccountTeam> accounTeams = FindByCondition(a => a.AccountTeamGameWeaks.Any(), trackChanges: true).ToList();
+
+                accounTeams.ForEach(accounTeam => UpdateAccountTeamUpdateCards(updateCards, accounTeam));
+            }
+            DBContext.SaveChanges();
+        }
+
+        private void UpdateAccountTeamUpdateCards(AccountTeamUpdateCards updateCards, AccountTeam accountTeam)
+        {
+            if (updateCards.BenchBoost > 0)
+            {
+                accountTeam.BenchBoost++;
+            }
+            if (updateCards.FreeHit > 0)
+            {
+                accountTeam.FreeHit++;
+            }
+            if (updateCards.WildCard > 0)
+            {
+                accountTeam.WildCard++;
+            }
+            if (updateCards.DoubleGameWeak > 0)
+            {
+                accountTeam.DoubleGameWeak++;
+            }
+            if (updateCards.Top_11 > 0)
+            {
+                accountTeam.Top_11++;
+            }
+            if (updateCards.FreeTransfer > 0)
+            {
+                accountTeam.FreeTransfer++;
+            }
+            if (updateCards.TripleCaptain > 0)
+            {
+                accountTeam.TripleCaptain++;
+            }
+        }
     }
 
     public static class AccountTeamRepositoryExtension

@@ -1,4 +1,4 @@
-@model AccountTeamEditCardModel
+@model AccountTeamsUpdateCards
 @{
     ViewData["Title"] = $"{Localizer.Get("CreateOrEdit")} {Localizer.Get("Account Teams")}";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,7 +6,7 @@
     ViewBag.useImageUploud = true;
     ViewBag.userFormRepeater = true;
 
-    List<AccountTeamModel> accountTeams = ViewData["AccountTeams"] != null ? 
+    List<AccountTeamModel> accountTeams = ViewData["AccountTeams"] != null ?
         (List<AccountTeamModel>)ViewData["AccountTeams"] : new List<AccountTeamModel>();
 }
 
@@ -41,11 +41,9 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <form class="form" asp-action="EditAccountTeamsCards" enctype="multipart/form-data">
+                                <form class="form" asp-action="EditAccountTeamsCards">
                                     <div asp-validation-summary="All" class="text-danger">@ViewData["Error"]</div>
-                                    
                                     <div class="row mb-1">
-                                        
                                         <div class="divider">
                                             <div class="divider-text">@Localizer.Get("Cards")</div>
                                         </div>
@@ -100,11 +98,11 @@
                                                 <span asp-validation-for="TripleCaptain" class="text-danger"></span>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
-                                    
+
                                     <hr />
-                                    
+
                                     @if (accountTeams.Count > 0)
                                     {
                                         <table class="table table-responsive">
@@ -116,29 +114,30 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @{ int i = 0;}
                                                 @foreach (var accountTeam in accountTeams)
                                                 {
-                                                    <input type="hidden" name="Fk_AccountTeams[]" value="@accountTeam.Id" />
                                                     <tr>
+                                                        <input type="hidden" asp-for="Fk_AccounTeams" value="@accountTeam.Id" />
                                                         <td>@accountTeam.Account.FullName</td>
                                                         <td>@accountTeam.Season.Name</td>
                                                         <td>@accountTeam.Name</td>
                                                     </tr>
-                                                    i++; 
                                                 }
                                             </tbody>
                                         </table>
-                                        <hr/>
+                                        <hr />
                                     }
-                                    
-                                    
-                                    
+                                    else
+                                    {
+                                        <h2 class="text-danger text-center m-2">
+                                            @Localizer.Get("You do not specify which team Reward cards will be added to all teams!")
+                                        </h2>
+                                    }
+
                                     <div class="row">
                                         <div class="col-12">
                                             <button type="submit" class="btn btn-primary me-1">@Localizer.Get("Submit")</button>
                                             <button type="reset" class="btn btn-outline-secondary me-1">@Localizer.Get("Reset")</button>
-                                            @* <a asp-action="Profile" asp-route-id="@Model.Fk_Account" class="btn btn-warning"> @Localizer.Get("Back") </a> *@
                                         </div>
                                     </div>
 
@@ -159,9 +158,9 @@
 
         function resetRepeaterData() {
             $(".game-id").last().val('0');
-           $(".game-name").last().val('');
-           $(".game-name-en").last().val('');
-           $(".gameid365").last().val('');
+            $(".game-name").last().val('');
+            $(".game-name-en").last().val('');
+            $(".gameid365").last().val('');
 
         }
 

@@ -17,17 +17,19 @@ namespace Dashboard.Areas.AccountTeamEntity.Controllers
         private readonly UnitOfWork _unitOfWork;
         private readonly LinkGenerator _linkGenerator;
         private readonly IWebHostEnvironment _environment;
+        private readonly UpdateResultsUtils _updateResultsUtils;
 
         public AccountTeamController(ILoggerManager logger, IMapper mapper,
                 UnitOfWork unitOfWork,
                  LinkGenerator linkGenerator,
-                 IWebHostEnvironment environment)
+                 IWebHostEnvironment environment, UpdateResultsUtils updateResultsUtils)
         {
             _logger = logger;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _linkGenerator = linkGenerator;
             _environment = environment;
+            _updateResultsUtils = updateResultsUtils;
         }
 
         public IActionResult Index(int Fk_Account, bool ProfileLayOut = false)
@@ -81,7 +83,7 @@ namespace Dashboard.Areas.AccountTeamEntity.Controllers
                 }, otherLang).ToList();
             }
 
-            AccountTeamEditCardModel model = new()
+            AccountTeamsUpdateCards model = new()
             {
                 BenchBoost = 0,
                 FreeHit = 0,
@@ -89,17 +91,37 @@ namespace Dashboard.Areas.AccountTeamEntity.Controllers
                 DoubleGameWeak = 0,
                 Top_11 = 0,
                 FreeTransfer = 0,
-                TripleCaptain = 0
+                TripleCaptain = 0,
+                Fk_AccounTeams = fk_AccountTeamsIds
             };
 
             return View(model);
         }
 
         [HttpPost]
-        [Authorize(DashboardViewEnum.Player, AccessLevelEnum.CreateOrEdit)]
-        public IActionResult EditAccountTeamsCards(List<int> fk_AccountTeams, AccountTeamEditCardModel model)
+        [Authorize(DashboardViewEnum.AccountTeam, AccessLevelEnum.CreateOrEdit)]
+        public IActionResult EditAccountTeamsCards(AccountTeamsUpdateCards updateCards)
         {
-            return View();
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            DashboardAdministratorModel admin = _unitOfWork.DashboardAdministration
+                .GetAdministratorbyId(auth.Fk_DashboardAdministrator, otherLang: false);
+
+            if (admin.CanDeploy)
+            {
+                if (updateCards.BenchBoost > 0 ||
+                    updateCards.FreeHit > 0 ||
+                    updateCards.WildCard > 0 ||
+                    updateCards.DoubleGameWeak > 0 ||
+                    updateCards.Top_11 > 0 ||
+                    updateCards.FreeTransfer > 0 ||
+                    updateCards.TripleCaptain > 0)
+                {
+                    _updateResultsUtils.UpdateAccountTeamUpdateCards(updateCards);
+                }
+            }
+
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult Profile(int id)

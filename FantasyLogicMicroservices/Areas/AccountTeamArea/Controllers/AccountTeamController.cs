@@ -105,14 +105,14 @@ namespace FantasyLogicMicroservices.Areas.AccountTeamArea.Controllers
             [FromQuery] bool indebug,
             [FromBody] AccountTeamsUpdateCards model)
         {
-            //if (indebug)
-            //{
-            //    _unitOfWork.AccountTeam.UpdateAccountTeamGameWeakRank
-            //}
-            //else
-            //{
-            //    _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.PrivateLeagueClac.RunPrivateLeaguesRanking(fk_GameWeak, id, indebug));
-            //}
+            if (indebug)
+            {
+                _unitOfWork.AccountTeam.UpdateAccountTeamUpdateCards(model);
+            }
+            else
+            {
+                _ = BackgroundJob.Enqueue(() => _unitOfWork.AccountTeam.UpdateAccountTeamUpdateCards(model));
+            }
 
             return Ok();
         }

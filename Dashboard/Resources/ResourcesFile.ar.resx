@@ -1347,4 +1347,7 @@
   <data name="YoutubeUrl" xml:space="preserve">
     <value>رابط يوتيوب</value>
   </data>
+  <data name="You do not specify which team Reward cards will be added to all teams!" xml:space="preserve">
+    <value>لم تحدد أي فريق سيتم اضافة بطاقات المكافآت إلى جميع الفرق!</value>
+  </data>
 </root>

@@ -78,6 +78,7 @@ if (useHangfire)
 app.UseEndpoints(endpoints =>
 {
     _ = endpoints.MapControllers();
+    _ = endpoints.MapHangfireDashboard();
 });
 
 app.Run();

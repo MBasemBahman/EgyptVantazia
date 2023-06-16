@@ -169,6 +169,7 @@ namespace FantasyLogicMicroservices.Extensions
             _ = services.AddHangfireServer(a =>
             {
                 a.WorkerCount = 50;
+                a.ServerName = "default";
             });
         }
     }

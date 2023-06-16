@@ -326,16 +326,8 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public int TotalPoints { get; set; }
     }
 
-    public class AccountTeamsUpdateCards : AccountTeamUpdateCards
+    public class AccountTeamEditCardModel
     {
-        [DisplayName(nameof(Fk_AccounTeams))]
-        public List<int> Fk_AccounTeams { get; set; }
-    }
-
-    public class AccountTeamUpdateCards
-    {
-        #region Cards
-
         [DisplayName(nameof(BenchBoost))]
         [DefaultValue(0)]
         public int BenchBoost { get; set; }
@@ -363,9 +355,16 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         [DisplayName(nameof(TripleCaptain))]
         [DefaultValue(0)]
         public int TripleCaptain { get; set; }
+    }
 
-        #endregion
+    public class AccountTeamsUpdateCards : AccountTeamUpdateCards
+    {
+        [DisplayName(nameof(Fk_AccounTeams))]
+        public List<int> Fk_AccounTeams { get; set; }
+    }
 
+    public class AccountTeamUpdateCards : AccountTeamEditCardModel
+    {
         [DisplayName(nameof(Fk_AccounTeam))]
         public int Fk_AccounTeam { get; set; }
     }

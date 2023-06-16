@@ -391,16 +391,16 @@ namespace Dashboard.MappingProfileCls
             _ = CreateMap<AccountTeamCreateOrEditModel, AccountTeam>();
 
             #endregion
-            
+
             #region Account Team GameWeak
 
-            _ = CreateMap<AccountTeamGameWeakModel , 
+            _ = CreateMap<AccountTeamGameWeakModel,
                 Dashboard.Areas.AccountTeamGameWeakEntity.Models.AccountTeamGameWeakDto>();
-            
-            _ = CreateMap<Dashboard.Areas.AccountTeamGameWeakEntity.Models.AccountTeamGameWeakDto, 
+
+            _ = CreateMap<Dashboard.Areas.AccountTeamGameWeakEntity.Models.AccountTeamGameWeakDto,
                 AccountTeamGameWeakModel>();
 
-            _ = CreateMap<Dashboard.Areas.AccountTeamGameWeakEntity.Models.AccountTeamGameWeakFilter, 
+            _ = CreateMap<Dashboard.Areas.AccountTeamGameWeakEntity.Models.AccountTeamGameWeakFilter,
                 AccountTeamGameWeakParameters>();
 
             #endregion
@@ -618,7 +618,7 @@ namespace Dashboard.MappingProfileCls
             _ = CreateMap<NotificationLang, NotificationLangModel>();
 
             #endregion
-            
+
             #region ScoreStype
 
             _ = CreateMap<PlayerGameWeakScoreDto, PlayerGameWeakScoreCreateDto>();

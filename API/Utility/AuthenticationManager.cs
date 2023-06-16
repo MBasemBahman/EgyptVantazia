@@ -158,6 +158,8 @@ namespace API.Utility
                 userAuthenticated.Fk_FavouriteTeam = account.Fk_FavouriteTeam;
                 userAuthenticated.Fk_AccountTeam = account.Fk_AccountTeam;
                 userAuthenticated.ShowAds = account.ShowAds;
+                userAuthenticated.Country = account.Country;
+                userAuthenticated.FavouriteTeam = account.FavouriteTeam;
             }
             return userAuthenticated;
         }

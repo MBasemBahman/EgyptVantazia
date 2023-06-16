@@ -149,7 +149,7 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
             ViewData["otherLang"] = otherLang;
 
             ViewData["auth"] = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
-            
+
             return View(data);
         }
 
@@ -262,14 +262,14 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-        
+
         [HttpPost]
         public async Task<ActionResult> UpdateTeamsPlayers(int fk_TeamGameWeak)
         {
             _unitOfWork.Season.UpdateTeamGameWeakPlayers(fk_TeamGameWeak);
 
             await _unitOfWork.Save();
-            
+
             return NoContent();
         }
 

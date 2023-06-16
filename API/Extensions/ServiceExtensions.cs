@@ -2,8 +2,6 @@
 using Entities.ServicesModels;
 using Entities.TenantModels;
 using FantasyLogic;
-using Hangfire;
-using Hangfire.SqlServer;
 using IntegrationWith365;
 
 namespace API.Extensions

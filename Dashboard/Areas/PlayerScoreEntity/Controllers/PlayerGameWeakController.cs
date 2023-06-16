@@ -207,7 +207,7 @@ namespace Dashboard.Areas.PlayerScoreEntity.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-        
+
         [HttpPost]
         public async Task<ActionResult> UpdatePlayerGameWeakRanking(int fk_PlayerGameWeak, double ranking)
         {
@@ -217,7 +217,7 @@ namespace Dashboard.Areas.PlayerScoreEntity.Controllers
             playerGameWeak.IsCanNotEdit = true;
 
             await _unitOfWork.Save();
-            
+
             return NoContent();
         }
 

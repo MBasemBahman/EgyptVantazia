@@ -1,6 +1,5 @@
 ﻿using Dashboard.Areas.SeasonEntity.Models;
 using Entities.CoreServicesModels.PrivateLeagueModels;
-using Entities.CoreServicesModels.SeasonModels;
 using System.ComponentModel;
 
 namespace Dashboard.Areas.PrivateLeagueEntity.Models

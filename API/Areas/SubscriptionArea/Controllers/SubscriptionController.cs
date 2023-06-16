@@ -27,7 +27,7 @@ namespace API.Areas.SubscriptionArea.Controllers
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
             parameters.Fk_Account = auth.Fk_Account;
-            parameters.Fk_Season = _unitOfWork.Season.GetCurrentSeason().Id;
+            parameters.Fk_Season = _unitOfWork.Season.GetCurrentSeasonId();
 
             PagedList<SubscriptionModel> data = await _unitOfWork.Subscription.GetSubscriptionPaged(parameters, otherLang);
 

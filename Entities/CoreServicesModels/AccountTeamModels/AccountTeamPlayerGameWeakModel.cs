@@ -13,6 +13,8 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         public int Fk_Player { get; set; }
 
+        public List<int> Fk_Players { get; set; }
+
         public int Fk_Account { get; set; }
 
         public int Fk_Season { get; set; }

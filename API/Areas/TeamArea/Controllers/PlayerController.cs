@@ -30,8 +30,8 @@ namespace API.Areas.TeamArea.Controllers
             {
                 if (parameters.Fk_GameWeakForScores == 0)
                 {
-                    parameters.Fk_SeasonForScores = _unitOfWork.Season.GetCurrentSeason().Id;
-                    parameters.Fk_GameWeakForScores = _unitOfWork.Season.GetCurrentGameWeak().Id;
+                    parameters.Fk_SeasonForScores = _unitOfWork.Season.GetCurrentSeasonId();
+                    parameters.Fk_GameWeakForScores = _unitOfWork.Season.GetCurrentGameWeakId();
                 }
             }
 
@@ -56,8 +56,8 @@ namespace API.Areas.TeamArea.Controllers
             {
                 if (parameters.Fk_GameWeakForScores == 0)
                 {
-                    parameters.Fk_SeasonForScores = _unitOfWork.Season.GetCurrentSeason().Id;
-                    parameters.Fk_GameWeakForScores = _unitOfWork.Season.GetCurrentGameWeak().Id;
+                    parameters.Fk_SeasonForScores = _unitOfWork.Season.GetCurrentSeasonId();
+                    parameters.Fk_GameWeakForScores = _unitOfWork.Season.GetCurrentGameWeakId();
                 }
             }
 
@@ -74,7 +74,7 @@ namespace API.Areas.TeamArea.Controllers
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
-            int fk_Season = _unitOfWork.Season.GetCurrentSeason().Id;
+            int fk_Season = _unitOfWork.Season.GetCurrentSeasonId();
 
             List<PlayerModel> data = _unitOfWork.Team.GetRandomTeam(fk_Season, isTop_11: false, otherLang);
 

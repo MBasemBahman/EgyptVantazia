@@ -61,6 +61,7 @@ namespace Entities.CoreServicesModels.PlayerTransfersModels
     public class SellPlayerModel
     {
         public int Id { get; set; }
+        public int Fk_Player { get; set; }
         public int Fk_TeamPlayerType { get; set; }
         public bool IsPrimary { get; set; }
         public int Order { get; set; }

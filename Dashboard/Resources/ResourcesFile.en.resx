@@ -787,7 +787,7 @@
     <value>Short Name English</value>
   </data>
   <data name="SnapChatUrl" xml:space="preserve">
-    <value>You Tube Url</value>
+    <value>Snap Chat Url</value>
   </data>
   <data name="Sponsor" xml:space="preserve">
     <value>Sponsor</value>
@@ -1295,5 +1295,8 @@
   </data>
   <data name="Edit Cards" xml:space="preserve">
     <value>Edit Cards</value>
+  </data>
+  <data name="YoutubeUrl" xml:space="preserve">
+    <value>You Tube Url</value>
   </data>
 </root>

@@ -16,6 +16,7 @@ namespace Repository.DBModels.AccountTeamModels
                            parameters.Fk_AccountTeamPlayer,
                            parameters.Fk_TeamPlayerType,
                            parameters.Fk_Player,
+                           parameters.Fk_Players,
                            parameters.Fk_AccountTeam,
                            parameters.Fk_Account,
                            parameters.Fk_Season,
@@ -97,6 +98,7 @@ namespace Repository.DBModels.AccountTeamModels
             int fk_AccountTeamPlayer,
             int fk_TeamPlayerType,
             int fk_Player,
+            List<int> fk_Players,
             int fk_AccountTeam,
             int fk_Account,
             int fk_Season,
@@ -117,6 +119,7 @@ namespace Repository.DBModels.AccountTeamModels
                                                    (isPrimary == null || a.IsPrimary == isPrimary) &&
                                                    (isTransfer == null || a.IsTransfer == isTransfer) &&
                                                    (fk_Player == 0 || a.AccountTeamPlayer.Fk_Player == fk_Player) &&
+                                                   (fk_Players == null || !fk_Players.Any() || fk_Players.Contains(a.AccountTeamPlayer.Fk_Player)) &&
                                                    (fk_AccountTeam == 0 || a.AccountTeamPlayer.Fk_AccountTeam == fk_AccountTeam) &&
                                                    (fk_TeamPlayerType == 0 || a.Fk_TeamPlayerType == fk_TeamPlayerType));
 

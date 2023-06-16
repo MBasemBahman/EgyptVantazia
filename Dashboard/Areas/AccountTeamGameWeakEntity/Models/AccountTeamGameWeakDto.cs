@@ -1,9 +1,9 @@
 ﻿using Dashboard.Areas.AccountEntity.Models;
 using Dashboard.Areas.PlayerTransferEntity.Models;
 using Dashboard.Areas.SeasonEntity.Models;
+using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.DBModels.SeasonModels;
 using System.ComponentModel;
-using Entities.CoreServicesModels.AccountTeamModels;
 
 namespace Dashboard.Areas.AccountTeamGameWeakEntity.Models
 {
@@ -14,7 +14,7 @@ namespace Dashboard.Areas.AccountTeamGameWeakEntity.Models
         public int Fk_Account { get; set; }
         [DisplayName(nameof(GameWeak))]
         public int Fk_GameWeak { get; set; }
-        
+
         public double? PointsFrom { get; set; }
         public double? PointsTo { get; set; }
 

@@ -83,7 +83,7 @@ namespace Dashboard.Areas.TeamEntity.Controllers
                 );
 
             ViewData["GameWeak"] = _unitOfWork.Season.GetGameWeakLookUp(new GameWeakParameters(), otherLang);
-            
+
             ViewData["auth"] = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
             return View(data);

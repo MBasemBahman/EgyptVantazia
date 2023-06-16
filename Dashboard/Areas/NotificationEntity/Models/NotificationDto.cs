@@ -10,11 +10,11 @@ namespace Dashboard.Areas.NotificationEntity.Models
     public class NotificationDto : NotificationModel
     {
         [DisplayName(nameof(ShowAt))]
-        public new string ShowAt { get; set; }
-        
+        public string ShowAt { get; set; }
+
         [DisplayName(nameof(ExpireAt))]
-        public new string ExpireAt { get; set; }
-        
+        public string ExpireAt { get; set; }
+
         [DisplayName(nameof(CreatedAt))]
         public new string CreatedAt { get; set; }
 

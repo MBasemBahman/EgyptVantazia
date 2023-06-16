@@ -57,7 +57,7 @@ namespace Dashboard.Areas.Dashboard.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetTeamGameWeak(int fk_Team,int fk_GameWeak)
+        public JsonResult GetTeamGameWeak(int fk_Team, int fk_GameWeak)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
@@ -68,7 +68,7 @@ namespace Dashboard.Areas.Dashboard.Controllers
             }, otherLang).Select(a => new
             {
                 a.Id,
-               Name =  $"{a.Home.Name} - {a.Away.Name}"
+                Name = $"{a.Home.Name} - {a.Away.Name}"
             }).ToList();
 
             return Json(result);

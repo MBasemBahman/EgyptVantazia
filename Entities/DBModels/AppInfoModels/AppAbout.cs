@@ -75,6 +75,11 @@
         [Url]
         public string TelegramUrl { get; set; }
 
+        [DisplayName(nameof(YoutubeUrl))]
+        [DataType(DataType.Url)]
+        [Url]
+        public string YoutubeUrl { get; set; }
+
         [DisplayName(nameof(ShowPayment))]
         public bool ShowPayment { get; set; }
 

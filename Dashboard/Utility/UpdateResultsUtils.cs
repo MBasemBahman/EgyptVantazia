@@ -66,7 +66,7 @@ namespace Dashboard.Utility
 
             if (fk_Players != null && fk_Players.Any())
             {
-                foreach (var fk_Player in fk_Players)
+                foreach (int fk_Player in fk_Players)
                 {
                     query.Add("fk_Players", fk_Player.ToString());
                 }

@@ -29,7 +29,7 @@ namespace API.Areas.PlayerStateArea.Controllers
 
             if (parameters.IncludeBestPlayer && parameters.Fk_Season == 0 && parameters.Fk_GameWeak == 0)
             {
-                parameters.Fk_Season = _unitOfWork.Season.GetCurrentSeason().Id;
+                parameters.Fk_Season = _unitOfWork.Season.GetCurrentSeasonId();
             }
 
             PagedList<ScoreStateModel> data = await _unitOfWork.PlayerState.GetScoreStatePaged(parameters, otherLang);

@@ -1,7 +1,6 @@
 ﻿using API.Controllers;
 using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.PrivateLeagueModels;
-using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.PrivateLeagueModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
@@ -73,13 +72,17 @@ namespace API.Areas.PrivateLeagueArea.Controllers
 
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
-            SeasonModelForCalc currentSeason = _unitOfWork.Season.GetCurrentSeason();
-            if (currentSeason == null)
+            int currentSeason = _unitOfWork.Season.GetCurrentSeasonId();
+            if (currentSeason > 0)
             {
                 throw new Exception("Season not started yet!");
             }
 
-            AccountTeamModel currentTeam = _unitOfWork.AccountTeam.GetCurrentTeam(auth.Fk_Account, currentSeason.Id);
+            AccountTeamModelForCalc currentTeam = _unitOfWork.AccountTeam.GetAccountTeamsForCalc(new AccountTeamParameters
+            {
+                Fk_Account = auth.Fk_Account,
+                Fk_Season = currentSeason
+            }).FirstOrDefault();
             if (currentTeam == null)
             {
                 throw new Exception("Please create your team!");

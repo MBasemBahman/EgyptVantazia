@@ -36,9 +36,9 @@ namespace Dashboard.Areas.PrivateLeagueEntity.Controllers
             PrivateLeagueFilter filter = new();
 
             ViewData[ViewDataConstants.AccessLevel] = (DashboardAccessLevelModel)Request.HttpContext.Items[ViewDataConstants.AccessLevel];
-            
+
             ViewData["auth"] = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
-            
+
             return View(filter);
         }
 
@@ -169,7 +169,7 @@ namespace Dashboard.Areas.PrivateLeagueEntity.Controllers
         }
 
         // helper methods
-        private void SetViewData( int fk_Season)
+        private void SetViewData(int fk_Season)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 

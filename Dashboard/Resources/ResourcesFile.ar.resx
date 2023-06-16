@@ -649,7 +649,7 @@
     <value>وصف قصير بالانجليزية</value>
   </data>
   <data name="SnapChatUrl" xml:space="preserve">
-    <value>رابط يوتيوب</value>
+    <value>رابط السناب شات</value>
   </data>
   <data name="Sponsor" xml:space="preserve">
     <value>الراعي</value>
@@ -1343,5 +1343,8 @@
   </data>
   <data name="Edit Cards" xml:space="preserve">
     <value>تعديل الكروت</value>
+  </data>
+  <data name="YoutubeUrl" xml:space="preserve">
+    <value>رابط يوتيوب</value>
   </data>
 </root>

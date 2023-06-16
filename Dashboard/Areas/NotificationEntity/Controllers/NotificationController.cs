@@ -114,7 +114,7 @@ namespace Dashboard.Areas.NotificationEntity.Controllers
 
             if (!ModelState.IsValid)
             {
-                SetViewData(otherLang,id);
+                SetViewData(otherLang, id);
 
                 return View(model);
             }
@@ -160,7 +160,7 @@ namespace Dashboard.Areas.NotificationEntity.Controllers
                         MessageContent = dataDB.Description,
                         ImgUrl = dataDB.StorageUrl + dataDB.ImageUrl,
                         OpenType = dataDB.OpenType.ToString(),
-                        OpenValue = dataDB.OpenValue.IsEmpty()? "0" : dataDB.OpenValue,
+                        OpenValue = dataDB.OpenValue.IsEmpty() ? "0" : dataDB.OpenValue,
                         Topic = model.Topic
                     }).Wait();
                 }
@@ -172,7 +172,7 @@ namespace Dashboard.Areas.NotificationEntity.Controllers
                 ViewData[ViewDataConstants.Error] = _logger.LogError(HttpContext.Request, ex).ErrorMessage;
             }
 
-            SetViewData(otherLang,id);
+            SetViewData(otherLang, id);
 
             return View(model);
         }
@@ -196,7 +196,7 @@ namespace Dashboard.Areas.NotificationEntity.Controllers
         }
 
         // helper methods
-        private void SetViewData(bool otherLang,int id = 0)
+        private void SetViewData(bool otherLang, int id = 0)
         {
             ViewData["id"] = id;
             ViewData["AppView"] = Enum.GetValues(typeof(AppViewEnum))
@@ -206,12 +206,12 @@ namespace Dashboard.Areas.NotificationEntity.Controllers
             ViewData["News"] = _unitOfWork.News.GetNews(new Entities.CoreServicesModels.NewsModels.NewsParameters
             {
 
-            }, otherLang).OrderByDescending(a => a.CreatedAt).ToDictionary(a => a.Id.ToString(),a=>a.Title);
+            }, otherLang).OrderByDescending(a => a.CreatedAt).ToDictionary(a => a.Id.ToString(), a => a.Title);
 
             ViewData["GameWeak"] = _unitOfWork.Season.GetGameWeakLookUp(new Entities.CoreServicesModels.SeasonModels.GameWeakParameters
             {
 
-            },otherLang);
+            }, otherLang);
 
             ViewData["Team"] = _unitOfWork.Team.GetTeamLookUp(new Entities.CoreServicesModels.TeamModels.TeamParameters
             {

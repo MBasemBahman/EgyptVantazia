@@ -22,7 +22,7 @@ namespace CoreServices.Logic
             return _repository.PlayerGameWeakScoreState
                        .FindAll(parameters, trackChanges: false)
                        .OrderByDescending(a => a.Points)
-                       .ThenBy(a => a.Player.Id)
+                       .ThenBy(a => a.Fk_Player)
                        .Select(a => new PlayerGameWeakScoreStateModel
                        {
                            Id = a.Id,
@@ -59,6 +59,17 @@ namespace CoreServices.Logic
                        .Sort(parameters.OrderBy);
         }
 
+        public IQueryable<PlayerGameWeakScoreState> GetPlayerGameWeakScoreStates(PlayerGameWeakScoreStateParameters parameters)
+        {
+            return _repository.PlayerGameWeakScoreState
+                       .FindAll(parameters, trackChanges: false);
+        }
+
+        public IQueryable<PlayerGameWeakScoreState> FindPlayerGameWeakScoreStates(PlayerGameWeakScoreStateParameters parameters, bool trackChanges)
+        {
+            return _repository.PlayerGameWeakScoreState
+                       .FindAll(parameters, trackChanges: trackChanges);
+        }
 
         public async Task<PagedList<PlayerGameWeakScoreStateModel>> GetPlayerGameWeakScoreStatePaged(
                   PlayerGameWeakScoreStateParameters parameters,
@@ -150,6 +161,14 @@ namespace CoreServices.Logic
                        .Sort(parameters.OrderBy);
         }
 
+        public IQueryable<PlayerSeasonScoreState> FindPlayerSeasonScoreStates(PlayerSeasonScoreStateParameters parameters,
+                bool trackChanges)
+        {
+            return _repository.PlayerSeasonScoreState
+                       .FindAll(parameters, trackChanges: trackChanges)
+                       .OrderByDescending(a => a.Points)
+                       .ThenBy(a => a.Fk_Player);
+        }
 
         public async Task<PagedList<PlayerSeasonScoreStateModel>> GetPlayerSeasonScoreStatePaged(
                   PlayerSeasonScoreStateParameters parameters,

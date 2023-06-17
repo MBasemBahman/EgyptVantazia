@@ -15,18 +15,18 @@ namespace FantasyLogic.SharedLogic
         public GameResultLogic(UnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _playerScoreCalc = new PlayerScoreCalc(unitOfWork);
+            _playerScoreCalc = new PlayerScoreCalc();
         }
 
         #region Scores
         public void UpdatePlayerStateScore(
-            List<Event> otherGoals, 
-            List<EventType> substitutions, 
-            int rankingIndex, 
+            List<Event> otherGoals,
+            List<EventType> substitutions,
+            int rankingIndex,
             PlayMinutesEnum playMinutes,
-            int fk_ScoreType, 
-            string value, 
-            int fk_PlayerPosition, 
+            int fk_ScoreType,
+            string value,
+            int fk_PlayerPosition,
             int fk_PlayerGameWeak)
         {
             PlayerGameWeakScore score = new()
@@ -40,13 +40,13 @@ namespace FantasyLogic.SharedLogic
         }
 
         public void UpdatePlayerEventScore(
-            List<Event> otherGoals, 
-            List<EventType> substitutions, 
+            List<Event> otherGoals,
+            List<EventType> substitutions,
             int rankingIndex,
             PlayMinutesEnum playMinutes,
-            EventType events, 
-            int fk_ScoreType, 
-            int fk_PlayerPosition, 
+            EventType events,
+            int fk_ScoreType,
+            int fk_PlayerPosition,
             int fk_PlayerGameWeak)
         {
             if (events.GameTime > 0)
@@ -72,7 +72,7 @@ namespace FantasyLogic.SharedLogic
             playerGameWeak.TotalPoints = _unitOfWork.PlayerScore.GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
             {
                 Fk_PlayerGameWeak = fk_PlayerGameWeak
-            }, otherLang: false).Select(a => a.Points).Sum();
+            }).Select(a => a.Points).Sum();
         }
         #endregion
     }

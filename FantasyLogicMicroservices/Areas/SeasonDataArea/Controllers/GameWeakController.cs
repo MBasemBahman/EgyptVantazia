@@ -41,12 +41,6 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
         [Route(nameof(UpdateRecurringJob))]
         public IActionResult UpdateRecurringJob()
         {
-            //_unitOfWork.AccountTeam.ResetAccountTeamPlayer(3958, 58);
-            //_unitOfWork.Save().Wait();
-
-            //_fantasyUnitOfWork.GamesDataHelper.TransferAccountTeamPlayers(3958, 58, 51, 13, 5).Wait();
-            //_unitOfWork.Save().Wait();
-
             WeeklyRecurringJob();
             DailyRecurringJob();
 
@@ -66,12 +60,6 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
         {
             //// At 01:00 AM
             RecurringJob.AddOrUpdate("RunAccountTeamsCalculations", () => _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(0, 0, null, null, false), "0 */8 * * *");
-
-            // At 02:00 AM
-            //RecurringJob.AddOrUpdate("UpdateAccountTeamGameWeakRanking", () => _fantasyUnitOfWork.AccountTeamCalc.RunUpdateAccountTeamGameWeakRanking(), "0 2 * * *");
-
-            // At 03:00 AM
-            //RecurringJob.AddOrUpdate("UpdateAccountTeamRanking", () => _fantasyUnitOfWork.AccountTeamCalc.RunUpdateAccountTeamRanking(), "0 3 * * *");
 
             // At 04:00 AM
             RecurringJob.AddOrUpdate("UpdatePrivateLeaguesRanking", () => _fantasyUnitOfWork.PrivateLeagueClac.RunPrivateLeaguesRanking(null, 0, false), "0 */14 * * *");
@@ -104,13 +92,13 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
         [ApiExplorerSettings(IgnoreApi = true)]
         public void RemoveAccountTeamRecurringJob()
         {
-            List<int> accountTeams = _unitOfWork.AccountTeam.GetAccountTeams(new AccountTeamParameters(), false).Select(a => a.Id).ToList();
+            List<int> accountTeams = _unitOfWork.AccountTeam.GetAccountTeams(new AccountTeamParameters()).Select(a => a.Id).ToList();
             foreach (int accountTeam in accountTeams)
             {
                 RecurringJob.RemoveIfExists($"AccountTeamCalc-{accountTeam}");
             }
 
-            List<int> accountTeamGameWeaks = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters(), false).Select(a => a.Id).ToList();
+            List<int> accountTeamGameWeaks = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters()).Select(a => a.Id).ToList();
             foreach (int accountTeamGameWeak in accountTeamGameWeaks)
             {
                 RecurringJob.RemoveIfExists($"AccountTeamGameWeakCalc-{accountTeamGameWeak}");
@@ -125,7 +113,7 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
             List<int> players = _unitOfWork.Team.GetPlayers(new PlayerParameters
             {
                 Fk_GameWeak = gameWeek
-            }, false).Select(a => a.Id).ToList();
+            }).Select(a => a.Id).ToList();
 
             foreach (int player in players)
             {

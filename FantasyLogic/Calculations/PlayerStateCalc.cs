@@ -3,7 +3,6 @@ using Entities.CoreServicesModels.PlayerScoreModels;
 using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
-using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.PlayerStateModels;
 using static Contracts.EnumData.DBModelsEnum;
 
@@ -29,18 +28,17 @@ namespace FantasyLogic.Calculations
         #region Calculations
         public void RunPlayersStateCalculations(int fk_GameWeak, string _365_MatchId, List<int> fk_Players, List<int> fk_Teams, bool ignoreGameWeaks, bool inDebug)
         {
-            SeasonModelForCalc season = _unitOfWork.Season.GetCurrentSeason();
+            int season = _unitOfWork.Season.GetCurrentSeasonId();
 
             List<int> gameWeaks = ignoreGameWeaks ? new List<int>() :
                                              _unitOfWork.Season
                                              .GetGameWeaks(new GameWeakParameters
                                              {
-                                                 Fk_Season = season.Id,
+                                                 Fk_Season = season,
                                                  Id = fk_GameWeak
-                                             }, otherLang: false)
-                                             .Select(a => a.Id).ToList();
+                                             }).Select(a => a.Id).ToList();
 
-            PlayersStateCalculations(season.Id, gameWeaks, _365_MatchId, fk_Players, fk_Teams, inDebug);
+            PlayersStateCalculations(season, gameWeaks, _365_MatchId, fk_Players, fk_Teams, inDebug);
         }
 
         public void PlayersStateCalculations(int fk_Season, List<int> fk_GameWeaks, string _365_MatchId, List<int> fk_Players, List<int> fk_Teams, bool inDebug)
@@ -57,8 +55,7 @@ namespace FantasyLogic.Calculations
                     Fk_GameWeak = fk_GameWeak,
                     _365_MatchId = _365_MatchId,
                     Fk_Players = fk_Players
-                }, otherLang: false)
-                .Select(a => a.Id)
+                }).Select(a => a.Id)
                 .ToList();
 
                 if (players != null && players.Any())
@@ -66,13 +63,13 @@ namespace FantasyLogic.Calculations
                     playerSelectionCount = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
                     {
                         Fk_GameWeak = fk_GameWeak
-                    }, otherLang: false).Select(a => a.AccountTeamPlayer.Fk_Player).Distinct().Count();
+                    }).Select(a => a.AccountTeamPlayer.Fk_Player).Distinct().Count();
 
                     playerCaptainCount = _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeaks(new AccountTeamPlayerGameWeakParameters
                     {
                         Fk_GameWeak = fk_GameWeak,
                         Fk_TeamPlayerType = (int)TeamPlayerTypeEnum.Captian
-                    }, otherLang: false).Select(a => a.AccountTeamPlayer.Fk_Player).Distinct().Count();
+                    }).Select(a => a.AccountTeamPlayer.Fk_Player).Distinct().Count();
 
                     foreach (int player in players)
                     {
@@ -334,47 +331,45 @@ namespace FantasyLogic.Calculations
         {
             if (fk_GameWeak > 0)
             {
-                List<int> players = _unitOfWork.PlayerState.GetPlayerGameWeakScoreStates(new PlayerGameWeakScoreStateParameters
+                _unitOfWork.PlayerState.ResetPlayerGameWeakScoreStateTop15(fk_GameWeak);
+
+                List<PlayerGameWeakScoreState> players = _unitOfWork.PlayerState.FindPlayerGameWeakScoreStates(new PlayerGameWeakScoreStateParameters
                 {
                     Fk_ScoreState = (int)ScoreStateEnum.Total,
                     Fk_GameWeak = fk_GameWeak,
-                }, otherLang: false)
+                }, trackChanges: true)
+                .OrderByDescending(a => a.Points)
+                .ThenBy(a => a.Fk_Player)
                 .Skip(0)
                 .Take(15)
-                .Select(a => a.Id)
                 .ToList();
 
-                _unitOfWork.PlayerState.ResetPlayerGameWeakScoreStateTop15(fk_GameWeak);
-
                 int ranking = 1;
-                foreach (int id in players)
-                {
-                    PlayerGameWeakScoreState PlayerGameWeakScore = await _unitOfWork.PlayerState.FindPlayerGameWeakScoreStatebyId(id, trackChanges: true);
-                    PlayerGameWeakScore.Top15 = ranking++;
-                }
+
+                players.ForEach(PlayerGameWeakScore => PlayerGameWeakScore.Top15 = ranking++);
+
                 await _unitOfWork.Save();
             }
 
             if (fk_Season > 0)
             {
-                List<int> players = _unitOfWork.PlayerState.GetPlayerSeasonScoreStates(new PlayerSeasonScoreStateParameters
+                _unitOfWork.PlayerState.ResetPlayerSeasonScoreStateTop15(fk_Season);
+
+                List<PlayerSeasonScoreState> players = _unitOfWork.PlayerState.FindPlayerSeasonScoreStates(new PlayerSeasonScoreStateParameters
                 {
                     Fk_ScoreState = (int)ScoreStateEnum.Total,
                     Fk_Season = fk_Season,
-                }, otherLang: false)
-                    .Skip(0)
-                    .Take(15)
-                    .Select(a => a.Id)
+                }, trackChanges: true)
+                .OrderByDescending(a => a.Points)
+                .ThenBy(a => a.Fk_Player)
+                .Skip(0)
+                .Take(15)
                 .ToList();
 
-                _unitOfWork.PlayerState.ResetPlayerSeasonScoreStateTop15(fk_Season);
-
                 int ranking = 1;
-                foreach (int id in players)
-                {
-                    PlayerSeasonScoreState PlayerGameWeakScore = await _unitOfWork.PlayerState.FindPlayerSeasonScoreStatebyId(id, trackChanges: true);
-                    PlayerGameWeakScore.Top15 = ranking++;
-                }
+
+                players.ForEach(PlayerGameWeakScore => PlayerGameWeakScore.Top15 = ranking++);
+
                 await _unitOfWork.Save();
             }
 

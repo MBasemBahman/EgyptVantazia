@@ -85,7 +85,7 @@ namespace Repository.DBModels.PlayerScoreModels
                     Points = a.Sum(b => b.Points),
                     FinalValue = a.Sum(b => b.FinalValue)
                 })
-                .SingleOrDefault();
+                .FirstOrDefault();
         }
 
         public void DeleteOldPlayerScores(int fk_PlayerGameWeak)

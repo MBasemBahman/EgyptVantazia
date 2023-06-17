@@ -1,6 +1,5 @@
 ﻿using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.PrivateLeagueModels;
-using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.PrivateLeagueModels;
 
 namespace FantasyLogic.Calculations
@@ -16,15 +15,15 @@ namespace FantasyLogic.Calculations
 
         public void RunPrivateLeaguesRanking(int? fk_GameWeak, int id, bool indebug = false)
         {
-            SeasonModelForCalc season = _unitOfWork.Season.GetCurrentSeason();
+            int season = _unitOfWork.Season.GetCurrentSeasonId();
 
             if (indebug)
             {
-                UpdatePrivateLeaguesRanking(season.Id, fk_GameWeak, id, indebug);
+                UpdatePrivateLeaguesRanking(season, fk_GameWeak, id, indebug);
             }
             else
             {
-                _ = BackgroundJob.Enqueue(() => UpdatePrivateLeaguesRanking(season.Id, fk_GameWeak, id, indebug));
+                _ = BackgroundJob.Enqueue(() => UpdatePrivateLeaguesRanking(season, fk_GameWeak, id, indebug));
             }
         }
 
@@ -36,7 +35,7 @@ namespace FantasyLogic.Calculations
                 Fk_Season = fk_Season,
                 Fk_GameWeak = fk_GameWeak,
                 Id = id,
-            }, false).Select(a => new
+            }).Select(a => new
             {
                 a.Id,
                 _365_GameWeakIdValue = a.Fk_GameWeak > 0 ? a.GameWeak._365_GameWeakIdValue : 0
@@ -47,7 +46,7 @@ namespace FantasyLogic.Calculations
             {
                 if (indebug)
                 {
-                    UpdatePrivateLeaguesRanking(fk_Season, privateLeague.Id, privateLeague._365_GameWeakIdValue, jobId);
+                    _ = UpdatePrivateLeaguesRanking(fk_Season, privateLeague.Id, privateLeague._365_GameWeakIdValue, jobId);
                 }
                 else
                 {
@@ -62,9 +61,9 @@ namespace FantasyLogic.Calculations
         {
             int ranking = 1;
 
-            var accountTeams = _unitOfWork.AccountTeam.GetPrivateLeaguesPoints(fk_Season, fk_PrivateLeague, _365_GameWeakIdValue);
+            List<AccountTeamModel> accountTeams = _unitOfWork.AccountTeam.GetPrivateLeaguesPoints(fk_Season, fk_PrivateLeague, _365_GameWeakIdValue);
 
-            foreach (var accountTeam in accountTeams)
+            foreach (AccountTeamModel accountTeam in accountTeams)
             {
                 _unitOfWork.PrivateLeague.CreatePrivateLeagueMember(new PrivateLeagueMember
                 {

@@ -1,5 +1,4 @@
-﻿using Entities.CoreServicesModels.PlayerScoreModels;
-using Entities.DBModels.PlayerScoreModels;
+﻿using Entities.DBModels.PlayerScoreModels;
 using IntegrationWith365.Entities.GameModels;
 using System.Linq.Dynamic.Core;
 using static Contracts.EnumData.DBModelsEnum;
@@ -9,13 +8,6 @@ namespace FantasyLogic.Calculations
 {
     public class PlayerScoreCalc
     {
-        private readonly UnitOfWork _unitOfWork;
-
-        public PlayerScoreCalc(UnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
-
         public PlayerGameWeakScore GetPlayerScore(
             List<Event> otherGoals,
             List<EventType> substitutions,

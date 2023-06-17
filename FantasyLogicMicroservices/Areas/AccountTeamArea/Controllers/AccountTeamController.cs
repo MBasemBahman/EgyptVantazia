@@ -48,15 +48,18 @@ namespace FantasyLogicMicroservices.Areas.AccountTeamArea.Controllers
             [FromQuery] int fk_GameWeak,
             [FromQuery] bool inDebug)
         {
-            GameWeakModel gameWeek = _unitOfWork.Season.GetGameWeakbyId(fk_GameWeak, otherLang: false);
+            GameWeakModelForCalc gameWeek = _unitOfWork.Season.GetGameWeaksForCalc(new GameWeakParameters
+            {
+                Id = fk_GameWeak,
+            }).FirstOrDefault();
 
             if (inDebug)
             {
-                _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamGameWeakRanking(gameWeek, gameWeek.Fk_Season);
+                _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamGameWeakRanking(fk_GameWeak, gameWeek.Fk_Season);
             }
             else
             {
-                _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamGameWeakRanking(gameWeek, gameWeek.Fk_Season));
+                _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamGameWeakRanking(fk_GameWeak, gameWeek.Fk_Season));
             }
             return Ok();
         }
@@ -67,7 +70,10 @@ namespace FantasyLogicMicroservices.Areas.AccountTeamArea.Controllers
            [FromQuery] int fk_GameWeak,
            [FromQuery] bool inDebug)
         {
-            GameWeakModel gameWeek = _unitOfWork.Season.GetGameWeakbyId(fk_GameWeak, otherLang: false);
+            GameWeakModelForCalc gameWeek = _unitOfWork.Season.GetGameWeaksForCalc(new GameWeakParameters
+            {
+                Id = fk_GameWeak,
+            }).FirstOrDefault();
 
             if (inDebug)
             {

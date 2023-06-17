@@ -1,7 +1,6 @@
 ﻿using FantasyLogic;
 using FantasyLogicMicroservices.Controllers;
 using Hangfire;
-using Microsoft.AspNetCore.Mvc;
 
 namespace FantasyLogicMicroservices.Areas.TeamDataArea.Controllers
 {

@@ -1,8 +1,6 @@
 ﻿using Entities.CoreServicesModels.SeasonModels;
 using FantasyLogic;
 using FantasyLogicMicroservices.Controllers;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System.Text.RegularExpressions;
 
 namespace FantasyLogicMicroservices.Areas.HandlingArea
 {
@@ -67,7 +65,7 @@ namespace FantasyLogicMicroservices.Areas.HandlingArea
                      fk_Teams.Any())
             {
 
-                foreach (var fk_Team in fk_Teams)
+                foreach (int fk_Team in fk_Teams)
                 {
                     if (!ignoreResetPlayer)
                     {
@@ -87,7 +85,7 @@ namespace FantasyLogicMicroservices.Areas.HandlingArea
 
                     _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(fk_GameWeak, 0, null, fk_Teams, false);
                 }
-                
+
             }
 
             return Ok();

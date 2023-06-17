@@ -328,6 +328,12 @@ namespace CoreServices.Logic
                        .Sort(parameters.OrderBy);
         }
 
+        public IQueryable<PlayerGameWeakScore> GetPlayerGameWeakScores(PlayerGameWeakScoreParameters parameters)
+        {
+            return _repository.PlayerGameWeakScore
+                       .FindAll(parameters, trackChanges: false);
+        }
+
 
         public async Task<PagedList<PlayerGameWeakScoreModel>> GetPlayerGameWeakScorePaged(
                   PlayerGameWeakScoreParameters parameters,

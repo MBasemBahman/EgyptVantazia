@@ -52,6 +52,12 @@ namespace CoreServices.Logic
                        .Sort(parameters.OrderBy);
         }
 
+        public IQueryable<PrivateLeague> GetPrivateLeagues(PrivateLeagueParameters parameters)
+        {
+            return _repository.PrivateLeague
+                       .FindAll(parameters, trackChanges: false);
+        }
+
         public async Task<PagedList<PrivateLeagueModel>> GetPrivateLeaguePaged(
                   PrivateLeagueParameters parameters, bool otherLang)
         {

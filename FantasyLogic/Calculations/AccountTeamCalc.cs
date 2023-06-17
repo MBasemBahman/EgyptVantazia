@@ -26,16 +26,16 @@ namespace FantasyLogic.Calculations
         {
             if (inDebug == false && fk_GameWeak == 0 && fk_AccountTeam == 0)
             {
-                fk_GameWeak = _unitOfWork.Season.GetCurrentGameWeak().Id;
+                fk_GameWeak = _unitOfWork.Season.GetCurrentGameWeakId();
             }
 
-            SeasonModelForCalc season = _unitOfWork.Season.GetCurrentSeason();
+            int season = _unitOfWork.Season.GetCurrentSeasonId();
             GameWeakModelForCalc nextGameWeek = _unitOfWork.Season.GetNextGameWeak();
 
             List<GameWeakModelForCalc> gameWeaks = _unitOfWork.Season
                                              .GetGameWeaksForCalc(new GameWeakParameters
                                              {
-                                                 Fk_Season = season.Id,
+                                                 Fk_Season = season,
                                                  Id = fk_GameWeak,
                                                  GameWeakTo = nextGameWeek._365_GameWeakIdValue
                                              }).ToList();
@@ -44,11 +44,11 @@ namespace FantasyLogic.Calculations
             {
                 if (inDebug)
                 {
-                    AccountTeamGameWeakCalculations(gameWeak, season.Id, fk_AccountTeam, fk_Players, fk_Teams, inDebug);
+                    AccountTeamGameWeakCalculations(gameWeak, season, fk_AccountTeam, fk_Players, fk_Teams, inDebug);
                 }
                 else
                 {
-                    BackgroundJob.Enqueue(() => AccountTeamGameWeakCalculations(gameWeak, season.Id, fk_AccountTeam, fk_Players, fk_Teams, inDebug));
+                    _ = BackgroundJob.Enqueue(() => AccountTeamGameWeakCalculations(gameWeak, season, fk_AccountTeam, fk_Players, fk_Teams, inDebug));
                 }
             }
         }
@@ -62,13 +62,11 @@ namespace FantasyLogic.Calculations
                 Fk_AccountTeam = fk_AccountTeam,
                 Fk_Players = fk_Players,
                 Fk_Teams = fk_Teams
-            }, otherLang: false)
-                    .Select(a => new
-                    {
-                        a.Id,
-                        a.Fk_AccountTeam
-                    })
-                    .ToList();
+            }).Select(a => new
+            {
+                a.Id,
+                a.Fk_AccountTeam
+            }).ToList();
 
             if (!accountTeamGameWeaks.Any())
             {
@@ -176,13 +174,11 @@ namespace FantasyLogic.Calculations
                 Fk_Players = players.Select(a => a.Fk_Player).ToList(),
                 Fk_GameWeak = gameWeak.Id,
                 Fk_ScoreState = (int)ScoreStateEnum.Total
-            }, otherLang: false)
-                .Select(a => new
-                {
-                    a.Fk_Player,
-                    a.Points
-                })
-            .ToList();
+            }).Select(a => new
+            {
+                a.Fk_Player,
+                a.Points
+            }).ToList();
 
             bool captianPointsFlag = players.Any(a => a.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian && (a.IsPlayed ||
                                                                                                                  a.IsDelayed ||
@@ -513,7 +509,10 @@ namespace FantasyLogic.Calculations
                 }
             }
 
-            _unitOfWork.AccountTeam.ResetAccountTeamPlayerGameWeakPoints(fk_AccountTeam, gameWeak.Id);
+            if (saveChanges)
+            {
+                _unitOfWork.AccountTeam.ResetAccountTeamPlayerGameWeakPoints(fk_AccountTeam, gameWeak.Id);
+            }
 
             List<AccountTeamPlayerGameWeak> playersGameWeekPoints = new();
 
@@ -533,7 +532,10 @@ namespace FantasyLogic.Calculations
                 };
 
                 playersGameWeekPoints.Add(accountTeamPlayerGameWeak);
-                _unitOfWork.AccountTeam.CreateAccountTeamPlayerGameWeak(accountTeamPlayerGameWeak);
+                if (saveChanges)
+                {
+                    _unitOfWork.AccountTeam.CreateAccountTeamPlayerGameWeak(accountTeamPlayerGameWeak);
+                }
             }
 
             int prevPoints = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
@@ -573,7 +575,7 @@ namespace FantasyLogic.Calculations
             return null;
         }
 
-        public void UpdateAccountTeamGameWeakRanking(GameWeakModel gameWeak, int fk_Season)
+        public void UpdateAccountTeamGameWeakRanking(int gameWeak, int fk_Season)
         {
             List<AccountTeamRanking> accountTeamGameWeakRankings = new();
             int ranking = 1;
@@ -581,7 +583,7 @@ namespace FantasyLogic.Calculations
             List<AccountTeamRanking> accountTeamGameWeaks = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
             {
                 Fk_Season = fk_Season,
-                Fk_GameWeak = gameWeak.Id,
+                Fk_GameWeak = gameWeak,
             }, otherLang: false)
                 .OrderByDescending(a => a.TotalPoints)
                 .Select(a => new AccountTeamRanking

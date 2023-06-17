@@ -1,4 +1,4 @@
-﻿using Contracts.Services;
+﻿ using Contracts.Services;
 using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
@@ -179,10 +179,7 @@ namespace FantasyLogic.DataMigration.GamesData
                 }
             }
         }
-        public async Task UpdateCurrentGameWeak(int id)
-        {
-            await UpdateCurrentGameWeak(id, resetTeam: false);
-        }
+
         public async Task UpdateCurrentGameWeak(int id, bool resetTeam, int fk_AccounTeam = 0, bool inDebug = false, bool skipReset = false)
         {
             if (!skipReset)

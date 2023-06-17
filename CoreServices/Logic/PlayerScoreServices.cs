@@ -40,6 +40,12 @@ namespace CoreServices.Logic
                        .Sort(parameters.OrderBy);
         }
 
+        public IQueryable<ScoreType> GetScoreTypes(ScoreTypeParameters parameters)
+        {
+            return _repository.ScoreType
+                       .FindAll(parameters, trackChanges: false);
+        }
+
 
         public async Task<PagedList<ScoreTypeModel>> GetScoreTypePaged(
                   ScoreTypeParameters parameters,
@@ -165,6 +171,12 @@ namespace CoreServices.Logic
                        .Sort(parameters.OrderBy);
         }
 
+
+        public IQueryable<PlayerGameWeak> GetPlayerGameWeaks(PlayerGameWeakParameters parameters)
+        {
+            return _repository.PlayerGameWeak
+                       .FindAll(parameters, trackChanges: false);
+        }
 
         public async Task<PagedList<PlayerGameWeakModel>> GetPlayerGameWeakPaged(
                   PlayerGameWeakParameters parameters,

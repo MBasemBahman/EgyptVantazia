@@ -133,6 +133,12 @@ namespace CoreServices.Logic
                        .Sort(parameters.OrderBy);
         }
 
+        public IQueryable<PlayerPosition> GetPlayerPositions(PlayerPositionParameters parameters)
+        {
+            return _repository.PlayerPosition
+                       .FindAll(parameters, trackChanges: false);
+        }
+
 
         public async Task<PagedList<PlayerPositionModel>> GetPlayerPositionPaged(
                   PlayerPositionParameters parameters,

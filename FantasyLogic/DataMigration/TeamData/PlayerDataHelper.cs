@@ -1,5 +1,6 @@
 ﻿using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.TeamModels;
+using FantasyLogic.DataMigration.StandingsData;
 using IntegrationWith365.Entities.SquadsModels;
 using static Contracts.EnumData.DBModelsEnum;
 
@@ -18,11 +19,16 @@ namespace FantasyLogic.DataMigration.TeamData
 
         public void RunUpdatePlayers()
         {
-            List<TeamModel> teams = _unitOfWork.Team.GetTeams(new TeamParameters(), otherLang: false).ToList();
-
-            List<PlayerPositionDto> positions = _unitOfWork.Team.GetPlayerPositions(new PlayerPositionParameters
+            List<TeamForCalc> teams = _unitOfWork.Team.GetTeams(new TeamParameters
             {
-            }, otherLang: false).Select(a => new PlayerPositionDto
+            }).Select(a => new TeamForCalc
+            {
+                Id = a.Id,
+                _365_TeamId = a._365_TeamId
+            }).ToList();
+
+            List<PlayerPositionForCalc> positions = _unitOfWork.Team.GetPlayerPositions(new PlayerPositionParameters
+            {}).Select(a => new PlayerPositionForCalc
             {
                 Id = a.Id,
                 _365_PositionId = a._365_PositionId
@@ -31,10 +37,10 @@ namespace FantasyLogic.DataMigration.TeamData
             _ = BackgroundJob.Enqueue(() => UpdateTeamsPlayers(teams, positions));
         }
 
-        public void UpdateTeamsPlayers(List<TeamModel> teams, List<PlayerPositionDto> positions)
+        public void UpdateTeamsPlayers(List<TeamForCalc> teams, List<PlayerPositionForCalc> positions)
         {
             string jobId = null;
-            foreach (TeamModel team in teams)
+            foreach (TeamForCalc team in teams)
             {
                 jobId = jobId.IsExisting()
                     ? BackgroundJob.ContinueJobWith(jobId, () => UpdatePlayers(team, positions, jobId))
@@ -42,7 +48,7 @@ namespace FantasyLogic.DataMigration.TeamData
             }
         }
 
-        public async Task UpdatePlayers(TeamModel team, List<PlayerPositionDto> positions, string jobId)
+        public async Task UpdatePlayers(TeamForCalc team, List<PlayerPositionForCalc> positions, string jobId)
         {
             _unitOfWork.Team.UpdatePlayerActivation(fk_Team: team.Id, isActive: false);
             _unitOfWork.Save().Wait();
@@ -102,7 +108,7 @@ namespace FantasyLogic.DataMigration.TeamData
         }
     }
 
-    public class PlayerPositionDto
+    public class PlayerPositionForCalc
     {
         public int Id { get; set; }
 

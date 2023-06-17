@@ -42,25 +42,24 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             bool runAll,
             bool stopAll)
         {
-            SeasonModelForCalc season = _unitOfWork.Season.GetCurrentSeason();
+            parameters.Fk_Season = _unitOfWork.Season.GetCurrentSeasonId();
 
-            parameters.Fk_Season = season.Id;
-
-            List<TeamGameWeakDto> teamGameWeaks = _unitOfWork.Season.GetTeamGameWeaks(parameters, otherLang: false).Select(a => new TeamGameWeakDto
+            List<TeamGameWeakForCalc> teamGameWeaks = _unitOfWork.Season.GetTeamGameWeaks(parameters).Select(a => new TeamGameWeakForCalc
             {
                 Id = a.Id,
                 _365_MatchId = a._365_MatchId,
                 StartTime = a.StartTime,
                 Fk_GameWeek = a.Fk_GameWeak,
-                Fk_Season = a.GameWeak.Fk_Season
+                Fk_Season = a.GameWeak.Fk_Season,
+                IsEnded = a.IsEnded,
             }).ToList();
 
-            List<ScoreTypeDto> scoreTypes = _unitOfWork.PlayerScore
+            List<ScoreTypeForCalc> scoreTypes = _unitOfWork.PlayerScore
                                                        .GetScoreTypes(new ScoreTypeParameters
                                                        {
                                                            HavePoints = true,
-                                                       }, otherLang: false)
-                                                       .Select(a => new ScoreTypeDto
+                                                       })
+                                                       .Select(a => new ScoreTypeForCalc
                                                        {
                                                            Id = a.Id,
                                                            _365_EventTypeId = a._365_EventTypeId,
@@ -68,7 +67,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                                        })
                                                        .ToList();
 
-            foreach (TeamGameWeakDto teamGameWeak in teamGameWeaks)
+            foreach (TeamGameWeakForCalc teamGameWeak in teamGameWeaks)
             {
                 if (inDebug)
                 {
@@ -88,16 +87,14 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             }
         }
 
-        public async Task UpdateGameResult(TeamGameWeakDto teamGameWeak, List<ScoreTypeDto> scoreTypes, bool runBonus, bool inDebug, bool runAll, bool stopAll)
+        public async Task UpdateGameResult(TeamGameWeakForCalc teamGameWeak, List<ScoreTypeForCalc> scoreTypes, bool runBonus, bool inDebug, bool runAll, bool stopAll)
         {
-            TeamGameWeak match = await _unitOfWork.Season.FindTeamGameWeakbyId(teamGameWeak.Id, trackChanges: true);
-
             GameReturn gameReturn = await _365Services.GetGame(new _365GameParameters
             {
                 GameId = teamGameWeak._365_MatchId.ParseToInt()
             });
 
-            bool matchEnded = !inDebug && !runAll && !runBonus && match.IsEnded /*teamGameWeak.EndTime < DateTime.UtcNow.ToEgypt()*/;
+            bool matchEnded = !inDebug && !runAll && !runBonus && teamGameWeak.IsEnded /*teamGameWeak.EndTime < DateTime.UtcNow.ToEgypt()*/;
 
             runBonus = runBonus || gameReturn.Game.IsEnded;
 
@@ -130,6 +127,8 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 gameReturn.Game.AwayCompetitor != null &&
                 gameReturn.Game.HomeCompetitor != null)
             {
+                TeamGameWeak match = await _unitOfWork.Season.FindTeamGameWeakbyId(teamGameWeak.Id, trackChanges: true);
+
                 match.LastUpdateId = gameReturn.LastUpdateId;
                 match.IsEnded = gameReturn.Game.IsEnded;
                 match.AwayScore = (int)gameReturn.Game.AwayCompetitor.Score;
@@ -146,14 +145,14 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 {
                     List<GameMember> allMembers = gameReturn.Game.Members;
 
-                    IQueryable<PlayerModel> playersQuary = _unitOfWork.Team.GetPlayers(new PlayerParameters
+                    IQueryable<Player> playersQuary = _unitOfWork.Team.GetPlayers(new PlayerParameters
                     {
                         _365_PlayerIds = allMembers.Select(a => a.AthleteId.ToString()).ToList(),
-                    }, otherLang: false);
+                    });
 
                     if (playersQuary.Any())
                     {
-                        List<PlayerDto> players = playersQuary.Select(a => new PlayerDto
+                        List<PlayerForCalc> players = playersQuary.Select(a => new PlayerForCalc
                         {
                             Id = a.Id,
                             _365_PlayerId = a._365_PlayerId,
@@ -189,15 +188,15 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                                               .Select(a => new
                                                               {
                                                                   a.Id,
-                                                                  index = (rankings.IndexOf(a.Ranking) + 1),
+                                                                  index = rankings.IndexOf(a.Ranking) + 1,
                                                                   a.Ranking
                                                               })
                                                               .ToList() : null;
 
                         foreach (GameMember member in allMembers)
                         {
-                            PlayerDto player = players.Where(a => a._365_PlayerId == member.AthleteId.ToString())
-                                                      .Select(a => new PlayerDto
+                            PlayerForCalc player = players.Where(a => a._365_PlayerId == member.AthleteId.ToString())
+                                                      .Select(a => new PlayerForCalc
                                                       {
                                                           Id = a.Id,
                                                           Fk_PlayerPosition = a.Fk_PlayerPosition,
@@ -245,11 +244,11 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                      matchEnded ||
                      runAll)
                 {
-                    var players = _unitOfWork.PlayerScore.GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
+                    List<int> players = _unitOfWork.PlayerScore.GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
                     {
                         Fk_GameWeak = match.Fk_GameWeak,
                         Fk_TeamGameWeak = match.Id
-                    }, otherLang: false).Select(a => a.PlayerGameWeak.Fk_Player).ToList();
+                    }).Select(a => a.PlayerGameWeak.Fk_Player).ToList();
 
                     if (inDebug)
                     {
@@ -266,11 +265,11 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
         public async Task UpdatePlayerResult(
             GameReturn gameReturn,
             GameMember member,
-            PlayerDto player,
+            PlayerForCalc player,
             int rankingIndex,
-            TeamGameWeakDto teamGameWeak,
+            TeamGameWeakForCalc teamGameWeak,
             Member memberResult,
-            List<ScoreTypeDto> scoreTypes,
+            List<ScoreTypeForCalc> scoreTypes,
             TeamGameWeak match,
             bool inDebug)
         {
@@ -367,44 +366,58 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             int fk_TeamGameWeak,
             Member memberResult,
             List<EventType> eventResult,
-            List<ScoreTypeDto> scoreTypes,
+            List<ScoreTypeForCalc> scoreTypes,
             int assistCount)
         {
-            var playMinutes = PlayMinutesEnum.NotPlayed;
+            PlayMinutesEnum playMinutes = PlayMinutesEnum.NotPlayed;
 
             if (fk_Player > 0 && memberResult != null)
             {
-                PlayerGameWeak playerGame = new()
+                int fk_PlayerGameWeak = 0;
+                bool isOld = false;
+
+                if (_unitOfWork.PlayerScore.GetPlayerGameWeaks(new PlayerGameWeakParameters { Fk_TeamGameWeak = fk_TeamGameWeak, Fk_Player = fk_Player }).Any())
                 {
-                    Fk_TeamGameWeak = fk_TeamGameWeak,
-                    Fk_Player = fk_Player,
-                    Ranking = memberResult.Ranking,
-                    _365_PlayerId = memberResult.Id.ToString()
-                };
+                    fk_PlayerGameWeak = _unitOfWork.PlayerScore
+                                               .GetPlayerGameWeaks(new PlayerGameWeakParameters { Fk_TeamGameWeak = fk_TeamGameWeak, Fk_Player = fk_Player })
+                                               .Select(a => a.Id)
+                                               .FirstOrDefault();
+                    isOld = true;
+                }
+                else
+                {
+                    PlayerGameWeak playerGame = new()
+                    {
+                        Fk_TeamGameWeak = fk_TeamGameWeak,
+                        Fk_Player = fk_Player,
+                        Ranking = memberResult.Ranking,
+                        _365_PlayerId = memberResult.Id.ToString()
+                    };
 
-                _unitOfWork.PlayerScore.CreatePlayerGameWeak(playerGame);
-                await _unitOfWork.Save();
+                    _unitOfWork.PlayerScore.CreatePlayerGameWeak(playerGame);
+                    await _unitOfWork.Save();
 
-                int fk_PlayerGameWeak = _unitOfWork.PlayerScore
-                                                   .GetPlayerGameWeaks(new PlayerGameWeakParameters { Fk_TeamGameWeak = fk_TeamGameWeak, Fk_Player = fk_Player }, false)
-                                                   .Select(x => x.Id)
-                                                   .SingleOrDefault();
+                    fk_PlayerGameWeak = playerGame.Id;
+                }
 
                 if (fk_PlayerGameWeak > 0)
                 {
-                    _unitOfWork.PlayerScore.DeleteOldPlayerScores(fk_PlayerGameWeak);
-                    _unitOfWork.Save().Wait();
+                    if (isOld)
+                    {
+                        _unitOfWork.PlayerScore.DeleteOldPlayerScores(fk_PlayerGameWeak);
+                        _unitOfWork.Save().Wait();
+                    }
 
                     if (memberResult.Stats != null && memberResult.Stats.Any())
                     {
                         List<Stat> states = memberResult.Stats.Where(a => a.Value != "0").ToList();
 
-                        var minsTypeId = 30;
-                        var goalsTypeId = 27;
+                        int minsTypeId = 30;
+                        int goalsTypeId = 27;
 
                         if (!states.Any(a => a.Type == goalsTypeId))
                         {
-                            ScoreTypeDto eventType = scoreTypes.Where(a => a.Id == (int)ScoreTypeEnum.Goal_Event).SingleOrDefault();
+                            ScoreTypeForCalc eventType = scoreTypes.Where(a => a.Id == (int)ScoreTypeEnum.Goal_Event).SingleOrDefault();
                             List<EventType> result = eventResult.Where(a => eventType._365_TypeId == a.Id.ToString() &&
                                                                             a.SubTypeId.ToString() != "2").ToList(); // 2 Own Goal
 
@@ -440,7 +453,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                             {
                                 if (fk_ScoreType == (int)ScoreTypeEnum.Goals)
                                 {
-                                    ScoreTypeDto eventType = scoreTypes.Where(a => a.Id == (int)ScoreTypeEnum.Goal_Event).SingleOrDefault();
+                                    ScoreTypeForCalc eventType = scoreTypes.Where(a => a.Id == (int)ScoreTypeEnum.Goal_Event).SingleOrDefault();
                                     List<EventType> result = eventResult.Where(a => eventType._365_TypeId == a.Id.ToString() && a.SubTypeId.ToString() != "2").ToList();// 2 Own Goal
                                     Stat.Value = result.Count.ToString();
                                 }
@@ -482,12 +495,12 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             int fk_Player,
             bool inDebug)
         {
-            List<PlayerGameWeakDto> players = _unitOfWork.PlayerScore.GetPlayerGameWeaks(new PlayerGameWeakParameters
+            List<PlayerGameWeakForCalc> players = _unitOfWork.PlayerScore.GetPlayerGameWeaks(new PlayerGameWeakParameters
             {
                 Fk_TeamGameWeak = fk_TeamGameWeak,
                 Fk_Player = fk_Player
             }, otherLang: false)
-                .Select(a => new PlayerGameWeakDto
+                .Select(a => new PlayerGameWeakForCalc
                 {
                     Fk_Player = a.Fk_Player,
                     Fk_PlayerPosition = a.Player.Fk_PlayerPosition,
@@ -498,7 +511,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
 
             if (players != null && players.Any())
             {
-                foreach (PlayerGameWeakDto player in players)
+                foreach (PlayerGameWeakForCalc player in players)
                 {
                     _gameResultLogic.UpdatePlayerStateScore(otherGoals, substitutions, rankingIndex, playMinutes, (int)ScoreTypeEnum.CleanSheet, "", player.Fk_PlayerPosition, player.Fk_PlayerGameWeak);
                     _gameResultLogic.UpdatePlayerStateScore(otherGoals, substitutions, rankingIndex, playMinutes, (int)ScoreTypeEnum.ReceiveGoals, "", player.Fk_PlayerPosition, player.Fk_PlayerGameWeak);
@@ -515,7 +528,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
         }
     }
 
-    public class TeamGameWeakDto
+    public class TeamGameWeakForCalc
     {
         public int Id { get; set; }
 
@@ -528,9 +541,11 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
         public int Fk_Season { get; set; }
 
         public int Fk_GameWeek { get; set; }
+
+        public bool IsEnded { get; set; }
     }
 
-    public class PlayerGameWeakDto
+    public class PlayerGameWeakForCalc
     {
         public int Fk_PlayerGameWeak { get; set; }
         public int Fk_PlayerPosition { get; set; }
@@ -539,7 +554,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
         public string _365_MatchId { get; set; }
     }
 
-    public class ScoreTypeDto
+    public class ScoreTypeForCalc
     {
         public int Id { get; set; }
 
@@ -548,7 +563,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
         public string _365_EventTypeId { get; set; }
     }
 
-    public class PlayerDto
+    public class PlayerForCalc
     {
         public int Id { get; set; }
 

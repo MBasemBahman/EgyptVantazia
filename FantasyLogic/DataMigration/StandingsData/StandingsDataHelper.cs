@@ -18,9 +18,9 @@ namespace FantasyLogic.DataMigration.StandingsData
 
         public void RunUpdateStandings()
         {
-            List<TeamDto> teams = _unitOfWork.Team.GetTeams(new TeamParameters
+            List<TeamForCalc> teams = _unitOfWork.Team.GetTeams(new TeamParameters
             {
-            }, otherLang: false).Select(a => new TeamDto
+            }).Select(a => new TeamForCalc
             {
                 Id = a.Id,
                 _365_TeamId = a._365_TeamId
@@ -31,7 +31,7 @@ namespace FantasyLogic.DataMigration.StandingsData
             _ = BackgroundJob.Enqueue(() => UpdateSeasonStandings(teams, season._365_SeasonId.ParseToInt(), season.Id));
         }
 
-        public async Task UpdateSeasonStandings(List<TeamDto> teams, int _365_SeasonId, int fk_Season)
+        public async Task UpdateSeasonStandings(List<TeamForCalc> teams, int _365_SeasonId, int fk_Season)
         {
             StandingsReturn standings = await _365Services.GetStandings(new _365StandingsParameters
             {
@@ -75,7 +75,7 @@ namespace FantasyLogic.DataMigration.StandingsData
         }
     }
 
-    public class TeamDto
+    public class TeamForCalc
     {
         public int Id { get; set; }
 

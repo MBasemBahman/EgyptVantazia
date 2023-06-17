@@ -20,8 +20,6 @@ namespace FantasyLogic.DataMigration.TeamData
         {
             SeasonModelForCalc season = _unitOfWork.Season.GetCurrentSeason();
 
-            int _365_SeasonId = season._365_SeasonId.ParseToInt();
-
             _ = BackgroundJob.Enqueue(() => UpdateSeasonTeams(season._365_SeasonId.ParseToInt()));
         }
 

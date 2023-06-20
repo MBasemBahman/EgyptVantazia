@@ -339,7 +339,13 @@ namespace CoreServices.Logic
                                                                         b.Fk_ScoreState == parameters.Fk_ScoreStateForCustomOrder &&
                                                                         (parameters.Fk_ScoreStatesForGameWeak == null ||
                                                                          !parameters.Fk_ScoreStatesForGameWeak.Any() ||
-                                                                         parameters.Fk_ScoreStatesForGameWeak.Contains(b.Fk_ScoreState))) : false
+                                                                         parameters.Fk_ScoreStatesForGameWeak.Contains(b.Fk_ScoreState))) : false,
+                                       LastTransferTypeEnum = (parameters.CheckLastTransfer && parameters.Fk_AccountTeam > 1) ?
+                                                               a.PlayerTransfers
+                                                                .Where(b => b.Fk_AccountTeam == parameters.Fk_AccountTeam)
+                                                                .OrderByDescending(b => b.Id)
+                                                                .Select(b => b.TransferTypeEnum)
+                                                                .FirstOrDefault() : null
                                    })
                                    .Search(parameters.SearchColumns, parameters.SearchTerm);
 
@@ -435,7 +441,7 @@ namespace CoreServices.Logic
         {
             IQueryable<Player> quary = _repository.Player
                                    .FindAll(parameters, trackChanges: false);
-            
+
             return quary;
         }
 

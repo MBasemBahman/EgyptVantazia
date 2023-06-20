@@ -2,11 +2,16 @@
 using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.TeamModels;
 using Entities.RequestFeatures;
+using static Entities.EnumData.LogicEnumData;
 
 namespace Entities.CoreServicesModels.TeamModels
 {
     public class PlayerParameters : RequestParameters
     {
+        public int Fk_AccountTeam { get; set; }
+
+        public bool CheckLastTransfer { get; set; }
+
         [DisplayName(nameof(Team))]
         public int Fk_Team { get; set; }
 
@@ -132,7 +137,10 @@ namespace Entities.CoreServicesModels.TeamModels
         public TeamModel NextMatch { get; set; }
 
         public TeamPlayerType TeamPlayerType { get; set; }
+
+        public TransferTypeEnum? LastTransferTypeEnum { get; set; }
     }
+
 
     public class PlayerCreateOrEditModel
     {

@@ -1,5 +1,6 @@
 ﻿using API.Controllers;
 using Entities.CoreServicesModels.PlayerStateModels;
+using Entities.DBModels.PlayerStateModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using static Contracts.EnumData.DBModelsEnum;
 
@@ -33,6 +34,12 @@ namespace API.Areas.PlayerStateArea.Controllers
             }
 
             parameters.Fk_Season = _unitOfWork.Season.GetCurrentSeasonId();
+            parameters.OrderBy = "value desc,";
+
+            if (parameters.Fk_ScoreState == (int)ScoreStateEnum.Total)
+            {
+                parameters.OrderBy = "points desc,";
+            }
 
             PagedList<PlayerSeasonScoreStateModel> data = await _unitOfWork.PlayerState.GetPlayerSeasonScoreStatePaged(parameters, otherLang);
 

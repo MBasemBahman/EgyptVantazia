@@ -60,6 +60,9 @@ namespace Entities.DBModels.SeasonModels
         [DisplayName(nameof(IsCanNotEdit))]
         public bool IsCanNotEdit { get; set; }
 
+        [DisplayName(nameof(IsActive))]
+        public bool IsActive { get; set; }
+
         [DisplayName(nameof(PlayerGameWeaks))]
         public IList<PlayerGameWeak> PlayerGameWeaks { get; set; }
     }

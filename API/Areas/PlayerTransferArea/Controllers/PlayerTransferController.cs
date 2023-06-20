@@ -45,13 +45,13 @@ namespace API.Areas.PlayerTransferArea.Controllers
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             int currentSeason = _unitOfWork.Season.GetCurrentSeasonId();
-            if (currentSeason > 0)
+            if (currentSeason < 0)
             {
                 throw new Exception("Season not started yet!");
             }
 
             int nextGameWeakId = _unitOfWork.Season.GetNextGameWeakId();
-            if (nextGameWeakId > 0)
+            if (nextGameWeakId < 0)
             {
                 throw new Exception("Game Weak not started yet!");
             }

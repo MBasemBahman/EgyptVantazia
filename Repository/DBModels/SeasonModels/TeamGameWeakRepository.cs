@@ -27,6 +27,7 @@ namespace Repository.DBModels.SeasonModels
                            parameters.IsDelayed,
                            parameters.CurrentSeason,
                            parameters.CurrentGameWeak,
+                           parameters.IsActive,
                            parameters.DashboardSearch);
         }
 
@@ -105,6 +106,7 @@ namespace Repository.DBModels.SeasonModels
             bool? isDelayed,
             bool currentSeason,
             bool currentGameWeak,
+            bool? isActive,
             string dashboardSearch)
         {
             return TeamGameWeaks.Where(a => (id == 0 || a.Id == id) &&
@@ -115,6 +117,7 @@ namespace Repository.DBModels.SeasonModels
                                              a.Away.Name.Contains(dashboardSearch)) &&
 
                                             (isEnded == null || a.IsEnded == isEnded) &&
+                                            (isActive == null || a.IsActive == isActive) &&
                                             (isDelayed == null || a.IsDelayed == isDelayed) &&
                                             (fk_Teams == null || !fk_Teams.Any() ||
                                               fk_Teams.Contains(a.Fk_Home) || fk_Teams.Contains(a.Fk_Away)) &&

@@ -44,6 +44,8 @@ namespace Entities.CoreServicesModels.SeasonModels
         public bool NextGameWeak { get; set; }
 
         public string DashboardSearch { get; set; }
+
+        public bool? IsActive { get; set; }
     }
 
     public class TeamGameWeakModel : AuditEntity
@@ -90,6 +92,10 @@ namespace Entities.CoreServicesModels.SeasonModels
         [DisplayName(nameof(IsCanNotEdit))]
         public bool IsCanNotEdit { get; set; }
 
+        [DisplayName(nameof(IsActive))]
+        [DefaultValue(true)]
+        public bool IsActive { get; set; }
+
         public string LastUpdateId { get; set; }
 
         [DisplayName(nameof(HomeTeamPlayers))]
@@ -129,6 +135,9 @@ namespace Entities.CoreServicesModels.SeasonModels
 
         [DisplayName(nameof(IsCanNotEdit))]
         public bool IsCanNotEdit { get; set; }
+
+        [DisplayName(nameof(IsActive))]
+        public bool IsActive { get; set; }
 
         [DisplayName(nameof(_365_MatchId))]
         public string _365_MatchId { get; set; }

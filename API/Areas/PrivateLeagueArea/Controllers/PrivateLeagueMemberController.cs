@@ -74,7 +74,7 @@ namespace API.Areas.PrivateLeagueArea.Controllers
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
             int currentSeason = _unitOfWork.Season.GetCurrentSeasonId();
-            if (currentSeason > 0)
+            if (currentSeason < 0)
             {
                 throw new Exception("Season not started yet!");
             }

@@ -412,6 +412,7 @@ namespace CoreServices.Logic
                            _365_MatchId = a._365_MatchId,
                            IsDelayed = a.IsDelayed,
                            IsCanNotEdit = a.IsCanNotEdit,
+                           IsActive = a.IsActive,
                            LastUpdateId = a.LastUpdateId,
                            Away = new TeamModel
                            {

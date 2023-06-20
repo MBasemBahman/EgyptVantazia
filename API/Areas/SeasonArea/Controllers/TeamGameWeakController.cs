@@ -30,7 +30,9 @@ namespace API.Areas.SeasonArea.Controllers
                 int gameWeakId = _unitOfWork.Season.GetNextGameWeakId();
                 parameters.Fk_GameWeak = gameWeakId;
             }
+
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            parameters.IsActive = true;
 
             PagedList<TeamGameWeakModel> data = await _unitOfWork.Season.GetTeamGameWeakPaged(parameters, otherLang);
 

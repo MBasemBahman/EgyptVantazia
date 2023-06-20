@@ -107,6 +107,7 @@
                                                 <th>@Html.DisplayNameFor(model => row.IsEnded)</th>
                                                 <th>@Html.DisplayNameFor(model => row.IsDelayed)</th>
                                                 <th>@Html.DisplayNameFor(model => row.IsCanNotEdit)</th>
+                                                <th>@Html.DisplayNameFor(model => row.IsActive)</th>
                                                 <th>
                                                     @Html.DisplayNameFor(model => row.Id)
                                                 </th>
@@ -157,6 +158,7 @@ else
                                     <th>@Html.DisplayNameFor(model => row.IsEnded)</th>
                                     <th>@Html.DisplayNameFor(model => row.IsDelayed)</th>
                                     <th>@Html.DisplayNameFor(model => row.IsCanNotEdit)</th>
+                                    <th>@Html.DisplayNameFor(model => row.IsActive)</th>
                                     <th>
                                         @Html.DisplayNameFor(model => row.Id)
                                     </th>
@@ -293,6 +295,18 @@ else
                         },
                         {
                             data: "isCanNotEdit",
+                            orderable: false,
+                            render: function (data) {
+                                if (data == true) {
+                                    return '<input type="checkbox"  class="form-check-input" checked disabled>';
+                                }
+                                else {
+                                    return '<input type="checkbox"  class="form-check-input"  disabled>';
+                                }
+                            }
+                        },
+                        {
+                            data: "isActive",
                             orderable: false,
                             render: function (data) {
                                 if (data == true) {

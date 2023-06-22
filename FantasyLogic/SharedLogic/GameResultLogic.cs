@@ -36,7 +36,7 @@ namespace FantasyLogic.SharedLogic
                 Value = value,
             };
 
-            _unitOfWork.PlayerScore.CreatePlayerGameWeakScore(_playerScoreCalc.GetPlayerScore(otherGoals, substitutions, score, rankingIndex, playMinutes, fk_PlayerPosition));
+            _unitOfWork.PlayerScore.CreatePlayerGameWeakScore(_playerScoreCalc.GetPlayerScore(otherGoals, substitutions, score, rankingIndex, playMinutes, fk_PlayerPosition), ignoreCheck: false);
         }
 
         public void UpdatePlayerEventScore(
@@ -60,7 +60,7 @@ namespace FantasyLogic.SharedLogic
                     IsOut = events.IsOut,
                 };
 
-                _unitOfWork.PlayerScore.CreatePlayerGameWeakScore(_playerScoreCalc.GetPlayerScore(otherGoals, substitutions, score, rankingIndex, playMinutes, fk_PlayerPosition));
+                _unitOfWork.PlayerScore.CreatePlayerGameWeakScore(_playerScoreCalc.GetPlayerScore(otherGoals, substitutions, score, rankingIndex, playMinutes, fk_PlayerPosition), ignoreCheck: false);
             }
         }
         #endregion

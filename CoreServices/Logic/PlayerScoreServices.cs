@@ -359,9 +359,9 @@ namespace CoreServices.Logic
             return await _repository.PlayerGameWeakScore.FindById(id, trackChanges);
         }
 
-        public void CreatePlayerGameWeakScore(PlayerGameWeakScore PlayerGameWeakScore, bool ignoreCheck = false)
+        public void CreatePlayerGameWeakScore(PlayerGameWeakScore PlayerGameWeakScore, bool ignoreCheck = true)
         {
-            if (ignoreCheck)
+            if (!ignoreCheck)
             {
                 if (PlayerGameWeakScore.Value == "0")
                 {

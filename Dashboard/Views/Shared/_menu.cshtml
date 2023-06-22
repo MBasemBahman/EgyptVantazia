@@ -405,6 +405,26 @@
                     </ul>
                 </li>
             }
+        
+            @if (viewList.Contains((int)DashboardViewEnum.Mark))
+            {
+                <li class=" nav-item">
+                    <a class="d-flex align-items-center" href="#">
+                        <i data-feather='map-pin'></i><span class="menu-title text-truncate" data-i18n="Menu Levels">@Localizer.Get("Player Marks")</span>
+                    </a>
+                    <ul class="menu-content">
+                        @if (viewList.Contains((int)DashboardViewEnum.Mark))
+                        {
+                            <li class="@(active == DashboardViewEnum.Mark.ToString()?"active":"")">
+                                <a class="d-flex align-items-center" asp-controller="Mark" asp-area="PlayerMarkEntity" asp-action="Index">
+                                    <i data-feather='settings'></i><span class="menu-item text-truncate" data-i18n="Second Level">@Localizer.Get("Marks")</span>
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
+                </li>
+            }
 
             @if (viewList.Contains((int)DashboardViewEnum.AppAbout))
             {

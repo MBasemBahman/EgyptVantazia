@@ -8,6 +8,7 @@ using Dashboard.Areas.LogEntity.Models;
 using Dashboard.Areas.NewsEntity.Models;
 using Dashboard.Areas.NotificationEntity.Models;
 using Dashboard.Areas.PaymentEntity.Models;
+using Dashboard.Areas.PlayerMarkEntity.Models;
 using Dashboard.Areas.PlayerScoreEntity.Models;
 using Dashboard.Areas.PlayerStateEntity.Models;
 using Dashboard.Areas.PlayerTransferEntity.Models;
@@ -25,6 +26,7 @@ using Entities.CoreServicesModels.LocationModels;
 using Entities.CoreServicesModels.LogModels;
 using Entities.CoreServicesModels.NewsModels;
 using Entities.CoreServicesModels.NotificationModels;
+using Entities.CoreServicesModels.PlayerMarkModels;
 using Entities.CoreServicesModels.PlayerScoreModels;
 using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.PlayerTransfersModels;
@@ -42,6 +44,7 @@ using Entities.DBModels.DashboardAdministrationModels;
 using Entities.DBModels.LocationModels;
 using Entities.DBModels.NewsModels;
 using Entities.DBModels.NotificationModels;
+using Entities.DBModels.PlayerMarkModels;
 using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.PlayerStateModels;
 using Entities.DBModels.PrivateLeagueModels;
@@ -478,6 +481,37 @@ namespace Dashboard.MappingProfileCls
 
             _ = CreateMap<PlayerGameWeakScoreFilter, PlayerGameWeakScoreParameters>();
             #endregion
+            #endregion
+            
+            #region Player Marks Models
+
+            #region Mark
+            _ = CreateMap<Mark, MarkCreateOrEditModel>();
+
+            _ = CreateMap<MarkCreateOrEditModel, Mark>();
+
+            _ = CreateMap<MarkModel, MarkDto>();
+
+            _ = CreateMap<MarkFilter, MarkParameters>();
+
+            _ = CreateMap<MarkLangModel, MarkLang>();
+
+            _ = CreateMap<MarkLang, MarkLangModel>();
+            #endregion
+            
+            #region PlayerMark
+            
+            _ = CreateMap<PlayerMark, PlayerMarkCreateOrEditModel>()
+                .ForMember(dest => dest.Fk_GameWeaks, opt => opt.Ignore());
+
+            _ = CreateMap<PlayerMarkCreateOrEditModel, PlayerMark>();
+
+            _ = CreateMap<PlayerMarkModel, PlayerMarkDto>();
+
+            _ = CreateMap<PlayerMarkFilter, PlayerMarkParameters>();
+            
+            #endregion
+
             #endregion
 
             #region Season Models

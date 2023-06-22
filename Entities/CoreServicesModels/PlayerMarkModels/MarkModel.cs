@@ -12,6 +12,9 @@ namespace Entities.CoreServicesModels.PlayerMarkModels
         [DisplayName($"{nameof(Name)}")]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public new string Name { get; set; }
+
+        [DisplayName(nameof(PlayerMarkCount))]
+        public int PlayerMarkCount { get; set; }
     }
 
     public class MarkCreateOrEditModel

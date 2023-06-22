@@ -1,4 +1,6 @@
-﻿namespace Entities.DBModels.PlayerScoreModels
+﻿using Entities.DBModels.PlayerMarkModels;
+
+namespace Entities.DBModels.PlayerScoreModels
 {
     public class PlayerGameWeakScore : AuditEntity
     {
@@ -33,5 +35,8 @@
 
         [DisplayName(nameof(IsCanNotEdit))]
         public bool IsCanNotEdit { get; set; }
+
+        [DisplayName(nameof(PlayerMarkGameWeakScores))]
+        public List<PlayerMarkGameWeakScore> PlayerMarkGameWeakScores { get; set; }
     }
 }

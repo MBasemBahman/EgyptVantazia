@@ -1,4 +1,5 @@
 ﻿using Entities.DBModels.AccountModels;
+using Entities.DBModels.PromoCodeModels;
 
 namespace Entities.DBModels.SubscriptionModels
 {
@@ -30,6 +31,9 @@ namespace Entities.DBModels.SubscriptionModels
 
         [DisplayName(nameof(AccountSubscriptions))]
         public IList<AccountSubscription> AccountSubscriptions { get; set; }
+
+        [DisplayName(nameof(PromoCodeSubscriptions))]
+        public List<PromoCodeSubscription> PromoCodeSubscriptions { get; set; }
 
         public SubscriptionLang SubscriptionLang { get; set; }
     }

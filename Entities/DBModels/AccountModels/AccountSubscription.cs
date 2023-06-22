@@ -1,4 +1,5 @@
-﻿using Entities.DBModels.SeasonModels;
+﻿using Entities.DBModels.PromoCodeModels;
+using Entities.DBModels.SeasonModels;
 using Entities.DBModels.SubscriptionModels;
 
 namespace Entities.DBModels.AccountModels
@@ -18,6 +19,13 @@ namespace Entities.DBModels.AccountModels
 
         [DisplayName(nameof(Subscription))]
         public Subscription Subscription { get; set; }
+
+        [DisplayName(nameof(PromoCode))]
+        [ForeignKey(nameof(PromoCode))]
+        public int? Fk_PromoCode { get; set; }
+
+        [DisplayName(nameof(PromoCode))]
+        public PromoCode PromoCode { get; set; }
 
         [DisplayName(nameof(Season))]
         [ForeignKey(nameof(Season))]

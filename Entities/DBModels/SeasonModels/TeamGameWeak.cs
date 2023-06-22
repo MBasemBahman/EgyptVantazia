@@ -1,4 +1,6 @@
-﻿using Entities.DBModels.PlayerScoreModels;
+﻿using Entities.DBModels.MatchStatisticModels;
+using Entities.DBModels.PlayerMarkModels;
+using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.TeamModels;
 
 namespace Entities.DBModels.SeasonModels
@@ -65,5 +67,11 @@ namespace Entities.DBModels.SeasonModels
 
         [DisplayName(nameof(PlayerGameWeaks))]
         public IList<PlayerGameWeak> PlayerGameWeaks { get; set; }
+
+        [DisplayName(nameof(MatchStatisticScores))]
+        public List<MatchStatisticScore> MatchStatisticScores { get; set; }
+
+        [DisplayName(nameof(PlayerMarkTeamGameWeaks))]
+        public List<PlayerMarkTeamGameWeak> PlayerMarkTeamGameWeaks { get; set; }
     }
 }

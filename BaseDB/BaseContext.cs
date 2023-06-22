@@ -5,12 +5,15 @@ using Entities.DBModels.AuditModels;
 using Entities.DBModels.DashboardAdministrationModels;
 using Entities.DBModels.LocationModels;
 using Entities.DBModels.LogModels;
+using Entities.DBModels.MatchStatisticModels;
 using Entities.DBModels.NewsModels;
 using Entities.DBModels.NotificationModels;
+using Entities.DBModels.PlayerMarkModels;
 using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.PlayerStateModels;
 using Entities.DBModels.PlayersTransfersModels;
 using Entities.DBModels.PrivateLeagueModels;
+using Entities.DBModels.PromoCodeModels;
 using Entities.DBModels.SeasonModels;
 using Entities.DBModels.SharedModels;
 using Entities.DBModels.SponsorModels;
@@ -157,6 +160,25 @@ namespace BaseDB
 
         #region Notification
         public DbSet<Notification> Notifications { get; set; }
+        #endregion
+
+        #region MatchStatistics Models
+        public DbSet<MatchStatisticScore> MatchStatisticScores { get; set; }
+        public DbSet<StatisticCategory> StatisticCategories { get; set; }
+        public DbSet<StatisticScore> StatisticScores { get; set; }
+        #endregion
+
+        #region PlayerMarks Models
+        public DbSet<Mark> Marks { get; set; }
+        public DbSet<PlayerMark> PlayerMarks { get; set; }
+        public DbSet<PlayerMarkGameWeakScore> PlayerMarkGameWeakScores { get; set; }
+        public DbSet<PlayerMarkGameWeak> PlayerMarkGameWeeks { get; set; }
+        public DbSet<PlayerMarkTeamGameWeak> PlayerMarkTeamGameWeaks { get; set; }
+        #endregion
+
+        #region PromoCode Models
+        public DbSet<PromoCode> PromoCodes { get; set; }
+        public DbSet<PromoCodeSubscription> PromoCodeSubscriptions { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -6,5 +6,7 @@
         public string Name { get; set; }
         public double Score { get; set; }
         public Lineups Lineups { get; set; }
+        public Lineups Statistics { get; set; }
+
     }
 }

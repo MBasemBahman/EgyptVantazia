@@ -1,5 +1,6 @@
 ﻿using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.NewsModels;
+using Entities.DBModels.PlayerMarkModels;
 using Entities.DBModels.PlayerStateModels;
 using Entities.DBModels.PlayersTransfersModels;
 
@@ -65,6 +66,9 @@ namespace Entities.DBModels.SeasonModels
 
         [DisplayName(nameof(PlayerGameWeakScoreStates))]
         public IList<PlayerGameWeakScoreState> PlayerGameWeakScoreStates { get; set; }
+
+        [DisplayName(nameof(PlayerMarkGameWeaks))]
+        public List<PlayerMarkGameWeak> PlayerMarkGameWeaks { get; set; }
 
         public GameWeakLang GameWeakLang { get; set; }
     }

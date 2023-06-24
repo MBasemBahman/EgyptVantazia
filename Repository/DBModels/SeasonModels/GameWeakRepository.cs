@@ -91,7 +91,7 @@ namespace Repository.DBModels.SeasonModels
                 return false;
             }
             return DBContext.TeamGameWeaks
-                            .Where(a => a.Fk_GameWeak == fk_GameWeak)
+                            .Where(a => a.Fk_GameWeak == fk_GameWeak && a.IsActive)
                             .OrderByDescending(a => a.StartTime)
                             .Select(a => a.IsEnded)
                             .FirstOrDefault() ||

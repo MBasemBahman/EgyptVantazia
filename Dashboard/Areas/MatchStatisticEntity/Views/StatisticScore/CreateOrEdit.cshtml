@@ -58,6 +58,14 @@
                                                 <span asp-validation-for="StatisticScoreLang.Name" class="text-danger"></span>
                                             </div>
                                         </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@Localizer.Get("StatisticCategory")</label>
+                                                <select asp-for="Fk_StatisticCategory" class="select2 form-select" asp-items="@(new SelectList(ViewData["StatisticCategory"] as Dictionary<string,string>,"Key","Value"))">
+                                                </select>
+                                                <span asp-validation-for="Fk_StatisticCategory" class="text-danger"></span>
+                                            </div>
+                                        </div>
 
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">

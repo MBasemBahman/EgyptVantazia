@@ -83,6 +83,10 @@ namespace CoreServices.Logic
                            LastModifiedAt = a.LastModifiedAt,
                            LastModifiedBy = a.LastModifiedBy,
                            Name = otherLang ? a.StatisticScoreLang.Name : a.Name,
+                           StatisticCategory = new StatisticCategoryModel
+                           {
+                               Name = otherLang?a.StatisticCategory.StatisticCategoryLang.Name : a.StatisticCategory.Name
+                           },
                            _365_Id = a._365_Id
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)

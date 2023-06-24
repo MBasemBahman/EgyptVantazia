@@ -75,7 +75,7 @@ namespace Dashboard.Areas.PromoCodeEntity.Controllers
             data.Subscriptions =_mapper.Map<List<SubscriptionDto>>(_unitOfWork.PromoCode.GetPromoCodeSubscriptions(new PromoCodeSubscriptionParameters
             {
                 Fk_PromoCode = id
-            }, otherLang).Select(a => a.Subscription.Name).ToList());
+            }, otherLang).Select(a => a.Subscription).ToList());
             return View(data);
         }
 
@@ -97,6 +97,10 @@ namespace Dashboard.Areas.PromoCodeEntity.Controllers
                 {
                     Fk_PromoCode = id
                 }, otherLang: false).Select(a => a.Fk_Subscription).ToList();
+            }
+            else
+            {
+                model.ExpirationDate = DateTime.UtcNow;
             }
 
       

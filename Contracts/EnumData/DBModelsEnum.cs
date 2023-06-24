@@ -56,10 +56,10 @@
             AccountTeamPlayer = 38,
             AccountTeamGameWeak = 39,
             Notification = 40,
-            PromoCode = 41,
-            StatisticScore = 42,
-            StatisticCategory = 43,
-            MatchStatisticScore = 44
+            PromoCode = 43,
+            StatisticScore = 44,
+            StatisticCategory = 45,
+            MatchStatisticScore = 46
         }
 
         public enum ScoreTypeEnum

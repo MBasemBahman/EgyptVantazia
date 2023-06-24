@@ -657,6 +657,10 @@ namespace Dashboard.MappingProfileCls
 
             _ = CreateMap<StatisticScoreFilter, StatisticScoreParameters>();
 
+            _ = CreateMap<StatisticScoreLangModel, StatisticScoreLang>();
+
+            _ = CreateMap<StatisticScoreLang, StatisticScoreLangModel>();
+
             #endregion
 
             #region PlayerSeasonScoreState
@@ -676,6 +680,7 @@ namespace Dashboard.MappingProfileCls
 
             #region Promo Code
             _ = CreateMap<PromoCode, PromoCodeCreateOrEditModel>();
+
 
             _ = CreateMap<PromoCodeCreateOrEditModel, PromoCode>();
 

@@ -18,6 +18,8 @@ using Dashboard.Areas.StandingsEntity.Models;
 using Dashboard.Areas.SubscriptionEntity.Models;
 using Dashboard.Areas.TeamEntity.Models;
 using Dashboard.Areas.UserEntity.Models;
+using Dashboard.Areas.PromoCodeEntity.Models;
+using Dashboard.Areas.MatchStatisticEntity.Models;
 using Entities.CoreServicesModels.AccountModels;
 using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.AppInfoModels;
@@ -35,6 +37,8 @@ using Entities.CoreServicesModels.StandingsModels;
 using Entities.CoreServicesModels.SubscriptionModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.CoreServicesModels.UserModels;
+using Entities.CoreServicesModels.PromoCodeModels;
+using Entities.CoreServicesModels.MatchStatisticModels;
 using Entities.DBModels.AccountModels;
 using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.AppInfoModels;
@@ -50,6 +54,8 @@ using Entities.DBModels.SponsorModels;
 using Entities.DBModels.StandingsModels;
 using Entities.DBModels.SubscriptionModels;
 using Entities.DBModels.TeamModels;
+using Entities.DBModels.PromoCodeModels;
+using Entities.DBModels.MatchStatisticModels;
 using Entities.RequestFeatures;
 using AccountTeamGameWeakDto = Dashboard.Areas.AccountTeamEntity.Models.AccountTeamGameWeakDto;
 
@@ -622,6 +628,68 @@ namespace Dashboard.MappingProfileCls
             #region ScoreStype
 
             _ = CreateMap<PlayerGameWeakScoreDto, PlayerGameWeakScoreCreateDto>();
+
+            #endregion
+
+            #region Match Statistics
+
+            #region StatisticCategory
+            _ = CreateMap<StatisticCategory, StatisticCategoryCreateOrEditModel>();
+
+            _ = CreateMap<StatisticCategoryCreateOrEditModel, StatisticCategory>();
+
+            _ = CreateMap<StatisticCategoryModel, StatisticCategoryDto>();
+
+            _ = CreateMap<StatisticCategoryFilter, StatisticCategoryParameters>();
+
+            _ = CreateMap<StatisticCategoryLangModel, StatisticCategoryLang>();
+
+            _ = CreateMap<StatisticCategoryLang, StatisticCategoryLangModel>();
+
+            #endregion
+
+            #region StatisticScore
+            _ = CreateMap<StatisticScore, StatisticScoreCreateOrEditModel>();
+
+            _ = CreateMap<StatisticScoreCreateOrEditModel, StatisticScore>();
+
+            _ = CreateMap<StatisticScoreModel, StatisticScoreDto>();
+
+            _ = CreateMap<StatisticScoreFilter, StatisticScoreParameters>();
+
+            #endregion
+
+            #region PlayerSeasonScoreState
+            _ = CreateMap<MatchStatisticScore, MatchStatisticScoreCreateOrEditModel>();
+
+            _ = CreateMap<MatchStatisticScoreCreateOrEditModel, MatchStatisticScore>();
+
+            _ = CreateMap<MatchStatisticScoreModel, MatchStatisticScoreDto>();
+
+            _ = CreateMap<MatchStatisticScoreFilter, MatchStatisticScoreParameters>();
+
+            #endregion
+
+            #endregion
+
+            #region PromoCode Models
+
+            #region Promo Code
+            _ = CreateMap<PromoCode, PromoCodeCreateOrEditModel>();
+
+            _ = CreateMap<PromoCodeCreateOrEditModel, PromoCode>();
+
+            _ = CreateMap<PromoCodeModel, PromoCodeDto>();
+
+            _ = CreateMap<PromoCodeFilter, PromoCodeParameters>();
+
+            _ = CreateMap<PromoCodeLangModel, PromoCodeLang>();
+
+            _ = CreateMap<PromoCodeLang, PromoCodeLangModel>();
+
+            #endregion
+
+        
 
             #endregion
 

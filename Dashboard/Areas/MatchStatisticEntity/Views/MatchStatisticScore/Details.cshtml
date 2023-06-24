@@ -1,0 +1,81 @@
+﻿@model MatchStatisticScoreDto
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.emptyLayout = true; 
+}
+ <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalScrollableTitle">@Localizer.Get("MatchStatisticScore")</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>  
+</div> 
+<div class="modal-body">
+     
+        <div class="row">
+            <div class="col-xl-7 col-12">
+                <dl class="row mb-0">
+    
+                
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.TeamGameWeak.Home):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.TeamGameWeak.Home.Name</dd>
+    
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.TeamGameWeak.GameWeak.Season):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.TeamGameWeak.GameWeak.Season.Name</dd>
+    
+                    
+               
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.StatisticScore.StatisticCategory):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.StatisticScore.StatisticCategory.Name</dd>
+
+
+                <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.Value):</dt>
+                <dd class="col-sm-8 mb-1">@Model.Value</dd>
+
+                <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.IsCanNotEdit):</dt>
+                <dd class="col-sm-8 mb-1">@(Model.IsCanNotEdit ? Localizer.Get("Yes") : Localizer.Get("No"))</dd>
+                </dl>
+            </div>
+            <div class="col-xl-5 col-12">
+                <dl class="row mb-0">
+    
+                
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.TeamGameWeak.Away):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.TeamGameWeak.Away.Name</dd>
+    
+                 <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.TeamGameWeak.GameWeak):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.TeamGameWeak.GameWeak.Name</dd>
+    
+    
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.StatisticScore):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.StatisticScore.Name</dd>
+
+                <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.ValuePercentage):</dt>
+                <dd class="col-sm-8 mb-1">@Model.ValuePercentage</dd>
+                </dl>
+            </div>
+    
+        </div>
+    
+        <div class="row">
+            <div class="col-xl-7 col-12">
+                <dl class="row mb-0">
+    
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.CreatedBy):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.CreatedBy</dd>
+    
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.LastModifiedBy):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.LastModifiedBy</dd>
+    
+                </dl>
+            </div>
+            <div class="col-xl-5 col-12">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.CreatedAt):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.CreatedAt</dd>
+    
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.LastModifiedAt):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.LastModifiedAt</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+

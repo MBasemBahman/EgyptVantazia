@@ -16,6 +16,8 @@ using Repository.DBModels.SponsorModels;
 using Repository.DBModels.StandingsModels;
 using Repository.DBModels.SubscripitonModels;
 using Repository.DBModels.TeamModels;
+using Repository.DBModels.PromoCodeModels;
+using Repository.DBModels.MatchStatisticModels;
 
 namespace Repository
 {
@@ -125,6 +127,18 @@ namespace Repository
         #region NotificationModels
         private NotificationRepository _notificationRepository;
         #endregion
+
+        #region MatchStatisticModels
+        private MatchStatisticScoreRepository _matchStatisticScoreRepository;
+        private StatisticCategoryRepository _statisticCategoryRepository;
+        private StatisticScoreRepository _statisticScoreRepository;
+        #endregion
+
+        #region PromoCodeModels
+        private PromoCodeRepository _promoCodeRepository;
+        private PromoCodeSubscriptionRepository _promoCodeSubscriptionRepository;
+        #endregion
+
 
 
         public RepositoryManager(BaseContext dBContext)
@@ -565,5 +579,57 @@ namespace Repository
             }
         }
         #endregion
+
+        #region MatchStatisticModels
+
+        public MatchStatisticScoreRepository MatchStatisticScore
+        {
+            get
+            {
+                _matchStatisticScoreRepository ??= new MatchStatisticScoreRepository(_dBContext);
+                return _matchStatisticScoreRepository;
+            }
+        }
+
+        public StatisticCategoryRepository StatisticCategory
+        {
+            get
+            {
+                _statisticCategoryRepository ??= new StatisticCategoryRepository(_dBContext);
+                return _statisticCategoryRepository;
+            }
+        }
+
+        public StatisticScoreRepository StatisticScore
+        {
+            get
+            {
+                _statisticScoreRepository ??= new StatisticScoreRepository(_dBContext);
+                return _statisticScoreRepository;
+            }
+        }
+        #endregion
+
+        #region PromoCodeModels
+
+        public PromoCodeRepository PromoCode
+        {
+            get
+            {
+                _promoCodeRepository ??= new PromoCodeRepository(_dBContext);
+                return _promoCodeRepository;
+            }
+        }
+
+        public PromoCodeSubscriptionRepository PromoCodeSubscription
+        {
+            get
+            {
+                _promoCodeSubscriptionRepository ??= new PromoCodeSubscriptionRepository(_dBContext);
+                return _promoCodeSubscriptionRepository;
+            }
+        }
+        #endregion
+
     }
 }

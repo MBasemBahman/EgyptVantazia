@@ -55,7 +55,11 @@
             Payment = 36,
             AccountTeamPlayer = 38,
             AccountTeamGameWeak = 39,
-            Notification = 40
+            Notification = 40,
+            PromoCode = 41,
+            StatisticScore = 42,
+            StatisticCategory = 43,
+            MatchStatisticScore = 44
         }
 
         public enum ScoreTypeEnum

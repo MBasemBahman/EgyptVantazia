@@ -1373,5 +1373,55 @@
   </data>
   <data name="Fk_TeamGameWeaks" xml:space="preserve">
     <value>الماتشات</value>
+  <data name="Discount1" xml:space="preserve">
+    <value>الخصم</value>
+  </data>
+  <data name="ExpirationDate" xml:space="preserve">
+    <value>تاريخ الانتهاء</value>
+  </data>
+  <data name="MatchStatistics Data" xml:space="preserve">
+    <value>بيانات احصائيات الماتشات</value>
+  </data>
+  <data name="MatchStatisticScore" xml:space="preserve">
+    <value>احصائيات الماتش</value>
+  </data>
+  <data name="MatchStatisticScores" xml:space="preserve">
+    <value>احصائيات الماتشات</value>
+  </data>
+  <data name="MaxDiscount" xml:space="preserve">
+    <value>الحد الاقصى للخصم</value>
+  </data>
+  <data name="MaxUse" xml:space="preserve">
+    <value>الحد الاقصى للاستخدام</value>
+  </data>
+  <data name="MaxUsePerUser" xml:space="preserve">
+    <value>أقصى استخدام لكل مستخدم</value>
+  </data>
+  <data name="MinPrice" xml:space="preserve">
+    <value>الحد الادنى للسعر</value>
+  </data>
+  <data name="PromoCode" xml:space="preserve">
+    <value>كود الخصم</value>
+  </data>
+  <data name="PromoCodes" xml:space="preserve">
+    <value>اكواد الخصم</value>
+  </data>
+  <data name="Select StatisticCategory" xml:space="preserve">
+    <value>اختر الفئة</value>
+  </data>
+  <data name="StatisticCategory" xml:space="preserve">
+    <value>الفئة</value>
+  </data>
+  <data name="StatisticCategorys" xml:space="preserve">
+    <value>فئات الاحصائيات</value>
+  </data>
+  <data name="StatisticScore" xml:space="preserve">
+    <value>النقاط</value>
+  </data>
+  <data name="StatisticScores" xml:space="preserve">
+    <value>نقاط الاحصائيات</value>
+  </data>
+  <data name="ValuePercentage" xml:space="preserve">
+    <value>نسبة القيمة</value>
   </data>
 </root>

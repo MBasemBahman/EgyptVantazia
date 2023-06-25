@@ -1,0 +1,132 @@
+﻿@model MatchStatisticScoreCreateOrEditModel
+@{
+    ViewData["Title"] = $"{Localizer.Get("CreateOrEdit")} {Localizer.Get("MatchStatisticScore")}";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.useForm = true;
+    ViewBag.useDatePicker = true;
+    bool IsProfile = ViewData["IsProfile"] != null ? (bool)ViewData["IsProfile"] :false;
+    int id = ViewData["id"] != null ? (int)ViewData["id"] : 0;
+
+}
+
+<!-- BEGIN: Content-->
+<div class="app-content content ">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row">
+            <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h2 class="content-header-title float-start mb-0">@ViewData["Title"]</h2>
+                        <div class="breadcrumb-wrapper">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="/MatchStatisticEntity/MatchStatisticScore/Index">@Localizer.Get("MatchStatisticScores")</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    @ViewData["Title"]
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-body">
+            <section id="multiple-column-form">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form class="form" asp-action="CreateOrEdit" enctype="multipart/form-data">
+                                    <input type="hidden" asp-for="@IsProfile" />
+                                    <input type="hidden" asp-for="Fk_TeamGameWeak" />
+                                    <div asp-validation-summary="All" class="text-danger">@ViewData["Error"]</div>
+                                    <br />
+
+                                    <div class="row mb-1">
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@Localizer.Get("StatisticCategory")</label>
+                                                <select asp-for="Fk_StatisticCategory" class="select2 form-select" asp-items="@(new SelectList(ViewData["StatisticCategory"] as Dictionary<string,string>,"Key","Value"))">
+                                                    <option value="0">@Localizer.Get("Select StatisticCategory")</option>
+                                                </select>
+                                                <span asp-validation-for="Fk_StatisticCategory" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@Localizer.Get("StatisticScore")</label>
+                                                <select asp-for="Fk_StatisticScore" class="select2 form-select" asp-items="@(new SelectList(ViewData["StatisticScore"] as Dictionary<string,string>,"Key","Value"))">
+                                                </select>
+                                                <span asp-validation-for="Fk_StatisticScore" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Value" class="form-label"></label>
+                                                <input asp-for="Value" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Value"))" />
+                                                <span asp-validation-for="Value" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="ValuePercentage" class="form-label"></label>
+                                                <input asp-for="ValuePercentage" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"ValuePercentage"))" />
+                                                <span asp-validation-for="ValuePercentage" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="IsCanNotEdit" class="form-check-label" for="IsCanNotEdit"></label>
+                                                <input asp-for="IsCanNotEdit" class="form-check-input" />
+                                                <span asp-validation-for="IsCanNotEdit" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary me-1">@Localizer.Get("Submit")</button>
+                                            <button type="reset" class="btn btn-outline-secondary me-1">@Localizer.Get("Reset")</button>
+                                            @if (IsProfile)
+                                            {
+                                                <a asp-action="Index" asp-route-Fk_TeamGameWeak="@Model.Fk_TeamGameWeak" class="btn btn-warning"> @Localizer.Get("Back") </a>
+                                            }
+                                            else
+                                            {
+                                                <a asp-action="Index" class="btn btn-warning"> @Localizer.Get("Back") </a>
+                                            }
+
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+</div>
+@section scripts
+    {
+    <script src="~/apis/site.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#Fk_StatisticCategory").on("change", function () {
+                getStatisticScores($("#Fk_StatisticScore"), $(this).val(), true);
+            });
+        });
+    </script>
+}

@@ -1,4 +1,5 @@
-﻿using Entities.CoreServicesModels.SeasonModels;
+﻿using Entities.CoreServicesModels.MatchStatisticModels;
+using Entities.CoreServicesModels.SeasonModels;
 
 namespace Dashboard.Areas.Dashboard.Controllers
 {
@@ -69,6 +70,23 @@ namespace Dashboard.Areas.Dashboard.Controllers
             {
                 a.Id,
                 Name = $"{a.Home.Name} - {a.Away.Name}"
+            }).ToList();
+
+            return Json(result);
+        }
+
+        [HttpGet]
+        public JsonResult GetStatisticScores(int Fk_StatisticCategory)
+        {
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
+            var result = _unitOfWork.MatchStatistic.GetStatisticScores(new StatisticScoreParameters
+            {
+                Fk_StatisticCategory = Fk_StatisticCategory,
+            }, otherLang).Select(a => new
+            {
+                a.Id,
+                Name = a.Name
             }).ToList();
 
             return Json(result);

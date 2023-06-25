@@ -58,6 +58,10 @@
             Notification = 40,
             Mark = 41,
             PlayerMark = 42
+            PromoCode = 43,
+            StatisticScore = 44,
+            StatisticCategory = 45,
+            MatchStatisticScore = 46
         }
 
         public enum ScoreTypeEnum

@@ -122,7 +122,8 @@
                             @* @if (dashboardRole == (int)DashboardAdministrationRoleEnum.Developer) *@
                             @* { *@
                                 <a class="btn btn-primary update_game_result">@Localizer.Get("UpdateGameResult")</a>
-                                <a class="btn btn-info update_teams_players">@Localizer.Get("UpdateTeamsPlayers")</a>
+                            <a class="btn btn-info update_teams_players">@Localizer.Get("UpdateTeamsPlayers")</a>
+                            <a href="/MatchStatisticEntity/MatchStatisticScore/Index/?Fk_TeamGameWeak=@Model.Id" target="_blank" class="btn btn-info">@Localizer.Get("MatchStatisticScore")</a>
                                 <hr>
                             @* } *@
                             <div class="d-flex justify-content-between align-items-start">

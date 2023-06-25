@@ -1,0 +1,172 @@
+﻿@model PromoCodeCreateOrEditModel
+@{
+    ViewData["Title"] = $"{Localizer.Get("CreateOrEdit")} {Localizer.Get("PromoCode")}";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.useForm = true;
+    ViewBag.useDatePicker = true;
+}
+
+<!-- BEGIN: Content-->
+<div class="app-content content ">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row">
+            <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h2 class="content-header-title float-start mb-0">@ViewData["Title"]</h2>
+                        <div class="breadcrumb-wrapper">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+
+                                    <a href="/PromoCodeEntity/PromoCode/Index">@Localizer.Get("PromoCodes")</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    @ViewData["Title"]
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-body">
+            <section id="multiple-column-form">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form class="form" asp-action="CreateOrEdit" enctype="multipart/form-data">
+                                    <div asp-validation-summary="All" class="text-danger">@ViewData["Error"]</div>
+                                   
+                                    <div class="row mb-1">
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Name" class="form-label"></label>
+                                                <input asp-for="Name" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Name{PropertyAttributeConstants.ArLang}"))" />
+                                                <span asp-validation-for="Name" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="PromoCodeLang.Name" class="form-label"></label>
+                                                <input asp-for="PromoCodeLang.Name" class="form-control" placeholder="@Localizer.Get("Enter")  @(Localizer.Get($"Name{PropertyAttributeConstants.EnLang}"))" />
+                                                <span asp-validation-for="PromoCodeLang.Name" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Description" class="form-label"></label>
+                                                <textarea rows="5" asp-for="Description" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Description{PropertyAttributeConstants.ArLang}"))" ></textarea>
+                                                <span asp-validation-for="Description" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="PromoCodeLang.Description" class="form-label"></label>
+                                                <textarea rows="5" asp-for="PromoCodeLang.Description" class="form-control" placeholder="@Localizer.Get("Enter")  @(Localizer.Get($"Description{PropertyAttributeConstants.EnLang}"))" ></textarea>
+                                                <span asp-validation-for="PromoCodeLang.Description" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Code" class="form-label"></label>
+                                                <input asp-for="Code" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Code"))" />
+                                                <span asp-validation-for="Code" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Discount" class="form-label"></label>
+                                                <input asp-for="Discount" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Discount"))" />
+                                                <span asp-validation-for="Discount" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="MinPrice" class="form-label"></label>
+                                                <input asp-for="MinPrice" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"MinPrice"))" />
+                                                <span asp-validation-for="MinPrice" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="MaxDiscount" class="form-label"></label>
+                                                <input asp-for="MaxDiscount" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"MaxDiscount"))" />
+                                                <span asp-validation-for="MaxDiscount" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="MaxUse" class="form-label"></label>
+                                                <input asp-for="MaxUse" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"MaxUse"))" />
+                                                <span asp-validation-for="MaxUse" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="MaxUsePerUser" class="form-label"></label>
+                                                <input asp-for="MaxUsePerUser" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"MaxUsePerUser"))" />
+                                                <span asp-validation-for="MaxUsePerUser" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="ExpirationDate" class="form-label"></label>
+                                                <input asp-for="ExpirationDate" class="form-control" type="date" />
+                                                <span asp-validation-for="ExpirationDate" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@Localizer.Get("IsActive")</label>
+                                                <select class="form-control" asp-for="IsActive">
+                                                    <option value="true">@Localizer.Get("Yes")</option>
+                                                    <option value="false">@Localizer.Get("No")</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                             <div class="col-md-12 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Fk_Subscriptions" class="form-label"></label>
+                                                <select asp-for="Fk_Subscriptions" class="select2 form-select" multiple asp-items="@(new SelectList(ViewData["Subscription"] as Dictionary<string,string>,"Key","Value"))">
+                                                </select>
+                                                <span asp-validation-for="Fk_Subscriptions" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary me-1">@Localizer.Get("Submit")</button>
+                                            <button type="reset" class="btn btn-outline-secondary me-1">@Localizer.Get("Reset")</button>
+                                          <a asp-action="Index" class="btn btn-warning"> @Localizer.Get("Back") </a>
+
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+</div>

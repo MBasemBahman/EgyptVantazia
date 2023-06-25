@@ -28,6 +28,8 @@ namespace CoreServices
         private SubscriptionServices _subscriptionServices;
         private AuditServices _auditServices;
         private NotificationServices _notificationServices;
+        private MatchStatisticServices  _matchStatisticServices;
+        private PromoCodeServices _promoCodeServices;
 
         public UnitOfWork(RepositoryManager repository, BaseContext dBContext)
         {
@@ -202,6 +204,24 @@ namespace CoreServices
             {
                 _notificationServices ??= new NotificationServices(_repository);
                 return _notificationServices;
+            }
+        }
+
+        public MatchStatisticServices MatchStatistic
+        {
+            get
+            {
+                _matchStatisticServices ??= new MatchStatisticServices(_repository);
+                return _matchStatisticServices;
+            }
+        }
+
+        public PromoCodeServices PromoCode
+        {
+            get
+            {
+                _promoCodeServices ??= new PromoCodeServices(_repository);
+                return _promoCodeServices;
             }
         }
     }

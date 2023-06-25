@@ -57,7 +57,7 @@
             AccountTeamGameWeak = 39,
             Notification = 40,
             Mark = 41,
-            PlayerMark = 42
+            PlayerMark = 42,
             PromoCode = 43,
             StatisticScore = 44,
             StatisticCategory = 45,

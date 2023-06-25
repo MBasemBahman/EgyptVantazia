@@ -1322,6 +1322,7 @@
   </data>
   <data name="Fk_TeamGameWeaks" xml:space="preserve">
     <value>Team Game Weaks</value>
+	  </data>
   <data name="Discount" xml:space="preserve">
     <value>Discount</value>
   </data>

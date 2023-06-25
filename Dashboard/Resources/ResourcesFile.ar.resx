@@ -1350,4 +1350,28 @@
   <data name="You do not specify which team Reward cards will be added to all teams!" xml:space="preserve">
     <value>لم تحدد أي فريق سيتم اضافة بطاقات المكافآت إلى جميع الفرق!</value>
   </data>
+  <data name="Mark" xml:space="preserve">
+    <value>العلامة</value>
+  </data>
+  <data name="Marks" xml:space="preserve">
+    <value>العلامات</value>
+  </data>
+  <data name="PlayerMark" xml:space="preserve">
+    <value>علامة لاعب</value>
+  </data>
+  <data name="PlayerMarks" xml:space="preserve">
+    <value>علامات اللاعب</value>
+  </data>
+  <data name="Fk_GameWeaks" xml:space="preserve">
+    <value>الاسابيع ( GameWeaks )</value>
+  </data>
+  <data name="Count" xml:space="preserve">
+    <value>العدد</value>
+  </data>
+  <data name="Used" xml:space="preserve">
+    <value>مستعمل</value>
+  </data>
+  <data name="Fk_TeamGameWeaks" xml:space="preserve">
+    <value>الماتشات</value>
+  </data>
 </root>

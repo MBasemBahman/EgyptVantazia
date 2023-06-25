@@ -91,6 +91,12 @@
                                                         <span class="fw-bold">@Html.DisplayNameFor(model => profileItem.PlayerSeasonScoreStates)</span>
                                                     </a>
                                                 </li>
+                                                
+                                                <li class="nav-item ">
+                                                    <a id="/PlayerMarkEntity/PlayerMark/Index/?Fk_Player=@Model.Id&ProfileLayOut=true" class="nav-link tab-item   @(returnItem==(int)PlayerProfileItems.PlayerMark ? "active" : "")">
+                                                        <span class="fw-bold">@Html.DisplayNameFor(model => profileItem.PlayerMarks)</span>
+                                                    </a>
+                                                </li>
 
                                             </ul>
 

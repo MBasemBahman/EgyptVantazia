@@ -54,6 +54,17 @@
 	  <AdditionalFiles Include="Areas\NotificationEntity\Views\Notification\Details.cshtml" />
 	  <AdditionalFiles Include="Areas\NotificationEntity\Views\Notification\Index.cshtml" />
 	  <AdditionalFiles Include="Areas\NotificationEntity\Views\_ViewImports.cshtml" />
+	  <AdditionalFiles Include="Areas\PlayerMarkEntity\Views\Mark\CreateOrEdit.cshtml" />
+	  <AdditionalFiles Include="Areas\PlayerMarkEntity\Views\Mark\Delete.cshtml" />
+	  <AdditionalFiles Include="Areas\PlayerMarkEntity\Views\Mark\Details.cshtml" />
+	  <AdditionalFiles Include="Areas\PlayerMarkEntity\Views\Mark\Index.cshtml" />
+	  <AdditionalFiles Include="Areas\PlayerMarkEntity\Views\PlayerMark\CreateOrEdit.cshtml" />
+	  <AdditionalFiles Include="Areas\PlayerMarkEntity\Views\PlayerMark\Delete.cshtml" />
+	  <AdditionalFiles Include="Areas\PlayerMarkEntity\Views\PlayerMark\Details.cshtml" />
+	  <AdditionalFiles Include="Areas\PlayerMarkEntity\Views\PlayerMark\Filter.cshtml" />
+	  <AdditionalFiles Include="Areas\PlayerMarkEntity\Views\PlayerMark\Index.cshtml" />
+	  <AdditionalFiles Include="Areas\PlayerMarkEntity\Views\PlayerMark\Profile.cshtml" />
+	  <AdditionalFiles Include="Areas\PlayerMarkEntity\Views\_ViewImports.cshtml" />
 	</ItemGroup>
 	
 </Project>

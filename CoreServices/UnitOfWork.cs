@@ -17,6 +17,7 @@ namespace CoreServices
         private AppInfoServices _appInfoServices;
         private NewsServices _newsServices;
         private PlayerScoreServices _playerScoreServices;
+        private PlayerMarkServices _playerMarkServices;
         private PlayerStateServices _PlayerStateServices;
         private PlayerTransfersServices _playerTransfersServices;
         private PrivateLeagueServices _privateLeagueServices;
@@ -110,6 +111,14 @@ namespace CoreServices
             {
                 _playerScoreServices ??= new PlayerScoreServices(_repository);
                 return _playerScoreServices;
+            }
+        }
+        public PlayerMarkServices PlayerMark
+        {
+            get
+            {
+                _playerMarkServices ??= new PlayerMarkServices(_repository);
+                return _playerMarkServices;
             }
         }
         public PlayerStateServices PlayerState

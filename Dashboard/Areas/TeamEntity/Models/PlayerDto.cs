@@ -50,6 +50,7 @@ namespace Dashboard.Areas.TeamEntity.Models
         PlayerGameWeakScore = 3,
         PlayerGameWeakScoreStates = 4,
         PlayerSeasonScoreStates = 5,
+        PlayerMark = 6,
     }
 
     public enum PlayerReturnPage

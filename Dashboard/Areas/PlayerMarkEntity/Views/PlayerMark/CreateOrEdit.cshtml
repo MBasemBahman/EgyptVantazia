@@ -1,0 +1,152 @@
+﻿@using Entities.CoreServicesModels.SeasonModels
+@model PlayerMarkCreateOrEditModel
+@{
+    ViewData["Title"] = $"{Localizer.Get("CreateOrEdit")} {Localizer.Get("PlayerMark")}";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.useForm = true;
+    ViewBag.userFormRepeater = true;
+
+
+}
+
+<!-- BEGIN: Content-->
+<div class="app-content content ">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row">
+            <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h2 class="content-header-title float-start mb-0">@ViewData["Title"]</h2>
+                        <div class="breadcrumb-wrapper">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="/TeamEntity/Player/Profile/@Model.Fk_Player?returnItem=@((int)PlayerProfileItems.PlayerMark)">@Localizer.Get("Player Profile")</a>
+                                </li>
+                                <li class="breadcrumb-item active">
+                                    @ViewData["Title"]
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-body">
+            <section id="multiple-column-form">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form class="form" asp-action="CreateOrEdit" enctype="multipart/form-data">
+                                    <input type="hidden" asp-for="Fk_Player" />
+                                    <div asp-validation-summary="All" class="text-danger">@ViewData["Error"]</div>
+                                    <br />
+
+                                    <div class="row mb-1">
+                                        
+                                        <div class="col-md-12 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Fk_Mark" class="form-label"></label>
+                                                <select asp-for="Fk_Mark" class="select2 form-select" asp-items="@(new SelectList(ViewData["Marks"] as Dictionary<string,string>,"Key","Value"))">
+                                                </select>
+                                                <span asp-validation-for="Fk_Mark" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Value" class="form-label"></label>
+                                                <input asp-for="Value" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Value"))" />
+                                                <span asp-validation-for="Value" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Count" class="form-label"></label>
+                                                <input asp-for="Count" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Count"))" />
+                                                <span asp-validation-for="Count" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Used" class="form-label"></label>
+                                                <input asp-for="Used" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Used"))" />
+                                                <span asp-validation-for="Used" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-12 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Fk_GameWeaks" class="form-label"></label>
+                                                <select asp-for="Fk_GameWeaks" class="select2 form-select" multiple asp-items="@(new SelectList(ViewData["GameWeaks"] as Dictionary<string,string>,"Key","Value"))">
+                                                </select>
+                                                <span asp-validation-for="Fk_GameWeaks" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-12 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Fk_TeamGameWeaks" class="form-label"></label>
+                                                <select asp-for="Fk_TeamGameWeaks" class="select2 form-select" multiple>
+                                                    @foreach (TeamGameWeakModel teamGameWeak in (List<TeamGameWeakModel>)ViewData["TeamGameWeaks"])
+                                                    {
+                                                        <option value="@teamGameWeak.Id">
+                                                            @( $" ( {teamGameWeak.GameWeak.Name} ) " + teamGameWeak.Home.Name + " x " + teamGameWeak.Away.Name)
+                                                        </option>
+                                                    }
+                                                </select>
+                                                <span asp-validation-for="Fk_TeamGameWeaks" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                    
+                                    </div>
+
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary me-1">@Localizer.Get("Submit")</button>
+                                            <button type="reset" class="btn btn-outline-secondary me-1">@Localizer.Get("Reset")</button>
+                                            <a asp-action="Profile" asp-controller="Player" asp-area="TeamEntity" asp-route-id="@Model.Fk_Player" asp-route-returnItem="@((int)PlayerProfileItems.PlayerMark)" class="btn btn-warning"> @Localizer.Get("Back") </a>
+
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+</div>
+@section scripts
+    {
+    <script src="~/apis/site.js"></script>
+    <script>
+        function resetRepeaterData() {
+            $(".score-id").last().val('0');
+            $(".score-value").last().val('0');
+            $(".score-points").last().val('0');
+
+        }
+        $(document).ready(function () {
+            $('button[data-repeater-delete][newRepeater]').each(function () {
+                $(this).click();
+            });
+            $("#Fk_Season").on("change", function () {
+                getGameWeak($("#Fk_GameWeak"), $(this).val(), true);
+            });
+            $("#add-new-btn").on('click', function () {
+                setTimeout(resetRepeaterData, 500)
+            });
+        });
+    </script>
+}

@@ -7,6 +7,7 @@ using Repository.DBModels.LocationModels;
 using Repository.DBModels.LogModels;
 using Repository.DBModels.NewsModels;
 using Repository.DBModels.NotificationModels;
+using Repository.DBModels.PlayerMarkModels;
 using Repository.DBModels.PlayerScoreModels;
 using Repository.DBModels.PlayerStateModels;
 using Repository.DBModels.PlayersTransfersModels;
@@ -63,6 +64,14 @@ namespace Repository
         private NewsRepository _newsRepository;
         #endregion
 
+        #region PlayerMarkModels
+        private MarkRepository _markRepository;
+        private PlayerMarkRepository _playerMarkRepository;
+        private PlayerMarkGameWeakRepository _playerMarkGameWeakRepository;
+        private PlayerMarkTeamGameWeakRepository _playerMarkTeamGameWeakRepository;
+        private PlayerMarkGameWeakScoreRepository _playerMarkGameWeakScoreRepository;
+        #endregion
+        
         #region PlayerScoreModels
         private PlayerGameWeakRepository _playerGameWeakRepository;
         private PlayerGameWeakScoreRepository _playerGameWeakScoreRepository;
@@ -336,6 +345,55 @@ namespace Repository
                 return _scoreTypeRepository;
             }
         }
+        #endregion
+
+        #region PlayerMarkModels
+
+        public MarkRepository Mark
+        {
+            get
+            {
+                _markRepository ??= new MarkRepository(_dBContext);
+                return _markRepository;
+            }
+        }
+        
+        public PlayerMarkRepository PlayerMark
+        {
+            get
+            {
+                _playerMarkRepository ??= new PlayerMarkRepository(_dBContext);
+                return _playerMarkRepository;
+            }
+        }
+        
+        public PlayerMarkGameWeakRepository PlayerMarkGameWeak
+        {
+            get
+            {
+                _playerMarkGameWeakRepository ??= new PlayerMarkGameWeakRepository(_dBContext);
+                return _playerMarkGameWeakRepository;
+            }
+        }
+        
+        public PlayerMarkTeamGameWeakRepository PlayerMarkTeamGameWeak
+        {
+            get
+            {
+                _playerMarkTeamGameWeakRepository ??= new PlayerMarkTeamGameWeakRepository(_dBContext);
+                return _playerMarkTeamGameWeakRepository;
+            }
+        }
+        
+        public PlayerMarkGameWeakScoreRepository PlayerMarkGameWeakScore
+        {
+            get
+            {
+                _playerMarkGameWeakScoreRepository ??= new PlayerMarkGameWeakScoreRepository(_dBContext);
+                return _playerMarkGameWeakScoreRepository;
+            }
+        }
+
         #endregion
 
         #region PlayersTransfersModels

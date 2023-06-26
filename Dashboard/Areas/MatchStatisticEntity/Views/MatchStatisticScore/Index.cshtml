@@ -102,12 +102,11 @@
                                                     }
 
                                                 </th>
-                                                <th>@Localizer.Get("HomeTeam")</th>
-                                                <th>@Localizer.Get("AwayTeam")</th>
+                                                <th>@Html.DisplayNameFor(model => row.Team)</th>
                                                 <th>@Html.DisplayNameFor(model => row.TeamGameWeak.GameWeak.Season)</th>
                                                 <th>@Html.DisplayNameFor(model => row.TeamGameWeak.GameWeak)</th>
-                                                <th>@Html.DisplayNameFor(model => row.StatisticScore)</th>
                                                 <th>@Html.DisplayNameFor(model => row.StatisticScore.StatisticCategory)</th>
+                                                <th>@Html.DisplayNameFor(model => row.StatisticScore)</th>
                                                 <th>@Html.DisplayNameFor(model => row.Value)</th>
                                                 <th>@Html.DisplayNameFor(model => row.ValuePercentage)</th>
                                                 <th>@Html.DisplayNameFor(model => row.IsCanNotEdit)</th>
@@ -160,7 +159,7 @@
                     columns: [
                         { data: "id" },
                         {
-                            data: "teamGameWeak.home",
+                            data: "team",
                             orderable: false,
                             render: function (data, type, row) {
                                 var span = '';
@@ -171,7 +170,7 @@
                                         + span
                                         + '</div></div>'
                                         + ' <div class= "d-flex flex-column">'
-                                        + '<a href="/TeamEntity/Team/Profile/' + row.teamGameWeak.fk_Home + '" target="_blank" class= "user_name text-truncate">'
+                                        + '<a href="/TeamEntity/Team/Profile/' + row.fk_Team + '" target="_blank" class= "user_name text-truncate">'
                                         + '<span class= "fw-bolder">' + data.name + '</span></a> '
                                         + '<small class= "emp_post text-muted" ></small ></div></div>';
                                 }
@@ -180,37 +179,7 @@
                                         + '<div class="avatar  bg-light-dark  me-1"><span class="avatar-content"></span>' + span + '</div>'
                                         + '</div>'
                                         + ' <div class= "d-flex flex-column">'
-                                        + '<a href="/TeamEntity/Player/Profile/' + row.teamGameWeak.fk_Home + '"  target="_blank" class= "user_name text-truncate">'
-                                        + '<span class= "fw-bolder">' + data.name + '</span></a> '
-                                        + '<small class= "emp_post text-muted" ></small ></div></div>';
-                                }
-
-
-                            }
-                        },
-                        {
-                            data: "teamGameWeak.away",
-                            orderable: false,
-                            render: function (data, type, row) {
-                                var span = '';
-
-                                if (data.imageUrl != null) {
-
-                                    return '<div class="d-flex justify-content-left align-items-center"><div class= "avatar-wrapper" ><div class="avatar me-1">'
-                                        + '<img src="' + data.imageUrl + '"  height="32" width="32">'
-                                        + span
-                                        + '</div></div>'
-                                        + ' <div class= "d-flex flex-column">'
-                                        + '<a href="/TeamEntity/Team/Profile/' + row.teamGameWeak.fk_Away + '" target="_blank" class= "user_name text-truncate">'
-                                        + '<span class= "fw-bolder">' + data.name + '</span></a> '
-                                        + '<small class= "emp_post text-muted" ></small ></div></div>';
-                                }
-                                else {
-                                    return '<div class="d-flex justify-content-left align-items-center"><div class= "avatar-wrapper" >'
-                                        + '<div class="avatar  bg-light-dark  me-1"><span class="avatar-content"></span>' + span + '</div>'
-                                        + '</div>'
-                                        + ' <div class= "d-flex flex-column">'
-                                        + '<a href="/TeamEntity/Player/Profile/' + row.teamGameWeak.fk_Away + '"  target="_blank" class= "user_name text-truncate">'
+                                        + '<a href="/TeamEntity/Team/Profile/' + row.fk_Team + '"  target="_blank" class= "user_name text-truncate">'
                                         + '<span class= "fw-bolder">' + data.name + '</span></a> '
                                         + '<small class= "emp_post text-muted" ></small ></div></div>';
                                 }
@@ -220,8 +189,8 @@
                         },
                         { data: "teamGameWeak.gameWeak.season.name", orderable: false, },
                         { data: "teamGameWeak.gameWeak.name", orderable: false, },
-                        { data: "statisticScore.name", orderable: false, },
                         { data: "statisticScore.statisticCategory.name", orderable: false, },
+                        { data: "statisticScore.name", orderable: false, },
                         { data: "value"},
                         { data: "valuePercentage"},
                  

@@ -19,7 +19,10 @@ namespace Repository.DBModels.PromoCodeModels
         public IQueryable<PromoCode> FindAll(PromoCodeParameters parameters, bool trackChanges)
         {
             return FindByCondition(a => true, trackChanges)
-                   .Filter(parameters.Id,parameters.IsActive);
+                   .Filter(parameters.Id,
+                           parameters.IsActive,
+                           parameters.Code,
+                           parameters.Fk_Subscription);
         }
 
         public async Task<PromoCode> FindById(int id, bool trackChanges)
@@ -44,10 +47,14 @@ namespace Repository.DBModels.PromoCodeModels
         public static IQueryable<PromoCode> Filter(
             this IQueryable<PromoCode> data,
             int id,
-            bool? isActive)
+            bool? isActive,
+            string code, 
+            int fk_Subscription)
         {
-            return data.Where(a => (id == 0 || a.Id == id)&&
-                                   (isActive == null || a.IsActive == isActive));
+            return data.Where(a => (id == 0 || a.Id == id) &&
+                                   (isActive == null || a.IsActive == isActive) &&
+                                   (string.IsNullOrEmpty(code) || a.Code.ToLower() == code.ToLower()) &&
+                                   (fk_Subscription == 0 || !a.PromoCodeSubscriptions.Any() || a.PromoCodeSubscriptions.Any(b => b.Fk_Subscription == fk_Subscription)));
 
         }
 

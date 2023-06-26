@@ -1162,7 +1162,7 @@
     <value>التكلفة بعد الخصم</value>
   </data>
   <data name="Discount" xml:space="preserve">
-    <value>خصم</value>
+    <value>خصم (%)</value>
   </data>
   <data name="ForAction" xml:space="preserve">
     <value>للبروموكود</value>
@@ -1373,9 +1373,6 @@
   </data>
   <data name="Fk_TeamGameWeaks" xml:space="preserve">
     <value>الماتشات</value>
-	  </data>
-  <data name="Discount1" xml:space="preserve">
-    <value>الخصم</value>
   </data>
   <data name="ExpirationDate" xml:space="preserve">
     <value>تاريخ الانتهاء</value>

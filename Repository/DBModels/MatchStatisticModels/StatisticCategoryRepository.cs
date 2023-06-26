@@ -1,6 +1,7 @@
 ﻿using Entities.CoreServicesModels.MatchStatisticModels;
 using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.DBModels.MatchStatisticModels;
+using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.PlayerStateModels;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,8 @@ namespace Repository.DBModels.MatchStatisticModels
         public IQueryable<StatisticCategory> FindAll(StatisticCategoryParameters parameters, bool trackChanges)
         {
             return FindByCondition(a => true, trackChanges)
-                   .Filter(parameters.Id);
+                   .Filter(parameters.Id,
+                           parameters._365_Id);
         }
 
         public async Task<StatisticCategory> FindById(int id, bool trackChanges)
@@ -30,11 +32,23 @@ namespace Repository.DBModels.MatchStatisticModels
         }
         public new void Create(StatisticCategory entity)
         {
-            entity.StatisticCategoryLang ??= new StatisticCategoryLang
+            if (FindByCondition(a => a._365_Id == entity._365_Id, trackChanges: false).Any())
             {
-                Name = entity.Name,
-            };
-            base.Create(entity);
+                StatisticCategory oldEntity = FindByCondition(a => a._365_Id == entity._365_Id, trackChanges: true)
+                                .Include(a => a.StatisticCategoryLang)
+                                .First();
+
+                oldEntity.Name = entity.Name;
+                oldEntity.StatisticCategoryLang.Name = entity.StatisticCategoryLang.Name;
+            }
+            else
+            {
+                entity.StatisticCategoryLang ??= new StatisticCategoryLang
+                {
+                    Name = entity.Name,
+                };
+                base.Create(entity);
+            }
         }
     }
 
@@ -42,9 +56,11 @@ namespace Repository.DBModels.MatchStatisticModels
     {
         public static IQueryable<StatisticCategory> Filter(
             this IQueryable<StatisticCategory> data,
-            int id)
+            int id,
+            string _365_Id)
         {
-            return data.Where(a => (id == 0 || a.Id == id));
+            return data.Where(a => (id == 0 || a.Id == id) &&
+                                   (string.IsNullOrEmpty(_365_Id) || a._365_Id == _365_Id));
 
         }
 

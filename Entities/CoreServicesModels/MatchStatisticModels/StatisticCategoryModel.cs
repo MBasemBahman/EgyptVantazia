@@ -1,16 +1,10 @@
-﻿using Entities.DBModels.MatchStatisticModels;
-using Entities.RequestFeatures;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Entities.RequestFeatures;
 
 namespace Entities.CoreServicesModels.MatchStatisticModels
 {
     public class StatisticCategoryParameters : RequestParameters
     {
-
+        public string _365_Id { get; set; }
     }
     public class StatisticCategoryModel : AuditLookUpEntity
     {

@@ -1,6 +1,8 @@
-﻿using Entities.CoreServicesModels.PlayerScoreModels;
+﻿using Entities.CoreServicesModels.MatchStatisticModels;
+using Entities.CoreServicesModels.PlayerScoreModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
+using Entities.DBModels.MatchStatisticModels;
 using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.SeasonModels;
 using Entities.DBModels.TeamModels;
@@ -108,6 +110,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 if (inDebug)
                 {
                     await _playerStateCalc.UpdateTop15(teamGameWeak.Fk_GameWeek, teamGameWeak.Fk_Season);
+
                 }
                 else
                 {
@@ -140,6 +143,27 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 }
 
                 await _unitOfWork.Save();
+
+                if (runBonus || matchEnded || runAll)
+                {
+                    var statisticScores = _unitOfWork.MatchStatistic.GetStatisticScores(new StatisticScoreParameters())
+                                                     .Select(a => new StatisticScoreModelForCalc
+                                                     {
+                                                         Id = a.Id,
+                                                         Name = a.Name,
+                                                         _365_Id = a._365_Id
+                                                     }).ToList();
+                    if (inDebug)
+                    {
+                        await UpdateStatistic(gameReturn.Game.AwayCompetitor.Statistics, statisticScores, teamGameWeak.Id, match.Fk_Away);
+                        await UpdateStatistic(gameReturn.Game.HomeCompetitor.Statistics, statisticScores, teamGameWeak.Id, match.Fk_Home);
+                    }
+                    else
+                    {
+                        _ = BackgroundJob.Enqueue(() => UpdateStatistic(gameReturn.Game.AwayCompetitor.Statistics, statisticScores, teamGameWeak.Id, match.Fk_Away));
+                        _ = BackgroundJob.Enqueue(() => UpdateStatistic(gameReturn.Game.HomeCompetitor.Statistics, statisticScores, teamGameWeak.Id, match.Fk_Home));
+                    }
+                }
 
                 if (gameReturn.Game.Members != null && gameReturn.Game.Members.Any())
                 {
@@ -525,6 +549,32 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
 
                 _playerStateCalc.RunPlayersStateCalculations(fk_GameWeak, _365_MatchId, players.Select(a => a.Fk_Player).ToList(), null, false, inDebug);
             }
+        }
+
+        public async Task UpdateStatistic(
+            List<Statistics> statistics,
+            List<StatisticScoreModelForCalc> statisticScores,
+            int fk_TeamGameWeak,
+            int fk_Team)
+        {
+            statistics.ForEach(a =>
+            {
+                int fk_StatisticScore = statisticScores.Where(b => b._365_Id == a.Id.ToString())
+                .Select(a => a.Id).FirstOrDefault();
+
+                if (fk_StatisticScore > 0)
+                {
+                    _unitOfWork.MatchStatistic.CreateMatchStatisticScore(new MatchStatisticScore
+                    {
+                        Fk_StatisticScore = fk_StatisticScore,
+                        Fk_Team = fk_Team,
+                        Fk_TeamGameWeak = fk_TeamGameWeak,
+                        Value = a.Value,
+                        ValuePercentage = a.ValuePercentage
+                    });
+                }
+            });
+            await _unitOfWork.Save();
         }
     }
 

@@ -1,11 +1,4 @@
-﻿using Entities.DBModels.AccountModels;
-using Entities.DBModels.PromoCodeModels;
-using Entities.RequestFeatures;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Entities.RequestFeatures;
 
 namespace Entities.CoreServicesModels.PromoCodeModels
 {
@@ -13,6 +6,12 @@ namespace Entities.CoreServicesModels.PromoCodeModels
     {
         [DisplayName(nameof(IsActive))]
         public bool? IsActive { get; set; }
+
+        public string Code { get; set; }
+
+        public int Fk_Subscription { get; set; }
+
+        public int Fk_Account { get; set; }
     }
     public class PromoCodeModel : AuditLookUpEntity
     {
@@ -27,9 +26,6 @@ namespace Entities.CoreServicesModels.PromoCodeModels
 
         [DisplayName(nameof(Discount))]
         public int Discount { get; set; }
-
-        [DisplayName(nameof(MinPrice))]
-        public int? MinPrice { get; set; }
 
         [DisplayName(nameof(MaxDiscount))]
         public int? MaxDiscount { get; set; }
@@ -46,6 +42,24 @@ namespace Entities.CoreServicesModels.PromoCodeModels
 
         [DisplayName(nameof(ExpirationDate))]
         public DateTime ExpirationDate { get; set; }
+
+        [DisplayName("UsedCount")]
+        public int UsedCount { get; set; }
+
+        [DisplayName("UserUsedCount")]
+        public int UserUsedCount { get; set; }
+
+        [DisplayName("DiscountAmount")]
+        public double DiscountAmount { get; set; }
+
+        [DisplayName("IsValid")]
+        public bool IsValid => IsActive && !IsExpired && !IsMaxReach && !IsMaxReachPerUser;
+
+        public bool IsExpired => !(ExpirationDate.Date >= DateTime.UtcNow.Date);
+
+        public bool IsMaxReach => !(MaxUse == null || MaxUse > UsedCount);
+
+        public bool IsMaxReachPerUser => !(MaxUsePerUser == null || MaxUsePerUser > UserUsedCount);
     }
 
     public class PromoCodeCreateOrEditModel

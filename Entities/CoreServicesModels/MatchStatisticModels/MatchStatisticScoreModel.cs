@@ -1,6 +1,8 @@
 ﻿using Entities.CoreServicesModels.SeasonModels;
+using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.MatchStatisticModels;
 using Entities.DBModels.SeasonModels;
+using Entities.DBModels.TeamModels;
 using Entities.RequestFeatures;
 using System;
 using System.Collections.Generic;
@@ -23,6 +25,8 @@ namespace Entities.CoreServicesModels.MatchStatisticModels
         public int Fk_GameWeak { get; set; }
 
         public int Fk_TeamGameWeak { get; set; }
+
+        public int Fk_Team { get; set; }
 
         [DisplayName(nameof(_365_MatchId))]
         public string _365_MatchId { get; set; }
@@ -48,6 +52,13 @@ namespace Entities.CoreServicesModels.MatchStatisticModels
         [DisplayName(nameof(TeamGameWeak))]
         public TeamGameWeakModel TeamGameWeak { get; set; }
 
+        [DisplayName(nameof(Team))]
+        [ForeignKey(nameof(Team))]
+        public int Fk_Team { get; set; }
+
+        [DisplayName(nameof(Team))]
+        public TeamModel Team { get; set; }
+
         [DisplayName(nameof(Value))]
         public string Value { get; set; }
 
@@ -68,7 +79,11 @@ namespace Entities.CoreServicesModels.MatchStatisticModels
 
         [DisplayName(nameof(TeamGameWeak))]
         public int Fk_TeamGameWeak { get; set; }
-    
+
+        [DisplayName(nameof(Team))]
+        [ForeignKey(nameof(Team))]
+        public int Fk_Team { get; set; }
+
         [DisplayName(nameof(Value))]
         public string Value { get; set; }
 

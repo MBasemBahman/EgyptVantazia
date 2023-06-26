@@ -21,6 +21,7 @@ namespace Repository.DBModels.MatchStatisticModels
             return FindByCondition(a => true, trackChanges)
                    .Filter(parameters.Id,
                            parameters.Fk_TeamGameWeak,
+                           parameters.Fk_Team,
                            parameters.Fk_Teams,
                            parameters.Fk_StatisticScores,
                            parameters.Fk_GameWeak,
@@ -40,7 +41,25 @@ namespace Repository.DBModels.MatchStatisticModels
 
         public new void Create(MatchStatisticScore entity)
         {
-            base.Create(entity);
+            if (FindByCondition(a => a.Fk_TeamGameWeak == entity.Fk_TeamGameWeak &&
+                                     a.Fk_Team == entity.Fk_Team &&
+                                     a.Fk_StatisticScore == entity.Fk_StatisticScore, trackChanges: false).Any())
+            {
+                MatchStatisticScore oldEntity = FindByCondition(a => a.Fk_TeamGameWeak == entity.Fk_TeamGameWeak &&
+                                     a.Fk_Team == entity.Fk_Team &&
+                                     a.Fk_StatisticScore == entity.Fk_StatisticScore, trackChanges: true)
+                                .First();
+
+                if (!oldEntity.IsCanNotEdit)
+                {
+                    oldEntity.ValuePercentage = entity.ValuePercentage;
+                    oldEntity.Value = entity.Value;
+                }
+            }
+            else
+            {
+                base.Create(entity);
+            }
         }
     }
 
@@ -50,6 +69,7 @@ namespace Repository.DBModels.MatchStatisticModels
             this IQueryable<MatchStatisticScore> data,
             int id,
             int fk_TeamGameWeak,
+            int fk_Team,
             List<int> fk_Teams,
             List<int> fk_StatisticScores,
             int fk_GameWeak,
@@ -59,15 +79,15 @@ namespace Repository.DBModels.MatchStatisticModels
             DateTime? createdAtTo)
         {
             return data.Where(a => (id == 0 || a.Id == id) &&
-                                            (fk_TeamGameWeak == 0 || a.Fk_TeamGameWeak == fk_TeamGameWeak)&&
-                                            (fk_Teams == null || !fk_Teams.Any() ||
-                                              fk_Teams.Contains(a.TeamGameWeak.Fk_Home) || fk_Teams.Contains(a.TeamGameWeak.Fk_Away)) &&
-                                            (fk_Season == 0 || a.TeamGameWeak.GameWeak.Fk_Season == fk_Season) &&
-                                            (fk_GameWeak == 0 || a.TeamGameWeak.Fk_GameWeak == fk_GameWeak) &&
-                                            (isCanNotEdit == null || a.IsCanNotEdit == isCanNotEdit) &&
-                                            (fk_StatisticScores == null || !fk_StatisticScores.Any()||fk_StatisticScores.Contains(a.Fk_StatisticScore))&&
-                                            (createdAtFrom == null || a.CreatedAt >= createdAtFrom) &&
-                                            (createdAtTo == null || a.CreatedAt <= createdAtTo));
+                                   (fk_TeamGameWeak == 0 || a.Fk_TeamGameWeak == fk_TeamGameWeak) &&
+                                   (fk_Team == 0 || a.Fk_Team == fk_Team) &&
+                                   (fk_Teams == null || !fk_Teams.Any() || fk_Teams.Contains(a.Fk_Team)) &&
+                                   (fk_Season == 0 || a.TeamGameWeak.GameWeak.Fk_Season == fk_Season) &&
+                                   (fk_GameWeak == 0 || a.TeamGameWeak.Fk_GameWeak == fk_GameWeak) &&
+                                   (isCanNotEdit == null || a.IsCanNotEdit == isCanNotEdit) &&
+                                   (fk_StatisticScores == null || !fk_StatisticScores.Any() || fk_StatisticScores.Contains(a.Fk_StatisticScore)) &&
+                                   (createdAtFrom == null || a.CreatedAt >= createdAtFrom) &&
+                                   (createdAtTo == null || a.CreatedAt <= createdAtTo));
 
         }
 

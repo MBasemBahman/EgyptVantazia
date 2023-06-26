@@ -28,11 +28,12 @@ namespace CoreServices.Logic
                            IsActive = a.IsActive,
                            Code = a.Code,
                            Discount = a.Discount,
-                           ExpirationDate= a.ExpirationDate,
+                           ExpirationDate = a.ExpirationDate,
                            MaxDiscount = a.MaxDiscount,
                            MaxUse = a.MaxUse,
-                           MaxUsePerUser= a.MaxUsePerUser,
-                           MinPrice = a.MinPrice,
+                           MaxUsePerUser = a.MaxUsePerUser,
+                           UsedCount = a.AccountSubscriptions.Count,
+                           UserUsedCount = a.AccountSubscriptions.Count(a => a.Fk_Account == parameters.Fk_Account),
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);
@@ -74,6 +75,52 @@ namespace CoreServices.Logic
         {
             return _repository.PromoCode.Count();
         }
+
+        public PromoCodeModel CheckPromoCode(string code, int fk_Subscription, int fk_Account, bool otherLang)
+        {
+            PromoCodeModel data = GetPromoCodes(new PromoCodeParameters
+            {
+                Code = code,
+                Fk_Subscription = fk_Subscription,
+            }, otherLang).FirstOrDefault() ?? throw new Exception("Invalid code!");
+
+            if (!data.IsValid)
+            {
+                if (data.IsExpired)
+                {
+                    throw new Exception("The discount code has expired!");
+                }
+                else if (data.IsMaxReach)
+                {
+                    throw new Exception("The maximum usage limit has been reached!");
+                }
+                else if (data.IsMaxReachPerUser)
+                {
+                    throw new Exception("Your account usage limit has been reached!");
+                }
+                else
+                {
+                    throw new Exception("Invalid code!");
+                }
+            }
+
+            int price = _repository.Subscription
+                                   .FindByCondition(a => a.Id == fk_Subscription, trackChanges: false)
+                                   .Select(a => a.CostAfterDiscount)
+                                   .FirstOrDefault();
+
+            return GetDiscountAmount(data, price);
+        }
+
+        public PromoCodeModel GetDiscountAmount(PromoCodeModel promoCode, double price)
+        {
+            double discountAmount = price / 100 * promoCode.Discount;
+
+            promoCode.DiscountAmount = (promoCode.MaxDiscount > 0 && discountAmount > promoCode.MaxDiscount) ? promoCode.MaxDiscount.Value : discountAmount;
+
+            return promoCode;
+        }
+
         #endregion
 
         #region PromoCodeSubscription Services
@@ -142,7 +189,7 @@ namespace CoreServices.Logic
                 {
                     _repository.PromoCodeSubscription.Create(new()
                     {
-                        Fk_PromoCode =fk_PromoCode,
+                        Fk_PromoCode = fk_PromoCode,
                         Fk_Subscription = fk_subscription
                     });
                 }
@@ -158,13 +205,13 @@ namespace CoreServices.Logic
 
             foreach (int fk_Subscription in fk_Subscriptions)
             {
-             await DeletePromoCodeSubscription(fk_Subscription);
+                await DeletePromoCodeSubscription(fk_Subscription);
             }
         }
 
         public async Task UpdatePromoCodeSubscriptions(int fk_PromoCode, List<int> fk_Subscriptions)
         {
-           fk_Subscriptions = fk_Subscriptions!=null ? fk_Subscriptions: new List<int>();
+            fk_Subscriptions ??= new List<int>();
             List<int> oldData = GetPromoCodeSubscriptions(new PromoCodeSubscriptionParameters
             {
                 Fk_PromoCode = fk_PromoCode,

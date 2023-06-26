@@ -20,9 +20,6 @@ namespace Entities.DBModels.PromoCodeModels
         [DisplayName(nameof(Discount))]
         public int Discount { get; set; }
 
-        [DisplayName(nameof(MinPrice))]
-        public int? MinPrice { get; set; }
-
         [DisplayName(nameof(MaxDiscount))]
         public int? MaxDiscount { get; set; }
 

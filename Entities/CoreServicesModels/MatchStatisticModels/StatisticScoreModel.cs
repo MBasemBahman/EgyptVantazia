@@ -24,7 +24,13 @@ namespace Entities.CoreServicesModels.MatchStatisticModels
 
         [DisplayName(nameof(StatisticCategory))]
         public StatisticCategoryModel StatisticCategory { get; set; }
+    }
 
+    public class StatisticScoreModelForCalc
+    {
+        public int Id { get; set; }
+        public string _365_Id { get; set; }
+        public string Name { get; set; }
     }
 
     public class StatisticScoreCreateOrEditModel

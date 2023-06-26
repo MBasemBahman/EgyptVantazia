@@ -1,4 +1,5 @@
 ﻿using Entities.DBModels.SeasonModels;
+using Entities.DBModels.TeamModels;
 
 namespace Entities.DBModels.MatchStatisticModels
 {
@@ -17,6 +18,13 @@ namespace Entities.DBModels.MatchStatisticModels
 
         [DisplayName(nameof(TeamGameWeak))]
         public TeamGameWeak TeamGameWeak { get; set; }
+
+        [DisplayName(nameof(Team))]
+        [ForeignKey(nameof(Team))]
+        public int Fk_Team { get; set; }
+
+        [DisplayName(nameof(Team))]
+        public Team Team { get; set; }
 
         [DisplayName(nameof(Value))]
         public string Value { get; set; }

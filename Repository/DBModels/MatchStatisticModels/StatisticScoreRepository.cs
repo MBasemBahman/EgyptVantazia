@@ -28,13 +28,26 @@ namespace Repository.DBModels.MatchStatisticModels
                         .Include(a => a.StatisticScoreLang)
                         .FirstOrDefaultAsync();
         }
+
         public new void Create(StatisticScore entity)
         {
-            entity.StatisticScoreLang ??= new StatisticScoreLang
+            if (FindByCondition(a => a._365_Id == entity._365_Id, trackChanges: false).Any())
             {
-                Name = entity.Name,
-            };
-            base.Create(entity);
+                StatisticScore oldEntity = FindByCondition(a => a._365_Id == entity._365_Id, trackChanges: true)
+                                .Include(a => a.StatisticScoreLang)
+                                .First();
+
+                oldEntity.Name = entity.Name;
+                oldEntity.StatisticScoreLang.Name = entity.StatisticScoreLang.Name;
+            }
+            else
+            {
+                entity.StatisticScoreLang ??= new StatisticScoreLang
+                {
+                    Name = entity.Name,
+                };
+                base.Create(entity);
+            }
         }
 
     }

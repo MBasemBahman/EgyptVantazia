@@ -1,4 +1,5 @@
 ﻿using Entities.DBModels.AccountModels;
+using Entities.DBModels.MatchStatisticModels;
 using Entities.DBModels.SeasonModels;
 using Entities.DBModels.StandingsModels;
 
@@ -45,6 +46,9 @@ namespace Entities.DBModels.TeamModels
 
         [DisplayName(nameof(Standings))]
         public IList<Standings> Standings { get; set; }
+
+        [DisplayName(nameof(MatchStatisticScores))]
+        public List<MatchStatisticScore> MatchStatisticScores { get; set; }
 
         public TeamLang TeamLang { get; set; }
     }

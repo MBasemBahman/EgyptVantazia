@@ -4,6 +4,7 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20230626052727_Ddsmdsk")]
+    partial class Ddsmdsk
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3660,6 +3663,9 @@ namespace DAL.Migrations
                     b.Property<int?>("MaxUsePerUser")
                         .HasColumnType("int");
 
+                    b.Property<int?>("MinPrice")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -4718,7 +4724,7 @@ namespace DAL.Migrations
                             IsExternalLogin = false,
                             LastModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Developer",
-                            Password = "$2a$11$5a1oluAuudih5q9EYtMCr.suyRpc2wkvJJP3S5LKDUWa6AwqrMz1e",
+                            Password = "$2a$11$ClzDEu1dLEZiCzwXki8bq.tfFRa1hnebuokvpcu/pOxNzIh0x1M5i",
                             UserName = "Developer"
                         });
                 });
@@ -5047,7 +5053,7 @@ namespace DAL.Migrations
                         .IsRequired();
 
                     b.HasOne("Entities.DBModels.TeamModels.Team", "Team")
-                        .WithMany("MatchStatisticScores")
+                        .WithMany()
                         .HasForeignKey("Fk_Team")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -5885,8 +5891,6 @@ namespace DAL.Migrations
                     b.Navigation("AwayGameWeaks");
 
                     b.Navigation("HomeGameWeaks");
-
-                    b.Navigation("MatchStatisticScores");
 
                     b.Navigation("PlayerPrices");
 

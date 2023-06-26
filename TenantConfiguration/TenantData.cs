@@ -25,7 +25,8 @@
             PlayerState,
             Payment,
             Subscription,
-            Notification
+            Notification,
+            PromoCode
         }
 
         public enum TenantViews

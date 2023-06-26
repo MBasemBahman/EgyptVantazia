@@ -167,6 +167,7 @@ namespace CoreServices.Logic
                                ShortName = a.Team.ShortName,
                                _365_TeamId = a.Team._365_TeamId,
                                ShirtImageUrl = a.Team.ShirtImageUrl,
+                               ImageUrl = a.Team.StorageUrl + a.Team.ImageUrl
                            },
                            StatisticScore = new StatisticScoreModel
                            {

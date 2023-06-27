@@ -179,6 +179,19 @@ namespace CoreServices.Logic
                                    Name = otherLang ? a.StatisticScore.StatisticCategory.StatisticCategoryLang.Name : a.StatisticScore.StatisticCategory.Name
                                }
                            },
+                           TeamGameWeak = new TeamGameWeakModel
+                           {
+                               GameWeak = new GameWeakModel
+                               {
+                                   Name = otherLang ? a.TeamGameWeak.GameWeak.GameWeakLang.Name : a.TeamGameWeak.GameWeak.Name,
+                                   _365_GameWeakId = a.TeamGameWeak.GameWeak._365_GameWeakId,
+                                   Fk_Season = a.TeamGameWeak.GameWeak.Fk_Season,
+                                   Season = new SeasonModel
+                                   {
+                                       Name = otherLang ? a.TeamGameWeak.GameWeak.Season.SeasonLang.Name : a.TeamGameWeak.GameWeak.Season.Name
+                                   },
+                               }
+                           }
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

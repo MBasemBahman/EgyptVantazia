@@ -164,12 +164,12 @@ namespace API.Areas.PlayerTransferArea.Controllers
                         throw new Exception("Please select correct players!");
                     }
 
-                    if (prices.Any(a => a.Id == player.Fk_Player &&
-                                        (a.LastTransferTypeEnum == TransferTypeEnum.Selling ||
-                                         a.LastTransferTypeEnum == null)))
-                    {
-                        throw new Exception("You can't sell a player, buy him first!");
-                    }
+                    //if (prices.Any(a => a.Id == player.Fk_Player &&
+                    //                    (a.LastTransferTypeEnum == TransferTypeEnum.Selling ||
+                    //                     a.LastTransferTypeEnum == null)))
+                    //{
+                    //    throw new Exception("You can't sell a player, buy him first!");
+                    //}
 
                     if (accountTeamPlayer != null)
                     {
@@ -205,10 +205,10 @@ namespace API.Areas.PlayerTransferArea.Controllers
                 int freeTransfer = currentTeam.FreeTransfer;
                 foreach (PlayerTransferBuyModel player in model.BuyPlayers)
                 {
-                    if (prices.Any(a => a.Id == player.Fk_Player && a.LastTransferTypeEnum == TransferTypeEnum.Buying))
-                    {
-                        throw new Exception("You can't buy a player, he already has in your team!");
-                    }
+                    //if (prices.Any(a => a.Id == player.Fk_Player && a.LastTransferTypeEnum == TransferTypeEnum.Buying))
+                    //{
+                    //    throw new Exception("You can't buy a player, he already has in your team!");
+                    //}
 
                     double price = prices.Where(a => a.Id == player.Fk_Player).Select(a => a.BuyPrice).FirstOrDefault();
 

@@ -27,9 +27,10 @@ namespace FantasyLogicMicroservices.Areas.GamesArea.Controllers
             [FromQuery] bool runBonus,
             [FromQuery] bool inDebug,
             [FromQuery] bool runAll,
-            [FromQuery] bool stopAll)
+            [FromQuery] bool stopAll,
+            [FromQuery] bool statisticsOnly)
         {
-            _fantasyUnitOfWork.GameResultDataHelper.RunUpdateGameResult(parameters, runBonus, inDebug, runAll, stopAll);
+            _fantasyUnitOfWork.GameResultDataHelper.RunUpdateGameResult(parameters, runBonus, inDebug, runAll, stopAll, statisticsOnly);
 
             return Ok();
         }

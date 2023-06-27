@@ -28,6 +28,7 @@ namespace Repository.DBModels.SeasonModels
                            parameters.CurrentSeason,
                            parameters.CurrentGameWeak,
                            parameters.IsActive,
+                           parameters.Havestatistics,
                            parameters.DashboardSearch);
         }
 
@@ -46,14 +47,14 @@ namespace Repository.DBModels.SeasonModels
         public new void Create(TeamGameWeak entity)
         {
             if (entity._365_MatchId.IsExisting() &&
-                FindByCondition(a => 
-                                     //(a.Fk_Away == entity.Fk_Away &&
-                                     // a.Fk_Home == entity.Fk_Home) ||
+                FindByCondition(a =>
+                                      //(a.Fk_Away == entity.Fk_Away &&
+                                      // a.Fk_Home == entity.Fk_Home) ||
                                       a._365_MatchId == entity._365_MatchId, trackChanges: false).Any())
             {
-                TeamGameWeak oldEntity = FindByCondition(a => 
-                                                              //(a.Fk_Away == entity.Fk_Away &&
-                                                              // a.Fk_Home == entity.Fk_Home) ||
+                TeamGameWeak oldEntity = FindByCondition(a =>
+                                                               //(a.Fk_Away == entity.Fk_Away &&
+                                                               // a.Fk_Home == entity.Fk_Home) ||
                                                                a._365_MatchId == entity._365_MatchId, trackChanges: true).First();
                 if (oldEntity.IsCanNotEdit == false)
                 {
@@ -107,6 +108,7 @@ namespace Repository.DBModels.SeasonModels
             bool currentSeason,
             bool currentGameWeak,
             bool? isActive,
+            bool? havestatistics,
             string dashboardSearch)
         {
             return TeamGameWeaks.Where(a => (id == 0 || a.Id == id) &&
@@ -115,6 +117,8 @@ namespace Repository.DBModels.SeasonModels
                                              a.Id.ToString().Contains(dashboardSearch) ||
                                              a.Home.Name.Contains(dashboardSearch) ||
                                              a.Away.Name.Contains(dashboardSearch)) &&
+
+                                            (havestatistics == null || (havestatistics == true ? a.MatchStatisticScores.Any() : !a.MatchStatisticScores.Any())) &&
 
                                             (isEnded == null || a.IsEnded == isEnded) &&
                                             (isActive == null || a.IsActive == isActive) &&

@@ -46,6 +46,8 @@ namespace Entities.CoreServicesModels.SeasonModels
         public string DashboardSearch { get; set; }
 
         public bool? IsActive { get; set; }
+
+        public bool? Havestatistics { get; set; }
     }
 
     public class TeamGameWeakModel : AuditEntity

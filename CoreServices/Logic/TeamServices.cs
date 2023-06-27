@@ -342,7 +342,11 @@ namespace CoreServices.Logic
                                                                          parameters.Fk_ScoreStatesForGameWeak.Contains(b.Fk_ScoreState))) : false,
                                        LastTransferTypeEnum = (parameters.CheckLastTransfer && parameters.Fk_AccountTeam > 1) ?
                                                                a.PlayerTransfers
-                                                                .Where(b => b.Fk_AccountTeam == parameters.Fk_AccountTeam)
+                                                                .Where(b => b.Fk_AccountTeam == parameters.Fk_AccountTeam &&
+                                                                            b.AccountTeam
+                                                                             .AccountTeamGameWeaks
+                                                                             .Any(c => c.Fk_GameWeak == b.Fk_GameWeak &&
+                                                                                       c.FreeHit == false))
                                                                 .OrderByDescending(b => b.Id)
                                                                 .Select(b => b.TransferTypeEnum)
                                                                 .FirstOrDefault() : null

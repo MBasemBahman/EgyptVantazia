@@ -178,7 +178,9 @@ namespace API.Areas.PlayerTransferArea.Controllers
                         AccountTeamPlayerGameWeak accountTeamPlayerGameWeak = await _unitOfWork.AccountTeam.FindAccountTeamPlayerGameWeakbyId(accountTeamPlayer.Id, trackChanges: true);
                         accountTeamPlayerGameWeak.IsTransfer = true;
 
-                        double price = prices.Where(a => a.Id == player.Fk_Player).Select(a => a.SellPrice).FirstOrDefault();
+                        double price = prices.Where(a => a.Id == player.Fk_Player)
+                                             .Select(a => a.SellPrice)
+                                             .FirstOrDefault();
                         _unitOfWork.PlayerTransfers.CreatePlayerTransfer(new PlayerTransfer
                         {
                             Fk_AccountTeam = currentTeam.Id,

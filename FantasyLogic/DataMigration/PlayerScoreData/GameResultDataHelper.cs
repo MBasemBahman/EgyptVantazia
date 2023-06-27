@@ -42,7 +42,8 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             bool runBonus,
             bool inDebug,
             bool runAll,
-            bool stopAll)
+            bool stopAll,
+            bool statisticsOnly)
         {
             parameters.Fk_Season = _unitOfWork.Season.GetCurrentSeasonId();
 
@@ -73,23 +74,33 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             {
                 if (inDebug)
                 {
-                    UpdateGameResult(teamGameWeak, scoreTypes, runBonus, inDebug, runAll, stopAll).Wait();
+                    UpdateGameResult(teamGameWeak, scoreTypes, runBonus, inDebug, runAll, stopAll, statisticsOnly).Wait();
                 }
                 if (runAll)
                 {
-                    _ = BackgroundJob.Enqueue(() => UpdateGameResult(teamGameWeak, scoreTypes, runBonus, inDebug, runAll, stopAll));
+                    _ = BackgroundJob.Enqueue(() => UpdateGameResult(teamGameWeak, scoreTypes, runBonus, inDebug, runAll, stopAll, statisticsOnly));
                 }
                 else
                 {
-                    if (runAll || teamGameWeak.EndTime > DateTime.UtcNow.ToEgypt())
+                    if (statisticsOnly == false)
                     {
-                        RecurringJob.AddOrUpdate(RecurringJobMatchId + teamGameWeak._365_MatchId.ToString(), () => UpdateGameResult(teamGameWeak, scoreTypes, runBonus, inDebug, runAll, stopAll), CronExpression.EveryMinutes(5));
+                        if (runAll || teamGameWeak.EndTime > DateTime.UtcNow.ToEgypt())
+                        {
+                            RecurringJob.AddOrUpdate(RecurringJobMatchId + teamGameWeak._365_MatchId.ToString(), () => UpdateGameResult(teamGameWeak, scoreTypes, runBonus, inDebug, runAll, stopAll, statisticsOnly), CronExpression.EveryMinutes(5));
+                        }
                     }
                 }
             }
         }
 
-        public async Task UpdateGameResult(TeamGameWeakForCalc teamGameWeak, List<ScoreTypeForCalc> scoreTypes, bool runBonus, bool inDebug, bool runAll, bool stopAll)
+        public async Task UpdateGameResult(
+            TeamGameWeakForCalc teamGameWeak,
+            List<ScoreTypeForCalc> scoreTypes,
+            bool runBonus,
+            bool inDebug,
+            bool runAll,
+            bool stopAll,
+            bool statisticsOnly)
         {
             GameReturn gameReturn = await _365Services.GetGame(new _365GameParameters
             {
@@ -100,53 +111,52 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
 
             runBonus = runBonus || gameReturn.Game.IsEnded;
 
-            if (matchEnded || stopAll)
+            if (statisticsOnly == false)
             {
-                RecurringJob.RemoveIfExists(RecurringJobMatchId + teamGameWeak._365_MatchId.ToString());
+                if (matchEnded || stopAll)
+                {
+                    RecurringJob.RemoveIfExists(RecurringJobMatchId + teamGameWeak._365_MatchId.ToString());
+                }
+
+                if (runBonus || matchEnded || runAll)
+                {
+                    if (inDebug)
+                    {
+                        await _playerStateCalc.UpdateTop15(teamGameWeak.Fk_GameWeek, teamGameWeak.Fk_Season);
+
+                    }
+                    else
+                    {
+                        _ = BackgroundJob.Enqueue(() => _playerStateCalc.UpdateTop15(teamGameWeak.Fk_GameWeek, teamGameWeak.Fk_Season));
+                    }
+                }
             }
 
-            if (runBonus || matchEnded || runAll)
-            {
-                if (inDebug)
-                {
-                    await _playerStateCalc.UpdateTop15(teamGameWeak.Fk_GameWeek, teamGameWeak.Fk_Season);
-
-                }
-                else
-                {
-                    _ = BackgroundJob.Enqueue(() => _playerStateCalc.UpdateTop15(teamGameWeak.Fk_GameWeek, teamGameWeak.Fk_Season));
-                }
-            }
-
-            //if (!inDebug && !runAll)
-            //{
-            //    if (match.LastUpdateId == gameReturn.LastUpdateId)
-            //    {
-            //        return;
-            //    }
-            //}
-
-            if (gameReturn != null && gameReturn.Game != null &&
+            if (gameReturn != null &&
+                gameReturn.Game != null &&
                 gameReturn.Game.AwayCompetitor != null &&
                 gameReturn.Game.HomeCompetitor != null)
             {
                 TeamGameWeak match = await _unitOfWork.Season.FindTeamGameWeakbyId(teamGameWeak.Id, trackChanges: true);
 
-                match.LastUpdateId = gameReturn.LastUpdateId;
-                match.IsEnded = gameReturn.Game.IsEnded;
-                match.AwayScore = (int)gameReturn.Game.AwayCompetitor.Score;
-                match.HomeScore = (int)gameReturn.Game.HomeCompetitor.Score;
-
-                if (!match.IsCanNotEdit)
+                if (statisticsOnly == false)
                 {
-                    match.StartTime = gameReturn.Game.StartTime;
+                    match.LastUpdateId = gameReturn.LastUpdateId;
+                    match.IsEnded = gameReturn.Game.IsEnded;
+                    match.AwayScore = (int)gameReturn.Game.AwayCompetitor.Score;
+                    match.HomeScore = (int)gameReturn.Game.HomeCompetitor.Score;
+
+                    if (!match.IsCanNotEdit)
+                    {
+                        match.StartTime = gameReturn.Game.StartTime;
+                    }
+
+                    await _unitOfWork.Save();
                 }
 
-                await _unitOfWork.Save();
-
-                if (runBonus || matchEnded || runAll)
+                if (runBonus || matchEnded || runAll || statisticsOnly)
                 {
-                    var statisticScores = _unitOfWork.MatchStatistic.GetStatisticScores(new StatisticScoreParameters())
+                    List<StatisticScoreModelForCalc> statisticScores = _unitOfWork.MatchStatistic.GetStatisticScores(new StatisticScoreParameters())
                                                      .Select(a => new StatisticScoreModelForCalc
                                                      {
                                                          Id = a.Id,
@@ -164,125 +174,129 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                         _ = BackgroundJob.Enqueue(() => UpdateStatistic(gameReturn.Game.HomeCompetitor.Statistics, statisticScores, teamGameWeak.Id, match.Fk_Home));
                     }
                 }
-
-                if (gameReturn.Game.Members != null && gameReturn.Game.Members.Any())
+                if (statisticsOnly == false)
                 {
-                    List<GameMember> allMembers = gameReturn.Game.Members;
-
-                    IQueryable<Player> playersQuary = _unitOfWork.Team.GetPlayers(new PlayerParameters
+                    if (gameReturn.Game.Members != null &&
+                        gameReturn.Game.Members.Any())
                     {
-                        _365_PlayerIds = allMembers.Select(a => a.AthleteId.ToString()).ToList(),
-                    });
+                        List<GameMember> allMembers = gameReturn.Game.Members;
 
-                    if (playersQuary.Any())
-                    {
-                        List<PlayerForCalc> players = playersQuary.Select(a => new PlayerForCalc
+                        IQueryable<Player> playersQuary = _unitOfWork.Team.GetPlayers(new PlayerParameters
                         {
-                            Id = a.Id,
-                            _365_PlayerId = a._365_PlayerId,
-                            Fk_PlayerPosition = a.Fk_PlayerPosition,
-                            Fk_Team = a.Fk_Team
-                        }).ToList();
-
-                        List<Member> allMembersResults = new();
-
-                        allMembersResults.AddRange(gameReturn.Game.HomeCompetitor.Lineups.Members);
-                        allMembersResults.AddRange(gameReturn.Game.AwayCompetitor.Lineups.Members);
-
-                        allMembersResults.ForEach(a =>
-                        {
-                            a.AthleteId = allMembers.Where(b => b.Id == a.Id)
-                                                    .Select(a => a.AthleteId)
-                                                    .FirstOrDefault();
+                            _365_PlayerIds = allMembers.Select(a => a.AthleteId.ToString()).ToList(),
                         });
 
-                        allMembersResults = allMembersResults.Where(a => a.Stats != null).ToList();
-
-                        List<double> rankings = runBonus ? allMembersResults.Where(a => a.Ranking > 0)
-                                                                            .OrderByDescending(a => a.Ranking)
-                                                                            .Skip(0)
-                                                                            .Take(3)
-                                                                            .Select(a => a.Ranking)
-                                                                            .ToList() : null;
-
-                        var membersRanking = runBonus &&
-                                             rankings != null &&
-                                             rankings.Any() ? allMembersResults
-                                                              .Where(a => rankings.Contains(a.Ranking))
-                                                              .Select(a => new
-                                                              {
-                                                                  a.Id,
-                                                                  index = rankings.IndexOf(a.Ranking) + 1,
-                                                                  a.Ranking
-                                                              })
-                                                              .ToList() : null;
-
-                        foreach (GameMember member in allMembers)
+                        if (playersQuary.Any())
                         {
-                            PlayerForCalc player = players.Where(a => a._365_PlayerId == member.AthleteId.ToString())
-                                                      .Select(a => new PlayerForCalc
-                                                      {
-                                                          Id = a.Id,
-                                                          Fk_PlayerPosition = a.Fk_PlayerPosition,
-                                                          Fk_Team = a.Fk_Team
-                                                      })
-                                                      .SingleOrDefault();
-                            if (player != null)
+                            List<PlayerForCalc> players = playersQuary.Select(a => new PlayerForCalc
                             {
-                                Member memberResult = allMembersResults.Where(a => a.AthleteId == member.AthleteId)
-                                                                       .LastOrDefault();
+                                Id = a.Id,
+                                _365_PlayerId = a._365_PlayerId,
+                                Fk_PlayerPosition = a.Fk_PlayerPosition,
+                                Fk_Team = a.Fk_Team
+                            }).ToList();
 
-                                int rankingIndex = 0;
+                            List<Member> allMembersResults = new();
 
-                                if (membersRanking != null &&
-                                    membersRanking.Any() &&
-                                    membersRanking.Any(a => a.Id == member.Id))
+                            allMembersResults.AddRange(gameReturn.Game.HomeCompetitor.Lineups.Members);
+                            allMembersResults.AddRange(gameReturn.Game.AwayCompetitor.Lineups.Members);
+
+                            allMembersResults.ForEach(a =>
+                            {
+                                a.AthleteId = allMembers.Where(b => b.Id == a.Id)
+                                                        .Select(a => a.AthleteId)
+                                                        .FirstOrDefault();
+                            });
+
+                            allMembersResults = allMembersResults.Where(a => a.Stats != null).ToList();
+
+                            List<double> rankings = runBonus ? allMembersResults.Where(a => a.Ranking > 0)
+                                                                                .OrderByDescending(a => a.Ranking)
+                                                                                .Skip(0)
+                                                                                .Take(3)
+                                                                                .Select(a => a.Ranking)
+                                                                                .ToList() : null;
+
+                            var membersRanking = runBonus &&
+                                                 rankings != null &&
+                                                 rankings.Any() ? allMembersResults
+                                                                  .Where(a => rankings.Contains(a.Ranking))
+                                                                  .Select(a => new
+                                                                  {
+                                                                      a.Id,
+                                                                      index = rankings.IndexOf(a.Ranking) + 1,
+                                                                      a.Ranking
+                                                                  })
+                                                                  .ToList() : null;
+
+                            foreach (GameMember member in allMembers)
+                            {
+                                PlayerForCalc player = players.Where(a => a._365_PlayerId == member.AthleteId.ToString())
+                                                          .Select(a => new PlayerForCalc
+                                                          {
+                                                              Id = a.Id,
+                                                              Fk_PlayerPosition = a.Fk_PlayerPosition,
+                                                              Fk_Team = a.Fk_Team
+                                                          })
+                                                          .SingleOrDefault();
+                                if (player != null)
                                 {
-                                    rankingIndex = membersRanking.Where(a => a.Id == member.Id)
-                                                                 .Select(a => a.index)
-                                                                 .FirstOrDefault();
-                                }
+                                    Member memberResult = allMembersResults.Where(a => a.AthleteId == member.AthleteId)
+                                                                           .LastOrDefault();
 
-                                if (memberResult != null)
-                                {
-                                    if (inDebug)
+                                    int rankingIndex = 0;
+
+                                    if (membersRanking != null &&
+                                        membersRanking.Any() &&
+                                        membersRanking.Any(a => a.Id == member.Id))
                                     {
-                                        UpdatePlayerResult(gameReturn, member, player, rankingIndex, teamGameWeak, memberResult, scoreTypes, match, inDebug).Wait();
+                                        rankingIndex = membersRanking.Where(a => a.Id == member.Id)
+                                                                     .Select(a => a.index)
+                                                                     .FirstOrDefault();
                                     }
-                                    else
+
+                                    if (memberResult != null)
                                     {
-                                        string JobPlayerId = this.JobPlayerId + teamGameWeak._365_MatchId.ToString() + $"-{member.Id}";
+                                        if (inDebug)
+                                        {
+                                            UpdatePlayerResult(gameReturn, member, player, rankingIndex, teamGameWeak, memberResult, scoreTypes, match, inDebug).Wait();
+                                        }
+                                        else
+                                        {
+                                            string JobPlayerId = this.JobPlayerId + teamGameWeak._365_MatchId.ToString() + $"-{member.Id}";
 
-                                        string hangfireJobId = BackgroundJob.Enqueue(() => UpdatePlayerResult(gameReturn, member, player, rankingIndex, teamGameWeak, memberResult, scoreTypes, match, inDebug));
+                                            string hangfireJobId = BackgroundJob.Enqueue(() => UpdatePlayerResult(gameReturn, member, player, rankingIndex, teamGameWeak, memberResult, scoreTypes, match, inDebug));
 
-                                        _hangFireCustomJob.ReplaceJob(hangfireJobId, JobPlayerId);
+                                            _hangFireCustomJob.ReplaceJob(hangfireJobId, JobPlayerId);
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                }
-                if (gameReturn.Game.Members == null ||
-                     !gameReturn.Game.Members.Any() ||
-                     runBonus ||
-                     matchEnded ||
-                     runAll)
-                {
-                    List<int> players = _unitOfWork.PlayerScore.GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
+                    if (gameReturn.Game.Members == null ||
+                         !gameReturn.Game.Members.Any() ||
+                         runBonus ||
+                         matchEnded ||
+                         runAll)
                     {
-                        Fk_GameWeak = match.Fk_GameWeak,
-                        Fk_TeamGameWeak = match.Id
-                    }).Select(a => a.PlayerGameWeak.Fk_Player).ToList();
+                        List<int> players = _unitOfWork.PlayerScore.GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
+                        {
+                            Fk_GameWeak = match.Fk_GameWeak,
+                            Fk_TeamGameWeak = match.Id
+                        }).Select(a => a.PlayerGameWeak.Fk_Player).ToList();
 
-                    if (inDebug)
-                    {
-                        _playerStateCalc.RunPlayersStateCalculations(match.Fk_GameWeak, match._365_MatchId, players, null, false, inDebug);
-                    }
-                    else
-                    {
-                        _ = BackgroundJob.Enqueue(() => _playerStateCalc.RunPlayersStateCalculations(match.Fk_GameWeak, match._365_MatchId, players, null, false, inDebug));
+                        if (inDebug)
+                        {
+                            _playerStateCalc.RunPlayersStateCalculations(match.Fk_GameWeak, match._365_MatchId, players, null, false, inDebug);
+                        }
+                        else
+                        {
+                            _ = BackgroundJob.Enqueue(() => _playerStateCalc.RunPlayersStateCalculations(match.Fk_GameWeak, match._365_MatchId, players, null, false, inDebug));
+                        }
                     }
                 }
+
             }
         }
 
@@ -557,24 +571,27 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             int fk_TeamGameWeak,
             int fk_Team)
         {
-            statistics.ForEach(a =>
+            if (statistics != null && statistics.Any())
             {
-                int fk_StatisticScore = statisticScores.Where(b => b._365_Id == a.Id.ToString())
-                .Select(a => a.Id).FirstOrDefault();
-
-                if (fk_StatisticScore > 0)
+                statistics.ForEach(a =>
                 {
-                    _unitOfWork.MatchStatistic.CreateMatchStatisticScore(new MatchStatisticScore
+                    int fk_StatisticScore = statisticScores.Where(b => b._365_Id == a.Id.ToString())
+                    .Select(a => a.Id).FirstOrDefault();
+
+                    if (fk_StatisticScore > 0)
                     {
-                        Fk_StatisticScore = fk_StatisticScore,
-                        Fk_Team = fk_Team,
-                        Fk_TeamGameWeak = fk_TeamGameWeak,
-                        Value = a.Value,
-                        ValuePercentage = a.ValuePercentage
-                    });
-                }
-            });
-            await _unitOfWork.Save();
+                        _unitOfWork.MatchStatistic.CreateMatchStatisticScore(new MatchStatisticScore
+                        {
+                            Fk_StatisticScore = fk_StatisticScore,
+                            Fk_Team = fk_Team,
+                            Fk_TeamGameWeak = fk_TeamGameWeak,
+                            Value = a.Value,
+                            ValuePercentage = a.ValuePercentage
+                        });
+                    }
+                });
+                await _unitOfWork.Save();
+            }
         }
     }
 

@@ -32,8 +32,8 @@ namespace CoreServices.Logic
                            MaxDiscount = a.MaxDiscount,
                            MaxUse = a.MaxUse,
                            MaxUsePerUser = a.MaxUsePerUser,
-                           UsedCount = a.AccountSubscriptions.Count,
-                           UserUsedCount = a.AccountSubscriptions.Count(a => a.Fk_Account == parameters.Fk_Account),
+                           UsedCount = a.AccountSubscriptions.Count(b => b.IsActive),
+                           UserUsedCount = a.AccountSubscriptions.Count(b => b.IsActive && b.Fk_Account == parameters.Fk_Account),
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

@@ -2,6 +2,7 @@
 using API.Controllers;
 using Entities.CoreServicesModels.AccountModels;
 using Entities.CoreServicesModels.AccountTeamModels;
+using Entities.CoreServicesModels.PromoCodeModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.SubscriptionModels;
 using Entities.DBModels.AccountModels;
@@ -49,6 +50,7 @@ namespace API.Areas.PaymentArea.Controllers
             {
                 throw new Exception("You already got that subscription for this season!");
             }
+
 
             //if (model.Fk_Subscription == (int)SubscriptionEnum.All)
             //{
@@ -106,6 +108,18 @@ namespace API.Areas.PaymentArea.Controllers
             SubscriptionModel subscription = _unitOfWork.Subscription.GetSubscriptionById(model.Fk_Subscription, otherLang: false);
 
             int amount_cents = subscription.CostAfterDiscount;
+            int? fk_PromoCode = null;
+
+            if (model.Code.IsExisting())
+            {
+                PromoCodeModel promocode = _unitOfWork.PromoCode.CheckPromoCode(model.Code, model.Fk_Subscription, auth.Fk_Account, otherLang: false);
+
+                if (promocode != null)
+                {
+                    fk_PromoCode = promocode.Id;
+                    amount_cents -= (int)promocode.DiscountAmount;
+                }
+            }
 
             string auth_token = await _paymobServices.Authorization();
 
@@ -163,7 +177,8 @@ namespace API.Areas.PaymentArea.Controllers
                     Fk_Season = season.Id,
                     Order_id = order_id.ToString(),
                     IsActive = false,
-                    Cost = amount_cents
+                    Cost = amount_cents,
+                    Fk_PromoCode = fk_PromoCode
                 });
                 await _unitOfWork.Save();
             }

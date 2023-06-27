@@ -41,6 +41,17 @@ namespace API.Areas.PlayerStateArea.Controllers
                 parameters.OrderBy = "points desc,";
             }
 
+            if (parameters.GetMonthPlayer)
+            {
+                MontlyGameWeakFromToModel fromTo = GetMontlyGameWeakFromTo(_unitOfWork.Season.GetCurrentGameWeak()._365_GameWeakIdValue);
+
+                if (fromTo != null)
+                {
+                    parameters.From_365_GameWeakIdValue = fromTo.From_365_GameWeakIdValue;
+                    parameters.To_365_GameWeakIdValue = fromTo.To_365_GameWeakIdValue;
+                }
+            }
+
             PagedList<PlayerSeasonScoreStateModel> data = await _unitOfWork.PlayerState.GetPlayerSeasonScoreStatePaged(parameters, otherLang);
 
             SetPagination(data.MetaData, parameters);
@@ -56,6 +67,19 @@ namespace API.Areas.PlayerStateArea.Controllers
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             PlayerSeasonScoreStateModel data = _unitOfWork.PlayerState.GetPlayerSeasonScoreStatebyId(id, otherLang);
+
+            return data;
+        }
+
+        private MontlyGameWeakFromToModel GetMontlyGameWeakFromTo(int _365_GameWeakIdValue)
+        {
+            int duration = 4;
+
+            MontlyGameWeakFromToModel data = new();
+
+            int current = ((_365_GameWeakIdValue < duration) ? 1 : (_365_GameWeakIdValue / duration));
+            data.From_365_GameWeakIdValue = --current * duration;
+            data.To_365_GameWeakIdValue = data.From_365_GameWeakIdValue + duration;
 
             return data;
         }

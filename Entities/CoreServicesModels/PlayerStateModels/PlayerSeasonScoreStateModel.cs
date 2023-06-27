@@ -24,6 +24,17 @@ namespace Entities.CoreServicesModels.PlayerStateModels
         public double? PercentTo { get; set; }
         public bool? IsTop15 { get; set; }
         public string DashboardSearch { get; set; }
+
+        public bool GetMonthPlayer { get; set; }
+
+        public int From_365_GameWeakIdValue { get; set; }
+        public int To_365_GameWeakIdValue { get; set; }
+    }
+
+    public class MontlyGameWeakFromToModel
+    {
+        public int From_365_GameWeakIdValue { get; set; }
+        public int To_365_GameWeakIdValue { get; set; }
     }
 
     public class PlayerSeasonScoreStateModel : AuditEntity

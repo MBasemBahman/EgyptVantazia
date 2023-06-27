@@ -132,9 +132,33 @@ namespace CoreServices.Logic
                            LastModifiedAt = a.LastModifiedAt,
                            LastModifiedBy = a.LastModifiedBy,
                            Fk_Player = a.Fk_Player,
-                           Points = a.Points,
-                           Percent = a.Percent,
-                           Value = a.Value,
+                           Points = ((parameters.GetMonthPlayer &&
+                                     parameters.From_365_GameWeakIdValue > 0 &&
+                                     parameters.To_365_GameWeakIdValue > 0) ?
+                                     a.Player
+                                      .PlayerGameWeakScoreStates
+                                      .Where(b => b.GameWeak._365_GameWeakIdValue >= parameters.From_365_GameWeakIdValue &&
+                                                  b.GameWeak._365_GameWeakIdValue <= parameters.To_365_GameWeakIdValue)
+                                      .Select(b => b.Points)
+                                      .Sum() : a.Points),
+                           Percent = ((parameters.GetMonthPlayer &&
+                                     parameters.From_365_GameWeakIdValue > 0 &&
+                                     parameters.To_365_GameWeakIdValue > 0) ?
+                                     a.Player
+                                      .PlayerGameWeakScoreStates
+                                      .Where(b => b.GameWeak._365_GameWeakIdValue >= parameters.From_365_GameWeakIdValue &&
+                                                  b.GameWeak._365_GameWeakIdValue <= parameters.To_365_GameWeakIdValue)
+                                      .Select(b => b.Percent)
+                                      .Sum() : a.Percent),
+                           Value = ((parameters.GetMonthPlayer &&
+                                     parameters.From_365_GameWeakIdValue > 0 &&
+                                     parameters.To_365_GameWeakIdValue > 0) ?
+                                     a.Player
+                                      .PlayerGameWeakScoreStates
+                                      .Where(b => b.GameWeak._365_GameWeakIdValue >= parameters.From_365_GameWeakIdValue &&
+                                                  b.GameWeak._365_GameWeakIdValue <= parameters.To_365_GameWeakIdValue)
+                                      .Select(b => b.Value)
+                                      .Sum() : a.Value),
                            Fk_ScoreState = a.Fk_ScoreState,
                            Fk_Season = a.Fk_Season,
                            Top15 = a.Top15,

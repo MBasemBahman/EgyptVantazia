@@ -26,7 +26,8 @@
             Payment,
             Subscription,
             Notification,
-            PromoCode
+            PromoCode,
+            MatchStatistic
         }
 
         public enum TenantViews

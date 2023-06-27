@@ -9,5 +9,7 @@ namespace API.Areas.PaymentArea.Models
         public string WalletIdentifier { get; set; }
 
         public int Fk_Subscription { get; set; }
+
+        public string Code { get; set; }
     }
 }

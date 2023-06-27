@@ -15,6 +15,12 @@ namespace Entities.CoreServicesModels.PlayerMarkModels
         [DisplayName(nameof(Mark))]
         [ForeignKey(nameof(Mark))]
         public int Fk_Mark { get; set; }
+        
+        [DisplayName(nameof(Team))]
+        public List<int> Fk_Teams { get; set; }
+        
+        [DisplayName(nameof(Player))]
+        public List<int> Fk_Players { get; set; }
     }
 
     public class PlayerMarkModel : AuditEntity

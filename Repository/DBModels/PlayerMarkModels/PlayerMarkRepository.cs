@@ -14,7 +14,9 @@ namespace Repository.DBModels.PlayerMarkModels
             return FindByCondition(a => true, trackChanges)
                    .Filter(parameters.Id,
                            parameters.Fk_Player,
-                           parameters.Fk_Mark);
+                           parameters.Fk_Mark,
+                           parameters.Fk_Teams,
+                           parameters.Fk_Players);
         }
 
         public async Task<PlayerMark> FindById(int id, bool trackChanges)
@@ -35,11 +37,15 @@ namespace Repository.DBModels.PlayerMarkModels
             this IQueryable<PlayerMark> PlayerMarks,
             int id,
             int fk_Player,
-            int fk_Mark)
+            int fk_Mark,
+            List<int> fk_Teams,
+            List<int> fk_Players)
         {
             return PlayerMarks.Where(a => (id == 0 || a.Id == id) &&
                                     (fk_Player == 0 || a.Fk_Player == fk_Player) &&
-                                    (fk_Mark == 0 || a.Fk_Mark == fk_Mark) );
+                                    (fk_Mark == 0 || a.Fk_Mark == fk_Mark) &&
+                                    (fk_Teams == null || !fk_Teams.Any() || fk_Teams.Contains(a.Player.Fk_Team)) &&
+                                    (fk_Players == null || !fk_Players.Any() || fk_Players.Contains(a.Fk_Player)) );
         }
 
     }

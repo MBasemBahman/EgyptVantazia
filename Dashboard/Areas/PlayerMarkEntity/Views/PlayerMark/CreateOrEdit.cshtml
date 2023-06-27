@@ -5,8 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.useForm = true;
     ViewBag.userFormRepeater = true;
-
-
+    
+    int returnPage = ViewData["returnPage"] != null ? (int)ViewData["returnPage"] : (int)PlayerMarkReturnPage.Index;
 }
 
 <!-- BEGIN: Content-->
@@ -22,7 +22,14 @@
                         <div class="breadcrumb-wrapper">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item">
-                                    <a href="/TeamEntity/Player/Profile/@Model.Fk_Player?returnItem=@((int)PlayerProfileItems.PlayerMark)">@Localizer.Get("Player Profile")</a>
+                                    @if (returnPage == (int)PlayerReturnPage.PlayerProfile)
+                                    {
+                                        <a href="/TeamEntity/Player/Profile/@Model.Fk_Player?returnItem=@((int)PlayerProfileItems.PlayerMark)">@Localizer.Get("Player Profile")</a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-action="Index">@Localizer.Get("PlayerMarks")</a>
+                                    }
                                 </li>
                                 <li class="breadcrumb-item active">
                                     @ViewData["Title"]
@@ -42,6 +49,7 @@
                             <div class="card-body">
                                 <form class="form" asp-action="CreateOrEdit" enctype="multipart/form-data">
                                     <input type="hidden" asp-for="Fk_Player" />
+                                    <input type="hidden" asp-for="@returnPage" />
                                     <div asp-validation-summary="All" class="text-danger">@ViewData["Error"]</div>
                                     <br />
 
@@ -109,8 +117,16 @@
                                         <div class="col-12">
                                             <button type="submit" class="btn btn-primary me-1">@Localizer.Get("Submit")</button>
                                             <button type="reset" class="btn btn-outline-secondary me-1">@Localizer.Get("Reset")</button>
-                                            <a asp-action="Profile" asp-controller="Player" asp-area="TeamEntity" asp-route-id="@Model.Fk_Player" asp-route-returnItem="@((int)PlayerProfileItems.PlayerMark)" class="btn btn-warning"> @Localizer.Get("Back") </a>
-
+                                            @if (returnPage == (int)PlayerReturnPage.PlayerProfile)
+                                            {
+                                                <a asp-action="Profile" asp-controller="Player" asp-area="TeamEntity" 
+                                                   asp-route-id="@Model.Fk_Player" asp-route-returnItem="@((int)PlayerProfileItems.PlayerMark)" 
+                                                   class="btn btn-warning"> @Localizer.Get("Back") </a>
+                                            }
+                                            else
+                                            {
+                                                <a asp-action="Index" class="btn btn-warning"> @Localizer.Get("Back") </a>
+                                            }
                                         </div>
                                     </div>
 

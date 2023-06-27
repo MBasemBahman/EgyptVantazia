@@ -139,12 +139,14 @@ else
 
                                         @if (accessLevel.CreateAccess)
                                         {
-                                            <a id="create" asp-action="CreateOrEdit" asp-route-Fk_Player="@Model.Fk_Player">
+                                            <a id="create" asp-action="CreateOrEdit" asp-route-Fk_Player="@Model.Fk_Player"
+                                               asp-route-returnPage="@((int)PlayerMarkReturnPage.PlayerProfile)">
                                             </a>
                                         }
                                         
                                         @if (accessLevel.EditAccess)
                                         {
+                                            <input type="hidden" id="routeData" value="?returnPage=@((int)PlayerMarkReturnPage.PlayerProfile)" />
                                             <a id="edit" asp-action="CreateOrEdit">
                                             </a>
                                         }
@@ -191,6 +193,8 @@ else
                             data: function (data) {
                                 data.Fk_Player = @Model.Fk_Player;
                                 data.Fk_Mark = $("#Fk_Mark").length > 0 ? $("#Fk_Mark").val() : @Model.Fk_Mark;
+                                data.Fk_Teams = $("#Fk_Teams").length > 0 ? $("#Fk_Teams").val() : null;
+                                data.Fk_Players = $("#Fk_Players").length > 0 ? $("#Fk_Players").val() : null;
                                 
                                 return JSON.stringify(data);
                             }
@@ -253,6 +257,35 @@ else
         $(document).ready(function () {
             LoadTable();
 
+            $(".players_selector").select2({
+                        ajax: {
+                            url: "@Url.ActionLink("GetPlayersByName", "Services", new { area = "Dashboard" })",
+                            dataType: "json",
+                            type: 'post',
+                            quietMillis: 50,
+                            data: function (params) {
+                              let query = {
+                                name: params.term,
+                                fk_Teams: $("#Fk_Teams").val()
+                              }
+                        
+                              // Query parameters will be ?search=[term]&type=public
+                              return query;
+                            },
+                            processResults: function (data) {
+                                return {
+                                    results: $.map(data, function (item, index) {
+                                        return {
+                                            id: index,
+                                            text: item
+                                        }
+                                    })
+                                };
+                            }
+                        }
+                    });
         });
+        
+        
     </script>
 }

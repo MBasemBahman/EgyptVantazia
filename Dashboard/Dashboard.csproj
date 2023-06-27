@@ -63,7 +63,6 @@
 	  <AdditionalFiles Include="Areas\PlayerMarkEntity\Views\PlayerMark\Details.cshtml" />
 	  <AdditionalFiles Include="Areas\PlayerMarkEntity\Views\PlayerMark\Filter.cshtml" />
 	  <AdditionalFiles Include="Areas\PlayerMarkEntity\Views\PlayerMark\Index.cshtml" />
-	  <AdditionalFiles Include="Areas\PlayerMarkEntity\Views\PlayerMark\Profile.cshtml" />
 	  <AdditionalFiles Include="Areas\PlayerMarkEntity\Views\_ViewImports.cshtml" />
 	</ItemGroup>
 	

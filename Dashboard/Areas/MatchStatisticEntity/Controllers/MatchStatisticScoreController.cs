@@ -47,7 +47,7 @@ namespace Dashboard.Areas.MatchStatisticEntity.Controllers
 
             ViewData["ProfileLayOut"] = ProfileLayOut;
             ViewData[ViewDataConstants.AccessLevel] = (DashboardAccessLevelModel)Request.HttpContext.Items[ViewDataConstants.AccessLevel];
-            SetViewData(isProfile: false, id: 0, Fk_StatisticCategory: 0, otherLang);
+            SetViewData(isProfile: false, id: 0, Fk_StatisticCategory: 0, Fk_TeamGameWeak: 0, otherLang);
             return View(filter);
         }
 
@@ -107,7 +107,7 @@ namespace Dashboard.Areas.MatchStatisticEntity.Controllers
             {
                 IsProfile = true;
             }
-            SetViewData(IsProfile, id, model.Fk_StatisticCategory, otherLang);
+            SetViewData(IsProfile, id, model.Fk_StatisticCategory, model.Fk_TeamGameWeak, otherLang);
 
        
 
@@ -123,7 +123,7 @@ namespace Dashboard.Areas.MatchStatisticEntity.Controllers
 
             if (!ModelState.IsValid)
             {
-                SetViewData(IsProfile, id, model.Fk_StatisticCategory, otherLang);
+                SetViewData(IsProfile, id, model.Fk_StatisticCategory, model.Fk_TeamGameWeak, otherLang);
 
                 return View(model);
             }
@@ -163,7 +163,7 @@ namespace Dashboard.Areas.MatchStatisticEntity.Controllers
                 ViewData[ViewDataConstants.Error] = _logger.LogError(HttpContext.Request, ex).ErrorMessage;
             }
 
-            SetViewData(IsProfile, id, model.Fk_StatisticCategory, otherLang);
+            SetViewData(IsProfile, id, model.Fk_StatisticCategory, model.Fk_TeamGameWeak, otherLang);
 
             return View(model);
         }
@@ -187,11 +187,15 @@ namespace Dashboard.Areas.MatchStatisticEntity.Controllers
         }
 
         // helper methods
-        private void SetViewData(bool isProfile,int id, int Fk_StatisticCategory, bool otherLang)
+        private void SetViewData(bool isProfile,int id, int Fk_StatisticCategory, int Fk_TeamGameWeak, bool otherLang)
         {
             ViewData["GameWeak"] = _unitOfWork.Season.GetGameWeakLookUp(new GameWeakParameters(), otherLang);
             ViewData["Season"] = _unitOfWork.Season.GetSeasonLookUp(new SeasonParameters(), otherLang);
             ViewData["Team"] = _unitOfWork.Team.GetTeamLookUp(new TeamParameters(), otherLang);
+            ViewData["HomeAway"] = _unitOfWork.Season.GetTeamGameWeaks(new TeamGameWeakParameters
+            {
+                Id = Fk_TeamGameWeak
+            }, otherLang).FirstOrDefault();
             ViewData["id"] = id;
             ViewData["IsProfile"] = isProfile;
             ViewData["StatisticScore"] = _unitOfWork.MatchStatistic.GetStatisticScoresLookUp(new StatisticScoreParameters()

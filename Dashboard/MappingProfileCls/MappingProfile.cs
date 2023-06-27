@@ -492,9 +492,11 @@ namespace Dashboard.MappingProfileCls
             #region Player Marks Models
 
             #region Mark
-            _ = CreateMap<Mark, MarkCreateOrEditModel>();
+            _ = CreateMap<Mark, MarkCreateOrEditModel>()
+                .ForMember(dest => dest.ImageUrl, opt => opt.Ignore());
 
-            _ = CreateMap<MarkCreateOrEditModel, Mark>();
+            _ = CreateMap<MarkCreateOrEditModel, Mark>()
+                .ForMember(dest => dest.ImageUrl, opt => opt.Ignore());
 
             _ = CreateMap<MarkModel, MarkDto>();
 
@@ -507,8 +509,7 @@ namespace Dashboard.MappingProfileCls
             
             #region PlayerMark
             
-            _ = CreateMap<PlayerMark, PlayerMarkCreateOrEditModel>()
-                .ForMember(dest => dest.Fk_GameWeaks, opt => opt.Ignore());
+            _ = CreateMap<PlayerMark, PlayerMarkCreateOrEditModel>();
 
             _ = CreateMap<PlayerMarkCreateOrEditModel, PlayerMark>();
 

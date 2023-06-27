@@ -27,7 +27,8 @@ namespace CoreServices.Logic
                            LastModifiedAt = x.LastModifiedAt,
                            LastModifiedBy = x.LastModifiedBy,
                            Name = otherLang ? x.MarkLang.Name : x.Name,
-                           PlayerMarkCount = x.PlayerMarks.Count
+                           PlayerMarkCount = x.PlayerMarks.Count,
+                           ImageUrl = x.StorageUrl + x.ImageUrl
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);
@@ -55,6 +56,12 @@ namespace CoreServices.Logic
         public Dictionary<string, string> GetMarksLookUp(MarkParameters parameters, bool otherLang)
         {
             return GetMarks(parameters, otherLang).ToDictionary(a => a.Id.ToString(), a => a.Name);
+        }
+        
+        public async Task<string> UploudMark(string rootPath, IFormFile file)
+        {
+            FileUploader uploader = new(rootPath);
+            return await uploader.UploudFile(file, "Uploud/Mark");
         }
         
         public void CreateMark(Mark Mark)
@@ -111,7 +118,6 @@ namespace CoreServices.Logic
                            },
                            Count = a.Count,
                            Used = a.Used,
-                           Value = a.Value
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);
@@ -157,12 +163,12 @@ namespace CoreServices.Logic
             return _repository.PlayerMark.Count();
         }
 
-        public async Task UpdatePlayerMarkGameWeaks(int fk_PlayerMark, List<int> fk_GameWeaks, string createdBy)
+        public async Task UpdatePlayerMarkReasonMatches(int fk_PlayerMark, List<int> fk_GameWeaks, string createdBy)
         {
-            List<int> oldData = GetPlayerMarkGameWeaks(new PlayerMarkGameWeakParameters
+            List<int> oldData = GetPlayerMarkReasonMatches(new PlayerMarkReasonMatchParameters
             {
                 Fk_PlayerMark = fk_PlayerMark
-            }, otherLang: false).Select(a => a.Fk_GameWeak).ToList();
+            }, otherLang: false).Select(a => a.Fk_TeamGameWeak).ToList();
         
             List<int> newData = fk_GameWeaks.ToList().Except(oldData).ToList();
         
@@ -171,12 +177,12 @@ namespace CoreServices.Logic
             // Add New
             if (newData.Count > 0)
             {
-                foreach (int fk_GameWeak in newData)   
+                foreach (int fk_TeamGameWeak in newData)   
                 {
-                    CreatePlayerMarkGameWeak(new PlayerMarkGameWeak
+                    CreatePlayerMarkReasonMatch(new PlayerMarkReasonMatch
                     {
                         Fk_PlayerMark = fk_PlayerMark,
-                        Fk_GameWeak = fk_GameWeak,
+                        Fk_TeamGameWeak = fk_TeamGameWeak,
                         CreatedBy = createdBy,
                         LastModifiedBy = createdBy,
                     });
@@ -186,15 +192,15 @@ namespace CoreServices.Logic
             // Remove Old
             if (rmvData.Count > 0)
             {
-                List<int> fk_PlayerMarkGameWeaks = _repository.PlayerMarkGameWeak.FindAll(new PlayerMarkGameWeakParameters
+                List<int> fk_PlayerMarkTeamGameWeaks = _repository.PlayerMarkReasonMatch.FindAll(new PlayerMarkReasonMatchParameters
                 {
                     Fk_PlayerMark = fk_PlayerMark,
-                    Fk_GameWeaks = rmvData
+                    Fk_TeamGameWeaks = rmvData
                 }, trackChanges: false).Select(a => a.Id).ToList();
                 
-                foreach (int fk_PlayerMarkGameWeak in fk_PlayerMarkGameWeaks)
+                foreach (int fk_PlayerMarkTeamGameWeak in fk_PlayerMarkTeamGameWeaks)
                 {
-                    await DeletePlayerMarkGameWeak(fk_PlayerMarkGameWeak);
+                    await DeletePlayerMarkReasonMatch(fk_PlayerMarkTeamGameWeak);
                 }
             }
         }
@@ -243,68 +249,6 @@ namespace CoreServices.Logic
         
         #endregion
 
-        #region PlayerMarkGameWeak Services
-        public IQueryable<PlayerMarkGameWeakModel> GetPlayerMarkGameWeaks(PlayerMarkGameWeakParameters parameters,
-                bool otherLang)
-        {
-            return _repository.PlayerMarkGameWeak
-                       .FindAll(parameters, trackChanges: false)
-                       .Select(a => new PlayerMarkGameWeakModel
-                       {
-                           Id = a.Id,
-                           CreatedAt = a.CreatedAt,
-                           CreatedBy = a.CreatedBy,
-                           LastModifiedAt = a.LastModifiedAt,
-                           LastModifiedBy = a.LastModifiedBy,
-                           Fk_PlayerMark = a.Fk_PlayerMark,
-                           Fk_GameWeak = a.Fk_GameWeak,
-                       })
-                       .Search(parameters.SearchColumns, parameters.SearchTerm)
-                       .Sort(parameters.OrderBy);
-        }
-
-        public IQueryable<PlayerMarkGameWeak> GetPlayerMarkGameWeaks(PlayerMarkGameWeakParameters parameters)
-        {
-            return _repository.PlayerMarkGameWeak
-                       .FindAll(parameters, trackChanges: false);
-        }
-
-
-        public async Task<PagedList<PlayerMarkGameWeakModel>> GetPlayerMarkGameWeakPaged(
-                  PlayerMarkGameWeakParameters parameters,
-                  bool otherLang)
-        {
-            return await PagedList<PlayerMarkGameWeakModel>.ToPagedList(GetPlayerMarkGameWeaks(parameters, otherLang), parameters.PageNumber, parameters.PageSize);
-        }
-
-        public async Task<PlayerMarkGameWeak> FindPlayerMarkGameWeakbyId(int id, bool trackChanges)
-        {
-            return await _repository.PlayerMarkGameWeak.FindById(id, trackChanges);
-        }
-
-        public void CreatePlayerMarkGameWeak(PlayerMarkGameWeak PlayerMarkGameWeak)
-        {
-            _repository.PlayerMarkGameWeak.Create(PlayerMarkGameWeak);
-        }
-
-        public async Task DeletePlayerMarkGameWeak(int id)
-        {
-            PlayerMarkGameWeak PlayerMarkGameWeak = await FindPlayerMarkGameWeakbyId(id, trackChanges: true);
-            _repository.PlayerMarkGameWeak.Delete(PlayerMarkGameWeak);
-        }
-
-        public PlayerMarkGameWeakModel GetPlayerMarkGameWeakbyId(int id, bool otherLang)
-        {
-            return GetPlayerMarkGameWeaks(new PlayerMarkGameWeakParameters { Id = id }, otherLang).FirstOrDefault();
-        }
-
-        public int GetPlayerMarkGameWeakCount()
-        {
-            return _repository.PlayerMarkGameWeak.Count();
-        }
-        
-        #endregion
-        
         #region PlayerMarkGameWeakScore Services
         public IQueryable<PlayerMarkGameWeakScoreModel> GetPlayerMarkGameWeakScores(PlayerMarkGameWeakScoreParameters parameters,
                 bool otherLang)
@@ -370,7 +314,7 @@ namespace CoreServices.Logic
         #region PlayerMarkTeamGameWeak Services
         public IQueryable<PlayerMarkTeamGameWeakModel> GetPlayerMarkTeamGameWeaks(PlayerMarkTeamGameWeakParameters parameters,
                 bool otherLang)
-        {
+        {   
             return _repository.PlayerMarkTeamGameWeak
                        .FindAll(parameters, trackChanges: false)
                        .Select(a => new PlayerMarkTeamGameWeakModel
@@ -425,6 +369,68 @@ namespace CoreServices.Logic
         public int GetPlayerMarkTeamGameWeakCount()
         {
             return _repository.PlayerMarkTeamGameWeak.Count();
+        }
+        
+        #endregion
+        
+        #region PlayerMarkReasonMatch Services
+        public IQueryable<PlayerMarkReasonMatchModel> GetPlayerMarkReasonMatches(PlayerMarkReasonMatchParameters parameters,
+                bool otherLang)
+        {   
+            return _repository.PlayerMarkReasonMatch
+                       .FindAll(parameters, trackChanges: false)
+                       .Select(a => new PlayerMarkReasonMatchModel
+                       {
+                           Id = a.Id,
+                           CreatedAt = a.CreatedAt,
+                           CreatedBy = a.CreatedBy,
+                           LastModifiedAt = a.LastModifiedAt,
+                           LastModifiedBy = a.LastModifiedBy,
+                           Fk_PlayerMark = a.Fk_PlayerMark,
+                           Fk_TeamGameWeak = a.Fk_TeamGameWeak
+                       })
+                       .Search(parameters.SearchColumns, parameters.SearchTerm)
+                       .Sort(parameters.OrderBy);
+        }
+
+        public IQueryable<PlayerMarkReasonMatch> GetPlayerMarkReasonMatches(PlayerMarkReasonMatchParameters parameters)
+        {
+            return _repository.PlayerMarkReasonMatch
+                       .FindAll(parameters, trackChanges: false);
+        }
+
+
+        public async Task<PagedList<PlayerMarkReasonMatchModel>> GetPlayerMarkReasonMatchPaged(
+                  PlayerMarkReasonMatchParameters parameters,
+                  bool otherLang)
+        {
+            return await PagedList<PlayerMarkReasonMatchModel>.ToPagedList(GetPlayerMarkReasonMatches(parameters, otherLang), parameters.PageNumber, parameters.PageSize);
+        }
+
+        public async Task<PlayerMarkReasonMatch> FindPlayerMarkReasonMatchbyId(int id, bool trackChanges)
+        {
+            return await _repository.PlayerMarkReasonMatch.FindById(id, trackChanges);
+        }
+
+        public void CreatePlayerMarkReasonMatch(PlayerMarkReasonMatch PlayerMarkReasonMatch)
+        {
+            _repository.PlayerMarkReasonMatch.Create(PlayerMarkReasonMatch);
+        }
+
+        public async Task DeletePlayerMarkReasonMatch(int id)
+        {
+            PlayerMarkReasonMatch PlayerMarkReasonMatch = await FindPlayerMarkReasonMatchbyId(id, trackChanges: true);
+            _repository.PlayerMarkReasonMatch.Delete(PlayerMarkReasonMatch);
+        }
+
+        public PlayerMarkReasonMatchModel GetPlayerMarkReasonMatchbyId(int id, bool otherLang)
+        {
+            return GetPlayerMarkReasonMatches(new PlayerMarkReasonMatchParameters { Id = id }, otherLang).FirstOrDefault();
+        }
+
+        public int GetPlayerMarkReasonMatchCount()
+        {
+            return _repository.PlayerMarkReasonMatch.Count();
         }
         
         #endregion

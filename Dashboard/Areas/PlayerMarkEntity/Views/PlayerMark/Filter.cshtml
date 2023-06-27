@@ -16,19 +16,31 @@
 
             <div class="row g-1 mb-md-1">
                 
+                @if (Model.Fk_Player == 0)
+                {
+                    <div class="col-md-6 col-12">
+                        <div class="mb-1">
+                            <label class="form-label">@Localizer.Get("Teams")</label>
+                            <select asp-for="Fk_Teams" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["Teams"] as Dictionary<string,string>,"Key","Value"))">
+                                <option value="">@Localizer.Get("All")</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-12">
+                        <div class="mb-1">
+                            <label class="form-label">@Localizer.Get("Players")</label>
+                            <select asp-for="Fk_Players" class="form-select players_selector">
+                                <option value="">@Localizer.Get("All")</option>
+                            </select>
+                        </div>
+                    </div>
+                }
+                
                 <div class="col-md-6 col-12">
                     <div class="mb-1">
                         <label asp-for="Fk_Mark" class="form-label">@Localizer.Get("Mark")</label>
                         <select asp-for="Fk_Mark" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["Marks"] as Dictionary<string,string>,"Key","Value"))">
-                            <option value="0">@Localizer.Get("All")</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="col-md-6 col-12">
-                    <div class="mb-1">
-                        <label asp-for="Fk_GameWeak" class="form-label">@Localizer.Get("GameWeak")</label>
-                        <select asp-for="Fk_GameWeak" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["GameWeaks"] as Dictionary<string,string>,"Key","Value"))">
                             <option value="0">@Localizer.Get("All")</option>
                         </select>
                     </div>

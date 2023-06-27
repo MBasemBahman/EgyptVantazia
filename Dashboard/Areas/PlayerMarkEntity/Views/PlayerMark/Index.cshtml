@@ -89,7 +89,6 @@
                                                 </th>
                                                 <th>@Html.DisplayNameFor(model => row.Player)</th>
                                                 <th>@Html.DisplayNameFor(model => row.Mark)</th>
-                                                <th>@Html.DisplayNameFor(model => row.Value)</th>
                                                 <th>@Html.DisplayNameFor(model => row.Used)</th>
                                                 <th>@Html.DisplayNameFor(model => row.Count)</th>
                                                 <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
@@ -140,12 +139,14 @@ else
 
                                         @if (accessLevel.CreateAccess)
                                         {
-                                            <a id="create" asp-action="CreateOrEdit" asp-route-Fk_Player="@Model.Fk_Player">
+                                            <a id="create" asp-action="CreateOrEdit" asp-route-Fk_Player="@Model.Fk_Player"
+                                               asp-route-returnPage="@((int)PlayerMarkReturnPage.PlayerProfile)">
                                             </a>
                                         }
                                         
                                         @if (accessLevel.EditAccess)
                                         {
+                                            <input type="hidden" id="routeData" value="?returnPage=@((int)PlayerMarkReturnPage.PlayerProfile)" />
                                             <a id="edit" asp-action="CreateOrEdit">
                                             </a>
                                         }
@@ -159,7 +160,6 @@ else
                                     </th>
                                     <th>@Html.DisplayNameFor(model => row.Player)</th>
                                     <th>@Html.DisplayNameFor(model => row.Mark)</th>
-                                    <th>@Html.DisplayNameFor(model => row.Value)</th>
                                     <th>@Html.DisplayNameFor(model => row.Used)</th>
                                     <th>@Html.DisplayNameFor(model => row.Count)</th>
                                     <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
@@ -193,7 +193,8 @@ else
                             data: function (data) {
                                 data.Fk_Player = @Model.Fk_Player;
                                 data.Fk_Mark = $("#Fk_Mark").length > 0 ? $("#Fk_Mark").val() : @Model.Fk_Mark;
-                                data.Fk_GameWeak = $("#Fk_GameWeak").length > 0 ? $("#Fk_GameWeak").val() : @Model.Fk_GameWeak;
+                                data.Fk_Teams = $("#Fk_Teams").length > 0 ? $("#Fk_Teams").val() : null;
+                                data.Fk_Players = $("#Fk_Players").length > 0 ? $("#Fk_Players").val() : null;
                                 
                                 return JSON.stringify(data);
                             }
@@ -206,7 +207,7 @@ else
                                 data: "player", orderable: false,
                                 render: function (data, type, row) {
                                     var span = '';
-                                    if (row.imageUrl != null) {
+                                    if (data.imageUrl != null) {
 
                                         return '<div class="d-flex justify-content-left align-items-center"><div class= "avatar-wrapper" ><div class="avatar me-1">'
                                             + '<img src="' + data.imageUrl + '"  height="32" width="32">'
@@ -231,7 +232,6 @@ else
                                 }
                             },
                             { data: "mark.name" },
-                            { data: "value" },
                             { data: "used" },
                             { data: "count" },
                             { data: "createdAt" },
@@ -257,6 +257,35 @@ else
         $(document).ready(function () {
             LoadTable();
 
+            $(".players_selector").select2({
+                        ajax: {
+                            url: "@Url.ActionLink("GetPlayersByName", "Services", new { area = "Dashboard" })",
+                            dataType: "json",
+                            type: 'post',
+                            quietMillis: 50,
+                            data: function (params) {
+                              let query = {
+                                name: params.term,
+                                fk_Teams: $("#Fk_Teams").val()
+                              }
+                        
+                              // Query parameters will be ?search=[term]&type=public
+                              return query;
+                            },
+                            processResults: function (data) {
+                                return {
+                                    results: $.map(data, function (item, index) {
+                                        return {
+                                            id: index,
+                                            text: item
+                                        }
+                                    })
+                                };
+                            }
+                        }
+                    });
         });
+        
+        
     </script>
 }

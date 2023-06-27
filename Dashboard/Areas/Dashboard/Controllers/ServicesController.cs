@@ -1,5 +1,6 @@
 ﻿using Entities.CoreServicesModels.MatchStatisticModels;
 using Entities.CoreServicesModels.SeasonModels;
+using Entities.CoreServicesModels.TeamModels;
 
 namespace Dashboard.Areas.Dashboard.Controllers
 {
@@ -91,7 +92,17 @@ namespace Dashboard.Areas.Dashboard.Controllers
 
             return Json(result);
         }
-
-
+        
+        [HttpPost]
+        public ActionResult<Dictionary<string, string>> GetPlayersByName(List<int> fk_Teams, string name)
+        {
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            return _unitOfWork.Team.GetPlayers(new PlayerParameters
+            {
+                SearchTerm = name,
+                SearchColumns = "Name,ShortName",
+                Fk_Teams = fk_Teams
+            }, otherLang).Take(10).ToDictionary(a => a.Id.ToString(), a => a.Name);
+        }
     }
 }

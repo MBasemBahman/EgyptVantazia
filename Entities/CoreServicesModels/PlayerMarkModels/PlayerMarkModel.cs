@@ -16,8 +16,11 @@ namespace Entities.CoreServicesModels.PlayerMarkModels
         [ForeignKey(nameof(Mark))]
         public int Fk_Mark { get; set; }
         
-        [DisplayName(nameof(GameWeak))]
-        public int Fk_GameWeak { get; set; }
+        [DisplayName(nameof(Team))]
+        public List<int> Fk_Teams { get; set; }
+        
+        [DisplayName(nameof(Player))]
+        public List<int> Fk_Players { get; set; }
     }
 
     public class PlayerMarkModel : AuditEntity
@@ -35,9 +38,6 @@ namespace Entities.CoreServicesModels.PlayerMarkModels
 
         [DisplayName(nameof(Mark))]
         public MarkModel Mark { get; set; }
-
-        [DisplayName(nameof(Value))]
-        public string Value { get; set; }
 
         [DisplayName(nameof(Count))]
         public int? Count { get; set; }
@@ -65,10 +65,10 @@ namespace Entities.CoreServicesModels.PlayerMarkModels
         [DisplayName(nameof(Used))]
         public int? Used { get; set; }
 
-        [DisplayName(nameof(Fk_GameWeaks))]
-        public List<int> Fk_GameWeaks { get; set; }
-
         [DisplayName(nameof(Fk_TeamGameWeaks))]
         public List<int> Fk_TeamGameWeaks { get; set; }
+        
+        [DisplayName(nameof(Fk_PlayerMarkReasonMatches))]
+        public List<int> Fk_PlayerMarkReasonMatches { get; set; }
     }
 }

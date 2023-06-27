@@ -1,4 +1,5 @@
-﻿@model MatchStatisticScoreCreateOrEditModel
+﻿@using Entities.CoreServicesModels.SeasonModels
+@model MatchStatisticScoreCreateOrEditModel
 @{
     ViewData["Title"] = $"{Localizer.Get("CreateOrEdit")} {Localizer.Get("MatchStatisticScore")}";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,6 +8,7 @@
     bool IsProfile = ViewData["IsProfile"] != null ? (bool)ViewData["IsProfile"] :false;
     int id = ViewData["id"] != null ? (int)ViewData["id"] : 0;
 
+    TeamGameWeakModel teamGameWeakModel = (TeamGameWeakModel)ViewData["HomeAway"];
 }
 
 <!-- BEGIN: Content-->
@@ -78,6 +80,17 @@
                                                 <label asp-for="ValuePercentage" class="form-label"></label>
                                                 <input asp-for="ValuePercentage" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"ValuePercentage"))" />
                                                 <span asp-validation-for="ValuePercentage" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 col-12">
+                                            <div class="mb-1">
+                                                <label class="form-label">@Localizer.Get("Team")</label>
+                                                <select asp-for="Fk_Team" class="select2 form-select">
+                                                    <option value="@teamGameWeakModel.Fk_Home">@teamGameWeakModel.Home.Name</option>
+                                                    <option value="@teamGameWeakModel.Fk_Away">@teamGameWeakModel.Away.Name</option>
+                                                </select>
+                                                <span asp-validation-for="Fk_Team" class="text-danger"></span>
                                             </div>
                                         </div>
 

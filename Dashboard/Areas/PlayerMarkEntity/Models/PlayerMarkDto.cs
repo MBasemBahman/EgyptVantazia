@@ -14,8 +14,11 @@ namespace Dashboard.Areas.PlayerMarkEntity.Models
         [DisplayName(nameof(Mark))]
         public int Fk_Mark { get; set; }
         
-        [DisplayName(nameof(GameWeak))]
-        public int Fk_GameWeak { get; set; }
+        [DisplayName(nameof(Team))]
+        public List<int> Fk_Teams { get; set; }
+        
+        [DisplayName(nameof(Player))]
+        public List<int> Fk_Players { get; set; }
     }
     public class PlayerMarkDto : PlayerMarkModel
     {
@@ -25,5 +28,10 @@ namespace Dashboard.Areas.PlayerMarkEntity.Models
         [DisplayName(nameof(LastModifiedAt))]
         public new string LastModifiedAt { get; set; }
     }
-    
+ 
+    public enum PlayerMarkReturnPage
+    {
+        Index = 1,
+        PlayerProfile = 2,
+    }
 }

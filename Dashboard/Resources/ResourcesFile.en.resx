@@ -1374,4 +1374,13 @@
   <data name="ValuePercentage" xml:space="preserve">
     <value>Value Percentage</value>
   </data>
+  <data name="Player Marks" xml:space="preserve">
+    <value>Player Marks</value>
+  </data>
+  <data name="PlayerMarkCount" xml:space="preserve">
+    <value>Player Mark Count</value>
+  </data>
+  <data name="Fk_PlayerMarkReasonMatches" xml:space="preserve">
+    <value>Player Mark Reason Matches</value>
+  </data>
 </root>

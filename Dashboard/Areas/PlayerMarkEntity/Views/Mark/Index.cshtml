@@ -125,7 +125,31 @@
                     // Columns Setups
                     columns: [
                         { data: "id" },
-                        { data: "name" },
+                        {
+                        data: "name",
+                            render: function(data, type, row) {
+                                var span = '';
+                                
+                                if (row.imageUrl != null) {
+    
+                                    return '<div class="d-flex justify-content-left align-items-center"><div class= "avatar-wrapper" ><div class="avatar me-1">'
+                                        + '<img src="' + row.imageUrl + '"  height="32" width="32">'
+                                        + span
+                                        + '</div></div>'
+                                        + ' <div class= "d-flex flex-column">'
+                                        + '<span class= "fw-bolder">' + data + '</span>'
+                                        + '<small class= "emp_post text-muted" ></small ></div></div>';
+                                }
+                                else {
+                                    return '<div class="d-flex justify-content-left align-items-center"><div class= "avatar-wrapper" >'
+                                        + '<div class="avatar  bg-light-dark  me-1"><span class="avatar-content"></span>' + span + '</div>'
+                                        + '</div>'
+                                        + ' <div class= "d-flex flex-column">'
+                                        + '<span class= "fw-bolder">' + data + '</span>'
+                                        + '<small class= "emp_post text-muted" ></small ></div></div>';
+                                }
+                            }
+                        },
                         { data: "playerMarkCount" },
                         { data: "createdAt" },
                         { data: "id" },

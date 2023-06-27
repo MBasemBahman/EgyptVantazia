@@ -18,20 +18,17 @@ namespace Entities.DBModels.PlayerMarkModels
         [DisplayName(nameof(Mark))]
         public Mark Mark { get; set; }
 
-        [DisplayName(nameof(Value))]
-        public string Value { get; set; }
-
         [DisplayName(nameof(Count))]
         public int? Count { get; set; }
 
         [DisplayName(nameof(Used))]
         public int? Used { get; set; }
 
-        [DisplayName(nameof(PlayerMarkGameWeaks))]
-        public List<PlayerMarkGameWeak> PlayerMarkGameWeaks { get; set; }
-
         [DisplayName(nameof(PlayerMarkTeamGameWeaks))]
         public List<PlayerMarkTeamGameWeak> PlayerMarkTeamGameWeaks { get; set; }
+        
+        [DisplayName(nameof(PlayerMarkReasonMatches))]
+        public List<PlayerMarkReasonMatch> PlayerMarkReasonMatches { get; set; }
 
         [DisplayName(nameof(PlayerMarkGameWeakScores))]
         public List<PlayerMarkGameWeakScore> PlayerMarkGameWeakScores { get; set; }

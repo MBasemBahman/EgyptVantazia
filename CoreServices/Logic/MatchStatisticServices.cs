@@ -166,7 +166,8 @@ namespace CoreServices.Logic
                                Name = a.Team.Name,
                                ShortName = a.Team.ShortName,
                                _365_TeamId = a.Team._365_TeamId,
-                               ShirtImageUrl = a.Team.ShirtImageUrl,
+                               ShirtImageUrl = a.Team.ShirtStorageUrl + a.Team.ShirtImageUrl,
+                               ImageUrl = a.Team.StorageUrl + a.Team.ImageUrl,
                            },
                            StatisticScore = new StatisticScoreModel
                            {
@@ -178,41 +179,6 @@ namespace CoreServices.Logic
                                    Name = otherLang ? a.StatisticScore.StatisticCategory.StatisticCategoryLang.Name : a.StatisticScore.StatisticCategory.Name
                                }
                            },
-                           TeamGameWeak = new TeamGameWeakModel
-                           {
-                               Away = new TeamModel
-                               {
-                                   Name = otherLang ? a.TeamGameWeak.Away.TeamLang.Name : a.TeamGameWeak.Away.Name,
-                                   ShortName = otherLang ? a.TeamGameWeak.Away.TeamLang.ShortName : a.TeamGameWeak.Away.ShortName,
-                                   ImageUrl = a.TeamGameWeak.Away.StorageUrl + a.TeamGameWeak.Away.ImageUrl,
-                                   ShirtImageUrl = a.TeamGameWeak.Away.ShirtStorageUrl + a.TeamGameWeak.Away.ShirtImageUrl,
-                                   _365_TeamId = a.TeamGameWeak.Away._365_TeamId,
-                               },
-                               Home = new TeamModel
-                               {
-                                   Name = otherLang ? a.TeamGameWeak.Home.TeamLang.Name : a.TeamGameWeak.Home.Name,
-                                   ShortName = otherLang ? a.TeamGameWeak.Home.TeamLang.ShortName : a.TeamGameWeak.Home.ShortName,
-                                   ImageUrl = a.TeamGameWeak.Home.StorageUrl + a.TeamGameWeak.Home.ImageUrl,
-                                   ShirtImageUrl = a.TeamGameWeak.Home.ShirtStorageUrl + a.TeamGameWeak.Home.ShirtImageUrl,
-                                   _365_TeamId = a.TeamGameWeak.Home._365_TeamId
-                               },
-                               GameWeak = new GameWeakModel
-                               {
-                                   Name = otherLang ? a.TeamGameWeak.GameWeak.GameWeakLang.Name : a.TeamGameWeak.GameWeak.Name,
-                                   _365_GameWeakId = a.TeamGameWeak.GameWeak._365_GameWeakId,
-                                   Fk_Season = a.TeamGameWeak.GameWeak.Fk_Season,
-                                   Season = new SeasonModel
-                                   {
-                                       Name = otherLang ? a.TeamGameWeak.GameWeak.Season.SeasonLang.Name : a.TeamGameWeak.GameWeak.Season.Name
-                                   },
-                               },
-                               Fk_Away = a.TeamGameWeak.Fk_Away,
-                               Fk_GameWeak = a.TeamGameWeak.Fk_GameWeak,
-                               Fk_Home = a.TeamGameWeak.Fk_Home,
-                               AwayScore = a.TeamGameWeak.AwayScore,
-                               HomeScore = a.TeamGameWeak.HomeScore,
-                               _365_MatchId = a.TeamGameWeak._365_MatchId,
-                           }
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

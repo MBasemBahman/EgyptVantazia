@@ -507,8 +507,7 @@ namespace Dashboard.MappingProfileCls
             
             #region PlayerMark
             
-            _ = CreateMap<PlayerMark, PlayerMarkCreateOrEditModel>()
-                .ForMember(dest => dest.Fk_GameWeaks, opt => opt.Ignore());
+            _ = CreateMap<PlayerMark, PlayerMarkCreateOrEditModel>();
 
             _ = CreateMap<PlayerMarkCreateOrEditModel, PlayerMark>();
 

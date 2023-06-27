@@ -141,10 +141,7 @@ namespace Dashboard.Areas.PlayerMarkEntity.Controllers
         {
             Mark data = await _unitOfWork.PlayerMark.FindMarkbyId(id, trackChanges: false);
 
-            return View(data != null && !_unitOfWork.PlayerMark.GetPlayerMarkGameWeaks(new PlayerMarkGameWeakParameters
-            {
-                Fk_PlayerMark = id
-            }, otherLang: false).Any());
+            return View(data != null);
         }
 
         [HttpPost, ActionName("Delete")]

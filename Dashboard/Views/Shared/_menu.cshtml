@@ -178,6 +178,14 @@
                                 </a>
                             </li>
                         }
+                        @if (viewList.Contains((int)DashboardViewEnum.PlayerMark))
+                        {
+                            <li id="PlayerMarkList" class="@(active == DashboardViewEnum.PlayerMark.ToString()?"active":"")">
+                                <a class="d-flex align-items-center" asp-controller="PlayerMark" asp-area="PlayerMarkEntity" asp-action="Index">
+                                    <i data-feather='flag'></i><span class="menu-item text-truncate" data-i18n="Second Level">@Localizer.Get("PlayerMarks")</span>
+                                </a>
+                            </li>
+                        }
                         @if (viewList.Contains((int)DashboardViewEnum.PlayerGameWeakScore))
                         {
                             <li id="PlayerGameWeakScoreList" class="@(active == DashboardViewEnum.PlayerGameWeakScore.ToString()?"active":"")">

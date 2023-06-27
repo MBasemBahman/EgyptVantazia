@@ -71,6 +71,7 @@ namespace Repository
         private PlayerMarkRepository _playerMarkRepository;
         private PlayerMarkGameWeakRepository _playerMarkGameWeakRepository;
         private PlayerMarkTeamGameWeakRepository _playerMarkTeamGameWeakRepository;
+        private PlayerMarkReasonMatchRepository _playerMarkReasonMatchRepository;
         private PlayerMarkGameWeakScoreRepository _playerMarkGameWeakScoreRepository;
         #endregion
         
@@ -396,6 +397,15 @@ namespace Repository
             {
                 _playerMarkTeamGameWeakRepository ??= new PlayerMarkTeamGameWeakRepository(_dBContext);
                 return _playerMarkTeamGameWeakRepository;
+            }
+        }
+        
+        public PlayerMarkReasonMatchRepository PlayerMarkReasonMatch
+        {
+            get
+            {
+                _playerMarkReasonMatchRepository ??= new PlayerMarkReasonMatchRepository(_dBContext);
+                return _playerMarkReasonMatchRepository;
             }
         }
         

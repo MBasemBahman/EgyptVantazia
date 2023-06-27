@@ -73,6 +73,20 @@ namespace CoreServices.Extensions
 
             return data.Where(expression);
         }
+        
+        public static IQueryable<PlayerMarkReasonMatchModel> Search(this IQueryable<PlayerMarkReasonMatchModel> data, string searchColumns, string searchTerm)
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm) || string.IsNullOrWhiteSpace(searchColumns))
+            {
+                return data;
+            }
+
+            searchTerm = searchTerm.SafeTrim().SafeLower();
+
+            Expression<Func<PlayerMarkReasonMatchModel, bool>> expression = SearchQueryBuilder.CreateSearchQuery<PlayerMarkReasonMatchModel>(searchColumns, searchTerm);
+
+            return data.Where(expression);
+        }
     }
 
     public static class PlayerMarkSortExtension
@@ -133,6 +147,18 @@ namespace CoreServices.Extensions
             }
 
             string orderQuery = OrderQueryBuilder.CreateOrderQuery<PlayerMarkTeamGameWeakModel>(orderByQueryString);
+
+            return data.OrderBy(orderQuery);
+        }
+        
+        public static IQueryable<PlayerMarkReasonMatchModel> Sort(this IQueryable<PlayerMarkReasonMatchModel> data, string orderByQueryString)
+        {
+            if (string.IsNullOrWhiteSpace(orderByQueryString))
+            {
+                return data.OrderBy(a => a.Id);
+            }
+
+            string orderQuery = OrderQueryBuilder.CreateOrderQuery<PlayerMarkReasonMatchModel>(orderByQueryString);
 
             return data.OrderBy(orderQuery);
         }

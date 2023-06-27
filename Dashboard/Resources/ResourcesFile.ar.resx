@@ -1422,4 +1422,13 @@
   <data name="ValuePercentage" xml:space="preserve">
     <value>نسبة القيمة</value>
   </data>
+  <data name="Player Marks" xml:space="preserve">
+    <value>علامات اللاعب</value>
+  </data>
+  <data name="PlayerMarkCount" xml:space="preserve">
+    <value>عدد علامات اللاعبين</value>
+  </data>
+  <data name="Fk_PlayerMarkReasonMatches" xml:space="preserve">
+    <value>الماتشات المسببة للعلامة</value>
+  </data>
 </root>

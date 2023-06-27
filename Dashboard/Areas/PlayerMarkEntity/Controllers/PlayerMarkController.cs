@@ -95,13 +95,13 @@ namespace Dashboard.Areas.PlayerMarkEntity.Controllers
             {
                 model = _mapper.Map<PlayerMarkCreateOrEditModel>(await _unitOfWork.PlayerMark.FindPlayerMarkbyId(id, trackChanges: false));
 
-                model.Fk_GameWeaks = _unitOfWork.PlayerMark
-                    .GetPlayerMarkGameWeaks(new PlayerMarkGameWeakParameters(), otherLang)
-                    .Select(a => a.Fk_GameWeak)
-                    .ToList();
-                
                 model.Fk_TeamGameWeaks = _unitOfWork.PlayerMark
                     .GetPlayerMarkTeamGameWeaks(new PlayerMarkTeamGameWeakParameters(), otherLang)
+                    .Select(a => a.Fk_TeamGameWeak)
+                    .ToList();
+                
+                model.Fk_PlayerMarkReasonMatches = _unitOfWork.PlayerMark
+                    .GetPlayerMarkReasonMatches(new PlayerMarkReasonMatchParameters(), otherLang)
                     .Select(a => a.Fk_TeamGameWeak)
                     .ToList();
             }
@@ -154,7 +154,7 @@ namespace Dashboard.Areas.PlayerMarkEntity.Controllers
 
                 await _unitOfWork.Save();
 
-                await _unitOfWork.PlayerMark.UpdatePlayerMarkGameWeaks(dataDB.Id, model.Fk_GameWeaks, auth.UserName);
+                await _unitOfWork.PlayerMark.UpdatePlayerMarkReasonMatches(dataDB.Id, model.Fk_PlayerMarkReasonMatches, auth.UserName); 
                 await _unitOfWork.PlayerMark.UpdatePlayerMarkTeamGameWeaks(dataDB.Id, model.Fk_TeamGameWeaks, auth.UserName);
                 
                 await _unitOfWork.Save();

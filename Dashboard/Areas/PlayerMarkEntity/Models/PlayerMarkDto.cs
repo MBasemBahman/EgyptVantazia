@@ -13,9 +13,6 @@ namespace Dashboard.Areas.PlayerMarkEntity.Models
 
         [DisplayName(nameof(Mark))]
         public int Fk_Mark { get; set; }
-        
-        [DisplayName(nameof(GameWeak))]
-        public int Fk_GameWeak { get; set; }
     }
     public class PlayerMarkDto : PlayerMarkModel
     {

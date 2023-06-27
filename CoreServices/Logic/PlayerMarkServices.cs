@@ -27,7 +27,8 @@ namespace CoreServices.Logic
                            LastModifiedAt = x.LastModifiedAt,
                            LastModifiedBy = x.LastModifiedBy,
                            Name = otherLang ? x.MarkLang.Name : x.Name,
-                           PlayerMarkCount = x.PlayerMarks.Count
+                           PlayerMarkCount = x.PlayerMarks.Count,
+                           ImageUrl = x.StorageUrl + x.ImageUrl
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);
@@ -55,6 +56,12 @@ namespace CoreServices.Logic
         public Dictionary<string, string> GetMarksLookUp(MarkParameters parameters, bool otherLang)
         {
             return GetMarks(parameters, otherLang).ToDictionary(a => a.Id.ToString(), a => a.Name);
+        }
+        
+        public async Task<string> UploudMark(string rootPath, IFormFile file)
+        {
+            FileUploader uploader = new(rootPath);
+            return await uploader.UploudFile(file, "Uploud/Mark");
         }
         
         public void CreateMark(Mark Mark)

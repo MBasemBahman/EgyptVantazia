@@ -80,8 +80,11 @@ namespace Dashboard.Areas.PlayerMarkEntity.Controllers
 
             if (id > 0)
             {
-                model = _mapper.Map<MarkCreateOrEditModel>(
-                                                await _unitOfWork.PlayerMark.FindMarkbyId(id, trackChanges: false));
+                var markDb = await _unitOfWork.PlayerMark.FindMarkbyId(id, trackChanges: false);
+                
+                model = _mapper.Map<MarkCreateOrEditModel>(markDb);
+                
+                model.ImageUrl = markDb.StorageUrl + markDb.ImageUrl;
             }
 
             SetViewData();
@@ -122,6 +125,13 @@ namespace Dashboard.Areas.PlayerMarkEntity.Controllers
                     dataDB.LastModifiedBy = auth.UserName;
                 }
 
+                IFormFile imageFile = HttpContext.Request.Form.Files["ImageFile"];
+
+                if (imageFile != null)
+                {
+                    dataDB.ImageUrl = await _unitOfWork.PlayerMark.UploudMark(_environment.WebRootPath, imageFile);
+                    dataDB.StorageUrl = _linkGenerator.GetUriByAction(HttpContext).GetBaseUri(HttpContext.Request.RouteValues["area"].ToString());
+                }
 
                 await _unitOfWork.Save();
 

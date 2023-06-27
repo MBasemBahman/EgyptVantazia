@@ -13,6 +13,9 @@ namespace Entities.CoreServicesModels.PlayerMarkModels
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public new string Name { get; set; }
 
+        public string StorageUrl { get; set; }
+        public string ImageUrl { get; set; }
+        
         [DisplayName(nameof(PlayerMarkCount))]
         public int PlayerMarkCount { get; set; }
     }
@@ -23,6 +26,8 @@ namespace Entities.CoreServicesModels.PlayerMarkModels
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
 
+        public string ImageUrl { get; set; }
+        
         public MarkLangModel MarkLang { get; set; }
     }
 

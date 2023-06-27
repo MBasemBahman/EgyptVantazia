@@ -207,7 +207,7 @@ else
                                 data: "player", orderable: false,
                                 render: function (data, type, row) {
                                     var span = '';
-                                    if (row.imageUrl != null) {
+                                    if (data.imageUrl != null) {
 
                                         return '<div class="d-flex justify-content-left align-items-center"><div class= "avatar-wrapper" ><div class="avatar me-1">'
                                             + '<img src="' + data.imageUrl + '"  height="32" width="32">'

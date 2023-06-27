@@ -1,11 +1,14 @@
 ﻿namespace Entities.DBModels.PlayerMarkModels
 {
-    public class Mark : AuditLookUpEntity
+    public class Mark : AuditLookUpEntity, IImageEntity
     {
         [DisplayName($"{nameof(Name)}{PropertyAttributeConstants.ArLang}")]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public new string Name { get; set; }
 
+        public string StorageUrl { get; set; }
+        public string ImageUrl { get; set; }
+        
         [DisplayName(nameof(PlayerMarks))]
         public List<PlayerMark> PlayerMarks { get; set; }
 

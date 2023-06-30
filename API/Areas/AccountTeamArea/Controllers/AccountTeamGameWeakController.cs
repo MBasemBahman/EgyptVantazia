@@ -1,5 +1,6 @@
 ﻿using API.Controllers;
 using Entities.CoreServicesModels.AccountTeamModels;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace API.Areas.AccountTeamArea.Controllers
 {
@@ -21,13 +22,14 @@ namespace API.Areas.AccountTeamArea.Controllers
         [HttpGet]
         [Route(nameof(GetAccountTeamGameWeaks))]
         public async Task<IEnumerable<AccountTeamGameWeakModel>> GetAccountTeamGameWeaks(
-        [FromQuery] AccountTeamGameWeakParameters parameters)
+            [FromQuery] _365CompetitionsEnum _365CompetitionsEnum,
+            [FromQuery] AccountTeamGameWeakParameters parameters)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             if (parameters.GetCurrentGameWeak)
             {
-                parameters.Fk_GameWeak = _unitOfWork.Season.GetCurrentGameWeakId();
+                parameters.Fk_GameWeak = _unitOfWork.Season.GetCurrentGameWeakId(_365CompetitionsEnum);
             }
 
             if (parameters.GetPrevGameWeak)

@@ -22,14 +22,14 @@ namespace FantasyLogic.Calculations
             _hangFireCustomJob = new HangFireCustomJob(unitOfWork);
         }
 
-        public void RunAccountTeamsCalculations(int fk_GameWeak, int fk_AccountTeam, List<int> fk_Players, List<int> fk_Teams, bool inDebug = false)
+        public void RunAccountTeamsCalculations(_365CompetitionsEnum _365CompetitionsEnum, int fk_GameWeak, int fk_AccountTeam, List<int> fk_Players, List<int> fk_Teams, bool inDebug = false)
         {
             if (inDebug == false && fk_GameWeak == 0 && fk_AccountTeam == 0)
             {
-                fk_GameWeak = _unitOfWork.Season.GetCurrentGameWeakId();
+                fk_GameWeak = _unitOfWork.Season.GetCurrentGameWeakId(_365CompetitionsEnum);
             }
 
-            int season = _unitOfWork.Season.GetCurrentSeasonId();
+            int season = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum);
             GameWeakModelForCalc nextGameWeek = _unitOfWork.Season.GetNextGameWeak();
 
             List<GameWeakModelForCalc> gameWeaks = _unitOfWork.Season
@@ -650,9 +650,9 @@ namespace FantasyLogic.Calculations
             _unitOfWork.Save().Wait();
         }
 
-        public void UpdateAccountTeamRanking(int fk_Season)
+        public void UpdateAccountTeamRanking(_365CompetitionsEnum _365CompetitionsEnum, int fk_Season)
         {
-            int currentGameWeak = _unitOfWork.Season.GetCurrentGameWeakId();
+            int currentGameWeak = _unitOfWork.Season.GetCurrentGameWeakId(_365CompetitionsEnum);
 
             List<AccountTeamRanking> accountTeamRankings = new();
             int ranking = 1;

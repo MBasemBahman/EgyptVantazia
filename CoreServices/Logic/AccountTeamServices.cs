@@ -66,7 +66,8 @@ namespace CoreServices.Logic
                            {
                                Name = otherLang ? a.Season.SeasonLang.Name : a.Season.Name,
                                ImageUrl = a.Season.StorageUrl + a.Season.ImageUrl,
-                               _365_SeasonId = a.Season._365_SeasonId
+                               _365_SeasonId = a.Season._365_SeasonId,
+                               _365_CompetitionsId = a.Season._365_CompetitionsId,
                            },
                            Account = new AccountModel
                            {

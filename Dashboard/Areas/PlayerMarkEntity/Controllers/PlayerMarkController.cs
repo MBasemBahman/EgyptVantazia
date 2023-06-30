@@ -48,7 +48,7 @@ namespace Dashboard.Areas.PlayerMarkEntity.Controllers
             ViewData["Marks"] = _unitOfWork.PlayerMark.GetMarksLookUp(new MarkParameters(), otherLang);
             ViewData["GameWeaks"] = _unitOfWork.Season.GetGameWeakLookUp(new GameWeakParameters(), otherLang);
             ViewData["Teams"] = _unitOfWork.Team.GetTeamLookUp(new TeamParameters(), otherLang);
-            
+
             return View(filter);
         }
 
@@ -81,7 +81,7 @@ namespace Dashboard.Areas.PlayerMarkEntity.Controllers
 
             PlayerMarkDto data = _mapper.Map<PlayerMarkDto>(_unitOfWork.PlayerMark
                                                            .GetPlayerMarkbyId(id, otherLang));
-            
+
             return View(data);
         }
 
@@ -103,7 +103,7 @@ namespace Dashboard.Areas.PlayerMarkEntity.Controllers
                     }, otherLang)
                     .Select(a => a.Fk_TeamGameWeak)
                     .ToList();
-                
+
                 model.Fk_PlayerMarkReasonMatches = _unitOfWork.PlayerMark
                     .GetPlayerMarkReasonMatches(new PlayerMarkReasonMatchParameters
                     {
@@ -124,7 +124,7 @@ namespace Dashboard.Areas.PlayerMarkEntity.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(DashboardViewEnum.PlayerMark, AccessLevelEnum.CreateOrEdit)]
-        public async Task<IActionResult> CreateOrEdit(int id, PlayerMarkCreateOrEditModel model, 
+        public async Task<IActionResult> CreateOrEdit(int id, PlayerMarkCreateOrEditModel model,
             int returnPage = (int)PlayerMarkReturnPage.Index)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
@@ -162,16 +162,16 @@ namespace Dashboard.Areas.PlayerMarkEntity.Controllers
 
                 await _unitOfWork.Save();
 
-                await _unitOfWork.PlayerMark.UpdatePlayerMarkReasonMatches(dataDB.Id, model.Fk_PlayerMarkReasonMatches, auth.UserName); 
+                await _unitOfWork.PlayerMark.UpdatePlayerMarkReasonMatches(dataDB.Id, model.Fk_PlayerMarkReasonMatches, auth.UserName);
                 await _unitOfWork.PlayerMark.UpdatePlayerMarkTeamGameWeaks(dataDB.Id, model.Fk_TeamGameWeaks, auth.UserName);
-                
+
                 await _unitOfWork.Save();
 
                 if (returnPage == (int)PlayerMarkReturnPage.PlayerProfile)
                 {
                     return Redirect($"/TeamEntity/Player/Profile/{model.Fk_Player}?returnItem={(int)PlayerProfileItems.PlayerMark}");
                 }
-                
+
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
@@ -203,24 +203,24 @@ namespace Dashboard.Areas.PlayerMarkEntity.Controllers
         }
 
         // helper methods
-        private void SetViewData(int returnPage , int fk_Player, bool otherLang)
+        private void SetViewData(int returnPage, int fk_Player, bool otherLang)
         {
-            int fk_CurrentSeason = _unitOfWork.Season.GetCurrentSeasonId();
-            
+            int fk_CurrentSeason = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum.Egypt);
+
             ViewData["GameWeaks"] = _unitOfWork.Season.GetGameWeakLookUp(new GameWeakParameters()
             {
                 Fk_Season = fk_CurrentSeason
             }, otherLang);
 
             ViewData["Marks"] = _unitOfWork.PlayerMark.GetMarksLookUp(new MarkParameters(), otherLang);
-            
+
             PlayerModel player = _unitOfWork.Team.GetPlayerbyId(fk_Player, otherLang);
 
             ViewData["TeamGameWeaks"] = _unitOfWork.Season.GetTeamGameWeaks(new TeamGameWeakParameters
             {
                 Fk_Team = player.Fk_Team
             }, otherLang).OrderBy(a => a.Fk_GameWeak).ToList();
-            
+
             ViewData["returnPage"] = returnPage;
         }
 

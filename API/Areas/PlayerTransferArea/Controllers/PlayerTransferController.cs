@@ -4,6 +4,7 @@ using Entities.CoreServicesModels.PlayerTransfersModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.PlayersTransfersModels;
+using static Contracts.EnumData.DBModelsEnum;
 using static Entities.EnumData.LogicEnumData;
 
 namespace API.Areas.PlayerTransferArea.Controllers
@@ -39,12 +40,14 @@ namespace API.Areas.PlayerTransferArea.Controllers
 
         [HttpPost]
         [Route(nameof(Create))]
-        public async Task<bool> Create([FromBody] PlayerTransferBulkCreateModel model)
+        public async Task<bool> Create(
+            [FromQuery] _365CompetitionsEnum _365CompetitionsEnum, 
+            [FromBody] PlayerTransferBulkCreateModel model)
         {
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
-            int currentSeason = _unitOfWork.Season.GetCurrentSeasonId();
+            int currentSeason = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum);
             if (currentSeason < 0)
             {
                 throw new Exception("Season not started yet!");

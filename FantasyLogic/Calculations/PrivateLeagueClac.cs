@@ -1,6 +1,7 @@
 ﻿using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.PrivateLeagueModels;
 using Entities.DBModels.PrivateLeagueModels;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace FantasyLogic.Calculations
 {
@@ -13,9 +14,9 @@ namespace FantasyLogic.Calculations
             _unitOfWork = unitOfWork;
         }
 
-        public void RunPrivateLeaguesRanking(int? fk_GameWeak, int id, bool indebug = false)
+        public void RunPrivateLeaguesRanking(_365CompetitionsEnum _365CompetitionsEnum, int? fk_GameWeak, int id, bool indebug = false)
         {
-            int season = _unitOfWork.Season.GetCurrentSeasonId();
+            int season = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum);
 
             if (indebug)
             {

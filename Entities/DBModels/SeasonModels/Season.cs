@@ -5,7 +5,6 @@ using Entities.DBModels.StandingsModels;
 
 namespace Entities.DBModels.SeasonModels
 {
-    [Index(nameof(Name), IsUnique = true)]
     public class Season : AuditImageEntity, ILookUpEntity
     {
         [DisplayName($"{nameof(Name)}{PropertyAttributeConstants.ArLang}")]
@@ -14,6 +13,9 @@ namespace Entities.DBModels.SeasonModels
 
         [DisplayName(nameof(_365_SeasonId))]
         public string _365_SeasonId { get; set; }
+
+        [DisplayName(nameof(_365_CompetitionsId))]
+        public string _365_CompetitionsId { get; set; }
 
         [DisplayName(nameof(IsCurrent))]
         public bool IsCurrent { get; set; }

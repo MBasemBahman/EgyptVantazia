@@ -5,6 +5,7 @@ using IntegrationWith365.Entities.StandingsModels;
 using IntegrationWith365.Parameters;
 using Newtonsoft.Json;
 using Services;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace IntegrationWith365
 {
@@ -17,20 +18,20 @@ namespace IntegrationWith365
             _servicesHttp.BaseUri = "https://webws.365scores.com/web/";
         }
 
-        private static string GetUri(string uri, _365Parameters parameters)
+        private static string GetUri(_365CompetitionsEnum _365CompetitionsEnum, string uri, _365Parameters parameters)
         {
             return $"{uri}/?" +
                    $"{nameof(parameters.LangId)}={parameters.LangId}&" +
                    $"{nameof(parameters.UserCountryId)}={parameters.UserCountryId}&" +
-                   $"{nameof(parameters.Competitions)}={parameters.Competitions}&" +
+                   $"Competitions={(int)_365CompetitionsEnum}&" +
                    $"{nameof(parameters.AppTypeId)}={parameters.AppTypeId}&" +
                    $"{nameof(parameters.TimezoneName)}={parameters.TimezoneName}&";
         }
 
         // ترتيب الفرق
-        public async Task<StandingsReturn> GetStandings(_365StandingsParameters parameters)
+        public async Task<StandingsReturn> GetStandings(_365CompetitionsEnum _365CompetitionsEnum, _365StandingsParameters parameters)
         {
-            string uri = GetUri("standings", parameters) +
+            string uri = GetUri(_365CompetitionsEnum, "standings", parameters) +
                          $"{nameof(parameters.SeasonNum)}={parameters.SeasonNum}&" +
                          $"{nameof(parameters.StageNum)}={parameters.StageNum}&" +
                          $"{nameof(parameters.Live)}={parameters.Live}&";
@@ -42,9 +43,9 @@ namespace IntegrationWith365
         }
 
         // لاعيبه الفرق
-        public async Task<SquadReturn> GetSquads(_365SquadsParameters parameters)
+        public async Task<SquadReturn> GetSquads(_365CompetitionsEnum _365CompetitionsEnum, _365SquadsParameters parameters)
         {
-            string uri = GetUri("squads", parameters) +
+            string uri = GetUri(_365CompetitionsEnum, "squads", parameters) +
                          $"{nameof(parameters.Competitors)}={parameters.Competitors}&";
             string content = await _servicesHttp.OnGet(uri);
 
@@ -54,9 +55,9 @@ namespace IntegrationWith365
         }
 
         // مواعيد الماتشات , ونتائج الماتشات
-        public async Task<GamesReturn> GetGames(_365GamesParameters parameters)
+        public async Task<GamesReturn> GetGames(_365CompetitionsEnum _365CompetitionsEnum, _365GamesParameters parameters)
         {
-            string uri = GetUri("games", parameters) +
+            string uri = GetUri(_365CompetitionsEnum, "games", parameters) +
                          $"{nameof(parameters.TimezoneId)}={parameters.TimezoneId}&" +
                          $"{nameof(parameters.Aftergame)}={parameters.Aftergame}&" +
                          $"{nameof(parameters.Direction)}={parameters.Direction}&" +
@@ -69,9 +70,9 @@ namespace IntegrationWith365
         }
 
         // السابقة
-        public async Task<GamesReturn> GetGamesResults(_365Parameters parameters)
+        public async Task<GamesReturn> GetGamesResults(_365CompetitionsEnum _365CompetitionsEnum, _365Parameters parameters)
         {
-            string uri = GetUri("games/results", parameters);
+            string uri = GetUri(_365CompetitionsEnum, "games/results", parameters);
             string content = await _servicesHttp.OnGet(uri);
 
             GamesReturn data = JsonConvert.DeserializeObject<GamesReturn>(content);
@@ -80,9 +81,9 @@ namespace IntegrationWith365
         }
 
         // القادمة
-        public async Task<GamesReturn> GetGamesFixtures(_365Parameters parameters)
+        public async Task<GamesReturn> GetGamesFixtures(_365CompetitionsEnum _365CompetitionsEnum, _365Parameters parameters)
         {
-            string uri = GetUri("games/fixtures", parameters);
+            string uri = GetUri(_365CompetitionsEnum, "games/fixtures", parameters);
             string content = await _servicesHttp.OnGet(uri);
 
             GamesReturn data = JsonConvert.DeserializeObject<GamesReturn>(content);
@@ -91,9 +92,9 @@ namespace IntegrationWith365
         }
 
         // بيانات الماتش نفسه
-        public async Task<GameReturn> GetGame(_365GameParameters parameters)
+        public async Task<GameReturn> GetGame(_365CompetitionsEnum _365CompetitionsEnum, _365GameParameters parameters)
         {
-            string uri = GetUri("game", parameters) +
+            string uri = GetUri(_365CompetitionsEnum, "game", parameters) +
                          $"{nameof(parameters.GameId)}={parameters.GameId}&";
             string content = await _servicesHttp.OnGet(uri);
 

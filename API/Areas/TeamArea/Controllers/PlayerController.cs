@@ -1,6 +1,7 @@
 ﻿using API.Areas.TeamArea.Models;
 using API.Controllers;
 using Entities.CoreServicesModels.TeamModels;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace API.Areas.TeamArea.Controllers
 {
@@ -22,7 +23,8 @@ namespace API.Areas.TeamArea.Controllers
         [HttpGet]
         [Route(nameof(GetPlayers))]
         public async Task<IEnumerable<PlayerDto>> GetPlayers(
-        [FromQuery] PlayerParameters parameters)
+            [FromQuery] _365CompetitionsEnum _365CompetitionsEnum,
+            [FromQuery] PlayerParameters parameters)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
@@ -30,8 +32,8 @@ namespace API.Areas.TeamArea.Controllers
             {
                 if (parameters.Fk_GameWeakForScores == 0)
                 {
-                    parameters.Fk_SeasonForScores = _unitOfWork.Season.GetCurrentSeasonId();
-                    parameters.Fk_GameWeakForScores = _unitOfWork.Season.GetCurrentGameWeakId();
+                    parameters.Fk_SeasonForScores = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum);
+                    parameters.Fk_GameWeakForScores = _unitOfWork.Season.GetCurrentGameWeakId(_365CompetitionsEnum);
                 }
             }
 
@@ -48,7 +50,9 @@ namespace API.Areas.TeamArea.Controllers
 
         [HttpGet]
         [Route(nameof(GetPlayerById))]
-        public PlayerDto GetPlayerById([FromQuery] PlayerParameters parameters)
+        public PlayerDto GetPlayerById(
+            [FromQuery] _365CompetitionsEnum _365CompetitionsEnum,
+            [FromQuery] PlayerParameters parameters)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
@@ -56,8 +60,8 @@ namespace API.Areas.TeamArea.Controllers
             {
                 if (parameters.Fk_GameWeakForScores == 0)
                 {
-                    parameters.Fk_SeasonForScores = _unitOfWork.Season.GetCurrentSeasonId();
-                    parameters.Fk_GameWeakForScores = _unitOfWork.Season.GetCurrentGameWeakId();
+                    parameters.Fk_SeasonForScores = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum);
+                    parameters.Fk_GameWeakForScores = _unitOfWork.Season.GetCurrentGameWeakId(_365CompetitionsEnum);
                 }
             }
 
@@ -70,11 +74,11 @@ namespace API.Areas.TeamArea.Controllers
 
         [HttpGet]
         [Route(nameof(GetRandomTeam))]
-        public IEnumerable<PlayerDto> GetRandomTeam()
+        public IEnumerable<PlayerDto> GetRandomTeam([FromQuery] _365CompetitionsEnum _365CompetitionsEnum)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
-            int fk_Season = _unitOfWork.Season.GetCurrentSeasonId();
+            int fk_Season = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum);
 
             List<PlayerModel> data = _unitOfWork.Team.GetRandomTeam(fk_Season, isTop_11: false, otherLang);
 

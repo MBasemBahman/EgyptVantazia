@@ -3,6 +3,7 @@ using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.PrivateLeagueModels;
 using Entities.DBModels.PrivateLeagueModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace API.Areas.PrivateLeagueArea.Controllers
 {
@@ -66,13 +67,15 @@ namespace API.Areas.PrivateLeagueArea.Controllers
 
         [HttpPost]
         [Route(nameof(Create))]
-        public async Task<PrivateLeagueModel> Create([FromBody] PrivateLeagueCreateModel model)
+        public async Task<PrivateLeagueModel> Create(
+            [FromQuery] _365CompetitionsEnum _365CompetitionsEnum, 
+            [FromBody] PrivateLeagueCreateModel model)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
-            int currentSeason = _unitOfWork.Season.GetCurrentSeasonId();
+            int currentSeason = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum);
             if (currentSeason < 0)
             {
                 throw new Exception("Season not started yet!");

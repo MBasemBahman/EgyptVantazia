@@ -2,6 +2,7 @@
 using Entities.DBModels.TeamModels;
 using IntegrationWith365.Entities.GamesModels;
 using IntegrationWith365.Entities.StandingsModels;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace FantasyLogic.DataMigration.TeamData
 {
@@ -16,25 +17,25 @@ namespace FantasyLogic.DataMigration.TeamData
             _unitOfWork = unitOfWork;
         }
 
-        public void RunUpdateTeams()
+        public void RunUpdateTeams(_365CompetitionsEnum _365CompetitionsEnum)
         {
-            SeasonModelForCalc season = _unitOfWork.Season.GetCurrentSeason();
+            SeasonModelForCalc season = _unitOfWork.Season.GetCurrentSeason(_365CompetitionsEnum);
 
-            _ = BackgroundJob.Enqueue(() => UpdateSeasonTeams(season._365_SeasonId.ParseToInt()));
+            _ = BackgroundJob.Enqueue(() => UpdateSeasonTeams(_365CompetitionsEnum, season._365_SeasonId.ParseToInt()));
         }
 
-        public async Task UpdateSeasonTeams(int _365_SeasonId)
+        public async Task UpdateSeasonTeams(_365CompetitionsEnum _365CompetitionsEnum, int _365_SeasonId)
         {
             _unitOfWork.Team.UpdateTeamActivation(isActive: false);
             _unitOfWork.Save().Wait();
 
-            StandingsReturn standingsInArabic = await _365Services.GetStandings(new _365StandingsParameters
+            StandingsReturn standingsInArabic = await _365Services.GetStandings(_365CompetitionsEnum, new _365StandingsParameters
             {
                 SeasonNum = _365_SeasonId,
                 IsArabic = true,
             });
 
-            StandingsReturn standingsInEnglish = await _365Services.GetStandings(new _365StandingsParameters
+            StandingsReturn standingsInEnglish = await _365Services.GetStandings(_365CompetitionsEnum, new _365StandingsParameters
             {
                 SeasonNum = _365_SeasonId,
                 IsArabic = false,

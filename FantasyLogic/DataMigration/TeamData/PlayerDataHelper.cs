@@ -17,7 +17,7 @@ namespace FantasyLogic.DataMigration.TeamData
             _unitOfWork = unitOfWork;
         }
 
-        public void RunUpdatePlayers()
+        public void RunUpdatePlayers(_365CompetitionsEnum _365CompetitionsEnum)
         {
             List<TeamForCalc> teams = _unitOfWork.Team.GetTeams(new TeamParameters
             {
@@ -28,40 +28,40 @@ namespace FantasyLogic.DataMigration.TeamData
             }).ToList();
 
             List<PlayerPositionForCalc> positions = _unitOfWork.Team.GetPlayerPositions(new PlayerPositionParameters
-            {}).Select(a => new PlayerPositionForCalc
+            { }).Select(a => new PlayerPositionForCalc
             {
                 Id = a.Id,
                 _365_PositionId = a._365_PositionId
             }).ToList();
 
-            _ = BackgroundJob.Enqueue(() => UpdateTeamsPlayers(teams, positions));
+            _ = BackgroundJob.Enqueue(() => UpdateTeamsPlayers(_365CompetitionsEnum, teams, positions));
         }
 
-        public void UpdateTeamsPlayers(List<TeamForCalc> teams, List<PlayerPositionForCalc> positions)
+        public void UpdateTeamsPlayers(_365CompetitionsEnum _365CompetitionsEnum, List<TeamForCalc> teams, List<PlayerPositionForCalc> positions)
         {
             string jobId = null;
             foreach (TeamForCalc team in teams)
             {
                 jobId = jobId.IsExisting()
-                    ? BackgroundJob.ContinueJobWith(jobId, () => UpdatePlayers(team, positions, jobId))
-                    : BackgroundJob.Enqueue(() => UpdatePlayers(team, positions, jobId));
+                    ? BackgroundJob.ContinueJobWith(jobId, () => UpdatePlayers(_365CompetitionsEnum, team, positions, jobId))
+                    : BackgroundJob.Enqueue(() => UpdatePlayers(_365CompetitionsEnum, team, positions, jobId));
             }
         }
 
-        public async Task UpdatePlayers(TeamForCalc team, List<PlayerPositionForCalc> positions, string jobId)
+        public async Task UpdatePlayers(_365CompetitionsEnum _365CompetitionsEnum, TeamForCalc team, List<PlayerPositionForCalc> positions, string jobId)
         {
             _unitOfWork.Team.UpdatePlayerActivation(fk_Team: team.Id, isActive: false);
             _unitOfWork.Save().Wait();
 
             int _365_TeamId = team._365_TeamId.ParseToInt();
 
-            SquadReturn squadsInArabic = await _365Services.GetSquads(new _365SquadsParameters
+            SquadReturn squadsInArabic = await _365Services.GetSquads(_365CompetitionsEnum, new _365SquadsParameters
             {
                 Competitors = _365_TeamId,
                 IsArabic = true,
             });
 
-            SquadReturn squadsInEnglish = await _365Services.GetSquads(new _365SquadsParameters
+            SquadReturn squadsInEnglish = await _365Services.GetSquads(_365CompetitionsEnum, new _365SquadsParameters
             {
                 Competitors = _365_TeamId,
                 IsArabic = false,

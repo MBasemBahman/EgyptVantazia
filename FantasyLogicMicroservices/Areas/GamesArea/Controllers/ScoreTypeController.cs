@@ -1,5 +1,6 @@
 ﻿using FantasyLogic;
 using FantasyLogicMicroservices.Controllers;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace FantasyLogicMicroservices.Areas.GamesArea.Controllers
 {
@@ -22,9 +23,9 @@ namespace FantasyLogicMicroservices.Areas.GamesArea.Controllers
         [HttpPost]
         [Route(nameof(UpdateScoreTypes))]
         [ApiExplorerSettings(IgnoreApi = true)]
-        public IActionResult UpdateScoreTypes(bool inDebug)
+        public IActionResult UpdateScoreTypes(_365CompetitionsEnum _365CompetitionsEnum, bool inDebug)
         {
-            _fantasyUnitOfWork.ScoreTypeDataHelper.RunUpdateStates(1, inDebug);
+            _fantasyUnitOfWork.ScoreTypeDataHelper.RunUpdateStates(_365CompetitionsEnum, 1, inDebug);
 
             return Ok();
         }

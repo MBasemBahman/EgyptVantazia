@@ -4,6 +4,7 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20230630182414_Newdmms")]
+    partial class Newdmms
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3906,7 +3909,7 @@ namespace DAL.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("StorageUrl")
                         .HasColumnType("nvarchar(max)");
@@ -3918,6 +3921,9 @@ namespace DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Seasons");
                 });
@@ -4761,7 +4767,7 @@ namespace DAL.Migrations
                             IsExternalLogin = false,
                             LastModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Developer",
-                            Password = "$2a$11$7s/v2fna6aHKGffoVB03WuHV2f3etGJMhecgaSTz7/iTWEy/ziebm",
+                            Password = "$2a$11$i4td7Rlgq4PTWFrJC2qMX.qQ32uGMM/bvrJdJ3eBsD1TUgFxWFjaK",
                             UserName = "Developer"
                         });
                 });

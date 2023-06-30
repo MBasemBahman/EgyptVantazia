@@ -1,6 +1,7 @@
 ﻿using Entities.CoreServicesModels.SeasonModels;
 using FantasyLogic;
 using FantasyLogicMicroservices.Controllers;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace FantasyLogicMicroservices.Areas.HandlingArea
 {
@@ -24,6 +25,7 @@ namespace FantasyLogicMicroservices.Areas.HandlingArea
         [HttpPost]
         [Route(nameof(ResetMatch))]
         public IActionResult ResetMatch(
+            [FromQuery] _365CompetitionsEnum _365CompetitionsEnum,
             [FromQuery] int fk_TeamGameWeak,
             [FromQuery] int fk_GameWeak,
             [FromQuery] List<int> fk_Teams,
@@ -56,9 +58,9 @@ namespace FantasyLogicMicroservices.Areas.HandlingArea
                         match.Fk_Away
                     };
 
-                    _fantasyUnitOfWork.PlayerStateCalc.RunPlayersStateCalculations(0, null, null, fk_Teams, true, false);
+                    _fantasyUnitOfWork.PlayerStateCalc.RunPlayersStateCalculations(_365CompetitionsEnum, 0, null, null, fk_Teams, true, false);
 
-                    _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(match.Fk_GameWeak, 0, null, fk_Teams, false);
+                    _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(_365CompetitionsEnum, match.Fk_GameWeak, 0, null, fk_Teams, false);
                 }
             }
             else if (fk_GameWeak > 0 &&
@@ -81,9 +83,9 @@ namespace FantasyLogicMicroservices.Areas.HandlingArea
 
                 if (!ignoreCalculations)
                 {
-                    _fantasyUnitOfWork.PlayerStateCalc.RunPlayersStateCalculations(0, null, null, fk_Teams, true, false);
+                    _fantasyUnitOfWork.PlayerStateCalc.RunPlayersStateCalculations(_365CompetitionsEnum, 0, null, null, fk_Teams, true, false);
 
-                    _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(fk_GameWeak, 0, null, fk_Teams, false);
+                    _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(_365CompetitionsEnum, fk_GameWeak, 0, null, fk_Teams, false);
                 }
 
             }

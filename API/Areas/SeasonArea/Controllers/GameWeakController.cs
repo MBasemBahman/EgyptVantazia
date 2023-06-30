@@ -2,6 +2,7 @@
 using API.Controllers;
 using Entities.CoreServicesModels.SeasonModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace API.Areas.SeasonArea.Controllers
 {
@@ -60,11 +61,11 @@ namespace API.Areas.SeasonArea.Controllers
 
         [HttpGet]
         [Route(nameof(GetCurrentGameWeak))]
-        public GameWeakDto GetCurrentGameWeak()
+        public GameWeakDto GetCurrentGameWeak([FromQuery] _365CompetitionsEnum _365CompetitionsEnum)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
-            GameWeakModel data = _unitOfWork.Season.GetCurrentGameWeak(otherLang);
+            GameWeakModel data = _unitOfWork.Season.GetCurrentGameWeak(_365CompetitionsEnum, otherLang);
 
             GameWeakDto dataDto = _mapper.Map<GameWeakDto>(data);
 

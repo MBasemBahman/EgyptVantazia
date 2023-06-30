@@ -1,6 +1,7 @@
 ﻿using FantasyLogic;
 using FantasyLogicMicroservices.Controllers;
 using Hangfire;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace FantasyLogicMicroservices.Areas.GamesArea.Controllers
 {
@@ -22,9 +23,9 @@ namespace FantasyLogicMicroservices.Areas.GamesArea.Controllers
 
         [HttpPost]
         [Route(nameof(UpdateGames))]
-        public IActionResult UpdateGames()
+        public IActionResult UpdateGames([FromQuery] _365CompetitionsEnum _365CompetitionsEnum)
         {
-            _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames());
+            _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames(_365CompetitionsEnum));
 
             return Ok();
         }

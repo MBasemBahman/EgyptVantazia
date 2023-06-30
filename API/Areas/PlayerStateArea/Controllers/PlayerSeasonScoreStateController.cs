@@ -24,6 +24,7 @@ namespace API.Areas.PlayerStateArea.Controllers
         [HttpGet]
         [Route(nameof(GetPlayerSeasonScoreStates))]
         public async Task<IEnumerable<PlayerSeasonScoreStateModel>> GetPlayerSeasonScoreStates(
+            [FromQuery] _365CompetitionsEnum _365CompetitionsEnum,
         [FromQuery] PlayerSeasonScoreStateParameters parameters)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
@@ -33,7 +34,7 @@ namespace API.Areas.PlayerStateArea.Controllers
                 parameters.Fk_PlayerPosition = (int)PlayerPositionEnum.Goalkeeper;
             }
 
-            parameters.Fk_Season = _unitOfWork.Season.GetCurrentSeasonId();
+            parameters.Fk_Season = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum);
             parameters.OrderBy = "value desc,";
 
             if (parameters.Fk_ScoreState == (int)ScoreStateEnum.Total)
@@ -43,7 +44,7 @@ namespace API.Areas.PlayerStateArea.Controllers
 
             if (parameters.GetMonthPlayer)
             {
-                MontlyGameWeakFromToModel fromTo = GetMontlyGameWeakFromTo(_unitOfWork.Season.GetCurrentGameWeak()._365_GameWeakIdValue);
+                MontlyGameWeakFromToModel fromTo = GetMontlyGameWeakFromTo(_unitOfWork.Season.GetCurrentGameWeak(_365CompetitionsEnum)._365_GameWeakIdValue);
 
                 if (fromTo != null)
                 {

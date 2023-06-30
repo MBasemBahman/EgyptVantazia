@@ -1,6 +1,7 @@
 ﻿using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.SeasonModels;
 using IntegrationWith365.Helpers;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace FantasyLogic.DataMigration.SeasonData
 {
@@ -15,16 +16,9 @@ namespace FantasyLogic.DataMigration.SeasonData
             _gamesHelper = new GamesHelper(unitOfWork, _365Services);
         }
 
-        public void RunUpdateGameWeaks()
+        public void UpdateSeasonGameWeaks(_365CompetitionsEnum _365CompetitionsEnum, int _365_SeasonId)
         {
-            SeasonModelForCalc season = _unitOfWork.Season.GetCurrentSeason();
-
-            _ = BackgroundJob.Enqueue(() => UpdateSeasonGameWeaks(season.Id, season._365_SeasonId.ParseToInt()));
-        }
-
-        public void UpdateSeasonGameWeaks(int fk_season, int _365_SeasonId)
-        {
-            List<int> rounds = _gamesHelper.GetAllGames(_365_SeasonId).Result.Select(a => a.RoundNum).Distinct().OrderBy(a => a).ToList();
+            List<int> rounds = _gamesHelper.GetAllGames(_365CompetitionsEnum, _365_SeasonId).Result.Select(a => a.RoundNum).Distinct().OrderBy(a => a).ToList();
 
             string jobId = null;
             foreach (int round in rounds)
@@ -52,9 +46,9 @@ namespace FantasyLogic.DataMigration.SeasonData
             await _unitOfWork.Save();
         }
 
-        public async Task UpdateCurrentGameWeak(int fk_Season, int _365_SeasonId)
+        public async Task UpdateCurrentGameWeak(_365CompetitionsEnum _365CompetitionsEnum, int fk_Season, int _365_SeasonId)
         {
-            int round = _gamesHelper.GetCurrentRound(_365_SeasonId);
+            int round = _gamesHelper.GetCurrentRound(_365CompetitionsEnum, _365_SeasonId);
             if (round > 0)
             {
                 GameWeak gameWeak = await _unitOfWork.Season.FindGameWeakby365Id(round.ToString(), fk_Season, trackChanges: true);

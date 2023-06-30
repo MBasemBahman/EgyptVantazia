@@ -140,5 +140,11 @@
         {
             OfficialLeague = 229
         }
+
+        public enum _365CompetitionsEnum
+        {
+            Egypt = 552,
+            KSA = 649
+        }
     }
 }

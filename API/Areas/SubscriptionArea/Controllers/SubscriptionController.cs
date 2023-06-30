@@ -1,5 +1,6 @@
 ﻿using API.Controllers;
 using Entities.CoreServicesModels.SubscriptionModels;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace API.Areas.SubscriptionArea.Controllers
 {
@@ -21,13 +22,14 @@ namespace API.Areas.SubscriptionArea.Controllers
         [HttpGet]
         [Route(nameof(GetSubscriptions))]
         public async Task<IEnumerable<SubscriptionModel>> GetSubscriptions(
-        [FromQuery] SubscriptionParameters parameters)
+            [FromQuery] _365CompetitionsEnum _365CompetitionsEnum,
+            [FromQuery] SubscriptionParameters parameters)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
             parameters.Fk_Account = auth.Fk_Account;
-            parameters.Fk_Season = _unitOfWork.Season.GetCurrentSeasonId();
+            parameters.Fk_Season = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum);
 
             PagedList<SubscriptionModel> data = await _unitOfWork.Subscription.GetSubscriptionPaged(parameters, otherLang);
 

@@ -1,5 +1,6 @@
 ﻿using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.SeasonModels;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace Repository.DBModels.SeasonModels
 {
@@ -17,6 +18,7 @@ namespace Repository.DBModels.SeasonModels
                            parameters._365_GameWeakId,
                            parameters.IsCurrent,
                            parameters.IsCurrentSeason,
+                           parameters._365_CompetitionsId,
                            parameters.BiggerThanWeak,
                            parameters.LowerThanWeak,
                            parameters.Deadline,
@@ -41,11 +43,12 @@ namespace Repository.DBModels.SeasonModels
                         .FirstOrDefaultAsync();
         }
 
-        public void ResetCurrent()
+        public void ResetCurrent(int _365CompetitionsEnum)
         {
-            List<GameWeak> gameWeaks = FindByCondition(a => a.IsCurrent ||
-                                                            a.IsPrev ||
-                                                            a.IsNext, trackChanges: true).ToList();
+            List<GameWeak> gameWeaks = FindByCondition(a => a.Season._365_CompetitionsId == _365CompetitionsEnum.ToString() &&
+                                                            (a.IsCurrent ||
+                                                             a.IsPrev ||
+                                                             a.IsNext), trackChanges: true).ToList();
             gameWeaks.ForEach(a =>
             {
                 a.IsCurrent = false;
@@ -109,6 +112,7 @@ namespace Repository.DBModels.SeasonModels
             string _365_GameWeakId,
             bool? isCurrent,
             bool? isCurrentSeason,
+            int _365_CompetitionsId,
             int? biggerThanWeak,
             int? lowerThanWeak,
             DateTime? deadline,
@@ -132,6 +136,8 @@ namespace Repository.DBModels.SeasonModels
                                         (isNext == null || a.IsNext == isNext) &&
                                         (isPrev == null || a.IsPrev == isPrev) &&
                                         (isCurrentSeason == null || a.Season.IsCurrent == isCurrentSeason) &&
+                                        (_365_CompetitionsId == 0 || a.Season._365_CompetitionsId == _365_CompetitionsId.ToString()) &&
+
                                         (string.IsNullOrWhiteSpace(_365_GameWeakId) || a._365_GameWeakId == _365_GameWeakId));
 
         }

@@ -17,6 +17,9 @@ namespace Entities.CoreServicesModels.SeasonModels
         [DisplayName(nameof(IsCurrent))]
         public bool? IsCurrentSeason { get; set; }
 
+        [DisplayName(nameof(_365_CompetitionsId))]
+        public int _365_CompetitionsId { get; set; }
+
         [DisplayName(nameof(IsDelayed))]
         public bool? IsDelayed { get; set; }
 

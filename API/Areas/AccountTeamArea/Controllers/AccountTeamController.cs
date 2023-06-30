@@ -5,6 +5,7 @@ using Entities.DBModels.AccountTeamModels;
 using FantasyLogic;
 using IntegrationWith365;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using static Contracts.EnumData.DBModelsEnum;
 using static Entities.EnumData.LogicEnumData;
 
 namespace API.Areas.AccountTeamArea.Controllers
@@ -99,9 +100,10 @@ namespace API.Areas.AccountTeamArea.Controllers
         [HttpGet]
         [Route(nameof(GetAccountTeamById))]
         public AccountTeamModel GetAccountTeamById(
-        [FromQuery, BindRequired] int id,
-        [FromQuery] bool includeGameWeakPoints,
-        [FromQuery] int fk_GameWeak)
+            [FromQuery] _365CompetitionsEnum _365CompetitionsEnum,
+            [FromQuery, BindRequired] int id,
+            [FromQuery] bool includeGameWeakPoints,
+            [FromQuery] int fk_GameWeak)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
@@ -115,7 +117,7 @@ namespace API.Areas.AccountTeamArea.Controllers
 
             if (fk_GameWeak == 0)
             {
-                gameWeak = _unitOfWork.Season.GetCurrentGameWeak();
+                gameWeak = _unitOfWork.Season.GetCurrentGameWeak(_365CompetitionsEnum);
 
                 fk_GameWeak = gameWeak.Id;
             }
@@ -157,13 +159,15 @@ namespace API.Areas.AccountTeamArea.Controllers
 
         [HttpGet]
         [Route(nameof(GetMyAccountTeam))]
-        public AccountTeamModel GetMyAccountTeam([FromQuery] bool includeGameWeakPoints)
+        public AccountTeamModel GetMyAccountTeam(
+            [FromQuery] _365CompetitionsEnum _365CompetitionsEnum,
+            [FromQuery] bool includeGameWeakPoints)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
-            int currentSeasonId = _unitOfWork.Season.GetCurrentSeasonId();
+            int currentSeasonId = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum);
             if (currentSeasonId < 0)
             {
                 throw new Exception("Season not started yet!");
@@ -173,7 +177,7 @@ namespace API.Areas.AccountTeamArea.Controllers
 
             if (currentTeam != null && includeGameWeakPoints)
             {
-                int currentGameWeakId = _unitOfWork.Season.GetCurrentGameWeakId();
+                int currentGameWeakId = _unitOfWork.Season.GetCurrentGameWeakId(_365CompetitionsEnum);
 
                 currentTeam.AverageGameWeakPoints = _unitOfWork.AccountTeam.GetAverageGameWeakPoints(currentGameWeakId);
 
@@ -191,14 +195,16 @@ namespace API.Areas.AccountTeamArea.Controllers
 
         [HttpPost]
         [Route(nameof(Create))]
-        public async Task<AccountTeamModel> Create([FromForm] AccountTeamCreateModel model)
+        public async Task<AccountTeamModel> Create(
+            [FromQuery] _365CompetitionsEnum _365CompetitionsEnum,
+            [FromForm] AccountTeamCreateModel model)
         {
             //throw new Exception("نعمل حاليا على على بعض تحديثات الفرق واللاعبين والأسعار, الرجاء المحاوله في وقت لاحق");
 
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
-            SeasonModelForCalc currentSeason = _unitOfWork.Season.GetCurrentSeason();
+            SeasonModelForCalc currentSeason = _unitOfWork.Season.GetCurrentSeason(_365CompetitionsEnum);
             int nextGameWeakId = _unitOfWork.Season.GetNextGameWeakId();
 
             AccountTeam accountTeam = _mapper.Map<AccountTeam>(model);
@@ -253,12 +259,14 @@ namespace API.Areas.AccountTeamArea.Controllers
 
         [HttpPost]
         [Route(nameof(ActivateCard))]
-        public async Task<bool> ActivateCard([FromQuery, BindRequired] CardTypeEnum cardTypeEnum)
+        public async Task<bool> ActivateCard(
+            [FromQuery] _365CompetitionsEnum _365CompetitionsEnum,
+            [FromQuery, BindRequired] CardTypeEnum cardTypeEnum)
         {
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
             _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
-            int currentSeasonId = _unitOfWork.Season.GetCurrentSeasonId();
+            int currentSeasonId = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum);
             if (currentSeasonId < 0)
             {
                 throw new Exception("Season not started yet!");
@@ -468,12 +476,14 @@ namespace API.Areas.AccountTeamArea.Controllers
 
         [HttpPost]
         [Route(nameof(DeActivateCard))]
-        public async Task<bool> DeActivateCard([FromQuery, BindRequired] CardTypeEnum cardTypeEnum)
+        public async Task<bool> DeActivateCard(
+            [FromQuery] _365CompetitionsEnum _365CompetitionsEnum,
+            [FromQuery, BindRequired] CardTypeEnum cardTypeEnum)
         {
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
             _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
-            int currentSeasonId = _unitOfWork.Season.GetCurrentSeasonId();
+            int currentSeasonId = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum);
             if (currentSeasonId < 0)
             {
                 throw new Exception("Season not started yet!");

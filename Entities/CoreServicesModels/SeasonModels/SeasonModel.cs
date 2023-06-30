@@ -7,6 +7,9 @@ namespace Entities.CoreServicesModels.SeasonModels
         [DisplayName(nameof(_365_SeasonId))]
         public string _365_SeasonId { get; set; }
 
+        [DisplayName(nameof(_365_CompetitionsId))]
+        public int _365_CompetitionsId { get; set; }
+
         [DisplayName(nameof(IsCurrent))]
         public bool? IsCurrent { get; set; }
     }
@@ -20,6 +23,9 @@ namespace Entities.CoreServicesModels.SeasonModels
         [DisplayName(nameof(_365_SeasonId))]
         public string _365_SeasonId { get; set; }
 
+        [DisplayName(nameof(_365_CompetitionsId))]
+        public string _365_CompetitionsId { get; set; }
+
         [DisplayName(nameof(IsCurrent))]
         public bool IsCurrent { get; set; }
     }
@@ -29,6 +35,8 @@ namespace Entities.CoreServicesModels.SeasonModels
         public int Id { get; set; }
 
         public string _365_SeasonId { get; set; }
+
+        public string _365_CompetitionsId { get; set; }
     }
 
     public class SeasonCreateOrEditModel
@@ -43,6 +51,9 @@ namespace Entities.CoreServicesModels.SeasonModels
 
         [DisplayName(nameof(IsCurrent))]
         public bool IsCurrent { get; set; }
+
+        [DisplayName(nameof(_365_CompetitionsId))]
+        public string _365_CompetitionsId { get; set; }
 
         [DisplayName(nameof(_365_SeasonId))]
         public string _365_SeasonId { get; set; }

@@ -86,8 +86,15 @@
                                             </div>
                                         </div>
 
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="_365_CompetitionsId" class="form-label"></label>
+                                                <input asp-for="_365_CompetitionsId" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"_365_CompetitionsId"))" />
+                                                <span asp-validation-for="_365_CompetitionsId" class="text-danger"></span>
+                                            </div>
+                                        </div>
 
-                                        <div class="col-md-6 col-12">
+                                        <div class="col-md-4 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="_365_SeasonId" class="form-label"></label>
                                                 <input asp-for="_365_SeasonId" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"_365_SeasonId"))" />
@@ -95,7 +102,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6 col-12">
+                                        <div class="col-md-4 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="IsCurrent" class="form-label"></label>
                                                 <select class="form-control" asp-for="IsCurrent">

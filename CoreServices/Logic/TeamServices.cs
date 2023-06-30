@@ -1,4 +1,5 @@
-﻿using Entities.CoreServicesModels.PlayerStateModels;
+﻿using Entities.CoreServicesModels.PlayerMarkModels;
+using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayerStateModels;
@@ -349,7 +350,19 @@ namespace CoreServices.Logic
                                                                                        c.FreeHit == false))
                                                                 .OrderByDescending(b => b.Id)
                                                                 .Select(b => b.TransferTypeEnum)
-                                                                .FirstOrDefault() : null
+                                                                .FirstOrDefault() : null,
+                                       PlayerMarks = a.PlayerMarks
+                                              .Where(b => b.Count > b.Used)
+                                              .Select(b => new PlayerMarkModel
+                                              {
+                                                  Count = b.Count,
+                                                  Used = b.Used,
+                                                  Mark = new MarkModel
+                                                  {
+                                                      Name = otherLang ? b.Mark.MarkLang.Name : b.Mark.Name
+                                                  }
+                                              })
+                                              .ToList(),
                                    })
                                    .Search(parameters.SearchColumns, parameters.SearchTerm);
 

@@ -1,4 +1,5 @@
-﻿using Entities.CoreServicesModels.PlayerScoreModels;
+﻿using Entities.CoreServicesModels.PlayerMarkModels;
+using Entities.CoreServicesModels.PlayerScoreModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayerScoreModels;
@@ -146,7 +147,20 @@ namespace CoreServices.Logic
                                ImageUrl = !string.IsNullOrEmpty(a.Player.ImageUrl) ? a.Player.StorageUrl + a.Player.ImageUrl : a.Player.Team.ShirtStorageUrl + a.Player.Team.ShirtImageUrl,
                                _365_PlayerId = a.Player._365_PlayerId,
                                Fk_PlayerPosition = a.Player.Fk_PlayerPosition,
-                               Fk_Team = a.Player.Fk_Team
+                               Fk_Team = a.Player.Fk_Team,
+                               PlayerMarks = a.Player
+                                              .PlayerMarks
+                                              .Where(b => b.Count > b.Used)
+                                              .Select(b => new PlayerMarkModel
+                                              {
+                                                  Count = b.Count,
+                                                  Used = b.Used,
+                                                  Mark = new MarkModel
+                                                  {
+                                                      Name = otherLang ? b.Mark.MarkLang.Name : b.Mark.Name
+                                                  }
+                                              })
+                                              .ToList(),
                            },
                            PlayerGameWeakScores = parameters.IncludeScore ?
                                                   a.PlayerGameWeakScores

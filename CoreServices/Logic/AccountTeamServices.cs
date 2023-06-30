@@ -1,6 +1,7 @@
 ﻿using BaseDB;
 using Entities.CoreServicesModels.AccountModels;
 using Entities.CoreServicesModels.AccountTeamModels;
+using Entities.CoreServicesModels.PlayerMarkModels;
 using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
@@ -509,7 +510,21 @@ namespace CoreServices.Logic
                                    Name = otherLang ? a.AccountTeamPlayer.Player.PlayerLang.Name : a.AccountTeamPlayer.Player.Name,
                                    ShortName = otherLang ? a.AccountTeamPlayer.Player.PlayerLang.ShortName : a.AccountTeamPlayer.Player.ShortName,
                                    ImageUrl = !string.IsNullOrEmpty(a.AccountTeamPlayer.Player.ImageUrl) ? a.AccountTeamPlayer.Player.StorageUrl + a.AccountTeamPlayer.Player.ImageUrl : a.AccountTeamPlayer.Player.Team.ShirtStorageUrl + a.AccountTeamPlayer.Player.Team.ShirtImageUrl,
-                                   _365_PlayerId = a.AccountTeamPlayer.Player._365_PlayerId
+                                   _365_PlayerId = a.AccountTeamPlayer.Player._365_PlayerId,
+                                   PlayerMarks = a.AccountTeamPlayer
+                                                  .Player
+                                                  .PlayerMarks
+                                                  .Where(b => b.Count > b.Used)
+                                                  .Select(b => new PlayerMarkModel
+                                                  {
+                                                      Count = b.Count,
+                                                      Used = b.Used,
+                                                      Mark = new MarkModel
+                                                      {
+                                                          Name = otherLang ? b.Mark.MarkLang.Name : b.Mark.Name
+                                                      }
+                                                  })
+                                                  .ToList()
                                },
                                AccountTeam = new AccountTeamModel
                                {
@@ -733,6 +748,19 @@ namespace CoreServices.Logic
                                         .Where(b => b.Season.IsCurrent && b.Top15 != null)
                                         .Select(b => b.Top15)
                                         .FirstOrDefault(),
+                               PlayerMarks = a.Player
+                                              .PlayerMarks
+                                              .Where(b => b.Count > b.Used)
+                                              .Select(b => new PlayerMarkModel
+                                              {
+                                                  Count = b.Count,
+                                                  Used = b.Used,
+                                                  Mark = new MarkModel
+                                                  {
+                                                      Name = otherLang ? b.Mark.MarkLang.Name : b.Mark.Name
+                                                  }
+                                              })
+                                              .ToList(),
                                PlayerPosition = new PlayerPositionModel
                                {
                                    Name = otherLang ? a.Player.PlayerPosition.PlayerPositionLang.Name : a.Player.PlayerPosition.Name,
@@ -803,7 +831,7 @@ namespace CoreServices.Logic
                                                 .ToList() : null,
                                NextMatch = parameters.IncludeNextMatch ?
                                _dBContext.Set<TeamGameWeak>()
-                                          .Where(b => b.IsActive && 
+                                          .Where(b => b.IsActive &&
                                                       b.StartTime >= DateTime.UtcNow.AddHours(2) &&
                                                       (b.Fk_Away == a.Player.Fk_Team || b.Fk_Home == a.Player.Fk_Team))
                                           .OrderBy(b => b.StartTime)
@@ -821,7 +849,7 @@ namespace CoreServices.Logic
                                           .FirstOrDefault() : null,
                                NextMatches = parameters.IncludeNextMatch ?
                                _dBContext.Set<TeamGameWeak>()
-                                          .Where(b => b.IsActive && 
+                                          .Where(b => b.IsActive &&
                                                       b.StartTime >= DateTime.UtcNow.AddHours(2) &&
                                                       (parameters.FromDeadLine == null || b.StartTime >= parameters.FromDeadLine) &&
                                                       (parameters.ToDeadLine == null || b.StartTime <= parameters.ToDeadLine) &&

@@ -1,6 +1,7 @@
 ﻿using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.SeasonModels;
 using IntegrationWith365.Helpers;
+using System.Diagnostics;
 using static Contracts.EnumData.DBModelsEnum;
 
 namespace FantasyLogic.DataMigration.SeasonData
@@ -16,16 +17,25 @@ namespace FantasyLogic.DataMigration.SeasonData
             _gamesHelper = new GamesHelper(unitOfWork, _365Services);
         }
 
-        public void UpdateSeasonGameWeaks(_365CompetitionsEnum _365CompetitionsEnum, int _365_SeasonId)
+        public void UpdateSeasonGameWeaks(_365CompetitionsEnum _365CompetitionsEnum, bool inDebug)
         {
-            List<int> rounds = _gamesHelper.GetAllGames(_365CompetitionsEnum, _365_SeasonId).Result.Select(a => a.RoundNum).Distinct().OrderBy(a => a).ToList();
+            SeasonModelForCalc season = _unitOfWork.Season.GetCurrentSeason(_365CompetitionsEnum);
+
+            List<int> rounds = _gamesHelper.GetAllGames(_365CompetitionsEnum, season._365_SeasonId.ParseToInt()).Result.Select(a => a.RoundNum).Distinct().OrderBy(a => a).ToList();
 
             string jobId = null;
             foreach (int round in rounds)
             {
-                jobId = jobId.IsExisting()
-                    ? BackgroundJob.ContinueJobWith(jobId, () => UpdateGameWeak(round, _365_SeasonId))
-                    : BackgroundJob.Enqueue(() => UpdateGameWeak(round, _365_SeasonId));
+                if (inDebug)
+                {
+                    UpdateGameWeak(round, season.Id).Wait();
+                }
+                else
+                {
+                    jobId = jobId.IsExisting()
+                    ? BackgroundJob.ContinueJobWith(jobId, () => UpdateGameWeak(round, season.Id))
+                    : BackgroundJob.Enqueue(() => UpdateGameWeak(round, season.Id));
+                }
             }
 
             //_ = BackgroundJob.ContinueJobWith(jobId, () => UpdateCurrentGameWeak(fk_season, _365_SeasonId));

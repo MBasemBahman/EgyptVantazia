@@ -28,6 +28,15 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
             this._365Services = _365Services;
         }
 
+        [HttpPost]
+        [Route(nameof(UpdateGameWeaks))]
+        public IActionResult UpdateGameWeaks([FromQuery] _365CompetitionsEnum _365CompetitionsEnum, [FromQuery] bool inDebug)
+        {
+            _fantasyUnitOfWork.GameWeakDataHelper.UpdateSeasonGameWeaks(_365CompetitionsEnum, inDebug);
+
+            return Ok();
+        }
+
 
         [HttpPost]
         [Route(nameof(UpdateCurrentGameWeak))]

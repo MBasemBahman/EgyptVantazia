@@ -1,6 +1,5 @@
 ﻿using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.SeasonModels;
-using static Contracts.EnumData.DBModelsEnum;
 
 namespace Repository.DBModels.SeasonModels
 {

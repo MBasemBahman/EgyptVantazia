@@ -26,7 +26,6 @@ namespace API.Controllers
         [HttpPost]
         [Route(nameof(Login))]
         [AllowAnonymous]
-        [AllowAll]
         public async Task<UserDto> Login([FromBody] UserForAuthenticationDto model)
         {
             if (model.UserName.IsEmpty())

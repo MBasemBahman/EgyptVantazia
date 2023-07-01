@@ -41,12 +41,14 @@ namespace FantasyLogic.DataMigration.GamesData
 
         public void RunUpdateGames(_365CompetitionsEnum _365CompetitionsEnum)
         {
-            List<TeamModelForCalc> teams = _unitOfWork.Team.GetTeams(new TeamParameters { })
-                                             .Select(a => new TeamModelForCalc
-                                             {
-                                                 Id = a.Id,
-                                                 _365_TeamId = a._365_TeamId
-                                             }).ToList();
+            List<TeamModelForCalc> teams = _unitOfWork.Team.GetTeams(new TeamParameters
+            {
+                _365_CompetitionsId = (int)_365CompetitionsEnum
+            }).Select(a => new TeamModelForCalc
+            {
+                Id = a.Id,
+                _365_TeamId = a._365_TeamId
+            }).ToList();
 
             _ = BackgroundJob.Enqueue(() => UpdateGames(_365CompetitionsEnum, teams));
         }

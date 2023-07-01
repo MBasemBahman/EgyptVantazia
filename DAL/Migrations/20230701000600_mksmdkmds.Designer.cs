@@ -4,6 +4,7 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20230701000600_mksmdkmds")]
+    partial class mksmdkmds
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -4534,7 +4537,7 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Fk_Season")
+                    b.Property<int?>("Fk_Season")
                         .HasColumnType("int");
 
                     b.Property<string>("ImageUrl")
@@ -4763,7 +4766,7 @@ namespace DAL.Migrations
                             IsExternalLogin = false,
                             LastModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Developer",
-                            Password = "$2a$11$rdqBDWZYVa58OW2kIpQaUOqx/3ggY0A1GYRUlmREvs0X1tWKbxSgu",
+                            Password = "$2a$11$LEQTrWBEL1u2SMH1YvYadehmvVAJy.5VCUd0FAlLeMivyUxFB0mlC",
                             UserName = "Developer"
                         });
                 });
@@ -5666,9 +5669,7 @@ namespace DAL.Migrations
                 {
                     b.HasOne("Entities.DBModels.SeasonModels.Season", "Season")
                         .WithMany("Teams")
-                        .HasForeignKey("Fk_Season")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Fk_Season");
 
                     b.Navigation("Season");
                 });

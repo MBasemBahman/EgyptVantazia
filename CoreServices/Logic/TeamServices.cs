@@ -43,6 +43,11 @@ namespace CoreServices.Logic
                            ImageUrl = a.StorageUrl + a.ImageUrl,
                            ShirtImageUrl = a.ShirtStorageUrl + a.ShirtImageUrl,
                            ShortName = otherLang ? a.TeamLang.ShortName : a.ShortName,
+                           Fk_Season = a.Fk_Season,
+                           Season = new SeasonModel
+                           {
+                               Name = otherLang ? a.Season.SeasonLang.Name : a.Season.Name,
+                           }
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        //.Sort(parameters.OrderBy)
@@ -67,9 +72,9 @@ namespace CoreServices.Logic
             return await _repository.Team.FindBy365Id(id, trackChanges);
         }
 
-        public void UpdateTeamActivation(bool isActive)
+        public void UpdateTeamActivation(int _365CompetitionsEnum, bool isActive)
         {
-            _repository.Team.UpdateActivation(isActive);
+            _repository.Team.UpdateActivation(_365CompetitionsEnum, isActive);
         }
 
         public void CreateTeam(Team Team)

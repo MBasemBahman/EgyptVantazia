@@ -21,6 +21,7 @@ namespace FantasyLogic.DataMigration.TeamData
         {
             List<TeamForCalc> teams = _unitOfWork.Team.GetTeams(new TeamParameters
             {
+                _365_CompetitionsId = (int)_365CompetitionsEnum
             }).Select(a => new TeamForCalc
             {
                 Id = a.Id,

@@ -11,6 +11,10 @@ namespace Entities.CoreServicesModels.PlayerMarkModels
         [DisplayName(nameof(Player))]
         [ForeignKey(nameof(Player))]
         public int Fk_Player { get; set; }
+        
+        [DisplayName(nameof(Season))]
+        [ForeignKey(nameof(Season))]
+        public int Fk_Season { get; set; }
 
         [DisplayName(nameof(Mark))]
         [ForeignKey(nameof(Mark))]

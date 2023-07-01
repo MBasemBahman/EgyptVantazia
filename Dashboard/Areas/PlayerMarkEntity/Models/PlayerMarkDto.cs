@@ -11,6 +11,9 @@ namespace Dashboard.Areas.PlayerMarkEntity.Models
         [DisplayName(nameof(Player))]
         public int Fk_Player { get; set; }
 
+        [DisplayName(nameof(Player))]
+        public int Fk_Season { get; set; }
+
         [DisplayName(nameof(Mark))]
         public int Fk_Mark { get; set; }
         

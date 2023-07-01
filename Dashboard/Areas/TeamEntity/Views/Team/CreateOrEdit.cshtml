@@ -119,6 +119,14 @@
                                             </div>
                                         </div>
                                         
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Fk_Season" class="form-label"></label>
+                                                <select class="form-control" asp-for="Fk_Season" asp-items="@(new SelectList(ViewData["Season"] as Dictionary<string,string>,"Key","Value"))"></select>
+                                                <span asp-validation-for="Fk_Season" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        
                                         <div class="col-md-12 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="IsActive" class="form-label"></label>

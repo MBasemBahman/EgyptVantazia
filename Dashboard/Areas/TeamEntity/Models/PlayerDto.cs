@@ -13,6 +13,9 @@ namespace Dashboard.Areas.TeamEntity.Models
 
         [DisplayName(nameof(GameWeak))]
         public int Fk_GameWeak { get; set; }
+        
+        [DisplayName(nameof(Season))]
+        public int Fk_Season { get; set; }
 
         [DisplayName(nameof(PlayerPosition))]
         public int Fk_PlayerPosition { get; set; }

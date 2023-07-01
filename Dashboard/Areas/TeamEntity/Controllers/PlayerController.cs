@@ -291,6 +291,7 @@ namespace Dashboard.Areas.TeamEntity.Controllers
             ViewData["id"] = id;
             ViewData["PlayerPosition"] = _unitOfWork.Team.GetPlayerPositionLookUp(new PlayerPositionParameters(), otherLang);
             ViewData["Team"] = _unitOfWork.Team.GetTeamLookUp(new TeamParameters(), otherLang);
+            ViewData["Season"] = _unitOfWork.Season.GetSeasonLookUp(new SeasonParameters(), otherLang);
         }
 
 

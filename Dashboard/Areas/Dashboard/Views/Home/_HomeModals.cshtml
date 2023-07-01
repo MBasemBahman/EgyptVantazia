@@ -19,8 +19,20 @@
                         <div class="row mb-1">
                             <div class="col-md-12 col-12">
                                 <div class="mb-1">
+                                    <label class="form-label">@Localizer.Get("Season")</label>
+                                    <select name="Fk_GameResultSeason" class="select2 form-select">
+                                        @foreach (KeyValuePair<string, string> season in (Dictionary<string, string>)ViewData["Season"])
+                                        {
+                                            <option selected="@(current > 0 && current.ToString() == season.Key)" value="@season.Key">@season.Value</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12 col-12">
+                                <div class="mb-1">
                                     <label class="form-label">@Localizer.Get("GameWeak")</label>
-                                    <select name="Fk_GameWeak" class="select2 form-select">
+                                    <select name="Fk_GameResultGameWeak" class="select2 form-select">
                                         @foreach (KeyValuePair<string, string> gameWeak in (Dictionary<string, string>)ViewData["GameWeak"])
                                         {
                                             <option selected="@(current > 0 && current.ToString() == gameWeak.Key)" value="@gameWeak.Key">@gameWeak.Value</option>
@@ -75,8 +87,20 @@
                         <div class="row mb-1">
                             <div class="col-md-12 col-12">
                                 <div class="mb-1">
+                                    <label class="form-label">@Localizer.Get("Season")</label>
+                                    <select name="Fk_RankingSeason" class="select2 form-select">
+                                        @foreach (KeyValuePair<string, string> season in (Dictionary<string, string>)ViewData["Season"])
+                                        {
+                                            <option selected="@(current > 0 && current.ToString() == season.Key)" value="@season.Key">@season.Value</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12 col-12">
+                                <div class="mb-1">
                                     <label class="form-label">@Localizer.Get("GameWeak")</label>
-                                    <select name="Fk_GameWeak" class="select2 form-select">
+                                    <select name="Fk_RankingGameWeak" class="select2 form-select">
                                         @foreach (KeyValuePair<string, string> gameWeak in (Dictionary<string, string>)ViewData["GameWeak"])
                                         {
                                             <option selected="@(current > 0 && current.ToString() == gameWeak.Key)" value="@gameWeak.Key">@gameWeak.Value</option>
@@ -144,8 +168,20 @@
                         <div class="row mb-1">
                             <div class="col-md-12 col-12">
                                 <div class="mb-1">
+                                    <label class="form-label">@Localizer.Get("Season")</label>
+                                    <select name="Fk_PointsSeason" class="select2 form-select">
+                                        @foreach (KeyValuePair<string, string> season in (Dictionary<string, string>)ViewData["Season"])
+                                        {
+                                            <option selected="@(current > 0 && current.ToString() == season.Key)" value="@season.Key">@season.Value</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12 col-12">
+                                <div class="mb-1">
                                     <label class="form-label">@Localizer.Get("GameWeak")</label>
-                                    <select name="Fk_GameWeak" class="select2 form-select">
+                                    <select name="Fk_PointsGameWeak" class="select2 form-select">
                                         @foreach (KeyValuePair<string, string> gameWeak in (Dictionary<string, string>)ViewData["GameWeak"])
                                         {
                                             <option selected="@(current > 0 && current.ToString() == gameWeak.Key)" value="@gameWeak.Key">@gameWeak.Value</option>

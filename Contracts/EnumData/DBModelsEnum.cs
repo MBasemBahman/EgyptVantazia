@@ -133,7 +133,12 @@
             BenchBoost = 7,
             Add3MillionsBank = 8,
             Top_11 = 9,
-            All = 10
+            Gold = 10
+        }
+
+        public enum PrivateLeagueEnum
+        {
+            OfficialLeague = 229
         }
     }
 }

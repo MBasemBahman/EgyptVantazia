@@ -1,4 +1,5 @@
-﻿using Entities.CoreServicesModels.PlayerStateModels;
+﻿using Entities.CoreServicesModels.PlayerMarkModels;
+using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayerStateModels;
@@ -297,7 +298,20 @@ namespace CoreServices.Logic
                                                     Value = playerScore.Value,
                                                     LastModifiedAt = playerScore.LastModifiedAt,
                                                 }
-                                             }
+                                             },
+                                             PlayerMarks = playerScore.Player
+                                              .PlayerMarks
+                                              .Where(b => b.Count > b.Used)
+                                              .Select(b => new PlayerMarkModel
+                                              {
+                                                  Count = b.Count,
+                                                  Used = b.Used,
+                                                  Mark = new MarkModel
+                                                  {
+                                                      Name = otherLang ? b.Mark.MarkLang.Name : b.Mark.Name
+                                                  }
+                                              })
+                                              .ToList(),
                                          })
                                          .FirstOrDefault() :
                                         parameters.Fk_GameWeak > 0 ?
@@ -342,7 +356,20 @@ namespace CoreServices.Logic
                                                     Value = playerScore.Value,
                                                     LastModifiedAt = playerScore.LastModifiedAt,
                                                 }
-                                             }
+                                             },
+                                             PlayerMarks = playerScore.Player
+                                              .PlayerMarks
+                                              .Where(b => b.Count > b.Used)
+                                              .Select(b => new PlayerMarkModel
+                                              {
+                                                  Count = b.Count,
+                                                  Used = b.Used,
+                                                  Mark = new MarkModel
+                                                  {
+                                                      Name = otherLang ? b.Mark.MarkLang.Name : b.Mark.Name
+                                                  }
+                                              })
+                                              .ToList(),
                                          })
                                          .FirstOrDefault() : null
                        })

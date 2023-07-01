@@ -1,6 +1,6 @@
 ﻿using Entities.CoreServicesModels.PrivateLeagueModels;
 using Entities.DBModels.PrivateLeagueModels;
-
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace Repository.DBModels.PrivateLeagueModels
 {
@@ -21,7 +21,8 @@ namespace Repository.DBModels.PrivateLeagueModels
                            parameters.FromPoints,
                            parameters.ToPoints,
                            parameters.HaveTeam,
-                           parameters.IgnoreZeroPoints);
+                           parameters.IgnoreZeroPoints,
+                           parameters.IgnoreGoldSubscription);
         }
 
         public async Task<PrivateLeagueMember> FindById(int id, bool trackChanges)
@@ -58,11 +59,15 @@ namespace Repository.DBModels.PrivateLeagueModels
             int? fromPoints,
             int? toPoints,
             bool haveTeam,
-            bool ignoreZeroPoints)
+            bool ignoreZeroPoints,
+            bool ignoreGoldSubscription)
         {
             return PrivateLeagueMembers.Where(a => (id == 0 || a.Id == id) &&
                                                    (haveTeam == false || a.Account.AccountTeams.Any(b => b.AccountTeamGameWeaks.Any())) &&
                                                    (ignoreZeroPoints == false || a.Points > 0) &&
+                                                   (ignoreGoldSubscription == false || !a.Account.AccountSubscriptions
+                                                                                         .Any(b => b.Fk_Subscription == (int)SubscriptionEnum.Gold &&
+                                                                                                   b.IsActive)) &&
                                                    (fromPoints == null || a.Points >= fromPoints) &&
                                                    (toPoints == null || a.Points <= toPoints) &&
                                                    (Fk_Account == 0 || a.Fk_Account == Fk_Account) &&

@@ -20,6 +20,8 @@ namespace Entities.CoreServicesModels.PrivateLeagueModels
         public bool HaveTeam { get; set; }
 
         public bool IgnoreZeroPoints { get; set; }
+        public bool IgnoreGoldSubscription { get; set; }
+
     }
 
     public class PrivateLeagueMemberModel : AuditEntity

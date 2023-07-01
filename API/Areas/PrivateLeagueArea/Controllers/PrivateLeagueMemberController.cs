@@ -3,6 +3,7 @@ using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.PrivateLeagueModels;
 using Entities.DBModels.PrivateLeagueModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace API.Areas.PrivateLeagueArea.Controllers
 {
@@ -35,6 +36,11 @@ namespace API.Areas.PrivateLeagueArea.Controllers
             parameters.Fk_Season = season;
             parameters.HaveTeam = true;
             parameters.IgnoreZeroPoints = true;
+
+            //if (parameters.Fk_PrivateLeague == (int)PrivateLeagueEnum.OfficialLeague)
+            //{
+            //    parameters.IgnoreGoldSubscription = true;
+            //}
 
             PagedList<PrivateLeagueMemberModel> data = await _unitOfWork.PrivateLeague.GetPrivateLeagueMemberPaged(parameters);
 

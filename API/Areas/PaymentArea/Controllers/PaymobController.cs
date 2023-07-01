@@ -227,7 +227,7 @@ namespace API.Areas.PaymentArea.Controllers
                         AccountTeamModel currentTeam = _unitOfWork.AccountTeam.GetCurrentTeam(accountSubscription.Fk_Account, accountSubscription.Fk_Season);
                         AccountTeam accounTeam = await _unitOfWork.AccountTeam.FindAccountTeambyId(currentTeam.Id, trackChanges: true);
 
-                        if (accountSubscription.Fk_Subscription == (int)SubscriptionEnum.All)
+                        if (accountSubscription.Fk_Subscription == (int)SubscriptionEnum.Gold)
                         {
                             accounTeam.TripleCaptain++;
                             accounTeam.DoubleGameWeak++;

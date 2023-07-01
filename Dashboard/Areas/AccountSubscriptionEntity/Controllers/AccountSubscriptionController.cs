@@ -152,7 +152,7 @@ namespace Dashboard.Areas.AccountSubscriptionEntity.Controllers
                     AccountTeamModel currentTeam = _unitOfWork.AccountTeam.GetCurrentTeam(model.Fk_Account, model.Fk_Season);
                     AccountTeam accounTeam = await _unitOfWork.AccountTeam.FindAccountTeambyId(currentTeam.Id, trackChanges: true);
 
-                    if (accountSubscriptionDB.Fk_Subscription == (int)SubscriptionEnum.All)
+                    if (accountSubscriptionDB.Fk_Subscription == (int)SubscriptionEnum.Gold)
                     {
                         accounTeam.TripleCaptain++;
                         accounTeam.DoubleGameWeak++;

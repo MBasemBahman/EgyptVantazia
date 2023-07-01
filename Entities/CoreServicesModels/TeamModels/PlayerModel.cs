@@ -1,4 +1,5 @@
-﻿using Entities.CoreServicesModels.PlayerStateModels;
+﻿using Entities.CoreServicesModels.PlayerMarkModels;
+using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.TeamModels;
 using Entities.RequestFeatures;
@@ -139,6 +140,8 @@ namespace Entities.CoreServicesModels.TeamModels
         public TeamPlayerType TeamPlayerType { get; set; }
 
         public TransferTypeEnum? LastTransferTypeEnum { get; set; }
+
+        public List<PlayerMarkModel> PlayerMarks { get; set; }
     }
 
 

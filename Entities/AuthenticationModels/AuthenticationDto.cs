@@ -1,4 +1,5 @@
-﻿using Entities.CoreServicesModels.LocationModels;
+﻿using Entities.CoreServicesModels.AccountTeamModels;
+using Entities.CoreServicesModels.LocationModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.ResponseFeatures;
 
@@ -128,6 +129,8 @@ namespace Entities.AuthenticationModels
         public bool ShowAds { get; set; }
 
         public int Fk_AccountTeam { get; set; }
+
+        public List<AccountTeamModel> AccountTeams { get; set; }
         public int Fk_Country { get; set; }
         public CountryModel Country { get; set; }
 

@@ -50,6 +50,20 @@ namespace CoreServices.Logic
                                                     .Where(a => a.Season.IsCurrent)
                                                     .Select(a => a.Id)
                                                     .FirstOrDefault(),
+                                  AccountTeams = a.AccountTeams
+                                                  .Where(a => a.Season.IsCurrent)
+                                                  .Select(b => new AccountTeamModel
+                                                  {
+                                                      Id = b.Id,
+                                                      Name = b.Name,
+                                                      Season = new SeasonModel
+                                                      {
+                                                          _365_CompetitionsId = b.Season._365_CompetitionsId,
+                                                          _365_SeasonId = b.Season._365_SeasonId,
+                                                          Name = otherLang ? b.Season.SeasonLang.Name : b.Season.Name,
+                                                      }
+                                                  })
+                                                  .ToList(),
                                   Country = new CountryModel
                                   {
                                       Id = a.Fk_Country,

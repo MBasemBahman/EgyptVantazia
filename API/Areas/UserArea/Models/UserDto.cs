@@ -1,4 +1,5 @@
-﻿using Entities.CoreServicesModels.LocationModels;
+﻿using Entities.CoreServicesModels.AccountTeamModels;
+using Entities.CoreServicesModels.LocationModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.CoreServicesModels.UserModels;
 using System.Text.Json.Serialization;
@@ -36,5 +37,7 @@ namespace API.Areas.UserArea.Models
 
         [JsonIgnore]
         public new string CreatedAt { get; set; }
+
+        public List<AccountTeamModel> AccountTeams { get; set; }
     }
 }

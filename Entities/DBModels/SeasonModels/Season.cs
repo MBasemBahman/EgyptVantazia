@@ -2,10 +2,10 @@
 using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.PlayerStateModels;
 using Entities.DBModels.StandingsModels;
+using Entities.DBModels.TeamModels;
 
 namespace Entities.DBModels.SeasonModels
 {
-    [Index(nameof(Name), IsUnique = true)]
     public class Season : AuditImageEntity, ILookUpEntity
     {
         [DisplayName($"{nameof(Name)}{PropertyAttributeConstants.ArLang}")]
@@ -14,6 +14,9 @@ namespace Entities.DBModels.SeasonModels
 
         [DisplayName(nameof(_365_SeasonId))]
         public string _365_SeasonId { get; set; }
+
+        [DisplayName(nameof(_365_CompetitionsId))]
+        public string _365_CompetitionsId { get; set; }
 
         [DisplayName(nameof(IsCurrent))]
         public bool IsCurrent { get; set; }
@@ -32,6 +35,9 @@ namespace Entities.DBModels.SeasonModels
 
         [DisplayName(nameof(AccountSubscriptions))]
         public IList<AccountSubscription> AccountSubscriptions { get; set; }
+
+        [DisplayName(nameof(Teams))]
+        public List<Team> Teams { get; set; }
 
         public SeasonLang SeasonLang { get; set; }
     }

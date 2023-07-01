@@ -33,7 +33,8 @@ namespace API.Areas.AccountTeamArea.Controllers
         [HttpGet]
         [Route(nameof(GetAccountTeamPlayers))]
         public async Task<IEnumerable<AccountTeamPlayerModel>> GetAccountTeamPlayers(
-        [FromQuery] AccountTeamPlayerParameters parameters)
+            [FromQuery] _365CompetitionsEnum _365CompetitionsEnum,
+            [FromQuery] AccountTeamPlayerParameters parameters)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
@@ -54,7 +55,7 @@ namespace API.Areas.AccountTeamArea.Controllers
             }
             else
             {
-                currentGamWeak = _unitOfWork.Season.GetCurrentGameWeak();
+                currentGamWeak = _unitOfWork.Season.GetCurrentGameWeak(_365CompetitionsEnum);
                 nextGameWeak = _unitOfWork.Season.GetNextGameWeak();
             }
 
@@ -162,12 +163,14 @@ namespace API.Areas.AccountTeamArea.Controllers
 
         [HttpPost]
         [Route(nameof(Create))]
-        public async Task<bool> Create([FromBody] AccountTeamPlayerBulkCreateModel model)
+        public async Task<bool> Create(
+            [FromQuery] _365CompetitionsEnum _365CompetitionsEnum,
+            [FromBody] AccountTeamPlayerBulkCreateModel model)
         {
             _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
-            int currentSeason = _unitOfWork.Season.GetCurrentSeasonId();
+            int currentSeason = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum);
             if (currentSeason < 0)
             {
                 throw new Exception("Season not started yet!");
@@ -296,12 +299,14 @@ namespace API.Areas.AccountTeamArea.Controllers
 
         [HttpPut]
         [Route(nameof(Update))]
-        public async Task<bool> Update([FromBody] AccountTeamPlayerBulkUpdateModel model)
+        public async Task<bool> Update(
+            [FromQuery] _365CompetitionsEnum _365CompetitionsEnum, 
+            [FromBody] AccountTeamPlayerBulkUpdateModel model)
         {
             _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
-            int currentSeason = _unitOfWork.Season.GetCurrentSeasonId();
+            int currentSeason = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum);
             if (currentSeason < 0)
             {
                 throw new Exception("Season not started yet!");

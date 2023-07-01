@@ -4,6 +4,7 @@ using Entities.DBModels.MatchStatisticModels;
 using Entities.DBModels.PlayerScoreModels;
 using IntegrationWith365.Entities.GameModels;
 using IntegrationWith365.Entities.GamesModels;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace FantasyLogic.DataMigration.PlayerScoreData
 {
@@ -18,9 +19,9 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             _unitOfWork = unitOfWork;
         }
 
-        public void RunUpdateStates(int delayMinutes, bool inDedug)
+        public void RunUpdateStates(_365CompetitionsEnum _365CompetitionsEnum, int delayMinutes, bool inDedug)
         {
-            int season = _unitOfWork.Season.GetCurrentSeasonId();
+            int season = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum);
 
             List<string> teamGameWeaks = _unitOfWork.Season.GetTeamGameWeaks(new TeamGameWeakParameters
             {
@@ -31,18 +32,18 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             {
                 if (inDedug)
                 {
-                    UpdateMatchStates(_365_MatchId.ParseToInt(), delayMinutes, inDedug).Wait();
+                    UpdateMatchStates(_365CompetitionsEnum, _365_MatchId.ParseToInt(), delayMinutes, inDedug).Wait();
                 }
                 else
                 {
-                    _ = BackgroundJob.Schedule(() => UpdateMatchStates(_365_MatchId.ParseToInt(), delayMinutes, inDedug), TimeSpan.FromMinutes(delayMinutes));
+                    _ = BackgroundJob.Schedule(() => UpdateMatchStates(_365CompetitionsEnum, _365_MatchId.ParseToInt(), delayMinutes, inDedug), TimeSpan.FromMinutes(delayMinutes));
                 }
             }
         }
 
-        public async Task UpdateMatchStates(int _365_MatchId, int delayMinutes, bool inDedug)
+        public async Task UpdateMatchStates(_365CompetitionsEnum _365CompetitionsEnum, int _365_MatchId, int delayMinutes, bool inDedug)
         {
-            GameReturn gameReturnInArabic = await _365Services.GetGame(new _365GameParameters
+            GameReturn gameReturnInArabic = await _365Services.GetGame(_365CompetitionsEnum, new _365GameParameters
             {
                 GameId = _365_MatchId,
                 IsArabic = true
@@ -50,7 +51,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
 
             if (gameReturnInArabic != null && gameReturnInArabic.Game != null)
             {
-                GameReturn gameReturnInEnglish = await _365Services.GetGame(new _365GameParameters
+                GameReturn gameReturnInEnglish = await _365Services.GetGame(_365CompetitionsEnum, new _365GameParameters
                 {
                     GameId = _365_MatchId,
                 });

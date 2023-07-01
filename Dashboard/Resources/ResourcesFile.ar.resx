@@ -1431,4 +1431,7 @@
   <data name="Fk_PlayerMarkReasonMatches" xml:space="preserve">
     <value>الماتشات المسببة للعلامة</value>
   </data>
+  <data name="_365_CompetitionsId" xml:space="preserve">
+    <value>الرقم المرجعي للدوري</value>
+  </data>
 </root>

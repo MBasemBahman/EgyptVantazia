@@ -2,6 +2,7 @@
 using API.Controllers;
 using Entities.CoreServicesModels.SeasonModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace API.Areas.SeasonArea.Controllers
 {
@@ -52,11 +53,11 @@ namespace API.Areas.SeasonArea.Controllers
 
         [HttpGet]
         [Route(nameof(GetCurrentSeason))]
-        public SeasonDto GetCurrentSeason()
+        public SeasonDto GetCurrentSeason([FromQuery] _365CompetitionsEnum _365CompetitionsEnum)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
-            SeasonModel data = _unitOfWork.Season.GetCurrentSeason(otherLang);
+            SeasonModel data = _unitOfWork.Season.GetCurrentSeason(_365CompetitionsEnum, otherLang);
 
             SeasonDto dataDto = _mapper.Map<SeasonDto>(data);
 

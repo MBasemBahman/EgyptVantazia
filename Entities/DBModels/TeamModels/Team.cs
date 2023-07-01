@@ -5,7 +5,6 @@ using Entities.DBModels.StandingsModels;
 
 namespace Entities.DBModels.TeamModels
 {
-    [Index(nameof(Name), IsUnique = true)]
     public class Team : AuditImageEntity, ILookUpEntity
     {
         [DisplayName($"{nameof(Name)}{PropertyAttributeConstants.ArLang}")]
@@ -28,6 +27,13 @@ namespace Entities.DBModels.TeamModels
 
         [DisplayName(nameof(IsActive))]
         public bool IsActive { get; set; }
+
+        [DisplayName(nameof(Season))]
+        [ForeignKey(nameof(Season))]
+        public int Fk_Season { get; set; }
+
+        [DisplayName(nameof(Season))]
+        public Season Season { get; set; }
 
         [DisplayName(nameof(Players))]
         public IList<Player> Players { get; set; }

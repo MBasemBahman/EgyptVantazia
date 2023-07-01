@@ -57,9 +57,9 @@ namespace Dashboard.Areas.Dashboard.Controllers
             };
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
-            ViewData["CurrentGameWeak"] = _unitOfWork.Season.GetCurrentGameWeakId();
+            ViewData["CurrentGameWeak"] = _unitOfWork.Season.GetCurrentGameWeakId(_365CompetitionsEnum.Egypt);
             ViewData["GameWeak"] = _unitOfWork.Season.GetGameWeakLookUp(new GameWeakParameters(), otherLang);
-            
+
             ViewData["auth"] = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
             return View(charts);
@@ -147,7 +147,7 @@ namespace Dashboard.Areas.Dashboard.Controllers
 
             DashboardAdministratorModel admin = _unitOfWork.DashboardAdministration
                 .GetAdministratorbyId(auth.Fk_DashboardAdministrator, otherLang: false);
-            
+
             if (admin.CanDeploy)
             {
                 _updateResultsUtils.UpdateStandings();
@@ -159,10 +159,10 @@ namespace Dashboard.Areas.Dashboard.Controllers
         public IActionResult UpdateGames()
         {
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
-            
+
             DashboardAdministratorModel admin = _unitOfWork.DashboardAdministration
                 .GetAdministratorbyId(auth.Fk_DashboardAdministrator, otherLang: false);
-            
+
             if (admin.CanDeploy)
             {
                 _updateResultsUtils.UpdateGames();
@@ -174,10 +174,10 @@ namespace Dashboard.Areas.Dashboard.Controllers
         public IActionResult UpdateGameResult(int fk_GameWeak, string _365_MatchId, bool runBonus, int fk_TeamGameWeak)
         {
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
-            
+
             DashboardAdministratorModel admin = _unitOfWork.DashboardAdministration
                 .GetAdministratorbyId(auth.Fk_DashboardAdministrator, otherLang: false);
-            
+
             if (admin.CanDeploy)
             {
                 _updateResultsUtils.UpdateGameResult(fk_GameWeak, fk_TeamGameWeak, _365_MatchId, runBonus);
@@ -189,10 +189,10 @@ namespace Dashboard.Areas.Dashboard.Controllers
         public IActionResult UpdateAccountTeamGameWeakRanking(int fk_GameWeak)
         {
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
-            
+
             DashboardAdministratorModel admin = _unitOfWork.DashboardAdministration
                 .GetAdministratorbyId(auth.Fk_DashboardAdministrator, otherLang: false);
-            
+
             if (admin.CanDeploy)
             {
                 _updateResultsUtils.UpdateAccountTeamGameWeakRanking(fk_GameWeak);
@@ -204,10 +204,10 @@ namespace Dashboard.Areas.Dashboard.Controllers
         public IActionResult UpdatePrivateLeagueRanking(int fk_GameWeak, int id)
         {
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
-            
+
             DashboardAdministratorModel admin = _unitOfWork.DashboardAdministration
                 .GetAdministratorbyId(auth.Fk_DashboardAdministrator, otherLang: false);
-            
+
             if (admin.CanDeploy)
             {
                 _updateResultsUtils.UpdatePrivateLeagueRanking(fk_GameWeak, id);
@@ -223,10 +223,10 @@ namespace Dashboard.Areas.Dashboard.Controllers
             int fk_TeamGameWeak)
         {
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
-            
+
             DashboardAdministratorModel admin = _unitOfWork.DashboardAdministration
                 .GetAdministratorbyId(auth.Fk_DashboardAdministrator, otherLang: false);
-            
+
             if (admin.CanDeploy)
             {
                 List<int> fk_Players = new();

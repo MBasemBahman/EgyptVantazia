@@ -2,6 +2,7 @@
 using API.Controllers;
 using Entities.CoreServicesModels.PlayerStateModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace API.Areas.PlayerStateArea.Controllers
 {
@@ -23,13 +24,14 @@ namespace API.Areas.PlayerStateArea.Controllers
         [HttpGet]
         [Route(nameof(GetScoreStates))]
         public async Task<IEnumerable<ScoreStateModel>> GetScoreStates(
+            [FromQuery] _365CompetitionsEnum _365CompetitionsEnum,
         [FromQuery] ScoreStateParameters parameters)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             if (parameters.IncludeBestPlayer && parameters.Fk_Season == 0 && parameters.Fk_GameWeak == 0)
             {
-                parameters.Fk_Season = _unitOfWork.Season.GetCurrentSeasonId();
+                parameters.Fk_Season = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum);
             }
 
             PagedList<ScoreStateModel> data = await _unitOfWork.PlayerState.GetScoreStatePaged(parameters, otherLang);

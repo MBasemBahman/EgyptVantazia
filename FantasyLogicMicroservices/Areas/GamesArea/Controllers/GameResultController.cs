@@ -1,6 +1,7 @@
 ﻿using Entities.CoreServicesModels.SeasonModels;
 using FantasyLogic;
 using FantasyLogicMicroservices.Controllers;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace FantasyLogicMicroservices.Areas.GamesArea.Controllers
 {
@@ -23,6 +24,7 @@ namespace FantasyLogicMicroservices.Areas.GamesArea.Controllers
         [HttpPost]
         [Route(nameof(UpdateGameResult))]
         public IActionResult UpdateGameResult(
+            [FromQuery] _365CompetitionsEnum _365CompetitionsEnum,
             [FromQuery] TeamGameWeakParameters parameters,
             [FromQuery] bool runBonus,
             [FromQuery] bool inDebug,
@@ -30,7 +32,7 @@ namespace FantasyLogicMicroservices.Areas.GamesArea.Controllers
             [FromQuery] bool stopAll,
             [FromQuery] bool statisticsOnly)
         {
-            _fantasyUnitOfWork.GameResultDataHelper.RunUpdateGameResult(parameters, runBonus, inDebug, runAll, stopAll, statisticsOnly);
+            _fantasyUnitOfWork.GameResultDataHelper.RunUpdateGameResult(_365CompetitionsEnum, parameters, runBonus, inDebug, runAll, stopAll, statisticsOnly);
 
             return Ok();
         }

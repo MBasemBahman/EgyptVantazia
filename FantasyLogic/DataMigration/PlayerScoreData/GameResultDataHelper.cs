@@ -38,6 +38,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
         }
 
         public void RunUpdateGameResult(
+            _365CompetitionsEnum _365CompetitionsEnum,
             TeamGameWeakParameters parameters,
             bool runBonus,
             bool inDebug,
@@ -45,7 +46,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             bool stopAll,
             bool statisticsOnly)
         {
-            parameters.Fk_Season = _unitOfWork.Season.GetCurrentSeasonId();
+            parameters.Fk_Season = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum);
 
             List<TeamGameWeakForCalc> teamGameWeaks = _unitOfWork.Season.GetTeamGameWeaks(parameters).Select(a => new TeamGameWeakForCalc
             {
@@ -74,11 +75,11 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             {
                 if (inDebug)
                 {
-                    UpdateGameResult(teamGameWeak, scoreTypes, runBonus, inDebug, runAll, stopAll, statisticsOnly).Wait();
+                    UpdateGameResult(_365CompetitionsEnum, teamGameWeak, scoreTypes, runBonus, inDebug, runAll, stopAll, statisticsOnly).Wait();
                 }
                 if (runAll)
                 {
-                    _ = BackgroundJob.Enqueue(() => UpdateGameResult(teamGameWeak, scoreTypes, runBonus, inDebug, runAll, stopAll, statisticsOnly));
+                    _ = BackgroundJob.Enqueue(() => UpdateGameResult(_365CompetitionsEnum, teamGameWeak, scoreTypes, runBonus, inDebug, runAll, stopAll, statisticsOnly));
                 }
                 else
                 {
@@ -86,7 +87,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                     {
                         if (runAll || teamGameWeak.EndTime > DateTime.UtcNow.ToEgypt())
                         {
-                            RecurringJob.AddOrUpdate(RecurringJobMatchId + teamGameWeak._365_MatchId.ToString(), () => UpdateGameResult(teamGameWeak, scoreTypes, runBonus, inDebug, runAll, stopAll, statisticsOnly), CronExpression.EveryMinutes(5));
+                            RecurringJob.AddOrUpdate(RecurringJobMatchId + teamGameWeak._365_MatchId.ToString(), () => UpdateGameResult(_365CompetitionsEnum, teamGameWeak, scoreTypes, runBonus, inDebug, runAll, stopAll, statisticsOnly), CronExpression.EveryMinutes(5));
                         }
                     }
                 }
@@ -94,6 +95,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
         }
 
         public async Task UpdateGameResult(
+            _365CompetitionsEnum _365CompetitionsEnum,
             TeamGameWeakForCalc teamGameWeak,
             List<ScoreTypeForCalc> scoreTypes,
             bool runBonus,
@@ -102,7 +104,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
             bool stopAll,
             bool statisticsOnly)
         {
-            GameReturn gameReturn = await _365Services.GetGame(new _365GameParameters
+            GameReturn gameReturn = await _365Services.GetGame(_365CompetitionsEnum, new _365GameParameters
             {
                 GameId = teamGameWeak._365_MatchId.ParseToInt()
             });
@@ -259,13 +261,13 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                     {
                                         if (inDebug)
                                         {
-                                            UpdatePlayerResult(gameReturn, member, player, rankingIndex, teamGameWeak, memberResult, scoreTypes, match, inDebug).Wait();
+                                            UpdatePlayerResult(_365CompetitionsEnum, gameReturn, member, player, rankingIndex, teamGameWeak, memberResult, scoreTypes, match, inDebug).Wait();
                                         }
                                         else
                                         {
                                             string JobPlayerId = this.JobPlayerId + teamGameWeak._365_MatchId.ToString() + $"-{member.Id}";
 
-                                            string hangfireJobId = BackgroundJob.Enqueue(() => UpdatePlayerResult(gameReturn, member, player, rankingIndex, teamGameWeak, memberResult, scoreTypes, match, inDebug));
+                                            string hangfireJobId = BackgroundJob.Enqueue(() => UpdatePlayerResult(_365CompetitionsEnum, gameReturn, member, player, rankingIndex, teamGameWeak, memberResult, scoreTypes, match, inDebug));
 
                                             _hangFireCustomJob.ReplaceJob(hangfireJobId, JobPlayerId);
                                         }
@@ -288,11 +290,11 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
 
                         if (inDebug)
                         {
-                            _playerStateCalc.RunPlayersStateCalculations(match.Fk_GameWeak, match._365_MatchId, players, null, false, inDebug);
+                            _playerStateCalc.RunPlayersStateCalculations(_365CompetitionsEnum, match.Fk_GameWeak, match._365_MatchId, players, null, false, inDebug);
                         }
                         else
                         {
-                            _ = BackgroundJob.Enqueue(() => _playerStateCalc.RunPlayersStateCalculations(match.Fk_GameWeak, match._365_MatchId, players, null, false, inDebug));
+                            _ = BackgroundJob.Enqueue(() => _playerStateCalc.RunPlayersStateCalculations(_365CompetitionsEnum, match.Fk_GameWeak, match._365_MatchId, players, null, false, inDebug));
                         }
                     }
                 }
@@ -301,6 +303,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
         }
 
         public async Task UpdatePlayerResult(
+            _365CompetitionsEnum _365CompetitionsEnum,
             GameReturn gameReturn,
             GameMember member,
             PlayerForCalc player,
@@ -391,7 +394,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 PlayMinutesEnum playMinutes = await UpdatePlayerGameResult(otherGoals, substitutions, rankingIndex, player.Id, player.Fk_PlayerPosition, teamGameWeak.Id, memberResult, eventResult, scoreTypes, assistCount);
                 await _unitOfWork.Save();
 
-                await UpdateGameFinalResult(otherGoals, substitutions, playMinutes, rankingIndex, match.Id, player.Id, inDebug);
+                await UpdateGameFinalResult(_365CompetitionsEnum, otherGoals, substitutions, playMinutes, rankingIndex, match.Id, player.Id, inDebug);
             }
         }
 
@@ -525,6 +528,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
         }
 
         public async Task UpdateGameFinalResult(
+            _365CompetitionsEnum _365CompetitionsEnum,
             List<Event> otherGoals,
             List<EventType> substitutions,
             PlayMinutesEnum playMinutes,
@@ -561,7 +565,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 int fk_GameWeak = players.First().Fk_GameWeak;
                 string _365_MatchId = players.First()._365_MatchId;
 
-                _playerStateCalc.RunPlayersStateCalculations(fk_GameWeak, _365_MatchId, players.Select(a => a.Fk_Player).ToList(), null, false, inDebug);
+                _playerStateCalc.RunPlayersStateCalculations(_365CompetitionsEnum, fk_GameWeak, _365_MatchId, players.Select(a => a.Fk_Player).ToList(), null, false, inDebug);
             }
         }
 

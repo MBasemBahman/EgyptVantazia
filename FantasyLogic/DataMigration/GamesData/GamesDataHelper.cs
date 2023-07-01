@@ -11,6 +11,7 @@ using FantasyLogic.DataMigration.PlayerScoreData;
 using IntegrationWith365.Entities.GamesModels;
 using IntegrationWith365.Helpers;
 using Services;
+using static Contracts.EnumData.DBModelsEnum;
 using static Entities.EnumData.LogicEnumData;
 
 namespace FantasyLogic.DataMigration.GamesData
@@ -38,21 +39,23 @@ namespace FantasyLogic.DataMigration.GamesData
             _notificationManager = firebaseNotificationManager;
         }
 
-        public void RunUpdateGames()
+        public void RunUpdateGames(_365CompetitionsEnum _365CompetitionsEnum)
         {
-            List<TeamModelForCalc> teams = _unitOfWork.Team.GetTeams(new TeamParameters { })
-                                             .Select(a => new TeamModelForCalc
-                                             {
-                                                 Id = a.Id,
-                                                 _365_TeamId = a._365_TeamId
-                                             }).ToList();
+            List<TeamModelForCalc> teams = _unitOfWork.Team.GetTeams(new TeamParameters
+            {
+                _365_CompetitionsId = (int)_365CompetitionsEnum
+            }).Select(a => new TeamModelForCalc
+            {
+                Id = a.Id,
+                _365_TeamId = a._365_TeamId
+            }).ToList();
 
-            _ = BackgroundJob.Enqueue(() => UpdateGames(teams));
+            _ = BackgroundJob.Enqueue(() => UpdateGames(_365CompetitionsEnum, teams));
         }
 
-        public void UpdateGames(List<TeamModelForCalc> teams)
+        public void UpdateGames(_365CompetitionsEnum _365CompetitionsEnum, List<TeamModelForCalc> teams)
         {
-            SeasonModelForCalc season = _unitOfWork.Season.GetCurrentSeason();
+            SeasonModelForCalc season = _unitOfWork.Season.GetCurrentSeason(_365CompetitionsEnum);
 
             List<GameWeakModelForCalc> gameWeaks = _unitOfWork.Season.GetGameWeaks(new GameWeakParameters
             {
@@ -63,7 +66,7 @@ namespace FantasyLogic.DataMigration.GamesData
                 _365_GameWeakId = a._365_GameWeakId
             }).ToList();
 
-            List<Games> games = _gamesHelper.GetAllGames(season._365_SeasonId.ParseToInt()).Result.OrderByDescending(a => a.StartTimeVal).ToList();
+            List<Games> games = _gamesHelper.GetAllGames(_365CompetitionsEnum, season._365_SeasonId.ParseToInt()).Result.OrderByDescending(a => a.StartTimeVal).ToList();
 
             string jobId = null;
 
@@ -76,17 +79,22 @@ namespace FantasyLogic.DataMigration.GamesData
                 if (fk_GameWeak > 0)
                 {
                     jobId = jobId.IsExisting()
-                        ? BackgroundJob.ContinueJobWith(jobId, () => UpdateGame(game, fk_Home, fk_Away, fk_GameWeak))
-                        : BackgroundJob.Enqueue(() => UpdateGame(game, fk_Home, fk_Away, fk_GameWeak));
+                        ? BackgroundJob.ContinueJobWith(jobId, () => UpdateGame(_365CompetitionsEnum, game, fk_Home, fk_Away, fk_GameWeak))
+                        : BackgroundJob.Enqueue(() => UpdateGame(_365CompetitionsEnum, game, fk_Home, fk_Away, fk_GameWeak));
                 }
             }
 
             jobId = jobId.IsExisting()
-                    ? BackgroundJob.ContinueJobWith(jobId, () => UpdateGameWeakDeadline(season.Id))
-                    : BackgroundJob.Enqueue(() => UpdateGameWeakDeadline(season.Id));
+                    ? BackgroundJob.ContinueJobWith(jobId, () => UpdateGameWeakDeadline(_365CompetitionsEnum, season.Id))
+                    : BackgroundJob.Enqueue(() => UpdateGameWeakDeadline(_365CompetitionsEnum, season.Id));
         }
 
-        public async Task UpdateGame(Games game, int fk_Home, int fk_Away, int fk_GameWeak)
+        public async Task UpdateGame(
+            _365CompetitionsEnum _365CompetitionsEnum,
+            Games game,
+            int fk_Home,
+            int fk_Away,
+            int fk_GameWeak)
         {
             DateTime startTime = game.StartTimeVal;
 
@@ -123,9 +131,9 @@ namespace FantasyLogic.DataMigration.GamesData
 
                 GameResultDataHelper gameResultDataHelper = new(_unitOfWork, _365Services);
 
-                string jobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, false, false, false, false, false), startTime);
-                string secondJobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, true, false, false, false, false), startTime.AddMinutes(120));
-                string thirdJobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, true, false, false, true, false), startTime.AddMinutes(200));
+                string jobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(_365CompetitionsEnum, new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, false, false, false, false, false), startTime);
+                string secondJobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(_365CompetitionsEnum, new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, true, false, false, false, false), startTime.AddMinutes(120));
+                string thirdJobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(_365CompetitionsEnum, new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, true, false, false, true, false), startTime.AddMinutes(200));
 
                 match.JobId = jobId;
                 match.SecondJobId = secondJobId;
@@ -135,7 +143,7 @@ namespace FantasyLogic.DataMigration.GamesData
             }
         }
 
-        public async Task UpdateGameWeakDeadline(int fk_Season)
+        public async Task UpdateGameWeakDeadline(_365CompetitionsEnum _365CompetitionsEnum, int fk_Season)
         {
             var teamGameWeaks = _unitOfWork.Season.GetTeamGameWeaks(new TeamGameWeakParameters
             {
@@ -168,7 +176,7 @@ namespace FantasyLogic.DataMigration.GamesData
 
                     if (deadline > DateTime.UtcNow)
                     {
-                        gameWeak.JobId = BackgroundJob.Schedule(() => UpdateCurrentGameWeak(gameWeak.Id, false, 0, false, false), deadline);
+                        gameWeak.JobId = BackgroundJob.Schedule(() => UpdateCurrentGameWeak(_365CompetitionsEnum, gameWeak.Id, false, 0, false, false), deadline);
 
                         gameWeak.SecondJobId = BackgroundJob.Schedule(() => SendNotificationForGameWeakDeadLine(gameWeak.Id), deadline.AddMinutes(-60));
                     }
@@ -180,11 +188,11 @@ namespace FantasyLogic.DataMigration.GamesData
             }
         }
 
-        public async Task UpdateCurrentGameWeak(int id, bool resetTeam, int fk_AccounTeam = 0, bool inDebug = false, bool skipReset = false)
+        public async Task UpdateCurrentGameWeak(_365CompetitionsEnum _365CompetitionsEnum, int id, bool resetTeam, int fk_AccounTeam = 0, bool inDebug = false, bool skipReset = false)
         {
             if (!skipReset)
             {
-                _unitOfWork.Season.ResetCurrentGameWeaks();
+                _unitOfWork.Season.ResetCurrentGameWeaks(_365CompetitionsEnum);
             }
 
             GameWeak gameWeak = await _unitOfWork.Season.FindGameWeakbyId(id, trackChanges: !skipReset);

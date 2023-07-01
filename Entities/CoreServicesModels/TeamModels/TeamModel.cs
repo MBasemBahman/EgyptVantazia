@@ -1,4 +1,5 @@
-﻿using Entities.RequestFeatures;
+﻿using Entities.CoreServicesModels.SeasonModels;
+using Entities.RequestFeatures;
 
 namespace Entities.CoreServicesModels.TeamModels
 {
@@ -14,6 +15,10 @@ namespace Entities.CoreServicesModels.TeamModels
         public DateTime? CreatedAtTo { get; set; }
 
         public bool? IsActive { get; set; }
+
+        public int Fk_Season { get; set; }
+
+        public int _365_CompetitionsId { get; set; }
     }
 
     public class TeamModel : AuditImageEntity
@@ -35,6 +40,13 @@ namespace Entities.CoreServicesModels.TeamModels
 
         [DisplayName(nameof(IsActive))]
         public bool IsActive { get; set; }
+
+        [DisplayName(nameof(Season))]
+        [ForeignKey(nameof(Season))]
+        public int Fk_Season { get; set; }
+
+        [DisplayName(nameof(Season))]
+        public SeasonModel Season { get; set; }
     }
 
     public class TeamCreateOrEditModel
@@ -67,6 +79,8 @@ namespace Entities.CoreServicesModels.TeamModels
 
         [DisplayName(nameof(IsActive))]
         public bool IsActive { get; set; }
+
+        public int Fk_Season { get; set; }
 
         public TeamLangModel TeamLang { get; set; }
     }

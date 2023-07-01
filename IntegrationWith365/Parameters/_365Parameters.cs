@@ -8,8 +8,6 @@
 
         public int UserCountryId { get; set; } = 131;
 
-        public int Competitions { get; set; } = 552;
-
         public int AppTypeId { get; set; } = 5;
 
         public string TimezoneName { get; set; } = "Africa/Cairo";

@@ -160,6 +160,7 @@ namespace API.Utility
                 userAuthenticated.ShowAds = account.ShowAds;
                 userAuthenticated.Country = account.Country;
                 userAuthenticated.FavouriteTeam = account.FavouriteTeam;
+                userAuthenticated.AccountTeams = account.AccountTeams;
             }
             return userAuthenticated;
         }

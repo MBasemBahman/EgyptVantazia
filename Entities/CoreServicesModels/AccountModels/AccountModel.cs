@@ -101,6 +101,8 @@ namespace Entities.CoreServicesModels.AccountModels
 
         public AccountTeamModel AccountTeam { get; set; }
 
+        public List<AccountTeamModel> AccountTeams { get; set; }
+
         [DisplayName(nameof(ShowAds))]
         public bool ShowAds { get; set; }
     }

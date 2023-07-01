@@ -15,6 +15,7 @@ namespace Repository.DBModels.SeasonModels
             return FindByCondition(a => true, trackChanges)
                    .Filter(parameters.Id,
                            parameters._365_SeasonId,
+                           parameters._365_CompetitionsId,
                            parameters.IsCurrent);
         }
 
@@ -48,11 +49,13 @@ namespace Repository.DBModels.SeasonModels
             this IQueryable<Season> Seasons,
             int id,
             string _365_SeasonId,
+            int _365_CompetitionsId,
             bool? isCurrent)
         {
             return Seasons.Where(a => (id == 0 || a.Id == id) &&
                                       (isCurrent == null || a.IsCurrent == isCurrent) &&
-                                      (string.IsNullOrWhiteSpace(_365_SeasonId) || a._365_SeasonId == _365_SeasonId));
+                                      (string.IsNullOrWhiteSpace(_365_SeasonId) || a._365_SeasonId == _365_SeasonId) &&
+                                      (_365_CompetitionsId == 0 || a._365_CompetitionsId == _365_CompetitionsId.ToString()));
         }
 
     }

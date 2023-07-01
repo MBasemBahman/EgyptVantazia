@@ -4,6 +4,7 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20230630182414_Newdmms")]
+    partial class Newdmms
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3906,7 +3909,7 @@ namespace DAL.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("StorageUrl")
                         .HasColumnType("nvarchar(max)");
@@ -3918,6 +3921,9 @@ namespace DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Seasons");
                 });
@@ -4534,9 +4540,6 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Fk_Season")
-                        .HasColumnType("int");
-
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -4553,7 +4556,7 @@ namespace DAL.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ShirtImageUrl")
                         .HasColumnType("nvarchar(max)");
@@ -4572,7 +4575,8 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Fk_Season");
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Teams");
                 });
@@ -4763,7 +4767,7 @@ namespace DAL.Migrations
                             IsExternalLogin = false,
                             LastModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Developer",
-                            Password = "$2a$11$rdqBDWZYVa58OW2kIpQaUOqx/3ggY0A1GYRUlmREvs0X1tWKbxSgu",
+                            Password = "$2a$11$i4td7Rlgq4PTWFrJC2qMX.qQ32uGMM/bvrJdJ3eBsD1TUgFxWFjaK",
                             UserName = "Developer"
                         });
                 });
@@ -5662,17 +5666,6 @@ namespace DAL.Migrations
                     b.Navigation("Team");
                 });
 
-            modelBuilder.Entity("Entities.DBModels.TeamModels.Team", b =>
-                {
-                    b.HasOne("Entities.DBModels.SeasonModels.Season", "Season")
-                        .WithMany("Teams")
-                        .HasForeignKey("Fk_Season")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Season");
-                });
-
             modelBuilder.Entity("Entities.DBModels.TeamModels.TeamLang", b =>
                 {
                     b.HasOne("Entities.DBModels.TeamModels.Team", "Source")
@@ -5900,8 +5893,6 @@ namespace DAL.Migrations
                     b.Navigation("SeasonLang");
 
                     b.Navigation("Standings");
-
-                    b.Navigation("Teams");
                 });
 
             modelBuilder.Entity("Entities.DBModels.SeasonModels.TeamGameWeak", b =>

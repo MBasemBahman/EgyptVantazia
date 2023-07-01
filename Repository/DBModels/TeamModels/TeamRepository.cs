@@ -1,6 +1,6 @@
 ﻿using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.TeamModels;
-
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace Repository.DBModels.TeamModels
 {
@@ -17,7 +17,9 @@ namespace Repository.DBModels.TeamModels
                            parameters._365_TeamId,
                            parameters.CreatedAtFrom,
                            parameters.CreatedAtTo,
-                           parameters.IsActive);
+                           parameters.IsActive,
+                           parameters.Fk_Season,
+                           parameters._365_CompetitionsId);
         }
 
         public async Task<Team> FindById(int id, bool trackChanges)
@@ -34,9 +36,9 @@ namespace Repository.DBModels.TeamModels
                         .FirstOrDefaultAsync();
         }
 
-        public void UpdateActivation(bool isActive)
+        public void UpdateActivation(int _365CompetitionsEnum, bool isActive)
         {
-            List<Team> teams = FindByCondition(a => true, trackChanges: true).ToList();
+            List<Team> teams = FindByCondition(a => a.Season._365_CompetitionsId == _365CompetitionsEnum.ToString(), trackChanges: true).ToList();
             teams.ForEach(a => a.IsActive = isActive);
         }
 
@@ -52,6 +54,7 @@ namespace Repository.DBModels.TeamModels
                 oldEntity._365_TeamId = entity._365_TeamId;
                 //oldEntity.TeamLang.Name = entity.TeamLang.Name;
                 oldEntity.IsActive = entity.IsActive;
+                oldEntity.Fk_Season = entity.Fk_Season;
             }
             else
             {
@@ -72,10 +75,16 @@ namespace Repository.DBModels.TeamModels
             string _365_TeamId,
             DateTime? createdAtFrom,
             DateTime? createdAtTo,
-            bool? isActive)
+            bool? isActive,
+            int fk_Season,
+            int _365_CompetitionsId)
         {
             return Teams.Where(a => (id == 0 || a.Id == id) &&
                                     (isActive == null || a.IsActive == isActive) &&
+
+                                    (fk_Season == 0 || a.Fk_Season == fk_Season) &&
+                                    (_365_CompetitionsId == 0 || a.Season._365_CompetitionsId == _365_CompetitionsId.ToString()) &&
+
                                     (string.IsNullOrWhiteSpace(_365_TeamId) || a._365_TeamId == _365_TeamId) &&
                                     (createdAtFrom == null || a.CreatedAt >= createdAtFrom) &&
                                     (createdAtTo == null || a.CreatedAt <= createdAtTo));

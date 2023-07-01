@@ -4,6 +4,7 @@ using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.SeasonModels;
 using Entities.DBModels.TeamModels;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace CoreServices.Logic
 {
@@ -30,6 +31,7 @@ namespace CoreServices.Logic
                            LastModifiedAt = a.LastModifiedAt,
                            LastModifiedBy = a.LastModifiedBy,
                            _365_SeasonId = a._365_SeasonId,
+                           _365_CompetitionsId = a._365_CompetitionsId,
                            Name = otherLang ? a.SeasonLang.Name : a.Name,
                            ImageUrl = a.StorageUrl + a.ImageUrl,
                            IsCurrent = a.IsCurrent
@@ -82,30 +84,43 @@ namespace CoreServices.Logic
             return _repository.Season.Count();
         }
 
-        public SeasonModel GetCurrentSeason(bool otherLang = false)
+        public SeasonModel GetCurrentSeason(_365CompetitionsEnum _365CompetitionsEnum, bool otherLang = false)
         {
-            return GetSeasons(new SeasonParameters { IsCurrent = true }, otherLang: otherLang)
+            return GetSeasons(new SeasonParameters
+            {
+                IsCurrent = true,
+                _365_CompetitionsId = (int)_365CompetitionsEnum
+            }, otherLang: otherLang)
                    .OrderByDescending(a => a.Id)
                    .FirstOrDefault();
         }
 
-        public SeasonModelForCalc GetCurrentSeason()
+        public SeasonModelForCalc GetCurrentSeason(_365CompetitionsEnum _365CompetitionsEnum)
         {
             return _repository.Season
-                       .FindAll(new SeasonParameters { IsCurrent = true }, trackChanges: false)
+                       .FindAll(new SeasonParameters
+                       {
+                           IsCurrent = true,
+                           _365_CompetitionsId = (int)_365CompetitionsEnum
+                       }, trackChanges: false)
                        .Select(a => new SeasonModelForCalc
                        {
                            Id = a.Id,
-                           _365_SeasonId = a._365_SeasonId
+                           _365_SeasonId = a._365_SeasonId,
+                           _365_CompetitionsId = a._365_CompetitionsId,
                        })
                        .OrderByDescending(a => a.Id)
                        .FirstOrDefault();
         }
 
-        public int GetCurrentSeasonId()
+        public int GetCurrentSeasonId(_365CompetitionsEnum _365CompetitionsEnum)
         {
             return _repository.Season
-                       .FindAll(new SeasonParameters { IsCurrent = true }, trackChanges: false)
+                       .FindAll(new SeasonParameters
+                       {
+                           IsCurrent = true,
+                           _365_CompetitionsId = (int)_365CompetitionsEnum
+                       }, trackChanges: false)
                        .OrderByDescending(a => a.Id)
                        .Select(a => a.Id)
                        .FirstOrDefault();
@@ -208,6 +223,7 @@ namespace CoreServices.Logic
                                Name = otherLang ? a.Season.SeasonLang.Name : a.Season.Name,
                                ImageUrl = a.Season.StorageUrl + a.Season.ImageUrl,
                                _365_SeasonId = a.Season._365_SeasonId,
+                               _365_CompetitionsId = a.Season._365_CompetitionsId
                            },
                            IsCurrent = a.IsCurrent,
                            IsNext = a.IsNext,
@@ -238,25 +254,36 @@ namespace CoreServices.Logic
                        .FindAll(parameters, trackChanges: false);
         }
 
-        public GameWeakModel GetCurrentGameWeak(bool otherLang = false)
+        public GameWeakModel GetCurrentGameWeak(_365CompetitionsEnum _365CompetitionsEnum, bool otherLang = false)
         {
-            return GetGameWeaks(new GameWeakParameters { IsCurrent = true, IsCurrentSeason = true }, otherLang: otherLang)
+            return GetGameWeaks(new GameWeakParameters
+            {
+                IsCurrent = true,
+                IsCurrentSeason = true,
+                _365_CompetitionsId = (int)_365CompetitionsEnum
+            }, otherLang: otherLang)
                 .OrderByDescending(a => a.Order)
                    .FirstOrDefault();
         }
 
-        public GameWeakModelForCalc GetCurrentGameWeak()
+        public GameWeakModelForCalc GetCurrentGameWeak(_365CompetitionsEnum _365CompetitionsEnum)
         {
             return GetGameWeaksForCalc(new GameWeakParameters
             {
                 IsCurrent = true,
-                IsCurrentSeason = true
+                IsCurrentSeason = true,
+                _365_CompetitionsId = (int)_365CompetitionsEnum
             }).FirstOrDefault();
         }
 
-        public int GetCurrentGameWeakId()
+        public int GetCurrentGameWeakId(_365CompetitionsEnum _365CompetitionsEnum)
         {
-            return GetGameWeaks(new GameWeakParameters { IsCurrent = true, IsCurrentSeason = true }, otherLang: false)
+            return GetGameWeaks(new GameWeakParameters
+            {
+                IsCurrent = true,
+                IsCurrentSeason = true,
+                _365_CompetitionsId = (int)_365CompetitionsEnum
+            }, otherLang: false)
                    .OrderByDescending(a => a.Order)
                    .Select(a => a.Id)
                    .FirstOrDefault();
@@ -331,9 +358,9 @@ namespace CoreServices.Logic
             return await _repository.GameWeak.FindById(id, trackChanges);
         }
 
-        public void ResetCurrentGameWeaks()
+        public void ResetCurrentGameWeaks(_365CompetitionsEnum _365CompetitionsEnum)
         {
-            _repository.GameWeak.ResetCurrent();
+            _repository.GameWeak.ResetCurrent((int)_365CompetitionsEnum);
         }
 
         public async Task<GameWeak> FindGameWeakby365Id(string id, int fk_Season, bool trackChanges)

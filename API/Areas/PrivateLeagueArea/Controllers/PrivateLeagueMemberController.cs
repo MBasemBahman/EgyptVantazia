@@ -25,6 +25,7 @@ namespace API.Areas.PrivateLeagueArea.Controllers
         [HttpGet]
         [Route(nameof(GetPrivateLeagueMembers))]
         public async Task<IEnumerable<PrivateLeagueMemberModel>> GetPrivateLeagueMembers(
+            [FromQuery] _365CompetitionsEnum _365CompetitionsEnum,
         [FromQuery] PrivateLeagueMemberParameters parameters)
         {
             if (!(parameters.Fk_PrivateLeague > 0 || parameters.Fk_Account > 0))
@@ -32,7 +33,7 @@ namespace API.Areas.PrivateLeagueArea.Controllers
                 throw new Exception("Not Valid!");
             }
 
-            int season = _unitOfWork.Season.GetCurrentSeasonId();
+            int season = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum);
             parameters.Fk_Season = season;
             parameters.HaveTeam = true;
             parameters.IgnoreZeroPoints = true;
@@ -73,13 +74,14 @@ namespace API.Areas.PrivateLeagueArea.Controllers
         [HttpPost]
         [Route(nameof(JoinPrivateLeague))]
         public async Task<PrivateLeagueModel> JoinPrivateLeague(
+        [FromQuery]_365CompetitionsEnum _365CompetitionsEnum,
         [FromQuery, BindRequired] string uniqueCode)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
-            int currentSeason = _unitOfWork.Season.GetCurrentSeasonId();
+            int currentSeason = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum);
             if (currentSeason < 0)
             {
                 throw new Exception("Season not started yet!");

@@ -33,10 +33,12 @@ namespace API.Areas.PaymentArea.Controllers
 
         [HttpPost]
         [Route(nameof(RequestPayment))]
-        public async Task<string> RequestPayment([FromBody] RequestPaymentDto model)
+        public async Task<string> RequestPayment(
+            [FromQuery] _365CompetitionsEnum _365CompetitionsEnum,
+            [FromBody] RequestPaymentDto model)
         {
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
-            SeasonModelForCalc season = _unitOfWork.Season.GetCurrentSeason();
+            SeasonModelForCalc season = _unitOfWork.Season.GetCurrentSeason(_365CompetitionsEnum);
 
             SubscriptionModel prevSubscription = _unitOfWork.Subscription.GetSubscriptions(new SubscriptionParameters
             {

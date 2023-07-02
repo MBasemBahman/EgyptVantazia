@@ -41,7 +41,7 @@ namespace Entities.DBModels.AccountModels
 
         [DisplayName(nameof(Season))]
         [ForeignKey(nameof(Season))]
-        public int? Fk_Season { get; set; }
+        public int Fk_Season { get; set; }
 
         [DisplayName(nameof(Season))]
         public Season Season { get; set; }

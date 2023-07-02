@@ -1,5 +1,6 @@
 ﻿using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.LocationModels;
+using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.ResponseFeatures;
 
@@ -131,6 +132,8 @@ namespace Entities.AuthenticationModels
         public int Fk_AccountTeam { get; set; }
 
         public List<AccountTeamModel> AccountTeams { get; set; }
+        public int? Fk_Season { get; set; }
+        public SeasonModel Season { get; set; }
         public int Fk_Country { get; set; }
         public CountryModel Country { get; set; }
 

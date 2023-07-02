@@ -48,6 +48,8 @@ namespace CoreServices.Logic
                                   Season = new SeasonModel
                                   {
                                       Name = otherLang ? a.Season.SeasonLang.Name : a.Season.Name,
+                                      _365_CompetitionsId = a.Season._365_CompetitionsId,
+                                      _365_SeasonId = a.Season._365_SeasonId,
                                   },
                                   PhoneNumberTwo = a.PhoneNumberTwo,
                                   ShowAds = a.ShowAds,

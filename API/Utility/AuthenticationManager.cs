@@ -161,6 +161,8 @@ namespace API.Utility
                 userAuthenticated.Country = account.Country;
                 userAuthenticated.FavouriteTeam = account.FavouriteTeam;
                 userAuthenticated.AccountTeams = account.AccountTeams;
+                userAuthenticated.Season = account.Season;
+                userAuthenticated.Fk_Season = account.Fk_Season;
             }
             return userAuthenticated;
         }

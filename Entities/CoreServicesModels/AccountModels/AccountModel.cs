@@ -92,7 +92,7 @@ namespace Entities.CoreServicesModels.AccountModels
 
         [DisplayName(nameof(Season))]
         [ForeignKey(nameof(Season))]
-        public int? Fk_Season { get; set; }
+        public int Fk_Season { get; set; }
 
         [DisplayName(nameof(Season))]
         public SeasonModel Season { get; set; }
@@ -135,7 +135,7 @@ namespace Entities.CoreServicesModels.AccountModels
         public int Fk_Nationality { get; set; }
 
         [DisplayName(nameof(Season))]
-        public int? Fk_Season { get; set; }
+        public int Fk_Season { get; set; }
 
         [DisplayName(nameof(Address))]
         [DataType(DataType.MultilineText)]
@@ -157,7 +157,7 @@ namespace Entities.CoreServicesModels.AccountModels
         public int Fk_Nationality { get; set; }
 
         [DisplayName("Season")]
-        public int? Fk_Season { get; set; }
+        public int Fk_Season { get; set; }
 
 
         [DisplayName(nameof(Address))]

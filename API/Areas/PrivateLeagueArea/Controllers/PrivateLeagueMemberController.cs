@@ -38,10 +38,10 @@ namespace API.Areas.PrivateLeagueArea.Controllers
             parameters.HaveTeam = true;
             parameters.IgnoreZeroPoints = true;
 
-            //if (parameters.Fk_PrivateLeague == (int)PrivateLeagueEnum.OfficialLeague)
-            //{
-            //    parameters.IgnoreGoldSubscription = true;
-            //}
+            if (parameters.Fk_PrivateLeague == (int)PrivateLeagueEnum.OfficialLeague)
+            {
+                parameters.IgnoreGoldSubscription = true;
+            }
 
             PagedList<PrivateLeagueMemberModel> data = await _unitOfWork.PrivateLeague.GetPrivateLeagueMemberPaged(parameters);
 

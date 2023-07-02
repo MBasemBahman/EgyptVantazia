@@ -133,7 +133,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                     Id = fk_GameWeak
                 }).FirstOrDefault();
 
-                AccountTeamCustemClac clac = _fantasyUnitOfWork.AccountTeamCalc.AccountTeamPlayersCalculations(data.Fk_AcountTeamGameWeek, id, gameWeak, gameWeak.Fk_Season, false);
+                AccountTeamCustemClac clac = _fantasyUnitOfWork.AccountTeamCalc.AccountTeamPlayersCalculations(data.Fk_AcountTeamGameWeek, id, gameWeak, gameWeak.Fk_Season, saveChanges: false, IgnoreTransfarePoints: true);
                 if (clac != null)
                 {
                     data.CurrentGameWeakPoints = clac.TotalPoints ?? 0;

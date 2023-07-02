@@ -81,13 +81,13 @@ namespace FantasyLogic.Calculations
                 }
                 if (inDebug)
                 {
-                    _ = AccountTeamPlayersCalculations(accountTeamGameWeak.Id, accountTeamGameWeak.Fk_AccountTeam, gameWeak, fk_Season, true);
+                    _ = AccountTeamPlayersCalculations(accountTeamGameWeak.Id, accountTeamGameWeak.Fk_AccountTeam, gameWeak, fk_Season, saveChanges: true, IgnoreTransfarePoints: false);
                 }
                 else
                 {
                     string recurringId = AccountGameWeakTeamId + $"{accountTeamGameWeak.Id}";
 
-                    string hangfireJobId = BackgroundJob.Enqueue(() => AccountTeamPlayersCalculations(accountTeamGameWeak.Id, accountTeamGameWeak.Fk_AccountTeam, gameWeak, fk_Season, true));
+                    string hangfireJobId = BackgroundJob.Enqueue(() => AccountTeamPlayersCalculations(accountTeamGameWeak.Id, accountTeamGameWeak.Fk_AccountTeam, gameWeak, fk_Season, true, false));
 
                     _hangFireCustomJob.ReplaceJob(hangfireJobId, recurringId);
                 }
@@ -131,7 +131,7 @@ namespace FantasyLogic.Calculations
             //}
         }
 
-        public AccountTeamCustemClac AccountTeamPlayersCalculations(int fk_AccountTeamGameWeak, int fk_AccountTeam, GameWeakModelForCalc gameWeak, int fk_Season, bool saveChanges = true)
+        public AccountTeamCustemClac AccountTeamPlayersCalculations(int fk_AccountTeamGameWeak, int fk_AccountTeam, GameWeakModelForCalc gameWeak, int fk_Season, bool saveChanges = true, bool IgnoreTransfarePoints = false)
         {
             bool gameWeakEnd = _unitOfWork.Season.CheckIfGameWeakEnded(gameWeak.Id);
 
@@ -552,7 +552,7 @@ namespace FantasyLogic.Calculations
                 totalPoints *= 2;
             }
 
-            accountTeamGameWeak.TotalPoints = (int)totalPoints + accountTeamGameWeak.TansfarePoints;
+            accountTeamGameWeak.TotalPoints = (IgnoreTransfarePoints && totalPoints == 0.0) ? (int)totalPoints : (int)totalPoints + accountTeamGameWeak.TansfarePoints;
             accountTeamGameWeak.BenchPoints = (int)benchPoints;
 
             accountTeamGameWeak.PrevPoints = prevPoints;

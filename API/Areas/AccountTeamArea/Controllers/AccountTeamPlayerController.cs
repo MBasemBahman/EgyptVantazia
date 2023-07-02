@@ -125,7 +125,7 @@ namespace API.Areas.AccountTeamArea.Controllers
 
                 if (acountTeamGameWeek > 0)
                 {
-                    AccountTeamCustemClac clac = _fantasyUnitOfWork.AccountTeamCalc.AccountTeamPlayersCalculations(acountTeamGameWeek, parameters.Fk_AccountTeam, currentGamWeak, currentGamWeak.Fk_Season, false);
+                    AccountTeamCustemClac clac = _fantasyUnitOfWork.AccountTeamCalc.AccountTeamPlayersCalculations(acountTeamGameWeek, parameters.Fk_AccountTeam, currentGamWeak, currentGamWeak.Fk_Season, saveChanges: false, IgnoreTransfarePoints: false);
                     if (clac != null && clac.Players != null && clac.Players.Any())
                     {
                         data.ForEach(player =>
@@ -300,7 +300,7 @@ namespace API.Areas.AccountTeamArea.Controllers
         [HttpPut]
         [Route(nameof(Update))]
         public async Task<bool> Update(
-            [FromQuery] _365CompetitionsEnum _365CompetitionsEnum, 
+            [FromQuery] _365CompetitionsEnum _365CompetitionsEnum,
             [FromBody] AccountTeamPlayerBulkUpdateModel model)
         {
             _ = (bool)Request.HttpContext.Items[ApiConstants.Language];

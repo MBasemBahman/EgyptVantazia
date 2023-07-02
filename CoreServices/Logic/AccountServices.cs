@@ -44,6 +44,11 @@ namespace CoreServices.Logic
                                   Fk_Country = a.Fk_Country,
                                   Fk_FavouriteTeam = a.Fk_FavouriteTeam,
                                   Fk_Nationality = a.Fk_Nationality,
+                                  Fk_Season = a.Fk_Season,
+                                  Season = new SeasonModel
+                                  {
+                                      Name = otherLang ? a.Season.SeasonLang.Name : a.Season.Name,
+                                  },
                                   PhoneNumberTwo = a.PhoneNumberTwo,
                                   ShowAds = a.ShowAds,
                                   Fk_AccountTeam = a.AccountTeams

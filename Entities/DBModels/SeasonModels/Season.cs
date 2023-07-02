@@ -39,6 +39,9 @@ namespace Entities.DBModels.SeasonModels
         [DisplayName(nameof(Teams))]
         public List<Team> Teams { get; set; }
 
+        [DisplayName(nameof(Accounts))]
+        public List<Account> Accounts { get; set; }
+
         public SeasonLang SeasonLang { get; set; }
     }
 

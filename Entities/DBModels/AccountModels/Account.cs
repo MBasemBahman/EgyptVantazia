@@ -1,6 +1,7 @@
 ﻿using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.LocationModels;
 using Entities.DBModels.PrivateLeagueModels;
+using Entities.DBModels.SeasonModels;
 using Entities.DBModels.TeamModels;
 using Entities.DBModels.UserModels;
 
@@ -37,6 +38,13 @@ namespace Entities.DBModels.AccountModels
 
         [DisplayName(nameof(Nationality))]
         public Country Nationality { get; set; }
+
+        [DisplayName(nameof(Season))]
+        [ForeignKey(nameof(Season))]
+        public int? Fk_Season { get; set; }
+
+        [DisplayName(nameof(Season))]
+        public Season Season { get; set; }
 
         [DisplayName(nameof(Address))]
         [DataType(DataType.MultilineText)]

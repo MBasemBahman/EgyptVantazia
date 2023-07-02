@@ -1,7 +1,9 @@
 ﻿using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.LocationModels;
+using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.LocationModels;
+using Entities.DBModels.SeasonModels;
 using Entities.RequestFeatures;
 
 namespace Entities.CoreServicesModels.AccountModels
@@ -41,6 +43,8 @@ namespace Entities.CoreServicesModels.AccountModels
 
         public int Fk_Nationality { get; set; }
 
+        public int Fk_Season { get; set; }
+
         public int Fk_FavouriteTeam { get; set; }
 
         [DisplayName(nameof(ShowAds))]
@@ -79,12 +83,19 @@ namespace Entities.CoreServicesModels.AccountModels
         [DisplayName(nameof(Country))]
         public CountryModel Country { get; set; }
 
-        [DisplayName(nameof(Nationality))]
-        [ForeignKey(nameof(Nationality))]
+        [DisplayName(nameof(Season))]
+        [ForeignKey(nameof(Season))]
         public int Fk_Nationality { get; set; }
 
-        [DisplayName(nameof(Nationality))]
+        [DisplayName(nameof(Season))]
         public CountryModel Nationality { get; set; }
+
+        [DisplayName(nameof(Season))]
+        [ForeignKey(nameof(Season))]
+        public int? Fk_Season { get; set; }
+
+        [DisplayName(nameof(Season))]
+        public SeasonModel Season { get; set; }
 
         [DisplayName(nameof(Address))]
         [DataType(DataType.MultilineText)]
@@ -123,6 +134,9 @@ namespace Entities.CoreServicesModels.AccountModels
         [DisplayName(nameof(Fk_Nationality))]
         public int Fk_Nationality { get; set; }
 
+        [DisplayName(nameof(Season))]
+        public int? Fk_Season { get; set; }
+
         [DisplayName(nameof(Address))]
         [DataType(DataType.MultilineText)]
         public string Address { get; set; }
@@ -141,6 +155,10 @@ namespace Entities.CoreServicesModels.AccountModels
 
         [DisplayName("Nationality")]
         public int Fk_Nationality { get; set; }
+
+        [DisplayName("Season")]
+        public int? Fk_Season { get; set; }
+
 
         [DisplayName(nameof(Address))]
         [DataType(DataType.MultilineText)]

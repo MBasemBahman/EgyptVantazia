@@ -17,6 +17,16 @@
 
             <div class="row g-1 mb-md-1">
                
+                <div class="col-md-6 col-12">
+                    <div class="mb-1">
+                        <label asp-for="Fk_Season" class="form-label"></label>
+                        <select class="form-control select2" asp-for="Fk_Season" asp-items="@(new SelectList(ViewData["Season"] as Dictionary<string, string>, "Key", "Value"))">
+                            <option value="0">@Localizer.Get("All")</option>
+                        </select>
+                        <span asp-validation-for="Fk_Season" class="text-danger"></span>
+                    </div>
+                </div>
+                
                 <div class="col-md-6">
                     <label asp-for="CreatedAtFrom" class="form-label"></label>
                     <div class="mb-0">

@@ -122,6 +122,7 @@
 
 <!-- END: Content-->
 @section scripts {
+    <script src="~/apis/site.js"></script>
     <script src="~/apis/charts.js"></script>
     <script>
         $(document).ready(function () {
@@ -157,6 +158,14 @@
             // Start Updating Modals
 
             // start update_game_result
+            $(document).on("change", "select[name=Fk_GameResultSeason]", function (e) {
+                e.preventDefault();
+
+                let fk_Season = $(this).val();
+                
+                getGameWeak($("select[name=Fk_GameResultGameWeak]"), fk_Season, true);
+            });
+            
             $(document).on("click", ".update_game_result", function (e) {
                 e.preventDefault();
 
@@ -164,7 +173,7 @@
             });
 
             $(document).on("click", ".update_game_result_submit", function (e) {
-                let fk_GameWeak = $("select[name=Fk_GameWeak]").val();
+                let fk_GameWeak = $("select[name=Fk_GameResultGameWeak]").val();
                 let _365_MatchId = $("input[name=_365_MatchId]").val();
                 let runBonus = $("select[name=RunBonus]").val();
 
@@ -184,6 +193,14 @@
             // end update_game_result
 
             // start update_account_team_game_weak_ranking
+            $(document).on("change", "select[name=Fk_RankingSeason]", function (e) {
+                e.preventDefault();
+
+                let fk_Season = $(this).val();
+                
+                getGameWeak($("select[name=Fk_RankingGameWeak]"), fk_Season, true);
+            });
+            
             $(document).on("click", ".update_account_team_game_weak_ranking", function (e) {
                 e.preventDefault();
 
@@ -191,7 +208,7 @@
             });
 
             $(document).on("click", ".update_account_team_game_weak_ranking_submit", function (e) {
-                let fk_GameWeak = $("select[name=Fk_GameWeak]").val();
+                let fk_GameWeak = $("select[name=Fk_RankingGameWeak]").val();
 
                 $.ajax({
                     url: '@Url.Action("UpdateAccountTeamGameWeakRanking", "Home", new {area = "Dashboard"})',
@@ -214,7 +231,7 @@
             });
 
             $(document).on("click", ".update_private_league_ranking_submit", function (e) {
-                let fk_GameWeak = $("select[name=Fk_GameWeak]").val();
+                // let fk_GameWeak = $("select[name=Fk_GameWeak]").val();
 
                 $.ajax({
                     url: '@Url.Action("UpdatePrivateLeagueRanking", "Home", new {area = "Dashboard"})',
@@ -228,6 +245,14 @@
             // end update_private_league_ranking
 
             // start update_account_team_points
+            $(document).on("change", "select[name=Fk_PointsSeason]", function (e) {
+                e.preventDefault();
+
+                let fk_Season = $(this).val();
+                
+                getGameWeak($("select[name=Fk_PointsGameWeak]"), fk_Season, true);
+            });
+            
             $(document).on("click", ".update_account_team_points", function (e) {
                 e.preventDefault();
 
@@ -235,7 +260,7 @@
             });
 
             $(document).on("click", ".update_account_team_points_submit", function (e) {
-                let fk_GameWeak = $("select[name=Fk_GameWeak]").val();
+                let fk_GameWeak = $("select[name=Fk_PointsGameWeak]").val();
 
                 $.ajax({
                     url: '@Url.Action("UpdateAccountTeamPoints", "Home", new {area = "Dashboard"})',

@@ -178,6 +178,7 @@ else
 }
 <!-- END: Content-->
 @section scripts{
+    <script src="~/apis/site.js"></script>
     <script>
 
         function LoadTable() {
@@ -253,7 +254,6 @@ else
                 }
             };
        
-
         $(document).ready(function () {
             LoadTable();
 
@@ -286,6 +286,10 @@ else
                     });
         });
         
-        
+        $(document).on("change", "#Fk_Season", function() {
+          let fk_Season = $(this).val();
+            
+          getTeams($("#Fk_Teams"), fk_Season, false);
+        });
     </script>
 }

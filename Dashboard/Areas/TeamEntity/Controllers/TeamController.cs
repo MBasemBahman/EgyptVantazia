@@ -1,4 +1,5 @@
 ﻿using Dashboard.Areas.TeamEntity.Models;
+using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.TeamModels;
 using Entities.RequestFeatures;
@@ -29,11 +30,14 @@ namespace Dashboard.Areas.TeamEntity.Controllers
 
         public IActionResult Index()
         {
-            _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             TeamFilter filter = new();
 
             ViewData[ViewDataConstants.AccessLevel] = (DashboardAccessLevelModel)Request.HttpContext.Items[ViewDataConstants.AccessLevel];
+            
+            SetViewData(IsProfile: false, id: 0, otherLang);
+            
             return View(filter);
         }
 
@@ -204,7 +208,7 @@ namespace Dashboard.Areas.TeamEntity.Controllers
         {
             ViewData["IsProfile"] = IsProfile;
             ViewData["id"] = id;
-
+            ViewData["Season"] = _unitOfWork.Season.GetSeasonLookUp(new SeasonParameters(), otherLang);
         }
 
 

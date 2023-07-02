@@ -57,6 +57,23 @@ namespace Dashboard.Areas.Dashboard.Controllers
 
             return Json(result);
         }
+        
+        [HttpGet]
+        public JsonResult GetTeams(int fk_Season)
+        {
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
+            var result = _unitOfWork.Team.GetTeams(new TeamParameters
+            {
+                Fk_Season = fk_Season
+            }, otherLang).Select(a => new
+            {
+                a.Id,
+                a.Name
+            }).ToList();
+
+            return Json(result);
+        }
 
         [HttpGet]
         public JsonResult GetTeamGameWeak(int fk_Team, int fk_GameWeak)

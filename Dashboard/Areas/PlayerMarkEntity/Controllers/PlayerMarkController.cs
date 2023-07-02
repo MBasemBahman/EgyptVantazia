@@ -48,6 +48,7 @@ namespace Dashboard.Areas.PlayerMarkEntity.Controllers
             ViewData["Marks"] = _unitOfWork.PlayerMark.GetMarksLookUp(new MarkParameters(), otherLang);
             ViewData["GameWeaks"] = _unitOfWork.Season.GetGameWeakLookUp(new GameWeakParameters(), otherLang);
             ViewData["Teams"] = _unitOfWork.Team.GetTeamLookUp(new TeamParameters(), otherLang);
+            ViewData["Season"] = _unitOfWork.Season.GetSeasonLookUp(new SeasonParameters(), otherLang);
 
             return View(filter);
         }

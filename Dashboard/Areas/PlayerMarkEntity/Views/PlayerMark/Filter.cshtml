@@ -20,6 +20,15 @@
                 {
                     <div class="col-md-6 col-12">
                         <div class="mb-1">
+                            <label class="form-label">@Localizer.Get("Season")</label>
+                            <select asp-for="Fk_Season" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["Season"] as Dictionary<string,string>,"Key","Value"))">
+                                <option value="0">@Localizer.Get("All")</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-12">
+                        <div class="mb-1">
                             <label class="form-label">@Localizer.Get("Teams")</label>
                             <select asp-for="Fk_Teams" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["Teams"] as Dictionary<string,string>,"Key","Value"))">
                                 <option value="">@Localizer.Get("All")</option>

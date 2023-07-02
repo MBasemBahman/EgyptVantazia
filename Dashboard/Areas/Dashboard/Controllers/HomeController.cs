@@ -58,6 +58,7 @@ namespace Dashboard.Areas.Dashboard.Controllers
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             ViewData["CurrentGameWeak"] = _unitOfWork.Season.GetCurrentGameWeakId(_365CompetitionsEnum.Egypt);
+            ViewData["Season"] = _unitOfWork.Season.GetSeasonLookUp(new SeasonParameters(), otherLang);
             ViewData["GameWeak"] = _unitOfWork.Season.GetGameWeakLookUp(new GameWeakParameters(), otherLang);
 
             ViewData["auth"] = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];

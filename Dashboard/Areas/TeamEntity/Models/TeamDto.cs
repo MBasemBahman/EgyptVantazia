@@ -1,5 +1,6 @@
 ﻿using Entities.CoreServicesModels.TeamModels;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Dashboard.Areas.TeamEntity.Models
 {
@@ -10,6 +11,8 @@ namespace Dashboard.Areas.TeamEntity.Models
 
         public DateTime? CreatedAtTo { get; set; }
 
+        [DisplayName("Season")]
+        public int Fk_Season { get; set; }
     }
     public class TeamDto : TeamModel
     {

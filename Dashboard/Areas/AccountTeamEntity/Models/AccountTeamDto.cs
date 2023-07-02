@@ -11,8 +11,6 @@ namespace Dashboard.Areas.AccountTeamEntity.Models
         public int Id { get; set; }
 
         public int Fk_Account { get; set; }
-        [DisplayName(nameof(GameWeak))]
-        public int Fk_GameWeak { get; set; }
 
         public double? PointsFrom { get; set; }
         public double? PointsTo { get; set; }

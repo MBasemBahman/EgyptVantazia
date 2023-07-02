@@ -28,6 +28,11 @@
             _ = DBContext.Set<T>().Add(entity);
         }
 
+        public void Create(List<T> entities)
+        {
+            DBContext.Set<T>().AddRange(entities);
+        }
+
         public void Delete(T entity)
         {
             _ = DBContext.Set<T>().Remove(entity);
@@ -37,5 +42,11 @@
         {
             DBContext.Set<T>().RemoveRange(entities);
         }
+
+        public void Delete(IQueryable<T> quary)
+        {
+            quary.ExecuteDelete();
+        }
+
     }
 }

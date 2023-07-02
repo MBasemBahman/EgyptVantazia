@@ -11,6 +11,8 @@ namespace Dashboard.Areas.AccountTeamEntity.Models
         public int Id { get; set; }
 
         public int Fk_Account { get; set; }
+        
+        public int Fk_GameWeak { get; set; }
 
         public double? PointsFrom { get; set; }
         public double? PointsTo { get; set; }

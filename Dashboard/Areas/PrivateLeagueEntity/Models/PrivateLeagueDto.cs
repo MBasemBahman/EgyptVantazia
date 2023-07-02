@@ -1,6 +1,7 @@
 ﻿using Dashboard.Areas.SeasonEntity.Models;
 using Entities.CoreServicesModels.PrivateLeagueModels;
 using System.ComponentModel;
+using Entities.DBModels.SeasonModels;
 
 namespace Dashboard.Areas.PrivateLeagueEntity.Models
 {
@@ -14,8 +15,10 @@ namespace Dashboard.Areas.PrivateLeagueEntity.Models
 
         public bool? HaveMembers { get; set; }
 
+        [DisplayName(nameof(Season))]
         public int Fk_Season { get; set; }
 
+        [DisplayName(nameof(GameWeak))]
         public int? Fk_GameWeak { get; set; }
     }
     

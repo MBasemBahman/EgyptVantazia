@@ -60,6 +60,43 @@
             </div>
 
             <div class="row g-1 mb-md-1">
+                
+                <div class="col-md-4 col-12">
+                    <div class="mb-1">
+                        <label asp-for="IsDelayed" class="form-label"></label>
+                        <select class="form-control select2" asp-for="IsDelayed">
+                            <option value="">@Localizer.Get("All")</option>
+                            <option value="true">@Localizer.Get("Yes")</option>
+                            <option value="false">@Localizer.Get("No")</option>
+                        </select>
+                        <span asp-validation-for="IsDelayed" class="text-danger"></span>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 col-12">
+                    <div class="mb-1">
+                        <label asp-for="IsCanNotEdit" class="form-label"></label>
+                        <select class="form-control select2" asp-for="IsCanNotEdit">
+                            <option value="">@Localizer.Get("All")</option>
+                            <option value="true">@Localizer.Get("Yes")</option>
+                            <option value="false">@Localizer.Get("No")</option>
+                        </select>
+                        <span asp-validation-for="IsCanNotEdit" class="text-danger"></span>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 col-12">
+                    <div class="mb-1">
+                        <label asp-for="IsActive" class="form-label"></label>
+                        <select class="form-control select2" asp-for="IsActive">
+                            <option value="">@Localizer.Get("All")</option>
+                            <option value="true">@Localizer.Get("Yes")</option>
+                            <option value="false">@Localizer.Get("No")</option>
+                        </select>
+                        <span asp-validation-for="IsActive" class="text-danger"></span>
+                    </div>
+                </div>
+                
                 <div class="col-md-6 col-12">
                     <div class="mb-1">
                         <label asp-for="IsEnded" class="form-label"></label>

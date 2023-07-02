@@ -127,6 +127,7 @@
                              data.CreatedAtFrom = $("#CreatedAtFrom").length > 0 ? $("#CreatedAtFrom").val() : '@Model.CreatedAtFrom';
                             data.CreatedAtTo = $("#CreatedAtTo").length > 0 ? $("#CreatedAtTo").val() : '@Model.CreatedAtTo';
                             data.Fk_Season = $("#Fk_Season").length > 0 ? $("#Fk_Season").val() : @Model.Fk_Season;
+                            data.IsActive = $("#IsActive").length > 0 ? $("#IsActive").val() : null;
 
                             return JSON.stringify(data);
                         }

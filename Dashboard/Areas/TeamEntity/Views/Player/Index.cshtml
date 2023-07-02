@@ -219,7 +219,7 @@ else
                             data.Fk_PlayerPosition = $("#Fk_PlayerPosition").length > 0 ? $("#Fk_PlayerPosition").val() : @Model.Fk_PlayerPosition;
                             data.CreatedAtFrom = $("#CreatedAtFrom").length > 0 ? $("#CreatedAtFrom").val() : '@Model.CreatedAtFrom';
                             data.CreatedAtTo = $("#CreatedAtTo").length > 0 ? $("#CreatedAtTo").val() : '@Model.CreatedAtTo';
-
+                            data.IsActive = $("#IsActive").length > 0 ? $("#IsActive").val() : null;
                             
                             return JSON.stringify(data);
                         }

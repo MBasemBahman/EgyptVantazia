@@ -32,18 +32,18 @@
             </div>
 
             <div class="row g-1 mb-md-1">
-                <div class="col-md-12 col-12">
+                <div class="col-md-6 col-12">
                     <div class="mb-1">
-                        <label asp-for="Fk_GameWeak" class="form-label"></label>
-                        <select asp-for="Fk_GameWeak" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["GameWeak"] as Dictionary<string,string>,"Key","Value"))">
+                        <label asp-for="Fk_Season" class="form-label"></label>
+                        <select asp-for="Fk_Season" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["Season"] as Dictionary<string, string>, "Key", "Value"))">
                             <option value="0">@Localizer.Get("All")</option>
                         </select>
                     </div>
                 </div>
                 <div class="col-md-6 col-12">
                     <div class="mb-1">
-                        <label asp-for="Fk_Season" class="form-label"></label>
-                        <select asp-for="Fk_Season" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["Season"] as Dictionary<string, string>, "Key", "Value"))">
+                        <label asp-for="Fk_GameWeak" class="form-label"></label>
+                        <select asp-for="Fk_GameWeak" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["GameWeak"] as Dictionary<string,string>,"Key","Value"))">
                             <option value="0">@Localizer.Get("All")</option>
                         </select>
                     </div>

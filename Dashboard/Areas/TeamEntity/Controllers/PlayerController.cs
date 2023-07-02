@@ -51,7 +51,7 @@ namespace Dashboard.Areas.TeamEntity.Controllers
 
             PlayerParameters parameters = new()
             {
-                SearchColumns = "Id,Name"
+                SearchColumns = "Id,Name,_365_PlayerId"
             };
 
             _ = _mapper.Map(dtParameters, parameters);

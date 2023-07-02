@@ -31,13 +31,15 @@ namespace Dashboard.Areas.PrivateLeagueEntity.Controllers
 
         public IActionResult Index()
         {
-            _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             PrivateLeagueFilter filter = new();
 
             ViewData[ViewDataConstants.AccessLevel] = (DashboardAccessLevelModel)Request.HttpContext.Items[ViewDataConstants.AccessLevel];
 
             ViewData["auth"] = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+            ViewData["Season"] = _unitOfWork.Season.GetSeasonLookUp(new SeasonParameters(), otherLang);
+            ViewData["GameWeak"] = _unitOfWork.Season.GetGameWeakLookUp(new GameWeakParameters(), otherLang);
 
             return View(filter);
         }

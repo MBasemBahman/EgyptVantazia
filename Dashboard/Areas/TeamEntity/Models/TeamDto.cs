@@ -13,6 +13,9 @@ namespace Dashboard.Areas.TeamEntity.Models
 
         [DisplayName("Season")]
         public int Fk_Season { get; set; }
+        
+        [DisplayName(nameof(IsActive))]
+        public bool? IsActive { get; set; }
     }
     public class TeamDto : TeamModel
     {

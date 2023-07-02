@@ -38,6 +38,15 @@ namespace Dashboard.Areas.SeasonEntity.Models
         public bool? IsEnded { get; set; }
 
         public string DashboardSearch { get; set; }
+        
+        [DisplayName(nameof(IsCanNotEdit))]
+        public bool? IsCanNotEdit { get; set; }
+        
+        [DisplayName(nameof(IsDelayed))]
+        public bool? IsDelayed { get; set; }
+        
+        [DisplayName(nameof(IsActive))]
+        public bool? IsActive { get; set; }
     }
 
     public class TeamGameWeakDto : TeamGameWeakModel

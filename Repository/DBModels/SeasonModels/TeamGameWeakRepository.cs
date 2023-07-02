@@ -28,6 +28,7 @@ namespace Repository.DBModels.SeasonModels
                            parameters.CurrentSeason,
                            parameters.CurrentGameWeak,
                            parameters.IsActive,
+                           parameters.IsCanNotEdit,
                            parameters.Havestatistics,
                            parameters.DashboardSearch);
         }
@@ -108,6 +109,7 @@ namespace Repository.DBModels.SeasonModels
             bool currentSeason,
             bool currentGameWeak,
             bool? isActive,
+            bool? isCanNotEdit,
             bool? havestatistics,
             string dashboardSearch)
         {
@@ -116,12 +118,14 @@ namespace Repository.DBModels.SeasonModels
                                             (string.IsNullOrEmpty(dashboardSearch) ||
                                              a.Id.ToString().Contains(dashboardSearch) ||
                                              a.Home.Name.Contains(dashboardSearch) ||
-                                             a.Away.Name.Contains(dashboardSearch)) &&
+                                             a.Away.Name.Contains(dashboardSearch) || 
+                                             a._365_MatchId == dashboardSearch) &&
 
                                             (havestatistics == null || (havestatistics == true ? a.MatchStatisticScores.Any() : !a.MatchStatisticScores.Any())) &&
 
                                             (isEnded == null || a.IsEnded == isEnded) &&
                                             (isActive == null || a.IsActive == isActive) &&
+                                            (isCanNotEdit == null || a.IsCanNotEdit == isCanNotEdit) &&
                                             (isDelayed == null || a.IsDelayed == isDelayed) &&
                                             (fk_Teams == null || !fk_Teams.Any() ||
                                               fk_Teams.Contains(a.Fk_Home) || fk_Teams.Contains(a.Fk_Away)) &&

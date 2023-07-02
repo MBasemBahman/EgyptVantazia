@@ -48,7 +48,7 @@ namespace Dashboard.Areas.TeamEntity.Controllers
 
             TeamParameters parameters = new()
             {
-                SearchColumns = "Id,Name"
+                SearchColumns = "Id,Name,_365_TeamId"
             };
 
             _ = _mapper.Map(dtParameters, parameters);

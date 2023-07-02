@@ -321,5 +321,11 @@ else
         $(document).ready(function () {
             LoadTable();
         });
+        
+        $(document).on("change", "#Fk_Season", function() {
+          let fk_Season = $(this).val();
+            
+          getGameWeak($("#Fk_GameWeak"), fk_Season, false);
+        });
     </script>
 }

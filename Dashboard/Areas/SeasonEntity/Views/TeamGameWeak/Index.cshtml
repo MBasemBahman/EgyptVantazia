@@ -196,6 +196,9 @@ else
                             data.FromTime = $("#FromTime").length > 0 ? $("#FromTime").val() : '@Model.FromTime';
                             data.ToTime = $("#ToTime").length > 0 ? $("#ToTime").val() : '@Model.ToTime';
                             data.IsEnded = $("#IsEnded").length > 0 ? $("#IsEnded").val() : '@Model.IsEnded';
+                            data.IsDelayed = $("#IsDelayed").length > 0 ? $("#IsDelayed").val() : '@Model.IsDelayed';
+                            data.IsCanNotEdit = $("#IsCanNotEdit").length > 0 ? $("#IsCanNotEdit").val() : '@Model.IsCanNotEdit';
+                            data.IsActive = $("#IsActive").length > 0 ? $("#IsActive").val() : '@Model.IsActive';
                             data.DashboardSearch = $("#DataTables_Table_0_filter input").val();
 
                             return JSON.stringify(data);

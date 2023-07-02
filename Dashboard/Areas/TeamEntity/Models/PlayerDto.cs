@@ -17,6 +17,9 @@ namespace Dashboard.Areas.TeamEntity.Models
         [DisplayName(nameof(Season))]
         public int Fk_Season { get; set; }
 
+        [DisplayName(nameof(IsActive))]
+        public bool? IsActive { get; set; }
+        
         [DisplayName(nameof(PlayerPosition))]
         public int Fk_PlayerPosition { get; set; }
         [DisplayName("CreatedAt")]

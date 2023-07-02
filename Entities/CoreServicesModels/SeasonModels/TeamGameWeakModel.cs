@@ -47,6 +47,8 @@ namespace Entities.CoreServicesModels.SeasonModels
 
         public bool? IsActive { get; set; }
 
+        public bool? IsCanNotEdit { get; set; }
+        
         public bool? Havestatistics { get; set; }
     }
 

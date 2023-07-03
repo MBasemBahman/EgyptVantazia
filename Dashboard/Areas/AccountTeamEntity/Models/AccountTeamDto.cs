@@ -41,6 +41,12 @@ namespace Dashboard.Areas.AccountTeamEntity.Models
         [DisplayName(nameof(LastModifiedAt))]
         public new string LastModifiedAt { get; set; }
 
+        [DisplayName(nameof(GoldSubscriptionUpdatedAt))]
+        public new string GoldSubscriptionUpdatedAt { get; set; }
+
+        [DisplayName(nameof(UnSubscriptionUpdatedAt))]
+        public new string UnSubscriptionUpdatedAt { get; set; }
+
         [DisplayName(nameof(Account))]
         public new AccountDto Account { get; set; }
 

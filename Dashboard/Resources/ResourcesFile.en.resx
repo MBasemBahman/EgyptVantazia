@@ -1392,4 +1392,19 @@
   <data name="Fk_Subscription" xml:space="preserve">
     <value>Subscription</value>
   </data>
+  <data name="GoldSubscriptionRanking" xml:space="preserve">
+    <value>Gold Subscription Ranking</value>
+  </data>
+  <data name="UnSubscriptionRanking" xml:space="preserve">
+    <value>UnSubscription Ranking</value>
+  </data>
+  <data name="GoldSubscriptionUpdatedAt" xml:space="preserve">
+    <value>Gold Subscription UpdatedAt</value>
+  </data>
+  <data name="UnSubscriptionUpdatedAt" xml:space="preserve">
+    <value>UnSubscription UpdatedAt</value>
+  </data>
+  <data name="HaveGoldSubscription" xml:space="preserve">
+    <value>Have Gold Subscription</value>
+  </data>
 </root>

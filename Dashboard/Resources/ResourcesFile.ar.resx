@@ -1440,4 +1440,19 @@
   <data name="Fk_Subscription" xml:space="preserve">
     <value>الاشتراك</value>
   </data>
+  <data name="GoldSubscriptionRanking" xml:space="preserve">
+    <value>التصنيف العالمي للمشتركين</value>
+  </data>
+  <data name="UnSubscriptionRanking" xml:space="preserve">
+    <value>تصنيف غير المشتركين</value>
+  </data>
+  <data name="GoldSubscriptionUpdatedAt" xml:space="preserve">
+    <value>اخر تعديل لتصنيف المشتركين العالمي</value>
+  </data>
+  <data name="UnSubscriptionUpdatedAt" xml:space="preserve">
+    <value>اخر تعديل لتصنيف غير المشتركين</value>
+  </data>
+  <data name="HaveGoldSubscription" xml:space="preserve">
+    <value>يملك اشتراك عالمي</value>
+  </data>
 </root>

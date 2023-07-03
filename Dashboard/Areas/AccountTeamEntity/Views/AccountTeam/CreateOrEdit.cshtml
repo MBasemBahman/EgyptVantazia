@@ -171,6 +171,23 @@
                                                 <span asp-validation-for="FavouriteTeamRanking" class="text-danger"></span>
                                             </div>
                                         </div>
+                                        
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="GoldSubscriptionRanking" class="form-label"></label>
+                                                <input asp-for="GoldSubscriptionRanking" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("GoldSubscriptionRanking"))" />
+                                                <span asp-validation-for="GoldSubscriptionRanking" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="UnSubscriptionRanking" class="form-label"></label>
+                                                <input asp-for="UnSubscriptionRanking" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("UnSubscriptionRanking"))" />
+                                                <span asp-validation-for="UnSubscriptionRanking" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        
                                     </div>
                                     
                                     <hr />

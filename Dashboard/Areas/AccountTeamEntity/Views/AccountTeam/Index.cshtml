@@ -102,6 +102,11 @@
                                                 <th>@Html.DisplayNameFor(model => row.GlobalRanking)</th>
                                                 <th>@Html.DisplayNameFor(model => row.CountryRanking)</th>
                                                 <th>@Html.DisplayNameFor(model => row.FavouriteTeamRanking)</th>
+                                                <th>@Html.DisplayNameFor(model => row.GoldSubscriptionRanking)</th>
+                                                <th>@Html.DisplayNameFor(model => row.GoldSubscriptionUpdatedAt)</th>
+                                                <th>@Html.DisplayNameFor(model => row.UnSubscriptionRanking)</th>
+                                                <th>@Html.DisplayNameFor(model => row.UnSubscriptionUpdatedAt)</th>
+                                                <th>@Html.DisplayNameFor(model => row.HaveGoldSubscription)</th>
                                                 <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
                                                 <th>
                                                     @Html.DisplayNameFor(model => row.Id)
@@ -168,6 +173,11 @@ else
                                     <th>@Html.DisplayNameFor(model => row.GlobalRanking)</th>
                                     <th>@Html.DisplayNameFor(model => row.CountryRanking)</th>
                                     <th>@Html.DisplayNameFor(model => row.FavouriteTeamRanking)</th>
+                                    <th>@Html.DisplayNameFor(model => row.GoldSubscriptionRanking)</th>
+                                    <th>@Html.DisplayNameFor(model => row.GoldSubscriptionUpdatedAt)</th>
+                                    <th>@Html.DisplayNameFor(model => row.UnSubscriptionRanking)</th>
+                                    <th>@Html.DisplayNameFor(model => row.UnSubscriptionUpdatedAt)</th>
+                                    <th>@Html.DisplayNameFor(model => row.HaveGoldSubscription)</th>
                                     <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
                                     <th>
                                         @Html.DisplayNameFor(model => row.Id)
@@ -299,9 +309,20 @@ else
                         { data: "globalRanking" },
                         { data: "countryRanking" },
                         { data: "favouriteTeamRanking" },
+                        { data: "goldSubscriptionRanking" },
+                        { data: "goldSubscriptionUpdatedAt" },
+                        { data: "unSubscriptionRanking" },
+                        { data: "unSubscriptionUpdatedAt" },
+                        { data: "haveGoldSubscription", render: function (data) {
+                            if (data) {
+                                return `@Localizer.Get("Yes")`;
+                            }
+                            return `@Localizer.Get("No")`;
+                        } },
                         { data: "createdAt" },
                         { data: "id" },
-                    ]
+                    ],
+                    scrollX: true,
                 });
                 $("button[type=reset]").on("click", function () {
                     $(".dt-date").each(function () {

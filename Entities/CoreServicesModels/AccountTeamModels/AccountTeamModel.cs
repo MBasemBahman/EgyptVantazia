@@ -186,6 +186,7 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         public int AccounTeamGameWeakCount { get; set; }
 
+        [DisplayName(nameof(HaveGoldSubscription))]
         public bool HaveGoldSubscription { get; set; }
     }
 
@@ -300,6 +301,11 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         [DisplayName(nameof(FavouriteTeamRanking))]
         public double FavouriteTeamRanking { get; set; }
 
+        [DisplayName(nameof(GoldSubscriptionRanking))]
+        public double? GoldSubscriptionRanking { get; set; }
+
+        [DisplayName(nameof(UnSubscriptionRanking))]
+        public double? UnSubscriptionRanking { get; set; }
         #endregion
     }
 

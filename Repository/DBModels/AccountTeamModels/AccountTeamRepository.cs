@@ -191,41 +191,47 @@ namespace Repository.DBModels.AccountTeamModels
             if (accountTeamModel.GoldSubscriptionUpdatedAt == null ||
                accountTeamModel.GoldSubscriptionUpdatedAt < lasUpdate)
             {
-                int rank = accounts
-                           .Where(a => a.HaveGoldSubscription == true)
-                           .Select((item, index) => new
-                           {
-                               item.Id,
-                               index
-                           })
-                           .Where(a => a.Id == id)
-                           .FirstOrDefault().index + 1;
-
-                if (rank != accountTeamModel.GoldSubscriptionRanking)
+                if (accounts.Any(a => a.Id == id && a.HaveGoldSubscription == true))
                 {
-                    accountTeam.GoldSubscriptionRanking = rank;
-                    accountTeam.GoldSubscriptionUpdatedAt = DateTime.UtcNow;
+                    int rank = accounts
+                          .Where(a => a.HaveGoldSubscription == true)
+                          .Select((item, index) => new
+                          {
+                              item.Id,
+                              index
+                          })
+                          .Where(a => a.Id == id)
+                          .FirstOrDefault().index + 1;
+
+                    if (rank != accountTeamModel.GoldSubscriptionRanking)
+                    {
+                        accountTeam.GoldSubscriptionRanking = rank;
+                    }
                 }
+                accountTeam.GoldSubscriptionUpdatedAt = DateTime.UtcNow;
             }
 
             if (accountTeamModel.UnSubscriptionUpdatedAt == null ||
                accountTeamModel.UnSubscriptionUpdatedAt < lasUpdate)
             {
-                int rank = accounts
-                           .Where(a => a.HaveGoldSubscription == false)
-                           .Select((item, index) => new
-                           {
-                               item.Id,
-                               index
-                           })
-                           .Where(a => a.Id == id)
-                           .FirstOrDefault().index + 1;
-
-                if (rank != accountTeamModel.UnSubscriptionRanking)
+                if (accounts.Any(a => a.Id == id && a.HaveGoldSubscription == false))
                 {
-                    accountTeam.UnSubscriptionRanking = rank;
-                    accountTeam.UnSubscriptionUpdatedAt = DateTime.UtcNow;
+                    int rank = accounts
+                       .Where(a => a.HaveGoldSubscription == false)
+                       .Select((item, index) => new
+                       {
+                           item.Id,
+                           index
+                       })
+                       .Where(a => a.Id == id)
+                       .FirstOrDefault().index + 1;
+
+                    if (rank != accountTeamModel.UnSubscriptionRanking)
+                    {
+                        accountTeam.UnSubscriptionRanking = rank;
+                    }
                 }
+                accountTeam.UnSubscriptionUpdatedAt = DateTime.UtcNow;
             }
 
             _ = DBContext.SaveChanges();

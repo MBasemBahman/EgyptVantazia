@@ -131,6 +131,8 @@ namespace CoreServices.Logic
                                                           ImageUrl = b.StorageUrl + b.ImageUrl,
                                                           CountryRanking = b.CountryRanking,
                                                           GlobalRanking = b.GlobalRanking,
+                                                          GoldSubscriptionRanking = b.GoldSubscriptionRanking,
+                                                          UnSubscriptionRanking = b.UnSubscriptionRanking,
                                                           FavouriteTeamRanking = b.FavouriteTeamRanking,
                                                           CurrentGameWeakPoints = b.AccountTeamGameWeaks
                                                                                    .Where(a => a.GameWeak.IsCurrent == true)

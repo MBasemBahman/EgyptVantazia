@@ -89,6 +89,18 @@ namespace Entities.DBModels.AccountTeamModels
         [DisplayName(nameof(FavouriteTeamRankingUpdatedAt))]
         public DateTime? FavouriteTeamRankingUpdatedAt { get; set; }
 
+        [DisplayName(nameof(GoldSubscriptionRanking))]
+        public double? GoldSubscriptionRanking { get; set; }
+
+        [DisplayName(nameof(GoldSubscriptionUpdatedAt))]
+        public DateTime? GoldSubscriptionUpdatedAt { get; set; }
+
+        [DisplayName(nameof(UnSubscriptionRanking))]
+        public double? UnSubscriptionRanking { get; set; }
+
+        [DisplayName(nameof(UnSubscriptionUpdatedAt))]
+        public DateTime? UnSubscriptionUpdatedAt { get; set; }
+
         #endregion
 
         [DisplayName(nameof(AccountTeamPlayers))]

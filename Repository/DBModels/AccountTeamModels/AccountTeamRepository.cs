@@ -1,6 +1,6 @@
 ﻿using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.DBModels.AccountTeamModels;
-
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace Repository.DBModels.AccountTeamModels
 {
@@ -30,6 +30,8 @@ namespace Repository.DBModels.AccountTeamModels
                            parameters.Fk_FavouriteTeam,
                            parameters.FromTotalPoints,
                            parameters.FromGlobalRanking,
+                           parameters.FromGoldSubscriptionRanking,
+                           parameters.FromUnSubscriptionRanking,
                            parameters.DashboardSearch,
                            parameters.Fk_AccountTeams);
         }
@@ -72,14 +74,16 @@ namespace Repository.DBModels.AccountTeamModels
                    .ToList();
         }
 
-        public void UpdateRank(int id)
+        public void UpdateRank(int id, int fk_Season)
         {
             DateTime lasUpdate = DateTime.UtcNow.AddDays(-1).Date;
 
             var accountTeamModel = FindByCondition(a => a.Id == id &&
                                                         (a.GlobalRankingUpdatedAt < lasUpdate ||
                                                          a.CountryRankingUpdatedAt < lasUpdate ||
-                                                         a.FavouriteTeamRankingUpdatedAt < lasUpdate), trackChanges: false)
+                                                         a.FavouriteTeamRankingUpdatedAt < lasUpdate ||
+                                                         a.GoldSubscriptionUpdatedAt < lasUpdate ||
+                                                         a.UnSubscriptionUpdatedAt < lasUpdate), trackChanges: false)
                                    .Select(a => new
                                    {
                                        a.Id,
@@ -92,6 +96,12 @@ namespace Repository.DBModels.AccountTeamModels
 
                                        a.FavouriteTeamRanking,
                                        a.FavouriteTeamRankingUpdatedAt,
+
+                                       a.GoldSubscriptionRanking,
+                                       a.GoldSubscriptionUpdatedAt,
+
+                                       a.UnSubscriptionRanking,
+                                       a.UnSubscriptionUpdatedAt,
 
                                        a.Account.Fk_Country,
                                        a.Account.Fk_FavouriteTeam
@@ -110,7 +120,10 @@ namespace Repository.DBModels.AccountTeamModels
                                a.Id,
                                a.TotalPoints,
                                a.Account.Fk_FavouriteTeam,
-                               a.Account.Fk_Country
+                               a.Account.Fk_Country,
+                               HaveGoldSubscription = a.Account.AccountSubscriptions.Any(b => b.Fk_Subscription == (int)SubscriptionEnum.Gold &&
+                                                                                              b.IsActive &&
+                                                                                              b.Fk_Season == fk_Season),
                            })
                            .ToList();
 
@@ -175,6 +188,45 @@ namespace Repository.DBModels.AccountTeamModels
                 }
             }
 
+            if (accountTeamModel.GoldSubscriptionUpdatedAt == null ||
+               accountTeamModel.GoldSubscriptionUpdatedAt < lasUpdate)
+            {
+                int rank = accounts
+                           .Where(a => a.HaveGoldSubscription == true)
+                           .Select((item, index) => new
+                           {
+                               item.Id,
+                               index
+                           })
+                           .Where(a => a.Id == id)
+                           .FirstOrDefault().index + 1;
+
+                if (rank != accountTeamModel.GoldSubscriptionRanking)
+                {
+                    accountTeam.GoldSubscriptionRanking = rank;
+                    accountTeam.GoldSubscriptionUpdatedAt = DateTime.UtcNow;
+                }
+            }
+
+            if (accountTeamModel.UnSubscriptionUpdatedAt == null ||
+               accountTeamModel.UnSubscriptionUpdatedAt < lasUpdate)
+            {
+                int rank = accounts
+                           .Where(a => a.HaveGoldSubscription == false)
+                           .Select((item, index) => new
+                           {
+                               item.Id,
+                               index
+                           })
+                           .Where(a => a.Id == id)
+                           .FirstOrDefault().index + 1;
+
+                if (rank != accountTeamModel.UnSubscriptionRanking)
+                {
+                    accountTeam.UnSubscriptionRanking = rank;
+                    accountTeam.UnSubscriptionUpdatedAt = DateTime.UtcNow;
+                }
+            }
 
             _ = DBContext.SaveChanges();
         }
@@ -259,6 +311,8 @@ namespace Repository.DBModels.AccountTeamModels
             int Fk_FavouriteTeam,
             int? FromTotalPoints,
             int? FromGlobalRanking,
+            int? FromGoldSubscriptionRanking,
+            int? FromUnSubscriptionRanking,
             string dashboardSearch,
             List<int> fk_AccountTeams)
 
@@ -276,7 +330,11 @@ namespace Repository.DBModels.AccountTeamModels
 
                                            (CurrentSeason == null || a.Season.IsCurrent == CurrentSeason) &&
                                            (FromTotalPoints == null || a.TotalPoints >= FromTotalPoints) &&
+
                                            (FromGlobalRanking == null || a.GlobalRanking >= FromGlobalRanking) &&
+                                           (FromGoldSubscriptionRanking == null || a.GoldSubscriptionRanking >= FromGoldSubscriptionRanking) &&
+                                           (FromUnSubscriptionRanking == null || a.UnSubscriptionRanking >= FromUnSubscriptionRanking) &&
+
                                            (Fk_Country == 0 || a.Account.Fk_Country == Fk_Country) &&
                                            (Fk_FavouriteTeam == 0 || a.Account.Fk_FavouriteTeam == Fk_FavouriteTeam) &&
                                            (Fk_Account == 0 || a.Fk_Account == Fk_Account) &&

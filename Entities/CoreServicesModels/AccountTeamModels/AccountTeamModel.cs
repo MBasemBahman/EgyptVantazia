@@ -42,6 +42,8 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         public int? FromTotalPoints { get; set; }
         public int? FromGlobalRanking { get; set; }
+        public int? FromGoldSubscriptionRanking { get; set; }
+        public int? FromUnSubscriptionRanking { get; set; }
 
         public string DashboardSearch { get; set; }
 
@@ -96,6 +98,18 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         [DisplayName(nameof(FavouriteTeamRankingUpdatedAt))]
         public DateTime? FavouriteTeamRankingUpdatedAt { get; set; }
+
+        [DisplayName(nameof(GoldSubscriptionRanking))]
+        public double? GoldSubscriptionRanking { get; set; }
+
+        [DisplayName(nameof(GoldSubscriptionUpdatedAt))]
+        public DateTime? GoldSubscriptionUpdatedAt { get; set; }
+
+        [DisplayName(nameof(UnSubscriptionRanking))]
+        public double? UnSubscriptionRanking { get; set; }
+
+        [DisplayName(nameof(UnSubscriptionUpdatedAt))]
+        public DateTime? UnSubscriptionUpdatedAt { get; set; }
 
         #endregion
 
@@ -171,6 +185,8 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         #endregion
 
         public int AccounTeamGameWeakCount { get; set; }
+
+        public bool HaveGoldSubscription { get; set; }
     }
 
     public class AccountTeamModelForCalc

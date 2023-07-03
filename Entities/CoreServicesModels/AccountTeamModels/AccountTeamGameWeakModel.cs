@@ -131,6 +131,12 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         [DisplayName(nameof(SeasonGlobalRanking))]
         public double SeasonGlobalRanking { get; set; }
 
+        [DisplayName(nameof(SeasonGoldSubscriptionRanking))]
+        public double? SeasonGoldSubscriptionRanking { get; set; }
+
+        [DisplayName(nameof(SeasonUnSubscriptionRanking))]
+        public double? SeasonUnSubscriptionRanking { get; set; }
+
         [DisplayName(nameof(GlobalRanking))]
         public double GlobalRanking { get; set; }
 

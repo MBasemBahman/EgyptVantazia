@@ -42,7 +42,9 @@ namespace API.Areas.AccountTeamArea.Controllers
 
             if (parameters.OrderBy.Contains("globalRanking") ||
                 parameters.OrderBy.Contains("countryRanking") ||
-                parameters.OrderBy.Contains("favouriteTeamRanking"))
+                parameters.OrderBy.Contains("favouriteTeamRanking") ||
+                parameters.OrderBy.Contains("goldSubscriptionRanking") ||
+                parameters.OrderBy.Contains("unSubscriptionUpdatedAt ") )
             {
                 parameters.FromGlobalRanking = 1;
 
@@ -60,6 +62,18 @@ namespace API.Areas.AccountTeamArea.Controllers
                 if (parameters.OrderBy.Contains("favouriteTeamRanking"))
                 {
                     parameters.Fk_FavouriteTeam = auth.Fk_FavouriteTeam;
+                    parameters.OrderBy = "totalPoints desc";
+                }
+
+                if (parameters.OrderBy.Contains("goldSubscriptionRanking"))
+                {
+                    parameters.FromGoldSubscriptionRanking = 1;
+                    parameters.OrderBy = "totalPoints desc";
+                }
+
+                if (parameters.OrderBy.Contains("unSubscriptionUpdatedAt"))
+                {
+                    parameters.FromUnSubscriptionRanking = 1;
                     parameters.OrderBy = "totalPoints desc";
                 }
             }
@@ -127,7 +141,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                 fk_GameWeak = gameWeak.Id;
             }
 
-            _unitOfWork.AccountTeam.UpdateAccountTeamRank(id);
+            _unitOfWork.AccountTeam.UpdateAccountTeamRank(id, auth.Fk_Season);
 
             _unitOfWork.AccountTeam.UpdateAccountTeamGameWeakRank(id, fk_GameWeak);
 

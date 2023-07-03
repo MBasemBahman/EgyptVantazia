@@ -2,6 +2,7 @@
 using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.AccountTeamModels;
+using System.ComponentModel;
 using System.Linq.Dynamic.Core;
 using static Contracts.EnumData.DBModelsEnum;
 
@@ -667,7 +668,8 @@ namespace FantasyLogic.Calculations
                     Id = a.Id,
                     Fk_Country = a.Account.Fk_Country,
                     Fk_FavouriteTeam = a.Account.Fk_FavouriteTeam,
-                    TotalPoints = a.TotalPoints
+                    TotalPoints = a.TotalPoints,
+                    HaveGoldSubscription = a.HaveGoldSubscription
                 })
                 .ToList();
 
@@ -701,12 +703,32 @@ namespace FantasyLogic.Calculations
                 }
             }
 
+            foreach (IGrouping<int, AccountTeamRanking> goldSubscription in accountTeams.GroupBy(a => a.HaveGoldSubscription == true))
+            {
+                ranking = 1;
+                foreach (AccountTeamRanking accountTeam in goldSubscription.ToList())
+                {
+                    accountTeamRankings.First(a => a.Id == accountTeam.Id).GoldSubscriptionRanking = ranking++;
+                }
+            }
+
+            foreach (IGrouping<int, AccountTeamRanking> unSubscriptionTeam in accountTeams.GroupBy(a => a.HaveGoldSubscription == false))
+            {
+                ranking = 1;
+                foreach (AccountTeamRanking accountTeam in unSubscriptionTeam.ToList())
+                {
+                    accountTeamRankings.First(a => a.Id == accountTeam.Id).UnSubscriptionRanking = ranking++;
+                }
+            }
+
             foreach (AccountTeamRanking accountTeamRanking in accountTeamRankings)
             {
                 AccountTeam accountTeam = _unitOfWork.AccountTeam.FindAccountTeambyId(accountTeamRanking.Id, trackChanges: true).Result;
                 accountTeam.GlobalRanking = accountTeamRanking.GlobalRanking;
                 accountTeam.CountryRanking = accountTeamRanking.CountryRanking;
                 accountTeam.FavouriteTeamRanking = accountTeamRanking.FavouriteTeamRanking;
+                accountTeam.GoldSubscriptionRanking = accountTeamRanking.GoldSubscriptionRanking;
+                accountTeam.UnSubscriptionRanking = accountTeamRanking.UnSubscriptionRanking;
 
                 AccountTeamGameWeakModel accountTeamGameWeakModel = _unitOfWork.AccountTeam.GetTeamGameWeak(accountTeam.Fk_Account, currentGameWeak);
 
@@ -715,6 +737,8 @@ namespace FantasyLogic.Calculations
                     AccountTeamGameWeak accountTeamGameWeak = _unitOfWork.AccountTeam.FindAccountTeamGameWeakbyId(accountTeamGameWeakModel.Id, trackChanges: true).Result;
 
                     accountTeamGameWeak.SeasonGlobalRanking = accountTeam.GlobalRanking;
+                    accountTeamGameWeak.SeasonGoldSubscriptionRanking = accountTeam.GoldSubscriptionRanking;
+                    accountTeamGameWeak.SeasonUnSubscriptionRanking = accountTeam.UnSubscriptionRanking;
                     accountTeamGameWeak.SeasonTotalPoints = accountTeam.TotalPoints;
                 }
 
@@ -750,8 +774,12 @@ public class AccountTeamRanking
     public int Fk_FavouriteTeam { get; set; }
     public int CountryRanking { get; set; }
     public int FavouriteTeamRanking { get; set; }
+    public int? GoldSubscriptionRanking { get; set; }
+    public int? UnSubscriptionRanking { get; set; }
     public int GlobalRanking { get; set; }
     public int TotalPoints { get; set; }
+
+    public bool HaveGoldSubscription { get; set; }
 }
 
 public class AccountTeamPlayerGameWeakDto

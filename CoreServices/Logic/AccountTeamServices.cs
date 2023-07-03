@@ -62,6 +62,10 @@ namespace CoreServices.Logic
                            FavouriteTeamRanking = a.FavouriteTeamRanking,
                            FavouriteTeamRankingUpdatedAt = a.FavouriteTeamRankingUpdatedAt,
                            AccounTeamGameWeakCount = a.AccountTeamGameWeaks.Count,
+                           GoldSubscriptionRanking = a.GoldSubscriptionRanking,
+                           GoldSubscriptionUpdatedAt = a.GoldSubscriptionUpdatedAt,
+                           UnSubscriptionRanking = a.UnSubscriptionRanking,
+                           UnSubscriptionUpdatedAt = a.UnSubscriptionUpdatedAt,
                            Season = new SeasonModel
                            {
                                Name = otherLang ? a.Season.SeasonLang.Name : a.Season.Name,
@@ -126,6 +130,9 @@ namespace CoreServices.Logic
                                                  .Where(a => a.GameWeak.IsPrev == true)
                                                  .Select(a => a.TotalPoints ?? 0)
                                                  .FirstOrDefault(),
+                           HaveGoldSubscription = a.Account.AccountSubscriptions.Any(b => b.Fk_Subscription == (int)SubscriptionEnum.Gold &&
+                                                                                              b.IsActive &&
+                                                                                              b.Fk_Season == parameters.Fk_Season)
                        })
                        .Where(a => parameters.FromCurrentGameWeakPoints == null || a.CurrentGameWeakPoints >= parameters.FromCurrentGameWeakPoints)
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
@@ -175,9 +182,9 @@ namespace CoreServices.Logic
             return await PagedList<AccountTeamModel>.ToPagedList(GetAccountTeams(parameters, otherLang), parameters.PageNumber, parameters.PageSize);
         }
 
-        public void UpdateAccountTeamRank(int id)
+        public void UpdateAccountTeamRank(int id, int fk_Season)
         {
-            _repository.AccountTeam.UpdateRank(id);
+            _repository.AccountTeam.UpdateRank(id, fk_Season);
         }
         public async Task<AccountTeam> FindAccountTeambyId(int id, bool trackChanges)
         {
@@ -268,6 +275,8 @@ namespace CoreServices.Logic
                            GlobalRanking = a.GlobalRanking,
                            GlobalRankingUpdatedAt = a.GlobalRankingUpdatedAt,
                            SeasonGlobalRanking = a.SeasonGlobalRanking,
+                           SeasonGoldSubscriptionRanking = a.SeasonGoldSubscriptionRanking,
+                           SeasonUnSubscriptionRanking = a.SeasonUnSubscriptionRanking,
                            CountryRanking = a.CountryRanking,
                            CountryRankingUpdatedAt = a.CountryRankingUpdatedAt,
                            FavouriteTeamRanking = a.FavouriteTeamRanking,
@@ -327,7 +336,9 @@ namespace CoreServices.Logic
                                TotalPoints = a.AccountTeam.TotalPoints,
                                GlobalRanking = a.AccountTeam.GlobalRanking,
                                CountryRanking = a.AccountTeam.CountryRanking,
-                               FavouriteTeamRanking = a.AccountTeam.GlobalRanking
+                               FavouriteTeamRanking = a.AccountTeam.FavouriteTeamRanking,
+                               UnSubscriptionRanking = a.AccountTeam.UnSubscriptionRanking,
+                               GoldSubscriptionRanking = a.AccountTeam.GoldSubscriptionRanking,
                            }
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)

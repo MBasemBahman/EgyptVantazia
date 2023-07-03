@@ -27,6 +27,10 @@ namespace API.Areas.PlayerStateArea.Controllers
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            parameters.Fk_Season = auth.Fk_Season;
+
             if (parameters.Fk_ScoreState == (int)ScoreStateEnum.CleanSheet)
             {
                 parameters.Fk_PlayerPosition = (int)PlayerPositionEnum.Goalkeeper;

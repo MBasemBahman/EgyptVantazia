@@ -25,6 +25,9 @@ namespace API.Areas.PlayerScoreArea.Controllers
         [FromQuery] PlayerGameWeakParameters parameters)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            parameters.Fk_Season = auth.Fk_Season;
 
             PagedList<PlayerGameWeakModel> data = await _unitOfWork.PlayerScore.GetPlayerGameWeakPaged(parameters, otherLang);
 

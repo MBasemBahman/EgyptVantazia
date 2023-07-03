@@ -132,7 +132,7 @@ namespace Entities.AuthenticationModels
         public int Fk_AccountTeam { get; set; }
 
         public List<AccountTeamModel> AccountTeams { get; set; }
-        public int? Fk_Season { get; set; }
+        public int Fk_Season { get; set; }
         public SeasonModel Season { get; set; }
         public int Fk_Country { get; set; }
         public CountryModel Country { get; set; }

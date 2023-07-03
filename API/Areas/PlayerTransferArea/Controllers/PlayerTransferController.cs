@@ -30,6 +30,9 @@ namespace API.Areas.PlayerTransferArea.Controllers
         [FromQuery] PlayerTransferParameters parameters)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            parameters.Fk_Season = auth.Fk_Season;
 
             PagedList<PlayerTransferModel> data = await _unitOfWork.PlayerTransfers.GetPlayerTransferPaged(parameters, otherLang);
 
@@ -46,6 +49,8 @@ namespace API.Areas.PlayerTransferArea.Controllers
         {
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
+            _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
 
             int currentSeason = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum);
             if (currentSeason < 0)

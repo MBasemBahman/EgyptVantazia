@@ -1,5 +1,6 @@
 ﻿using API.Areas.TeamArea.Models;
 using API.Controllers;
+using Entities.AuthenticationModels;
 using Entities.CoreServicesModels.TeamModels;
 using static Contracts.EnumData.DBModelsEnum;
 
@@ -27,6 +28,9 @@ namespace API.Areas.TeamArea.Controllers
             [FromQuery] PlayerParameters parameters)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
 
             if (parameters.IncludeScore && parameters.Fk_SeasonForScores == 0)
             {
@@ -55,6 +59,9 @@ namespace API.Areas.TeamArea.Controllers
             [FromQuery] PlayerParameters parameters)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
 
             if (parameters.IncludeScore && parameters.Fk_SeasonForScores == 0)
             {
@@ -77,6 +84,9 @@ namespace API.Areas.TeamArea.Controllers
         public IEnumerable<PlayerDto> GetRandomTeam([FromQuery] _365CompetitionsEnum _365CompetitionsEnum)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
 
             int fk_Season = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum);
 

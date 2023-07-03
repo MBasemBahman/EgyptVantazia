@@ -1,5 +1,7 @@
 ﻿using API.Areas.UserArea.Models;
 using Entities.DBModels.AccountModels;
+using Entities.DBModels.SeasonModels;
+using static Contracts.EnumData.DBModelsEnum;
 using BC = BCrypt.Net.BCrypt;
 
 namespace API.Controllers
@@ -109,6 +111,11 @@ namespace API.Controllers
             model.Account.FullName = model.Account.FullName.IsExisting() ? model.Account.FullName : model.User.Name;
 
             Account account = _mapper.Map<Account>(model.Account);
+
+            if (account.Fk_Season == 0)
+            {
+                account.Fk_Season = (int)SeasonEnum.Egypt;
+            }
 
             user.Account = account;
             user.Account.ShowAds = true;
@@ -221,6 +228,10 @@ namespace API.Controllers
 
             Account account = await _unitOfWork.Account.FindByUserId(auth.Id, trackChanges: true);
 
+            if (model.Account.Fk_Season == 0)
+            {
+                model.Account.Fk_Season = account.Fk_Season;
+            }
             _ = _mapper.Map(model.Account, account);
 
             await _unitOfWork.Save();

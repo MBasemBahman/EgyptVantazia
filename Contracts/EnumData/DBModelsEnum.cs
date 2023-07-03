@@ -146,5 +146,11 @@
             Egypt = 552,
             KSA = 649
         }
+
+        public enum SeasonEnum
+        {
+            Egypt = 5,
+            KSA = 6,
+        }
     }
 }

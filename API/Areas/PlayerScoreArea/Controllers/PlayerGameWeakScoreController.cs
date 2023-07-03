@@ -25,6 +25,10 @@ namespace API.Areas.PlayerScoreArea.Controllers
         public async Task<IEnumerable<PlayerGameWeakScoreModel>> GetPlayerGameWeakScores(
         [FromQuery] PlayerGameWeakScoreParameters parameters)
         {
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            parameters.Fk_Season = auth.Fk_Season;
+
             if (parameters.Fk_TeamGameWeak == 0)
             {
                 return new List<PlayerGameWeakScoreModel>();

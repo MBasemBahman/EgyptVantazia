@@ -25,6 +25,10 @@ namespace API.Areas.SeasonArea.Controllers
         public async Task<IEnumerable<TeamGameWeakDto>> GetTeamGameWeaks(
         [FromQuery] TeamGameWeakParameters parameters)
         {
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            parameters.Fk_Season = auth.Fk_Season;
+
             if (parameters.NextGameWeak)
             {
                 int gameWeakId = _unitOfWork.Season.GetNextGameWeakId();

@@ -26,6 +26,9 @@ namespace API.Areas.StandingsArea.Controllers
         [FromQuery] StandingsParameters parameters)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            parameters.Fk_Season = auth.Fk_Season;
 
             PagedList<StandingsModel> data = await _unitOfWork.Standings.GetStandingsPaged(parameters, otherLang);
 

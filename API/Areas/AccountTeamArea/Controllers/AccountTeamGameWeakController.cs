@@ -26,6 +26,9 @@ namespace API.Areas.AccountTeamArea.Controllers
             [FromQuery] AccountTeamGameWeakParameters parameters)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
 
             if (parameters.GetCurrentGameWeak)
             {

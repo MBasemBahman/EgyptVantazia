@@ -24,6 +24,9 @@ namespace API.Areas.AccountTeamArea.Controllers
         [FromQuery] AccountTeamPlayerGameWeakParameters parameters)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            parameters.Fk_Season = auth.Fk_Season;
 
             PagedList<AccountTeamPlayerGameWeakModel> data = await _unitOfWork.AccountTeam.GetAccountTeamPlayerGameWeakPaged(parameters, otherLang);
 

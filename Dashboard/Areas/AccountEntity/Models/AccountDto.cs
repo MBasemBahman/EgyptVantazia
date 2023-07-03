@@ -1,6 +1,7 @@
 ﻿using Dashboard.Areas.Location.Models;
 using Entities.CoreServicesModels.AccountModels;
 using Entities.CoreServicesModels.UserModels;
+using Entities.DBModels.SubscriptionModels;
 using System.ComponentModel;
 
 namespace Dashboard.Areas.AccountEntity.Models
@@ -29,6 +30,7 @@ namespace Dashboard.Areas.AccountEntity.Models
 
     public class AccountFilter : DtParameters
     {
+        [DisplayName(nameof(Subscription))]
         public int Fk_Subscription { get; set; }
         public int Fk_User { get; set; }
 

@@ -29,6 +29,10 @@ namespace API.Areas.PlayerStateArea.Controllers
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
+
             if (parameters.Fk_ScoreState == (int)ScoreStateEnum.CleanSheet)
             {
                 parameters.Fk_PlayerPosition = (int)PlayerPositionEnum.Goalkeeper;

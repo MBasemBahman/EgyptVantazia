@@ -27,6 +27,9 @@ namespace API.Areas.TeamArea.Controllers
         [FromQuery] TeamParameters parameters)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            parameters.Fk_Season = auth.Fk_Season;
 
             PagedList<TeamModel> data = await _unitOfWork.Team.GetTeamPaged(parameters, otherLang);
 

@@ -27,6 +27,9 @@ namespace API.Areas.SeasonArea.Controllers
         [FromQuery] GameWeakParameters parameters)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            parameters.Fk_Season = auth.Fk_Season;
 
             PagedList<GameWeakModel> data = await _unitOfWork.Season.GetGameWeakPaged(parameters, otherLang);
 
@@ -64,6 +67,9 @@ namespace API.Areas.SeasonArea.Controllers
         public GameWeakDto GetCurrentGameWeak([FromQuery] _365CompetitionsEnum _365CompetitionsEnum)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
 
             GameWeakModel data = _unitOfWork.Season.GetCurrentGameWeak(_365CompetitionsEnum, otherLang);
 

@@ -88,6 +88,8 @@ namespace API.Areas.AccountTeamArea.Controllers
                 }
             }
 
+            parameters.Fk_Season = auth.Fk_Season;
+
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             PagedList<AccountTeamModel> data = await _unitOfWork.AccountTeam.GetAccountTeamPaged(parameters, otherLang);
@@ -106,6 +108,7 @@ namespace API.Areas.AccountTeamArea.Controllers
             [FromQuery] int fk_GameWeak)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
             AccountTeamModel data = _unitOfWork.AccountTeam.GetAccountTeams(new AccountTeamParameters
             {
@@ -114,6 +117,8 @@ namespace API.Areas.AccountTeamArea.Controllers
             }, otherLang).FirstOrDefault();
 
             GameWeakModelForCalc gameWeak = null;
+
+            _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
 
             if (fk_GameWeak == 0)
             {
@@ -167,6 +172,8 @@ namespace API.Areas.AccountTeamArea.Controllers
 
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
+            _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
+
             int currentSeasonId = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum);
             if (currentSeasonId < 0)
             {
@@ -203,6 +210,8 @@ namespace API.Areas.AccountTeamArea.Controllers
 
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
 
             SeasonModelForCalc currentSeason = _unitOfWork.Season.GetCurrentSeason(_365CompetitionsEnum);
             int nextGameWeakId = _unitOfWork.Season.GetNextGameWeakId();
@@ -265,6 +274,8 @@ namespace API.Areas.AccountTeamArea.Controllers
         {
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
             _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
+            _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
 
             int currentSeasonId = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum);
             if (currentSeasonId < 0)
@@ -482,6 +493,8 @@ namespace API.Areas.AccountTeamArea.Controllers
         {
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
             _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
+            _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
 
             int currentSeasonId = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum);
             if (currentSeasonId < 0)

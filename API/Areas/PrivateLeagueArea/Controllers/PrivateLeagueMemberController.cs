@@ -28,10 +28,14 @@ namespace API.Areas.PrivateLeagueArea.Controllers
             [FromQuery] _365CompetitionsEnum _365CompetitionsEnum,
         [FromQuery] PrivateLeagueMemberParameters parameters)
         {
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
             if (!(parameters.Fk_PrivateLeague > 0 || parameters.Fk_Account > 0))
             {
                 throw new Exception("Not Valid!");
             }
+
+            _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
 
             int season = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum);
             parameters.Fk_Season = season;

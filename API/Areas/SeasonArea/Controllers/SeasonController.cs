@@ -56,6 +56,9 @@ namespace API.Areas.SeasonArea.Controllers
         public SeasonDto GetCurrentSeason([FromQuery] _365CompetitionsEnum _365CompetitionsEnum)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
 
             SeasonModel data = _unitOfWork.Season.GetCurrentSeason(_365CompetitionsEnum, otherLang);
 

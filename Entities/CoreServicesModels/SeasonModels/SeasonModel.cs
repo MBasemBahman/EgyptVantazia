@@ -1,4 +1,5 @@
 ﻿using Entities.RequestFeatures;
+using static Entities.EnumData.LogicEnumData;
 
 namespace Entities.CoreServicesModels.SeasonModels
 {

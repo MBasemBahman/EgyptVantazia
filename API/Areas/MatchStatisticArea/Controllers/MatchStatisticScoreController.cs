@@ -24,6 +24,9 @@ namespace API.Areas.MatchStatisticArea.Controllers
         [FromQuery] MatchStatisticScoreParameters parameters)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            parameters.Fk_Season = auth.Fk_Season;
 
             PagedList<MatchStatisticScoreModel> data = await _unitOfWork.MatchStatistic.GetMatchStatisticScoresPaged(parameters, otherLang);
 

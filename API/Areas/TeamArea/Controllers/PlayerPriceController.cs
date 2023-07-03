@@ -2,6 +2,7 @@
 using API.Controllers;
 using Entities.CoreServicesModels.TeamModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace API.Areas.TeamArea.Controllers
 {

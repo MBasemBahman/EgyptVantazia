@@ -67,10 +67,12 @@ namespace Repository.DBModels.SeasonModels
                     oldEntity.AwayScore = entity.AwayScore;
                     oldEntity.HomeScore = entity.HomeScore;
                     oldEntity.IsDelayed = entity.IsDelayed;
+                    oldEntity.IsActive = true;
                 }
             }
             else
             {
+                entity.IsActive = true;
                 base.Create(entity);
             }
         }

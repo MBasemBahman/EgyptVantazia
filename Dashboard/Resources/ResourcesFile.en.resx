@@ -1386,4 +1386,10 @@
   <data name="_365_CompetitionsId" xml:space="preserve">
     <value>League reference number</value>
   </data>
+  <data name="FavouriteSeason" xml:space="preserve">
+    <value>Favourite Season</value>
+  </data>
+  <data name="Fk_Subscription" xml:space="preserve">
+    <value>Subscription</value>
+  </data>
 </root>

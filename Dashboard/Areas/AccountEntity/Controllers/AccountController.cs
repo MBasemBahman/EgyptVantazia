@@ -1,5 +1,6 @@
 ﻿using Dashboard.Areas.AccountEntity.Models;
 using Entities.CoreServicesModels.AccountModels;
+using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.SubscriptionModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.CoreServicesModels.UserModels;
@@ -211,6 +212,7 @@ namespace Dashboard.Areas.AccountEntity.Controllers
             ViewData["Teams"] = _unitOfWork.Team.GetTeams(new TeamParameters(), otherLang)
                 .ToDictionary(a => a.Id.ToString(), a => a.Name);
             ViewData["Subscription"] = _unitOfWork.Subscription.GetSubscriptionsLookUp(new SubscriptionParameters(), otherLang);
+            ViewData["Season"] = _unitOfWork.Season.GetSeasonLookUp(new SeasonParameters(), otherLang);
         }
 
 

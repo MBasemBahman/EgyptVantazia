@@ -57,6 +57,9 @@ namespace Dashboard.Areas.AccountEntity.Models
 
         [DisplayName("Nationality")]
         public int Fk_Nationality { get; set; }
+        
+        [DisplayName("FavouriteSeason")]
+        public int Fk_Season { get; set; }
 
 
         [DisplayName("FavouriteTeam")]

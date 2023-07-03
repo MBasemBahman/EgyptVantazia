@@ -114,6 +114,8 @@ namespace CoreServices.Logic
                            Fk_Mark = a.Fk_Mark,
                            Mark = new MarkModel
                            {
+                               ImageUrl = a.Mark.StorageUrl + a.Mark.ImageUrl,
+                               Id = a.Mark.Id,
                                Name = otherLang ? a.Mark.MarkLang.Name : a.Mark.Name
                            },
                            Count = a.Count,

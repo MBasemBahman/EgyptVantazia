@@ -364,6 +364,8 @@ namespace CoreServices.Logic
                                                   Used = b.Used,
                                                   Mark = new MarkModel
                                                   {
+                                                      ImageUrl = b.Mark.StorageUrl + b.Mark.ImageUrl,
+                                                      Id = b.Mark.Id,
                                                       Name = otherLang ? b.Mark.MarkLang.Name : b.Mark.Name
                                                   }
                                               })

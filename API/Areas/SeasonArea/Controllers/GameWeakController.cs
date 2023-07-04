@@ -56,9 +56,14 @@ namespace API.Areas.SeasonArea.Controllers
 
         [HttpGet]
         [Route(nameof(GetNextGameWeakDeadLine))]
-        public string GetNextGameWeakDeadLine()
+        public string GetNextGameWeakDeadLine(
+            [FromQuery] _365CompetitionsEnum _365CompetitionsEnum)
         {
-            string dataDto = _mapper.Map<string>(_unitOfWork.Season.GetFirstTeamGameWeakMatchDate().Value.AddHours(2));
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
+
+            string dataDto = _mapper.Map<string>(_unitOfWork.Season.GetFirstTeamGameWeakMatchDate(_365CompetitionsEnum).Value.AddHours(2));
             return dataDto;
         }
 

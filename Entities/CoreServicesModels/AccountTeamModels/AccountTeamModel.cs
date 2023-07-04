@@ -50,6 +50,13 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public int? FromCurrentGameWeakPoints { get; set; }
 
         public bool IncludeTotalPoints { get; set; }
+
+        public bool IncludeNextAndPrevGameWeek { get; set; }
+
+        public bool GetMonthPlayer { get; set; }
+
+        public int From_365_GameWeakIdValue { get; set; }
+        public int To_365_GameWeakIdValue { get; set; }
     }
 
     public class AccountTeamModel : AuditImageEntity
@@ -188,6 +195,15 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         [DisplayName(nameof(HaveGoldSubscription))]
         public bool HaveGoldSubscription { get; set; }
+
+        [DisplayName(nameof(GameWeak))]
+        public GameWeakModel GameWeak { get; set; }
+
+        [DisplayName(nameof(PrevGameWeak))]
+        public GameWeakModel PrevGameWeak { get; set; }
+
+        [DisplayName(nameof(NextGameWeak))]
+        public GameWeakModel NextGameWeak { get; set; }
     }
 
     public class AccountTeamModelForCalc

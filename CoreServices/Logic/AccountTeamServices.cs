@@ -53,7 +53,14 @@ namespace CoreServices.Logic
                                              .Select(b => b.FirstOrDefault().SellPrice)
                                              .Sum(),
                            IsVip = a.IsVip,
-                           TotalPoints = a.TotalPoints,
+                           TotalPoints = ((parameters.GetMonthPlayer &&
+                                     parameters.From_365_GameWeakIdValue > 0 &&
+                                     parameters.To_365_GameWeakIdValue > 0) ?
+                                     a.AccountTeamGameWeaks
+                                      .Where(b => b.GameWeak._365_GameWeakIdValue >= parameters.From_365_GameWeakIdValue &&
+                                                  b.GameWeak._365_GameWeakIdValue <= parameters.To_365_GameWeakIdValue)
+                                      .Select(b => b.TotalPoints ?? 0)
+                                      .Sum() : a.TotalPoints),
                            ImageUrl = a.StorageUrl + a.ImageUrl,
                            GlobalRanking = a.GlobalRanking,
                            GlobalRankingUpdatedAt = a.GlobalRankingUpdatedAt,

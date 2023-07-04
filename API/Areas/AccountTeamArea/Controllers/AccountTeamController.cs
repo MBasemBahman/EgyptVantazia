@@ -1,5 +1,6 @@
 ﻿using API.Controllers;
 using Entities.CoreServicesModels.AccountTeamModels;
+using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.AccountTeamModels;
 using FantasyLogic;
@@ -36,6 +37,7 @@ namespace API.Areas.AccountTeamArea.Controllers
         [HttpGet]
         [Route(nameof(GetAccountTeams))]
         public async Task<IEnumerable<AccountTeamModel>> GetAccountTeams(
+            [FromQuery] _365CompetitionsEnum _365CompetitionsEnum,
         [FromQuery] AccountTeamParameters parameters)
         {
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
@@ -44,7 +46,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                 parameters.OrderBy.Contains("countryRanking") ||
                 parameters.OrderBy.Contains("favouriteTeamRanking") ||
                 parameters.OrderBy.Contains("goldSubscriptionRanking") ||
-                parameters.OrderBy.Contains("unSubscriptionUpdatedAt ") )
+                parameters.OrderBy.Contains("unSubscriptionUpdatedAt "))
             {
                 parameters.FromGlobalRanking = 1;
 
@@ -104,9 +106,44 @@ namespace API.Areas.AccountTeamArea.Controllers
 
             parameters.Fk_Season = auth.Fk_Season;
 
+            if (parameters.GetMonthPlayer)
+            {
+                _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
+
+                MontlyGameWeakFromToModel fromTo = _unitOfWork.Season.GetMontlyGameWeakFromTo(_unitOfWork.Season.GetCurrentGameWeak(_365CompetitionsEnum)._365_GameWeakIdValue);
+
+                if (fromTo != null)
+                {
+                    parameters.From_365_GameWeakIdValue = fromTo.From_365_GameWeakIdValue;
+                    parameters.To_365_GameWeakIdValue = fromTo.To_365_GameWeakIdValue;
+                }
+            }
+
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             PagedList<AccountTeamModel> data = await _unitOfWork.AccountTeam.GetAccountTeamPaged(parameters, otherLang);
+
+            if (parameters.Fk_GameWeak > 0)
+            {
+                var gameWeak = _unitOfWork.Season.GetGameWeakbyId(parameters.Fk_GameWeak, otherLang);
+
+                var prevGameWeak = _unitOfWork.Season.GetGameWeaks(new GameWeakParameters
+                {
+                    _365_GameWeakId = (gameWeak._365_GameWeakId_Parsed ?? 0 - 1).ToString(),
+                }, otherLang).FirstOrDefault();
+
+                var nextGameWeak = _unitOfWork.Season.GetGameWeaks(new GameWeakParameters
+                {
+                    _365_GameWeakId = (gameWeak._365_GameWeakId_Parsed ?? 0 + 1).ToString(),
+                }, otherLang).FirstOrDefault();
+
+                data.ForEach(accountTeam =>
+                {
+                    accountTeam.GameWeak = gameWeak;
+                    accountTeam.PrevGameWeak = prevGameWeak;
+                    accountTeam.NextGameWeak = nextGameWeak;
+                });
+            }
 
             SetPagination(data.MetaData, parameters);
 

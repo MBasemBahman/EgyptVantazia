@@ -1,4 +1,5 @@
 ﻿using Entities.CoreServicesModels.PlayerScoreModels;
+using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayerScoreModels;
@@ -414,6 +415,19 @@ namespace CoreServices.Logic
         {
             return _repository.GameWeak.CheckIfGameWeakEnded(fk_GameWeak);
         }
+
+        public MontlyGameWeakFromToModel GetMontlyGameWeakFromTo(int _365_GameWeakIdValue)
+        {
+            int duration = 4;
+
+            MontlyGameWeakFromToModel data = new();
+
+            int current = ((_365_GameWeakIdValue < duration) ? 1 : (_365_GameWeakIdValue / duration));
+            data.From_365_GameWeakIdValue = --current * duration;
+            data.To_365_GameWeakIdValue = data.From_365_GameWeakIdValue + duration;
+
+            return data;
+        }
         #endregion
 
         #region TeamGameWeak Services
@@ -524,12 +538,13 @@ namespace CoreServices.Logic
             return await _repository.TeamGameWeak.FindBy365Id(id, trackChanges);
         }
 
-        public DateTime? GetFirstTeamGameWeakMatchDate()
+        public DateTime? GetFirstTeamGameWeakMatchDate(_365CompetitionsEnum _365CompetitionsEnum)
         {
             return _repository.GameWeak
                       .FindAll(new GameWeakParameters
                       {
-                          IsNext = true
+                          IsNext = true,
+                          _365_CompetitionsId = (int)_365CompetitionsEnum
                       }, trackChanges: false)
                       .Select(a => a.Deadline.Value.AddHours(-2))
                       .FirstOrDefault();

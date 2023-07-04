@@ -48,7 +48,7 @@ namespace API.Areas.PlayerStateArea.Controllers
 
             if (parameters.GetMonthPlayer)
             {
-                MontlyGameWeakFromToModel fromTo = GetMontlyGameWeakFromTo(_unitOfWork.Season.GetCurrentGameWeak(_365CompetitionsEnum)._365_GameWeakIdValue);
+                MontlyGameWeakFromToModel fromTo = _unitOfWork.Season.GetMontlyGameWeakFromTo(_unitOfWork.Season.GetCurrentGameWeak(_365CompetitionsEnum)._365_GameWeakIdValue);
 
                 if (fromTo != null)
                 {
@@ -72,19 +72,6 @@ namespace API.Areas.PlayerStateArea.Controllers
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             PlayerSeasonScoreStateModel data = _unitOfWork.PlayerState.GetPlayerSeasonScoreStatebyId(id, otherLang);
-
-            return data;
-        }
-
-        private MontlyGameWeakFromToModel GetMontlyGameWeakFromTo(int _365_GameWeakIdValue)
-        {
-            int duration = 4;
-
-            MontlyGameWeakFromToModel data = new();
-
-            int current = ((_365_GameWeakIdValue < duration) ? 1 : (_365_GameWeakIdValue / duration));
-            data.From_365_GameWeakIdValue = --current * duration;
-            data.To_365_GameWeakIdValue = data.From_365_GameWeakIdValue + duration;
 
             return data;
         }

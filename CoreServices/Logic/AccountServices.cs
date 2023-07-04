@@ -5,9 +5,6 @@ using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.SubscriptionModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountModels;
-using Entities.DBModels.AccountTeamModels;
-using Entities.DBModels.SeasonModels;
-using static Contracts.EnumData.DBModelsEnum;
 
 namespace CoreServices.Logic
 {
@@ -54,11 +51,11 @@ namespace CoreServices.Logic
                                   PhoneNumberTwo = a.PhoneNumberTwo,
                                   ShowAds = a.ShowAds,
                                   Fk_AccountTeam = a.AccountTeams
-                                                    .Where(a => a.Season.IsCurrent)
+                                                    .Where(a => a.Fk_Season == a.Fk_Season)
                                                     .Select(a => a.Id)
                                                     .FirstOrDefault(),
-                                  AccountTeams = a.AccountTeams
-                                                  .Where(a => a.Season.IsCurrent)
+                                  AccountTeam = a.AccountTeams
+                                                  .Where(a => a.Fk_Season == a.Fk_Season)
                                                   .Select(b => new AccountTeamModel
                                                   {
                                                       Id = b.Id,
@@ -70,7 +67,7 @@ namespace CoreServices.Logic
                                                           Name = otherLang ? b.Season.SeasonLang.Name : b.Season.Name,
                                                       }
                                                   })
-                                                  .ToList(),
+                                                  .FirstOrDefault(),
                                   Country = new CountryModel
                                   {
                                       Id = a.Fk_Country,

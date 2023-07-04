@@ -258,8 +258,9 @@ namespace CoreServices.Logic
                            BestPlayer = parameters.IncludeBestPlayer == false ? null :
                                         parameters.Fk_Season > 0 ?
                                         scoreState.PlayerSeasonScoreStates
-                                         .Where(a => scoreState.Id != (int)ScoreStateEnum.CleanSheet ||
-                                                     a.Player.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper)
+                                         .Where(a => a.Player.Team.Fk_Season == parameters.Fk_Season &&
+                                                     (scoreState.Id != (int)ScoreStateEnum.CleanSheet ||
+                                                      a.Player.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper))
                                          .OrderByDescending(a => a.Points)
                                          .ThenBy(a => a.Player.Id)
                                          .Select(playerScore => new PlayerModel
@@ -318,8 +319,9 @@ namespace CoreServices.Logic
                                          .FirstOrDefault() :
                                         parameters.Fk_GameWeak > 0 ?
                                         scoreState.PlayerGameWeakScoreStates
-                                         .Where(a => scoreState.Id != (int)ScoreStateEnum.CleanSheet ||
-                                                     a.Player.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper)
+                                         .Where(a => a.Player.Team.Fk_Season == parameters.Fk_Season &&
+                                                      (scoreState.Id != (int)ScoreStateEnum.CleanSheet ||
+                                                      a.Player.Fk_PlayerPosition == (int)PlayerPositionEnum.Goalkeeper))
                                          .OrderByDescending(a => a.Points)
                                          .ThenBy(a => a.Player.Id)
                                          .Select(playerScore => new PlayerModel

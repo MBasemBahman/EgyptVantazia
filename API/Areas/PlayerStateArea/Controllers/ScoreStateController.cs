@@ -28,6 +28,9 @@ namespace API.Areas.PlayerStateArea.Controllers
         [FromQuery] ScoreStateParameters parameters)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            parameters.Fk_Season = auth.Fk_Season;
 
             if (parameters.IncludeBestPlayer && parameters.Fk_Season == 0 && parameters.Fk_GameWeak == 0)
             {

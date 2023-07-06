@@ -42,74 +42,86 @@ namespace API.Areas.AccountTeamArea.Controllers
         {
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
-            if (parameters.OrderBy.Contains("globalRanking") ||
-                parameters.OrderBy.Contains("countryRanking") ||
-                parameters.OrderBy.Contains("favouriteTeamRanking") ||
-                parameters.OrderBy.Contains("goldSubscriptionRanking") ||
-                parameters.OrderBy.Contains("unSubscriptionUpdatedAt "))
+            if (parameters.OrderBy.IsExisting())
             {
-                parameters.FromGlobalRanking = 1;
-
-                if (parameters.OrderBy.Contains("globalRanking"))
+                if (parameters.OrderBy.Contains("globalRanking") ||
+                    parameters.OrderBy.Contains("countryRanking") ||
+                    parameters.OrderBy.Contains("favouriteTeamRanking") ||
+                    parameters.OrderBy.Contains("goldSubscriptionRanking") ||
+                    parameters.OrderBy.Contains("unSubscriptionUpdatedAt "))
                 {
-                    parameters.OrderBy = "totalPoints desc";
+                    parameters.FromGlobalRanking = 1;
+
+                    if (parameters.OrderBy.Contains("globalRanking"))
+                    {
+                        parameters.OrderBy = "totalPoints desc";
+                    }
+
+                    if (parameters.OrderBy.Contains("countryRanking"))
+                    {
+                        parameters.Fk_Country = auth.Fk_Country;
+                        parameters.OrderBy = "totalPoints desc";
+                    }
+
+                    if (parameters.OrderBy.Contains("favouriteTeamRanking"))
+                    {
+                        parameters.Fk_FavouriteTeam = auth.Fk_FavouriteTeam;
+                        parameters.OrderBy = "totalPoints desc";
+                    }
+
+                    if (parameters.OrderBy.Contains("goldSubscriptionRanking"))
+                    {
+                        parameters.FromGoldSubscriptionRanking = 1;
+                        parameters.OrderBy = "totalPoints desc";
+                    }
+
+                    if (parameters.OrderBy.Contains("unSubscriptionUpdatedAt"))
+                    {
+                        parameters.FromUnSubscriptionRanking = 1;
+                        parameters.OrderBy = "totalPoints desc";
+                    }
                 }
 
-                if (parameters.OrderBy.Contains("countryRanking"))
+                if (parameters.OrderBy.Contains("currentGameWeakGlobalRanking") ||
+                    parameters.OrderBy.Contains("currentGameWeakCountryRanking") ||
+                    parameters.OrderBy.Contains("currentGameWeakFavouriteTeamRanking"))
                 {
-                    parameters.Fk_Country = auth.Fk_Country;
-                    parameters.OrderBy = "totalPoints desc";
+                    parameters.FromCurrentGameWeakPoints = 1;
+
+                    if (parameters.OrderBy.Contains("currentGameWeakGlobalRanking"))
+                    {
+                        parameters.OrderBy = "currentGameWeakPoints desc";
+                    }
+
+                    if (parameters.OrderBy.Contains("currentGameWeakCountryRanking"))
+                    {
+                        parameters.Fk_Country = auth.Fk_Country;
+                        parameters.OrderBy = "currentGameWeakPoints desc";
+                    }
+
+                    if (parameters.OrderBy.Contains("currentGameWeakFavouriteTeamRanking"))
+                    {
+                        parameters.Fk_FavouriteTeam = auth.Fk_FavouriteTeam;
+                        parameters.OrderBy = "currentGameWeakPoints desc";
+                    }
                 }
 
-                if (parameters.OrderBy.Contains("favouriteTeamRanking"))
+                if (parameters.OrderBy.Contains("unSubscriptionRanking"))
                 {
-                    parameters.Fk_FavouriteTeam = auth.Fk_FavouriteTeam;
-                    parameters.OrderBy = "totalPoints desc";
+                    parameters.FromUnSubscriptionRanking = 0;
                 }
 
                 if (parameters.OrderBy.Contains("goldSubscriptionRanking"))
                 {
-                    parameters.FromGoldSubscriptionRanking = 1;
-                    parameters.OrderBy = "totalPoints desc";
-                }
-
-                if (parameters.OrderBy.Contains("unSubscriptionUpdatedAt"))
-                {
-                    parameters.FromUnSubscriptionRanking = 1;
-                    parameters.OrderBy = "totalPoints desc";
-                }
-            }
-
-            if (parameters.OrderBy.Contains("currentGameWeakGlobalRanking") ||
-                parameters.OrderBy.Contains("currentGameWeakCountryRanking") ||
-                parameters.OrderBy.Contains("currentGameWeakFavouriteTeamRanking"))
-            {
-                parameters.FromCurrentGameWeakPoints = 1;
-
-                if (parameters.OrderBy.Contains("currentGameWeakGlobalRanking"))
-                {
-                    parameters.OrderBy = "currentGameWeakPoints desc";
-                }
-
-                if (parameters.OrderBy.Contains("currentGameWeakCountryRanking"))
-                {
-                    parameters.Fk_Country = auth.Fk_Country;
-                    parameters.OrderBy = "currentGameWeakPoints desc";
-                }
-
-                if (parameters.OrderBy.Contains("currentGameWeakFavouriteTeamRanking"))
-                {
-                    parameters.Fk_FavouriteTeam = auth.Fk_FavouriteTeam;
-                    parameters.OrderBy = "currentGameWeakPoints desc";
+                    parameters.FromGoldSubscriptionRanking = 0;
                 }
             }
 
             parameters.Fk_Season = auth.Fk_Season;
+            _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
 
             if (parameters.GetMonthPlayer)
             {
-                _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
-
                 MontlyGameWeakFromToModel fromTo = _unitOfWork.Season.GetMontlyGameWeakFromTo(_unitOfWork.Season.GetCurrentGameWeak(_365CompetitionsEnum)._365_GameWeakIdValue);
 
                 if (fromTo != null)
@@ -117,6 +129,11 @@ namespace API.Areas.AccountTeamArea.Controllers
                     parameters.From_365_GameWeakIdValue = fromTo.From_365_GameWeakIdValue;
                     parameters.To_365_GameWeakIdValue = fromTo.To_365_GameWeakIdValue;
                 }
+            }
+
+            if (parameters.IncludeGameWeakPoints == true && parameters.Fk_GameWeak == 0)
+            {
+                parameters.Fk_GameWeak = _unitOfWork.Season.GetCurrentGameWeakId(_365CompetitionsEnum);
             }
 
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];

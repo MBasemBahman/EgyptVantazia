@@ -146,12 +146,12 @@ namespace API.Areas.AccountTeamArea.Controllers
 
                 var prevGameWeak = _unitOfWork.Season.GetGameWeaks(new GameWeakParameters
                 {
-                    _365_GameWeakId = (gameWeak._365_GameWeakId_Parsed ?? 0 - 1).ToString(),
+                    _365_GameWeakId = (gameWeak._365_GameWeakId_Parsed.Value - 1).ToString(),
                 }, otherLang).FirstOrDefault();
 
                 var nextGameWeak = _unitOfWork.Season.GetGameWeaks(new GameWeakParameters
                 {
-                    _365_GameWeakId = (gameWeak._365_GameWeakId_Parsed ?? 0 + 1).ToString(),
+                    _365_GameWeakId = (gameWeak._365_GameWeakId_Parsed.Value + 1).ToString(),
                 }, otherLang).FirstOrDefault();
 
                 data.ForEach(accountTeam =>

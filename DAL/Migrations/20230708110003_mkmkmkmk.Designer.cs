@@ -4,6 +4,7 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20230708110003_mkmkmkmk")]
+    partial class mkmkmkmk
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,7 +48,7 @@ namespace DAL.Migrations
                     b.Property<int>("Fk_Country")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Fk_FavouriteTeam")
+                    b.Property<int>("Fk_FavouriteTeam")
                         .HasColumnType("int");
 
                     b.Property<int>("Fk_Nationality")
@@ -4791,7 +4794,7 @@ namespace DAL.Migrations
                             IsExternalLogin = false,
                             LastModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Developer",
-                            Password = "$2a$11$uIrdHe9OZAVIbh.IMLXn2uWZIjJXCQKUyT3gKnwQgwVfdZ7p74yoe",
+                            Password = "$2a$11$IUgd3krE2KE3TvEzbXQn9OoPQ5P9K62/.meCF.BioZ562BDofIEy2",
                             UserName = "Developer"
                         });
                 });
@@ -4846,7 +4849,9 @@ namespace DAL.Migrations
 
                     b.HasOne("Entities.DBModels.TeamModels.Team", "FavouriteTeam")
                         .WithMany("AccountFavourites")
-                        .HasForeignKey("Fk_FavouriteTeam");
+                        .HasForeignKey("Fk_FavouriteTeam")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Entities.DBModels.LocationModels.Country", "Nationality")
                         .WithMany("AccountNationalities")

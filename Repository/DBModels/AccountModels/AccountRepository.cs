@@ -29,7 +29,6 @@ namespace Repository.DBModels.AccountModels
                            parameters.Fk_Country,
                            parameters.Fk_Nationality,
                            parameters.Fk_Season,
-                           parameters.Fk_FavouriteTeam,
                            parameters.Fk_Subscription,
                            parameters.ShowAds);
 
@@ -86,7 +85,6 @@ namespace Repository.DBModels.AccountModels
             int fk_Country,
             int fk_Nationality,
             int fk_Season,
-            int fk_FavouriteTeam,
             int fk_Subscription,
             bool? showAds)
         {
@@ -99,7 +97,6 @@ namespace Repository.DBModels.AccountModels
                                        (fk_Country == 0 || a.Fk_Country == fk_Country) &&
                                        (fk_Nationality == 0 || a.Fk_Nationality == fk_Nationality) &&
                                        (fk_Season == 0 || a.Fk_Season == fk_Season) &&
-                                       (fk_FavouriteTeam == 0 || a.Fk_FavouriteTeam == fk_FavouriteTeam) &&
 
                                        (isLoginBefore == null || (isLoginBefore == true ? a.User.RefreshTokens.Any() : !a.User.RefreshTokens.Any())) &&
                                        (fk_Accounts == null || !fk_Accounts.Any() || fk_Accounts.Contains(a.Id)) &&

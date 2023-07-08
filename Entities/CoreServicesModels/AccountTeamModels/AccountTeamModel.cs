@@ -1,8 +1,10 @@
 ﻿using Entities.CoreServicesModels.AccountModels;
 using Entities.CoreServicesModels.SeasonModels;
+using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountModels;
 using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.SeasonModels;
+using Entities.DBModels.TeamModels;
 using Entities.RequestFeatures;
 using Microsoft.AspNetCore.Http;
 
@@ -50,6 +52,13 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public int? FromCurrentGameWeakPoints { get; set; }
 
         public bool IncludeTotalPoints { get; set; }
+
+        public bool IncludeNextAndPrevGameWeek { get; set; }
+
+        public bool GetMonthPlayer { get; set; }
+
+        public int From_365_GameWeakIdValue { get; set; }
+        public int To_365_GameWeakIdValue { get; set; }
     }
 
     public class AccountTeamModel : AuditImageEntity
@@ -65,6 +74,13 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         [DisplayName(nameof(Season))]
         public SeasonModel Season { get; set; }
+
+        [DisplayName(nameof(FavouriteTeam))]
+        [ForeignKey(nameof(FavouriteTeam))]
+        public int Fk_FavouriteTeam { get; set; }
+
+        [DisplayName(nameof(FavouriteTeam))]
+        public TeamModel FavouriteTeam { get; set; }
 
         [DisplayName(nameof(Name))]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
@@ -188,6 +204,15 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         [DisplayName(nameof(HaveGoldSubscription))]
         public bool HaveGoldSubscription { get; set; }
+
+        [DisplayName(nameof(GameWeak))]
+        public GameWeakModel GameWeak { get; set; }
+
+        [DisplayName(nameof(PrevGameWeak))]
+        public GameWeakModel PrevGameWeak { get; set; }
+
+        [DisplayName(nameof(NextGameWeak))]
+        public GameWeakModel NextGameWeak { get; set; }
     }
 
     public class AccountTeamModelForCalc
@@ -239,6 +264,9 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         [DisplayName(nameof(Season))]
         [ForeignKey(nameof(Season))]
         public int Fk_Season { get; set; }
+
+        [DisplayName("FavouriteTeam")]
+        public int Fk_FavouriteTeam { get; set; }
 
         [DisplayName(nameof(Name))]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
@@ -317,6 +345,8 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         [DisplayName(nameof(ImageFile))]
         public IFormFile ImageFile { get; set; }
+
+        public int Fk_FavouriteTeam { get; set; }
     }
 
     public class AccountTeamCustemClac

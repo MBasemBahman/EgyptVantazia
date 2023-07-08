@@ -2,6 +2,7 @@
 using API.Controllers;
 using Entities.CoreServicesModels.SeasonModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace API.Areas.SeasonArea.Controllers
 {
@@ -27,11 +28,12 @@ namespace API.Areas.SeasonArea.Controllers
         {
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
+            _365CompetitionsEnum _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
             parameters.Fk_Season = auth.Fk_Season;
 
             if (parameters.NextGameWeak)
             {
-                int gameWeakId = _unitOfWork.Season.GetNextGameWeakId();
+                int gameWeakId = _unitOfWork.Season.GetNextGameWeakId(_365CompetitionsEnum);
                 parameters.Fk_GameWeak = gameWeakId;
             }
 

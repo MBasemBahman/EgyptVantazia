@@ -45,8 +45,6 @@ namespace Entities.CoreServicesModels.AccountModels
 
         public int Fk_Season { get; set; }
 
-        public int Fk_FavouriteTeam { get; set; }
-
         [DisplayName(nameof(ShowAds))]
         public bool? ShowAds { get; set; }
     }
@@ -101,18 +99,9 @@ namespace Entities.CoreServicesModels.AccountModels
         [DataType(DataType.MultilineText)]
         public string Address { get; set; }
 
-        [DisplayName(nameof(FavouriteTeam))]
-        [ForeignKey(nameof(FavouriteTeam))]
-        public int Fk_FavouriteTeam { get; set; }
-
-        [DisplayName(nameof(FavouriteTeam))]
-        public TeamModel FavouriteTeam { get; set; }
-
         public int Fk_AccountTeam { get; set; }
 
         public AccountTeamModel AccountTeam { get; set; }
-
-        public List<AccountTeamModel> AccountTeams { get; set; }
 
         [DisplayName(nameof(ShowAds))]
         public bool ShowAds { get; set; }
@@ -140,9 +129,6 @@ namespace Entities.CoreServicesModels.AccountModels
         [DisplayName(nameof(Address))]
         [DataType(DataType.MultilineText)]
         public string Address { get; set; }
-
-        [DisplayName(nameof(Fk_FavouriteTeam))]
-        public int Fk_FavouriteTeam { get; set; }
     }
 
     public class AccountCreateModel
@@ -163,9 +149,6 @@ namespace Entities.CoreServicesModels.AccountModels
         [DisplayName(nameof(Address))]
         [DataType(DataType.MultilineText)]
         public string Address { get; set; }
-
-        [DisplayName("FavouriteTeam")]
-        public int Fk_FavouriteTeam { get; set; }
 
         [DisplayName(nameof(PhoneNumberTwo))]
         [DataType(DataType.PhoneNumber)]

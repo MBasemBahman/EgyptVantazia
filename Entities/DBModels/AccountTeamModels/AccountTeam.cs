@@ -1,6 +1,7 @@
 ﻿using Entities.DBModels.AccountModels;
 using Entities.DBModels.PlayersTransfersModels;
 using Entities.DBModels.SeasonModels;
+using Entities.DBModels.TeamModels;
 
 namespace Entities.DBModels.AccountTeamModels
 {
@@ -19,6 +20,13 @@ namespace Entities.DBModels.AccountTeamModels
 
         [DisplayName(nameof(Season))]
         public Season Season { get; set; }
+
+        [DisplayName(nameof(FavouriteTeam))]
+        [ForeignKey(nameof(FavouriteTeam))]
+        public int Fk_FavouriteTeam { get; set; }
+
+        [DisplayName(nameof(FavouriteTeam))]
+        public Team FavouriteTeam { get; set; }
 
         [DisplayName(nameof(Name))]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]

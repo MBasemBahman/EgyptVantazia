@@ -1,4 +1,5 @@
 ﻿using Entities.CoreServicesModels.PlayerScoreModels;
+using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayerScoreModels;
@@ -289,36 +290,39 @@ namespace CoreServices.Logic
                    .FirstOrDefault();
         }
 
-        public GameWeakModel GetNextGameWeak(bool otherLang = false)
+        public GameWeakModel GetNextGameWeak(_365CompetitionsEnum _365CompetitionsEnum,bool otherLang = false)
         {
             return GetGameWeaks(new GameWeakParameters
             {
-                IsNext = true
+                IsNext = true,
+                _365_CompetitionsId = (int)_365CompetitionsEnum
             }, otherLang: otherLang).FirstOrDefault();
         }
 
 
-        public GameWeakModelForCalc GetNextGameWeak()
+        public GameWeakModelForCalc GetNextGameWeak(_365CompetitionsEnum _365CompetitionsEnum)
         {
             return GetGameWeaksForCalc(new GameWeakParameters
             {
-                IsNext = true
+                IsNext = true,
+                _365_CompetitionsId = (int)_365CompetitionsEnum
             }).FirstOrDefault();
         }
 
-        public int GetNextGameWeakId()
+        public int GetNextGameWeakId(_365CompetitionsEnum _365CompetitionsEnum)
         {
             return GetGameWeaks(new GameWeakParameters
             {
-                IsNext = true
+                IsNext = true,
+                _365_CompetitionsId = (int)_365CompetitionsEnum
             }, otherLang: false)
                 .Select(a => a.Id)
                 .FirstOrDefault();
         }
 
-        public GameWeakModelForCalc GetNextNextGameWeak(bool otherLang = false)
+        public GameWeakModelForCalc GetNextNextGameWeak(_365CompetitionsEnum _365CompetitionsEnum, bool otherLang = false)
         {
-            GameWeakModelForCalc next = GetNextGameWeak();
+            GameWeakModelForCalc next = GetNextGameWeak(_365CompetitionsEnum);
 
             return next != null
                 ? GetGameWeaksForCalc(new GameWeakParameters
@@ -328,19 +332,21 @@ namespace CoreServices.Logic
                 : null;
         }
 
-        public GameWeakModel GetPrevGameWeak(bool otherLang = false)
+        public GameWeakModel GetPrevGameWeak(_365CompetitionsEnum _365CompetitionsEnum,bool otherLang = false)
         {
             return GetGameWeaks(new GameWeakParameters
             {
-                IsPrev = true
+                IsPrev = true,
+                _365_CompetitionsId = (int)_365CompetitionsEnum
             }, otherLang: otherLang).FirstOrDefault();
         }
 
-        public int GetPrevGameWeakId()
+        public int GetPrevGameWeakId(_365CompetitionsEnum _365CompetitionsEnum)
         {
             return GetGameWeaks(new GameWeakParameters
             {
-                IsPrev = true
+                IsPrev = true,
+                _365_CompetitionsId = (int)_365CompetitionsEnum
             }, otherLang: false)
                 .Select(a => a.Id)
                 .FirstOrDefault();
@@ -413,6 +419,19 @@ namespace CoreServices.Logic
         public bool CheckIfGameWeakEnded(int fk_GameWeak)
         {
             return _repository.GameWeak.CheckIfGameWeakEnded(fk_GameWeak);
+        }
+
+        public MontlyGameWeakFromToModel GetMontlyGameWeakFromTo(int _365_GameWeakIdValue)
+        {
+            int duration = 4;
+
+            MontlyGameWeakFromToModel data = new();
+
+            int current = ((_365_GameWeakIdValue < duration) ? 1 : (_365_GameWeakIdValue / duration));
+            data.From_365_GameWeakIdValue = --current * duration;
+            data.To_365_GameWeakIdValue = data.From_365_GameWeakIdValue + duration;
+
+            return data;
         }
         #endregion
 
@@ -524,12 +543,13 @@ namespace CoreServices.Logic
             return await _repository.TeamGameWeak.FindBy365Id(id, trackChanges);
         }
 
-        public DateTime? GetFirstTeamGameWeakMatchDate()
+        public DateTime? GetFirstTeamGameWeakMatchDate(_365CompetitionsEnum _365CompetitionsEnum)
         {
             return _repository.GameWeak
                       .FindAll(new GameWeakParameters
                       {
-                          IsNext = true
+                          IsNext = true,
+                          _365_CompetitionsId = (int)_365CompetitionsEnum
                       }, trackChanges: false)
                       .Select(a => a.Deadline.Value.AddHours(-2))
                       .FirstOrDefault();

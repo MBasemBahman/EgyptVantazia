@@ -28,6 +28,8 @@ namespace API.Areas.SeasonArea.Controllers
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
+            parameters.IsCurrent = true;
+
             PagedList<SeasonModel> data = await _unitOfWork.Season.GetSeasonPaged(parameters, otherLang);
 
             SetPagination(data.MetaData, parameters);

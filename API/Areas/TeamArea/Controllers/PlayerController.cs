@@ -42,6 +42,7 @@ namespace API.Areas.TeamArea.Controllers
             }
 
             parameters.IsActive = true;
+            parameters.Fk_Season = auth.Fk_Season;
 
             PagedList<PlayerModel> data = await _unitOfWork.Team.GetPlayerPaged(parameters, otherLang);
 

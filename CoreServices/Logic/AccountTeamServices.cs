@@ -39,6 +39,14 @@ namespace CoreServices.Logic
                            LastModifiedBy = a.LastModifiedBy,
                            Fk_Account = a.Fk_Account,
                            Fk_Season = a.Fk_Season,
+                           Fk_FavouriteTeam = a.Fk_FavouriteTeam,
+                           FavouriteTeam = a.Fk_FavouriteTeam > 0 ? new TeamModel
+                           {
+                               Id = a.FavouriteTeam.Id,
+                               Name = otherLang ? a.FavouriteTeam.TeamLang.Name : a.FavouriteTeam.Name,
+                               ImageUrl = a.FavouriteTeam.StorageUrl + a.FavouriteTeam.ImageUrl,
+                               ShirtImageUrl = a.FavouriteTeam.ShirtStorageUrl + a.FavouriteTeam.ShirtImageUrl
+                           } : null,
                            Name = a.Name,
                            TotalMoney = a.TotalMoney,
                            TotalTeamPrice = a.AccountTeamPlayers
@@ -53,7 +61,14 @@ namespace CoreServices.Logic
                                              .Select(b => b.FirstOrDefault().SellPrice)
                                              .Sum(),
                            IsVip = a.IsVip,
-                           TotalPoints = a.TotalPoints,
+                           TotalPoints = ((parameters.GetMonthPlayer &&
+                                     parameters.From_365_GameWeakIdValue > 0 &&
+                                     parameters.To_365_GameWeakIdValue > 0) ?
+                                     a.AccountTeamGameWeaks
+                                      .Where(b => b.GameWeak._365_GameWeakIdValue >= parameters.From_365_GameWeakIdValue &&
+                                                  b.GameWeak._365_GameWeakIdValue <= parameters.To_365_GameWeakIdValue)
+                                      .Select(b => b.TotalPoints ?? 0)
+                                      .Sum() : a.TotalPoints),
                            ImageUrl = a.StorageUrl + a.ImageUrl,
                            GlobalRanking = a.GlobalRanking,
                            GlobalRankingUpdatedAt = a.GlobalRankingUpdatedAt,
@@ -78,7 +93,6 @@ namespace CoreServices.Logic
                                ImageUrl = a.Account.StorageUrl + a.Account.ImageUrl,
                                FullName = a.Account.FullName,
                                Fk_Country = a.Account.Fk_Country,
-                               Fk_FavouriteTeam = a.Account.Fk_FavouriteTeam,
                                Fk_Nationality = a.Account.Fk_Nationality,
                            },
                            PlayersCount = a.AccountTeamPlayers.Count,
@@ -232,6 +246,11 @@ namespace CoreServices.Logic
             _repository.AccountTeam.UpdateAccountTeamUpdateCards(updateCards);
         }
 
+        public void TransfareFavouriteTeam()
+        {
+            _repository.AccountTeam.TransfareFavouriteTeam();
+        }
+
         #endregion
 
         #region AccountTeamGameWeak Services
@@ -328,10 +347,10 @@ namespace CoreServices.Logic
                                Account = new AccountModel
                                {
                                    Fk_Country = a.AccountTeam.Account.Fk_Country,
-                                   Fk_FavouriteTeam = a.AccountTeam.Account.Fk_FavouriteTeam,
                                    Name = a.AccountTeam.Account.FullName,
                                },
                                Fk_Account = a.AccountTeam.Fk_Account,
+                               Fk_FavouriteTeam = a.AccountTeam.Fk_FavouriteTeam,
                                TotalMoney = a.AccountTeam.TotalMoney,
                                TotalPoints = a.AccountTeam.TotalPoints,
                                GlobalRanking = a.AccountTeam.GlobalRanking,
@@ -533,6 +552,8 @@ namespace CoreServices.Logic
                                                       Used = b.Used,
                                                       Mark = new MarkModel
                                                       {
+                                                          ImageUrl = b.Mark.StorageUrl + b.Mark.ImageUrl,
+                                                          Id = b.Mark.Id,
                                                           Name = otherLang ? b.Mark.MarkLang.Name : b.Mark.Name
                                                       }
                                                   })
@@ -769,6 +790,8 @@ namespace CoreServices.Logic
                                                   Used = b.Used,
                                                   Mark = new MarkModel
                                                   {
+                                                      ImageUrl = b.Mark.StorageUrl + b.Mark.ImageUrl,
+                                                      Id = b.Mark.Id,
                                                       Name = otherLang ? b.Mark.MarkLang.Name : b.Mark.Name
                                                   }
                                               })

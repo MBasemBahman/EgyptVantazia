@@ -132,15 +132,6 @@
                                                 <span asp-validation-for="Account.Fk_Nationality" class="text-danger"></span>
                                             </div>
                                         </div>
-                                       
-                                        <div class="col-md-4 col-12">
-                                            <div class="mb-1">
-                                                <label asp-for="Account.Fk_FavouriteTeam" class="form-label"></label>
-                                                <select asp-for="Account.Fk_FavouriteTeam" class="select2 form-select" asp-items="@(new SelectList(ViewData["Teams"] as Dictionary<string,string>,"Key","Value"))">
-                                                </select>
-                                                <span asp-validation-for="Account.Fk_FavouriteTeam" class="text-danger"></span>
-                                            </div>
-                                        </div>
                                         
                                         <div class="col-md-4 col-12">
                                             <div class="mb-1">

@@ -32,7 +32,7 @@ namespace Dashboard.Areas.Dashboard.Controllers
             var result = _unitOfWork.Season.GetGameWeaks(new GameWeakParameters
             {
                 Fk_Season = fk_Season
-            }, otherLang).OrderByDescending(a => a._365_GameWeakId).Select(a => new
+            }, otherLang).OrderBy(a => a._365_GameWeakIdValue).Select(a => new
             {
                 a.Id,
                 a.Name

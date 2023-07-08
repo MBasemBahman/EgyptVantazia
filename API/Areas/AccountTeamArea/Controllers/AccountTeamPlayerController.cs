@@ -59,7 +59,7 @@ namespace API.Areas.AccountTeamArea.Controllers
             else
             {
                 currentGamWeak = _unitOfWork.Season.GetCurrentGameWeak(_365CompetitionsEnum);
-                nextGameWeak = _unitOfWork.Season.GetNextGameWeak();
+                nextGameWeak = _unitOfWork.Season.GetNextGameWeak(_365CompetitionsEnum);
             }
 
             parameters.IsTransfer = false;
@@ -90,7 +90,7 @@ namespace API.Areas.AccountTeamArea.Controllers
 
                 if (parameters.IncludeNextMatch)
                 {
-                    GameWeakModelForCalc nextNextGameWeak = _unitOfWork.Season.GetNextNextGameWeak();
+                    GameWeakModelForCalc nextNextGameWeak = _unitOfWork.Season.GetNextNextGameWeak(_365CompetitionsEnum);
 
                     parameters.FromDeadLine = nextGameWeak.Deadline;
                     parameters.ToDeadLine = nextNextGameWeak.Deadline;
@@ -153,7 +153,7 @@ namespace API.Areas.AccountTeamArea.Controllers
             if (parameters.IsCurrent == true && !data.Any())
             {
                 parameters.IsCurrent = false;
-                int prevGameWeak = _unitOfWork.Season.GetPrevGameWeakId();
+                int prevGameWeak = _unitOfWork.Season.GetPrevGameWeakId(_365CompetitionsEnum);
                 parameters.Fk_GameWeak = prevGameWeak;
 
                 data = await _unitOfWork.AccountTeam.GetAccountTeamPlayerPaged(parameters, otherLang);
@@ -181,7 +181,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                 throw new Exception("Season not started yet!");
             }
 
-            int nextGameWeakId = _unitOfWork.Season.GetNextGameWeakId();
+            int nextGameWeakId = _unitOfWork.Season.GetNextGameWeakId(_365CompetitionsEnum);
             if (nextGameWeakId < 0)
             {
                 throw new Exception("Game Weak not started yet!");
@@ -319,7 +319,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                 throw new Exception("Season not started yet!");
             }
 
-            int nextGameWeakId = _unitOfWork.Season.GetNextGameWeakId();
+            int nextGameWeakId = _unitOfWork.Season.GetNextGameWeakId(_365CompetitionsEnum);
             if (nextGameWeakId < 0)
             {
                 throw new Exception("Game Weak not started yet!");

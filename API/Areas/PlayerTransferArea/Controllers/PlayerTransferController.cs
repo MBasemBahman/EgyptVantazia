@@ -58,7 +58,7 @@ namespace API.Areas.PlayerTransferArea.Controllers
                 throw new Exception("Season not started yet!");
             }
 
-            int nextGameWeakId = _unitOfWork.Season.GetNextGameWeakId();
+            int nextGameWeakId = _unitOfWork.Season.GetNextGameWeakId(_365CompetitionsEnum);
             if (nextGameWeakId < 0)
             {
                 throw new Exception("Game Weak not started yet!");

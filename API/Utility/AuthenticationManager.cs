@@ -155,11 +155,9 @@ namespace API.Utility
                 userAuthenticated.Fk_Account = account.Id;
                 userAuthenticated.CreatedAt = account.CreatedAt;
                 userAuthenticated.Fk_Country = account.Fk_Country;
-                userAuthenticated.Fk_FavouriteTeam = account.Fk_FavouriteTeam;
                 userAuthenticated.Fk_AccountTeam = account.Fk_AccountTeam;
                 userAuthenticated.ShowAds = account.ShowAds;
                 userAuthenticated.Country = account.Country;
-                userAuthenticated.FavouriteTeam = account.FavouriteTeam;
                 userAuthenticated.AccountTeam = account.AccountTeam;
                 userAuthenticated.Season = account.Season;
                 userAuthenticated.Fk_Season = account.Fk_Season;

@@ -31,7 +31,7 @@ namespace FantasyLogic.Calculations
             }
 
             int season = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum);
-            GameWeakModelForCalc nextGameWeek = _unitOfWork.Season.GetNextGameWeak();
+            GameWeakModelForCalc nextGameWeek = _unitOfWork.Season.GetNextGameWeak(_365CompetitionsEnum);
 
             List<GameWeakModelForCalc> gameWeaks = _unitOfWork.Season
                                              .GetGameWeaksForCalc(new GameWeakParameters
@@ -591,7 +591,7 @@ namespace FantasyLogic.Calculations
                 {
                     Id = a.Id,
                     Fk_Country = a.AccountTeam.Account.Fk_Country,
-                    Fk_FavouriteTeam = a.AccountTeam.Account.Fk_FavouriteTeam
+                    Fk_FavouriteTeam = a.AccountTeam.Fk_FavouriteTeam
                 })
                 .ToList();
 
@@ -667,7 +667,7 @@ namespace FantasyLogic.Calculations
                 {
                     Id = a.Id,
                     Fk_Country = a.Account.Fk_Country,
-                    Fk_FavouriteTeam = a.Account.Fk_FavouriteTeam,
+                    Fk_FavouriteTeam = a.Fk_FavouriteTeam,
                     TotalPoints = a.TotalPoints,
                     HaveGoldSubscription = a.HaveGoldSubscription
                 })

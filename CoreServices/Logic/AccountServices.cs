@@ -39,7 +39,6 @@ namespace CoreServices.Logic
                                   UserName = a.User.UserName,
                                   Address = a.Address,
                                   Fk_Country = a.Fk_Country,
-                                  Fk_FavouriteTeam = a.Fk_FavouriteTeam,
                                   Fk_Nationality = a.Fk_Nationality,
                                   Fk_Season = a.Fk_Season,
                                   Season = new SeasonModel
@@ -65,7 +64,13 @@ namespace CoreServices.Logic
                                                           _365_CompetitionsId = b.Season._365_CompetitionsId,
                                                           _365_SeasonId = b.Season._365_SeasonId,
                                                           Name = otherLang ? b.Season.SeasonLang.Name : b.Season.Name,
-                                                      }
+                                                      },
+                                                      Fk_FavouriteTeam = b.Fk_FavouriteTeam,
+                                                      FavouriteTeam = b.Fk_FavouriteTeam > 0 ? new TeamModel
+                                                      {
+                                                          Id = b.FavouriteTeam.Id,
+                                                          Name = otherLang ? b.FavouriteTeam.TeamLang.Name : b.FavouriteTeam.Name
+                                                      } : null
                                                   })
                                                   .FirstOrDefault(),
                                   Country = new CountryModel
@@ -80,13 +85,7 @@ namespace CoreServices.Logic
                                   },
                                   LastActive = a.User.RefreshTokens.Any()
                                   ? a.User.RefreshTokens.OrderByDescending(b => b.Id).Select(a => a.CreatedAt).FirstOrDefault()
-                                  : null,
-                                  FavouriteTeam = new TeamModel
-                                  {
-                                      Id = a.Fk_FavouriteTeam,
-                                      Name = otherLang ? a.FavouriteTeam.TeamLang.Name : a.FavouriteTeam.Name,
-                                      ShortName = otherLang ? a.FavouriteTeam.TeamLang.ShortName : a.FavouriteTeam.ShortName,
-                                  }
+                                  : null
                               })
                               .Search(parameters.SearchColumns, parameters.SearchTerm)
                               .Sort(parameters.OrderBy);

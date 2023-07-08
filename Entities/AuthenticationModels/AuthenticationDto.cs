@@ -137,9 +137,6 @@ namespace Entities.AuthenticationModels
         public int Fk_Country { get; set; }
         public CountryModel Country { get; set; }
 
-        public int Fk_FavouriteTeam { get; set; }
-        public TeamModel FavouriteTeam { get; set; }
-
         public TokenResponse TokenResponse { get; set; }
         public TokenResponse RefreshTokenResponse { get; set; }
 

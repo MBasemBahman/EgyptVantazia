@@ -104,7 +104,7 @@ namespace Repository.DBModels.AccountTeamModels
                                        a.UnSubscriptionUpdatedAt,
 
                                        a.Account.Fk_Country,
-                                       a.Account.Fk_FavouriteTeam
+                                       a.Fk_FavouriteTeam
 
                                    }).FirstOrDefault();
 
@@ -119,7 +119,7 @@ namespace Repository.DBModels.AccountTeamModels
                            {
                                a.Id,
                                a.TotalPoints,
-                               a.Account.Fk_FavouriteTeam,
+                               a.Fk_FavouriteTeam,
                                a.Account.Fk_Country,
                                HaveGoldSubscription = a.Account.AccountSubscriptions.Any(b => b.Fk_Subscription == (int)SubscriptionEnum.Gold &&
                                                                                               b.IsActive &&
@@ -260,7 +260,7 @@ namespace Repository.DBModels.AccountTeamModels
 
                 accounTeams.ForEach(accounTeam => UpdateAccountTeamUpdateCards(updateCards, accounTeam));
             }
-            DBContext.SaveChanges();
+            _ = DBContext.SaveChanges();
         }
 
         private void UpdateAccountTeamUpdateCards(AccountTeamUpdateCards updateCards, AccountTeam accountTeam)
@@ -292,6 +292,18 @@ namespace Repository.DBModels.AccountTeamModels
             if (updateCards.TripleCaptain > 0)
             {
                 accountTeam.TripleCaptain++;
+            }
+        }
+
+        public void TransfareFavouriteTeam()
+        {
+            List<AccountTeam> accountTeams = FindByCondition(a => a.Fk_FavouriteTeam == null, trackChanges: true)
+                               .Include(a => a.Account)
+                               .ToList();
+
+            foreach (AccountTeam accountTeam in accountTeams)
+            {
+                accountTeam.Fk_FavouriteTeam = accountTeam.Account.Fk_FavouriteTeam;
             }
         }
     }
@@ -342,7 +354,7 @@ namespace Repository.DBModels.AccountTeamModels
                                            (FromUnSubscriptionRanking == null || a.UnSubscriptionRanking >= FromUnSubscriptionRanking) &&
 
                                            (Fk_Country == 0 || a.Account.Fk_Country == Fk_Country) &&
-                                           (Fk_FavouriteTeam == 0 || a.Account.Fk_FavouriteTeam == Fk_FavouriteTeam) &&
+                                           (Fk_FavouriteTeam == 0 || a.Fk_FavouriteTeam == Fk_FavouriteTeam) &&
                                            (Fk_Account == 0 || a.Fk_Account == Fk_Account) &&
                                            (Fk_User == 0 || a.Account.Fk_User == Fk_User) &&
                                            (Fk_PrivateLeague == 0 || a.Account.PrivateLeagueMembers.Any(b => b.Fk_PrivateLeague == Fk_PrivateLeague)) &&

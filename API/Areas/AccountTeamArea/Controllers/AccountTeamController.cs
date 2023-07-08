@@ -65,7 +65,7 @@ namespace API.Areas.AccountTeamArea.Controllers
 
                     if (parameters.OrderBy.Contains("favouriteTeamRanking"))
                     {
-                        parameters.Fk_FavouriteTeam = auth.Fk_FavouriteTeam;
+                        parameters.Fk_FavouriteTeam = auth.AccountTeam.Fk_FavouriteTeam;
                         parameters.OrderBy = "totalPoints desc";
                     }
 
@@ -101,7 +101,7 @@ namespace API.Areas.AccountTeamArea.Controllers
 
                     if (parameters.OrderBy.Contains("currentGameWeakFavouriteTeamRanking"))
                     {
-                        parameters.Fk_FavouriteTeam = auth.Fk_FavouriteTeam;
+                        parameters.Fk_FavouriteTeam = auth.AccountTeam.Fk_FavouriteTeam;
                         parameters.OrderBy = "currentGameWeakPoints desc";
                     }
                 }
@@ -282,7 +282,7 @@ namespace API.Areas.AccountTeamArea.Controllers
             _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
 
             SeasonModelForCalc currentSeason = _unitOfWork.Season.GetCurrentSeason(_365CompetitionsEnum);
-            int nextGameWeakId = _unitOfWork.Season.GetNextGameWeakId();
+            int nextGameWeakId = _unitOfWork.Season.GetNextGameWeakId(_365CompetitionsEnum);
 
             AccountTeam accountTeam = _mapper.Map<AccountTeam>(model);
             accountTeam.CreatedBy = auth.Name;
@@ -351,7 +351,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                 throw new Exception("Season not started yet!");
             }
 
-            GameWeakModelForCalc nextGameWeak = _unitOfWork.Season.GetNextGameWeak();
+            GameWeakModelForCalc nextGameWeak = _unitOfWork.Season.GetNextGameWeak(_365CompetitionsEnum);
             if (nextGameWeak == null || nextGameWeak._365_GameWeakId_Parsed == null)
             {
                 throw new Exception("Game Weak not started yet!");
@@ -570,7 +570,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                 throw new Exception("Season not started yet!");
             }
 
-            GameWeakModelForCalc nextGameWeak = _unitOfWork.Season.GetNextGameWeak();
+            GameWeakModelForCalc nextGameWeak = _unitOfWork.Season.GetNextGameWeak(_365CompetitionsEnum);
             if (nextGameWeak == null || nextGameWeak._365_GameWeakId_Parsed == null)
             {
                 throw new Exception("Game Weak not started yet!");

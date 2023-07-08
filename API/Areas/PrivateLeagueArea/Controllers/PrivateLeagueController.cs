@@ -92,7 +92,7 @@ namespace API.Areas.PrivateLeagueArea.Controllers
                 throw new Exception("Please create your team!");
             }
 
-            int nextGameWeakId = _unitOfWork.Season.GetNextGameWeakId();
+            int nextGameWeakId = _unitOfWork.Season.GetNextGameWeakId(_365CompetitionsEnum);
 
             if (nextGameWeakId < 0)
             {

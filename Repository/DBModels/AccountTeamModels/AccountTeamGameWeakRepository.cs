@@ -91,7 +91,7 @@ namespace Repository.DBModels.AccountTeamModels
                                        a.FavouriteTeamRankingUpdatedAt,
 
                                        a.AccountTeam.Account.Fk_Country,
-                                       a.AccountTeam.Account.Fk_FavouriteTeam
+                                       a.AccountTeam.Fk_FavouriteTeam
 
                                    }).FirstOrDefault();
 
@@ -106,7 +106,7 @@ namespace Repository.DBModels.AccountTeamModels
                            {
                                a.Id,
                                a.TotalPoints,
-                               a.AccountTeam.Account.Fk_FavouriteTeam,
+                               a.AccountTeam.Fk_FavouriteTeam,
                                a.AccountTeam.Account.Fk_Country
                            })
                            .ToList();

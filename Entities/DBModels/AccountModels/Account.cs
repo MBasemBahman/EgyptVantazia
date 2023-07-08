@@ -52,7 +52,7 @@ namespace Entities.DBModels.AccountModels
 
         [DisplayName(nameof(FavouriteTeam))]
         [ForeignKey(nameof(FavouriteTeam))]
-        public int Fk_FavouriteTeam { get; set; }
+        public int? Fk_FavouriteTeam { get; set; }
 
         [DisplayName(nameof(FavouriteTeam))]
         public Team FavouriteTeam { get; set; }

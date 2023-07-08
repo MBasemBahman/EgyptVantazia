@@ -297,13 +297,13 @@ namespace Repository.DBModels.AccountTeamModels
 
         public void TransfareFavouriteTeam()
         {
-            List<AccountTeam> accountTeams = FindByCondition(a => a.Fk_FavouriteTeam == null, trackChanges: true)
+            List<AccountTeam> accountTeams = FindByCondition(a => a.Account.Fk_FavouriteTeam != null, trackChanges: true)
                                .Include(a => a.Account)
                                .ToList();
 
             foreach (AccountTeam accountTeam in accountTeams)
             {
-                accountTeam.Fk_FavouriteTeam = accountTeam.Account.Fk_FavouriteTeam;
+                accountTeam.Fk_FavouriteTeam = accountTeam.Account.Fk_FavouriteTeam.Value;
             }
         }
     }

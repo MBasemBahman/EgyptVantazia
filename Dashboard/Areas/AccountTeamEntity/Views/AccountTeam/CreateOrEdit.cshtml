@@ -84,11 +84,19 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-12 col-12">
+                                        <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="Fk_Season" class="form-label"></label>
                                                 <select class="form-control" asp-for="Fk_Season" asp-items="@(new SelectList(ViewData["Season"] as Dictionary<string,string>,"Key","Value"))"></select>
                                                 <span asp-validation-for="Fk_Season" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Fk_FavouriteTeam" class="form-label"></label>
+                                                <select class="form-control select2" asp-for="Fk_FavouriteTeam" asp-items="@(new SelectList(ViewData["Team"] as Dictionary<string,string>,"Key","Value"))"></select>
+                                                <span asp-validation-for="Fk_FavouriteTeam" class="text-danger"></span>
                                             </div>
                                         </div>
 
@@ -212,6 +220,7 @@
 </div>
 
 @section scripts{
+    <script src="~/apis/site.js"></script>
     <script>
 
         function resetRepeaterData() {
@@ -231,6 +240,11 @@
                 setTimeout(resetRepeaterData, 500)
             });
 
+        });
+        
+        $(document).on('change', 'select[name=Fk_Season]', function() {
+          let fk_Season = $(this).val();
+          getTeams($('select[name=Fk_FavouriteTeam]'), fk_Season, true);
         });
 
     </script>

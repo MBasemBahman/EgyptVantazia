@@ -176,7 +176,7 @@ namespace Dashboard.Areas.AccountTeamEntity.Controllers
                 model.StorageUrl = _linkGenerator.GetUriByAction(HttpContext).GetBaseUri(HttpContext.Request.RouteValues["area"].ToString());
             }
 
-            SetViewData(ProfileLayOut: true);
+            SetViewData(ProfileLayOut: true, model.Fk_Season);
             return View(model);
         }
 
@@ -187,7 +187,7 @@ namespace Dashboard.Areas.AccountTeamEntity.Controllers
         {
             if (!ModelState.IsValid)
             {
-                SetViewData(ProfileLayOut: false);
+                SetViewData(ProfileLayOut: false, model.Fk_Season);
 
                 return View(model);
             }
@@ -231,19 +231,23 @@ namespace Dashboard.Areas.AccountTeamEntity.Controllers
                 ViewData[ViewDataConstants.Error] = _logger.LogError(HttpContext.Request, ex).ErrorMessage;
             }
 
-            SetViewData(ProfileLayOut: false);
+            SetViewData(ProfileLayOut: false, model.Fk_Season);
 
             return View(model);
         }
 
         // helper methods
-        private void SetViewData(bool ProfileLayOut = false)
+        private void SetViewData(bool ProfileLayOut = false, int fk_Season = 0)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             ViewData["Season"] = _unitOfWork.Season.GetSeasonLookUp(new SeasonParameters(), otherLang);
             ViewData["Player"] = _unitOfWork.Team.GetPlayerLookUp(new PlayerParameters(), otherLang);
             ViewData["GameWeak"] = _unitOfWork.Season.GetGameWeakLookUp(new GameWeakParameters(), otherLang);
+            ViewData["Team"] = _unitOfWork.Team.GetTeamLookUp(new TeamParameters
+            {
+                Fk_Season = fk_Season
+            }, otherLang);
             ViewData["ProfileLayOut"] = ProfileLayOut;
         }
 

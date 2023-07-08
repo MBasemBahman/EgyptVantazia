@@ -1407,4 +1407,7 @@
   <data name="HaveGoldSubscription" xml:space="preserve">
     <value>Have Gold Subscription</value>
   </data>
+  <data name="Fk_FavouriteTeam" xml:space="preserve">
+    <value>Favourite Team</value>
+  </data>
 </root>

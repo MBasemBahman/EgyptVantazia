@@ -211,6 +211,7 @@ else
                         data: function (data) {
                             data.Fk_Account = @Model.Fk_Account;
                             data.Fk_Season = $("#Fk_Season").length > 0 ? $("#Fk_Season").val() : @Model.Fk_Season
+                            data.Fk_FavouriteTeam = $("#Fk_FavouriteTeam").length > 0 ? $("#Fk_FavouriteTeam").val() : @Model.Fk_FavouriteTeam
                             data.CreatedAtFrom = $("#CreatedAtFrom").length > 0 ? $("#CreatedAtFrom").val() : '@Model.CreatedAtFrom'
                             data.CreatedAtTo = $("#CreatedAtTo").length > 0 ? $("#CreatedAtTo").val() : '@Model.CreatedAtTo'
                             data.AccountUserName = $("#AccountUserName").length > 0 ? $("#AccountUserName").val() : '@Model.AccountUserName'
@@ -352,6 +353,11 @@ else
 
         $(document).ready(function () {
             LoadTable();
+        });
+        
+        $(document).on('change', 'select[name=Fk_Season]', function() {
+          let fk_Season = $(this).val();
+          getTeams($('select[name=Fk_FavouriteTeam]'), fk_Season, true);
         });
     </script>
 }

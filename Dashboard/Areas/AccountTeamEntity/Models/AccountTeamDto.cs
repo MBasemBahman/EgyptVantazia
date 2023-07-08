@@ -11,6 +11,8 @@ namespace Dashboard.Areas.AccountTeamEntity.Models
         public int Id { get; set; }
 
         public int Fk_Account { get; set; }
+        [DisplayName(nameof(Fk_FavouriteTeam))]
+        public int Fk_FavouriteTeam { get; set; }
         
         public int Fk_GameWeak { get; set; }
 

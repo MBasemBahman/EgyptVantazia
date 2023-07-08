@@ -1455,4 +1455,7 @@
   <data name="HaveGoldSubscription" xml:space="preserve">
     <value>يملك اشتراك عالمي</value>
   </data>
+  <data name="Fk_FavouriteTeam" xml:space="preserve">
+    <value>الفريق المفضل</value>
+  </data>
 </root>

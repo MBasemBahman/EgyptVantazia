@@ -22,7 +22,7 @@
                     if (accountId != null)
                     {
                         // attach account to context on successful jwt validation
-                        context.Items[ApiConstants.User] = await accountService.GetById(accountId.Value);
+                        context.Items[ApiConstants.User] = await accountService.GetById(accountId.Value, otherLang: false);
                     }
                 }
             }

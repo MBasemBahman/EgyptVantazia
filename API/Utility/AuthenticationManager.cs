@@ -1,4 +1,5 @@
 ﻿using Entities.CoreServicesModels.AccountModels;
+using System.Text.RegularExpressions;
 
 namespace API.Utility
 {
@@ -41,10 +42,10 @@ namespace API.Utility
             // save changes to db
             await _unitOfWork.Save();
 
-            return GetAuthenticatedUser(_user, jwtToken, new TokenResponse(refreshToken.Token, refreshToken.Expires));
+            return GetAuthenticatedUser(_user, jwtToken, new TokenResponse(refreshToken.Token, refreshToken.Expires), userForAuth.OtherLang);
         }
 
-        public async Task<UserAuthenticatedDto> Authenticate(string token, string ipAddress)
+        public async Task<UserAuthenticatedDto> Authenticate(string token, string ipAddress, bool otherLang)
         {
             _user = await _unitOfWork.User.FindByRefreshToken(token, trackChanges: true);
 
@@ -87,7 +88,7 @@ namespace API.Utility
             // generate new jwt
             TokenResponse jwtToken = _jwtUtils.GenerateJwtToken(_user.Id, expires: 0);
 
-            return GetAuthenticatedUser(_user, jwtToken, new TokenResponse(refreshToken.Token, refreshToken.Expires));
+            return GetAuthenticatedUser(_user, jwtToken, new TokenResponse(refreshToken.Token, refreshToken.Expires), otherLang);
         }
 
         public async Task RevokeToken(string token, string ipAddress)
@@ -125,16 +126,16 @@ namespace API.Utility
                    _user.UserName == userName;
         }
 
-        public async Task<UserAuthenticatedDto> GetById(int id)
+        public async Task<UserAuthenticatedDto> GetById(int id, bool otherLang)
         {
             _user = await _unitOfWork.User.FindById(id, trackChanges: false);
 
-            return _user == null ? throw new Exception("user not found") : GetAuthenticatedUser(_user, token: null, refreshToken: null);
+            return _user == null ? throw new Exception("user not found") : GetAuthenticatedUser(_user, token: null, refreshToken: null, otherLang);
         }
 
         // helper methods
 
-        private UserAuthenticatedDto GetAuthenticatedUser(User user, TokenResponse token, TokenResponse refreshToken)
+        private UserAuthenticatedDto GetAuthenticatedUser(User user, TokenResponse token, TokenResponse refreshToken, bool otherLang)
         {
             UserAuthenticatedDto userAuthenticated = new()
             {
@@ -147,7 +148,7 @@ namespace API.Utility
                 UserName = user.UserName,
             };
 
-            AccountModel account = _unitOfWork.Account.GetByUserId(user.Id, otherLang: false).Result;
+            AccountModel account = _unitOfWork.Account.GetByUserId(user.Id, otherLang: otherLang).Result;
             if (account != null)
             {
                 userAuthenticated.ImageUrl = account.StorageUrl + account.ImageUrl;

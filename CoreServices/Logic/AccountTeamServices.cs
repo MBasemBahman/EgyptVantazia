@@ -65,7 +65,8 @@ namespace CoreServices.Logic
                                      parameters.From_365_GameWeakIdValue > 0 &&
                                      parameters.To_365_GameWeakIdValue > 0) ?
                                      a.AccountTeamGameWeaks
-                                      .Where(b => b.GameWeak._365_GameWeakIdValue >= parameters.From_365_GameWeakIdValue &&
+                                      .Where(b => b.GameWeak.Season._365_CompetitionsId == parameters._365_CompetitionsId.ToString() &&
+                                                  b.GameWeak._365_GameWeakIdValue >= parameters.From_365_GameWeakIdValue &&
                                                   b.GameWeak._365_GameWeakIdValue <= parameters.To_365_GameWeakIdValue)
                                       .Select(b => b.TotalPoints ?? 0)
                                       .Sum() : a.TotalPoints),

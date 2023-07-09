@@ -52,7 +52,7 @@ namespace Repository.DBModels.PrivateLeagueModels
             int? fk_GameWeak)
         {
             return PrivateLeagues.Where(a => (id == 0 || a.Id == id) &&
-                                             (Fk_Season == 0 || a.PrivateLeagueMembers.Any(b => b.Account.AccountTeams.Any(c => c.Fk_Season == Fk_Season))) &&
+                                             (Fk_Season == 0 || a.GameWeak.Fk_Season == Fk_Season) &&
                                              (haveMembers == null || (haveMembers == true ? a.PrivateLeagueMembers.Any() : !a.PrivateLeagueMembers.Any())) &&
                                              (Fk_Account == 0 || a.PrivateLeagueMembers.Any(b => b.Fk_Account == Fk_Account)) &&
                                              (IsAdmin == null || a.PrivateLeagueMembers.Any(b => b.IsAdmin == IsAdmin)) &&

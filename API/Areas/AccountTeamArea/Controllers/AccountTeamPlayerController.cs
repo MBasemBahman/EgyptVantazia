@@ -86,12 +86,14 @@ namespace API.Areas.AccountTeamArea.Controllers
 
                 if (parameters.IncludeNextMatch)
                 {
-                    GameWeakModelForCalc nextNextGameWeak = _unitOfWork.Season.GetNextNextGameWeak();
-
                     parameters.FromDeadLine = nextGameWeak.Deadline;
-                    parameters.ToDeadLine = nextNextGameWeak.Deadline;
 
-                    if (parameters.ToDeadLine == null)
+                    GameWeakModelForCalc nextNextGameWeak = _unitOfWork.Season.GetNextNextGameWeak();
+                    if (nextNextGameWeak != null)
+                    {
+                        parameters.ToDeadLine = nextNextGameWeak.Deadline;
+                    }
+                    else
                     {
                         parameters.ToDeadLine = _unitOfWork.Season.GetTeamGameWeaks(new TeamGameWeakParameters
                         {

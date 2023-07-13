@@ -2,6 +2,7 @@
 using Entities.DBModels.TeamModels;
 using FantasyLogic.DataMigration.StandingsData;
 using IntegrationWith365.Entities.SquadsModels;
+using Microsoft.AspNetCore.Http.Features;
 using static Contracts.EnumData.DBModelsEnum;
 
 namespace FantasyLogic.DataMigration.TeamData
@@ -35,21 +36,28 @@ namespace FantasyLogic.DataMigration.TeamData
                 _365_PositionId = a._365_PositionId
             }).ToList();
 
-            _ = BackgroundJob.Enqueue(() => UpdateTeamsPlayers(_365CompetitionsEnum, teams, positions));
+            List<PlayerPositionForCalc> formations = _unitOfWork.Team.GetFormationPositions(new FormationPositionParameters
+            { }).Select(a => new PlayerPositionForCalc
+            {
+                Id = a.Id,
+                _365_PositionId = a._365_PositionId
+            }).ToList();
+
+            _ = BackgroundJob.Enqueue(() => UpdateTeamsPlayers(_365CompetitionsEnum, teams, positions, formations));
         }
 
-        public void UpdateTeamsPlayers(_365CompetitionsEnum _365CompetitionsEnum, List<TeamForCalc> teams, List<PlayerPositionForCalc> positions)
+        public void UpdateTeamsPlayers(_365CompetitionsEnum _365CompetitionsEnum, List<TeamForCalc> teams, List<PlayerPositionForCalc> positions, List<PlayerPositionForCalc>  formations)
         {
             string jobId = null;
             foreach (TeamForCalc team in teams)
             {
                 jobId = jobId.IsExisting()
-                    ? BackgroundJob.ContinueJobWith(jobId, () => UpdatePlayers(_365CompetitionsEnum, team, positions, jobId))
-                    : BackgroundJob.Enqueue(() => UpdatePlayers(_365CompetitionsEnum, team, positions, jobId));
+                    ? BackgroundJob.ContinueJobWith(jobId, () => UpdatePlayers(_365CompetitionsEnum, team, positions,formations, jobId))
+                    : BackgroundJob.Enqueue(() => UpdatePlayers(_365CompetitionsEnum, team, positions,formations, jobId));
             }
         }
 
-        public async Task UpdatePlayers(_365CompetitionsEnum _365CompetitionsEnum, TeamForCalc team, List<PlayerPositionForCalc> positions, string jobId)
+        public async Task UpdatePlayers(_365CompetitionsEnum _365CompetitionsEnum, TeamForCalc team, List<PlayerPositionForCalc> positions, List<PlayerPositionForCalc> formations, string jobId)
         {
             _unitOfWork.Team.UpdatePlayerActivation(fk_Team: team.Id, isActive: false);
             _unitOfWork.Save().Wait();
@@ -77,27 +85,34 @@ namespace FantasyLogic.DataMigration.TeamData
                                                  .Select(a => a.Id)
                                                  .FirstOrDefault();
 
+                int fk_FormationPosition = formations.Where(a => a._365_PositionId == athletesInArabic[i].FormationPosition.Id.ToString())
+                                                 .Select(a => a.Id)
+                                                 .FirstOrDefault();
+
                 if (fk_PlayerPosition != (int)PlayerPositionEnum.Coach)
                 {
 
                     jobId = jobId.IsExisting()
-                        ? BackgroundJob.ContinueJobWith(jobId, () => UpdatePlayer(athletesInArabic[i], athletesInEnglish[i], team.Id, fk_PlayerPosition))
-                        : BackgroundJob.Enqueue(() => UpdatePlayer(athletesInArabic[i], athletesInEnglish[i], team.Id, fk_PlayerPosition));
+                        ? BackgroundJob.ContinueJobWith(jobId, () => UpdatePlayer(athletesInArabic[i], athletesInEnglish[i], team.Id, fk_PlayerPosition, fk_FormationPosition))
+                        : BackgroundJob.Enqueue(() => UpdatePlayer(athletesInArabic[i], athletesInEnglish[i], team.Id, fk_PlayerPosition, fk_FormationPosition));
                 }
             }
         }
 
-        public async Task UpdatePlayer(Athlete athleteInArabic, Athlete athleteInEnglish, int fk_Team, int fk_PlayerPosition)
+        public async Task UpdatePlayer(Athlete athleteInArabic, Athlete athleteInEnglish, int fk_Team, int fk_PlayerPosition, int fk_FormationPosition)
         {
             _unitOfWork.Team.CreatePlayer(new Player
             {
                 Name = athleteInArabic.Name,
                 ShortName = athleteInArabic.ShortName ?? athleteInEnglish.ShortName,
                 Age = athleteInArabic.Age,
+                Height = athleteInArabic.Height,
+                Birthdate = athleteInArabic.Birthdate,
                 PlayerNumber = athleteInArabic.JerseyNum.ToString(),
                 _365_PlayerId = athleteInArabic.Id.ToString(),
                 Fk_Team = fk_Team,
                 Fk_PlayerPosition = fk_PlayerPosition,
+                Fk_FormationPosition = fk_FormationPosition,
                 IsActive = true,
                 PlayerLang = new PlayerLang
                 {

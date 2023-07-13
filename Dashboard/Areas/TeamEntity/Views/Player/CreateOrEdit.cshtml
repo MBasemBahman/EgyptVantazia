@@ -111,18 +111,35 @@
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
-                                                <label asp-for="Age" class="form-label"></label>
-                                                <input asp-for="Age" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Age"))" />
-                                                <span asp-validation-for="Age" class="text-danger"></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <div class="mb-1">
                                                 <label asp-for="PlayerNumber" class="form-label"></label>
                                                 <input asp-for="PlayerNumber" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"PlayerNumber"))" />
                                                 <span asp-validation-for="PlayerNumber" class="text-danger"></span>
                                             </div>
                                         </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Height" class="form-label"></label>
+                                                <input asp-for="Height" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Height"))" />
+                                                <span asp-validation-for="Height" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Age" class="form-label"></label>
+                                                <input asp-for="Age" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Age"))" />
+                                                <span asp-validation-for="Age" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Birthdate" class="form-label"></label>
+                                                <input asp-for="Birthdate" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Birthdate"))" />
+                                                <span asp-validation-for="Birthdate" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
 
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
@@ -130,6 +147,14 @@
                                                 <select asp-for="Fk_PlayerPosition" class="select2 form-select" asp-items="@(new SelectList(ViewData["PlayerPosition"] as Dictionary<string,string>,"Key","Value"))">
                                                 </select>
                                                 <span asp-validation-for="Fk_PlayerPosition" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Fk_FormationPosition" class="form-label"></label>
+                                                <select asp-for="Fk_FormationPosition" class="select2 form-select" asp-items="@(new SelectList(ViewData["FormationPosition"] as Dictionary<string,string>,"Key","Value"))">
+                                                </select>
+                                                <span asp-validation-for="Fk_FormationPosition" class="text-danger"></span>
                                             </div>
                                         </div>
 

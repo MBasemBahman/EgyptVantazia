@@ -1458,4 +1458,16 @@
   <data name="Fk_FavouriteTeam" xml:space="preserve">
     <value>الفريق المفضل</value>
   </data>
+  <data name="Birthdate" xml:space="preserve">
+    <value>تاريخ الميلاد</value>
+  </data>
+  <data name="FormationPosition" xml:space="preserve">
+    <value>المركز فى التشكيل</value>
+  </data>
+  <data name="FormationPositions" xml:space="preserve">
+    <value>مراكز التشكيل</value>
+  </data>
+  <data name="Height" xml:space="preserve">
+    <value>الطول</value>
+  </data>
 </root>

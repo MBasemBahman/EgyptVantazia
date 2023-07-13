@@ -1410,4 +1410,10 @@
   <data name="Fk_FavouriteTeam" xml:space="preserve">
     <value>Favourite Team</value>
   </data>
+  <data name="FormationPosition" xml:space="preserve">
+    <value>Formation Position</value>
+  </data>
+  <data name="FormationPositions" xml:space="preserve">
+    <value>Formation Positions</value>
+  </data>
 </root>

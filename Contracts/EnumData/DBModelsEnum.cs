@@ -61,7 +61,8 @@
             PromoCode = 43,
             StatisticScore = 44,
             StatisticCategory = 45,
-            MatchStatisticScore = 46
+            MatchStatisticScore = 46,
+            FormationPosition = 47
         }
 
         public enum ScoreTypeEnum

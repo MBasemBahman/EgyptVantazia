@@ -1,4 +1,5 @@
 ﻿using Contracts.Services;
+using Entities.DBModels.TeamModels;
 using FantasyLogic.Calculations;
 using FantasyLogic.DataMigration.GamesData;
 using FantasyLogic.DataMigration.PlayerScoreData;
@@ -33,6 +34,7 @@ namespace FantasyLogic
         #region TeamData
         private TeamDataHelper _teamDataHelper;
         private PlayerDataHelper _playerDataHelper;
+        private FormationPositionDataHelper _formationPositionDataHelper;
         #endregion
 
         #region GamesData
@@ -95,6 +97,14 @@ namespace FantasyLogic
             {
                 _playerDataHelper ??= new PlayerDataHelper(_unitOfWork, _365Services);
                 return _playerDataHelper;
+            }
+        }
+        public FormationPositionDataHelper FormationPositionDataHelper
+        {
+            get
+            {
+                _formationPositionDataHelper ??= new FormationPositionDataHelper(_unitOfWork, _365Services);
+                return _formationPositionDataHelper;
             }
         }
         #endregion

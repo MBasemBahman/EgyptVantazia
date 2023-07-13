@@ -281,6 +281,7 @@ namespace Dashboard.MappingProfileCls
                 .ForMember(dest => dest.StorageUrl, opt => opt.Ignore());
 
             _ = CreateMap<PlayerPositionModel, PlayerPositionDto>();
+            _ = CreateMap<FormationPositionModel, FormationPositionDto>();
 
             _ = CreateMap<PlayerPositionFilter, PlayerPositionParameters>();
 

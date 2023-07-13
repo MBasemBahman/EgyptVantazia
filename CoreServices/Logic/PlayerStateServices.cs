@@ -271,6 +271,7 @@ namespace CoreServices.Logic
                                              ShortName = otherLang ? playerScore.Player.PlayerLang.ShortName : playerScore.Player.ShortName,
                                              ImageUrl = !string.IsNullOrEmpty(playerScore.Player.ImageUrl) ? playerScore.Player.StorageUrl + playerScore.Player.ImageUrl : playerScore.Player.Team.ShirtStorageUrl + playerScore.Player.Team.ShirtImageUrl,
                                              Fk_PlayerPosition = playerScore.Player.Fk_PlayerPosition,
+                                             Fk_FormationPosition = playerScore.Player.Fk_FormationPosition,
                                              Fk_Team = playerScore.Player.Fk_Team,
                                              PlayerNumber = playerScore.Player.PlayerNumber,
                                              PlayerPosition = new PlayerPositionModel
@@ -279,6 +280,13 @@ namespace CoreServices.Logic
                                                  ShortName = otherLang ? playerScore.Player.PlayerPosition.PlayerPositionLang.ShortName : playerScore.Player.PlayerPosition.ShortName,
                                                  ImageUrl = playerScore.Player.PlayerPosition.StorageUrl + playerScore.Player.PlayerPosition.ImageUrl,
                                                  _365_PositionId = playerScore.Player.PlayerPosition._365_PositionId
+                                             },
+                                             FormationPosition = new FormationPositionModel
+                                             {
+                                                 Name = otherLang ? playerScore.Player.FormationPosition.FormationPositionLang.Name : playerScore.Player.FormationPosition.Name,
+                                                 ShortName = otherLang ? playerScore.Player.FormationPosition.FormationPositionLang.ShortName : playerScore.Player.FormationPosition.ShortName,
+                                                 ImageUrl = playerScore.Player.FormationPosition.StorageUrl + playerScore.Player.FormationPosition.ImageUrl,
+                                                 _365_PositionId = playerScore.Player.FormationPosition._365_PositionId
                                              },
                                              Team = new TeamModel
                                              {
@@ -332,6 +340,7 @@ namespace CoreServices.Logic
                                              ShortName = otherLang ? playerScore.Player.PlayerLang.ShortName : playerScore.Player.ShortName,
                                              ImageUrl = !string.IsNullOrEmpty(playerScore.Player.ImageUrl) ? playerScore.Player.StorageUrl + playerScore.Player.ImageUrl : playerScore.Player.Team.ShirtStorageUrl + playerScore.Player.Team.ShirtImageUrl,
                                              Fk_PlayerPosition = playerScore.Player.Fk_PlayerPosition,
+                                             Fk_FormationPosition = playerScore.Player.Fk_FormationPosition,
                                              Fk_Team = playerScore.Player.Fk_Team,
                                              PlayerNumber = playerScore.Player.PlayerNumber,
                                              PlayerPosition = new PlayerPositionModel
@@ -340,6 +349,13 @@ namespace CoreServices.Logic
                                                  ShortName = otherLang ? playerScore.Player.PlayerPosition.PlayerPositionLang.ShortName : playerScore.Player.PlayerPosition.ShortName,
                                                  ImageUrl = playerScore.Player.PlayerPosition.StorageUrl + playerScore.Player.PlayerPosition.ImageUrl,
                                                  _365_PositionId = playerScore.Player.PlayerPosition._365_PositionId
+                                             },
+                                             FormationPosition = new FormationPositionModel
+                                             {
+                                                 Name = otherLang ? playerScore.Player.FormationPosition.FormationPositionLang.Name : playerScore.Player.FormationPosition.Name,
+                                                 ShortName = otherLang ? playerScore.Player.FormationPosition.FormationPositionLang.ShortName : playerScore.Player.FormationPosition.ShortName,
+                                                 ImageUrl = playerScore.Player.FormationPosition.StorageUrl + playerScore.Player.FormationPosition.ImageUrl,
+                                                 _365_PositionId = playerScore.Player.FormationPosition._365_PositionId
                                              },
                                              Team = new TeamModel
                                              {

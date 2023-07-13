@@ -32,6 +32,20 @@ namespace CoreServices.Extensions
             return data.Where(expression);
         }
 
+        public static IQueryable<FormationPositionModel> Search(this IQueryable<FormationPositionModel> data, string searchColumns, string searchTerm)
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm) || string.IsNullOrWhiteSpace(searchColumns))
+            {
+                return data;
+            }
+
+            searchTerm = searchTerm.SafeTrim().SafeLower();
+
+            Expression<Func<FormationPositionModel, bool>> expression = SearchQueryBuilder.CreateSearchQuery<FormationPositionModel>(searchColumns, searchTerm);
+
+            return data.Where(expression);
+        }
+
         public static IQueryable<PlayerPriceModel> Search(this IQueryable<PlayerPriceModel> data, string searchColumns, string searchTerm)
         {
             if (string.IsNullOrWhiteSpace(searchTerm) || string.IsNullOrWhiteSpace(searchColumns))
@@ -83,6 +97,18 @@ namespace CoreServices.Extensions
             }
 
             string orderQuery = OrderQueryBuilder.CreateOrderQuery<PlayerPositionModel>(orderByQueryString);
+
+            return data.OrderBy(orderQuery);
+        }
+
+        public static IQueryable<FormationPositionModel> Sort(this IQueryable<FormationPositionModel> data, string orderByQueryString)
+        {
+            if (string.IsNullOrWhiteSpace(orderByQueryString))
+            {
+                return data.OrderBy(a => a.Id);
+            }
+
+            string orderQuery = OrderQueryBuilder.CreateOrderQuery<FormationPositionModel>(orderByQueryString);
 
             return data.OrderBy(orderQuery);
         }

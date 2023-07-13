@@ -97,6 +97,7 @@ namespace BaseDB
         public DbSet<Team> Teams { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<PlayerPosition> PlayerPositions { get; set; }
+        public DbSet<FormationPosition> FormationPositions { get; set; }
         public DbSet<PlayerPrice> PlayerPrices { get; set; }
 
         #endregion

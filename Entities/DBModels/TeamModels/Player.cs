@@ -21,6 +21,12 @@ namespace Entities.DBModels.TeamModels
         [DisplayName(nameof(Age))]
         public int Age { get; set; }
 
+        [DisplayName(nameof(Height))]
+        public int Height { get; set; }
+
+        [DisplayName(nameof(Birthdate))]
+        public DateTime? Birthdate { get; set; }
+
         [DisplayName(nameof(Team))]
         [ForeignKey(nameof(Team))]
         public int Fk_Team { get; set; }
@@ -34,6 +40,13 @@ namespace Entities.DBModels.TeamModels
 
         [DisplayName(nameof(PlayerPosition))]
         public PlayerPosition PlayerPosition { get; set; }
+
+        [DisplayName(nameof(FormationPosition))]
+        [ForeignKey(nameof(FormationPosition))]
+        public int Fk_FormationPosition { get; set; }
+
+        [DisplayName(nameof(FormationPosition))]
+        public FormationPosition FormationPosition { get; set; }
 
         [DisplayName(nameof(PlayerNumber))]
         public string PlayerNumber { get; set; }

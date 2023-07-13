@@ -82,6 +82,7 @@ namespace API.MappingProfileCls
             _ = CreateMap<TeamModel, TeamDto>();
             _ = CreateMap<PlayerModel, PlayerDto>();
             _ = CreateMap<PlayerPositionModel, PlayerPositionDto>();
+            _ = CreateMap<FormationPositionModel, FormationPositionDto>();
             _ = CreateMap<PlayerPriceModel, PlayerPriceDto>();
 
             #endregion

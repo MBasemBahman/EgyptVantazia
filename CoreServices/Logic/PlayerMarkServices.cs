@@ -109,6 +109,7 @@ namespace CoreServices.Logic
                                ImageUrl = !string.IsNullOrEmpty(a.Player.ImageUrl) ? a.Player.StorageUrl + a.Player.ImageUrl : a.Player.Team.ShirtStorageUrl + a.Player.Team.ShirtImageUrl,
                                _365_PlayerId = a.Player._365_PlayerId,
                                Fk_PlayerPosition = a.Player.Fk_PlayerPosition,
+                               Fk_FormationPosition = a.Player.Fk_FormationPosition,
                                Fk_Team = a.Player.Fk_Team
                            },
                            Fk_Mark = a.Fk_Mark,

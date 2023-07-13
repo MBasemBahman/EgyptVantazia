@@ -290,6 +290,7 @@ namespace Dashboard.Areas.TeamEntity.Controllers
             ViewData["returnPage"] = returnPage;
             ViewData["id"] = id;
             ViewData["PlayerPosition"] = _unitOfWork.Team.GetPlayerPositionLookUp(new PlayerPositionParameters(), otherLang);
+            ViewData["FormationPosition"] = _unitOfWork.Team.GetFormationPositionLookUp(new FormationPositionParameters(), otherLang);
             ViewData["Team"] = _unitOfWork.Team.GetTeamLookUp(new TeamParameters(), otherLang);
             ViewData["Season"] = _unitOfWork.Season.GetSeasonLookUp(new SeasonParameters(), otherLang);
         }

@@ -4,6 +4,7 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20230713205953_NewPlayerInfos")]
+    partial class NewPlayerInfos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1216,14 +1219,6 @@ namespace DAL.Migrations
                             Fk_DashboardAccessLevel = 1,
                             Fk_DashboardAdministrationRole = 1,
                             Fk_DashboardView = 46
-                        },
-                        new
-                        {
-                            Id = 46,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Fk_DashboardAccessLevel = 1,
-                            Fk_DashboardAdministrationRole = 1,
-                            Fk_DashboardView = 47
                         });
                 });
 
@@ -1823,13 +1818,6 @@ namespace DAL.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "MatchStatisticScore",
                             ViewPath = "MatchStatisticScore"
-                        },
-                        new
-                        {
-                            Id = 47,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "FormationPosition",
-                            ViewPath = "FormationPosition"
                         });
                 });
 
@@ -2175,13 +2163,6 @@ namespace DAL.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fk_Source = 46,
                             Name = "MatchStatisticScore"
-                        },
-                        new
-                        {
-                            Id = 47,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Fk_Source = 47,
-                            Name = "FormationPosition"
                         });
                 });
 
@@ -4372,7 +4353,7 @@ namespace DAL.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ShortName")
                         .HasColumnType("nvarchar(max)");
@@ -4384,6 +4365,9 @@ namespace DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("FormationPositions");
                 });
@@ -4901,7 +4885,7 @@ namespace DAL.Migrations
                             IsExternalLogin = false,
                             LastModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Developer",
-                            Password = "$2a$11$ut3yxRvrV.oEZapJmMXDnOBkTS.CKPdYIm.zhobAd1qw8mqVqPbzi",
+                            Password = "$2a$11$pQPeho2ck25LhGBRvdxqoeYSLXdv0rH/b.2OD71Ph/VcQBELNIjUO",
                             UserName = "Developer"
                         });
                 });

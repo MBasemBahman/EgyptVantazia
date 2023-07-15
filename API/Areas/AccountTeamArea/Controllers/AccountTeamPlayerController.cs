@@ -67,7 +67,11 @@ namespace API.Areas.AccountTeamArea.Controllers
             if (parameters.IncludeNextMatch)
             {
                 parameters.FromDeadLine = currentGamWeak.Deadline;
-                parameters.ToDeadLine = nextGameWeak.Deadline;
+
+                if (nextGameWeak != null)
+                {
+                    parameters.ToDeadLine = nextGameWeak.Deadline;
+                }
 
                 if (parameters.ToDeadLine == null)
                 {

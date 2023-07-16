@@ -357,7 +357,7 @@ else
         
         $(document).on('change', 'select[name=Fk_Season]', function() {
           let fk_Season = $(this).val();
-          getTeams($('select[name=Fk_FavouriteTeam]'), fk_Season, true);
+          getTeams($('select[name=Fk_FavouriteTeam]'), fk_Season, false);
         });
     </script>
 }

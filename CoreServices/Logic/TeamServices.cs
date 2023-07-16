@@ -313,13 +313,13 @@ namespace CoreServices.Logic
                                            ImageUrl = a.PlayerPosition.StorageUrl + a.PlayerPosition.ImageUrl,
                                            _365_PositionId = a.PlayerPosition._365_PositionId
                                        },
-                                       FormationPosition = new FormationPositionModel
+                                       FormationPosition = a.Fk_FormationPosition > 0 ? new FormationPositionModel
                                        {
                                            Name = otherLang ? a.FormationPosition.FormationPositionLang.Name : a.FormationPosition.Name,
                                            ShortName = otherLang ? a.FormationPosition.FormationPositionLang.ShortName : a.FormationPosition.ShortName,
                                            ImageUrl = a.FormationPosition.StorageUrl + a.FormationPosition.ImageUrl,
                                            _365_PositionId = a.FormationPosition._365_PositionId
-                                       },
+                                       } : null,
                                        Team = new TeamModel
                                        {
                                            Name = otherLang ? a.Team.TeamLang.Name : a.Team.Name,

@@ -32,6 +32,11 @@ namespace Repository.DBModels.TeamModels
 
         public new void Create(FormationPosition entity)
         {
+            if (entity.Name.IsEmpty())
+            {
+                return;
+            }
+
             if (entity._365_PositionId.IsExisting() && FindByCondition(a => a._365_PositionId == entity._365_PositionId, trackChanges: false).Any())
             {
                 FormationPosition oldEntity = FindByCondition(a => a._365_PositionId == entity._365_PositionId, trackChanges: true)

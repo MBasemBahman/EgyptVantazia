@@ -43,7 +43,7 @@ namespace Entities.DBModels.TeamModels
 
         [DisplayName(nameof(FormationPosition))]
         [ForeignKey(nameof(FormationPosition))]
-        public int Fk_FormationPosition { get; set; }
+        public int? Fk_FormationPosition { get; set; }
 
         [DisplayName(nameof(FormationPosition))]
         public FormationPosition FormationPosition { get; set; }

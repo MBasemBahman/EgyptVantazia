@@ -106,7 +106,7 @@ namespace Entities.CoreServicesModels.TeamModels
         public PlayerPositionModel PlayerPosition { get; set; }
 
         [DisplayName(nameof(FormationPosition))]
-        public int Fk_FormationPosition { get; set; }
+        public int? Fk_FormationPosition { get; set; }
 
         [DisplayName(nameof(FormationPosition))]
         public FormationPositionModel FormationPosition { get; set; }
@@ -198,7 +198,7 @@ namespace Entities.CoreServicesModels.TeamModels
         public int Fk_PlayerPosition { get; set; }
 
         [DisplayName(nameof(FormationPosition))]
-        public int Fk_FormationPosition { get; set; }
+        public int? Fk_FormationPosition { get; set; }
 
         [DisplayName(nameof(PlayerNumber))]
         public string PlayerNumber { get; set; }
@@ -248,7 +248,7 @@ namespace Entities.CoreServicesModels.TeamModels
     {
         public int Fk_Player { get; set; }
         public int Fk_PlayerPosition { get; set; }
-        public int Fk_FormationPosition { get; set; }
+        public int? Fk_FormationPosition { get; set; }
         public int Fk_Team { get; set; }
         public double BuyPrice { get; set; }
         public double TotalPoints { get; set; }

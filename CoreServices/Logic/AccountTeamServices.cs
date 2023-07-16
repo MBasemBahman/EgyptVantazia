@@ -805,12 +805,12 @@ namespace CoreServices.Logic
                                    ShortName = otherLang ? a.Player.PlayerPosition.PlayerPositionLang.ShortName : a.Player.PlayerPosition.ShortName,
                                    ImageUrl = a.Player.PlayerPosition.StorageUrl + a.Player.PlayerPosition.ImageUrl,
                                },
-                               FormationPosition = new FormationPositionModel
+                               FormationPosition = a.Player.Fk_FormationPosition > 0 ? new FormationPositionModel
                                {
                                    Name = otherLang ? a.Player.FormationPosition.FormationPositionLang.Name : a.Player.FormationPosition.Name,
                                    ShortName = otherLang ? a.Player.FormationPosition.FormationPositionLang.ShortName : a.Player.FormationPosition.ShortName,
                                    ImageUrl = a.Player.FormationPosition.StorageUrl + a.Player.FormationPosition.ImageUrl,
-                               },
+                               } : null,
                                Team = new TeamModel
                                {
                                    Name = otherLang ? a.Player.Team.TeamLang.Name : a.Player.Team.Name,

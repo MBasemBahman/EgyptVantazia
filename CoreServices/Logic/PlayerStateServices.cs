@@ -281,13 +281,13 @@ namespace CoreServices.Logic
                                                  ImageUrl = playerScore.Player.PlayerPosition.StorageUrl + playerScore.Player.PlayerPosition.ImageUrl,
                                                  _365_PositionId = playerScore.Player.PlayerPosition._365_PositionId
                                              },
-                                             FormationPosition = new FormationPositionModel
+                                             FormationPosition = playerScore.Player.Fk_FormationPosition > 0 ? new FormationPositionModel
                                              {
                                                  Name = otherLang ? playerScore.Player.FormationPosition.FormationPositionLang.Name : playerScore.Player.FormationPosition.Name,
                                                  ShortName = otherLang ? playerScore.Player.FormationPosition.FormationPositionLang.ShortName : playerScore.Player.FormationPosition.ShortName,
                                                  ImageUrl = playerScore.Player.FormationPosition.StorageUrl + playerScore.Player.FormationPosition.ImageUrl,
                                                  _365_PositionId = playerScore.Player.FormationPosition._365_PositionId
-                                             },
+                                             } : null,
                                              Team = new TeamModel
                                              {
                                                  Name = otherLang ? playerScore.Player.Team.TeamLang.Name : playerScore.Player.Team.Name,
@@ -350,13 +350,13 @@ namespace CoreServices.Logic
                                                  ImageUrl = playerScore.Player.PlayerPosition.StorageUrl + playerScore.Player.PlayerPosition.ImageUrl,
                                                  _365_PositionId = playerScore.Player.PlayerPosition._365_PositionId
                                              },
-                                             FormationPosition = new FormationPositionModel
+                                             FormationPosition = playerScore.Player.Fk_FormationPosition > 0 ? new FormationPositionModel
                                              {
                                                  Name = otherLang ? playerScore.Player.FormationPosition.FormationPositionLang.Name : playerScore.Player.FormationPosition.Name,
                                                  ShortName = otherLang ? playerScore.Player.FormationPosition.FormationPositionLang.ShortName : playerScore.Player.FormationPosition.ShortName,
                                                  ImageUrl = playerScore.Player.FormationPosition.StorageUrl + playerScore.Player.FormationPosition.ImageUrl,
                                                  _365_PositionId = playerScore.Player.FormationPosition._365_PositionId
-                                             },
+                                             } : null,
                                              Team = new TeamModel
                                              {
                                                  Name = otherLang ? playerScore.Player.Team.TeamLang.Name : playerScore.Player.Team.Name,

@@ -46,14 +46,14 @@ namespace FantasyLogic.DataMigration.TeamData
             _ = BackgroundJob.Enqueue(() => UpdateTeamsPlayers(_365CompetitionsEnum, teams, positions, formations));
         }
 
-        public void UpdateTeamsPlayers(_365CompetitionsEnum _365CompetitionsEnum, List<TeamForCalc> teams, List<PlayerPositionForCalc> positions, List<PlayerPositionForCalc>  formations)
+        public void UpdateTeamsPlayers(_365CompetitionsEnum _365CompetitionsEnum, List<TeamForCalc> teams, List<PlayerPositionForCalc> positions, List<PlayerPositionForCalc> formations)
         {
             string jobId = null;
             foreach (TeamForCalc team in teams)
             {
                 jobId = jobId.IsExisting()
-                    ? BackgroundJob.ContinueJobWith(jobId, () => UpdatePlayers(_365CompetitionsEnum, team, positions,formations, jobId))
-                    : BackgroundJob.Enqueue(() => UpdatePlayers(_365CompetitionsEnum, team, positions,formations, jobId));
+                    ? BackgroundJob.ContinueJobWith(jobId, () => UpdatePlayers(_365CompetitionsEnum, team, positions, formations, jobId))
+                    : BackgroundJob.Enqueue(() => UpdatePlayers(_365CompetitionsEnum, team, positions, formations, jobId));
             }
         }
 
@@ -112,7 +112,7 @@ namespace FantasyLogic.DataMigration.TeamData
                 _365_PlayerId = athleteInArabic.Id.ToString(),
                 Fk_Team = fk_Team,
                 Fk_PlayerPosition = fk_PlayerPosition,
-                Fk_FormationPosition = fk_FormationPosition,
+                Fk_FormationPosition = fk_FormationPosition == 0 ? null : fk_FormationPosition,
                 IsActive = true,
                 PlayerLang = new PlayerLang
                 {

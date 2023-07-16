@@ -94,7 +94,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_User")
                         .IsUnique();
 
-                    b.ToTable("Accounts");
+                    b.ToTable("Accounts", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.AccountModels.AccountSubscription", b =>
@@ -144,7 +144,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("Fk_Subscription");
 
-                    b.ToTable("AccountSubscriptions");
+                    b.ToTable("AccountSubscriptions", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.AccountModels.Payment", b =>
@@ -173,7 +173,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("Fk_Account");
 
-                    b.ToTable("Payments");
+                    b.ToTable("Payments", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.AccountTeamModels.AccountTeam", b =>
@@ -289,7 +289,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Account", "Fk_Season")
                         .IsUnique();
 
-                    b.ToTable("AccountTeams");
+                    b.ToTable("AccountTeams", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.AccountTeamModels.AccountTeamGameWeak", b =>
@@ -390,7 +390,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_AccountTeam", "Fk_GameWeak")
                         .IsUnique();
 
-                    b.ToTable("AccountTeamGameWeaks");
+                    b.ToTable("AccountTeamGameWeaks", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.AccountTeamModels.AccountTeamPlayer", b =>
@@ -419,7 +419,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Player", "Fk_AccountTeam")
                         .IsUnique();
 
-                    b.ToTable("AccountTeamPlayers");
+                    b.ToTable("AccountTeamPlayers", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.AccountTeamModels.AccountTeamPlayerGameWeak", b =>
@@ -483,7 +483,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_GameWeak", "Fk_TeamPlayerType", "Fk_AccountTeamPlayer")
                         .IsUnique();
 
-                    b.ToTable("AccountTeamPlayerGameWeaks");
+                    b.ToTable("AccountTeamPlayerGameWeaks", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.AccountTeamModels.TeamPlayerType", b =>
@@ -520,7 +520,7 @@ namespace DAL.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("TeamPlayerTypes");
+                    b.ToTable("TeamPlayerTypes", (string)null);
 
                     b.HasData(
                         new
@@ -571,7 +571,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Source")
                         .IsUnique();
 
-                    b.ToTable("TeamPlayerTypeLang");
+                    b.ToTable("TeamPlayerTypeLang", (string)null);
 
                     b.HasData(
                         new
@@ -681,7 +681,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AppAbout");
+                    b.ToTable("AppAbout", (string)null);
 
                     b.HasData(
                         new
@@ -736,7 +736,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Source")
                         .IsUnique();
 
-                    b.ToTable("AppAboutLang");
+                    b.ToTable("AppAboutLang", (string)null);
 
                     b.HasData(
                         new
@@ -777,7 +777,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Audits");
+                    b.ToTable("Audits", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.AuditModels.JobAudit", b =>
@@ -820,7 +820,7 @@ namespace DAL.Migrations
                     b.HasIndex("MyJobId")
                         .IsUnique();
 
-                    b.ToTable("JobAudits");
+                    b.ToTable("JobAudits", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.DashboardAdministrationModels.AdministrationRolePremission", b =>
@@ -854,7 +854,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_DashboardAdministrationRole", "Fk_DashboardView")
                         .IsUnique();
 
-                    b.ToTable("AdministrationRolePremissions");
+                    b.ToTable("AdministrationRolePremissions", (string)null);
 
                     b.HasData(
                         new
@@ -1261,7 +1261,7 @@ namespace DAL.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("DashboardAccessLevels");
+                    b.ToTable("DashboardAccessLevels", (string)null);
 
                     b.HasData(
                         new
@@ -1321,7 +1321,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Source")
                         .IsUnique();
 
-                    b.ToTable("DashboardAccessLevelLang");
+                    b.ToTable("DashboardAccessLevelLang", (string)null);
 
                     b.HasData(
                         new
@@ -1369,7 +1369,7 @@ namespace DAL.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("DashboardAdministrationRoles");
+                    b.ToTable("DashboardAdministrationRoles", (string)null);
 
                     b.HasData(
                         new
@@ -1405,7 +1405,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Source")
                         .IsUnique();
 
-                    b.ToTable("DashboardAdministrationRoleLang");
+                    b.ToTable("DashboardAdministrationRoleLang", (string)null);
 
                     b.HasData(
                         new
@@ -1462,7 +1462,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_User")
                         .IsUnique();
 
-                    b.ToTable("DashboardAdministrators");
+                    b.ToTable("DashboardAdministrators", (string)null);
 
                     b.HasData(
                         new
@@ -1506,7 +1506,7 @@ namespace DAL.Migrations
                     b.HasIndex("ViewPath")
                         .IsUnique();
 
-                    b.ToTable("DashboardViews");
+                    b.ToTable("DashboardViews", (string)null);
 
                     b.HasData(
                         new
@@ -1858,7 +1858,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Source")
                         .IsUnique();
 
-                    b.ToTable("DashboardViewLang");
+                    b.ToTable("DashboardViewLang", (string)null);
 
                     b.HasData(
                         new
@@ -2228,7 +2228,7 @@ namespace DAL.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Countries");
+                    b.ToTable("Countries", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.LocationModels.CountryLang", b =>
@@ -2256,7 +2256,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Source")
                         .IsUnique();
 
-                    b.ToTable("CountryLang");
+                    b.ToTable("CountryLang", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.LogModels.Log", b =>
@@ -2286,7 +2286,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Logs");
+                    b.ToTable("Logs", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.MatchStatisticModels.MatchStatisticScore", b =>
@@ -2340,7 +2340,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("Fk_TeamGameWeak");
 
-                    b.ToTable("MatchStatisticScores");
+                    b.ToTable("MatchStatisticScores", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.MatchStatisticModels.StatisticCategory", b =>
@@ -2380,7 +2380,7 @@ namespace DAL.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("StatisticCategories");
+                    b.ToTable("StatisticCategories", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.MatchStatisticModels.StatisticCategoryLang", b =>
@@ -2408,7 +2408,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Source")
                         .IsUnique();
 
-                    b.ToTable("StatisticCategoryLang");
+                    b.ToTable("StatisticCategoryLang", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.MatchStatisticModels.StatisticScore", b =>
@@ -2453,7 +2453,7 @@ namespace DAL.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("StatisticScores");
+                    b.ToTable("StatisticScores", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.MatchStatisticModels.StatisticScoreLang", b =>
@@ -2481,7 +2481,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Source")
                         .IsUnique();
 
-                    b.ToTable("StatisticScoreLang");
+                    b.ToTable("StatisticScoreLang", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.NewsModels.News", b =>
@@ -2537,7 +2537,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("Fk_GameWeak");
 
-                    b.ToTable("News");
+                    b.ToTable("News", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.NewsModels.NewsAttachment", b =>
@@ -2575,7 +2575,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("Fk_News");
 
-                    b.ToTable("NewsAttachments");
+                    b.ToTable("NewsAttachments", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.NewsModels.NewsLang", b =>
@@ -2611,7 +2611,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Source")
                         .IsUnique();
 
-                    b.ToTable("NewsLang");
+                    b.ToTable("NewsLang", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.NotificationModels.Notification", b =>
@@ -2661,7 +2661,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Notifications");
+                    b.ToTable("Notifications", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.NotificationModels.NotificationLang", b =>
@@ -2693,7 +2693,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Source")
                         .IsUnique();
 
-                    b.ToTable("NotificationLang");
+                    b.ToTable("NotificationLang", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.PlayerMarkModels.Mark", b =>
@@ -2736,7 +2736,7 @@ namespace DAL.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Marks");
+                    b.ToTable("Marks", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.PlayerMarkModels.MarkLang", b =>
@@ -2764,7 +2764,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Source")
                         .IsUnique();
 
-                    b.ToTable("MarkLang");
+                    b.ToTable("MarkLang", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.PlayerMarkModels.PlayerMark", b =>
@@ -2810,7 +2810,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("Fk_Player");
 
-                    b.ToTable("PlayerMarks");
+                    b.ToTable("PlayerMarks", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.PlayerMarkModels.PlayerMarkGameWeak", b =>
@@ -2850,7 +2850,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("Fk_PlayerMark");
 
-                    b.ToTable("PlayerMarkGameWeeks");
+                    b.ToTable("PlayerMarkGameWeeks", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.PlayerMarkModels.PlayerMarkGameWeakScore", b =>
@@ -2890,7 +2890,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("Fk_PlayerMark");
 
-                    b.ToTable("PlayerMarkGameWeakScores");
+                    b.ToTable("PlayerMarkGameWeakScores", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.PlayerMarkModels.PlayerMarkReasonMatch", b =>
@@ -2930,7 +2930,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("Fk_TeamGameWeak");
 
-                    b.ToTable("PlayerMarkReasonMatch");
+                    b.ToTable("PlayerMarkReasonMatch", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.PlayerMarkModels.PlayerMarkTeamGameWeak", b =>
@@ -2970,7 +2970,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("Fk_TeamGameWeak");
 
-                    b.ToTable("PlayerMarkTeamGameWeaks");
+                    b.ToTable("PlayerMarkTeamGameWeaks", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.PlayerScoreModels.PlayerGameWeak", b =>
@@ -3023,7 +3023,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_TeamGameWeak", "Fk_Player")
                         .IsUnique();
 
-                    b.ToTable("PlayerGameWeaks");
+                    b.ToTable("PlayerGameWeaks", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.PlayerScoreModels.PlayerGameWeakScore", b =>
@@ -3082,7 +3082,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_PlayerGameWeak", "Fk_ScoreType")
                         .IsUnique();
 
-                    b.ToTable("PlayerGameWeakScores");
+                    b.ToTable("PlayerGameWeakScores", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.PlayerScoreModels.ScoreType", b =>
@@ -3137,7 +3137,7 @@ namespace DAL.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("ScoreTypes");
+                    b.ToTable("ScoreTypes", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.PlayerScoreModels.ScoreTypeLang", b =>
@@ -3165,7 +3165,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Source")
                         .IsUnique();
 
-                    b.ToTable("ScoreTypeLang");
+                    b.ToTable("ScoreTypeLang", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.PlayerStateModels.PlayerGameWeakScoreState", b =>
@@ -3223,7 +3223,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Player", "Fk_GameWeak", "Fk_ScoreState")
                         .IsUnique();
 
-                    b.ToTable("PlayerGameWeakScoreStates");
+                    b.ToTable("PlayerGameWeakScoreStates", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.PlayerStateModels.PlayerSeasonScoreState", b =>
@@ -3281,7 +3281,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Player", "Fk_Season", "Fk_ScoreState")
                         .IsUnique();
 
-                    b.ToTable("PlayerSeasonScoreStates");
+                    b.ToTable("PlayerSeasonScoreStates", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.PlayerStateModels.ScoreState", b =>
@@ -3321,7 +3321,7 @@ namespace DAL.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("ScoreStates");
+                    b.ToTable("ScoreStates", (string)null);
 
                     b.HasData(
                         new
@@ -3449,7 +3449,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Source")
                         .IsUnique();
 
-                    b.ToTable("ScoreStateLang");
+                    b.ToTable("ScoreStateLang", (string)null);
 
                     b.HasData(
                         new
@@ -3603,7 +3603,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("Fk_Player");
 
-                    b.ToTable("PlayerTransfers");
+                    b.ToTable("PlayerTransfers", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.PrivateLeagueModels.PrivateLeague", b =>
@@ -3649,7 +3649,7 @@ namespace DAL.Migrations
                     b.HasIndex("UniqueCode")
                         .IsUnique();
 
-                    b.ToTable("PrivateLeagues");
+                    b.ToTable("PrivateLeagues", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.PrivateLeagueModels.PrivateLeagueMember", b =>
@@ -3699,7 +3699,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Account", "Fk_PrivateLeague")
                         .IsUnique();
 
-                    b.ToTable("PrivateLeagueMembers");
+                    b.ToTable("PrivateLeagueMembers", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.PromoCodeModels.PromoCode", b =>
@@ -3762,7 +3762,7 @@ namespace DAL.Migrations
                     b.HasIndex("Code")
                         .IsUnique();
 
-                    b.ToTable("PromoCodes");
+                    b.ToTable("PromoCodes", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.PromoCodeModels.PromoCodeLang", b =>
@@ -3794,7 +3794,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Source")
                         .IsUnique();
 
-                    b.ToTable("PromoCodeLang");
+                    b.ToTable("PromoCodeLang", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.PromoCodeModels.PromoCodeSubscription", b =>
@@ -3822,7 +3822,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("Fk_Subscription");
 
-                    b.ToTable("PromoCodeSubscriptions");
+                    b.ToTable("PromoCodeSubscriptions", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.SeasonModels.GameWeak", b =>
@@ -3892,7 +3892,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Season", "Name")
                         .IsUnique();
 
-                    b.ToTable("GameWeaks");
+                    b.ToTable("GameWeaks", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.SeasonModels.GameWeakLang", b =>
@@ -3920,7 +3920,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Source")
                         .IsUnique();
 
-                    b.ToTable("GameWeakLang");
+                    b.ToTable("GameWeakLang", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.SeasonModels.Season", b =>
@@ -3969,7 +3969,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Seasons");
+                    b.ToTable("Seasons", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.SeasonModels.SeasonLang", b =>
@@ -3997,7 +3997,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Source")
                         .IsUnique();
 
-                    b.ToTable("SeasonLang");
+                    b.ToTable("SeasonLang", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.SeasonModels.TeamGameWeak", b =>
@@ -4078,7 +4078,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("Fk_Home");
 
-                    b.ToTable("TeamGameWeaks");
+                    b.ToTable("TeamGameWeaks", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.SponsorModels.Sponsor", b =>
@@ -4127,7 +4127,7 @@ namespace DAL.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Sponsors");
+                    b.ToTable("Sponsors", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.SponsorModels.SponsorLang", b =>
@@ -4155,7 +4155,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Source")
                         .IsUnique();
 
-                    b.ToTable("SponsorLang");
+                    b.ToTable("SponsorLang", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.SponsorModels.SponsorView", b =>
@@ -4182,7 +4182,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Sponsor", "AppViewEnum")
                         .IsUnique();
 
-                    b.ToTable("SponsorViews");
+                    b.ToTable("SponsorViews", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.StandingsModels.Standings", b =>
@@ -4250,7 +4250,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Season", "Fk_Team")
                         .IsUnique();
 
-                    b.ToTable("Standings");
+                    b.ToTable("Standings", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.SubscriptionModels.Subscription", b =>
@@ -4308,7 +4308,7 @@ namespace DAL.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Subscriptions");
+                    b.ToTable("Subscriptions", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.SubscriptionModels.SubscriptionLang", b =>
@@ -4339,7 +4339,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Source")
                         .IsUnique();
 
-                    b.ToTable("SubscriptionLang");
+                    b.ToTable("SubscriptionLang", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.TeamModels.FormationPosition", b =>
@@ -4385,7 +4385,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FormationPositions");
+                    b.ToTable("FormationPositions", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.TeamModels.FormationPositionLang", b =>
@@ -4416,7 +4416,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Source")
                         .IsUnique();
 
-                    b.ToTable("FormationPositionLang");
+                    b.ToTable("FormationPositionLang", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.TeamModels.Player", b =>
@@ -4495,7 +4495,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("Fk_Team");
 
-                    b.ToTable("Players");
+                    b.ToTable("Players", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.TeamModels.PlayerLang", b =>
@@ -4526,7 +4526,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Source")
                         .IsUnique();
 
-                    b.ToTable("PlayerLang");
+                    b.ToTable("PlayerLang", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.TeamModels.PlayerPosition", b =>
@@ -4575,7 +4575,7 @@ namespace DAL.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("PlayerPositions");
+                    b.ToTable("PlayerPositions", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.TeamModels.PlayerPositionLang", b =>
@@ -4606,7 +4606,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Source")
                         .IsUnique();
 
-                    b.ToTable("PlayerPositionLang");
+                    b.ToTable("PlayerPositionLang", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.TeamModels.PlayerPrice", b =>
@@ -4652,7 +4652,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("Fk_Team");
 
-                    b.ToTable("PlayerPrices");
+                    b.ToTable("PlayerPrices", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.TeamModels.Team", b =>
@@ -4712,7 +4712,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("Fk_Season");
 
-                    b.ToTable("Teams");
+                    b.ToTable("Teams", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.TeamModels.TeamLang", b =>
@@ -4743,7 +4743,7 @@ namespace DAL.Migrations
                     b.HasIndex("Fk_Source")
                         .IsUnique();
 
-                    b.ToTable("TeamLang");
+                    b.ToTable("TeamLang", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.UserModels.Device", b =>
@@ -4785,7 +4785,7 @@ namespace DAL.Migrations
                     b.HasIndex("NotificationToken")
                         .IsUnique();
 
-                    b.ToTable("Devices");
+                    b.ToTable("Devices", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.UserModels.RefreshToken", b =>
@@ -4834,7 +4834,7 @@ namespace DAL.Migrations
                     b.HasIndex("Token")
                         .IsUnique();
 
-                    b.ToTable("RefreshTokens");
+                    b.ToTable("RefreshTokens", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.UserModels.User", b =>
@@ -4890,7 +4890,7 @@ namespace DAL.Migrations
                     b.HasIndex("UserName")
                         .IsUnique();
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
 
                     b.HasData(
                         new
@@ -4943,7 +4943,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("Fk_User");
 
-                    b.ToTable("Verifications");
+                    b.ToTable("Verifications", (string)null);
                 });
 
             modelBuilder.Entity("Entities.DBModels.AccountModels.Account", b =>

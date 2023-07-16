@@ -1416,4 +1416,7 @@
   <data name="FormationPositions" xml:space="preserve">
     <value>Formation Positions</value>
   </data>
+  <data name="TwiceCaptain" xml:space="preserve">
+    <value>Twice Captain</value>
+  </data>
 </root>

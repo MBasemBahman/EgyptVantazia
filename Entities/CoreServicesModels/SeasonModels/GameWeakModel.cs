@@ -51,6 +51,9 @@ namespace Entities.CoreServicesModels.SeasonModels
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
 
+        [DisplayName(nameof(OtherName))]
+        public string OtherName { get; set; }
+
         [DisplayName(nameof(_365_GameWeakId))]
         public string _365_GameWeakId { get; set; }
 

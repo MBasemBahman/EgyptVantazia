@@ -64,6 +64,7 @@ namespace Repository.DBModels.SeasonModels
                     oldEntity.Fk_GameWeak = entity.Fk_GameWeak;
                     oldEntity.StartTime = entity.StartTime;
                     oldEntity.IsEnded = entity.IsEnded;
+                    oldEntity.HalfTimeEnded = entity.HalfTimeEnded;
                     oldEntity._365_MatchId = entity._365_MatchId;
                     oldEntity.AwayScore = entity.AwayScore;
                     oldEntity.HomeScore = entity.HomeScore;

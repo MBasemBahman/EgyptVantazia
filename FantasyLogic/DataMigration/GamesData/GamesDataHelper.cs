@@ -8,6 +8,7 @@ using Entities.DBModels.SeasonModels;
 using Entities.ServicesModels;
 using FantasyLogic.Calculations;
 using FantasyLogic.DataMigration.PlayerScoreData;
+using IntegrationWith365.Entities.GameModels;
 using IntegrationWith365.Entities.GamesModels;
 using IntegrationWith365.Helpers;
 using Services;
@@ -131,13 +132,13 @@ namespace FantasyLogic.DataMigration.GamesData
 
                 GameResultDataHelper gameResultDataHelper = new(_unitOfWork, _365Services);
 
-                string jobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(_365CompetitionsEnum, new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, false, false, false, false, false), startTime);
-                string secondJobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(_365CompetitionsEnum, new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, true, false, false, false, false), startTime.AddMinutes(120));
-                string thirdJobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(_365CompetitionsEnum, new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, true, false, false, true, false), startTime.AddMinutes(200));
+                match.JobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(_365CompetitionsEnum, new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, false, false, false, false, false), startTime); // بداية الماتش;
+                match.SecondJobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(_365CompetitionsEnum, new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, true, false, false, false, false), startTime.AddMinutes(120)); // احتساب البونص;
+                match.ThirdJobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(_365CompetitionsEnum, new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, true, false, false, true, false), startTime.AddMinutes(200)); // احتساب البونص;
 
-                match.JobId = jobId;
-                match.SecondJobId = secondJobId;
-                match.ThirdJobId = thirdJobId;
+                match.FirstNotificationJobId = BackgroundJob.Schedule(() => SendNotificationForMatch(match.Id, MatchNotificationEnum.StartMatch), startTime);
+                match.SecondNotificationJobId = BackgroundJob.Schedule(() => SendNotificationForMatch(match.Id, MatchNotificationEnum.HalfTime), startTime.AddMinutes(45));
+                match.ThirdNotificationJobId = BackgroundJob.Schedule(() => SendNotificationForMatch(match.Id, MatchNotificationEnum.EndMatch), startTime.AddMinutes(105));
 
                 _unitOfWork.Save().Wait();
             }
@@ -241,8 +242,8 @@ namespace FantasyLogic.DataMigration.GamesData
                 OpenValue = id.ToString(),
                 NotificationLang = new NotificationLang
                 {
-                    Title = "باقي على نهاية الجوله ساعه",
-                    Description = " إلحق ضبط تشكيلتك",
+                    Title = "There is an hour left in the tour",
+                    Description = "Configure your formation",
                 }
             };
             _unitOfWork.Notification.CreateNotification(notification);
@@ -257,6 +258,111 @@ namespace FantasyLogic.DataMigration.GamesData
                 OpenValue = notification.OpenValue,
                 Topic = "all"
             }).Wait();
+        }
+
+        public async Task SendNotificationForMatch(int id, MatchNotificationEnum matchNotificationEnum)
+        {
+            TeamGameWeakModel match = _unitOfWork.Season.GetTeamGameWeaksForNotification(new TeamGameWeakParameters
+            {
+                Id = id
+            }).FirstOrDefault();
+
+            if (match != null && match.IsActive)
+            {
+                TeamGameWeak teamGameWeak = await _unitOfWork.Season.FindTeamGameWeakbyId(id, trackChanges: true);
+
+                Notification notification = new()
+                {
+                    OpenType = NotificationOpenTypeEnum.MatchProfile,
+                    OpenValue = id.ToString(),
+                    NotificationLang = new NotificationLang()
+                };
+
+                if (matchNotificationEnum == MatchNotificationEnum.StartMatch)
+                {
+                    notification.Title = $"انتباه! بدء مباراة فى الأسبوع {match.GameWeak.Name} الآن. اضبط التردد واستمتع بالمباراة!";
+                    notification.Title = $"بين فريقي {match.Home.Name} و {match.Away.Name}";
+
+                    notification.NotificationLang.Title = $"Attention! The match in week {match.GameWeak.OtherName} is starting now. Tune in and enjoy the game!";
+                    notification.NotificationLang.Title = $"Between {match.Home.OtherName} and {match.Away.OtherName}";
+
+                    teamGameWeak.FirstNotificationJobId = null;
+
+                    _unitOfWork.Save().Wait();
+                }
+                else if (matchNotificationEnum == MatchNotificationEnum.HalfTime)
+                {
+                    if (match.HalfTimeEnded)
+                    {
+                        if (teamGameWeak.FirstNotificationJobId.IsExisting())
+                        {
+                            _ = BackgroundJob.Delete(teamGameWeak.FirstNotificationJobId);
+                            teamGameWeak.FirstNotificationJobId = null;
+                        }
+
+                        teamGameWeak.SecondNotificationJobId = null;
+                        _unitOfWork.Save().Wait();
+                    }
+                    else
+                    {
+                        teamGameWeak.SecondNotificationJobId = BackgroundJob.Schedule(() => SendNotificationForMatch(match.Id, MatchNotificationEnum.HalfTime), DateTime.UtcNow.AddMinutes(5));
+                        _unitOfWork.Save().Wait();
+
+                        return;
+                    }
+
+                    notification.Title = $"انتهت فترة الشوط الأول! النتائج حتى الآن";
+                    notification.Title = $"[{match.Home.Name} ({match.HomeScore})] [{match.Away.Name} ({match.AwayScore})]";
+
+                    notification.NotificationLang.Title = $"Halftime is over! The results so far";
+                    notification.NotificationLang.Title = $"[{match.Home.OtherName} ({match.HomeScore})] [{match.Away.OtherName} ({match.AwayScore})]";
+                }
+                else if (matchNotificationEnum == MatchNotificationEnum.EndMatch)
+                {
+                    if (match.IsEnded)
+                    {
+                        if (teamGameWeak.FirstNotificationJobId.IsExisting())
+                        {
+                            _ = BackgroundJob.Delete(teamGameWeak.FirstNotificationJobId);
+                            teamGameWeak.FirstNotificationJobId = null;
+                        }
+                        if (teamGameWeak.SecondNotificationJobId.IsExisting())
+                        {
+                            _ = BackgroundJob.Delete(teamGameWeak.SecondNotificationJobId);
+                            teamGameWeak.SecondNotificationJobId = null;
+                        }
+
+                        teamGameWeak.ThirdNotificationJobId = null;
+                        _unitOfWork.Save().Wait();
+                    }
+                    else
+                    {
+                        teamGameWeak.ThirdNotificationJobId = BackgroundJob.Schedule(() => SendNotificationForMatch(match.Id, MatchNotificationEnum.EndMatch), DateTime.UtcNow.AddMinutes(5));
+                        _unitOfWork.Save().Wait();
+
+                        return;
+                    }
+
+                    notification.Title = $"انتهت المباراة! النتيجة النهائية";
+                    notification.Title = $"[{match.Home.Name} ({match.HomeScore})] [{match.Away.Name} ({match.AwayScore})]";
+
+                    notification.NotificationLang.Title = $"The football match has ended. Final score";
+                    notification.NotificationLang.Title = $"[{match.Home.OtherName} ({match.HomeScore})] [{match.Away.OtherName} ({match.AwayScore})]";
+                }
+
+                _unitOfWork.Notification.CreateNotification(notification);
+                await _unitOfWork.Save();
+
+                _notificationManager.SendToTopic(new FirebaseNotificationModel
+                {
+                    MessageHeading = notification.Title,
+                    MessageContent = notification.Description,
+                    ImgUrl = notification.StorageUrl + notification.ImageUrl,
+                    OpenType = notification.OpenType.ToString(),
+                    OpenValue = notification.OpenValue,
+                    Topic = "all"
+                }).Wait();
+            }
         }
 
         public void TransferAccountTeamPlayers(int fk_CurrentGameWeak, int fk_PrevGameWeak, int prev_365_GameWeakId, int fk_Season, bool resetTeam, int fk_AccounTeam, bool inDebug)
@@ -399,6 +505,13 @@ namespace FantasyLogic.DataMigration.GamesData
                     }
                 }
             }
+        }
+
+        public enum MatchNotificationEnum
+        {
+            StartMatch,
+            HalfTime,
+            EndMatch
         }
     }
 

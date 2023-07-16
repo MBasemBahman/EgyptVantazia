@@ -90,6 +90,9 @@ namespace Entities.CoreServicesModels.SeasonModels
         [DisplayName(nameof(IsEnded))]
         public bool IsEnded { get; set; }
 
+        [DisplayName(nameof(HalfTimeEnded))]
+        public bool HalfTimeEnded { get; set; }
+
         [DisplayName(nameof(IsDelayed))]
         public bool IsDelayed { get; set; }
 

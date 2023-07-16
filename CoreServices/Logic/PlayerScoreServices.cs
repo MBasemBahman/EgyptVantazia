@@ -118,6 +118,7 @@ namespace CoreServices.Logic
                                StartTime = a.TeamGameWeak.StartTime,
                                _365_MatchId = a.TeamGameWeak._365_MatchId,
                                IsEnded = a.TeamGameWeak.IsEnded,
+                               HalfTimeEnded = a.TeamGameWeak.HalfTimeEnded,
                                Away = new TeamModel
                                {
                                    Name = otherLang ? a.TeamGameWeak.Away.TeamLang.Name : a.TeamGameWeak.Away.Name,

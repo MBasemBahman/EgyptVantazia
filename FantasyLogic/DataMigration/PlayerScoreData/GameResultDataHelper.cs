@@ -10,6 +10,7 @@ using FantasyLogic.Calculations;
 using FantasyLogic.SharedLogic;
 using IntegrationWith365.Entities.GameModels;
 using IntegrationWith365.Entities.GamesModels;
+using System.ComponentModel;
 using static Contracts.EnumData.DBModelsEnum;
 using static Entities.EnumData.LogicEnumData;
 
@@ -56,6 +57,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 Fk_GameWeek = a.Fk_GameWeak,
                 Fk_Season = a.GameWeak.Fk_Season,
                 IsEnded = a.IsEnded,
+                HalfTimeEnded = a.HalfTimeEnded,
             }).ToList();
 
             List<ScoreTypeForCalc> scoreTypes = _unitOfWork.PlayerScore
@@ -87,7 +89,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                     {
                         if (runAll || teamGameWeak.EndTime > DateTime.UtcNow.ToEgypt())
                         {
-                            _ = BackgroundJob.Enqueue(() => UpdateGameResult(teamGameWeak, scoreTypes, runBonus, inDebug, runAll, stopAll, statisticsOnly));
+                            _ = BackgroundJob.Enqueue(() => UpdateGameResult(_365CompetitionsEnum, teamGameWeak, scoreTypes, runBonus, inDebug, runAll, stopAll, statisticsOnly));
                         }
                     }
                 }
@@ -145,6 +147,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 {
                     match.LastUpdateId = gameReturn.LastUpdateId;
                     match.IsEnded = gameReturn.Game.IsEnded;
+                    match.HalfTimeEnded = gameReturn.Game.HalfTimeEnded;
                     match.AwayScore = (int)gameReturn.Game.AwayCompetitor.Score;
                     match.HomeScore = (int)gameReturn.Game.HomeCompetitor.Score;
 
@@ -614,6 +617,8 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
         public int Fk_GameWeek { get; set; }
 
         public bool IsEnded { get; set; }
+
+        public bool HalfTimeEnded { get; set; }
     }
 
     public class PlayerGameWeakForCalc

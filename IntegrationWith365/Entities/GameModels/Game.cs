@@ -24,5 +24,11 @@ namespace IntegrationWith365.Entities.GameModels
         public Competitor AwayCompetitor { get; set; }
 
         public List<Event> Events { get; set; }
+
+        public List<Stage> Stages { get; set; }
+
+        public bool HalfTimeEnded => Stages != null && Stages.Any(a => a.Id == 7 && a.IsEnded);
+        
+         public bool EndMatchEnded => Stages != null && Stages.Any(a => a.Id == 9 && a.IsEnded);
     }
 }

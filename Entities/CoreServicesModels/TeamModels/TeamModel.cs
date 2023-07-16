@@ -27,6 +27,9 @@ namespace Entities.CoreServicesModels.TeamModels
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
 
+        [DisplayName(nameof(OtherName))]
+        public string OtherName { get; set; }
+
         [DisplayName(nameof(ShortName))]
         public string ShortName { get; set; }
 

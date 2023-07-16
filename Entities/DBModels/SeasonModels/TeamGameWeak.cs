@@ -40,6 +40,9 @@ namespace Entities.DBModels.SeasonModels
         [DisplayName(nameof(IsEnded))]
         public bool IsEnded { get; set; }
 
+        [DisplayName(nameof(HalfTimeEnded))]
+        public bool HalfTimeEnded { get; set; }
+
         [DisplayName(nameof(IsDelayed))]
         [DefaultValue(false)]
         public bool IsDelayed { get; set; }
@@ -58,6 +61,15 @@ namespace Entities.DBModels.SeasonModels
 
         [DisplayName(nameof(ThirdJobId))]
         public string ThirdJobId { get; set; }
+
+        [DisplayName(nameof(FirstNotificationJobId))]
+        public string FirstNotificationJobId { get; set; }
+
+        [DisplayName(nameof(SecondNotificationJobId))]
+        public string SecondNotificationJobId { get; set; }
+
+        [DisplayName(nameof(ThirdNotificationJobId))]
+        public string ThirdNotificationJobId { get; set; }
 
         [DisplayName(nameof(IsCanNotEdit))]
         public bool IsCanNotEdit { get; set; }

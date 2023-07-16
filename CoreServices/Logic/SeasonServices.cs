@@ -290,7 +290,7 @@ namespace CoreServices.Logic
                    .FirstOrDefault();
         }
 
-        public GameWeakModel GetNextGameWeak(_365CompetitionsEnum _365CompetitionsEnum,bool otherLang = false)
+        public GameWeakModel GetNextGameWeak(_365CompetitionsEnum _365CompetitionsEnum, bool otherLang = false)
         {
             return GetGameWeaks(new GameWeakParameters
             {
@@ -332,7 +332,7 @@ namespace CoreServices.Logic
                 : null;
         }
 
-        public GameWeakModel GetPrevGameWeak(_365CompetitionsEnum _365CompetitionsEnum,bool otherLang = false)
+        public GameWeakModel GetPrevGameWeak(_365CompetitionsEnum _365CompetitionsEnum, bool otherLang = false)
         {
             return GetGameWeaks(new GameWeakParameters
             {
@@ -445,6 +445,7 @@ namespace CoreServices.Logic
                        {
                            Id = a.Id,
                            IsEnded = a.IsEnded,
+                           HalfTimeEnded = a.HalfTimeEnded,
                            CreatedAt = a.CreatedAt,
                            CreatedBy = a.CreatedBy,
                            LastModifiedAt = a.LastModifiedAt,
@@ -515,6 +516,40 @@ namespace CoreServices.Logic
                                        IsCanNotEdit = b.IsCanNotEdit
                                    }).ToList(),
 
+                       })
+                       .Search(parameters.SearchColumns, parameters.SearchTerm)
+                       .Sort(parameters.OrderBy);
+        }
+
+        public IQueryable<TeamGameWeakModel> GetTeamGameWeaksForNotification(TeamGameWeakParameters parameters)
+        {
+            return _repository.TeamGameWeak
+                       .FindAll(parameters, trackChanges: false)
+                       .Select(a => new TeamGameWeakModel
+                       {
+                           Id = a.Id,
+                           IsEnded = a.IsEnded,
+                           HalfTimeEnded = a.HalfTimeEnded,
+                           AwayScore = a.AwayScore,
+                           HomeScore = a.HomeScore,
+                           StartTime = a.StartTime,
+                           IsDelayed = a.IsDelayed,
+                           IsActive = a.IsActive,
+                           Away = new TeamModel
+                           {
+                               Name = a.Away.Name,
+                               OtherName = a.Away.TeamLang.Name
+                           },
+                           Home = new TeamModel
+                           {
+                               Name = a.Home.Name,
+                               OtherName = a.Home.TeamLang.Name
+                           },
+                           GameWeak = new GameWeakModel
+                           {
+                               Name = a.GameWeak.Name,
+                               OtherName = a.GameWeak.GameWeakLang.Name
+                           }
                        })
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);

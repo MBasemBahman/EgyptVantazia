@@ -30,6 +30,8 @@ namespace API.Controllers
         [AllowAnonymous]
         public async Task<UserDto> Login([FromBody] UserForAuthenticationDto model)
         {
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
             if (model.UserName.IsEmpty())
             {
                 throw new Exception("Please enter your username!");
@@ -42,6 +44,7 @@ namespace API.Controllers
             _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             model.UserName = RegexService.GetUserName(model.UserName);
+            model.OtherLang = otherLang;
 
             UserAuthenticatedDto auth = await _authManager.Authenticate(model, IpAddress());
 
@@ -261,12 +264,12 @@ namespace API.Controllers
         public async Task<UserDto> RefreshToken(
             [FromBody] UserForTokenDto model)
         {
-            _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             model.Token = System.Net.WebUtility.UrlDecode(model.Token);
             model.Token = model.Token.Replace(" ", "+");
 
-            UserAuthenticatedDto auth = await _authManager.Authenticate(model.Token, IpAddress());
+            UserAuthenticatedDto auth = await _authManager.Authenticate(model.Token, IpAddress(), otherLang);
 
             SetToken(auth.TokenResponse);
             SetRefresh(auth.RefreshTokenResponse);
@@ -282,7 +285,9 @@ namespace API.Controllers
         public async Task<bool> RevokeToken(
             [FromBody] UserForTokenDto model)
         {
-            _ = await _authManager.Authenticate(model.Token, IpAddress());
+            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
+
+            _ = await _authManager.Authenticate(model.Token, IpAddress(), otherLang);
 
             await _authManager.RevokeToken(model.Token, IpAddress());
 

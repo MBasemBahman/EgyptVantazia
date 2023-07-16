@@ -196,6 +196,86 @@ namespace CoreServices.Logic
         }
         #endregion
 
+        #region Formation Position Services
+        public IQueryable<FormationPositionModel> GetFormationPositions(FormationPositionParameters parameters,
+                bool otherLang)
+        {
+            return _repository.FormationPosition
+                       .FindAll(parameters, trackChanges: false)
+                       .Select(a => new FormationPositionModel
+                       {
+                           Id = a.Id,
+                           CreatedAt = a.CreatedAt,
+                           CreatedBy = a.CreatedBy,
+                           LastModifiedAt = a.LastModifiedAt,
+                           LastModifiedBy = a.LastModifiedBy,
+                           Name = otherLang ? a.FormationPositionLang.Name : a.Name,
+                           ShortName = otherLang ? a.FormationPositionLang.ShortName : a.ShortName,
+                           ImageUrl = a.StorageUrl + a.ImageUrl,
+                           _365_PositionId = a._365_PositionId,
+                           PlayersCount = a.Players.Count,
+                       })
+                       .Search(parameters.SearchColumns, parameters.SearchTerm)
+                       .Sort(parameters.OrderBy);
+        }
+
+        public IQueryable<FormationPosition> GetFormationPositions(FormationPositionParameters parameters)
+        {
+            return _repository.FormationPosition
+                       .FindAll(parameters, trackChanges: false);
+        }
+
+
+        public async Task<PagedList<FormationPositionModel>> GetFormationPositionPaged(
+                  FormationPositionParameters parameters,
+                  bool otherLang)
+        {
+            return await PagedList<FormationPositionModel>.ToPagedList(GetFormationPositions(parameters, otherLang), parameters.PageNumber, parameters.PageSize);
+        }
+
+        public async Task<FormationPosition> FindFormationPositionbyId(int id, bool trackChanges)
+        {
+            return await _repository.FormationPosition.FindById(id, trackChanges);
+        }
+
+        public async Task<FormationPosition> FindFormationPositionby365Id(string id, bool trackChanges)
+        {
+            return await _repository.FormationPosition.FindBy365Id(id, trackChanges);
+        }
+
+
+        public void CreateFormationPosition(FormationPosition FormationPosition)
+        {
+            _repository.FormationPosition.Create(FormationPosition);
+        }
+
+        public async Task DeleteFormationPosition(int id)
+        {
+            FormationPosition FormationPosition = await FindFormationPositionbyId(id, trackChanges: true);
+            _repository.FormationPosition.Delete(FormationPosition);
+        }
+
+        public FormationPositionModel GetFormationPositionbyId(int id, bool otherLang)
+        {
+            return GetFormationPositions(new FormationPositionParameters { Id = id }, otherLang).FirstOrDefault();
+        }
+
+        public Dictionary<string, string> GetFormationPositionLookUp(FormationPositionParameters parameters, bool otherLang)
+        {
+            return GetFormationPositions(parameters, otherLang).ToDictionary(a => a.Id.ToString(), a => a.Name);
+        }
+        public int GetFormationPositionCount()
+        {
+            return _repository.FormationPosition.Count();
+        }
+
+        public async Task<string> UploudFormationPositionImage(string rootPath, IFormFile file)
+        {
+            FileUploader uploader = new(rootPath);
+            return await uploader.UploudFile(file, "Uploud/FormationPosition");
+        }
+        #endregion
+
         #region Player Services
         public IQueryable<PlayerModel> GetPlayers(PlayerParameters parameters,
                 bool otherLang)
@@ -215,9 +295,12 @@ namespace CoreServices.Logic
                                        ShortName = otherLang ? a.PlayerLang.ShortName : a.ShortName,
                                        ImageUrl = !string.IsNullOrEmpty(a.ImageUrl) ? a.StorageUrl + a.ImageUrl : a.Team.ShirtStorageUrl + a.Team.ShirtImageUrl,
                                        Fk_PlayerPosition = a.Fk_PlayerPosition,
+                                       Fk_FormationPosition = a.Fk_FormationPosition,
                                        Fk_Team = a.Fk_Team,
                                        PlayerNumber = a.PlayerNumber,
                                        Age = a.Age,
+                                       Height = a.Height,
+                                       Birthdate = a.Birthdate,
                                        InExternalTeam = a.InExternalTeam,
                                        Top15 = a.PlayerSeasonScoreStates
                                                 .Where(b => b.Season.IsCurrent && b.Top15 != null)
@@ -230,6 +313,13 @@ namespace CoreServices.Logic
                                            ImageUrl = a.PlayerPosition.StorageUrl + a.PlayerPosition.ImageUrl,
                                            _365_PositionId = a.PlayerPosition._365_PositionId
                                        },
+                                       FormationPosition = a.Fk_FormationPosition > 0 ? new FormationPositionModel
+                                       {
+                                           Name = otherLang ? a.FormationPosition.FormationPositionLang.Name : a.FormationPosition.Name,
+                                           ShortName = otherLang ? a.FormationPosition.FormationPositionLang.ShortName : a.FormationPosition.ShortName,
+                                           ImageUrl = a.FormationPosition.StorageUrl + a.FormationPosition.ImageUrl,
+                                           _365_PositionId = a.FormationPosition._365_PositionId
+                                       } : null,
                                        Team = new TeamModel
                                        {
                                            Name = otherLang ? a.Team.TeamLang.Name : a.Team.Name,

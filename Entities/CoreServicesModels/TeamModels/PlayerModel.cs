@@ -2,6 +2,7 @@
 using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.DBModels.AccountTeamModels;
 using Entities.DBModels.TeamModels;
+using Entities.Extensions;
 using Entities.RequestFeatures;
 using static Entities.EnumData.LogicEnumData;
 
@@ -21,6 +22,9 @@ namespace Entities.CoreServicesModels.TeamModels
 
         [DisplayName(nameof(PlayerPosition))]
         public int Fk_PlayerPosition { get; set; }
+
+        [DisplayName(nameof(FormationPosition))]
+        public int Fk_FormationPosition { get; set; }
 
         [DisplayName(nameof(_365_PlayerId))]
         public string _365_PlayerId { get; set; }
@@ -101,11 +105,26 @@ namespace Entities.CoreServicesModels.TeamModels
         [DisplayName(nameof(PlayerPosition))]
         public PlayerPositionModel PlayerPosition { get; set; }
 
+        [DisplayName(nameof(FormationPosition))]
+        public int? Fk_FormationPosition { get; set; }
+
+        [DisplayName(nameof(FormationPosition))]
+        public FormationPositionModel FormationPosition { get; set; }
+
         [DisplayName(nameof(PlayerNumber))]
         public string PlayerNumber { get; set; }
 
         [DisplayName(nameof(Age))]
         public int Age { get; set; }
+
+        [DisplayName(nameof(Height))]
+        public int Height { get; set; }
+
+        [DisplayName(nameof(Birthdate))]
+        public DateTime? Birthdate { get; set; }
+
+        [DisplayName(nameof(Birthdate))]
+        public string BirthdateString => Birthdate != null ? Birthdate.Value.ToShortDateTimeString() : null;
 
         [DisplayName(nameof(BuyPrice))]
         public double BuyPrice { get; set; }
@@ -151,6 +170,7 @@ namespace Entities.CoreServicesModels.TeamModels
         {
             PlayerPrices = new List<PlayerPriceCreateOrEditModel>();
         }
+
         [DisplayName($"{nameof(Name)}{PropertyAttributeConstants.ArLang}")]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
@@ -163,13 +183,22 @@ namespace Entities.CoreServicesModels.TeamModels
 
         [DisplayName(nameof(Age))]
         public int Age { get; set; }
+
+        [DisplayName(nameof(Height))]
+        public int Height { get; set; }
+
+        [DisplayName(nameof(Birthdate))]
+        public DateTime? Birthdate { get; set; }
+
         [DisplayName(nameof(Team))]
         [ForeignKey(nameof(Team))]
         public int Fk_Team { get; set; }
 
         [DisplayName(nameof(PlayerPosition))]
-        [ForeignKey(nameof(PlayerPosition))]
         public int Fk_PlayerPosition { get; set; }
+
+        [DisplayName(nameof(FormationPosition))]
+        public int? Fk_FormationPosition { get; set; }
 
         [DisplayName(nameof(PlayerNumber))]
         public string PlayerNumber { get; set; }
@@ -219,6 +248,7 @@ namespace Entities.CoreServicesModels.TeamModels
     {
         public int Fk_Player { get; set; }
         public int Fk_PlayerPosition { get; set; }
+        public int? Fk_FormationPosition { get; set; }
         public int Fk_Team { get; set; }
         public double BuyPrice { get; set; }
         public double TotalPoints { get; set; }

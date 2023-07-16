@@ -96,7 +96,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                 {
                     parameters.FromDeadLine = nextGameWeak.Deadline;
 
-                    GameWeakModelForCalc nextNextGameWeak = _unitOfWork.Season.GetNextNextGameWeak();
+                    GameWeakModelForCalc nextNextGameWeak = _unitOfWork.Season.GetNextNextGameWeak(_365CompetitionsEnum);
                     if (nextNextGameWeak != null)
                     {
                         parameters.ToDeadLine = nextNextGameWeak.Deadline;

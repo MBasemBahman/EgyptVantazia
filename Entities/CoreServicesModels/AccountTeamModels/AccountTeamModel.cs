@@ -59,6 +59,8 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         public int From_365_GameWeakIdValue { get; set; }
         public int To_365_GameWeakIdValue { get; set; }
+
+        public int _365_CompetitionsId { get; set; }
     }
 
     public class AccountTeamModel : AuditImageEntity

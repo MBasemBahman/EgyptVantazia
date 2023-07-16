@@ -61,7 +61,8 @@
             PromoCode = 43,
             StatisticScore = 44,
             StatisticCategory = 45,
-            MatchStatisticScore = 46
+            MatchStatisticScore = 46,
+            FormationPosition = 47
         }
 
         public enum ScoreTypeEnum
@@ -144,13 +145,15 @@
         public enum _365CompetitionsEnum
         {
             Egypt = 552,
-            KSA = 649
+            KSA = 649,
+            EPL = 7
         }
 
         public enum SeasonEnum
         {
             Egypt = 5,
-            KSA = 6,
+            KSA = 8,
+            EPL = 9
         }
     }
 }

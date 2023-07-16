@@ -65,7 +65,8 @@ namespace CoreServices.Logic
                                      parameters.From_365_GameWeakIdValue > 0 &&
                                      parameters.To_365_GameWeakIdValue > 0) ?
                                      a.AccountTeamGameWeaks
-                                      .Where(b => b.GameWeak._365_GameWeakIdValue >= parameters.From_365_GameWeakIdValue &&
+                                      .Where(b => b.GameWeak.Season._365_CompetitionsId == parameters._365_CompetitionsId.ToString() &&
+                                                  b.GameWeak._365_GameWeakIdValue >= parameters.From_365_GameWeakIdValue &&
                                                   b.GameWeak._365_GameWeakIdValue <= parameters.To_365_GameWeakIdValue)
                                       .Select(b => b.TotalPoints ?? 0)
                                       .Sum() : a.TotalPoints),
@@ -538,6 +539,7 @@ namespace CoreServices.Logic
                                    Id = a.AccountTeamPlayer.Fk_Player,
                                    InExternalTeam = a.AccountTeamPlayer.Player.InExternalTeam,
                                    Fk_PlayerPosition = a.AccountTeamPlayer.Player.Fk_PlayerPosition,
+                                   Fk_FormationPosition = a.AccountTeamPlayer.Player.Fk_PlayerPosition,
                                    Name = otherLang ? a.AccountTeamPlayer.Player.PlayerLang.Name : a.AccountTeamPlayer.Player.Name,
                                    ShortName = otherLang ? a.AccountTeamPlayer.Player.PlayerLang.ShortName : a.AccountTeamPlayer.Player.ShortName,
                                    ImageUrl = !string.IsNullOrEmpty(a.AccountTeamPlayer.Player.ImageUrl) ? a.AccountTeamPlayer.Player.StorageUrl + a.AccountTeamPlayer.Player.ImageUrl : a.AccountTeamPlayer.Player.Team.ShirtStorageUrl + a.AccountTeamPlayer.Player.Team.ShirtImageUrl,
@@ -775,6 +777,7 @@ namespace CoreServices.Logic
                                _365_PlayerId = a.Player._365_PlayerId,
                                Fk_Team = a.Player.Fk_Team,
                                Fk_PlayerPosition = a.Player.Fk_PlayerPosition,
+                               Fk_FormationPosition = a.Player.Fk_FormationPosition,
                                InExternalTeam = a.Player.InExternalTeam,
                                Top15 = a.Player
                                         .PlayerSeasonScoreStates
@@ -802,6 +805,12 @@ namespace CoreServices.Logic
                                    ShortName = otherLang ? a.Player.PlayerPosition.PlayerPositionLang.ShortName : a.Player.PlayerPosition.ShortName,
                                    ImageUrl = a.Player.PlayerPosition.StorageUrl + a.Player.PlayerPosition.ImageUrl,
                                },
+                               FormationPosition = a.Player.Fk_FormationPosition > 0 ? new FormationPositionModel
+                               {
+                                   Name = otherLang ? a.Player.FormationPosition.FormationPositionLang.Name : a.Player.FormationPosition.Name,
+                                   ShortName = otherLang ? a.Player.FormationPosition.FormationPositionLang.ShortName : a.Player.FormationPosition.ShortName,
+                                   ImageUrl = a.Player.FormationPosition.StorageUrl + a.Player.FormationPosition.ImageUrl,
+                               } : null,
                                Team = new TeamModel
                                {
                                    Name = otherLang ? a.Player.Team.TeamLang.Name : a.Player.Team.Name,
@@ -810,6 +819,8 @@ namespace CoreServices.Logic
                                    ShirtImageUrl = a.Player.Team.StorageUrl + a.Player.Team.ShirtImageUrl,
                                },
                                Age = a.Player.Age,
+                               Height = a.Player.Height,
+                               Birthdate = a.Player.Birthdate,
                                PlayerNumber = a.Player.PlayerNumber,
                                BuyPrice = a.Player.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.BuyPrice).FirstOrDefault(),
                                SellPrice = a.Player.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.SellPrice).FirstOrDefault(),

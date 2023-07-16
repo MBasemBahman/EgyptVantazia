@@ -84,6 +84,8 @@ namespace Entities.AuthenticationModels
         [DisplayName(nameof(IsExternalLogin))]
         [DefaultValue(false)]
         public bool IsExternalLogin { get; set; }
+
+        public bool OtherLang { get; set; }
     }
 
     public class UserForTokenDto

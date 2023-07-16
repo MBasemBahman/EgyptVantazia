@@ -20,6 +20,7 @@ namespace Repository.DBModels.TeamModels
                            parameters.Fk_Season,
                            parameters.Fk_GameWeaks,
                            parameters.Fk_PlayerPosition,
+                           parameters.Fk_FormationPosition,
                            parameters._365_PlayerId,
                            parameters.CreatedAtFrom,
                            parameters.CreatedAtTo,
@@ -68,8 +69,11 @@ namespace Repository.DBModels.TeamModels
                 oldEntity._365_PlayerId = entity._365_PlayerId;
                 //oldEntity.ShortName = entity.ShortName;
                 oldEntity.Age = entity.Age;
+                oldEntity.Height = entity.Height;
+                oldEntity.Birthdate = entity.Birthdate;
                 //oldEntity.PlayerNumber = entity.PlayerNumber;
                 //oldEntity.Fk_PlayerPosition = entity.Fk_PlayerPosition;
+                oldEntity.Fk_FormationPosition = entity.Fk_FormationPosition;
                 oldEntity.Fk_Team = entity.Fk_Team;
                 //oldEntity.PlayerLang.Name = entity.PlayerLang.Name;
                 //oldEntity.PlayerLang.ShortName = entity.PlayerLang.ShortName;
@@ -104,6 +108,7 @@ namespace Repository.DBModels.TeamModels
                                                 {
                                                     Fk_Player = a.Id,
                                                     Fk_PlayerPosition = a.Fk_PlayerPosition,
+                                                    Fk_FormationPosition = a.Fk_FormationPosition,
                                                     Fk_Team = a.Fk_Team,
                                                     BuyPrice = a.PlayerPrices
                                                                 .Where(b => b.BuyPrice > 0)
@@ -173,6 +178,7 @@ namespace Repository.DBModels.TeamModels
             int Fk_Season,
             List<int> Fk_GameWeaks,
             int Fk_PlayerPosition,
+            int Fk_FormationPosition,
             string _365_PlayerId,
             DateTime? createdAtFrom,
             DateTime? createdAtTo,
@@ -207,6 +213,7 @@ namespace Repository.DBModels.TeamModels
                                       (fk_TeamGameWeak_Ignored == 0 || !a.PlayerGameWeaks.Any(b => b.Fk_TeamGameWeak == fk_TeamGameWeak_Ignored)) &&
                                       (fk_TeamGameWeak == 0 || a.PlayerGameWeaks.Any(b => b.Fk_TeamGameWeak == fk_TeamGameWeak)) &&
                                       (Fk_PlayerPosition == 0 || a.Fk_PlayerPosition == Fk_PlayerPosition) &&
+                                      (Fk_FormationPosition == 0 || a.Fk_FormationPosition == Fk_FormationPosition) &&
                                       (_365_PlayerIds == null || !_365_PlayerIds.Any() || _365_PlayerIds.Contains(a._365_PlayerId)) &&
                                       (string.IsNullOrWhiteSpace(_365_PlayerId) || a._365_PlayerId == _365_PlayerId) &&
                                       (fk_Players == null || !fk_Players.Any() || fk_Players.Contains(a.Id)));

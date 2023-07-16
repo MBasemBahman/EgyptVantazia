@@ -42,10 +42,10 @@ namespace Dashboard.Utility
             // save changes to db
             await _unitOfWork.Save();
 
-            return GetAuthenticatedUser(_user, jwtToken, new TokenResponse(refreshToken.Token, refreshToken.Expires));
+            return GetAuthenticatedUser(_user, jwtToken, new TokenResponse(refreshToken.Token, refreshToken.Expires), userForAuth.OtherLang);
         }
 
-        public async Task<UserAuthenticatedDto> Authenticate(string token, string ipAddress)
+        public async Task<UserAuthenticatedDto> Authenticate(string token, string ipAddress, bool otherLang)
         {
             _user = await _unitOfWork.User.FindByRefreshToken(token, trackChanges: true);
 
@@ -87,7 +87,7 @@ namespace Dashboard.Utility
             // generate new jwt
             TokenResponse jwtToken = _jwtUtils.GenerateJwtToken(_user.Id);
 
-            return GetAuthenticatedUser(_user, jwtToken, new TokenResponse(refreshToken.Token, refreshToken.Expires));
+            return GetAuthenticatedUser(_user, jwtToken, new TokenResponse(refreshToken.Token, refreshToken.Expires), otherLang);
         }
 
         public async Task RevokeToken(string token, string ipAddress)
@@ -116,16 +116,16 @@ namespace Dashboard.Utility
             return _user != null && _unitOfWork.User.CheckUserPassword(_user, userForAuth.Password);
         }
 
-        public async Task<UserAuthenticatedDto> GetById(int id)
+        public async Task<UserAuthenticatedDto> GetById(int id, bool otherLang)
         {
             _user = await _unitOfWork.User.FindById(id, trackChanges: false);
 
-            return _user == null ? null : GetAuthenticatedUser(_user, token: null, refreshToken: null);
+            return _user == null ? null : GetAuthenticatedUser(_user, token: null, refreshToken: null, otherLang);
         }
 
         // helper methods
 
-        private UserAuthenticatedDto GetAuthenticatedUser(User user, TokenResponse token, TokenResponse refreshToken)
+        private UserAuthenticatedDto GetAuthenticatedUser(User user, TokenResponse token, TokenResponse refreshToken, bool otherLang)
         {
             UserAuthenticatedDto userAuthenticated = new()
             {

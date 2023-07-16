@@ -57,16 +57,16 @@
                                     <h4 class="card-title"> @ViewData["Title"]</h4>
 
                                 </div>
-                                  <p class="m-2 demo-inline-spacing">
-                                <a class="btn btn-primary me-1" data-bs-toggle="collapse" href="#AdvancedFilter" role="button" aria-expanded="false" aria-controls="AdvancedFilter">
-                                    <i data-feather='filter'></i>
-                                    @Localizer.Get("Advanced Search")
-                                </a>
+                                <p class="m-2 demo-inline-spacing">
+                                    <a class="btn btn-primary me-1" data-bs-toggle="collapse" href="#AdvancedFilter" role="button" aria-expanded="false" aria-controls="AdvancedFilter">
+                                        <i data-feather='filter'></i>
+                                        @Localizer.Get("Advanced Search")
+                                    </a>
 
-                            </p>
-                            @{
-                                await Html.RenderPartialAsync("../Player/Filter", Model, ViewData);
-                            }
+                                </p>
+                                @{
+                                    await Html.RenderPartialAsync("../Player/Filter", Model, ViewData);
+                                }
                                 <div class="card-datatable">
                                     <form class="playersPricesForm" asp-action="EditPlayersPrices" method="get">
                                         <table class="datatables datatables-ajax table table-responsive table">
@@ -103,6 +103,7 @@
                                                     <th>@Html.DisplayNameFor(model => row.ShortName)</th>
                                                     <th>@Html.DisplayNameFor(model => row.PlayerNumber)</th>
                                                     <th>@Html.DisplayNameFor(model => row.Age)</th>
+                                                    <th>@Html.DisplayNameFor(model => row.Height)</th>
                                                     <th>@Html.DisplayNameFor(model => row.Team)</th>
                                                     <th>@Html.DisplayNameFor(model => row._365_PlayerId)</th>
 
@@ -110,6 +111,7 @@
                                                     <th>@Html.DisplayNameFor(model => row.BuyPrice)</th>
 
                                                     <th>@Html.DisplayNameFor(model => row.PlayerPosition)</th>
+                                                    <th>@Html.DisplayNameFor(model => row.FormationPosition)</th>
                                                     <th>@Html.DisplayNameFor(model => row.IsActive)</th>
                                                     <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
                                                     <th>
@@ -175,6 +177,8 @@ else
                                     <th>@Html.DisplayNameFor(model => row.ShortName)</th>
                                     <th>@Html.DisplayNameFor(model => row.PlayerNumber)</th>
                                     <th>@Html.DisplayNameFor(model => row.Age)</th>
+                                    <th>@Html.DisplayNameFor(model => row.Height)</th>
+
                                     <th>@Html.DisplayNameFor(model => row.Team)</th>
                                     <th>@Html.DisplayNameFor(model => row._365_PlayerId)</th>
 
@@ -182,6 +186,8 @@ else
                                     <th>@Html.DisplayNameFor(model => row.BuyPrice)</th>
 
                                     <th>@Html.DisplayNameFor(model => row.PlayerPosition)</th>
+                                    <th>@Html.DisplayNameFor(model => row.FormationPosition)</th>
+
                                     <th>@Html.DisplayNameFor(model => row.IsActive)</th>
                                     <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
                                     <th>
@@ -220,7 +226,7 @@ else
                             data.CreatedAtFrom = $("#CreatedAtFrom").length > 0 ? $("#CreatedAtFrom").val() : '@Model.CreatedAtFrom';
                             data.CreatedAtTo = $("#CreatedAtTo").length > 0 ? $("#CreatedAtTo").val() : '@Model.CreatedAtTo';
                             data.IsActive = $("#IsActive").length > 0 ? $("#IsActive").val() : null;
-                            
+
                             return JSON.stringify(data);
                         }
                     },
@@ -268,7 +274,8 @@ else
                         },
                         { data: "shortName" },
                         { data: "playerNumber" },
-                        { data: "age", orderable: false },
+                        { data: "age", },
+                        { data: "height",},
                         {
                             data: "team",
                             orderable: false,
@@ -328,8 +335,36 @@ else
                                         + '<span class= "fw-bolder">' + data.name + '</span></a> '
                                         + '<small class= "emp_post text-muted" ></small ></div></div>';
                                 }
+                            }
+                        },
+                        {
+                            data: "formationPosition",
+                            orderable: false,
+                            render: function (data, type, row) {
+                                var span = '';
+                                if (data == null) {
+                                    return '';
+                                }
+                                else if (data.imageUrl != null) {
 
-
+                                    return '<div class="d-flex justify-content-left align-items-center"><div class= "avatar-wrapper" ><div class="avatar me-1">'
+                                        + '<img src="' + data.imageUrl + '"  height="32" width="32">'
+                                        + span
+                                        + '</div></div>'
+                                        + ' <div class= "d-flex flex-column">'
+                                        + '<a href="#"  class= "user_name text-truncate">'
+                                        + '<span class= "fw-bolder">' + data.name + '</span></a> '
+                                        + '<small class= "emp_post text-muted" ></small ></div></div>';
+                                }
+                                else {
+                                    return '<div class="d-flex justify-content-left align-items-center"><div class= "avatar-wrapper" >'
+                                        + '<div class="avatar  bg-light-dark  me-1"><span class="avatar-content"></span>' + span + '</div>'
+                                        + '</div>'
+                                        + ' <div class= "d-flex flex-column">'
+                                        + '<a href="#"  class= "user_name text-truncate">'
+                                        + '<span class= "fw-bolder">' + data.name + '</span></a> '
+                                        + '<small class= "emp_post text-muted" ></small ></div></div>';
+                                }
                             }
                         },
                         { data: "isActive", render: function(data) {
@@ -361,7 +396,7 @@ else
         $(document).ready(function () {
             LoadTable();
         });
-        
+
         $(document).on("click", ".edit-rows", function(e) {
           e.preventDefault();
           let fk_Players = $('input[name="fk_Players[]"]:checked').map(function(){return $(this).val();}).get();
@@ -370,20 +405,20 @@ else
               alert('choose one at least');
           } else {
             // $(".playersPricesForm").submit();
-            
+
             window.location.href = '/TeamEntity/Player/EditPlayersPrices?fk_Players='+fk_Players;
-            
+
           }
-          
+
         });
-        
+
         $(document).on("click", ".selectAllPlayers", function() {
           $('input:checkbox').prop('checked', this.checked);
         });
-        
+
         $(document).on("change", "#Fk_Season", function() {
           let fk_Season = $(this).val();
-            
+
           getTeams($("#Fk_Team"), fk_Season, false);
         });
     </script>

@@ -28,7 +28,7 @@
             {
                 if (!string.IsNullOrWhiteSpace(refreshToken))
                 {
-                    UserAuthenticatedDto auth = await _authManager.Authenticate(refreshToken, IpAddress());
+                    UserAuthenticatedDto auth = await _authManager.Authenticate(refreshToken, IpAddress(), otherLang: false);
 
                     RemoveCookies();
 

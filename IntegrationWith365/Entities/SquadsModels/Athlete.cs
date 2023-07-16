@@ -6,7 +6,10 @@
         public string Name { get; set; }
         public string ShortName { get; set; }
         public int Age { get; set; }
+        public int Height { get; set; }
+        public DateTime Birthdate { get; set; }
         public int JerseyNum { get; set; }
         public Position Position { get; set; }
+        public Position FormationPosition { get; set; }
     }
 }

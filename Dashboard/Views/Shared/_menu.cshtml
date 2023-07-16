@@ -338,7 +338,8 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
             </li>
 
-            @if (viewList.Contains((int)DashboardViewEnum.PlayerPosition))
+            @if (viewList.Contains((int)DashboardViewEnum.PlayerPosition) ||
+                 viewList.Contains((int)DashboardViewEnum.FormationPosition))
             {
                 <li class=" nav-item">
                     <a class="d-flex align-items-center" href="#">
@@ -350,6 +351,14 @@
                             <li class="@(active == DashboardViewEnum.PlayerPosition.ToString()?"active":"")">
                                 <a class="d-flex align-items-center" asp-controller="PlayerPosition" asp-area="TeamEntity" asp-action="Index">
                                     <i data-feather='settings'></i><span class="menu-item text-truncate" data-i18n="Second Level">@Localizer.Get("PlayerPositions")</span>
+                                </a>
+                            </li>
+                        }
+                        @if (viewList.Contains((int)DashboardViewEnum.FormationPosition))
+                        {
+                            <li class="@(active == DashboardViewEnum.FormationPosition.ToString()?"active":"")">
+                                <a class="d-flex align-items-center" asp-controller="FormationPosition" asp-area="TeamEntity" asp-action="Index">
+                                    <i data-feather='settings'></i><span class="menu-item text-truncate" data-i18n="Second Level">@Localizer.Get("FormationPositions")</span>
                                 </a>
                             </li>
                         }

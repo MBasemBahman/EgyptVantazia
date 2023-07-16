@@ -19,6 +19,7 @@ using Repository.DBModels.SubscripitonModels;
 using Repository.DBModels.TeamModels;
 using Repository.DBModels.PromoCodeModels;
 using Repository.DBModels.MatchStatisticModels;
+using Entities.DBModels.TeamModels;
 
 namespace Repository
 {
@@ -107,6 +108,8 @@ namespace Repository
 
         #region TeamModels
         private PlayerPositionRepository _playerPositionRepository;
+        private FormationPositionRepository _formationPositionRepository;
+
         private PlayerPriceRepository _playerPriceRepository;
         private PlayerRepository _playerRepository;
         private TeamRepository _teamRepository;
@@ -508,6 +511,14 @@ namespace Repository
         #endregion
 
         #region TeamModels
+        public FormationPositionRepository FormationPosition
+        {
+            get
+            {
+                _formationPositionRepository ??= new FormationPositionRepository(_dBContext);
+                return _formationPositionRepository;
+            }
+        }
         public PlayerPositionRepository PlayerPosition
         {
             get

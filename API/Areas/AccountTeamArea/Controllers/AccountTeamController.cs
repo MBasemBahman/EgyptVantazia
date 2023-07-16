@@ -177,16 +177,17 @@ namespace API.Areas.AccountTeamArea.Controllers
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+            _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
 
             AccountTeamModel data = _unitOfWork.AccountTeam.GetAccountTeams(new AccountTeamParameters
             {
                 Id = id,
-                Fk_GameWeak = fk_GameWeak
+                Fk_GameWeak = fk_GameWeak,
+                _365_CompetitionsId = (int)_365CompetitionsEnum
             }, otherLang).FirstOrDefault();
 
             GameWeakModelForCalc gameWeak = null;
 
-            _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
 
             if (fk_GameWeak == 0)
             {

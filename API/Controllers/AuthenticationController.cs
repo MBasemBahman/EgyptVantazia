@@ -108,6 +108,10 @@ namespace API.Controllers
             //}
 
             model.User.UserName = RegexService.GetUserName(model.User.UserName);
+            if (model.User.Password.IsEmpty())
+            {
+                model.User.Password = RandomGenerator.GenerateString(8);
+            }
 
             User user = _mapper.Map<User>(model.User);
 

@@ -14,7 +14,7 @@ namespace Entities.AuthenticationModels
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string UserName { get; set; }
 
-        [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
+        //[Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 

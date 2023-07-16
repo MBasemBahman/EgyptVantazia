@@ -86,7 +86,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                     {
                         if (runAll || teamGameWeak.EndTime > DateTime.UtcNow.ToEgypt())
                         {
-                            RecurringJob.AddOrUpdate(RecurringJobMatchId + teamGameWeak._365_MatchId.ToString(), () => UpdateGameResult(teamGameWeak, scoreTypes, runBonus, inDebug, runAll, stopAll, statisticsOnly), CronExpression.EveryMinutes(5));
+                            _ = BackgroundJob.Enqueue(() => UpdateGameResult(teamGameWeak, scoreTypes, runBonus, inDebug, runAll, stopAll, statisticsOnly));
                         }
                     }
                 }

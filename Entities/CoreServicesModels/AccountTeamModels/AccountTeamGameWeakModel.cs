@@ -36,6 +36,7 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public bool? DoubleGameWeak { get; set; }
         public bool? Top_11 { get; set; }
         public bool? TripleCaptain { get; set; }
+        public bool? TwiceCaptain { get; set; }
         public DateTime? CreatedAtFrom { get; set; }
 
         public DateTime? CreatedAtTo { get; set; }
@@ -119,6 +120,9 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         [DisplayName(nameof(TripleCaptain))]
         public bool TripleCaptain { get; set; }
 
+        [DisplayName(nameof(TwiceCaptain))]
+        public bool TwiceCaptain { get; set; }
+
         [DisplayName(nameof(TansfarePoints))]
         public int TansfarePoints { get; set; }
 
@@ -177,5 +181,7 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         [DisplayName(nameof(TripleCaptain))]
         public bool TripleCaptain { get; set; }
 
+        [DisplayName(nameof(TwiceCaptain))]
+        public bool TwiceCaptain { get; set; }
     }
 }

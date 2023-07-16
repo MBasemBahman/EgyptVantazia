@@ -134,7 +134,8 @@
             BenchBoost = 7,
             Add3MillionsBank = 8,
             Top_11 = 9,
-            Gold = 10
+            Gold = 10,
+            TwiceCaptain = 11,
         }
 
         public enum PrivateLeagueEnum

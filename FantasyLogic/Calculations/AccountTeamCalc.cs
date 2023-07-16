@@ -181,12 +181,28 @@ namespace FantasyLogic.Calculations
                 a.Points
             }).ToList();
 
+
             bool captianPointsFlag = players.Any(a => a.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian && (a.IsPlayed ||
                                                                                                                  a.IsDelayed ||
                                                                                                                  a.NotHaveMatch));
+
             bool havePointsInTotal = true;
 
             AccountTeamGameWeak accountTeamGameWeak = _unitOfWork.AccountTeam.FindAccountTeamGameWeakbyId(fk_AccountTeamGameWeak, trackChanges: true).Result;
+
+            int twiceCaptain = 0;
+
+            if (captianPointsFlag)
+            {
+                if (accountTeamGameWeak.TwiceCaptain)
+                {
+                    twiceCaptain = 2;
+                }
+                else
+                {
+                    twiceCaptain = 1;
+                }
+            }
 
             if (accountTeamGameWeak == null)
             {
@@ -248,11 +264,11 @@ namespace FantasyLogic.Calculations
                 }
 
                 if (havePointsInTotal &&
-                    captianPointsFlag &&
+                    twiceCaptain > 0 &&
                     ((player.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.Captian && player.IsParticipate) ||
                      (player.Fk_TeamPlayerType == (int)TeamPlayerTypeEnum.ViceCaptian && player.IsParticipate)))
                 {
-                    captianPointsFlag = false;
+                    twiceCaptain--;
                     captianPoints = accountTeamGameWeak.TripleCaptain ? 3 : 2;
                 }
 

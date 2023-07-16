@@ -91,7 +91,7 @@
                                                 <span asp-validation-for="Fk_Season" class="text-danger"></span>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="Fk_FavouriteTeam" class="form-label"></label>
@@ -132,6 +132,15 @@
                                                 <span asp-validation-for="DoubleGameWeak" class="text-danger"></span>
                                             </div>
                                         </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="TwiceCaptain" class="form-label"></label>
+                                                <input asp-for="TwiceCaptain" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("TwiceCaptain"))" />
+                                                <span asp-validation-for="TwiceCaptain" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
                                         <div class="col-md-4 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="Top_11" class="form-label"></label>
@@ -179,7 +188,7 @@
                                                 <span asp-validation-for="FavouriteTeamRanking" class="text-danger"></span>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="GoldSubscriptionRanking" class="form-label"></label>
@@ -195,7 +204,7 @@
                                                 <span asp-validation-for="UnSubscriptionRanking" class="text-danger"></span>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
                                     
                                     <hr />

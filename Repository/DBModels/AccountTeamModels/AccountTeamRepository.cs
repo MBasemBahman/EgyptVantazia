@@ -51,6 +51,7 @@ namespace Repository.DBModels.AccountTeamModels
             entity.FreeHit = 1;
             entity.WildCard = 2;
             entity.DoubleGameWeak = 1;
+            entity.TwiceCaptain = 1;
             entity.Top_11 = 1;
             entity.TripleCaptain = 1;
 
@@ -284,6 +285,10 @@ namespace Repository.DBModels.AccountTeamModels
             if (updateCards.Top_11 > 0)
             {
                 accountTeam.Top_11++;
+            }
+            if (updateCards.TwiceCaptain > 0)
+            {
+                accountTeam.TwiceCaptain++;
             }
             if (updateCards.FreeTransfer > 0)
             {

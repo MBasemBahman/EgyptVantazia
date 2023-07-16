@@ -60,6 +60,10 @@ namespace Entities.DBModels.AccountTeamModels
         [DefaultValue(0)]
         public int DoubleGameWeak { get; set; }
 
+        [DisplayName(nameof(TwiceCaptain))]
+        [DefaultValue(0)]
+        public int TwiceCaptain { get; set; }
+
         [DisplayName(nameof(Top_11))]
         [DefaultValue(0)]
         public int Top_11 { get; set; }

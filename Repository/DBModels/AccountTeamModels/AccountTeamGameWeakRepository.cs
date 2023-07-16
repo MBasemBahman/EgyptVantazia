@@ -28,6 +28,7 @@ namespace Repository.DBModels.AccountTeamModels
                            parameters.DoubleGameWeak,
                            parameters.Top_11,
                            parameters.TripleCaptain,
+                           parameters.TwiceCaptain,
                            parameters.CreatedAtFrom,
                            parameters.CreatedAtTo,
                            parameters.AccountFullName,
@@ -197,6 +198,7 @@ namespace Repository.DBModels.AccountTeamModels
             bool? DoubleGameWeak,
             bool? Top_11,
             bool? TrippleCaptain,
+            bool? TwiceCaptain,
             DateTime? CreatedAtFrom,
             DateTime? CreatedAtTo,
             string AccountFullName,
@@ -242,6 +244,7 @@ namespace Repository.DBModels.AccountTeamModels
                                                    (DoubleGameWeak == null || a.DoubleGameWeak == DoubleGameWeak) &&
                                                    (Top_11 == null || a.Top_11 == Top_11) &&
                                                    (TrippleCaptain == null || a.TripleCaptain == TrippleCaptain) &&
+                                                   (TwiceCaptain == null || a.TwiceCaptain == TwiceCaptain) &&
                                                    (string.IsNullOrEmpty(_365_GameWeakId) || a.GameWeak._365_GameWeakId == _365_GameWeakId) &&
                                                    (Fk_Season == 0 || a.AccountTeam.Fk_Season == Fk_Season) &&
                                                    (Fk_Account == 0 || a.AccountTeam.Fk_Account == Fk_Account) &&

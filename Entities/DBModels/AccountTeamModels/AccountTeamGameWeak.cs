@@ -38,6 +38,10 @@ namespace Entities.DBModels.AccountTeamModels
         [DisplayName(nameof(TripleCaptain))]
         public bool TripleCaptain { get; set; }
 
+        [DisplayName(nameof(TwiceCaptain))]
+        [DefaultValue(0)]
+        public bool TwiceCaptain { get; set; }
+
         #endregion
 
         #region Calculations

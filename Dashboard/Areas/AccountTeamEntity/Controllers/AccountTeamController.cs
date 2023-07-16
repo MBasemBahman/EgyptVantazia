@@ -91,6 +91,7 @@ namespace Dashboard.Areas.AccountTeamEntity.Controllers
                 DoubleGameWeak = 0,
                 Top_11 = 0,
                 FreeTransfer = 0,
+                TwiceCaptain = 0,
                 TripleCaptain = 0,
                 Fk_AccounTeams = fk_AccountTeamsIds
             };
@@ -115,6 +116,7 @@ namespace Dashboard.Areas.AccountTeamEntity.Controllers
                     updateCards.DoubleGameWeak > 0 ||
                     updateCards.Top_11 > 0 ||
                     updateCards.FreeTransfer > 0 ||
+                    updateCards.TwiceCaptain > 0 ||
                     updateCards.TripleCaptain > 0)
                 {
                     _updateResultsUtils.UpdateAccountTeamUpdateCards(updateCards);

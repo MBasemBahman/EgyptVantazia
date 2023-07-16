@@ -100,6 +100,7 @@ namespace CoreServices.Logic
                            FreeTransfer = a.FreeTransfer,
                            BenchBoost = a.BenchBoost,
                            DoubleGameWeak = a.DoubleGameWeak,
+                           TwiceCaptain = a.TwiceCaptain,
                            FreeHit = a.FreeHit,
                            Top_11 = a.Top_11,
                            TripleCaptain = a.TripleCaptain,
@@ -178,6 +179,7 @@ namespace CoreServices.Logic
                            DoubleGameWeak = a.DoubleGameWeak,
                            FreeHit = a.FreeHit,
                            Top_11 = a.Top_11,
+                           TwiceCaptain = a.TwiceCaptain,
                            TripleCaptain = a.TripleCaptain,
                            WildCard = a.WildCard,
                            TotalMoney = a.TotalMoney,
@@ -307,6 +309,7 @@ namespace CoreServices.Logic
                            AvailableTop_11 = !a.Top_11,
                            AvailableWildCard = !a.WildCard,
                            TripleCaptain = a.TripleCaptain,
+                           TwiceCaptain = a.TwiceCaptain,
                            GameWeak = new GameWeakModel
                            {
                                Id = a.GameWeak.Id,
@@ -378,6 +381,7 @@ namespace CoreServices.Logic
                            DoubleGameWeak = a.DoubleGameWeak,
                            Top_11 = a.Top_11,
                            TripleCaptain = a.TripleCaptain,
+                           TwiceCaptain = a.TwiceCaptain,
                        });
         }
 

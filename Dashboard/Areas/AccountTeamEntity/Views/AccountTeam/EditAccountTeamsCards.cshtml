@@ -85,6 +85,13 @@
                                         </div>
                                         <div class="col-md-4 col-12">
                                             <div class="mb-1">
+                                                <label asp-for="TwiceCaptain" class="form-label"></label>
+                                                <input asp-for="TwiceCaptain" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("TwiceCaptain"))" />
+                                                <span asp-validation-for="TwiceCaptain" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
                                                 <label asp-for="FreeTransfer" class="form-label"></label>
                                                 <input asp-for="FreeTransfer" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("FreeTransfer"))" />
                                                 <span asp-validation-for="FreeTransfer" class="text-danger"></span>

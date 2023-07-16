@@ -233,6 +233,7 @@ namespace API.Areas.PaymentArea.Controllers
                         {
                             accounTeam.TripleCaptain++;
                             accounTeam.DoubleGameWeak++;
+                            accounTeam.TwiceCaptain++;
                             accounTeam.BenchBoost++;
                             accounTeam.Top_11++;
                             accounTeam.IsVip = true;
@@ -253,6 +254,10 @@ namespace API.Areas.PaymentArea.Controllers
                         else if (accountSubscription.Fk_Subscription == (int)SubscriptionEnum.Top_11)
                         {
                             accounTeam.Top_11++;
+                        }
+                        else if (accountSubscription.Fk_Subscription == (int)SubscriptionEnum.TwiceCaptain)
+                        {
+                            accounTeam.TwiceCaptain++;
                         }
                         else if (accountSubscription.Fk_Subscription == (int)SubscriptionEnum.Add3MillionsBank)
                         {

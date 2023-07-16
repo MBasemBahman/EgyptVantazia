@@ -35,7 +35,8 @@
             WildCard = 3,
             DoubleGameWeak = 4,
             Top_11 = 5,
-            TripleCaptain = 6
+            TripleCaptain = 6,
+            TwiceCaptain = 7,
         }
 
         public enum PlayMinutesEnum

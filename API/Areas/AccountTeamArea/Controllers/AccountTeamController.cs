@@ -393,7 +393,8 @@ namespace API.Areas.AccountTeamArea.Controllers
                 teamGameWeak.WildCard ||
                 teamGameWeak.FreeHit ||
                 teamGameWeak.Top_11 ||
-                teamGameWeak.TripleCaptain)
+                teamGameWeak.TripleCaptain ||
+                teamGameWeak.TwiceCaptain)
             {
                 throw new Exception("You already use card in this gameweek!");
             }
@@ -510,6 +511,24 @@ namespace API.Areas.AccountTeamArea.Controllers
                 //    throw new Exception("You already use card in this half of season!");
                 //}
             }
+            else if (cardTypeEnum == CardTypeEnum.TwiceCaptain)
+            {
+                if (currentTeam.TwiceCaptain <= 0)
+                {
+                    throw new Exception("You not have valid card!");
+                }
+
+                //if (_unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
+                //{
+                //    Fk_AccountTeam = currentTeam.Id,
+                //    GameWeakFrom = gameWeakFrom,
+                //    GameWeakTo = gameWeakTo,
+                //    TwiceCaptain = true
+                //}, otherLang: false).Count() >= 2)
+                //{
+                //    throw new Exception("You already use card in this half of season!");
+                //}
+            }
 
             AccountTeamGameWeak accountTeamGameWeak = await _unitOfWork.AccountTeam.FindAccountTeamGameWeakbyId(teamGameWeak.Id, trackChanges: true);
             AccountTeam accountTeam = await _unitOfWork.AccountTeam.FindAccountTeambyId(currentTeam.Id, trackChanges: true);
@@ -547,6 +566,11 @@ namespace API.Areas.AccountTeamArea.Controllers
             {
                 accountTeamGameWeak.TripleCaptain = true;
                 accountTeam.TripleCaptain--;
+            }
+            else if (cardTypeEnum == CardTypeEnum.TwiceCaptain)
+            {
+                accountTeamGameWeak.TwiceCaptain = true;
+                accountTeam.TwiceCaptain--;
             }
 
             await _unitOfWork.Save();
@@ -619,6 +643,11 @@ namespace API.Areas.AccountTeamArea.Controllers
             {
                 accountTeamGameWeak.Top_11 = false;
                 accountTeam.Top_11++;
+            }
+            else if (cardTypeEnum == CardTypeEnum.TwiceCaptain && accountTeamGameWeak.TwiceCaptain == true)
+            {
+                accountTeamGameWeak.TwiceCaptain = false;
+                accountTeam.TwiceCaptain++;
             }
 
             await _unitOfWork.Save();

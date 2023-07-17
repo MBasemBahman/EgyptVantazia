@@ -32,6 +32,11 @@ namespace FantasyLogic.Calculations
             int season = _unitOfWork.Season.GetCurrentSeasonId();
             GameWeakModelForCalc nextGameWeek = _unitOfWork.Season.GetNextGameWeak();
 
+            if (nextGameWeek == null)
+            {
+                nextGameWeek = _unitOfWork.Season.GetCurrentGameWeak();
+            }
+
             List<GameWeakModelForCalc> gameWeaks = _unitOfWork.Season
                                              .GetGameWeaksForCalc(new GameWeakParameters
                                              {

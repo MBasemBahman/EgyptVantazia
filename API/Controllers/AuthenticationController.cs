@@ -36,10 +36,10 @@ namespace API.Controllers
             {
                 throw new Exception("Please enter your username!");
             }
-            if (model.Password.IsEmpty())
-            {
-                throw new Exception("Please enter your password!");
-            }
+            //if (model.Password.IsEmpty())
+            //{
+            //    throw new Exception("Please enter your password!");
+            //}
 
             _ = (bool)Request.HttpContext.Items[ApiConstants.Language];
 

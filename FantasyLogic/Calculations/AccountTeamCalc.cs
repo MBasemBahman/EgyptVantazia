@@ -35,7 +35,7 @@ namespace FantasyLogic.Calculations
 
             if (nextGameWeek == null)
             {
-                nextGameWeek = _unitOfWork.Season.GetCurrentGameWeak();
+                nextGameWeek = _unitOfWork.Season.GetCurrentGameWeak(_365CompetitionsEnum);
             }
 
             List<GameWeakModelForCalc> gameWeaks = _unitOfWork.Season

@@ -289,13 +289,17 @@ namespace API.Areas.AccountTeamArea.Controllers
             accountTeam.CreatedBy = auth.Name;
             accountTeam.Fk_Account = auth.Fk_Account;
             accountTeam.Fk_Season = currentSeason.Id;
-            accountTeam.AccountTeamGameWeaks = new List<AccountTeamGameWeak>
+
+            if (nextGameWeakId > 0)
             {
-                new AccountTeamGameWeak
+                accountTeam.AccountTeamGameWeaks = new List<AccountTeamGameWeak>
                 {
-                    Fk_GameWeak = nextGameWeakId,
-                }
-            };
+                    new AccountTeamGameWeak
+                    {
+                        Fk_GameWeak = nextGameWeakId,
+                    }
+                };
+            }
 
             if (model.ImageFile != null)
             {

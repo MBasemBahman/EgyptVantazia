@@ -162,6 +162,12 @@ namespace API.Utility
                 userAuthenticated.AccountTeam = account.AccountTeam;
                 userAuthenticated.Season = account.Season;
                 userAuthenticated.Fk_Season = account.Fk_Season;
+
+                if (account.AccountTeam != null)
+                {
+                    userAuthenticated.Fk_FavouriteTeam = account.AccountTeam.Fk_FavouriteTeam;
+                    userAuthenticated.FavouriteTeam = account.AccountTeam.FavouriteTeam;
+                }
             }
             return userAuthenticated;
         }

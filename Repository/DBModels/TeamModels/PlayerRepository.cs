@@ -206,7 +206,7 @@ namespace Repository.DBModels.TeamModels
                                       (sellPriceFrom == null || a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.SellPrice).FirstOrDefault() >= sellPriceFrom) &&
                                       (sellPriceTo == null || a.PlayerPrices.OrderByDescending(b => b.Id).Select(a => a.SellPrice).FirstOrDefault() <= sellPriceTo) &&
                                       (Fk_GameWeak == 0 || a.PlayerGameWeaks.Any(a => a.TeamGameWeak.Fk_GameWeak == Fk_GameWeak)) &&
-                                      (Fk_Season == 0 || a.PlayerGameWeaks.Any(a => a.TeamGameWeak.GameWeak.Fk_Season == Fk_Season)) &&
+                                      (Fk_Season == 0 || a.Team.Fk_Season == Fk_Season) &&
                                       (Fk_GameWeaks == null || !Fk_GameWeaks.Any() || a.PlayerGameWeaks.Any(a => Fk_GameWeaks.Contains(a.TeamGameWeak.Fk_GameWeak))) &&
                                       (createdAtFrom == null || a.CreatedAt >= createdAtFrom) &&
                                       (createdAtTo == null || a.CreatedAt <= createdAtTo) &&

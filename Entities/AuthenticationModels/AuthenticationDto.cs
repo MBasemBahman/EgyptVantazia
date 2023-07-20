@@ -139,6 +139,13 @@ namespace Entities.AuthenticationModels
         public int Fk_Country { get; set; }
         public CountryModel Country { get; set; }
 
+        [DisplayName(nameof(FavouriteTeam))]
+        [ForeignKey(nameof(FavouriteTeam))]
+        public int Fk_FavouriteTeam { get; set; }
+
+        [DisplayName(nameof(FavouriteTeam))]
+        public TeamModel FavouriteTeam { get; set; }
+
         public TokenResponse TokenResponse { get; set; }
         public TokenResponse RefreshTokenResponse { get; set; }
 

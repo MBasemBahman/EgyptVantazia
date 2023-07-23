@@ -135,7 +135,8 @@
             Add3MillionsBank = 8,
             Top_11 = 9,
             Gold = 10,
-            TwiceCaptain = 11,
+            TwiceCaptain = 12,
+            RemoveAds = 13,
         }
 
         public enum PrivateLeagueEnum

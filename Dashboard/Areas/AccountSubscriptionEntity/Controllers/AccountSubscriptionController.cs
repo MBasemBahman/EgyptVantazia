@@ -186,6 +186,11 @@ namespace Dashboard.Areas.AccountSubscriptionEntity.Controllers
                     {
                         accounTeam.TotalMoney += 3;
                     }
+                    else if (accountSubscriptionDB.Fk_Subscription == (int)SubscriptionEnum.RemoveAds)
+                    {
+                        Account account = await _unitOfWork.Account.FindAccountById(accounTeam.Fk_Account, trackChanges: true);
+                        account.ShowAds = false;
+                    }
                 }
                 else
                 {

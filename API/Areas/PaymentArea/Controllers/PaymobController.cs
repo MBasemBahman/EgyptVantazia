@@ -203,19 +203,19 @@ namespace API.Areas.PaymentArea.Controllers
                 string email = parameters.Obj.Payment_key_claims.Billing_data.Email;
                 string phoneNumber = parameters.Obj.Payment_key_claims.Billing_data.Phone_number;
 
-                int account = _unitOfWork.Account.GetAccounts(new AccountParameters
+                int fk_Account = _unitOfWork.Account.GetAccounts(new AccountParameters
                 {
                     Email = email,
                     Phone = phoneNumber
                 }, otherLang: false).Select(a => a.Id).FirstOrDefault();
 
-                if (account > 0)
+                if (fk_Account > 0)
                 {
                     _unitOfWork.Account.CreatePayment(new Payment
                     {
                         Amount = parameters.Obj.Amount_cents / 100,
                         TransactionId = parameters.Obj.Order.Id.ToString(),
-                        Fk_Account = account
+                        Fk_Account = fk_Account
                     });
 
                     int accountSubscriptionId = _unitOfWork.Account.GetAccountSubscriptions(new AccountSubscriptionParameters
@@ -265,6 +265,11 @@ namespace API.Areas.PaymentArea.Controllers
                         else if (accountSubscription.Fk_Subscription == (int)SubscriptionEnum.Add3MillionsBank)
                         {
                             accounTeam.TotalMoney += 3;
+                        }
+                        else if (accountSubscription.Fk_Subscription == (int)SubscriptionEnum.RemoveAds)
+                        {
+                            Account account = await _unitOfWork.Account.FindAccountById(accounTeam.Fk_Account, trackChanges: true);
+                            account.ShowAds = false;
                         }
 
                         _unitOfWork.Save().Wait();

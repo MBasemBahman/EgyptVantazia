@@ -1419,4 +1419,7 @@
   <data name="TwiceCaptain" xml:space="preserve">
     <value>Twice Captain</value>
   </data>
+  <data name="Fk_Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
 </root>

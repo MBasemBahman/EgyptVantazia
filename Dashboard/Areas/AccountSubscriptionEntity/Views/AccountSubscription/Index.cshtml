@@ -90,7 +90,6 @@
                                                 <th>@Html.DisplayNameFor(model => row.Season)</th>
                                                 <th>@Html.DisplayNameFor(model => row.Subscription)</th>
                                                 <th>@Html.DisplayNameFor(model => row.Cost)</th>
-                                                <th>@Html.DisplayNameFor(model => row.Order_id)</th>
                                                 <th>@Html.DisplayNameFor(model => row.IsAction)</th>
                                                 <th>@Html.DisplayNameFor(model => row.IsActive)</th>
                                                 <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
@@ -148,7 +147,6 @@ else
                                     <th>@Html.DisplayNameFor(model => row.Season)</th>
                                     <th>@Html.DisplayNameFor(model => row.Subscription)</th>
                                     <th>@Html.DisplayNameFor(model => row.Cost)</th>
-                                    <th>@Html.DisplayNameFor(model => row.Order_id)</th>
                                     <th>@Html.DisplayNameFor(model => row.IsAction)</th>
                                     <th>@Html.DisplayNameFor(model => row.IsActive)</th>
                                     <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
@@ -201,7 +199,6 @@ else
                             { data: "season.name", orderable: false, },
                             { data: "subscription.name", orderable: false, },
                             { data: "cost" },
-                            { data: "order_id" },
                             { data: "isAction", render: function(data) {
                               if (data) {
                                 return '@Localizer.Get("Yes")';
@@ -264,7 +261,6 @@ else
                             { data: "season.name", orderable: false, },
                             { data: "subscription.name", orderable: false, },
                             { data: "cost" },
-                            { data: "order_id" },
                             { data: "isAction", render: function(data) {
                               if (data) {
                                 return '@Localizer.Get("Yes")';

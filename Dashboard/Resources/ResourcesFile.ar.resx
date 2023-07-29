@@ -1470,4 +1470,7 @@
   <data name="Height" xml:space="preserve">
     <value>الطول</value>
   </data>
+  <data name="Fk_Account" xml:space="preserve">
+    <value>الحساب</value>
+  </data>
 </root>

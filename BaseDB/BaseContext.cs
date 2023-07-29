@@ -278,7 +278,7 @@ namespace BaseDB
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
-            OnBeforeSaving();
+            _ = OnBeforeSaving();
             return base.SaveChanges(acceptAllChangesOnSuccess);
         }
 
@@ -293,7 +293,7 @@ namespace BaseDB
         )
         {
             List<AuditEntry> auditEntries = OnBeforeSaving();
-            int result = await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+            _ = await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
             await OnAfterSaving(auditEntries);
             return await base.SaveChangesAsync(acceptAllChangesOnSuccess,
                          cancellationToken);
@@ -321,7 +321,7 @@ namespace BaseDB
                             break;
                     }
                 }
-                else if(entry.Entity is BaseEntity basetrackable)
+                else if (entry.Entity is BaseEntity basetrackable)
                 {
                     switch (entry.State)
                     {
@@ -461,6 +461,7 @@ namespace BaseDB
 
             public Audit ToAudit()
             {
+                return null;
                 Audit audit = new()
                 {
                     TableName = TableName,

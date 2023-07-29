@@ -239,6 +239,8 @@ namespace API.Areas.PaymentArea.Controllers
                             accounTeam.TwiceCaptain++;
                             accounTeam.BenchBoost++;
                             accounTeam.Top_11++;
+                            accounTeam.FreeHit++;
+                            accounTeam.WildCard++;
                             accounTeam.IsVip = true;
                             accounTeam.TotalMoney += 3;
 
@@ -268,6 +270,14 @@ namespace API.Areas.PaymentArea.Controllers
                         else if (accountSubscription.Fk_Subscription == (int)SubscriptionEnum.Add3MillionsBank)
                         {
                             accounTeam.TotalMoney += 3;
+                        }
+                        else if (accountSubscription.Fk_Subscription == (int)SubscriptionEnum.FreeHit)
+                        {
+                            accounTeam.FreeHit++;
+                        }
+                        else if (accountSubscription.Fk_Subscription == (int)SubscriptionEnum.WildCard)
+                        {
+                            accounTeam.WildCard++;
                         }
                         else if (accountSubscription.Fk_Subscription == (int)SubscriptionEnum.RemoveAds)
                         {

@@ -159,6 +159,8 @@ namespace Dashboard.Areas.AccountSubscriptionEntity.Controllers
                         accounTeam.TwiceCaptain++;
                         accounTeam.BenchBoost++;
                         accounTeam.Top_11++;
+                        accounTeam.FreeHit++;
+                        accounTeam.WildCard++;
                         accounTeam.IsVip = true;
                         accounTeam.TotalMoney += 3;
 
@@ -184,6 +186,14 @@ namespace Dashboard.Areas.AccountSubscriptionEntity.Controllers
                     else if (accountSubscriptionDB.Fk_Subscription == (int)SubscriptionEnum.TwiceCaptain)
                     {
                         accounTeam.TwiceCaptain++;
+                    }
+                    else if (accountSubscriptionDB.Fk_Subscription == (int)SubscriptionEnum.FreeHit)
+                    {
+                        accounTeam.FreeHit++;
+                    }
+                    else if (accountSubscriptionDB.Fk_Subscription == (int)SubscriptionEnum.WildCard)
+                    {
+                        accounTeam.WildCard++;
                     }
                     else if (accountSubscriptionDB.Fk_Subscription == (int)SubscriptionEnum.Add3MillionsBank)
                     {

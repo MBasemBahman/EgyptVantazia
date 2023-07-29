@@ -137,6 +137,8 @@
             Gold = 10,
             TwiceCaptain = 12,
             RemoveAds = 13,
+            FreeHit = 14,
+            WildCard = 15,
         }
 
         public enum PrivateLeagueEnum

@@ -1,4 +1,5 @@
 ﻿using API.Areas.UserArea.Models;
+using Entities.CoreServicesModels.AccountModels;
 using Entities.DBModels.AccountModels;
 using Entities.DBModels.SeasonModels;
 using static Contracts.EnumData.DBModelsEnum;
@@ -106,6 +107,22 @@ namespace API.Controllers
             //{
             //    throw new Exception("Email address not valid!");
             //}
+
+            if (model.User.EmailAddress.IsExisting() && _unitOfWork.Account.GetAccounts(new AccountParameters
+            {
+                EmailAddress = model.User.EmailAddress
+            }, otherLang: false).Any())
+            {
+                throw new Exception("Email Address already registered!");
+            }
+
+            if (model.User.EmailAddress.IsExisting() && _unitOfWork.Account.GetAccounts(new AccountParameters
+            {
+                PhoneNumber = model.User.PhoneNumber
+            }, otherLang: false).Any())
+            {
+                throw new Exception("Phone Number already registered!");
+            }
 
             model.User.UserName = RegexService.GetUserName(model.User.UserName);
             if (model.User.Password.IsEmpty())

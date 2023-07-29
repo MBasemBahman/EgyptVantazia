@@ -1,5 +1,6 @@
 ﻿using Entities.CoreServicesModels.AccountModels;
 using Entities.DBModels.AccountModels;
+using System.Net.Mail;
 
 namespace Repository.DBModels.AccountModels
 {
@@ -26,6 +27,8 @@ namespace Repository.DBModels.AccountModels
                            parameters.AccountFullName,
                            parameters.Phone,
                            parameters.Email,
+                           parameters.PhoneNumber,
+                           parameters.EmailAddress,
                            parameters.Fk_Country,
                            parameters.Fk_Nationality,
                            parameters.Fk_Season,
@@ -82,6 +85,8 @@ namespace Repository.DBModels.AccountModels
             string accountFullName,
             string phone,
             string email,
+            string phoneNumber,
+            string emailAddress,
             int fk_Country,
             int fk_Nationality,
             int fk_Season,
@@ -106,6 +111,9 @@ namespace Repository.DBModels.AccountModels
                                        (string.IsNullOrWhiteSpace(phone) || a.User.PhoneNumber.ToLower().Contains(phone)) &&
                                        (string.IsNullOrWhiteSpace(email) || a.User.EmailAddress.ToLower().Contains(email)) &&
                                        (string.IsNullOrEmpty(UserName) || a.User.UserName.ToLower() == UserName.ToLower()) &&
+
+                                       (string.IsNullOrWhiteSpace(phoneNumber) || (!string.IsNullOrWhiteSpace(phoneNumber) && a.User.PhoneNumber.ToLower() == phoneNumber.ToLower())) &&
+                                       (string.IsNullOrWhiteSpace(emailAddress) || (!string.IsNullOrWhiteSpace(emailAddress) && a.User.EmailAddress.ToLower() == emailAddress.ToLower())) &&
 
                                        (fk_Subscription == 0 || (a.AccountSubscriptions != null &&
                                             a.AccountSubscriptions.Any(a => a.Fk_Subscription == fk_Subscription))) &&

@@ -29,7 +29,7 @@ namespace CoreServices.Logic
                            LastModifiedBy = a.LastModifiedBy,
                            Name = a.Name,
                            UniqueCode = a.UniqueCode,
-                           MemberCount = a.PrivateLeagueMembers.Count,
+                           MemberCount = a.PrivateLeagueMembers.Count(b => !(a.Fk_GameWeak > 0) || b.Account.AccountTeams.Any(c => c.Fk_Season == a.GameWeak.Fk_Season)),
                            IsAdmin = a.PrivateLeagueMembers.Any(b => b.Fk_Account == parameters.Fk_Account && b.IsAdmin),
                            MyPosition = a.PrivateLeagueMembers
                                          .Where(b => b.Fk_Account == parameters.Fk_Account)

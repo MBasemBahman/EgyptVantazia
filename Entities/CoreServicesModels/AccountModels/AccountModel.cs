@@ -47,6 +47,10 @@ namespace Entities.CoreServicesModels.AccountModels
 
         [DisplayName(nameof(ShowAds))]
         public bool? ShowAds { get; set; }
+
+        public string PhoneNumber { get; set; }
+
+        public string EmailAddress { get; set; }
     }
 
     public class AccountModel : AuditImageEntity

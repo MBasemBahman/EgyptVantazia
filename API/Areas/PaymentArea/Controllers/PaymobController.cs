@@ -241,6 +241,9 @@ namespace API.Areas.PaymentArea.Controllers
                             accounTeam.Top_11++;
                             accounTeam.IsVip = true;
                             accounTeam.TotalMoney += 3;
+
+                            Account account = await _unitOfWork.Account.FindAccountById(accounTeam.Fk_Account, trackChanges: true);
+                            account.ShowAds = false;
                         }
                         else if (accountSubscription.Fk_Subscription == (int)SubscriptionEnum.TripleCaptain)
                         {

@@ -164,7 +164,7 @@ namespace CoreServices.Logic
         public Dictionary<string, string> GetAccountLookUp(AccountParameters parameters, bool otherLang)
         {
             return GetAccounts(parameters, otherLang)
-                .OrderByDescending(a => a.Id).ToDictionary(a => a.Id.ToString(), a => a.UserName);
+                .OrderByDescending(a => a.Id).ToDictionary(a => a.Id.ToString(), a => a.FullName);
         }
 
         public async Task<AccountModel> GetByUserId(int fK_User, bool otherLang)

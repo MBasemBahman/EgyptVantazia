@@ -15,14 +15,6 @@
     <div class="card-body mt-2">
         <form asp-action="LoadTable" class="filter">
             <div class="row g-1 mb-md-1">
-                <div class="col-md-6 col-12">
-                    <div class="mb-1">
-                        <label asp-for="Fk_Account" class="form-label"></label>
-                        <select asp-for="Fk_Account" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["Account"] as Dictionary<string,string>,"Key","Value"))">
-                            <option value="0">@Localizer.Get("All")</option>
-                        </select>
-                    </div>
-                </div>
                 
                 <div class="col-md-6 col-12">
                     <div class="mb-1">

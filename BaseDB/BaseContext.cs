@@ -294,13 +294,17 @@ namespace BaseDB
         {
             List<AuditEntry> auditEntries = OnBeforeSaving();
             _ = await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
-            await OnAfterSaving(auditEntries);
+            if (auditEntries != null && auditEntries.Any())
+            {
+                await OnAfterSaving(auditEntries);
+            }
             return await base.SaveChangesAsync(acceptAllChangesOnSuccess,
                          cancellationToken);
         }
 
         private List<AuditEntry> OnBeforeSaving()
         {
+            return null;
             IEnumerable<EntityEntry> entries = ChangeTracker.Entries();
             DateTime utcNow = DateTime.UtcNow;
 
@@ -461,7 +465,6 @@ namespace BaseDB
 
             public Audit ToAudit()
             {
-                return null;
                 Audit audit = new()
                 {
                     TableName = TableName,

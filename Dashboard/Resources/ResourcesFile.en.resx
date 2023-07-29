@@ -1324,7 +1324,7 @@
     <value>Team Game Weaks</value>
   </data>
   <data name="Discount" xml:space="preserve">
-    <value>Discount (%)</value>
+    <value>Discount</value>
   </data>
   <data name="ExpirationDate" xml:space="preserve">
     <value>Expiration Date</value>

@@ -30,6 +30,7 @@ namespace API.Areas.SubscriptionArea.Controllers
 
             parameters.Fk_Account = auth.Fk_Account;
             parameters.Fk_Season = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum);
+            parameters.OrderBy = "order";
 
             PagedList<SubscriptionModel> data = await _unitOfWork.Subscription.GetSubscriptionPaged(parameters, otherLang);
 

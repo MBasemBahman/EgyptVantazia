@@ -29,6 +29,9 @@ namespace Entities.DBModels.SubscriptionModels
         [DisplayName(nameof(IsActive))]
         public bool IsActive { get; set; } = true;
 
+        [DisplayName(nameof(Order))]
+        public int Order { get; set; }
+
         [DisplayName(nameof(AccountSubscriptions))]
         public IList<AccountSubscription> AccountSubscriptions { get; set; }
 

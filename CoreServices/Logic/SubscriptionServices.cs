@@ -30,6 +30,7 @@ namespace CoreServices.Logic
                            LastModifiedBy = a.LastModifiedBy,
                            ForAction = a.ForAction,
                            IsActive = a.IsActive,
+                           Order = a.Order,
                            Cost = a.Cost,
                            Discount = a.Discount,
                            AccountSubscriptionCount = (a.AccountSubscriptions != null &&

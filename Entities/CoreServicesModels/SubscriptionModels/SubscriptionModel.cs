@@ -36,6 +36,9 @@ namespace Entities.CoreServicesModels.SubscriptionModels
         [DisplayName(nameof(IsActive))]
         public bool IsActive { get; set; }
 
+        [DisplayName(nameof(Order))]
+        public int Order { get; set; }
+
         public bool IsValid { get; set; }
 
         [DisplayName(nameof(AccountSubscriptionCount))]
@@ -67,6 +70,9 @@ namespace Entities.CoreServicesModels.SubscriptionModels
 
         [DisplayName(nameof(IsActive))]
         public bool IsActive { get; set; } = true;
+
+        [DisplayName(nameof(Order))]
+        public int Order { get; set; }
 
         [DisplayName(nameof(ImageUrl))]
         public string ImageUrl { get; set; }

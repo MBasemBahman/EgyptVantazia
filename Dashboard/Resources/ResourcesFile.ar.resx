@@ -1162,7 +1162,7 @@
     <value>التكلفة بعد الخصم</value>
   </data>
   <data name="Discount" xml:space="preserve">
-    <value>خصم (%)</value>
+    <value>قيمة الخصم</value>
   </data>
   <data name="ForAction" xml:space="preserve">
     <value>للبروموكود</value>

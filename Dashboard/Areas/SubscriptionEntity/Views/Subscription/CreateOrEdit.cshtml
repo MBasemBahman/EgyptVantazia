@@ -78,7 +78,7 @@
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="Description" class="form-label"></label>
-                                                <textarea asp-for="Description" class="form-control" rows="2" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Description{PropertyAttributeConstants.ArLang}"))" ></textarea>
+                                                <textarea asp-for="Description" class="form-control" rows="2" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Description{PropertyAttributeConstants.ArLang}"))"></textarea>
                                                 <span asp-validation-for="Description" class="text-danger"></span>
                                             </div>
                                         </div>
@@ -105,7 +105,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6 col-12">
+                                        <div class="col-md-4 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="IsActive" class="form-label"></label>
                                                 <select class="form-control" asp-for="IsActive">
@@ -115,7 +115,7 @@
                                                 <span asp-validation-for="IsActive" class="text-danger"></span>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-12">
+                                        <div class="col-md-4 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="ForAction" class="form-label"></label>
                                                 <select class="form-control" asp-for="ForAction">
@@ -123,6 +123,13 @@
                                                     <option value="false">@Localizer.Get("No")</option>
                                                 </select>
                                                 <span asp-validation-for="ForAction" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Order" class="form-label"></label>
+                                                <input asp-for="Order" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Order"))" />
+                                                <span asp-validation-for="Order" class="text-danger"></span>
                                             </div>
                                         </div>
                                     </div>

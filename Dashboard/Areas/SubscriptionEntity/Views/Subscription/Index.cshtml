@@ -91,6 +91,7 @@
                                             <th class="no-sort">@Html.DisplayNameFor(model => row.CostAfterDiscount)</th>
                                             <th>@Html.DisplayNameFor(model => row.ForAction)</th>
                                             <th>@Html.DisplayNameFor(model => row.IsActive)</th>
+                                            <th>@Html.DisplayNameFor(model => row.Order)</th>
                                             <th>@Html.DisplayNameFor(model => row.AccountSubscriptionCount)</th>
 
                                             <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
@@ -189,6 +190,7 @@
                                  }
                              }
                         },
+                        { data: "order"},
                         { data: "accountSubscriptionCount", orderable: false },
                         { data: "createdAt" },
                         { data: "id" },

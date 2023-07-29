@@ -10,7 +10,6 @@ namespace Entities.DBModels.PromoCodeModels
         public string Name { get; set; }
 
         [DisplayName($"{nameof(Description)}{PropertyAttributeConstants.ArLang}")]
-        [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Description { get; set; }
 
         [DisplayName(nameof(Code))]
@@ -53,7 +52,6 @@ namespace Entities.DBModels.PromoCodeModels
         public string Name { get; set; }
 
         [DisplayName($"{nameof(Description)}{PropertyAttributeConstants.EnLang}")]
-        [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Description { get; set; }
     }
 }

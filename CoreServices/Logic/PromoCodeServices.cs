@@ -29,7 +29,7 @@ namespace CoreServices.Logic
                            Code = a.Code,
                            Discount = a.Discount,
                            ExpirationDate = a.ExpirationDate,
-                           MaxDiscount = a.MaxDiscount,
+                           ExpirationDateVal = a.ExpirationDate,
                            MaxUse = a.MaxUse,
                            MaxUsePerUser = a.MaxUsePerUser,
                            UsedCount = a.AccountSubscriptions.Count(b => b.IsActive),
@@ -114,9 +114,7 @@ namespace CoreServices.Logic
 
         public PromoCodeModel GetDiscountAmount(PromoCodeModel promoCode, double price)
         {
-            double discountAmount = price / 100 * promoCode.Discount;
-
-            promoCode.DiscountAmount = (promoCode.MaxDiscount > 0 && discountAmount > promoCode.MaxDiscount) ? promoCode.MaxDiscount.Value : discountAmount;
+            promoCode.DiscountAmount = price > promoCode.Discount ? price - promoCode.Discount : 0;
 
             return promoCode;
         }

@@ -1473,4 +1473,10 @@
   <data name="Fk_Account" xml:space="preserve">
     <value>الحساب</value>
   </data>
+  <data name="IsValid" xml:space="preserve">
+    <value>صالح للأستخدام</value>
+  </data>
+  <data name="UsedCount" xml:space="preserve">
+    <value>عدد الأستخدام</value>
+  </data>
 </root>

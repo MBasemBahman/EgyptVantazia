@@ -1422,4 +1422,10 @@
   <data name="Fk_Account" xml:space="preserve">
     <value>Account</value>
   </data>
+  <data name="IsValid" xml:space="preserve">
+    <value>Is Valid</value>
+  </data>
+  <data name="UsedCount" xml:space="preserve">
+    <value>Used Count</value>
+  </data>
 </root>

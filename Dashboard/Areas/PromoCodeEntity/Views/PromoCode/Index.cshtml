@@ -86,9 +86,13 @@
                                             <th>@Html.DisplayNameFor(model => row.Name)</th>
                                             <th>@Html.DisplayNameFor(model => row.Code)</th>
                                             <th>@Html.DisplayNameFor(model => row.Discount)</th>
+
+                                            <th>@Html.DisplayNameFor(model => row.MaxUse)</th>
+                                            <th>@Html.DisplayNameFor(model => row.UsedCount)</th>
+
                                             <th>@Html.DisplayNameFor(model => row.ExpirationDate)</th>
-                                            <th>@Html.DisplayNameFor(model => row.IsActive)</th>
-                                            <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
+                                            <th>@Html.DisplayNameFor(model => row.IsValid)</th>
+
                                             <th>
                                                 @Html.DisplayNameFor(model => row.Id)
                                             </th>
@@ -131,9 +135,12 @@
                         { data: "name" },
                         { data: "code" },
                         { data: "discount" },
+                        { data: "maxUse" },
+                        { data: "usedCount" },
+
                         { data: "expirationDate" },
                         {
-                            data: "isActive",
+                            data: "isValid",
                             render: function(data) {
                               if (data) {
                                   return '@Localizer.Get("Yes")'
@@ -143,7 +150,6 @@
                             }
                         },
 
-                        { data: "createdAt" },
                         { data: "id" },
                     ]
                 });

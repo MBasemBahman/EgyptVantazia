@@ -17,7 +17,6 @@ namespace Entities.CoreServicesModels.PromoCodeModels
     {
 
         [DisplayName($"{nameof(Description)}")]
-        [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Description { get; set; }
 
         [DisplayName(nameof(Code))]
@@ -26,9 +25,6 @@ namespace Entities.CoreServicesModels.PromoCodeModels
 
         [DisplayName(nameof(Discount))]
         public int Discount { get; set; }
-
-        [DisplayName(nameof(MaxDiscount))]
-        public int? MaxDiscount { get; set; }
 
         [DisplayName(nameof(MaxUse))]
         public int? MaxUse { get; set; }
@@ -43,6 +39,9 @@ namespace Entities.CoreServicesModels.PromoCodeModels
         [DisplayName(nameof(ExpirationDate))]
         public DateTime ExpirationDate { get; set; }
 
+        [DisplayName(nameof(ExpirationDate))]
+        public DateTime ExpirationDateVal { get; set; }
+
         [DisplayName("UsedCount")]
         public int UsedCount { get; set; }
 
@@ -55,7 +54,7 @@ namespace Entities.CoreServicesModels.PromoCodeModels
         [DisplayName("IsValid")]
         public bool IsValid => IsActive && !IsExpired && !IsMaxReach && !IsMaxReachPerUser;
 
-        public bool IsExpired => !(ExpirationDate.Date >= DateTime.UtcNow.Date);
+        public bool IsExpired => DateTime.UtcNow > ExpirationDateVal;
 
         public bool IsMaxReach => !(MaxUse == null || MaxUse > UsedCount);
 
@@ -74,7 +73,6 @@ namespace Entities.CoreServicesModels.PromoCodeModels
         public string Name { get; set; }
 
         [DisplayName($"{nameof(Description)}{PropertyAttributeConstants.ArLang}")]
-        [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Description { get; set; }
 
         [DisplayName(nameof(Code))]
@@ -83,12 +81,6 @@ namespace Entities.CoreServicesModels.PromoCodeModels
 
         [DisplayName(nameof(Discount))]
         public int Discount { get; set; }
-
-        [DisplayName(nameof(MinPrice))]
-        public int? MinPrice { get; set; }
-
-        [DisplayName(nameof(MaxDiscount))]
-        public int? MaxDiscount { get; set; }
 
         [DisplayName(nameof(MaxUse))]
         public int? MaxUse { get; set; }
@@ -117,7 +109,6 @@ namespace Entities.CoreServicesModels.PromoCodeModels
         public string Name { get; set; }
 
         [DisplayName($"{nameof(Description)}{PropertyAttributeConstants.EnLang}")]
-        [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Description { get; set; }
 
     }

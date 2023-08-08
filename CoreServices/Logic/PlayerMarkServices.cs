@@ -100,6 +100,7 @@ namespace CoreServices.Logic
                            LastModifiedAt = a.LastModifiedAt,
                            LastModifiedBy = a.LastModifiedBy,
                            Fk_Player = a.Fk_Player,
+                           DateTo = a.DateTo,
                            Player = new PlayerModel
                            {
                                Id = a.Fk_Player,

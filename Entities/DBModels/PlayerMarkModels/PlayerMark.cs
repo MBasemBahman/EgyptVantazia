@@ -24,9 +24,11 @@ namespace Entities.DBModels.PlayerMarkModels
         [DisplayName(nameof(Used))]
         public int? Used { get; set; }
 
+        public DateTime? DateTo { get; set; }
+
         [DisplayName(nameof(PlayerMarkTeamGameWeaks))]
         public List<PlayerMarkTeamGameWeak> PlayerMarkTeamGameWeaks { get; set; }
-        
+
         [DisplayName(nameof(PlayerMarkReasonMatches))]
         public List<PlayerMarkReasonMatch> PlayerMarkReasonMatches { get; set; }
 

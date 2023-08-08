@@ -95,6 +95,8 @@ namespace Repository.DBModels.TeamModels
                     }
                 };
 
+                entity.IsActive = false;
+
                 base.Create(entity);
             }
         }

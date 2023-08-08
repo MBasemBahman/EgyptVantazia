@@ -11,7 +11,7 @@ namespace Entities.CoreServicesModels.PlayerMarkModels
         [DisplayName(nameof(Player))]
         [ForeignKey(nameof(Player))]
         public int Fk_Player { get; set; }
-        
+
         [DisplayName(nameof(Season))]
         [ForeignKey(nameof(Season))]
         public int Fk_Season { get; set; }
@@ -19,10 +19,13 @@ namespace Entities.CoreServicesModels.PlayerMarkModels
         [DisplayName(nameof(Mark))]
         [ForeignKey(nameof(Mark))]
         public int Fk_Mark { get; set; }
-        
+
+        [DisplayName(nameof(IsValid))]
+        public bool? IsValid { get; set; }
+
         [DisplayName(nameof(Team))]
         public List<int> Fk_Teams { get; set; }
-        
+
         [DisplayName(nameof(Player))]
         public List<int> Fk_Players { get; set; }
     }
@@ -48,6 +51,11 @@ namespace Entities.CoreServicesModels.PlayerMarkModels
 
         [DisplayName(nameof(Used))]
         public int? Used { get; set; }
+
+        [DisplayName(nameof(DateTo))]
+        public DateTime? DateTo { get; set; }
+
+        public bool IsValid => DateTo >= DateTime.UtcNow;
     }
 
     public class PlayerMarkCreateOrEditModel
@@ -55,7 +63,7 @@ namespace Entities.CoreServicesModels.PlayerMarkModels
         [DisplayName(nameof(Player))]
         [ForeignKey(nameof(Player))]
         public int Fk_Player { get; set; }
-        
+
         [DisplayName(nameof(Mark))]
         [ForeignKey(nameof(Mark))]
         public int Fk_Mark { get; set; }
@@ -69,9 +77,11 @@ namespace Entities.CoreServicesModels.PlayerMarkModels
         [DisplayName(nameof(Used))]
         public int? Used { get; set; }
 
+        public DateTime? DateTo { get; set; }
+
         [DisplayName(nameof(Fk_TeamGameWeaks))]
         public List<int> Fk_TeamGameWeaks { get; set; }
-        
+
         [DisplayName(nameof(Fk_PlayerMarkReasonMatches))]
         public List<int> Fk_PlayerMarkReasonMatches { get; set; }
     }

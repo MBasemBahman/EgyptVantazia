@@ -10,12 +10,12 @@ namespace DAL.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "Order",
-                table: "Subscriptions",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
+            //migrationBuilder.AddColumn<int>(
+            //    name: "Order",
+            //    table: "Subscriptions",
+            //    type: "int",
+            //    nullable: false,
+            //    defaultValue: 0);
 
             migrationBuilder.UpdateData(
                 table: "Users",

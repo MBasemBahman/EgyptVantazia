@@ -141,8 +141,12 @@
                        }
                     },
                     { data: "order" },
-                    { data: "accountsCount" },
-                    { data: "nationalitiesCount" },
+                    { data: "accountsCount", render: function(data, type, row) {console.log(row)
+                        return `<a href="/AccountEntity/Account/Index?Fk_Country=${row.id}">${data}</a>`;
+                    } },
+                    { data: "nationalitiesCount", render: function(data, type, row) {
+                        return `<a href="/AccountEntity/Account/Index?Fk_Nationality=${row.id}">${data}</a>`;
+                    } },
                     { data: "createdAt" },
                    {data:"id"},
                 ]

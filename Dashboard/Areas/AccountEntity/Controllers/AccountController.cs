@@ -31,11 +31,15 @@ namespace Dashboard.Areas.AccountEntity.Controllers
             _environment = environment;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int fk_Country = 0, int fk_Nationality = 0)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
-            AccountFilter filter = new();
+            AccountFilter filter = new()
+            {
+                Fk_Country = fk_Country,
+                Fk_Nationality = fk_Nationality,
+            };
 
             ViewData[ViewDataConstants.AccessLevel] = (DashboardAccessLevelModel)Request.HttpContext.Items[ViewDataConstants.AccessLevel];
             SetViewData(IsProfile: false, id: 0, otherLang);

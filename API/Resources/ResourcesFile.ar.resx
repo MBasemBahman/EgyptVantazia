@@ -120,6 +120,9 @@
   <data name="Account already registered!" xml:space="preserve">
     <value>الحساب مسجل بالفعل!</value>
   </data>
+  <data name="DateTo" xml:space="preserve">
+    <value>إلي تاريخ</value>
+  </data>
   <data name="Email Address already registered!" xml:space="preserve">
     <value>عنوان البريد الإلكتروني مسجل بالفعل!</value>
   </data>

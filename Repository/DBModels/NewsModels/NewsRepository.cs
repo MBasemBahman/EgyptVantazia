@@ -17,6 +17,7 @@ namespace Repository.DBModels.NewsModels
                            parameters.Fk_Season,
                            parameters.Fk_GameWeak,
                            parameters.NewsTypeEnum,
+                           parameters._365_CompetitionsId,
                            parameters.CreatedAtFrom,
                            parameters.CreatedAtTo);
         }
@@ -48,12 +49,14 @@ namespace Repository.DBModels.NewsModels
             int Fk_Season,
             int Fk_GameWeak,
             NewsTypeEnum NewsTypeEnum,
+            int _365_CompetitionsId,
             DateTime? createdAtFrom,
             DateTime? createdAtTo)
         {
             return Newss.Where(a => (id == 0 || a.Id == id) &&
                                                    (NewsTypeEnum == 0 || a.NewsTypeEnum == NewsTypeEnum) &&
-                                                   (Fk_Season == 0 || a.GameWeak.Fk_Season == Fk_Season) &&
+                                                   (Fk_Season == 0 || a.Fk_Season == Fk_Season) &&
+                                                   (_365_CompetitionsId == 0 || (a.Season != null && a.Season._365_CompetitionsId == _365_CompetitionsId.ToString())) &&
                                                    (Fk_GameWeak == 0 || a.Fk_GameWeak == Fk_GameWeak) &&
                                                    (createdAtFrom == null || a.CreatedAt >= createdAtFrom) &&
                                                    (createdAtTo == null || a.CreatedAt <= createdAtTo));

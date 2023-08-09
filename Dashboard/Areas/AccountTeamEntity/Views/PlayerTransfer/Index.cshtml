@@ -114,7 +114,7 @@ else
                         await Html.RenderPartialAsync("../PlayerTransfer/Filter", Model, ViewData);
                     }
 
-                                                    <div class="card-datatable">
+                    <div class="card-datatable">
                         <table class="datatables datatables-ajax table table-responsive table">
                             <thead>
                                 <tr>
@@ -255,11 +255,10 @@ else
                             data: "transferTypeEnum",
                             orderable: false,
                             render: function (data, type, row) {
-                                if (data.transferTypeEnum == 'Buying') {
-                                    return `@Localizer.Get("Buying")`;   
+                                if (data == 'Buying') {
+                                    return `@Localizer.Get("Buying")`;
                                 }
-                                
-                                return `@Localizer.Get("Selling")`;   
+                                return `@Localizer.Get("Selling")`;
                             }
                         },
                         { data: "cost" },
@@ -267,7 +266,7 @@ else
                           if (data == true) {
                               return `@Localizer.Get("Yes")`;
                           }
-                          
+
                           return `@Localizer.Get("No")`;
                         } },
                         { data: "createdAt" },
@@ -285,7 +284,7 @@ else
                     event.preventDefault();
                     dt_ajax_table.DataTable().draw();
                 });
-                
+
             }
         };
 
@@ -293,7 +292,7 @@ else
         $(document).ready(function () {
             LoadTable();
         });
-        
+
         $(document).on('change', 'select[name=Fk_Season]', function() {
           let fk_Season = $(this).val();
           getTeams($('select[name=Fk_Team]'), fk_Season, false);

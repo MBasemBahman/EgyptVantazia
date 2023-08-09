@@ -18,6 +18,9 @@ namespace Entities.CoreServicesModels.NewsModels
         [DisplayName(nameof(NewsTypeEnum))]
         public NewsTypeEnum NewsTypeEnum { get; set; }
 
+        [DisplayName(nameof(_365_CompetitionsId))]
+        public int _365_CompetitionsId { get; set; }
+
         [DisplayName("CreatedAt")]
         public DateTime? CreatedAtFrom { get; set; }
 

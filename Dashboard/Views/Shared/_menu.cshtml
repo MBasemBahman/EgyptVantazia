@@ -36,8 +36,8 @@
             </li>
 
             @if (viewList.Contains((int)DashboardViewEnum.Account) ||
-            viewList.Contains((int)DashboardViewEnum.AccountSubscription) ||
-            viewList.Contains((int)DashboardViewEnum.Payment))
+          viewList.Contains((int)DashboardViewEnum.AccountSubscription) ||
+          viewList.Contains((int)DashboardViewEnum.Payment))
             {
                 <li class=" nav-item">
                     <a class="d-flex align-items-center" href="#">
@@ -85,7 +85,7 @@
                     </a>
                 </li>
             }
-        
+
             @if (viewList.Contains((int)DashboardViewEnum.AccountTeamGameWeak))
             {
                 <li id="AccountTeamGameWeakList" class="@(active ==DashboardViewEnum.AccountTeamGameWeak.ToString()?"active":"") nav-item">
@@ -114,9 +114,23 @@
                 </li>
             }
 
+            @if (viewList.Contains((int)DashboardViewEnum.PlayerTransfer))
+            {
+                <li id="PlayerTransferList" class="@(active ==DashboardViewEnum.PlayerTransfer.ToString()?"active":"") nav-item">
+                    <a class="d-flex align-items-center"
+                       asp-action="Index" asp-area="AccountTeamEntity"
+                       asp-controller="PlayerTransfer">
+                        <i data-feather='trending-up'></i>
+                        <span class="menu-title text-truncate">
+                            @Localizer.Get("PlayerTransfers")
+                        </span>
+                    </a>
+                </li>
+            }
+
             @if (viewList.Contains((int)DashboardViewEnum.Team) ||
-            viewList.Contains((int)DashboardViewEnum.Player) ||
-            viewList.Contains((int)DashboardViewEnum.Standings))
+          viewList.Contains((int)DashboardViewEnum.Player) ||
+          viewList.Contains((int)DashboardViewEnum.Standings))
             {
                 <li class=" nav-item">
                     <a class="d-flex align-items-center" href="#">
@@ -152,10 +166,10 @@
             }
 
             @if (viewList.Contains((int)DashboardViewEnum.TeamGameWeak) ||
-           viewList.Contains((int)DashboardViewEnum.PlayerGameWeak) ||
-           viewList.Contains((int)DashboardViewEnum.PlayerGameWeakScore) ||
-           viewList.Contains((int)DashboardViewEnum.PlayerSeasonScoreState) ||
-           viewList.Contains((int)DashboardViewEnum.PlayerGameWeakScoreState))
+         viewList.Contains((int)DashboardViewEnum.PlayerGameWeak) ||
+         viewList.Contains((int)DashboardViewEnum.PlayerGameWeakScore) ||
+         viewList.Contains((int)DashboardViewEnum.PlayerSeasonScoreState) ||
+         viewList.Contains((int)DashboardViewEnum.PlayerGameWeakScoreState))
             {
                 <li class=" nav-item">
                     <a class="d-flex align-items-center" href="#">
@@ -263,12 +277,12 @@
                     </a>
                 </li>
             }
-               @if (viewList.Contains((int)DashboardViewEnum.PromoCode))
+            @if (viewList.Contains((int)DashboardViewEnum.PromoCode))
             {
                 <li id="PromoCodeList" class="@(active == DashboardViewEnum.PromoCode.ToString()?"active":"") nav-item">
                     <a class="d-flex align-items-center"
-                   asp-action="Index" asp-area="PromoCodeEntity"
-                   asp-controller="PromoCode">
+                       asp-action="Index" asp-area="PromoCodeEntity"
+                       asp-controller="PromoCode">
                         <i data-feather='check-circle'></i>
                         <span class="menu-title text-truncate">
                             @Localizer.Get("PromoCodes")
@@ -276,7 +290,7 @@
                     </a>
                 </li>
             }
-        
+
             @if (viewList.Contains((int)DashboardViewEnum.Notification))
             {
                 <li id="NotificationList" class="@(active == DashboardViewEnum.Notification.ToString()?"active":"") nav-item">
@@ -339,7 +353,7 @@
             </li>
 
             @if (viewList.Contains((int)DashboardViewEnum.PlayerPosition) ||
-                 viewList.Contains((int)DashboardViewEnum.FormationPosition))
+               viewList.Contains((int)DashboardViewEnum.FormationPosition))
             {
                 <li class=" nav-item">
                     <a class="d-flex align-items-center" href="#">
@@ -424,7 +438,7 @@
                 </li>
             }
             @if (viewList.Contains((int)DashboardViewEnum.StatisticCategory)
-            || viewList.Contains((int)DashboardViewEnum.StatisticScore))
+          || viewList.Contains((int)DashboardViewEnum.StatisticScore))
             {
                 <li class=" nav-item">
                     <a class="d-flex align-items-center" href="#">
@@ -471,7 +485,7 @@
                     </ul>
                 </li>
             }
-        
+
             @if (viewList.Contains((int)DashboardViewEnum.Mark))
             {
                 <li class=" nav-item">

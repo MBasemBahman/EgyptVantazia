@@ -11,7 +11,7 @@ using PlayerTransferDto = Dashboard.Areas.PlayerTransferEntity.Models.PlayerTran
 namespace Dashboard.Areas.AccountTeamEntity.Controllers
 {
     [Area("AccountTeamEntity")]
-    [Authorize(DashboardViewEnum.AccountTeam, AccessLevelEnum.View)]
+    [Authorize(DashboardViewEnum.PlayerTransfer, AccessLevelEnum.View)]
     public class PlayerTransferController : Controller
     {
         private readonly ILoggerManager _logger;

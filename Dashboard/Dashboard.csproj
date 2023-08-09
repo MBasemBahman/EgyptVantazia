@@ -49,12 +49,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <AdditionalFiles Include="Areas\AccountTeamEntity\Views\PlayerTransfer\CreateOrEdit.cshtml" />
-	  <AdditionalFiles Include="Areas\AccountTeamEntity\Views\PlayerTransfer\EditAccountTeamsCards.cshtml" />
 	  <AdditionalFiles Include="Areas\AccountTeamEntity\Views\PlayerTransfer\Filter.cshtml" />
 	  <AdditionalFiles Include="Areas\AccountTeamEntity\Views\PlayerTransfer\Index.cshtml" />
-	  <AdditionalFiles Include="Areas\AccountTeamEntity\Views\PlayerTransfer\Profile.cshtml" />
-	  <AdditionalFiles Include="Areas\AccountTeamEntity\Views\PlayerTransfer\_AccountTeamModals.cshtml" />
 	  <AdditionalFiles Include="Areas\NotificationEntity\Views\Notification\CreateOrEdit.cshtml" />
 	  <AdditionalFiles Include="Areas\NotificationEntity\Views\Notification\Delete.cshtml" />
 	  <AdditionalFiles Include="Areas\NotificationEntity\Views\Notification\Details.cshtml" />

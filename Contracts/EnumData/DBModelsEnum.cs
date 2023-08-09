@@ -62,7 +62,8 @@
             StatisticScore = 44,
             StatisticCategory = 45,
             MatchStatisticScore = 46,
-            FormationPosition = 47
+            FormationPosition = 47,
+            PlayerTransfer = 48
         }
 
         public enum ScoreTypeEnum

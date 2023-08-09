@@ -1,6 +1,7 @@
 ﻿using Entities.CoreServicesModels.NewsModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.DBModels.NewsModels;
+using Entities.DBModels.SeasonModels;
 
 namespace CoreServices.Logic
 {
@@ -31,6 +32,10 @@ namespace CoreServices.Logic
                                Name = otherLang ? a.GameWeak.GameWeakLang.Name : a.GameWeak.Name,
                            } : null,
                            ImageUrl = a.StorageUrl + a.ImageUrl,
+                           Season = a.Fk_Season > 0 ? new SeasonModel
+                           {
+                               Name = otherLang ? a.Season.SeasonLang.Name : a.Season.Name,
+                           } : null,
                            Id = a.Id,
                            CreatedAt = a.CreatedAt,
                            CreatedBy = a.CreatedBy,

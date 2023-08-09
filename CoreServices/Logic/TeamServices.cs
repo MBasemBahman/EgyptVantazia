@@ -447,7 +447,7 @@ namespace CoreServices.Logic
                                                                 .Select(b => b.TransferTypeEnum)
                                                                 .FirstOrDefault() : null,
                                        PlayerMarks = a.PlayerMarks
-                                              .Where(b => b.Count > b.Used)
+                                              .Where(b => b.DateTo == null || b.DateTo >= DateTime.UtcNow)
                                               .Select(b => new PlayerMarkModel
                                               {
                                                   Count = b.Count,

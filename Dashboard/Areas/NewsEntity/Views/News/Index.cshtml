@@ -65,7 +65,7 @@
                                 await Html.RenderPartialAsync("../News/Filter", Model, ViewData);
                             }
 
-                       
+
                             <div class="card-datatable">
                                 <table class="datatables datatables-ajax table table-responsive table">
                                     <thead>
@@ -129,7 +129,7 @@
         });
     </script>
     <script>
-        
+
         function LoadTable() {
             var dt_ajax_table = $('.datatables');
             if (dt_ajax_table.length) {
@@ -157,7 +157,7 @@
                             data: "title",
                             render: function(data, type, row) {
                                 var span = '';
-                                
+
                                 if (row.imageUrl != null) {
 
                                     return '<div class="d-flex justify-content-left align-items-center"><div class= "avatar-wrapper" ><div class="avatar me-1">'
@@ -182,19 +182,18 @@
 
                             }
                         },
-                      
-                        { data: "gameWeak", orderable: false, render: function(data) {
-                          if (data != null && data.length > 0){
+                        { data: "season", orderable: false, render: function(data) {
+                          if (data != null){
                               return data.name;
                           }
-                          
+
                           return '@Localizer.Get("Not Found")';
                         } },
-                        { data: "season", orderable: false, render: function(data) {
-                          if (data != null && data.length > 0){
+                        { data: "gameWeak", orderable: false, render: function(data) {
+                          if (data != null){
                               return data.name;
                           }
-                          
+
                           return '@Localizer.Get("Not Found")';
                         } },
                         { data: "newsTypeEnum", orderable: false },
@@ -221,7 +220,7 @@
 
         $(document).ready(function() {
             LoadTable();
-          
+
         });
     </script>
 }

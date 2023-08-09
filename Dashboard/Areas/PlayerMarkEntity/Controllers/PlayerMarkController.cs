@@ -97,21 +97,21 @@ namespace Dashboard.Areas.PlayerMarkEntity.Controllers
             {
                 model = _mapper.Map<PlayerMarkCreateOrEditModel>(await _unitOfWork.PlayerMark.FindPlayerMarkbyId(id, trackChanges: false));
 
-                model.Fk_TeamGameWeaks = _unitOfWork.PlayerMark
-                    .GetPlayerMarkTeamGameWeaks(new PlayerMarkTeamGameWeakParameters
-                    {
-                        Fk_PlayerMark = id
-                    }, otherLang)
-                    .Select(a => a.Fk_TeamGameWeak)
-                    .ToList();
-
-                model.Fk_PlayerMarkReasonMatches = _unitOfWork.PlayerMark
-                    .GetPlayerMarkReasonMatches(new PlayerMarkReasonMatchParameters
-                    {
-                        Fk_PlayerMark = id
-                    }, otherLang)
-                    .Select(a => a.Fk_TeamGameWeak)
-                    .ToList();
+                // model.Fk_TeamGameWeaks = _unitOfWork.PlayerMark
+                //     .GetPlayerMarkTeamGameWeaks(new PlayerMarkTeamGameWeakParameters
+                //     {
+                //         Fk_PlayerMark = id
+                //     }, otherLang)
+                //     .Select(a => a.Fk_TeamGameWeak)
+                //     .ToList();
+                //
+                // model.Fk_PlayerMarkReasonMatches = _unitOfWork.PlayerMark
+                //     .GetPlayerMarkReasonMatches(new PlayerMarkReasonMatchParameters
+                //     {
+                //         Fk_PlayerMark = id
+                //     }, otherLang)
+                //     .Select(a => a.Fk_TeamGameWeak)
+                //     .ToList();
             }
             if (Fk_Player > 0)
             {
@@ -162,11 +162,11 @@ namespace Dashboard.Areas.PlayerMarkEntity.Controllers
 
 
                 await _unitOfWork.Save();
-
-                await _unitOfWork.PlayerMark.UpdatePlayerMarkReasonMatches(dataDB.Id, model.Fk_PlayerMarkReasonMatches, auth.UserName);
-                await _unitOfWork.PlayerMark.UpdatePlayerMarkTeamGameWeaks(dataDB.Id, model.Fk_TeamGameWeaks, auth.UserName);
-
-                await _unitOfWork.Save();
+                //
+                // await _unitOfWork.PlayerMark.UpdatePlayerMarkReasonMatches(dataDB.Id, model.Fk_PlayerMarkReasonMatches, auth.UserName);
+                // await _unitOfWork.PlayerMark.UpdatePlayerMarkTeamGameWeaks(dataDB.Id, model.Fk_TeamGameWeaks, auth.UserName);
+                //
+                // await _unitOfWork.Save();
 
                 if (returnPage == (int)PlayerMarkReturnPage.PlayerProfile)
                 {

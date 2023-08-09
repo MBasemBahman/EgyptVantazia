@@ -76,6 +76,11 @@
                                                         <span class="fw-bold">@Localizer.Get("TeamGameWeaks")</span>
                                                     </a>
                                                 </li>
+                                                <li class="nav-item ">
+                                                    <a id="/AccountTeamEntity/PlayerTransfer/Index/?Fk_Team=@Model.Id&ProfileLayOut=true" class="nav-link tab-item   @(returnItem==(int)TeamProfileItems.PlayerTransfer ? "active" : "")">
+                                                        <span class="fw-bold">@Localizer.Get("PlayerTransfers")</span>
+                                                    </a>
+                                                </li>
                                                 @* <li class="nav-item "> *@
                                                 @*     <a id="/SeasonEntity/TeamGameWeak/Index/?Fk_Home=@Model.Id&ProfileLayOut=true" class="nav-link tab-item   @(returnItem==(int)TeamProfileItems.HomeTeamGameWeak ? "active" : "")"> *@
                                                 @*         <span class="fw-bold">@Html.DisplayNameFor(model => profileItem.HomeGameWeaks)</span> *@

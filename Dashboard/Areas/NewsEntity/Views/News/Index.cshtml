@@ -95,6 +95,7 @@
 
                                             </th>
                                             <th>@Html.DisplayNameFor(model => row.Title)</th>
+                                            <th>@Html.DisplayNameFor(model => row.Season)</th>
                                             <th>@Html.DisplayNameFor(model => row.GameWeak)</th>
                                             <th>@Html.DisplayNameFor(model => row.NewsTypeEnum)</th>
                                             <th>@Html.DisplayNameFor(model => row.NewsAttachments)</th>
@@ -183,6 +184,13 @@
                         },
                       
                         { data: "gameWeak", orderable: false, render: function(data) {
+                          if (data != null && data.length > 0){
+                              return data.name;
+                          }
+                          
+                          return '@Localizer.Get("Not Found")';
+                        } },
+                        { data: "season", orderable: false, render: function(data) {
                           if (data != null && data.length > 0){
                               return data.name;
                           }

@@ -17,7 +17,8 @@ namespace Repository.DBModels.UserModels
                            parameters.EmailAddress,
                            parameters.Id,
                            parameters.CreatedAtFrom,
-                           parameters.CreatedAtTo);
+                           parameters.CreatedAtTo,
+                           parameters.Fk_Accounts);
 
 
         }
@@ -101,17 +102,24 @@ namespace Repository.DBModels.UserModels
             string emailAddress,
             int id,
             DateTime? createdAtFrom,
-            DateTime? createdAtTo)
+            DateTime? createdAtTo,
+            List<int> fk_Accounts)
         {
             phoneNumber = phoneNumber.SafeTrim().SafeLower();
             emailAddress = emailAddress.SafeTrim().SafeLower();
 
             return users.Where(a => (id == 0 || a.Id == id) &&
-                                     (createdAtFrom == null || a.CreatedAt >= createdAtFrom) &&
-                                     (createdAtTo == null || createdAtTo == createdAtFrom || a.CreatedAt <= createdAtTo) &&
-                                     (string.IsNullOrWhiteSpace(phoneNumber) ||
+                                    
+                                    (fk_Accounts == null || !fk_Accounts.Any() || fk_Accounts.Contains(a.Id)) &&
+                                     
+                                    (createdAtFrom == null || a.CreatedAt >= createdAtFrom) &&
+                                     
+                                    (createdAtTo == null || createdAtTo == createdAtFrom || a.CreatedAt <= createdAtTo) &&
+                                     
+                                    (string.IsNullOrWhiteSpace(phoneNumber) ||
                                      (!string.IsNullOrWhiteSpace(a.PhoneNumber) &&
                                       a.PhoneNumber.ToLower().Contains(phoneNumber))) &&
+                                    
                                     (string.IsNullOrWhiteSpace(emailAddress) ||
                                      (!string.IsNullOrWhiteSpace(a.EmailAddress) &&
                                       a.EmailAddress.ToLower().Contains(emailAddress))));

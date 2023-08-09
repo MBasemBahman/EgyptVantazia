@@ -97,6 +97,11 @@
                                                         <span class="fw-bold">@Html.DisplayNameFor(model => profileItem.PlayerMarks)</span>
                                                     </a>
                                                 </li>
+                                                <li class="nav-item ">
+                                                    <a id="/AccountTeamEntity/PlayerTransfer/Index/?Fk_Player=@Model.Id&ProfileLayOut=true" class="nav-link tab-item   @(returnItem==(int)PlayerProfileItems.PlayerTransfer ? "active" : "")">
+                                                        <span class="fw-bold">@Localizer.Get("PlayerTransfers")</span>
+                                                    </a>
+                                                </li>
 
                                             </ul>
 

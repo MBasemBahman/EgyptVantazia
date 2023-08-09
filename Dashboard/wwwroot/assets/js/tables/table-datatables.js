@@ -199,7 +199,21 @@ $(function () {
                             $(node).addClass('modalbtn');
                         }
                     }
-                }
+                },
+                {
+                    text: feather.icons['trash-2'].toSvg({ class: 'me-50 font-small-4' }) + $("#customButton").data('label'),
+                    className: `edit-rows btn btn-${$("#customButton").data('color')} me-2 custom_btn`,
+                    init: function (api, node, config) {
+                        if ($('#customButton').attr('href') == undefined) {
+                            $(node).hide();
+                        } else {
+                            $(node).removeClass('btn-secondary');
+                        }
+                    },
+                    action: function (e, dt, button, config) {
+
+                    }
+                },
             ],
             language: {
                 paginate: {

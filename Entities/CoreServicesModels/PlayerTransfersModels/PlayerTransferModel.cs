@@ -1,6 +1,7 @@
 ﻿using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
+using Entities.EnumData;
 using Entities.RequestFeatures;
 using static Entities.EnumData.LogicEnumData;
 
@@ -13,12 +14,16 @@ namespace Entities.CoreServicesModels.PlayerTransfersModels
         public int Fk_AccountTeam { get; set; }
 
         public int Fk_GameWeak { get; set; }
+        public int Fk_Team { get; set; }
 
         public bool? IsFree { get; set; }
 
         public int Fk_Account { get; set; }
 
         public int Fk_Season { get; set; }
+        
+        [DisplayName(nameof(TransferTypeEnum))]
+        public LogicEnumData.TransferTypeEnum? TransferTypeEnum { get; set; }
     }
 
     public class PlayerTransferModel : AuditEntity

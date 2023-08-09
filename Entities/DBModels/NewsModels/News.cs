@@ -22,6 +22,13 @@ namespace Entities.DBModels.NewsModels
         [DisplayName(nameof(NewsTypeEnum))]
         public NewsTypeEnum NewsTypeEnum { get; set; }
 
+        [DisplayName(nameof(Season))]
+        [ForeignKey(nameof(Season))]
+        public int? Fk_Season { get; set; }
+
+        [DisplayName(nameof(Season))]
+        public Season Season { get; set; }
+        
         [DisplayName(nameof(GameWeak))]
         [ForeignKey(nameof(GameWeak))]
         public int? Fk_GameWeak { get; set; }

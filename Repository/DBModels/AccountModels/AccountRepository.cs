@@ -33,7 +33,8 @@ namespace Repository.DBModels.AccountModels
                            parameters.Fk_Nationality,
                            parameters.Fk_Season,
                            parameters.Fk_Subscription,
-                           parameters.ShowAds);
+                           parameters.ShowAds,
+                           parameters.DashboardSearch);
 
         }
 
@@ -91,10 +92,16 @@ namespace Repository.DBModels.AccountModels
             int fk_Nationality,
             int fk_Season,
             int fk_Subscription,
-            bool? showAds)
+            bool? showAds,
+            string dashboardSearch)
         {
             return accounts.Where(a => (id == 0 || a.Id == id) &&
 
+                                       (string.IsNullOrEmpty(dashboardSearch) || a.Id.ToString().Contains(dashboardSearch)
+                                          || a.User.UserName.ToString().Contains(dashboardSearch) || a.FullName.ToString().Contains(dashboardSearch)
+                                          || a.User.EmailAddress.ToString().Contains(dashboardSearch) || a.User.PhoneNumber.ToString().Contains(dashboardSearch)
+                                          || a.PhoneNumberTwo.ToString().Contains(dashboardSearch)) &&
+                                       
                                        (showAds == null || a.ShowAds == showAds) &&
 
                                        (fk_Account_Ignored == 0 || a.Id != fk_Account_Ignored) &&

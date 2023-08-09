@@ -402,6 +402,16 @@ namespace Dashboard.MappingProfileCls
 
             #endregion
 
+            #region Player Transfer
+
+            _ = CreateMap<PlayerTransferModel, PlayerTransferDto>();
+
+            _ = CreateMap<PlayerTransferDto, PlayerTransferModel>();
+
+            _ = CreateMap<PlayerTransferFilter, PlayerTransferParameters>();
+
+            #endregion
+            
             #region Account Team GameWeak
 
             _ = CreateMap<AccountTeamGameWeakModel,
@@ -414,7 +424,6 @@ namespace Dashboard.MappingProfileCls
                 AccountTeamGameWeakParameters>();
 
             #endregion
-
 
             #region Account Team Game Weak
             _ = CreateMap<AccountTeamGameWeakModel, AccountTeamGameWeakDto>();

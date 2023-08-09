@@ -4,6 +4,7 @@ using Entities.CoreServicesModels.LocationModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.SubscriptionModels;
 using Entities.CoreServicesModels.TeamModels;
+using Entities.CoreServicesModels.UserModels;
 using Entities.DBModels.AccountModels;
 
 namespace CoreServices.Logic
@@ -212,6 +213,19 @@ namespace CoreServices.Logic
 
             _repository.User.Delete(user);
 
+        }
+        
+        public async Task DeleteAccount(List<int> ids)
+        {
+            await _repository.User.FindAll(new UserParameters
+            {
+                Fk_Accounts = ids
+            }, trackChanges: false).ExecuteDeleteAsync();
+            
+            await _repository.Account.FindAll(new AccountParameters
+            {
+                Fk_Accounts = ids
+            }, trackChanges: false).ExecuteDeleteAsync();
         }
         #endregion
 

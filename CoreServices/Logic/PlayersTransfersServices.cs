@@ -1,4 +1,5 @@
-﻿using Entities.CoreServicesModels.PlayerTransfersModels;
+﻿using Entities.CoreServicesModels.AccountTeamModels;
+using Entities.CoreServicesModels.PlayerTransfersModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayersTransfersModels;
@@ -29,6 +30,11 @@ namespace CoreServices.Logic
                            LastModifiedBy = a.LastModifiedBy,
                            Cost = a.Cost,
                            Fk_AccountTeam = a.Fk_AccountTeam,
+                           AccountTeam = new AccountTeamModel
+                           {
+                                Name  = a.AccountTeam.Name,
+                                ImageUrl = a.AccountTeam.StorageUrl + a.AccountTeam.ImageUrl
+                           },
                            Fk_GameWeak = a.Fk_GameWeak,
                            Fk_Player = a.Fk_Player,
                            IsFree = a.IsFree,

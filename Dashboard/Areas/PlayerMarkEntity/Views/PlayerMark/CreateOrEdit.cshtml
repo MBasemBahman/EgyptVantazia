@@ -55,7 +55,7 @@
 
                                     <div class="row mb-1">
                                         
-                                        <div class="col-md-12 col-12">
+                                        <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="Fk_Mark" class="form-label"></label>
                                                 <select asp-for="Fk_Mark" class="select2 form-select" asp-items="@(new SelectList(ViewData["Marks"] as Dictionary<string,string>,"Key","Value"))">
@@ -66,49 +66,58 @@
 
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
-                                                <label asp-for="Count" class="form-label"></label>
-                                                <input asp-for="Count" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Count"))" />
-                                                <span asp-validation-for="Count" class="text-danger"></span>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 col-12">
-                                            <div class="mb-1">
-                                                <label asp-for="Used" class="form-label"></label>
-                                                <input asp-for="Used" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Used"))" />
-                                                <span asp-validation-for="Used" class="text-danger"></span>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-12 col-12">
-                                            <div class="mb-1">
-                                                <label asp-for="Fk_PlayerMarkReasonMatches" class="form-label"></label>
-                                                <select asp-for="Fk_PlayerMarkReasonMatches" class="select2 form-select" multiple>
-                                                    @foreach (TeamGameWeakModel teamGameWeak in (List<TeamGameWeakModel>)ViewData["TeamGameWeaks"])
-                                                    {
-                                                        <option value="@teamGameWeak.Id">
-                                                            @( $" ( {teamGameWeak.GameWeak.Name} ) " + teamGameWeak.Home.Name + " x " + teamGameWeak.Away.Name)
-                                                        </option>
-                                                    }
-                                                </select>
-                                                <span asp-validation-for="Fk_PlayerMarkReasonMatches" class="text-danger"></span>
+                                                <label asp-for="DateTo" class="form-label"></label>
+                                                <input type="date" asp-for="DateTo" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"DateTo"))" />
+                                                <span asp-validation-for="DateTo" class="text-danger"></span>
                                             </div>
                                         </div>
                                         
-                                        <div class="col-md-12 col-12">
-                                            <div class="mb-1">
-                                                <label asp-for="Fk_TeamGameWeaks" class="form-label"></label>
-                                                <select asp-for="Fk_TeamGameWeaks" class="select2 form-select" multiple>
-                                                    @foreach (TeamGameWeakModel teamGameWeak in (List<TeamGameWeakModel>)ViewData["TeamGameWeaks"])
-                                                    {
-                                                        <option value="@teamGameWeak.Id">
-                                                            @( $" ( {teamGameWeak.GameWeak.Name} ) " + teamGameWeak.Home.Name + " x " + teamGameWeak.Away.Name)
-                                                        </option>
-                                                    }
-                                                </select>
-                                                <span asp-validation-for="Fk_TeamGameWeaks" class="text-danger"></span>
-                                            </div>
-                                        </div>
+                                        
+                                        @* <div class="col-md-6 col-12"> *@
+                                        @*     <div class="mb-1"> *@
+                                        @*         <label asp-for="Count" class="form-label"></label> *@
+                                        @*         <input asp-for="Count" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Count"))" /> *@
+                                        @*         <span asp-validation-for="Count" class="text-danger"></span> *@
+                                        @*     </div> *@
+                                        @* </div> *@
+                                        @* *@
+                                        @* <div class="col-md-6 col-12"> *@
+                                        @*     <div class="mb-1"> *@
+                                        @*         <label asp-for="Used" class="form-label"></label> *@
+                                        @*         <input asp-for="Used" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Used"))" /> *@
+                                        @*         <span asp-validation-for="Used" class="text-danger"></span> *@
+                                        @*     </div> *@
+                                        @* </div> *@
+
+                                        @* <div class="col-md-12 col-12"> *@
+                                        @*     <div class="mb-1"> *@
+                                        @*         <label asp-for="Fk_PlayerMarkReasonMatches" class="form-label"></label> *@
+                                        @*         <select asp-for="Fk_PlayerMarkReasonMatches" class="select2 form-select" multiple> *@
+                                        @*             @foreach (TeamGameWeakModel teamGameWeak in (List<TeamGameWeakModel>)ViewData["TeamGameWeaks"]) *@
+                                        @*             { *@
+                                        @*                 <option value="@teamGameWeak.Id"> *@
+                                        @*                     @( $" ( {teamGameWeak.GameWeak.Name} ) " + teamGameWeak.Home.Name + " x " + teamGameWeak.Away.Name) *@
+                                        @*                 </option> *@
+                                        @*             } *@
+                                        @*         </select> *@
+                                        @*         <span asp-validation-for="Fk_PlayerMarkReasonMatches" class="text-danger"></span> *@
+                                        @*     </div> *@
+                                        @* </div> *@
+                                        @* *@
+                                        @* <div class="col-md-12 col-12"> *@
+                                        @*     <div class="mb-1"> *@
+                                        @*         <label asp-for="Fk_TeamGameWeaks" class="form-label"></label> *@
+                                        @*         <select asp-for="Fk_TeamGameWeaks" class="select2 form-select" multiple> *@
+                                        @*             @foreach (TeamGameWeakModel teamGameWeak in (List<TeamGameWeakModel>)ViewData["TeamGameWeaks"]) *@
+                                        @*             { *@
+                                        @*                 <option value="@teamGameWeak.Id"> *@
+                                        @*                     @( $" ( {teamGameWeak.GameWeak.Name} ) " + teamGameWeak.Home.Name + " x " + teamGameWeak.Away.Name) *@
+                                        @*                 </option> *@
+                                        @*             } *@
+                                        @*         </select> *@
+                                        @*         <span asp-validation-for="Fk_TeamGameWeaks" class="text-danger"></span> *@
+                                        @*     </div> *@
+                                        @* </div> *@
                                     
                                     </div>
 

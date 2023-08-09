@@ -54,7 +54,7 @@ namespace Dashboard.Areas.AccountEntity.Controllers
 
             AccountParameters parameters = new()
             {
-                SearchColumns = "Id,UserName,FullName"
+                SearchColumns = ""
             };
 
             _ = _mapper.Map(dtParameters, parameters);
@@ -202,6 +202,16 @@ namespace Dashboard.Areas.AccountEntity.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             await _unitOfWork.Account.DeleteAccount(id);
+            await _unitOfWork.Save();
+
+            return RedirectToAction(nameof(Index));
+        }
+        
+        [HttpPost]
+        [Authorize(DashboardViewEnum.Account, AccessLevelEnum.Delete)]
+        public async Task<IActionResult> DeleteBulk(List<int> ids)
+        {
+            await _unitOfWork.Account.DeleteAccount(ids);
             await _unitOfWork.Save();
 
             return RedirectToAction(nameof(Index));

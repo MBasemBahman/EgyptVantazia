@@ -1479,4 +1479,7 @@
   <data name="UsedCount" xml:space="preserve">
     <value>عدد الأستخدام</value>
   </data>
+  <data name="Delete ALl" xml:space="preserve">
+    <value>حذف الكل</value>
+  </data>
 </root>

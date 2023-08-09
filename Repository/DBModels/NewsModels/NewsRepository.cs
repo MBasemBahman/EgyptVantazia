@@ -14,8 +14,8 @@ namespace Repository.DBModels.NewsModels
         {
             return FindByCondition(a => true, trackChanges)
                    .Filter(parameters.Id,
-                           parameters.Fk_GameWeak,
                            parameters.Fk_Season,
+                           parameters.Fk_GameWeak,
                            parameters.NewsTypeEnum,
                            parameters.CreatedAtFrom,
                            parameters.CreatedAtTo);
@@ -45,16 +45,16 @@ namespace Repository.DBModels.NewsModels
         public static IQueryable<News> Filter(
             this IQueryable<News> Newss,
             int id,
-            int Fk_GameWeak,
             int Fk_Season,
+            int Fk_GameWeak,
             NewsTypeEnum NewsTypeEnum,
             DateTime? createdAtFrom,
             DateTime? createdAtTo)
         {
             return Newss.Where(a => (id == 0 || a.Id == id) &&
-                                                   (Fk_GameWeak == 0 || a.Fk_GameWeak == Fk_GameWeak) &&
                                                    (NewsTypeEnum == 0 || a.NewsTypeEnum == NewsTypeEnum) &&
                                                    (Fk_Season == 0 || a.GameWeak.Fk_Season == Fk_Season) &&
+                                                   (Fk_GameWeak == 0 || a.Fk_GameWeak == Fk_GameWeak) &&
                                                    (createdAtFrom == null || a.CreatedAt >= createdAtFrom) &&
                                                    (createdAtTo == null || a.CreatedAt <= createdAtTo));
 

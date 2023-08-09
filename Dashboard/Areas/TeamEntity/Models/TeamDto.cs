@@ -32,6 +32,7 @@ namespace Dashboard.Areas.TeamEntity.Models
         Player = 2,
         HomeTeamGameWeak = 3,
         AwayTeamGameWeak = 4,
-        TeamGameWeak = 5
+        TeamGameWeak = 5,
+        PlayerTransfer = 6,
     }
 }

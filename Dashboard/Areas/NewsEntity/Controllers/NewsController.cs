@@ -104,11 +104,6 @@ namespace Dashboard.Areas.NewsEntity.Controllers
 
 
             }
-            model.Fk_Season = model.Fk_GameWeak != null
-                ? _unitOfWork.Season.GetGameWeakbyId((int)model.Fk_GameWeak, otherLang: false).Fk_Season
-                : _unitOfWork.Season.GetSeasons(new SeasonParameters(), otherLang: false).Any()
-                    ? _unitOfWork.Season.GetSeasons(new SeasonParameters(), otherLang: false).FirstOrDefault().Id
-                    : 0;
 
             if (model.ImageUrl.IsNullOrEmpty())
             {

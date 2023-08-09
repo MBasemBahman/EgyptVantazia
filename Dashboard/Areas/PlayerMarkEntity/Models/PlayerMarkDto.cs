@@ -25,6 +25,9 @@ namespace Dashboard.Areas.PlayerMarkEntity.Models
     }
     public class PlayerMarkDto : PlayerMarkModel
     {
+        [DisplayName(nameof(DateTo))]
+        public new string DateTo { get; set; }
+        
         [DisplayName(nameof(CreatedAt))]
         public new string CreatedAt { get; set; }
 

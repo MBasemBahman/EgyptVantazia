@@ -4,6 +4,8 @@ namespace Entities.CoreServicesModels.UserModels
 {
     public class UserParameters : RequestParameters
     {
+        public List<int> Fk_Accounts { get; set; }
+        
         [DataType(DataType.PhoneNumber)]
         [Phone]
         public string PhoneNumber { get; set; }

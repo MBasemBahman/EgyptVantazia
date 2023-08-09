@@ -89,8 +89,9 @@
                                                 </th>
                                                 <th>@Html.DisplayNameFor(model => row.Player)</th>
                                                 <th>@Html.DisplayNameFor(model => row.Mark)</th>
-                                                <th>@Html.DisplayNameFor(model => row.Used)</th>
-                                                <th>@Html.DisplayNameFor(model => row.Count)</th>
+                                                @* <th>@Html.DisplayNameFor(model => row.Used)</th> *@
+                                                @* <th>@Html.DisplayNameFor(model => row.Count)</th> *@
+                                                <th>@Html.DisplayNameFor(model => row.DateTo)</th>
                                                 <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
 
                                                 <th>
@@ -160,8 +161,9 @@ else
                                     </th>
                                     <th>@Html.DisplayNameFor(model => row.Player)</th>
                                     <th>@Html.DisplayNameFor(model => row.Mark)</th>
-                                    <th>@Html.DisplayNameFor(model => row.Used)</th>
-                                    <th>@Html.DisplayNameFor(model => row.Count)</th>
+                                    @* <th>@Html.DisplayNameFor(model => row.Used)</th> *@
+                                    @* <th>@Html.DisplayNameFor(model => row.Count)</th> *@
+                                    <th>@Html.DisplayNameFor(model => row.DateTo)</th>
                                     <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
 
                                     <th>
@@ -233,8 +235,9 @@ else
                                 }
                             },
                             { data: "mark.name" },
-                            { data: "used" },
-                            { data: "count" },
+                            // { data: "used" },
+                            // { data: "count" },
+                            { data: "dateTo" },
                             { data: "createdAt" },
                             { data: "id" },
                         ]

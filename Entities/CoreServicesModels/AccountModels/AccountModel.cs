@@ -16,6 +16,7 @@ namespace Entities.CoreServicesModels.AccountModels
         public string UserName { get; set; }
 
         public string Phone { get; set; }
+        public string DashboardSearch { get; set; }
 
         public string AccountUserName { get; set; }
 

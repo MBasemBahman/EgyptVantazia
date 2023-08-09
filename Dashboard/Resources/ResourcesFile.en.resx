@@ -1428,4 +1428,7 @@
   <data name="UsedCount" xml:space="preserve">
     <value>Used Count</value>
   </data>
+  <data name="Delete ALl" xml:space="preserve">
+    <value>Delete All</value>
+  </data>
 </root>

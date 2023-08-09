@@ -38,6 +38,9 @@ namespace Dashboard.Areas.AccountEntity.Models
 
         [DisplayName(nameof(Phone))]
         public string Phone { get; set; }
+        
+        [DisplayName(nameof(DashboardSearch))]
+        public string DashboardSearch { get; set; }
 
         [DisplayName("UserName")]
         public string AccountUserName { get; set; }

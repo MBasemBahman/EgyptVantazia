@@ -109,6 +109,8 @@ namespace API.Areas.AccountTeamArea.Controllers
                 if (parameters.OrderBy.Contains("unSubscriptionRanking"))
                 {
                     parameters.FromUnSubscriptionRanking = 0;
+
+                    throw new Exception("Teams will appear after the first round ends!");
                 }
 
                 if (parameters.OrderBy.Contains("goldSubscriptionRanking"))

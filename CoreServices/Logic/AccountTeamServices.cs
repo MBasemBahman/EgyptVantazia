@@ -28,7 +28,7 @@ namespace CoreServices.Logic
         public IQueryable<AccountTeamModel> GetAccountTeams(AccountTeamParameters parameters,
                 bool otherLang)
         {
-            return _repository.AccountTeam
+            var quary = _repository.AccountTeam
                        .FindAll(parameters, trackChanges: false)
                        .Select(a => new AccountTeamModel
                        {
@@ -153,6 +153,8 @@ namespace CoreServices.Logic
                        .Where(a => parameters.FromCurrentGameWeakPoints == null || a.CurrentGameWeakPoints >= parameters.FromCurrentGameWeakPoints)
                        .Search(parameters.SearchColumns, parameters.SearchTerm)
                        .Sort(parameters.OrderBy);
+
+            return quary;
         }
 
         public int GetCurrentAcountTeamGameWeek(AccountTeamParameters parameters)

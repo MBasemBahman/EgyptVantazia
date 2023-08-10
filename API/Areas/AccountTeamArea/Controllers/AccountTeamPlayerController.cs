@@ -73,7 +73,8 @@ namespace API.Areas.AccountTeamArea.Controllers
                     parameters.ToDeadLine = nextGameWeak.Deadline;
                 }
 
-                if (parameters.ToDeadLine == null)
+                if (parameters.FromDeadLine == parameters.ToDeadLine ||
+                    parameters.ToDeadLine == null)
                 {
                     parameters.ToDeadLine = _unitOfWork.Season.GetTeamGameWeaks(new TeamGameWeakParameters
                     {
@@ -101,7 +102,9 @@ namespace API.Areas.AccountTeamArea.Controllers
                     {
                         parameters.ToDeadLine = nextNextGameWeak.Deadline;
                     }
-                    else
+
+                    if (parameters.ToDeadLine == null || 
+                        parameters.FromDeadLine == parameters.ToDeadLine)
                     {
                         parameters.ToDeadLine = _unitOfWork.Season.GetTeamGameWeaks(new TeamGameWeakParameters
                         {

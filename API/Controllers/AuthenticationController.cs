@@ -138,7 +138,7 @@ namespace API.Controllers
 
             if (account.Fk_Season == 0)
             {
-                account.Fk_Season = (int)SeasonEnum.Egypt;
+                account.Fk_Season = (int)SeasonEnum.EPL;
             }
 
             user.Account = account;

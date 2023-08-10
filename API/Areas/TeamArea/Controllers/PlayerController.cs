@@ -44,6 +44,11 @@ namespace API.Areas.TeamArea.Controllers
             parameters.IsActive = true;
             parameters.Fk_Season = auth.Fk_Season;
 
+            if (parameters.OrderBy.IsEmpty())
+            {
+                parameters.OrderBy = "BuyPrice desc,";
+            }
+
             PagedList<PlayerModel> data = await _unitOfWork.Team.GetPlayerPaged(parameters, otherLang);
 
             SetPagination(data.MetaData, parameters);

@@ -119,15 +119,26 @@ namespace FantasyLogic.DataMigration.GamesData
                 {
                     _ = BackgroundJob.Delete(match.JobId);
                 }
-
                 if (match.SecondJobId.IsExisting())
                 {
                     _ = BackgroundJob.Delete(match.SecondJobId);
                 }
-
                 if (match.ThirdJobId.IsExisting())
                 {
                     _ = BackgroundJob.Delete(match.ThirdJobId);
+                }
+
+                if (match.FirstNotificationJobId.IsExisting())
+                {
+                    _ = BackgroundJob.Delete(match.FirstNotificationJobId);
+                }
+                if (match.SecondNotificationJobId.IsExisting())
+                {
+                    _ = BackgroundJob.Delete(match.SecondNotificationJobId);
+                }
+                if (match.ThirdNotificationJobId.IsExisting())
+                {
+                    _ = BackgroundJob.Delete(match.ThirdNotificationJobId);
                 }
 
                 GameResultDataHelper gameResultDataHelper = new(_unitOfWork, _365Services);
@@ -281,10 +292,10 @@ namespace FantasyLogic.DataMigration.GamesData
                 if (matchNotificationEnum == MatchNotificationEnum.StartMatch)
                 {
                     notification.Title = $"انتباه! بدء مباراة فى الأسبوع {match.GameWeak.Name} الآن. اضبط التردد واستمتع بالمباراة!";
-                    notification.Title = $"بين فريقي {match.Home.Name} و {match.Away.Name}";
+                    notification.Description = $"بين فريقي {match.Home.Name} و {match.Away.Name}";
 
                     notification.NotificationLang.Title = $"Attention! The match in week {match.GameWeak.OtherName} is starting now. Tune in and enjoy the game!";
-                    notification.NotificationLang.Title = $"Between {match.Home.OtherName} and {match.Away.OtherName}";
+                    notification.NotificationLang.Description = $"Between {match.Home.OtherName} and {match.Away.OtherName}";
 
                     teamGameWeak.FirstNotificationJobId = null;
 
@@ -312,10 +323,10 @@ namespace FantasyLogic.DataMigration.GamesData
                     }
 
                     notification.Title = $"انتهت فترة الشوط الأول! النتائج حتى الآن";
-                    notification.Title = $"[{match.Home.Name} ({match.HomeScore})] [{match.Away.Name} ({match.AwayScore})]";
+                    notification.Description = $"[{match.Home.Name} ({match.HomeScore})] [{match.Away.Name} ({match.AwayScore})]";
 
                     notification.NotificationLang.Title = $"Halftime is over! The results so far";
-                    notification.NotificationLang.Title = $"[{match.Home.OtherName} ({match.HomeScore})] [{match.Away.OtherName} ({match.AwayScore})]";
+                    notification.NotificationLang.Description = $"[{match.Home.OtherName} ({match.HomeScore})] [{match.Away.OtherName} ({match.AwayScore})]";
                 }
                 else if (matchNotificationEnum == MatchNotificationEnum.EndMatch)
                 {
@@ -344,10 +355,10 @@ namespace FantasyLogic.DataMigration.GamesData
                     }
 
                     notification.Title = $"انتهت المباراة! النتيجة النهائية";
-                    notification.Title = $"[{match.Home.Name} ({match.HomeScore})] [{match.Away.Name} ({match.AwayScore})]";
+                    notification.Description = $"[{match.Home.Name} ({match.HomeScore})] [{match.Away.Name} ({match.AwayScore})]";
 
                     notification.NotificationLang.Title = $"The football match has ended. Final score";
-                    notification.NotificationLang.Title = $"[{match.Home.OtherName} ({match.HomeScore})] [{match.Away.OtherName} ({match.AwayScore})]";
+                    notification.NotificationLang.Description = $"[{match.Home.OtherName} ({match.HomeScore})] [{match.Away.OtherName} ({match.AwayScore})]";
                 }
 
                 _unitOfWork.Notification.CreateNotification(notification);

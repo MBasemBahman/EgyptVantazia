@@ -1,4 +1,5 @@
 ﻿using Entities.CoreServicesModels.AccountTeamModels;
+using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using FantasyLogic;
 using FantasyLogicMicroservices.Controllers;
@@ -87,6 +88,7 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
             RecurringJob.AddOrUpdate($"Update-Standings-{_365CompetitionsEnum.KSA}", () => _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings(_365CompetitionsEnum.KSA), "0 6 * * *");
             RecurringJob.AddOrUpdate($"Update-Standings-{_365CompetitionsEnum.EPL}", () => _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings(_365CompetitionsEnum.EPL), "0 6 * * *");
 
+            RecurringJob.AddOrUpdate($"Remove-Update-Matchs", () => RemoveUpdateMatchRecurringJob(), "0 6 * * *");
         }
 
         private void WeeklyRecurringJob()
@@ -123,6 +125,20 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
             foreach (int accountTeamGameWeak in accountTeamGameWeaks)
             {
                 RecurringJob.RemoveIfExists($"AccountTeamGameWeakCalc-{accountTeamGameWeak}");
+            }
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public void RemoveUpdateMatchRecurringJob()
+        {
+            List<string> matches = _unitOfWork.Season.GetTeamGameWeaks(new TeamGameWeakParameters
+            {
+                FromTime = DateTime.UtcNow.AddDays(-1),
+                ToTime = DateTime.UtcNow,
+            }).Select(a => a._365_MatchId).ToList();
+            foreach (string match in matches)
+            {
+                RecurringJob.RemoveIfExists($"UpdateMatch-{match}");
             }
         }
 

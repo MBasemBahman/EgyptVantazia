@@ -70,6 +70,7 @@ namespace Services
 
         public async Task SendToTopic(FirebaseNotificationModel model)
         {
+            model.ImgUrl = model.ImgUrl.IsEmpty() ? null : model.ImgUrl;
             // [START apns_message]
             Message message = new()
             {
@@ -117,6 +118,8 @@ namespace Services
 
         public async Task SendMulticast(FirebaseNotificationModel model)
         {
+            model.ImgUrl = model.ImgUrl.IsEmpty() ? null : model.ImgUrl;
+
             // [START apns_message]
             MulticastMessage message = new()
             {

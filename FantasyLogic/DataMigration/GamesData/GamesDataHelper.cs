@@ -260,15 +260,18 @@ namespace FantasyLogic.DataMigration.GamesData
             _unitOfWork.Notification.CreateNotification(notification);
             await _unitOfWork.Save();
 
-            _notificationManager.SendToTopic(new FirebaseNotificationModel
+            if (notification.Id > 0)
             {
-                MessageHeading = notification.Title,
-                MessageContent = notification.Description,
-                ImgUrl = notification.StorageUrl + notification.ImageUrl,
-                OpenType = notification.OpenType.ToString(),
-                OpenValue = notification.OpenValue,
-                Topic = "all"
-            }).Wait();
+                _notificationManager.SendToTopic(new FirebaseNotificationModel
+                {
+                    MessageHeading = notification.Title,
+                    MessageContent = notification.Description,
+                    ImgUrl = notification.StorageUrl + notification.ImageUrl,
+                    OpenType = notification.OpenType.ToString(),
+                    OpenValue = notification.OpenValue,
+                    Topic = "all"
+                }).Wait();
+            }
         }
 
         public async Task SendNotificationForMatch(int id, MatchNotificationEnum matchNotificationEnum)
@@ -364,15 +367,18 @@ namespace FantasyLogic.DataMigration.GamesData
                 _unitOfWork.Notification.CreateNotification(notification);
                 await _unitOfWork.Save();
 
-                _notificationManager.SendToTopic(new FirebaseNotificationModel
+                if (notification.Id > 0)
                 {
-                    MessageHeading = notification.Title,
-                    MessageContent = notification.Description,
-                    ImgUrl = notification.StorageUrl + notification.ImageUrl,
-                    OpenType = notification.OpenType.ToString(),
-                    OpenValue = notification.OpenValue,
-                    Topic = "all"
-                }).Wait();
+                    _notificationManager.SendToTopic(new FirebaseNotificationModel
+                    {
+                        MessageHeading = notification.Title,
+                        MessageContent = notification.Description,
+                        ImgUrl = notification.StorageUrl + notification.ImageUrl,
+                        OpenType = notification.OpenType.ToString(),
+                        OpenValue = notification.OpenValue,
+                        Topic = "all"
+                    }).Wait();
+                }
             }
         }
 

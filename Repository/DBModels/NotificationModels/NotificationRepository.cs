@@ -26,6 +26,14 @@ namespace Repository.DBModels.NotificationModels
 
         public new void Create(Notification entity)
         {
+            if (FindByCondition(a => a.Title == entity.Title &&
+                                     a.Description == entity.Description &&
+                                     a.OpenValue == entity.OpenValue &&
+                                     a.OpenType == entity.OpenType, trackChanges: false).Any())
+            {
+                return;
+            }
+
             entity.NotificationLang ??= new NotificationLang
             {
                 Title = entity.Title,

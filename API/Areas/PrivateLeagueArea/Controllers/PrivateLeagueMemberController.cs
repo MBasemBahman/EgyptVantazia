@@ -78,12 +78,14 @@ namespace API.Areas.PrivateLeagueArea.Controllers
         [HttpPost]
         [Route(nameof(JoinPrivateLeague))]
         public async Task<PrivateLeagueModel> JoinPrivateLeague(
-        [FromQuery]_365CompetitionsEnum _365CompetitionsEnum,
+        [FromQuery] _365CompetitionsEnum _365CompetitionsEnum,
         [FromQuery, BindRequired] string uniqueCode)
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
 
             int currentSeason = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum);
             if (currentSeason < 0)
@@ -102,7 +104,11 @@ namespace API.Areas.PrivateLeagueArea.Controllers
             }
 
             int fk_PrivateLeague = _unitOfWork.PrivateLeague
-                                              .GetPrivateLeagues(new PrivateLeagueParameters { UniqueCode = uniqueCode }, otherLang)
+                                              .GetPrivateLeagues(new PrivateLeagueParameters
+                                              {
+                                                  UniqueCode = uniqueCode,
+                                                  Fk_Season = currentSeason
+                                              }, otherLang)
                                               .Select(a => a.Id)
                                               .FirstOrDefault();
             if (fk_PrivateLeague == 0)

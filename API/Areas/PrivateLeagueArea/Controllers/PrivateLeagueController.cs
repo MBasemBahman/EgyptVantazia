@@ -30,7 +30,9 @@ namespace API.Areas.PrivateLeagueArea.Controllers
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
-            parameters.Fk_Season = auth.Fk_Season;
+            _365CompetitionsEnum _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
+
+            parameters.Fk_Season = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum); ;
             parameters.Fk_Account = auth.Fk_Account;
 
             PagedList<PrivateLeagueModel> data = await _unitOfWork.PrivateLeague.GetPrivateLeaguePaged(parameters, otherLang);

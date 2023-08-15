@@ -28,6 +28,8 @@ namespace API.Areas.SubscriptionArea.Controllers
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
 
+            _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
+
             parameters.Fk_Account = auth.Fk_Account;
             parameters.Fk_Season = _unitOfWork.Season.GetCurrentSeasonId(_365CompetitionsEnum);
             parameters.OrderBy = "order";

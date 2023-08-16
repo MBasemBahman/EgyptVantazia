@@ -110,6 +110,12 @@ namespace Entities.CoreServicesModels.AccountModels
 
         [DisplayName(nameof(ShowAds))]
         public bool ShowAds { get; set; }
+        
+        [DisplayName(nameof(AccountSubscriptionsCount))]
+        public int AccountSubscriptionsCount { get; set; }
+        
+        [DisplayName(nameof(GoldSubscriptionsCount))]
+        public int GoldSubscriptionsCount { get; set; }
     }
 
     public class AccountEditModel

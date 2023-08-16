@@ -95,6 +95,7 @@ namespace CoreServices.Logic
                                FullName = a.Account.FullName,
                                Fk_Country = a.Account.Fk_Country,
                                Fk_Nationality = a.Account.Fk_Nationality,
+                               PhoneNumber = a.Account.User.PhoneNumber
                            },
                            PlayersCount = a.AccountTeamPlayers.Count,
                            FreeTransfer = a.FreeTransfer,

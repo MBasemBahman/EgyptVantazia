@@ -1482,4 +1482,10 @@
   <data name="Delete ALl" xml:space="preserve">
     <value>حذف الكل</value>
   </data>
+  <data name="AccountSubscriptionsCount" xml:space="preserve">
+    <value>عدد الاشتراكات النشطة</value>
+  </data>
+  <data name="GoldSubscriptionsCount" xml:space="preserve">
+    <value>عدد العضويات الذهبية</value>
+  </data>
 </root>

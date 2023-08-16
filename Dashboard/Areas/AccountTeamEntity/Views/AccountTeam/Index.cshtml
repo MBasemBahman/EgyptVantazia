@@ -242,31 +242,35 @@ else
                             render: function (data, type, row) {
                                 var span = '';
 
-                                if (data.imageUrl != null) {
+                                if (data.imageUrl != null && data.imageUrl != '') {
 
                                     return '<div class="d-flex justify-content-left align-items-center"><div class= "avatar-wrapper" ><div class="avatar me-1">'
                                         + '<img src="' + data.imageUrl + '"  height="32" width="32">'
                                         + span
                                         + '</div></div>'
-                                        + ' <div class= "d-flex flex-column">'
+                                        + ' <div class= "">'
                                         + '<a href="/AccountEntity/Account/Profile/' + row.fk_Account + '" target="_blank" class= "user_name text-truncate">'
-                                        + '<span class= "fw-bolder">' + data.fullName + '</span></a> '
+                                        + '<span class= "fw-bolder">' + data.fullName + '</span></a> | '
+                                        + '<a href="https://wa.me/' + data.phoneNumber + '" target="_blank" class= "user_name text-truncate">'
+                                        +'<img src="/whatsapp.png"/></a>'
                                         + '<small class= "emp_post text-muted" ></small ></div></div>';
                                 }
                                 else {
                                     return '<div class="d-flex justify-content-left align-items-center"><div class= "avatar-wrapper" >'
                                         + '<div class="avatar  bg-light-dark  me-1"><span class="avatar-content"></span>' + span + '</div>'
                                         + '</div>'
-                                        + ' <div class= "d-flex flex-column">'
+                                        + ' <div class= "">'
                                         + '<a href="/AccountEntity/Account/Profile/' + row.fk_Account + '"  target="_blank" class= "user_name text-truncate">'
-                                        + '<span class= "fw-bolder">' + data.fullName + '</span></a> '
+                                        + '<span class= "fw-bolder">' + data.fullName + '</span></a> | '
+                                        + '<a href="https://wa.me/' + data.phoneNumber + '" target="_blank" class= "user_name text-truncate">'
+                                        +'<img src="/whatsapp.png"/></a>'
                                         + '<small class= "emp_post text-muted" ></small ></div></div>';
                                 }
 
 
                             }
                         },
-                        { data: "season.name", orderable: false, },
+                        { data: "season.name", orderable: false },
                         {
                             data: "name",
                             render: function (data, type, row) {

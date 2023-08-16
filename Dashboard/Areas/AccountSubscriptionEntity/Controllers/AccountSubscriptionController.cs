@@ -31,11 +31,12 @@ namespace Dashboard.Areas.AccountSubscriptionEntity.Controllers
             _environment = environment;
         }
 
-        public IActionResult Index(int Fk_Account, bool ProfileLayOut = false)
+        public IActionResult Index(int Fk_Account, int Fk_Subscription, bool ProfileLayOut = false)
         {
             AccountSubscriptionFilter filter = new()
             {
-                Fk_Account = Fk_Account
+                Fk_Account = Fk_Account,
+                Fk_Subscription = Fk_Subscription
             };
 
             ViewData[ViewDataConstants.AccessLevel] = (DashboardAccessLevelModel)Request.HttpContext.Items[ViewDataConstants.AccessLevel];

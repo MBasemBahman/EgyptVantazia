@@ -1431,4 +1431,10 @@
   <data name="Delete ALl" xml:space="preserve">
     <value>Delete All</value>
   </data>
+  <data name="AccountSubscriptionsCount" xml:space="preserve">
+    <value>Subscriptions Count</value>
+  </data>
+  <data name="GoldSubscriptionsCount" xml:space="preserve">
+    <value>Gold Subscriptions Count</value>
+  </data>
 </root>

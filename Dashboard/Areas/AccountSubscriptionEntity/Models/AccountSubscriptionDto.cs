@@ -12,6 +12,7 @@ namespace Dashboard.Areas.AccountSubscriptionEntity.Models
         public int Id { get; set; }
 
         public int Fk_Account { get; set; }
+        public int Fk_Subscription { get; set; }
 
         [DisplayName(nameof(Season))]
         public int Fk_Season { get; set; }

@@ -1,4 +1,5 @@
-﻿using Entities.CoreServicesModels.AccountModels;
+﻿using Contracts.EnumData;
+using Entities.CoreServicesModels.AccountModels;
 using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.LocationModels;
 using Entities.CoreServicesModels.SeasonModels;
@@ -87,7 +88,9 @@ namespace CoreServices.Logic
                                   },
                                   LastActive = a.User.RefreshTokens.Any()
                                   ? a.User.RefreshTokens.OrderByDescending(b => b.Id).Select(a => a.CreatedAt).FirstOrDefault()
-                                  : null
+                                  : null,
+                                  AccountSubscriptionsCount = a.AccountSubscriptions.Count(b => b.IsActive),
+                                  GoldSubscriptionsCount = a.AccountSubscriptions.Count(b => b.IsActive && b.Fk_Subscription == (int)DBModelsEnum.SubscriptionEnum.Gold)
                               })
                               .Search(parameters.SearchColumns, parameters.SearchTerm)
                               .Sort(parameters.OrderBy);

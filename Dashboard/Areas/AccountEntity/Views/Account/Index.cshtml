@@ -100,6 +100,8 @@
                                             <th>@Localizer.Get("FavouriteSeason")</th>
                                             <th>@Html.DisplayNameFor(model => row.PhoneNumber)</th>
                                             <th>@Html.DisplayNameFor(model => row.EmailAddress)</th>
+                                            <th>@Html.DisplayNameFor(model => row.AccountSubscriptionsCount)</th>
+                                            <th>@Html.DisplayNameFor(model => row.GoldSubscriptionsCount)</th>
                                             <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
                                             <th class="no-sort">@Html.DisplayNameFor(model => row.LastActive)</th>
                                             <th>
@@ -170,27 +172,45 @@
                         {
                             data: "fullName",
                             render: function(data, type, row) {
-                                var span = '';
+                                let span = '';
                                 
-                                if (row.imageUrl != null) {
+                                if (row.imageUrl != null && row.imageUrl != '') {
 
-                                    return '<div class="d-flex justify-content-left align-items-center"><div class= "avatar-wrapper" ><div class="avatar me-1">'
-                                        + '<img src="' + row.imageUrl + '"  height="32" width="32">'
-                                        + span
-                                        + '</div></div>'
-                                        + ' <div class= "d-flex flex-column">'
-                                        + '<a href="/AccountEntity/Account/Profile/' + row.id + '" class= "user_name text-truncate">'
-                                        + '<span class= "fw-bolder">' + data + '</span></a> '
-                                        + '<small class= "emp_post text-muted" ></small ></div></div>';
+                                    return `<div class="d-flex justify-content-left align-items-center">
+                                                <div class="avatar-wrapper" >
+                                                    <div class="avatar me-1">
+                                                        <img src="${row.imageUrl}" alt="${data}" height="32" width="32">${span}
+                                                    </div>
+                                                </div>
+                                                <div class= "">
+                                                    <a href="/AccountEntity/Account/Profile/${row.id}" class="user_name text-truncate">
+                                                        <span class= "fw-bolder">${data}</span>
+                                                    </a> | 
+                                                    <a href="https://wa.me/${row.phoneNumber}" target="_blank" class= "user_name text-truncate">
+                                                        <img src="/whatsapp.png" alt="${data}" />
+                                                    </a>
+                                                    <small class= "emp_post text-muted" ></small >
+                                                </div>
+                                            </div>`;
                                 }
                                 else {
-                                    return '<div class="d-flex justify-content-left align-items-center"><div class= "avatar-wrapper" >'
-                                        + '<div class="avatar  bg-light-dark  me-1"><span class="avatar-content"></span>' + span + '</div>'
-                                        + '</div>'
-                                        + ' <div class= "d-flex flex-column">'
-                                        + '<a href="/AccountEntity/Account/Profile/' + row.id + '" class= "user_name text-truncate">'
-                                        + '<span class= "fw-bolder">' + data + '</span></a> '
-                                        + '<small class= "emp_post text-muted" ></small ></div></div>';
+                                    return `<div class="d-flex justify-content-left align-items-center">
+                                                <div class= "avatar-wrapper" >
+                                                    <div class="avatar bg-light-dark  me-1">
+                                                        <span class="avatar-content"></span>
+                                                        ${span}
+                                                    </div>
+                                                </div>
+                                                <div class="">
+                                                    <a href="/AccountEntity/Account/Profile/${row.id}" class= "user_name text-truncate">
+                                                        <span class="fw-bolder">${data}</span>
+                                                    </a> | 
+                                                    <a href="https://wa.me/${row.phoneNumber}" target="_blank" class= "user_name text-truncate">
+                                                        <img src="/whatsapp.png" alt="${data}" />
+                                                    </a>
+                                                    <small class= "emp_post text-muted" ></small >
+                                                </div>
+                                            </div>`;
                                 }
 
 
@@ -202,10 +222,17 @@
 
                         { data: "phoneNumber" },
                         { data: "emailAddress" },
+                        { data: "accountSubscriptionsCount", render: function (data, type, row) {
+                          return `<a href="/AccountSubscriptionEntity/AccountSubscription/Index?Fk_Account=${row.id}" target="_blank">${data}</a>`;
+                        } },
+                        { data: "goldSubscriptionsCount", render: function (data, type, row) {
+                          return `<a href="/AccountSubscriptionEntity/AccountSubscription/Index?Fk_Account=${row.id}&Fk_Subscription=@((int)SubscriptionEnum.Gold)" target="_blank">${data}</a>`;
+                        } },
                         { data: "createdAt" },
                         { data: "lastActive" },
                         { data: "id" },
-                    ]
+                    ],
+                    scrollX: true
                 });
                  $("button[type=reset]").on("click", function() {
                 $(".dt-date").each(function() {
@@ -278,7 +305,7 @@
             
                 // $('body').on('click', '#ExcelBtn', function () {
                 //     $.ajax({
-@*              //         url:'@Url.Action("ExportExcel")',                                  *@
+    @*              //         url:'@Url.Action("ExportExcel")',                                  *@
                 //         type: "POST",
                 //         data:  $('#FilterForm').serialize(),
                 //         success: function (result) {

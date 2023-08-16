@@ -161,6 +161,12 @@ namespace Entities.CoreServicesModels.TeamModels
         public TransferTypeEnum? LastTransferTypeEnum { get; set; }
 
         public List<PlayerMarkModel> PlayerMarks { get; set; }
+
+        [DisplayName(nameof(BuyingCount))]
+        public int BuyingCount { get; set; }
+
+        [DisplayName(nameof(SellingCount))]
+        public int SellingCount { get; set; }
     }
 
 

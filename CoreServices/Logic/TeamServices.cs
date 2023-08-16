@@ -460,6 +460,8 @@ namespace CoreServices.Logic
                                                   }
                                               })
                                               .ToList(),
+                                       BuyingCount = a.PlayerTransfers.Count(a => a.TransferTypeEnum == TransferTypeEnum.Buying),
+                                       SellingCount = a.PlayerTransfers.Count(a => a.TransferTypeEnum == TransferTypeEnum.Selling),
                                    })
                                    .Search(parameters.SearchColumns, parameters.SearchTerm);
 

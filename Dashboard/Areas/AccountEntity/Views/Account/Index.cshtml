@@ -185,9 +185,9 @@
                                                 <div class= "">
                                                     <a href="/AccountEntity/Account/Profile/${row.id}" class="user_name text-truncate">
                                                         <span class= "fw-bolder">${data}</span>
-                                                    </a> | 
-                                                    <a href="https://wa.me/${row.phoneNumber}" target="_blank" class= "user_name text-truncate">
-                                                        <img src="/whatsapp.png" alt="${data}" />
+                                                    </a> 
+                                                    <a href="https://wa.me/2${row.phoneNumber}" target="_blank" class= "user_name text-truncate text-success">
+                                                        <i class="fab fa-whatsapp"></i>
                                                     </a>
                                                     <small class= "emp_post text-muted" ></small >
                                                 </div>
@@ -204,9 +204,9 @@
                                                 <div class="">
                                                     <a href="/AccountEntity/Account/Profile/${row.id}" class= "user_name text-truncate">
                                                         <span class="fw-bolder">${data}</span>
-                                                    </a> | 
-                                                    <a href="https://wa.me/${row.phoneNumber}" target="_blank" class= "user_name text-truncate">
-                                                        <img src="/whatsapp.png" alt="${data}" />
+                                                    </a>
+                                                    <a href="https://wa.me/2${row.phoneNumber}" target="_blank" class= "user_name text-truncate text-success">
+                                                        <i class="fab fa-whatsapp"></i>
                                                     </a>
                                                     <small class= "emp_post text-muted" ></small >
                                                 </div>
@@ -223,10 +223,10 @@
                         { data: "phoneNumber" },
                         { data: "emailAddress" },
                         { data: "accountSubscriptionsCount", render: function (data, type, row) {
-                          return `<a href="/AccountSubscriptionEntity/AccountSubscription/Index?Fk_Account=${row.id}" target="_blank">${data}</a>`;
+                            return `<a href="/AccountSubscriptionEntity/AccountSubscription/Index?Fk_Account=${row.id}&IsActive=true" target="_blank">${data}</a>`;
                         } },
                         { data: "goldSubscriptionsCount", render: function (data, type, row) {
-                          return `<a href="/AccountSubscriptionEntity/AccountSubscription/Index?Fk_Account=${row.id}&Fk_Subscription=@((int)SubscriptionEnum.Gold)" target="_blank">${data}</a>`;
+                            return `<a href="/AccountSubscriptionEntity/AccountSubscription/Index?Fk_Account=${row.id}&Fk_Subscription=@((int)SubscriptionEnum.Gold)&IsActive=true" target="_blank">${data}</a>`;
                         } },
                         { data: "createdAt" },
                         { data: "lastActive" },

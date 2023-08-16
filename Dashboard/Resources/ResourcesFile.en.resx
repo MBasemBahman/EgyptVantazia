@@ -1324,7 +1324,7 @@
     <value>Team Game Weaks</value>
   </data>
   <data name="Discount" xml:space="preserve">
-    <value>Discount</value>
+    <value>Payment amount</value>
   </data>
   <data name="ExpirationDate" xml:space="preserve">
     <value>Expiration Date</value>
@@ -1436,5 +1436,11 @@
   </data>
   <data name="GoldSubscriptionsCount" xml:space="preserve">
     <value>Gold Subscriptions Count</value>
+  </data>
+  <data name="BuyingCount" xml:space="preserve">
+    <value>Buying Count</value>
+  </data>
+  <data name="SellingCount" xml:space="preserve">
+    <value>Selling Count</value>
   </data>
 </root>

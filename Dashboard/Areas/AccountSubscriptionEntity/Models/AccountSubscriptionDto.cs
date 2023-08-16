@@ -30,6 +30,7 @@ namespace Dashboard.Areas.AccountSubscriptionEntity.Models
         public string AccountUserName { get; set; }
 
         public string DashboardSearch { get; set; }
+        public bool? IsActive { get; set; }
     }
     public class AccountSubscriptionDto : AccountSubscriptionModel
     {

@@ -183,6 +183,8 @@ else
                             dataType: "json",
                             data: function (data) {
                                 data.Fk_Account = @Model.Fk_Account;
+                                data.Fk_Subscription = @Model.Fk_Subscription;
+                                data.IsActive = '@Model.IsActive';
                                 data.Fk_Season = $("#Fk_Season").length > 0 ? $("#Fk_Season").val() : @Model.Fk_Season
                                 data.CreatedAtFrom = $("#CreatedAtFrom").length > 0 ? $("#CreatedAtFrom").val() : '@Model.CreatedAtFrom'
                                 data.CreatedAtTo = $("#CreatedAtTo").length > 0 ? $("#CreatedAtTo").val() : '@Model.CreatedAtTo'

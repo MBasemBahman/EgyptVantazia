@@ -110,6 +110,9 @@
                                                     <th>@Html.DisplayNameFor(model => row.SellPrice)</th>
                                                     <th>@Html.DisplayNameFor(model => row.BuyPrice)</th>
 
+                                                    <th>@Html.DisplayNameFor(model => row.SellingCount)</th>
+                                                    <th>@Html.DisplayNameFor(model => row.BuyingCount)</th>
+
                                                     <th>@Html.DisplayNameFor(model => row.PlayerPosition)</th>
                                                     <th>@Html.DisplayNameFor(model => row.FormationPosition)</th>
                                                     <th>@Html.DisplayNameFor(model => row.IsActive)</th>
@@ -184,6 +187,9 @@ else
 
                                     <th>@Html.DisplayNameFor(model => row.SellPrice)</th>
                                     <th>@Html.DisplayNameFor(model => row.BuyPrice)</th>
+
+                                    <th>@Html.DisplayNameFor(model => row.SellingCount)</th>
+                                    <th>@Html.DisplayNameFor(model => row.BuyingCount)</th>
 
                                     <th>@Html.DisplayNameFor(model => row.PlayerPosition)</th>
                                     <th>@Html.DisplayNameFor(model => row.FormationPosition)</th>
@@ -309,6 +315,8 @@ else
                         { data: "_365_PlayerId" },
                         { data: "sellPrice" },
                         { data: "buyPrice" },
+                        { data: "sellingCount" },
+                        { data: "buyingCount" },
                         {
                             data: "playerPosition",
                             orderable: false,

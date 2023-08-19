@@ -142,8 +142,8 @@
                         contentType: "application/json",
                         dataType: "json",
                         data: function(data) {
-                            data.fk_Season = $("#fk_Season").length > 0 ? $("#fk_Season").val() : '@Model.Fk_Season';
-                            data.fk_GameWeak = $("#fk_GameWeak").length > 0 ? $("#fk_GameWeak").val() : '@Model.Fk_GameWeak';
+                            data.Fk_Season = $("#Fk_Season").length > 0 ? $("#Fk_Season").val() : '@Model.Fk_Season';
+                            data.Fk_GameWeak = $("#Fk_GameWeak").length > 0 ? $("#Fk_GameWeak").val() : '@Model.Fk_GameWeak';
                             return JSON.stringify(data);
                         }
                     },

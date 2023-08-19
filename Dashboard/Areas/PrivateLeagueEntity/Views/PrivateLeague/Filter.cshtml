@@ -28,7 +28,7 @@
                     <div class="mb-1">
                         <label asp-for="Fk_GameWeak" class="form-label"></label>
                         <select asp-for="Fk_GameWeak" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["GameWeak"] as Dictionary<string,string>,"Key","Value"))">
-                            <option value="0">@Localizer.Get("All")</option>
+                            <option value="">@Localizer.Get("All")</option>
                         </select>
                     </div>
                 </div>

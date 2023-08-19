@@ -14,7 +14,7 @@
     var accessLevel = (DashboardAccessLevelModel)ViewData[ViewDataConstants.AccessLevel];
 
     var row = new PrivateLeagueDto();
-    
+
     int dashboardRole = ((UserAuthenticatedDto)ViewData["auth"]).Fk_DashboardAdministrationRole;
 }
 
@@ -57,7 +57,7 @@
                             <div class="card-header border-bottom">
                                 <h4 class="card-title"> @ViewData["Title"]</h4>
                             </div>
-                            
+
                             <p class="m-2 demo-inline-spacing">
                                 <a class="btn btn-primary me-1" data-bs-toggle="collapse" href="#AdvancedFilter" role="button" aria-expanded="false" aria-controls="AdvancedFilter">
                                     <i data-feather='filter'></i>
@@ -101,7 +101,7 @@
                                             <th>@Html.DisplayNameFor(model => row.MemberCount)</th>
                                             @* @if (dashboardRole == (int)DashboardAdministrationRoleEnum.Developer) *@
                                             @* { *@
-                                                <th>@Localizer.Get("UpdatePrivateLeagueRanking")</th>
+                                            <th>@Localizer.Get("UpdatePrivateLeagueRanking")</th>
                                             @* } *@
                                             <th>@Html.DisplayNameFor(model => row.GameWeak)</th>
 
@@ -142,7 +142,8 @@
                         contentType: "application/json",
                         dataType: "json",
                         data: function(data) {
-
+                            data.fk_Season = $("#fk_Season").length > 0 ? $("#fk_Season").val() : '@Model.Fk_Season';
+                            data.fk_GameWeak = $("#fk_GameWeak").length > 0 ? $("#fk_GameWeak").val() : '@Model.Fk_GameWeak';
                             return JSON.stringify(data);
                         }
                     },
@@ -151,8 +152,8 @@
                         { data: "id" },
                         { data:"name" },
                         { data:"memberCount" },
-                        
-                        
+
+
                                 {
                                     data: "id",
                                     render: function (data) {
@@ -160,8 +161,8 @@
                                         @Localizer.Get("UpdatePrivateLeagueRanking")
                                     </a>`;
                                 } },
-                           
-                        
+
+
                         {
                             data: "gameWeak",
                             render: function (data) {
@@ -222,10 +223,10 @@
             });
         });
         // end update_private_league_ranking
-        
+
         $(document).on("change", "#Fk_Season", function() {
           let fk_Season = $(this).val();
-            
+
           getGameWeak($("#Fk_GameWeak"), fk_Season, false);
         });
     </script>

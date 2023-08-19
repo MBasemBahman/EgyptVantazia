@@ -100,7 +100,7 @@
 @section scripts{
     <script src="~/apis/charts.js"></script>
     <script>
-        
+
         function LoadTable() {
             var dt_ajax_table = $('.datatables');
             if (dt_ajax_table.length) {
@@ -112,7 +112,7 @@
                         contentType: "application/json",
                         dataType: "json",
                         data: function(data) {
-                          data.Fk_PrivateLeague=$("#Fk_PrivateLeague").length > 0 ?$("#Fk_PrivateLeague").val() : @Model.Fk_PrivateLeague
+                          data.Fk_PrivateLeague=$("#Fk_PrivateLeague").length > 0 ?$("#Fk_PrivateLeague").val() : @Model.Fk_PrivateLeague;
                             return JSON.stringify(data);
                         }
                     },
@@ -123,7 +123,7 @@
                             data: "account",
                             render: function(data, type, row) {
                                 var span = '';
-                                
+
                                 if (data.imageUrl != null) {
 
                                     return '<div class="d-flex justify-content-left align-items-center"><div class= "avatar-wrapper" ><div class="avatar me-1">'

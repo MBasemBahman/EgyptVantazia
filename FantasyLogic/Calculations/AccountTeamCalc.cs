@@ -597,8 +597,16 @@ namespace FantasyLogic.Calculations
             return null;
         }
 
-        public void UpdateAccountTeamGameWeakRanking(int gameWeak, int fk_Season)
+        public void UpdateAccountTeamGameWeakRanking(_365CompetitionsEnum _365CompetitionsEnum, int gameWeak, int fk_Season)
         {
+            if (gameWeak == 0 || fk_Season == 0)
+            {
+                GameWeakModelForCalc currentGameWeak = _unitOfWork.Season.GetCurrentGameWeak(_365CompetitionsEnum);
+
+                gameWeak = currentGameWeak.Id;
+                fk_Season = currentGameWeak.Fk_Season;
+            }
+
             List<AccountTeamRanking> accountTeamGameWeakRankings = new();
             int ranking = 1;
 
@@ -672,16 +680,16 @@ namespace FantasyLogic.Calculations
             _unitOfWork.Save().Wait();
         }
 
-        public void UpdateAccountTeamRanking(_365CompetitionsEnum _365CompetitionsEnum, int fk_Season)
+        public void UpdateAccountTeamRanking(_365CompetitionsEnum _365CompetitionsEnum)
         {
-            int currentGameWeak = _unitOfWork.Season.GetCurrentGameWeakId(_365CompetitionsEnum);
+            GameWeakModelForCalc currentGameWeak = _unitOfWork.Season.GetCurrentGameWeak(_365CompetitionsEnum);
 
             List<AccountTeamRanking> accountTeamRankings = new();
             int ranking = 1;
 
             List<AccountTeamRanking> accountTeams = _unitOfWork.AccountTeam.GetAccountTeams(new AccountTeamParameters
             {
-                Fk_Season = fk_Season
+                Fk_Season = currentGameWeak.Fk_Season
             }, otherLang: false)
                 .OrderByDescending(a => a.TotalPoints)
                 .Select(a => new AccountTeamRanking
@@ -724,7 +732,7 @@ namespace FantasyLogic.Calculations
                 }
             }
 
-            foreach (IGrouping<int, AccountTeamRanking> goldSubscription in accountTeams.GroupBy(a => a.HaveGoldSubscription == true))
+            foreach (var goldSubscription in accountTeams.GroupBy(a => a.HaveGoldSubscription == true))
             {
                 ranking = 1;
                 foreach (AccountTeamRanking accountTeam in goldSubscription.ToList())
@@ -733,7 +741,7 @@ namespace FantasyLogic.Calculations
                 }
             }
 
-            foreach (IGrouping<int, AccountTeamRanking> unSubscriptionTeam in accountTeams.GroupBy(a => a.HaveGoldSubscription == false))
+            foreach (var unSubscriptionTeam in accountTeams.GroupBy(a => a.HaveGoldSubscription == false))
             {
                 ranking = 1;
                 foreach (AccountTeamRanking accountTeam in unSubscriptionTeam.ToList())
@@ -751,7 +759,7 @@ namespace FantasyLogic.Calculations
                 accountTeam.GoldSubscriptionRanking = accountTeamRanking.GoldSubscriptionRanking;
                 accountTeam.UnSubscriptionRanking = accountTeamRanking.UnSubscriptionRanking;
 
-                AccountTeamGameWeakModel accountTeamGameWeakModel = _unitOfWork.AccountTeam.GetTeamGameWeak(accountTeam.Fk_Account, currentGameWeak);
+                AccountTeamGameWeakModel accountTeamGameWeakModel = _unitOfWork.AccountTeam.GetTeamGameWeak(accountTeam.Fk_Account, currentGameWeak.Id);
 
                 if (accountTeamGameWeakModel != null)
                 {

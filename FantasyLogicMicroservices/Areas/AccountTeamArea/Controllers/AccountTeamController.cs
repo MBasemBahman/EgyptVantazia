@@ -47,6 +47,7 @@ namespace FantasyLogicMicroservices.Areas.AccountTeamArea.Controllers
         [HttpPost]
         [Route(nameof(UpdateAccountTeamGameWeakRanking))]
         public IActionResult UpdateAccountTeamGameWeakRanking(
+            [FromQuery] _365CompetitionsEnum _365CompetitionsEnum,
             [FromQuery] int fk_GameWeak,
             [FromQuery] bool inDebug)
         {
@@ -57,11 +58,11 @@ namespace FantasyLogicMicroservices.Areas.AccountTeamArea.Controllers
 
             if (inDebug)
             {
-                _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamGameWeakRanking(fk_GameWeak, gameWeek.Fk_Season);
+                _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamGameWeakRanking(_365CompetitionsEnum, fk_GameWeak, gameWeek.Fk_Season);
             }
             else
             {
-                _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamGameWeakRanking(fk_GameWeak, gameWeek.Fk_Season));
+                _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamGameWeakRanking(_365CompetitionsEnum, fk_GameWeak, gameWeek.Fk_Season));
             }
             return Ok();
         }
@@ -70,21 +71,15 @@ namespace FantasyLogicMicroservices.Areas.AccountTeamArea.Controllers
         [Route(nameof(UpdateAccountTeamRanking))]
         public IActionResult UpdateAccountTeamRanking(
            [FromQuery] _365CompetitionsEnum _365CompetitionsEnum,
-           [FromQuery] int fk_GameWeak,
            [FromQuery] bool inDebug)
         {
-            GameWeakModelForCalc gameWeek = _unitOfWork.Season.GetGameWeaksForCalc(new GameWeakParameters
-            {
-                Id = fk_GameWeak,
-            }).FirstOrDefault();
-
             if (inDebug)
             {
-                _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamRanking(_365CompetitionsEnum, gameWeek.Fk_Season);
+                _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamRanking(_365CompetitionsEnum);
             }
             else
             {
-                _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamRanking(_365CompetitionsEnum, gameWeek.Fk_Season));
+                _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamRanking(_365CompetitionsEnum));
             }
             return Ok();
         }

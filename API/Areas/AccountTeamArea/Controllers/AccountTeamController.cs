@@ -80,7 +80,6 @@ namespace API.Areas.AccountTeamArea.Controllers
                     {
                         parameters.FromUnSubscriptionRanking = 1;
                         parameters.OrderBy = "totalPoints desc";
-                        parameters.HaveGoldSubscription = false;
                     }
                 }
 
@@ -111,6 +110,7 @@ namespace API.Areas.AccountTeamArea.Controllers
                 if (parameters.OrderBy.Contains("unSubscriptionRanking"))
                 {
                     parameters.FromUnSubscriptionRanking = 0;
+                    parameters.HaveGoldSubscription = false;
                 }
 
                 if (parameters.OrderBy.Contains("goldSubscriptionRanking"))

@@ -70,6 +70,9 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
 
         private void DailyRecurringJob()
         {
+            // every 1 hour
+            RecurringJob.AddOrUpdate($"Remove-Update-Matchs", () => RemoveUpdateMatchRecurringJob(), "0 * * * *");
+
             // every 8 hour
             RecurringJob.AddOrUpdate($"Run-AccountTeams-Calculations-{_365CompetitionsEnum.Egypt}", () => _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(_365CompetitionsEnum.Egypt, 0, 0, null, null, false), "0 */8 * * *");
             RecurringJob.AddOrUpdate($"Run-AccountTeams-Calculations-{_365CompetitionsEnum.KSA}", () => _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(_365CompetitionsEnum.KSA, 0, 0, null, null, false), "0 */8 * * *");
@@ -101,8 +104,7 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
             RecurringJob.AddOrUpdate($"Update-AccountTeam-GameWeak-Ranking-{_365CompetitionsEnum.Egypt}", () => _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamGameWeakRanking(_365CompetitionsEnum.Egypt, 0, 0), "0 6 * * *");
             RecurringJob.AddOrUpdate($"Update-AccountTeam-Ranking-{_365CompetitionsEnum.Egypt}", () => _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamRanking(_365CompetitionsEnum.Egypt), "0 7 * * *");
 
-
-            RecurringJob.AddOrUpdate($"Remove-Update-Matchs", () => RemoveUpdateMatchRecurringJob(), "0 6 * * *");
+            
         }
 
         private void WeeklyRecurringJob()
@@ -145,14 +147,18 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
         [ApiExplorerSettings(IgnoreApi = true)]
         public void RemoveUpdateMatchRecurringJob()
         {
-            List<string> matches = _unitOfWork.Season.GetTeamGameWeaks(new TeamGameWeakParameters
+            var matches = _unitOfWork.Season.GetTeamGameWeaks(new TeamGameWeakParameters
             {
                 FromTime = DateTime.UtcNow.AddDays(-1),
                 ToTime = DateTime.UtcNow,
-            }).Select(a => a._365_MatchId).ToList();
-            foreach (string match in matches)
+                IsEnded = true
+            }).ToList();
+            foreach (TeamGameWeak match in matches)
             {
-                RecurringJob.RemoveIfExists($"UpdateMatch-{match}");
+                if (match.StartTime.AddMinutes(210) < DateTime.UtcNow)
+                {
+                    RecurringJob.RemoveIfExists($"UpdateMatch-{match._365_MatchId}");
+                }
             }
         }
 

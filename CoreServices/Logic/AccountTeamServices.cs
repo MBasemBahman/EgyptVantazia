@@ -61,15 +61,15 @@ namespace CoreServices.Logic
                                              .Select(b => b.FirstOrDefault().SellPrice)
                                              .Sum(),
                            IsVip = a.IsVip,
-                           TotalPoints = ((parameters.GetMonthPlayer &&
-                                     parameters.From_365_GameWeakIdValue > 0 &&
+                           TotalPoints = (parameters.GetMonthPlayer &&
+                                     parameters.From_365_GameWeakIdValue >= 0 &&
                                      parameters.To_365_GameWeakIdValue > 0) ?
                                      a.AccountTeamGameWeaks
                                       .Where(b => b.GameWeak.Season._365_CompetitionsId == parameters._365_CompetitionsId.ToString() &&
                                                   b.GameWeak._365_GameWeakIdValue >= parameters.From_365_GameWeakIdValue &&
                                                   b.GameWeak._365_GameWeakIdValue <= parameters.To_365_GameWeakIdValue)
                                       .Select(b => b.TotalPoints ?? 0)
-                                      .Sum() : a.TotalPoints),
+                                      .Sum() : a.TotalPoints,
                            ImageUrl = a.StorageUrl + a.ImageUrl,
                            GlobalRanking = a.GlobalRanking,
                            GlobalRankingUpdatedAt = a.GlobalRankingUpdatedAt,
@@ -200,6 +200,13 @@ namespace CoreServices.Logic
                   bool otherLang)
         {
             return await PagedList<AccountTeamModel>.ToPagedList(GetAccountTeams(parameters, otherLang), parameters.PageNumber, parameters.PageSize);
+        }
+
+        public async Task<PagedList<AccountTeamModel>> GetAccountTeamPaged(
+            IQueryable<AccountTeamModel> accountTeams,
+            AccountTeamParameters parameters)
+        {
+            return await PagedList<AccountTeamModel>.ToPagedList(accountTeams, parameters.PageNumber, parameters.PageSize);
         }
 
         public void UpdateAccountTeamRank(int id, int fk_Season)
@@ -882,24 +889,6 @@ namespace CoreServices.Logic
                                                     }
                                                 })
                                                 .ToList() : null,
-                               NextMatch = parameters.IncludeNextMatch ?
-                               _dBContext.Set<TeamGameWeak>()
-                                          .Where(b => b.IsActive &&
-                                                      b.StartTime >= DateTime.UtcNow.AddHours(2) &&
-                                                      (b.Fk_Away == a.Player.Fk_Team || b.Fk_Home == a.Player.Fk_Team))
-                                          .OrderBy(b => b.StartTime)
-                                          .Select(b => b.Fk_Home != a.Player.Fk_Team ? new TeamModel
-                                          {
-                                              Name = otherLang ? b.Home.TeamLang.Name : b.Home.Name,
-                                              ShortName = otherLang ? b.Home.TeamLang.ShortName : b.Home.ShortName,
-                                              IsAwayTeam = false
-                                          } : new TeamModel
-                                          {
-                                              Name = otherLang ? b.Away.TeamLang.Name : b.Away.Name,
-                                              ShortName = otherLang ? b.Away.TeamLang.ShortName : b.Away.ShortName,
-                                              IsAwayTeam = true
-                                          })
-                                          .FirstOrDefault() : null,
                                NextMatches = parameters.IncludeNextMatch ?
                                _dBContext.Set<TeamGameWeak>()
                                           .Where(b => b.IsActive &&
@@ -912,12 +901,12 @@ namespace CoreServices.Logic
                                           {
                                               Name = otherLang ? b.Home.TeamLang.Name : b.Home.Name,
                                               ShortName = otherLang ? b.Home.TeamLang.ShortName : b.Home.ShortName,
-                                              IsAwayTeam = false
+                                              IsAwayTeam = false,
                                           } : new TeamModel
                                           {
                                               Name = otherLang ? b.Away.TeamLang.Name : b.Away.Name,
                                               ShortName = otherLang ? b.Away.TeamLang.ShortName : b.Away.ShortName,
-                                              IsAwayTeam = true
+                                              IsAwayTeam = true,
                                           })
                                           .ToList() : null,
                            },

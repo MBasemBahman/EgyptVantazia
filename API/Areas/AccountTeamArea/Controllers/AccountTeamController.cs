@@ -138,7 +138,21 @@ namespace API.Areas.AccountTeamArea.Controllers
 
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
-            PagedList<AccountTeamModel> data = await _unitOfWork.AccountTeam.GetAccountTeamPaged(parameters, otherLang);
+            IQueryable<AccountTeamModel> accountTeams = _unitOfWork.AccountTeam.GetAccountTeams(parameters, otherLang);
+
+            if (parameters.GetMonthPlayer)
+            {
+                if (accountTeams.Skip(0).Take(1).Any(a => a.TotalPoints > 0))
+                {
+                    accountTeams = accountTeams.Skip(0).Take(1);
+                }
+                else
+                {
+                    accountTeams = accountTeams.Skip(0).Take(0);
+                }
+            }
+
+            PagedList<AccountTeamModel> data = await _unitOfWork.AccountTeam.GetAccountTeamPaged(accountTeams, parameters);
 
             if (parameters.Fk_GameWeak > 0)
             {

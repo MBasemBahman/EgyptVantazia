@@ -327,6 +327,7 @@ namespace CoreServices.Logic
             return next != null
                 ? GetGameWeaksForCalc(new GameWeakParameters
                 {
+                    _365_CompetitionsId = (int)_365CompetitionsEnum,
                     _365_GameWeakId = (next._365_GameWeakId_Parsed + 1).ToString()
                 }).FirstOrDefault()
                 : null;

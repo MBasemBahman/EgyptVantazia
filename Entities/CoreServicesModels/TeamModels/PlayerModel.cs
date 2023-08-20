@@ -154,8 +154,6 @@ namespace Entities.CoreServicesModels.TeamModels
 
         public IList<TeamModel> NextMatches { get; set; }
 
-        public TeamModel NextMatch { get; set; }
-
         public TeamPlayerType TeamPlayerType { get; set; }
 
         public TransferTypeEnum? LastTransferTypeEnum { get; set; }

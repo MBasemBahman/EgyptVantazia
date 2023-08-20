@@ -1,5 +1,6 @@
 ﻿using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.DBModels.AccountTeamModels;
+using Entities.DBModels.SubscriptionModels;
 using static Contracts.EnumData.DBModelsEnum;
 
 namespace Repository.DBModels.AccountTeamModels
@@ -30,6 +31,7 @@ namespace Repository.DBModels.AccountTeamModels
                            parameters.Fk_FavouriteTeam,
                            parameters.FromTotalPoints,
                            parameters.FromGlobalRanking,
+                           parameters.HaveGoldSubscription,
                            parameters.FromGoldSubscriptionRanking,
                            parameters.FromUnSubscriptionRanking,
                            parameters.DashboardSearch,
@@ -334,6 +336,7 @@ namespace Repository.DBModels.AccountTeamModels
             int Fk_FavouriteTeam,
             int? FromTotalPoints,
             int? FromGlobalRanking,
+            bool? HaveGoldSubscription,
             int? FromGoldSubscriptionRanking,
             int? FromUnSubscriptionRanking,
             string dashboardSearch,
@@ -355,6 +358,13 @@ namespace Repository.DBModels.AccountTeamModels
                                            (FromTotalPoints == null || a.TotalPoints >= FromTotalPoints) &&
 
                                            (FromGlobalRanking == null || a.GlobalRanking >= FromGlobalRanking) &&
+                                           (HaveGoldSubscription == null || (HaveGoldSubscription == true ? a.Account
+                                                                              .AccountSubscriptions
+                                                                              .Any(b => b.Fk_Subscription == (int)SubscriptionEnum.Gold &&
+                                                                                        b.IsActive) : !a.Account
+                                                                              .AccountSubscriptions
+                                                                              .Any(b => b.Fk_Subscription == (int)SubscriptionEnum.Gold &&
+                                                                                        b.IsActive))) &&
                                            (FromGoldSubscriptionRanking == null || a.GoldSubscriptionRanking >= FromGoldSubscriptionRanking) &&
                                            (FromUnSubscriptionRanking == null || a.UnSubscriptionRanking >= FromUnSubscriptionRanking) &&
 

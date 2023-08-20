@@ -47,6 +47,8 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public int? FromGoldSubscriptionRanking { get; set; }
         public int? FromUnSubscriptionRanking { get; set; }
 
+        public bool? HaveGoldSubscription { get; set; }
+
         public string DashboardSearch { get; set; }
 
         public int? FromCurrentGameWeakPoints { get; set; }

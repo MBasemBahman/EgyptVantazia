@@ -420,9 +420,14 @@ namespace API.Areas.AccountTeamArea.Controllers
                 throw new Exception("You already use card in this gameweek!");
             }
 
-            if (nextGameWeak._365_GameWeakId_Parsed >= 18)
-            {
-            }
+            //int gameWeakFrom = 1;
+            //int gameWeakTo = 17;
+
+            //if (nextGameWeak._365_GameWeakId_Parsed >= 18)
+            //{
+            //    gameWeakFrom = 18;
+            //    gameWeakTo = 34;
+            //}
 
             if (cardTypeEnum == CardTypeEnum.BenchBoost)
             {

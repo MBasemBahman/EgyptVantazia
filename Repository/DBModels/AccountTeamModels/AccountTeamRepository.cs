@@ -361,10 +361,12 @@ namespace Repository.DBModels.AccountTeamModels
                                            (HaveGoldSubscription == null || (HaveGoldSubscription == true ? a.Account
                                                                               .AccountSubscriptions
                                                                               .Any(b => b.Fk_Subscription == (int)SubscriptionEnum.Gold &&
-                                                                                        b.IsActive) : !a.Account
+                                                                                        b.IsActive &&
+                                                                                        (Fk_Season == 0 || b.Fk_Season == Fk_Season)) : !a.Account
                                                                               .AccountSubscriptions
                                                                               .Any(b => b.Fk_Subscription == (int)SubscriptionEnum.Gold &&
-                                                                                        b.IsActive))) &&
+                                                                                        b.IsActive &&
+                                                                                        (Fk_Season == 0 || b.Fk_Season == Fk_Season)))) &&
                                            (FromGoldSubscriptionRanking == null || a.GoldSubscriptionRanking >= FromGoldSubscriptionRanking) &&
                                            (FromUnSubscriptionRanking == null || a.UnSubscriptionRanking >= FromUnSubscriptionRanking) &&
 

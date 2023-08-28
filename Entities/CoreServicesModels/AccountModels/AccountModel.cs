@@ -108,9 +108,11 @@ namespace Entities.CoreServicesModels.AccountModels
 
         public AccountTeamModel AccountTeam { get; set; }
 
+        public bool RemoveAds { get; set; }
+
         [DisplayName(nameof(ShowAds))]
-        public bool ShowAds { get; set; }
-        
+        public bool ShowAds => !RemoveAds;
+
         [DisplayName(nameof(AccountSubscriptionsCount))]
         public int AccountSubscriptionsCount { get; set; }
         

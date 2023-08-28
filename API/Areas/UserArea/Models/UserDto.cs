@@ -44,5 +44,7 @@ namespace API.Areas.UserArea.Models
         public int Fk_Season { get; set; }
 
         public SeasonModel Season { get; set; }
+
+        public bool ShowAds { get; set; }
     }
 }

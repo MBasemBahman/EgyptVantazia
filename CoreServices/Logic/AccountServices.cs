@@ -53,10 +53,11 @@ namespace CoreServices.Logic
                                       ImageUrl = a.Season.StorageUrl + a.Season.ImageUrl,
                                   },
                                   PhoneNumberTwo = a.PhoneNumberTwo,
-                                  ShowAds = a.ShowAds ||
-                                            a.AccountSubscriptions.Any(b => b.Fk_Subscription == (int)SubscriptionEnum.RemoveAds &&
-                                                                            b.IsActive &&
-                                                                            b.Fk_Season == a.Fk_Season),
+                                  RemoveAds = a.ShowAds == false ||
+                                              a.AccountSubscriptions.Any(b => ( b.Fk_Subscription == (int)SubscriptionEnum.RemoveAds ||
+                                                                                b.Fk_Subscription == (int)SubscriptionEnum.Gold) &&
+                                                                                b.IsActive &&
+                                                                                b.Fk_Season == a.Fk_Season),
                                   Fk_AccountTeam = a.AccountTeams
                                                     .Where(b => b.Fk_Season == a.Fk_Season)
                                                     .Select(b => b.Id)

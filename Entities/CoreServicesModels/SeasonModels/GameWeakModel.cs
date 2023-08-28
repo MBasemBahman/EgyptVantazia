@@ -94,6 +94,9 @@ namespace Entities.CoreServicesModels.SeasonModels
 
         public int Fk_Season { get; set; }
 
+        [DisplayName(nameof(_365_CompetitionsId))]
+        public string _365_CompetitionsId { get; set; }
+
         public DateTime? Deadline { get; set; }
 
         [DisplayName(nameof(_365_GameWeakId))]

@@ -1,5 +1,6 @@
 ﻿using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.SeasonModels;
+using Entities.DBModels.SeasonModels;
 using FantasyLogic;
 using FantasyLogicMicroservices.Controllers;
 using Hangfire;
@@ -32,6 +33,16 @@ namespace FantasyLogicMicroservices.Areas.AccountTeamArea.Controllers
             [FromQuery] List<int> fk_Players,
             [FromQuery] bool inDebug)
         {
+            if (fk_GameWeak > 0 && _365CompetitionsEnum == 0)
+            {
+                GameWeakModelForCalc gameWeek = _unitOfWork.Season.GetGameWeaksForCalc(new GameWeakParameters
+                {
+                    Id = fk_GameWeak,
+                }).FirstOrDefault();
+
+                _365CompetitionsEnum = (_365CompetitionsEnum)Enum.Parse(typeof(_365CompetitionsEnum), gameWeek._365_CompetitionsId);
+            }
+
             if (inDebug)
             {
                 _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(_365CompetitionsEnum, fk_GameWeak, fk_AccountTeam, fk_Players, null, inDebug);
@@ -55,6 +66,11 @@ namespace FantasyLogicMicroservices.Areas.AccountTeamArea.Controllers
             {
                 Id = fk_GameWeak,
             }).FirstOrDefault();
+
+            if (_365CompetitionsEnum == 0)
+            {
+                _365CompetitionsEnum = (_365CompetitionsEnum)Enum.Parse(typeof(_365CompetitionsEnum), gameWeek._365_CompetitionsId);
+            }
 
             if (inDebug)
             {
@@ -92,6 +108,16 @@ namespace FantasyLogicMicroservices.Areas.AccountTeamArea.Controllers
             [FromQuery] int? fk_GameWeak,
             [FromQuery] int id)
         {
+            if (fk_GameWeak > 0 && _365CompetitionsEnum == 0)
+            {
+                GameWeakModelForCalc gameWeek = _unitOfWork.Season.GetGameWeaksForCalc(new GameWeakParameters
+                {
+                    Id = fk_GameWeak.Value,
+                }).FirstOrDefault();
+
+                _365CompetitionsEnum = (_365CompetitionsEnum)Enum.Parse(typeof(_365CompetitionsEnum), gameWeek._365_CompetitionsId);
+            }
+
             if (indebug)
             {
                 _fantasyUnitOfWork.PrivateLeagueClac.RunPrivateLeaguesRanking(_365CompetitionsEnum, fk_GameWeak, id, indebug);

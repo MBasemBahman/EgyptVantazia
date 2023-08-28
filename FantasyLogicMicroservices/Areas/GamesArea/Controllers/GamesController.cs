@@ -25,7 +25,16 @@ namespace FantasyLogicMicroservices.Areas.GamesArea.Controllers
         [Route(nameof(UpdateGames))]
         public IActionResult UpdateGames([FromQuery] _365CompetitionsEnum _365CompetitionsEnum)
         {
-            _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames(_365CompetitionsEnum));
+            if (_365CompetitionsEnum == 0)
+            {
+                _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames(_365CompetitionsEnum.Egypt));
+                _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames(_365CompetitionsEnum.KSA));
+                _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames(_365CompetitionsEnum.EPL));
+            }
+            else
+            {
+                _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames(_365CompetitionsEnum));
+            }
 
             return Ok();
         }

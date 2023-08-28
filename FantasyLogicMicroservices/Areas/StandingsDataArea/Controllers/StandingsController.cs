@@ -25,7 +25,16 @@ namespace FantasyLogicMicroservices.Areas.StandingsDataArea.Controllers
         [Route(nameof(UpdateStandings))]
         public IActionResult UpdateStandings([FromQuery] _365CompetitionsEnum _365CompetitionsEnum)
         {
-            _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings(_365CompetitionsEnum));
+            if (_365CompetitionsEnum == 0)
+            {
+                _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings(_365CompetitionsEnum.Egypt));
+                _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings(_365CompetitionsEnum.KSA));
+                _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings(_365CompetitionsEnum.EPL));
+            }
+            else
+            {
+                _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings(_365CompetitionsEnum));
+            }
 
             return Ok();
         }

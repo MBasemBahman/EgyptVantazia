@@ -32,6 +32,19 @@ namespace FantasyLogicMicroservices.Areas.GamesArea.Controllers
             [FromQuery] bool stopAll,
             [FromQuery] bool statisticsOnly)
         {
+            if (_365CompetitionsEnum == 0 && parameters._365_MatchId.IsExisting())
+            {
+                string _365Competitions = _unitOfWork.Season.GetTeamGameWeaks(new TeamGameWeakParameters
+                {
+                    _365_MatchId = parameters._365_MatchId,
+                }, otherLang: false).Select(a => a.GameWeak.Season._365_CompetitionsId).FirstOrDefault();
+
+                if (_365Competitions.IsExisting())
+                {
+                    _365CompetitionsEnum = (_365CompetitionsEnum)Enum.Parse(typeof(_365CompetitionsEnum), _365Competitions);
+                }
+            }
+
             _fantasyUnitOfWork.GameResultDataHelper.RunUpdateGameResult(_365CompetitionsEnum, parameters, runBonus, inDebug, runAll, stopAll, statisticsOnly);
 
             return Ok();

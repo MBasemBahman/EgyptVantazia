@@ -246,6 +246,7 @@ namespace CoreServices.Logic
                            Fk_Season = a.Fk_Season,
                            _365_GameWeakIdValue = a._365_GameWeakIdValue,
                            Deadline = a.Deadline,
+                           _365_CompetitionsId = a.Season._365_CompetitionsId
                        });
         }
 
@@ -485,7 +486,8 @@ namespace CoreServices.Logic
                                Fk_Season = a.GameWeak.Fk_Season,
                                Season = new SeasonModel
                                {
-                                   Name = otherLang ? a.GameWeak.Season.SeasonLang.Name : a.GameWeak.Season.Name
+                                   Name = otherLang ? a.GameWeak.Season.SeasonLang.Name : a.GameWeak.Season.Name,
+                                   _365_CompetitionsId = a.GameWeak.Season._365_CompetitionsId
                                },
                            },
                            HomeTeamPlayers = a.PlayerGameWeaks

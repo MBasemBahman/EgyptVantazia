@@ -7,6 +7,8 @@ using Entities.CoreServicesModels.SubscriptionModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.CoreServicesModels.UserModels;
 using Entities.DBModels.AccountModels;
+using Entities.DBModels.SubscriptionModels;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace CoreServices.Logic
 {
@@ -51,7 +53,10 @@ namespace CoreServices.Logic
                                       ImageUrl = a.Season.StorageUrl + a.Season.ImageUrl,
                                   },
                                   PhoneNumberTwo = a.PhoneNumberTwo,
-                                  ShowAds = a.ShowAds,
+                                  ShowAds = a.ShowAds ||
+                                            a.AccountSubscriptions.Any(b => b.Fk_Subscription == (int)SubscriptionEnum.RemoveAds &&
+                                                                            b.IsActive &&
+                                                                            b.Fk_Season == a.Fk_Season),
                                   Fk_AccountTeam = a.AccountTeams
                                                     .Where(b => b.Fk_Season == a.Fk_Season)
                                                     .Select(b => b.Id)
@@ -217,14 +222,14 @@ namespace CoreServices.Logic
             _repository.User.Delete(user);
 
         }
-        
+
         public async Task DeleteAccount(List<int> ids)
         {
             await _repository.User.FindAll(new UserParameters
             {
                 Fk_Accounts = ids
             }, trackChanges: false).ExecuteDeleteAsync();
-            
+
             await _repository.Account.FindAll(new AccountParameters
             {
                 Fk_Accounts = ids

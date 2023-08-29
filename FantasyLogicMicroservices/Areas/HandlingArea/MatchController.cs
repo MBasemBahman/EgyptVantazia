@@ -1,6 +1,8 @@
 ﻿using Entities.CoreServicesModels.SeasonModels;
+using Entities.DBModels.SeasonModels;
 using FantasyLogic;
 using FantasyLogicMicroservices.Controllers;
+using System.Diagnostics;
 using static Contracts.EnumData.DBModelsEnum;
 
 namespace FantasyLogicMicroservices.Areas.HandlingArea
@@ -87,6 +89,51 @@ namespace FantasyLogicMicroservices.Areas.HandlingArea
 
                     _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(_365CompetitionsEnum, fk_GameWeak, 0, null, fk_Teams, false);
                 }
+
+            }
+
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route(nameof(ResetAccountTeam))]
+        public async Task<IActionResult> ResetAccountTeam(
+            [FromQuery] int fk_GameWeak,
+            [FromQuery] int fk_AccounTeam,
+            [FromQuery] bool resetTeam,
+            [FromQuery] bool inDebug)
+        {
+            var teams = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new Entities.CoreServicesModels.AccountTeamModels.AccountTeamGameWeakParameters
+            {
+                FreeHit = true
+            }, otherLang: false).Select(a => new
+            {
+                a.Fk_AccountTeam,
+                a.Fk_GameWeak,
+                a.Id,
+            }).ToList();
+
+            foreach (var team in teams)
+            {
+                fk_GameWeak = team.Fk_GameWeak;
+                fk_AccounTeam = team.Fk_AccountTeam;
+
+                GameWeak gameWeak = await _unitOfWork.Season.FindGameWeakbyId(fk_GameWeak, trackChanges: false);
+                GameWeak nextGameWeak = null;
+
+                do
+                {
+                    gameWeak = await _unitOfWork.Season.FindGameWeakbyId(fk_GameWeak, trackChanges: false);
+                    nextGameWeak = await _unitOfWork.Season.FindGameWeakby365Id((gameWeak._365_GameWeakId.ParseToInt() + 1).ToString(), gameWeak.Fk_Season, trackChanges: false);
+
+                    if (gameWeak.IsNext == false)
+                    {
+                        _fantasyUnitOfWork.GamesDataHelper.TransferAccountTeamPlayers(nextGameWeak.Id, gameWeak.Id, gameWeak._365_GameWeakId.ParseToInt(), nextGameWeak.Fk_Season, resetTeam, fk_AccounTeam, inDebug);
+                    }
+
+                    fk_GameWeak++;
+
+                } while (gameWeak.IsNext == false);
 
             }
 

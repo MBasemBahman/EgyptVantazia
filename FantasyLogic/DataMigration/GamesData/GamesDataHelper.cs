@@ -489,10 +489,16 @@ namespace FantasyLogic.DataMigration.GamesData
                                 freeHit = false;
                                 prev_365_GameWeakId--;
 
-                                fk_PrevGameWeak = _unitOfWork.Season.GetGameWeaks(new GameWeakParameters
+                                if (prev_365_GameWeakId > 0)
                                 {
-                                    _365_GameWeakId = prev_365_GameWeakId.ToString()
-                                }).Select(a => a.Id).FirstOrDefault();
+                                    GameWeak prevGameWeak = await _unitOfWork.Season.FindGameWeakby365Id(prev_365_GameWeakId.ToString(), fk_Season, trackChanges: false);
+
+                                    fk_PrevGameWeak = prevGameWeak.Id;
+                                }
+                                else
+                                {
+                                    fk_PrevGameWeak = 0;
+                                }
                             }
                             else
                             {

@@ -244,7 +244,6 @@ namespace CoreServices.Logic
                            Id = a.Id,
                            _365_GameWeakId = a._365_GameWeakId,
                            Fk_Season = a.Fk_Season,
-                           _365_GameWeakIdValue = a._365_GameWeakIdValue,
                            Deadline = a.Deadline,
                            _365_CompetitionsId = a.Season._365_CompetitionsId
                        });

@@ -103,7 +103,7 @@ namespace Entities.CoreServicesModels.SeasonModels
         public string _365_GameWeakId { get; set; }
 
         [DisplayName(nameof(_365_GameWeakIdValue))]
-        public int _365_GameWeakIdValue { get; set; }
+        public int _365_GameWeakIdValue => _365_GameWeakId_Parsed ?? 0;
 
         [DisplayName(nameof(_365_GameWeakId_Parsed))]
         public int? _365_GameWeakId_Parsed => string.IsNullOrWhiteSpace(_365_GameWeakId) ? null : int.Parse(_365_GameWeakId);

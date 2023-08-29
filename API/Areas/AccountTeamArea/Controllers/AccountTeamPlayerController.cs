@@ -53,7 +53,8 @@ namespace API.Areas.AccountTeamArea.Controllers
 
                 nextGameWeak = _unitOfWork.Season.GetGameWeaksForCalc(new GameWeakParameters
                 {
-                    _365_GameWeakId = (currentGamWeak._365_GameWeakIdValue + 1).ToString()
+                    _365_GameWeakId = (currentGamWeak._365_GameWeakId_Parsed + 1).ToString(),
+                    _365_CompetitionsId = (int)_365CompetitionsEnum
                 }).FirstOrDefault();
             }
             else

@@ -1494,4 +1494,10 @@
   <data name="SellingCount" xml:space="preserve">
     <value>عدد البيع</value>
   </data>
+  <data name="DateTo" xml:space="preserve">
+    <value>الى تاريخ</value>
+  </data>
+  <data name="Notes" xml:space="preserve">
+    <value>ملاحظات</value>
+  </data>
 </root>

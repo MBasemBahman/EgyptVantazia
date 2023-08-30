@@ -257,7 +257,12 @@ namespace CoreServices.Logic
                                   },
                                   Account = new AccountModel
                                   {
-                                      Name = a.Account.FullName
+                                      Name = a.Account.FullName,
+                                      PhoneNumber = a.Account.User.PhoneNumber,
+                                      ImageUrl = a.Account.StorageUrl + a.Account.ImageUrl,
+                                      FullName = a.Account.FullName,
+                                      Fk_Country = a.Account.Fk_Country,
+                                      Fk_Nationality = a.Account.Fk_Nationality,
                                   },
                                   IsAction = a.IsAction,
                                   Fk_Account = a.Fk_Account,

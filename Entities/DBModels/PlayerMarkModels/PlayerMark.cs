@@ -26,6 +26,13 @@ namespace Entities.DBModels.PlayerMarkModels
 
         public DateTime? DateTo { get; set; }
 
+        [DisplayName(nameof(Percent))]
+        public int Percent { get; set; }
+
+        [DisplayName(nameof(Notes))]
+        [DataType(DataType.MultilineText)]
+        public string Notes { get; set; }
+
         [DisplayName(nameof(PlayerMarkTeamGameWeaks))]
         public List<PlayerMarkTeamGameWeak> PlayerMarkTeamGameWeaks { get; set; }
 

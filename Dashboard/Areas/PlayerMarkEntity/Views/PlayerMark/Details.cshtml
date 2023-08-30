@@ -24,6 +24,9 @@
                     <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.Mark):</dt>
                     <dd class="col-sm-8 mb-1">@Model.Mark.Name</dd>
 
+                    <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.Percent):</dt>
+                    <dd class="col-sm-8 mb-1">@Model.Percent</dd>
+
                 </dl>
             </div>
             <div class="col-xl-5 col-12">
@@ -39,30 +42,45 @@
             </div>
     
         </div>
-    
+            <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start">
+            <span class="badge bg-success">@Html.DisplayNameFor(model => model.Notes) </span>
+        </div>
+        <br />
+        @if (!string.IsNullOrEmpty(Model.Notes))
+        {
+            @Html.Raw(Model.Notes)
+        }
+        else
+        {
+            <p>@Localizer.Get("Not Found")</p>
+        }
+
+    </div>
         <hr />
         <div class="row">
             <div class="col-xl-7 col-12">
                 <dl class="row mb-0">
-    
+
                     <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.CreatedBy):</dt>
                     <dd class="col-sm-8 mb-1">@Model.CreatedBy</dd>
-    
+
                     <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.LastModifiedBy):</dt>
                     <dd class="col-sm-8 mb-1">@Model.LastModifiedBy</dd>
-    
+
                 </dl>
             </div>
             <div class="col-xl-5 col-12">
                 <dl class="row mb-0">
                     <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.CreatedAt):</dt>
                     <dd class="col-sm-8 mb-1">@Model.CreatedAt</dd>
-    
+
                     <dt class="col-sm-4 fw-bolder mb-1">@Html.DisplayNameFor(model => model.LastModifiedAt):</dt>
                     <dd class="col-sm-8 mb-1">@Model.LastModifiedAt</dd>
                 </dl>
             </div>
         </div>
     </div>
+      
 </div>
 

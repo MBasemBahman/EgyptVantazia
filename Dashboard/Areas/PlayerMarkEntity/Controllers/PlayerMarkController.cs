@@ -58,12 +58,17 @@ namespace Dashboard.Areas.PlayerMarkEntity.Controllers
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
+            string searchBy = dtParameters.Search?.Value.ToLower();
+
+
             PlayerMarkParameters parameters = new()
             {
                 SearchColumns = ""
             };
 
             _ = _mapper.Map(dtParameters, parameters);
+
+            parameters.SearchBy = searchBy;
 
             PagedList<PlayerMarkModel> data = await _unitOfWork.PlayerMark.GetPlayerMarkPaged(parameters, otherLang);
 

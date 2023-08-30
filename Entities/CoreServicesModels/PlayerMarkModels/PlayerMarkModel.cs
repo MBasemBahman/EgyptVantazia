@@ -28,6 +28,8 @@ namespace Entities.CoreServicesModels.PlayerMarkModels
 
         [DisplayName(nameof(Player))]
         public List<int> Fk_Players { get; set; }
+
+        public string SearchBy { get; set; }
     }
 
     public class PlayerMarkModel : AuditEntity
@@ -54,7 +56,12 @@ namespace Entities.CoreServicesModels.PlayerMarkModels
 
         [DisplayName(nameof(DateTo))]
         public DateTime? DateTo { get; set; }
+        [DisplayName(nameof(Percent))]
+        public int Percent { get; set; }
 
+        [DisplayName(nameof(Notes))]
+        [DataType(DataType.MultilineText)]
+        public string Notes { get; set; }
         public bool IsValid => DateTo >= DateTime.UtcNow;
     }
 
@@ -77,7 +84,15 @@ namespace Entities.CoreServicesModels.PlayerMarkModels
         [DisplayName(nameof(Used))]
         public int? Used { get; set; }
 
+        [DisplayName(nameof(DateTo))]
         public DateTime? DateTo { get; set; }
+
+        [DisplayName(nameof(Percent))]
+        public int Percent { get; set; }
+
+        [DisplayName(nameof(Notes))]
+        [DataType(DataType.MultilineText)]
+        public string Notes { get; set; }
 
         [DisplayName(nameof(Fk_TeamGameWeaks))]
         public List<int> Fk_TeamGameWeaks { get; set; }

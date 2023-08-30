@@ -18,7 +18,8 @@ namespace Repository.DBModels.PlayerMarkModels
                            parameters.Fk_Mark,
                            parameters.IsValid,
                            parameters.Fk_Teams,
-                           parameters.Fk_Players);
+                           parameters.Fk_Players,
+                           parameters.SearchBy);
         }
 
         public async Task<PlayerMark> FindById(int id, bool trackChanges)
@@ -43,7 +44,8 @@ namespace Repository.DBModels.PlayerMarkModels
             int fk_Mark,
             bool? isValid,
             List<int> fk_Teams,
-            List<int> fk_Players)
+            List<int> fk_Players,
+            string searchBy)
         {
             return PlayerMarks.Where(a => (id == 0 || a.Id == id) &&
                                     (fk_Player == 0 || a.Fk_Player == fk_Player) &&
@@ -51,7 +53,10 @@ namespace Repository.DBModels.PlayerMarkModels
                                     (fk_Season == 0 || a.Player.Team.Fk_Season == fk_Season) &&
                                     (fk_Mark == 0 || a.Fk_Mark == fk_Mark) &&
                                     (fk_Teams == null || !fk_Teams.Any() || fk_Teams.Contains(a.Player.Fk_Team)) &&
-                                    (fk_Players == null || !fk_Players.Any() || fk_Players.Contains(a.Fk_Player)));
+                                    (fk_Players == null || !fk_Players.Any() || fk_Players.Contains(a.Fk_Player))&&
+                                    (string.IsNullOrEmpty(searchBy) ||
+                                    a.Player.Name.ToLower().Contains(searchBy.ToLower()) ||
+                                    a.Mark.Name.ToLower().Contains(searchBy.ToLower())));
         }
 
     }

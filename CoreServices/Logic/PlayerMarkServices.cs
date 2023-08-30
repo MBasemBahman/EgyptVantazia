@@ -101,6 +101,8 @@ namespace CoreServices.Logic
                            LastModifiedBy = a.LastModifiedBy,
                            Fk_Player = a.Fk_Player,
                            DateTo = a.DateTo,
+                           Percent = a.Percent,
+                           Notes = a.Notes,
                            Player = new PlayerModel
                            {
                                Id = a.Fk_Player,

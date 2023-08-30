@@ -71,8 +71,25 @@
                                                 <span asp-validation-for="DateTo" class="text-danger"></span>
                                             </div>
                                         </div>
-                                        
-                                        
+
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Percent" class="form-label"></label>
+                                                <input asp-for="Percent" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Percent"))" />
+                                                <span asp-validation-for="Percent" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Notes" class="form-label"></label>
+                                                <textarea rows="3" asp-for="Notes" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Notes"))" ></textarea>
+                                                <span asp-validation-for="Notes" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+
                                         @* <div class="col-md-6 col-12"> *@
                                         @*     <div class="mb-1"> *@
                                         @*         <label asp-for="Count" class="form-label"></label> *@

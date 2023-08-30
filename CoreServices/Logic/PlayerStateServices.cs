@@ -315,6 +315,8 @@ namespace CoreServices.Logic
                                               {
                                                   Count = b.Count,
                                                   Used = b.Used,
+                                                  Percent = b.Percent,
+                                                  Notes = b.Notes,
                                                   Mark = new MarkModel
                                                   {
                                                       ImageUrl = b.Mark.StorageUrl + b.Mark.ImageUrl,
@@ -384,6 +386,8 @@ namespace CoreServices.Logic
                                               {
                                                   Count = b.Count,
                                                   Used = b.Used,
+                                                  Percent = b.Percent,
+                                                  Notes = b.Notes,
                                                   Mark = new MarkModel
                                                   {
                                                       ImageUrl = b.Mark.StorageUrl + b.Mark.ImageUrl,

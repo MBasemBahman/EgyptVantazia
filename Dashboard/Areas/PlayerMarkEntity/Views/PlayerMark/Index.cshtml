@@ -89,9 +89,11 @@
                                                 </th>
                                                 <th>@Html.DisplayNameFor(model => row.Player)</th>
                                                 <th>@Html.DisplayNameFor(model => row.Mark)</th>
+                                                <th>@Html.DisplayNameFor(model => row.DateTo)</th>
+                                                <th>@Html.DisplayNameFor(model => row.Percent)</th>
+                                                <th>@Html.DisplayNameFor(model => row.Notes)</th>
                                                 @* <th>@Html.DisplayNameFor(model => row.Used)</th> *@
                                                 @* <th>@Html.DisplayNameFor(model => row.Count)</th> *@
-                                                <th>@Html.DisplayNameFor(model => row.DateTo)</th>
                                                 <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
 
                                                 <th>
@@ -144,14 +146,14 @@ else
                                                asp-route-returnPage="@((int)PlayerMarkReturnPage.PlayerProfile)">
                                             </a>
                                         }
-                                        
+
                                         @if (accessLevel.EditAccess)
                                         {
                                             <input type="hidden" id="routeData" value="?returnPage=@((int)PlayerMarkReturnPage.PlayerProfile)" />
                                             <a id="edit" asp-action="CreateOrEdit">
                                             </a>
                                         }
-                                        
+
                                         @if (accessLevel.DeleteAccess)
                                         {
                                             <a id="delete" asp-action="Delete">
@@ -161,9 +163,11 @@ else
                                     </th>
                                     <th>@Html.DisplayNameFor(model => row.Player)</th>
                                     <th>@Html.DisplayNameFor(model => row.Mark)</th>
+                                    <th>@Html.DisplayNameFor(model => row.DateTo)</th>
+                                    <th>@Html.DisplayNameFor(model => row.Percent)</th>
+                                    <th>@Html.DisplayNameFor(model => row.Notes)</th>
                                     @* <th>@Html.DisplayNameFor(model => row.Used)</th> *@
                                     @* <th>@Html.DisplayNameFor(model => row.Count)</th> *@
-                                    <th>@Html.DisplayNameFor(model => row.DateTo)</th>
                                     <th>@Html.DisplayNameFor(model => row.CreatedAt)</th>
 
                                     <th>
@@ -238,6 +242,8 @@ else
                             // { data: "used" },
                             // { data: "count" },
                             { data: "dateTo" },
+                            { data: "percent" },
+                            { data: "notes" },
                             { data: "createdAt" },
                             { data: "id" },
                         ]

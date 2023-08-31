@@ -91,6 +91,12 @@
                                                         <a id="edit" asp-action="CreateOrEdit">
                                                         </a>
                                                     }
+                                                    
+                                                    @if (accessLevel.DeleteAccess)
+                                                    {
+                                                        <a id="delete" asp-action="Delete">
+                                                        </a>
+                                                    }
 
                                                 </th>
                                                 <th>@Html.DisplayNameFor(model => row.Account)</th>
@@ -160,6 +166,12 @@ else
                                         @if (Model.Fk_Account != 0 && accessLevel.EditAccess)
                                         {
                                             <a id="edit" asp-action="CreateOrEdit">
+                                            </a>
+                                        }
+                                        
+                                        @if (Model.Fk_Account != 0 && accessLevel.DeleteAccess)
+                                        {
+                                            <a id="delete" asp-action="Delete">
                                             </a>
                                         }
 

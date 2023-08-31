@@ -238,6 +238,21 @@ namespace Dashboard.Areas.AccountTeamEntity.Controllers
             return View(model);
         }
 
+        [Authorize(DashboardViewEnum.AccountTeam, AccessLevelEnum.Delete)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            AccountTeam data = await _unitOfWork.AccountTeam.FindAccountTeambyId(id, trackChanges: false);
+
+            return View(data != null);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [Authorize(DashboardViewEnum.AccountTeam, AccessLevelEnum.Delete)]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            return RedirectToAction(nameof(Index));
+        }
+        
         // helper methods
         private void SetViewData(bool ProfileLayOut = false, int fk_Season = 0)
         {

@@ -248,8 +248,10 @@ namespace Dashboard.Areas.AccountTeamEntity.Controllers
 
         [HttpPost, ActionName("Delete")]
         [Authorize(DashboardViewEnum.AccountTeam, AccessLevelEnum.Delete)]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            await _unitOfWork.AccountTeam.DeleteAccountTeam(id);
+            await _unitOfWork.Save();
 
             return RedirectToAction(nameof(Index));
         }

@@ -248,11 +248,12 @@ namespace Dashboard.Areas.AccountTeamEntity.Controllers
 
         [HttpPost, ActionName("Delete")]
         [Authorize(DashboardViewEnum.AccountTeam, AccessLevelEnum.Delete)]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
+
             return RedirectToAction(nameof(Index));
         }
-        
+
         // helper methods
         private void SetViewData(bool ProfileLayOut = false, int fk_Season = 0)
         {

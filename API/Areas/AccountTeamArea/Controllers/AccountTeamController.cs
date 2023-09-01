@@ -122,6 +122,9 @@ namespace API.Areas.AccountTeamArea.Controllers
 
             parameters.Fk_Season = auth.Fk_Season;
             _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
+            parameters._365_CompetitionsId = (int)_365CompetitionsEnum;
+
+            var ignoreGetMonthPlayer = false;
 
             if (parameters.GetMonthPlayer)
             {
@@ -131,6 +134,38 @@ namespace API.Areas.AccountTeamArea.Controllers
                 {
                     parameters.From_365_GameWeakIdValue = fromTo.From_365_GameWeakIdValue;
                     parameters.To_365_GameWeakIdValue = fromTo.To_365_GameWeakIdValue;
+                }
+
+                GameWeakModelForCalc currentGameWeak = _unitOfWork.Season.GetCurrentGameWeak(_365CompetitionsEnum);
+                if (currentGameWeak == null ||
+                    currentGameWeak._365_GameWeakIdValue <= parameters.To_365_GameWeakIdValue)
+                {
+                    bool ignore = true;
+
+                    if (currentGameWeak._365_GameWeakIdValue == parameters.To_365_GameWeakIdValue)
+                    {
+                        ignore = false;
+
+                        var lastMatchEnded = _unitOfWork.Season.GetTeamGameWeaks(new TeamGameWeakParameters
+                        {
+                            Fk_GameWeak = currentGameWeak.Id
+                        }).OrderByDescending(a => a.StartTime)
+                          .Select(a => a.IsEnded)
+                          .FirstOrDefault();
+
+                        if (lastMatchEnded == false)
+                        {
+                            ignore = true;
+                        }
+                    }
+
+                    if (ignore)
+                    {
+                        parameters.From_365_GameWeakIdValue = 0;
+                        parameters.To_365_GameWeakIdValue = 0;
+                    }
+
+                    ignoreGetMonthPlayer = ignore;
                 }
             }
 
@@ -145,30 +180,25 @@ namespace API.Areas.AccountTeamArea.Controllers
 
             if (parameters.GetMonthPlayer)
             {
-                if (accountTeams.Skip(0).Take(1).Any(a => a.TotalPoints > 0))
-                {
-                    accountTeams = accountTeams.Skip(0).Take(1);
-                }
-                else
-                {
-                    accountTeams = accountTeams.Skip(0).Take(0);
-                }
+                accountTeams = accountTeams.Where(a => a.TotalPoints > 0).Any() && ignoreGetMonthPlayer == false ? accountTeams.Skip(0).Take(1) : accountTeams.Skip(0).Take(0);
             }
 
             PagedList<AccountTeamModel> data = await _unitOfWork.AccountTeam.GetAccountTeamPaged(accountTeams, parameters);
 
             if (parameters.Fk_GameWeak > 0)
             {
-                var gameWeak = _unitOfWork.Season.GetGameWeakbyId(parameters.Fk_GameWeak, otherLang);
+                GameWeakModel gameWeak = _unitOfWork.Season.GetGameWeakbyId(parameters.Fk_GameWeak, otherLang);
 
-                var prevGameWeak = _unitOfWork.Season.GetGameWeaks(new GameWeakParameters
+                GameWeakModel prevGameWeak = _unitOfWork.Season.GetGameWeaks(new GameWeakParameters
                 {
                     _365_GameWeakId = (gameWeak._365_GameWeakId_Parsed.Value - 1).ToString(),
+                    _365_CompetitionsId = (int)_365CompetitionsEnum
                 }, otherLang).FirstOrDefault();
 
-                var nextGameWeak = _unitOfWork.Season.GetGameWeaks(new GameWeakParameters
+                GameWeakModel nextGameWeak = _unitOfWork.Season.GetGameWeaks(new GameWeakParameters
                 {
                     _365_GameWeakId = (gameWeak._365_GameWeakId_Parsed.Value + 1).ToString(),
+                    _365_CompetitionsId = (int)_365CompetitionsEnum
                 }, otherLang).FirstOrDefault();
 
                 data.ForEach(accountTeam =>

@@ -331,7 +331,11 @@ namespace CoreServices.Logic
                                    Name = otherLang ? a.GameWeak.Season.SeasonLang.Name : a.GameWeak.Season.Name
                                }
                            },
-                           NextGameWeak = a.GameWeak.IsCurrent == false && parameters.IncludeNextAndPrevGameWeek && a.AccountTeam.AccountTeamGameWeaks.Any(b => b.GameWeak._365_GameWeakId == (a.GameWeak._365_GameWeakIdValue + 1).ToString()) ?
+                           NextGameWeak = a.GameWeak.IsCurrent == false && 
+                                          parameters.IncludeNextAndPrevGameWeek && 
+                                          a.AccountTeam
+                                           .AccountTeamGameWeaks
+                                           .Any(b => b.GameWeak._365_GameWeakId == (a.GameWeak._365_GameWeakIdValue + 1).ToString()) ?
                            a.AccountTeam
                             .AccountTeamGameWeaks
                             .Where(b => b.GameWeak._365_GameWeakId == (a.GameWeak._365_GameWeakIdValue + 1).ToString())
@@ -342,7 +346,10 @@ namespace CoreServices.Logic
                                 _365_GameWeakId = b.GameWeak._365_GameWeakId,
                                 Fk_Season = b.GameWeak.Fk_Season
                             }).FirstOrDefault() : null,
-                           PrevGameWeak = parameters.IncludeNextAndPrevGameWeek && a.AccountTeam.AccountTeamGameWeaks.Any(b => b.GameWeak._365_GameWeakId == (a.GameWeak._365_GameWeakIdValue - 1).ToString()) ?
+                           PrevGameWeak = parameters.IncludeNextAndPrevGameWeek && 
+                                          a.AccountTeam
+                                           .AccountTeamGameWeaks
+                                           .Any(b => b.GameWeak._365_GameWeakId == (a.GameWeak._365_GameWeakIdValue - 1).ToString()) ?
                            a.AccountTeam
                             .AccountTeamGameWeaks
                             .Where(b => b.GameWeak._365_GameWeakId == (a.GameWeak._365_GameWeakIdValue - 1).ToString())

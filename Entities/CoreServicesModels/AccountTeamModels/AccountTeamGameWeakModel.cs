@@ -54,6 +54,8 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public List<int> Fk_Teams { get; set; }
 
         public bool IncludeNextAndPrevGameWeek { get; set; }
+
+        public bool? UseCards { get; set; }
     }
 
     public class AccountTeamGameWeakModel : AuditEntity

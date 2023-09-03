@@ -33,6 +33,9 @@ namespace Dashboard.Areas.AccountTeamGameWeakEntity.Models
         public string AccountUserName { get; set; }
 
         public string DashboardSearch { get; set; }
+
+        [DisplayName("UseCards")]
+        public bool? UseCards { get; set; }
     }
     public class AccountTeamGameWeakDto : AccountTeamGameWeakModel
     {

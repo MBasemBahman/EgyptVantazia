@@ -1449,4 +1449,7 @@
   <data name="Notes" xml:space="preserve">
     <value>Notes</value>
   </data>
+  <data name="UseCards" xml:space="preserve">
+    <value>Use Cards</value>
+  </data>
 </root>

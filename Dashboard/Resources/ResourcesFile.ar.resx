@@ -1500,4 +1500,7 @@
   <data name="Notes" xml:space="preserve">
     <value>ملاحظات</value>
   </data>
+  <data name="UseCards" xml:space="preserve">
+    <value>يستخدم خواص</value>
+  </data>
 </root>

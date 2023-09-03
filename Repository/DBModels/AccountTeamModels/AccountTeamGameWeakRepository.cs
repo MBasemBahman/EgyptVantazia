@@ -36,7 +36,8 @@ namespace Repository.DBModels.AccountTeamModels
                            parameters.DashboardSearch,
                            parameters.Fk_Players,
                            parameters.Fk_Teams,
-                           parameters.Fk_PrivateLeague);
+                           parameters.Fk_PrivateLeague,
+                           parameters.UseCards);
 
         }
 
@@ -73,7 +74,7 @@ namespace Repository.DBModels.AccountTeamModels
         {
             DateTime lasUpdate = DateTime.UtcNow.AddDays(-1).Date;
 
-            var accountTeamModel = FindByCondition(a => a.Fk_AccountTeam == fk_AccountTeam && 
+            var accountTeamModel = FindByCondition(a => a.Fk_AccountTeam == fk_AccountTeam &&
                                                         a.Fk_GameWeak == fk_GameWeek &&
                                                         (a.GlobalRankingUpdatedAt < lasUpdate ||
                                                          a.CountryRankingUpdatedAt < lasUpdate ||
@@ -206,7 +207,8 @@ namespace Repository.DBModels.AccountTeamModels
             string dashboardSearch,
             List<int> fk_Players,
             List<int> fk_Teams,
-            int fk_PrivateLeague)
+            int fk_PrivateLeague,
+            bool? useCards)
         {
             return AccountTeamGameWeaks.Where(a => (id == 0 || a.Id == id) &&
 
@@ -231,6 +233,23 @@ namespace Repository.DBModels.AccountTeamModels
                                                                (Fk_GameWeak == 0 || b.AccountTeamPlayerGameWeaks.Any(c => c.Fk_GameWeak == Fk_GameWeak && c.IsTransfer == false)))) &&
 
                                                    (Fk_AccountTeam == 0 || a.Fk_AccountTeam == Fk_AccountTeam) &&
+
+                                                   (useCards == null ||
+                                                    (useCards == true ?
+                                                     (a.BenchBoost ||
+                                                      a.FreeHit ||
+                                                      a.WildCard ||
+                                                      a.DoubleGameWeak ||
+                                                      a.Top_11 ||
+                                                      a.TripleCaptain ||
+                                                      a.TwiceCaptain) :
+                                                     !(a.BenchBoost ||
+                                                      a.FreeHit ||
+                                                      a.WildCard ||
+                                                      a.DoubleGameWeak ||
+                                                      a.Top_11 ||
+                                                      a.TripleCaptain ||
+                                                      a.TwiceCaptain))) &&
 
                                                    (fk_PrivateLeague == 0 || a.AccountTeam.Account.PrivateLeagueMembers.Any(b => b.Fk_PrivateLeague == fk_PrivateLeague)) &&
 

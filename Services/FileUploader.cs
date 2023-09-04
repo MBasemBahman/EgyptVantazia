@@ -45,7 +45,7 @@ namespace Services
                 int Width = uploadedFile.Width;
                 int Height = uploadedFile.Height;
 
-                while (Width > 300 || Height > 300)
+                while (Width > 400 || Height > 400)
                 {
                     Width /= 3;
                     Height /= 3;

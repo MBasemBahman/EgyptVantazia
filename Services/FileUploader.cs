@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Net.NetworkInformation;
 
 namespace Services
 {
@@ -35,28 +34,33 @@ namespace Services
             }
 
             string fullPath = Path.Combine(folderName, fileName);
+            long size = file.Length / 1000; // in kb
 
-            if (file.ContentType.Contains("image"))
+            if (file.ContentType.Contains("image") && size > 300)
             {
-                using (FileStream localFile = File.OpenWrite(fullPath))
-                using (Image uploadedFile = Image.FromStream(file.OpenReadStream()))
+
+                using FileStream localFile = File.OpenWrite(fullPath);
+                using Image uploadedFile = Image.FromStream(file.OpenReadStream());
+
+                int Width = uploadedFile.Width;
+                int Height = uploadedFile.Height;
+
+                while (Width > 300 || Height > 300)
                 {
-                    var resized = new Bitmap(uploadedFile, new Size(600, 600));
-
-                    resized.SetResolution(70, 70);
-
-                    resized.Save(localFile, ImageFormat.Jpeg);
+                    Width /= 3;
+                    Height /= 3;
                 }
+
+                Bitmap resized = new(uploadedFile, new Size(Width, Height));
+
+                resized.Save(localFile, ImageFormat.Png);
             }
             else
             {
-                using (FileStream localFile = File.OpenWrite(fullPath))
-                using (Stream uploadedFile = file.OpenReadStream())
-                {
+                using FileStream localFile = File.OpenWrite(fullPath);
+                using Stream uploadedFile = file.OpenReadStream();
 
-                    await uploadedFile.CopyToAsync(localFile);
-
-                }
+                await uploadedFile.CopyToAsync(localFile);
             }
 
             return storagePath + "/" + fileName;

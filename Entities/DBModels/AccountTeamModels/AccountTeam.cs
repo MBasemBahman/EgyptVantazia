@@ -28,6 +28,13 @@ namespace Entities.DBModels.AccountTeamModels
         [DisplayName(nameof(FavouriteTeam))]
         public Team FavouriteTeam { get; set; }
 
+        [DisplayName(nameof(CommunicationStatus))]
+        [ForeignKey(nameof(CommunicationStatus))]
+        public int? Fk_CommunicationStatus { get; set; }
+
+        [DisplayName(nameof(CommunicationStatus))]
+        public CommunicationStatus CommunicationStatus { get; set; }
+
         [DisplayName(nameof(Name))]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }

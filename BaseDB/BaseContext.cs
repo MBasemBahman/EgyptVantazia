@@ -116,6 +116,7 @@ namespace BaseDB
 
         #region AccountTeamModels
         public DbSet<AccountTeam> AccountTeams { get; set; }
+        public DbSet<CommunicationStatus> CommunicationStatuses { get; set; }
         public DbSet<AccountTeamPlayer> AccountTeamPlayers { get; set; }
         public DbSet<AccountTeamGameWeak> AccountTeamGameWeaks { get; set; }
         public DbSet<TeamPlayerType> TeamPlayerTypes { get; set; }

@@ -97,6 +97,12 @@ namespace CoreServices.Logic
                                Fk_Nationality = a.Account.Fk_Nationality,
                                PhoneNumber = a.Account.User.PhoneNumber
                            },
+                           Fk_CommunicationStatus = a.Fk_CommunicationStatus,
+                           CommunicationStatus = a.Fk_CommunicationStatus != null ? new CommunicationStatusModel
+                           {
+                                Name  = a.CommunicationStatus.Name
+                           } : null,
+                           CommunicationStatusComment = a.CommunicationStatusComment,
                            PlayersCount = a.AccountTeamPlayers.Count,
                            FreeTransfer = a.FreeTransfer,
                            BenchBoost = a.BenchBoost,
@@ -1023,6 +1029,63 @@ namespace CoreServices.Logic
         public int GetTeamPlayerTypeCount()
         {
             return _repository.TeamPlayerType.Count();
+        }
+        #endregion
+        
+        #region CommunicationStatus Services
+        public IQueryable<CommunicationStatusModel> GetCommunicationStatuses(RequestParameters parameters,
+                bool otherLang)
+        {
+            return _repository.CommunicationStatus
+                       .FindAll(parameters, trackChanges: false)
+                       .Select(a => new CommunicationStatusModel
+                       {
+                           Id = a.Id,
+                           CreatedAt = a.CreatedAt,
+                           Name = a.Name,
+                       })
+                       .Search(parameters.SearchColumns, parameters.SearchTerm)
+                       .Sort(parameters.OrderBy);
+        }
+
+
+        public async Task<PagedList<CommunicationStatusModel>> GetCommunicationStatusPaged(
+                  RequestParameters parameters,
+                  bool otherLang)
+        {
+            return await PagedList<CommunicationStatusModel>.ToPagedList(GetCommunicationStatuses(parameters, otherLang), parameters.PageNumber, parameters.PageSize);
+        }
+
+        public Dictionary<string, string> GetCommunicationStatusesLookUp(RequestParameters parameters, bool otherLang)
+        {
+            return GetCommunicationStatuses(parameters, otherLang)
+                .ToDictionary(a => a.Id.ToString(), a => a.Name);
+        }
+        
+        public async Task<CommunicationStatus> FindCommunicationStatusbyId(int id, bool trackChanges)
+        {
+            return await _repository.CommunicationStatus.FindById(id, trackChanges);
+        }
+
+        public void CreateCommunicationStatus(CommunicationStatus CommunicationStatus)
+        {
+            _repository.CommunicationStatus.Create(CommunicationStatus);
+        }
+
+        public async Task DeleteCommunicationStatus(int id)
+        {
+            CommunicationStatus CommunicationStatus = await FindCommunicationStatusbyId(id, trackChanges: true);
+            _repository.CommunicationStatus.Delete(CommunicationStatus);
+        }
+
+        public CommunicationStatusModel GetCommunicationStatusbyId(int id, bool otherLang)
+        {
+            return GetCommunicationStatuses(new RequestParameters { Id = id }, otherLang).FirstOrDefault();
+        }
+
+        public int GetCommunicationStatusCount()
+        {
+            return _repository.CommunicationStatus.Count();
         }
         #endregion
     }

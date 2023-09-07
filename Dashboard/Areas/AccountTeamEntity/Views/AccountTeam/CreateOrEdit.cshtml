@@ -204,6 +204,24 @@
                                                 <span asp-validation-for="UnSubscriptionRanking" class="text-danger"></span>
                                             </div>
                                         </div>
+                                        
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="Fk_CommunicationStatus" class="form-label"></label>
+                                                <select class="form-control select2" asp-for="Fk_CommunicationStatus" asp-items="@(new SelectList(ViewData["CommunicationStatus"] as Dictionary<string, string>, "Key", "Value"))">
+                                                    <option value="">@Localizer.Get("Not Selected")</option>
+                                                </select>
+                                                <span asp-validation-for="Fk_CommunicationStatus" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="CommunicationStatusComment" class="form-label"></label>
+                                                <input asp-for="CommunicationStatusComment" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("CommunicationStatusComment"))" />
+                                                <span asp-validation-for="CommunicationStatusComment" class="text-danger"></span>
+                                            </div>
+                                        </div>
 
                                     </div>
                                     

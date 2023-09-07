@@ -66,6 +66,15 @@
                         <input type="text" class="form-control" asp-for="PointsTo">
                     </div>
                 </div>
+                
+                <div class="col-md-6 col-12">
+                    <div class="mb-1">
+                        <label asp-for="Fk_CommunicationStatuses" class="form-label"></label>
+                        <select asp-for="Fk_CommunicationStatuses" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["CommunicationStatus"] as Dictionary<string, string>, "Key", "Value"))">
+                            <option value="">@Localizer.Get("All")</option>
+                        </select>
+                    </div>
+                </div>
 
             </div>
             <hr />

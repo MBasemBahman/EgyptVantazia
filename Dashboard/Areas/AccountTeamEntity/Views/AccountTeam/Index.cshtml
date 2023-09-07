@@ -105,6 +105,8 @@
                                                 <th>@Html.DisplayNameFor(model => row.TotalPoints)</th>
                                                 <th>@Html.DisplayNameFor(model => row.TotalMoney)</th>
                                                 <th>@Html.DisplayNameFor(model => row.IsVip)</th>
+                                                <th>@Html.DisplayNameFor(model => row.CommunicationStatus)</th>
+                                                <th>@Html.DisplayNameFor(model => row.CommunicationStatusComment)</th>
                                                 <th>@Html.DisplayNameFor(model => row.GlobalRanking)</th>
                                                 <th>@Html.DisplayNameFor(model => row.CountryRanking)</th>
                                                 <th>@Html.DisplayNameFor(model => row.FavouriteTeamRanking)</th>
@@ -182,6 +184,8 @@ else
                                     <th>@Html.DisplayNameFor(model => row.TotalPoints)</th>
                                     <th>@Html.DisplayNameFor(model => row.TotalMoney)</th>
                                     <th>@Html.DisplayNameFor(model => row.IsVip)</th>
+                                    <th>@Html.DisplayNameFor(model => row.CommunicationStatus)</th>
+                                    <th>@Html.DisplayNameFor(model => row.CommunicationStatusComment)</th>
                                     <th>@Html.DisplayNameFor(model => row.GlobalRanking)</th>
                                     <th>@Html.DisplayNameFor(model => row.CountryRanking)</th>
                                     <th>@Html.DisplayNameFor(model => row.FavouriteTeamRanking)</th>
@@ -224,6 +228,7 @@ else
                             data.Fk_Account = @Model.Fk_Account;
                             data.Fk_Season = $("#Fk_Season").length > 0 ? $("#Fk_Season").val() : @Model.Fk_Season
                             data.Fk_FavouriteTeam = $("#Fk_FavouriteTeam").length > 0 ? $("#Fk_FavouriteTeam").val() : @Model.Fk_FavouriteTeam
+                            data.Fk_CommunicationStatuses = $("#Fk_CommunicationStatuses").length > 0 ? $("#Fk_CommunicationStatuses").val() : null
                             data.CreatedAtFrom = $("#CreatedAtFrom").length > 0 ? $("#CreatedAtFrom").val() : '@Model.CreatedAtFrom'
                             data.CreatedAtTo = $("#CreatedAtTo").length > 0 ? $("#CreatedAtTo").val() : '@Model.CreatedAtTo'
                             data.AccountUserName = $("#AccountUserName").length > 0 ? $("#AccountUserName").val() : '@Model.AccountUserName'
@@ -323,6 +328,16 @@ else
                                 }
                             }
                         },
+                        {
+                            data: "communicationStatus", render: function (data) {
+                                if (data != null) {
+                                    return data.name;
+                                } 
+                                
+                                return '@Localizer.Get("Not Found")';
+                            }
+                        },
+                        { data: "communicationStatusComment" },
                         { data: "globalRanking" },
                         { data: "countryRanking" },
                         { data: "favouriteTeamRanking" },

@@ -35,7 +35,9 @@ namespace Repository.DBModels.AccountTeamModels
                            parameters.FromGoldSubscriptionRanking,
                            parameters.FromUnSubscriptionRanking,
                            parameters.DashboardSearch,
-                           parameters.Fk_AccountTeams);
+                           parameters.Fk_AccountTeams,
+                           parameters.Fk_CommunicationStatus,
+                           parameters.Fk_CommunicationStatuses);
         }
 
         public async Task<AccountTeam> FindById(int id, bool trackChanges)
@@ -340,7 +342,9 @@ namespace Repository.DBModels.AccountTeamModels
             int? FromGoldSubscriptionRanking,
             int? FromUnSubscriptionRanking,
             string dashboardSearch,
-            List<int> fk_AccountTeams)
+            List<int> fk_AccountTeams,
+            int? fk_CommunicationStatus,
+            List<int> fk_CommunicationStatuses)
 
         {
             return AccountTeams.Where(a => (id == 0 || a.Id == id) &&
@@ -381,6 +385,10 @@ namespace Repository.DBModels.AccountTeamModels
                                            (string.IsNullOrWhiteSpace(AccountFullName) || a.Account.FullName.ToLower().Contains(AccountFullName)) &&
                                            (Fk_Season == 0 || a.Fk_Season == Fk_Season) &&
 
+                                           (fk_CommunicationStatus == null || a.Fk_CommunicationStatus == fk_CommunicationStatus) &&
+                                           (fk_CommunicationStatuses == null || !fk_CommunicationStatuses.Any() || 
+                                                fk_CommunicationStatuses.Contains((int)a.Fk_CommunicationStatus)) &&
+                                           
                                            (fk_AccountTeams == null || !fk_AccountTeams.Any() || fk_AccountTeams.Contains(a.Id)));
         }
 

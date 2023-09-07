@@ -72,6 +72,20 @@ namespace CoreServices.Extensions
 
             return data.Where(expression);
         }
+        
+        public static IQueryable<CommunicationStatusModel> Search(this IQueryable<CommunicationStatusModel> data, string searchColumns, string searchTerm)
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm) || string.IsNullOrWhiteSpace(searchColumns))
+            {
+                return data;
+            }
+
+            searchTerm = searchTerm.SafeTrim().SafeLower();
+
+            Expression<Func<CommunicationStatusModel, bool>> expression = SearchQueryBuilder.CreateSearchQuery<CommunicationStatusModel>(searchColumns, searchTerm);
+
+            return data.Where(expression);
+        }
     }
 
     public static class AccountTeamServiceSortExtension
@@ -132,6 +146,18 @@ namespace CoreServices.Extensions
             }
 
             string orderQuery = OrderQueryBuilder.CreateOrderQuery<TeamPlayerTypeModel>(orderByQueryString);
+
+            return data.OrderBy(orderQuery);
+        }
+        
+        public static IQueryable<CommunicationStatusModel> Sort(this IQueryable<CommunicationStatusModel> data, string orderByQueryString)
+        {
+            if (string.IsNullOrWhiteSpace(orderByQueryString))
+            {
+                return data.OrderBy(a => a.Id);
+            }
+
+            string orderQuery = OrderQueryBuilder.CreateOrderQuery<CommunicationStatusModel>(orderByQueryString);
 
             return data.OrderBy(orderQuery);
         }

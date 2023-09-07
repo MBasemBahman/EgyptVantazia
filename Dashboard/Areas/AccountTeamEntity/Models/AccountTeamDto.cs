@@ -10,6 +10,8 @@ namespace Dashboard.Areas.AccountTeamEntity.Models
     {
         public int Id { get; set; }
 
+        [DisplayName(nameof(Fk_CommunicationStatuses))]
+        public List<int> Fk_CommunicationStatuses { get; set; }
         public int Fk_Account { get; set; }
         [DisplayName(nameof(Fk_FavouriteTeam))]
         public int Fk_FavouriteTeam { get; set; }

@@ -14,6 +14,8 @@ namespace Entities.CoreServicesModels.AccountTeamModels
     {
         public List<int> Fk_AccountTeams { get; set; }
         public int Fk_Account { get; set; }
+        public int? Fk_CommunicationStatus { get; set; }
+        public List<int> Fk_CommunicationStatuses { get; set; }
         public int Fk_User { get; set; }
         public int Fk_Season { get; set; }
         public int Fk_GameWeak { get; set; }
@@ -221,6 +223,15 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         [DisplayName(nameof(NextGameWeak))]
         public GameWeakModel NextGameWeak { get; set; }
+        
+        [DisplayName(nameof(CommunicationStatus))]
+        public int? Fk_CommunicationStatus { get; set; }
+
+        [DisplayName(nameof(CommunicationStatus))]
+        public CommunicationStatusModel CommunicationStatus { get; set; }
+
+        [DisplayName(nameof(CommunicationStatusComment))]
+        public string CommunicationStatusComment { get; set; }
     }
 
     public class AccountTeamModelForCalc
@@ -351,6 +362,12 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         [DisplayName(nameof(UnSubscriptionRanking))]
         public double? UnSubscriptionRanking { get; set; }
         #endregion
+        
+        [DisplayName(nameof(CommunicationStatus))]
+        public int? Fk_CommunicationStatus { get; set; }
+
+        [DisplayName(nameof(CommunicationStatusComment))]
+        public string CommunicationStatusComment { get; set; }
     }
 
     public class AccountTeamCreateModel

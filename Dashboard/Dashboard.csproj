@@ -49,6 +49,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AdditionalFiles Include="Areas\AccountTeamEntity\Views\CommunicationStatus\CreateOrEdit.cshtml" />
+	  <AdditionalFiles Include="Areas\AccountTeamEntity\Views\CommunicationStatus\Delete.cshtml" />
+	  <AdditionalFiles Include="Areas\AccountTeamEntity\Views\CommunicationStatus\Details.cshtml" />
+	  <AdditionalFiles Include="Areas\AccountTeamEntity\Views\CommunicationStatus\Index.cshtml" />
 	  <AdditionalFiles Include="Areas\AccountTeamEntity\Views\PlayerTransfer\Filter.cshtml" />
 	  <AdditionalFiles Include="Areas\AccountTeamEntity\Views\PlayerTransfer\Index.cshtml" />
 	  <AdditionalFiles Include="Areas\NotificationEntity\Views\Notification\CreateOrEdit.cshtml" />

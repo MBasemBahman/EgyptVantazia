@@ -380,7 +380,7 @@
                 </li>
             }
 
-            @if (viewList.Contains((int)DashboardViewEnum.TeamPlayerType))
+            @if (viewList.Contains((int)DashboardViewEnum.TeamPlayerType) || viewList.Contains((int)DashboardViewEnum.CommunicationStatus))
             {
                 <li class=" nav-item">
                     <a class="d-flex align-items-center" href="#">
@@ -392,6 +392,15 @@
                             <li class="@(active == DashboardViewEnum.TeamPlayerType.ToString()?"active":"")">
                                 <a class="d-flex align-items-center" asp-controller="TeamPlayerType" asp-area="AccountTeamEntity" asp-action="Index">
                                     <i data-feather='settings'></i><span class="menu-item text-truncate" data-i18n="Second Level">@Localizer.Get("TeamPlayerTypes")</span>
+                                </a>
+                            </li>
+                        }
+                        
+                        @if (viewList.Contains((int)DashboardViewEnum.CommunicationStatus))
+                        {
+                            <li class="@(active == DashboardViewEnum.CommunicationStatus.ToString()?"active":"")">
+                                <a class="d-flex align-items-center" asp-controller="CommunicationStatus" asp-area="AccountTeamEntity" asp-action="Index">
+                                    <i data-feather='settings'></i><span class="menu-item text-truncate" data-i18n="Second Level">@Localizer.Get("CommunicationStatuses")</span>
                                 </a>
                             </li>
                         }

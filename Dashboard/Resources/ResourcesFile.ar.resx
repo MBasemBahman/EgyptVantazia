@@ -1503,4 +1503,16 @@
   <data name="UseCards" xml:space="preserve">
     <value>يستخدم خواص</value>
   </data>
+  <data name="CommunicationStatuses" xml:space="preserve">
+    <value>حالات الاتصال</value>
+  </data>
+  <data name="CommunicationStatus" xml:space="preserve">
+    <value>حالة الاتصال</value>
+  </data>
+  <data name="CommunicationStatusComment" xml:space="preserve">
+    <value>تعليق حالة الاتصال</value>
+  </data>
+  <data name="Fk_CommunicationStatuses" xml:space="preserve">
+    <value>حالات الاتصال</value>
+  </data>
 </root>

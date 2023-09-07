@@ -389,6 +389,18 @@ namespace Dashboard.MappingProfileCls
             _ = CreateMap<TeamPlayerTypeLang, TeamPlayerTypeLangModel>();
 
             #endregion
+            
+            #region CommunicationStatus
+            
+            _ = CreateMap<CommunicationStatus, CommunicationStatusCreateOrEditModel>();
+
+            _ = CreateMap<CommunicationStatusCreateOrEditModel, CommunicationStatus>();
+
+            _ = CreateMap<CommunicationStatusModel, CommunicationStatusDto>();
+
+            _ = CreateMap<CommunicationStatusFilter, RequestParameters>();
+
+            #endregion
 
             #region Account Team
 

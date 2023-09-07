@@ -264,6 +264,7 @@ namespace Dashboard.Areas.AccountTeamEntity.Controllers
             ViewData["Season"] = _unitOfWork.Season.GetSeasonLookUp(new SeasonParameters(), otherLang);
             ViewData["Player"] = _unitOfWork.Team.GetPlayerLookUp(new PlayerParameters(), otherLang);
             ViewData["GameWeak"] = _unitOfWork.Season.GetGameWeakLookUp(new GameWeakParameters(), otherLang);
+            ViewData["CommunicationStatus"] = _unitOfWork.AccountTeam.GetCommunicationStatusesLookUp(new RequestParameters(), otherLang);
             ViewData["Team"] = _unitOfWork.Team.GetTeamLookUp(new TeamParameters
             {
                 Fk_Season = fk_Season

@@ -121,6 +121,7 @@ namespace Repository
         private AccountTeamPlayerRepository _accountTeamPlayerRepository;
         private AccountTeamRepository _accountTeamRepository;
         private TeamPlayerTypeRepository _teamPlayerTypeRepository;
+        private CommunicationStatusRepository _communicationStatusRepository;
         #endregion
 
         #region SubscriptionModels
@@ -593,6 +594,15 @@ namespace Repository
             {
                 _teamPlayerTypeRepository ??= new TeamPlayerTypeRepository(_dBContext);
                 return _teamPlayerTypeRepository;
+            }
+        }
+        
+        public CommunicationStatusRepository CommunicationStatus
+        {
+            get
+            {
+                _communicationStatusRepository ??= new CommunicationStatusRepository(_dBContext);
+                return _communicationStatusRepository;
             }
         }
         #endregion

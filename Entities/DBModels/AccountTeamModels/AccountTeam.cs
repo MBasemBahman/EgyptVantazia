@@ -35,6 +35,9 @@ namespace Entities.DBModels.AccountTeamModels
         [DisplayName(nameof(CommunicationStatus))]
         public CommunicationStatus CommunicationStatus { get; set; }
 
+        [DisplayName(nameof(CommunicationStatusComment))]
+        public string CommunicationStatusComment { get; set; }
+
         [DisplayName(nameof(Name))]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }

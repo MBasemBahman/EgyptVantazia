@@ -23,9 +23,18 @@ namespace FantasyLogicMicroservices.Areas.TeamDataArea.Controllers
 
         [HttpPost]
         [Route(nameof(UpdatePlayers))]
-        public IActionResult UpdatePlayers([FromQuery] _365CompetitionsEnum _365CompetitionsEnum)
+        public IActionResult UpdatePlayers(
+            [FromQuery] _365CompetitionsEnum _365CompetitionsEnum,
+            [FromQuery] bool inDebug)
         {
-            _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.PlayerDataHelper.RunUpdatePlayers(_365CompetitionsEnum));
+            if (inDebug)
+            {
+                _fantasyUnitOfWork.PlayerDataHelper.RunUpdatePlayers(_365CompetitionsEnum);
+            }
+            else
+            {
+                _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.PlayerDataHelper.RunUpdatePlayers(_365CompetitionsEnum));
+            }
 
             return Ok();
         }

@@ -180,6 +180,9 @@
   <data name="The code is incorrect!" xml:space="preserve">
     <value>الكود غير صحيح!</value>
   </data>
+  <data name="The Egyptian League is currently not available. Please wait until the league schedule is announced!" xml:space="preserve">
+    <value>!الدوري المصري غير متاح حاليا, برجاء الانتظار حتي الاعلان عن جدول الدوري</value>
+  </data>
   <data name="The players must be distinct!" xml:space="preserve">
     <value>يجب أن يكون اللاعبون مختلفين!</value>
   </data>

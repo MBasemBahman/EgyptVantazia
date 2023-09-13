@@ -329,10 +329,10 @@ namespace API.Areas.AccountTeamArea.Controllers
 
             _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
 
-            if (_365CompetitionsEnum == _365CompetitionsEnum.Egypt)
-            {
-                throw new Exception("The Egyptian League is currently not available. Please wait until the league schedule is announced!");
-            }
+            //if (_365CompetitionsEnum == _365CompetitionsEnum.Egypt)
+            //{
+            //    throw new Exception("The Egyptian League is currently not available. Please wait until the league schedule is announced!");
+            //}
 
             SeasonModelForCalc currentSeason = _unitOfWork.Season.GetCurrentSeason(_365CompetitionsEnum);
             int nextGameWeakId = _unitOfWork.Season.GetNextGameWeakId(_365CompetitionsEnum);

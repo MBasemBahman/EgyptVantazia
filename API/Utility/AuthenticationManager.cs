@@ -1,5 +1,12 @@
 ﻿using Entities.CoreServicesModels.AccountModels;
+using Entities.CoreServicesModels.AccountTeamModels;
+using Entities.CoreServicesModels.LocationModels;
+using Entities.CoreServicesModels.SeasonModels;
+using Entities.CoreServicesModels.TeamModels;
+using Entities.DBModels.AccountModels;
+using Entities.DBModels.AccountTeamModels;
 using System.Text.RegularExpressions;
+using static Contracts.EnumData.DBModelsEnum;
 
 namespace API.Utility
 {
@@ -148,26 +155,87 @@ namespace API.Utility
                 UserName = user.UserName,
             };
 
-            AccountModel account = _unitOfWork.Account.GetByUserId(user.Id, otherLang: otherLang).Result;
+            AccountModel account = _unitOfWork.Account
+                                              .GetAccountByCondition(a => a.Fk_User == user.Id)
+                                              .Select(a => new AccountModel
+                                              {
+                                                  ImageUrl = a.StorageUrl + a.ImageUrl,
+                                                  Id = a.Id,
+                                                  CreatedAt = a.CreatedAt,
+                                                  Fk_Country = a.Fk_Country,
+                                                  Fk_Season = a.Fk_Season,
+                                                  Country = new CountryModel
+                                                  {
+                                                      Id = a.Country.Id,
+                                                      Name = otherLang ? a.Country.CountryLang.Name : a.Country.Name,
+                                                  },
+                                                  Season = new SeasonModel
+                                                  {
+                                                      _365_CompetitionsId = a.Season._365_CompetitionsId,
+                                                      _365_SeasonId = a.Season._365_SeasonId,
+                                                      Name = otherLang ? a.Season.SeasonLang.Name : a.Season.Name,
+                                                  }
+                                              })
+                                              .FirstOrDefault();
+
             if (account != null)
             {
-                userAuthenticated.ImageUrl = account.StorageUrl + account.ImageUrl;
                 userAuthenticated.Name = userAuthenticated.Name;
+
+                userAuthenticated.ImageUrl = account.StorageUrl + account.ImageUrl;
                 userAuthenticated.Fk_Account = account.Id;
                 userAuthenticated.CreatedAt = account.CreatedAt;
                 userAuthenticated.Fk_Country = account.Fk_Country;
-                userAuthenticated.Fk_AccountTeam = account.Fk_AccountTeam;
-                userAuthenticated.ShowAds = account.ShowAds;
-                userAuthenticated.Country = account.Country;
-                userAuthenticated.AccountTeam = account.AccountTeam;
-                userAuthenticated.Season = account.Season;
                 userAuthenticated.Fk_Season = account.Fk_Season;
+                userAuthenticated.Country = account.Country;
+                userAuthenticated.Season = account.Season;
 
-                if (account.AccountTeam != null)
+                account = _unitOfWork.Account
+                                     .GetAccountByCondition(a => a.Fk_User == user.Id)
+                                     .Select(a => new AccountModel
+                                     {
+                                         AccountTeam = a.AccountTeams
+                                                         .Where(b => b.Fk_Season == a.Fk_Season)
+                                                         .Select(b => new AccountTeamModel
+                                                         {
+                                                             Id = b.Id,
+                                                             Name = b.Name,
+                                                             Fk_FavouriteTeam = b.Fk_FavouriteTeam,
+                                                             FavouriteTeam = b.Fk_FavouriteTeam > 0 ? new TeamModel
+                                                             {
+                                                                 Id = b.FavouriteTeam.Id,
+                                                                 Name = otherLang ? b.FavouriteTeam.TeamLang.Name : b.FavouriteTeam.Name
+                                                             } : null
+                                                         })
+                                                         .FirstOrDefault()
+                                     })
+                                     .FirstOrDefault();
+
+                if (account != null && account.AccountTeam != null)
                 {
+                    userAuthenticated.Fk_AccountTeam = account.AccountTeam.Id;
+                    userAuthenticated.AccountTeam = account.AccountTeam;
+
                     userAuthenticated.Fk_FavouriteTeam = account.AccountTeam.Fk_FavouriteTeam;
                     userAuthenticated.FavouriteTeam = account.AccountTeam.FavouriteTeam;
                 }
+
+                //account = _unitOfWork.Account
+                //                     .GetAccountByCondition(a => a.Fk_User == user.Id)
+                //                     .Select(a => new AccountModel
+                //                     {
+                //                         RemoveAds = a.AccountSubscriptions.Any(b => (b.Fk_Subscription == (int)SubscriptionEnum.RemoveAds ||
+                //                                                                b.Fk_Subscription == (int)SubscriptionEnum.Gold) &&
+                //                                                                b.IsActive &&
+                //                                                                b.Fk_Season == a.Fk_Season)
+                //                     })
+                //                     .FirstOrDefault();
+
+                //if (account != null)
+                //{
+                //    userAuthenticated.ShowAds = account.ShowAds;
+                //}
+
             }
             return userAuthenticated;
         }

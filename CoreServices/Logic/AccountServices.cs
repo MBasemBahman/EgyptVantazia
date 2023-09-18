@@ -54,7 +54,7 @@ namespace CoreServices.Logic
                                   },
                                   PhoneNumberTwo = a.PhoneNumberTwo,
                                   RemoveAds = a.ShowAds == false ||
-                                              a.AccountSubscriptions.Any(b => ( b.Fk_Subscription == (int)SubscriptionEnum.RemoveAds ||
+                                              a.AccountSubscriptions.Any(b => (b.Fk_Subscription == (int)SubscriptionEnum.RemoveAds ||
                                                                                 b.Fk_Subscription == (int)SubscriptionEnum.Gold) &&
                                                                                 b.IsActive &&
                                                                                 b.Fk_Season == a.Fk_Season),
@@ -183,6 +183,11 @@ namespace CoreServices.Logic
             {
                 Fk_User = fK_User
             }, otherLang).FirstOrDefaultAsync();
+        }
+
+        public IQueryable<Account> GetAccountByCondition(Expression<Func<Account, bool>> expression)
+        {
+            return _repository.Account.FindByCondition(expression, trackChanges: false);
         }
 
         public void CreateAccount(Account account)

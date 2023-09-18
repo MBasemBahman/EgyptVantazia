@@ -151,7 +151,7 @@ namespace API.Extensions
                     {
                         Endpoint = "*",
                         Period = "1s",
-                        Limit = 10,
+                        Limit = 1,
                     }
                 };
             });

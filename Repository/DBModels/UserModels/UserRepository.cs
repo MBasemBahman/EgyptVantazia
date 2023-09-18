@@ -33,7 +33,7 @@ namespace Repository.DBModels.UserModels
             userName = userName.SafeTrim().SafeLower();
 
             return await FindByCondition(a => a.UserName.ToLower().Trim() == userName, trackChanges: trackChanges)
-                         .Include(a => a.RefreshTokens)
+                         .Include(a => a.RefreshTokens.OrderByDescending(a => a.Id).Skip(0).Take(1))
                          .FirstOrDefaultAsync();
         }
 
@@ -65,7 +65,7 @@ namespace Repository.DBModels.UserModels
                 ? null
                 : await FindByCondition(a => a.RefreshTokens.Any(b => b.Token == token)
                                               , trackChanges: trackChanges)
-                         .Include(a => a.RefreshTokens)
+                         .Include(a => a.RefreshTokens.Where(b => b.Token == token))
                          .FirstOrDefaultAsync();
         }
 
@@ -82,7 +82,7 @@ namespace Repository.DBModels.UserModels
                 ? null
                 : await FindByCondition(a => a.Verifications.Any(b => b.Code == code)
                                               , trackChanges: trackChanges)
-                         .Include(a => a.Verifications)
+                         .Include(a => a.Verifications.Where(b => b.Code == code))
                          .FirstOrDefaultAsync();
         }
 
@@ -109,17 +109,17 @@ namespace Repository.DBModels.UserModels
             emailAddress = emailAddress.SafeTrim().SafeLower();
 
             return users.Where(a => (id == 0 || a.Id == id) &&
-                                    
+
                                     (fk_Accounts == null || !fk_Accounts.Any() || fk_Accounts.Contains(a.Id)) &&
-                                     
+
                                     (createdAtFrom == null || a.CreatedAt >= createdAtFrom) &&
-                                     
+
                                     (createdAtTo == null || createdAtTo == createdAtFrom || a.CreatedAt <= createdAtTo) &&
-                                     
+
                                     (string.IsNullOrWhiteSpace(phoneNumber) ||
                                      (!string.IsNullOrWhiteSpace(a.PhoneNumber) &&
                                       a.PhoneNumber.ToLower().Contains(phoneNumber))) &&
-                                    
+
                                     (string.IsNullOrWhiteSpace(emailAddress) ||
                                      (!string.IsNullOrWhiteSpace(a.EmailAddress) &&
                                       a.EmailAddress.ToLower().Contains(emailAddress))));

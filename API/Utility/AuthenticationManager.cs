@@ -190,6 +190,8 @@ namespace API.Utility
                 userAuthenticated.Country = account.Country;
                 userAuthenticated.Season = account.Season;
 
+                userAuthenticated.ShowAds = true;
+
                 account = _unitOfWork.Account
                                      .GetAccountByCondition(a => a.Fk_User == user.Id)
                                      .Select(a => new AccountModel

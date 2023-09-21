@@ -161,5 +161,11 @@
             KSA = 8,
             EPL = 9
         }
+
+        public enum OnlinePaymentProviderEnum
+        {
+            Kashier = 1,
+            Paymob = 2,
+        }
     }
 }

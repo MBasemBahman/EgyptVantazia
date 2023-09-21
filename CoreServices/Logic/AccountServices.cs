@@ -336,6 +336,7 @@ namespace CoreServices.Logic
                                   TransactionId = a.TransactionId,
                                   Fk_Account = a.Fk_Account,
                                   Amount = a.Amount,
+                                  PaymentProvider = a.PaymentProvider,
                                   Account = new AccountModel
                                   {
                                       Name = a.Account.FullName

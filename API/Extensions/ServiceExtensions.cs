@@ -3,6 +3,7 @@ using Entities.ServicesModels;
 using Entities.TenantModels;
 using FantasyLogic;
 using IntegrationWith365;
+using static Services.KashierServices;
 
 namespace API.Extensions
 {
@@ -184,6 +185,16 @@ namespace API.Extensions
             });
 
             _ = services.AddScoped<IFirebaseNotificationManager, FirebaseNotificationManager>();
+        }
+
+        public static void Configurekashier(this IServiceCollection services,
+          IConfiguration configuration)
+        {
+            KashierConfiguration config = configuration.GetSection("kashierConfiguration")
+                                               .Get<KashierConfiguration>();
+
+            _ = services.AddSingleton(config);
+            _ = services.AddScoped<KashierServices>();
         }
     }
 }

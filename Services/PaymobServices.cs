@@ -87,7 +87,7 @@ namespace Services
         }
 
         // Step 3
-        public async Task<string> PaymentKey(PaymentKeyRequestParameters parameters, PyamentTypeEnum pyamentType)
+        public async Task<string> PaymentKey(PaymentKeyRequestParameters parameters, PyamentTypeEnum pyamentType, bool inTesting)
         {
             string token = null;
 
@@ -95,15 +95,15 @@ namespace Services
 
             if (pyamentType == PyamentTypeEnum.Credit)
             {
-                integration_id = _config.CardLive;
+                integration_id = inTesting ? _config.CardTest : _config.CardLive;
             }
             else if (pyamentType == PyamentTypeEnum.Wallet)
             {
-                integration_id = _config.WalletLive;
+                integration_id = inTesting ? _config.WalletTest : _config.WalletLive;
             }
             else if (pyamentType == PyamentTypeEnum.Kiosk)
             {
-                integration_id = _config.KioskLive;
+                integration_id = inTesting ? _config.KioskTest : _config.KioskLive;
             }
 
             Dictionary<string, object> Params = new()

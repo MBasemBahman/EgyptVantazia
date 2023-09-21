@@ -25,5 +25,8 @@ namespace Entities.CoreServicesModels.AccountModels
 
         [DisplayName("Amount")]
         public double Amount { get; set; }
+
+        [DisplayName("PaymentProvider")]
+        public string PaymentProvider { get; set; }
     }
 }

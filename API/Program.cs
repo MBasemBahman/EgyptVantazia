@@ -39,6 +39,7 @@ builder.Services.AddControllers(opt =>
 });
 builder.Services.ConfigureFirebase(config.AppSettings);
 builder.Services.ConfigurePaymob(builder.Configuration);
+builder.Services.Configurekashier(builder.Configuration);
 
 WebApplication app = builder.Build();
 

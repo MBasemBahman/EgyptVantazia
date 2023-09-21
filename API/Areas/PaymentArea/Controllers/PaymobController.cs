@@ -267,9 +267,14 @@ namespace API.Areas.PaymentArea.Controllers
         [Route(nameof(TransactionResponseCallback))]
         [AllowAll]
         [HttpGet]
-        public IActionResult TransactionResponseCallback(TransactionProcessedCallbackParameters parameters)
+        public Response TransactionResponseCallback(TransactionProcessedCallbackParameters parameters)
         {
-            return Ok();
+            return parameters.Obj.Success == false
+                    ? new Response(false)
+                    {
+                        ErrorMessage = "المدفوعات بها شيء خاطئ. حاول مرة أخرى في وقت لاحق!"
+                    }
+                    : new Response(true);
         }
 
         #endregion

@@ -42,11 +42,24 @@ namespace API.Areas.PaymentArea.Controllers
 
         [HttpPost]
         [Route(nameof(RequestPayment))]
+        //[AllowAll]
         public async Task<string> RequestPayment(
             [FromQuery] _365CompetitionsEnum _365CompetitionsEnum,
             [FromBody] RequestPaymentDto model)
         {
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+
+            //auth = new UserAuthenticatedDto
+            //{
+            //    Fk_Account = 2415,
+            //    Name = "test",
+            //    PhoneNumber = "201207746433",
+            //    EmailAddress = "mail@mail.com",
+            //    Season = new SeasonModel()
+            //    {
+            //        _365_CompetitionsId = "552"
+            //    }
+            //};
 
             _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
 
@@ -329,7 +342,7 @@ namespace API.Areas.PaymentArea.Controllers
 
         #endregion
 
-        public async Task TransactionSuccess(int fk_Account, double amount, string transactionId, string paymentProvider)
+        private async Task TransactionSuccess(int fk_Account, double amount, string transactionId, string paymentProvider)
         {
             if (fk_Account > 0)
             {

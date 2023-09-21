@@ -4,6 +4,7 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20230921224650_GameWeekValue")]
+    partial class GameWeekValue
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3985,7 +3988,7 @@ namespace DAL.Migrations
                     b.Property<int>("_365_GameWeakIdValue")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("int")
-                        .HasComputedColumnSql("CONVERT(int, _365_GameWeakId)");
+                        .HasComputedColumnSql("CONVERT(int, SUBSTRING(_365_GameWeakId, 2, LEN(_365_GameWeakId)))");
 
                     b.HasKey("Id");
 
@@ -5016,7 +5019,7 @@ namespace DAL.Migrations
                             IsExternalLogin = false,
                             LastModifiedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Developer",
-                            Password = "$2a$11$tWYCYPvy2WMIggFi8aWxMOwDQbpF.Ahhf4MHq.QUvV7CSol1QDds6",
+                            Password = "$2a$11$vdzkUUjvLPLc7T1mg59oXub5dAyNGTIOAa82xBXHglTcrFrev9ySi",
                             UserName = "Developer"
                         });
                 });

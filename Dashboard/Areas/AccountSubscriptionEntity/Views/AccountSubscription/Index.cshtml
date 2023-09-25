@@ -73,12 +73,7 @@
                                                 <th>
                                                     @Html.DisplayNameFor(model => row.Id)
 
-                                                    @if (accessLevel.CreateAccess)
-                                                    {
-                                                        <a id="create" asp-action="CreateOrEdit" >
-                                                        </a>
-                                                    }
-                                                    
+                                                 
                                                     @if (accessLevel.EditAccess)
                                                     {
                                                         <a id="edit" asp-action="CreateOrEdit">

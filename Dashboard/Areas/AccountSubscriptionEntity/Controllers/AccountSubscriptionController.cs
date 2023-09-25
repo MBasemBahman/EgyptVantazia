@@ -246,7 +246,6 @@ namespace Dashboard.Areas.AccountSubscriptionEntity.Controllers
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
             ViewData["Season"] = _unitOfWork.Season.GetSeasonLookUp(new SeasonParameters(), otherLang);
-            ViewData["Account"] = _unitOfWork.Account.GetAccountLookUp(new AccountParameters(), otherLang);
             ViewData["Subscription"] = _unitOfWork.Subscription.GetSubscriptionsLookUp(new SubscriptionParameters(), otherLang);
             ViewData["ProfileLayOut"] = ProfileLayOut;
         }

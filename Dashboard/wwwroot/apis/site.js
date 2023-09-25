@@ -116,3 +116,5 @@ function getStatisticScores(elem, fk_StatisticCategory, removeFirstelem = true) 
         }
     });
 }
+
+

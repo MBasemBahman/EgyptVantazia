@@ -33,7 +33,7 @@ namespace Dashboard.Areas.PaymentEntity.Controllers
             };
 
             ViewData[ViewDataConstants.AccessLevel] = (DashboardAccessLevelModel)Request.HttpContext.Items[ViewDataConstants.AccessLevel];
-            SetViewData(ProfileLayOut);
+            ViewData["ProfileLayOut"] = ProfileLayOut;
             return View(filter);
         }
 
@@ -65,7 +65,6 @@ namespace Dashboard.Areas.PaymentEntity.Controllers
         {
             bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
 
-            ViewData["Account"] = _unitOfWork.Account.GetAccountLookUp(new AccountParameters(), otherLang);
             ViewData["ProfileLayOut"] = ProfileLayOut;
         }
 

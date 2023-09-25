@@ -25,6 +25,7 @@ namespace Entities.DBModels.SeasonModels
         public string _365_GameWeakId { get; set; }
 
         [DisplayName(nameof(_365_GameWeakIdValue))]
+        [NotMapped]
         public int _365_GameWeakIdValue { get; set; }
 
         [DisplayName(nameof(Season))]

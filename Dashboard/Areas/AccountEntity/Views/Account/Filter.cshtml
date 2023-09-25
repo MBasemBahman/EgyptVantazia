@@ -67,6 +67,15 @@
             <div class="row g-1 mb-md-1">
                
                 <div class="col-md-6">
+                    <label asp-for="LastActiveFrom" class="form-label"></label>
+                    <div class="mb-0">
+                        <input type="text" class="form-control dt-date flatpickr-range dt-input flatpickr-input active" data-column="1" placeholder="@Localizer.Get("From Date To Date")" data-column-index="0" name="dt_date" readonly="readonly">
+                        <input type="hidden" class="form-control dt-date start_date dt-input" data-column="1" data-column-index="0" asp-for="LastActiveFrom">
+                        <input type="hidden" class="form-control dt-date end_date dt-input" asp-for="LastActiveTo" data-column="1" data-column-index="0">
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
                     <label asp-for="CreatedAtFrom" class="form-label"></label>
                     <div class="mb-0">
                         <input type="text" class="form-control dt-date flatpickr-range dt-input flatpickr-input active" data-column="1" placeholder="@Localizer.Get("From Date To Date")" data-column-index="0" name="dt_date" readonly="readonly">

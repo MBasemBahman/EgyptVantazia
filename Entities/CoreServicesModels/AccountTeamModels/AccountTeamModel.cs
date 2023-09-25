@@ -307,7 +307,7 @@ namespace Entities.CoreServicesModels.AccountTeamModels
 
         [DisplayName(nameof(TotalMoney))]
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
-        public int TotalMoney { get; set; }
+        public double TotalMoney { get; set; }
 
         #region Cards
 

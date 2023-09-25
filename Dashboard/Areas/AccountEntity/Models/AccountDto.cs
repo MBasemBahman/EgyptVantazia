@@ -69,6 +69,12 @@ namespace Dashboard.Areas.AccountEntity.Models
 
         [DisplayName("FavouriteTeam")]
         public int Fk_FavouriteTeam { get; set; }
+        
+        [DisplayName("LastActive")]
+        public DateTime? LastActiveFrom { get; set; }
+
+        [DisplayName("LastActiveTo")]
+        public DateTime? LastActiveTo { get; set; }
     }
 
     public class UserAccountCreateOrEditModel

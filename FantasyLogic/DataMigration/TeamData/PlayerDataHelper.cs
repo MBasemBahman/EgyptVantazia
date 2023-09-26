@@ -113,7 +113,7 @@ namespace FantasyLogic.DataMigration.TeamData
                 Fk_Team = fk_Team,
                 Fk_PlayerPosition = fk_PlayerPosition,
                 Fk_FormationPosition = fk_FormationPosition == 0 ? null : fk_FormationPosition,
-                IsActive = true,
+                IsActive = false,
                 PlayerLang = new PlayerLang
                 {
                     Name = athleteInEnglish.Name,

@@ -65,7 +65,7 @@ namespace Repository.DBModels.TeamModels
                                 .First();
 
                 //oldEntity.Name = entity.Name;
-                oldEntity.IsActive = entity.IsActive;
+                oldEntity.IsActive = false;
                 oldEntity._365_PlayerId = entity._365_PlayerId;
                 //oldEntity.ShortName = entity.ShortName;
                 oldEntity.Age = entity.Age;

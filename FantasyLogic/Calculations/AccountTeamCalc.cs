@@ -676,8 +676,11 @@ namespace FantasyLogic.Calculations
                 .Sum();
 
             AccountTeam accountTeam = _unitOfWork.AccountTeam.FindAccountTeambyId(fk_AccountTeam, trackChanges: true).Result;
-            accountTeam.TotalPoints = totalPoints;
-            _unitOfWork.Save().Wait();
+            if (accountTeam != null)
+            {
+                accountTeam.TotalPoints = totalPoints;
+                _unitOfWork.Save().Wait();
+            }
         }
 
         public void UpdateAccountTeamRanking(_365CompetitionsEnum _365CompetitionsEnum)

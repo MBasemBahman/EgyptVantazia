@@ -100,7 +100,7 @@ namespace CoreServices.Logic
                            Fk_CommunicationStatus = a.Fk_CommunicationStatus,
                            CommunicationStatus = a.Fk_CommunicationStatus != null ? new CommunicationStatusModel
                            {
-                                Name  = a.CommunicationStatus.Name
+                               Name = a.CommunicationStatus.Name
                            } : null,
                            CommunicationStatusComment = a.CommunicationStatusComment,
                            PlayersCount = a.AccountTeamPlayers.Count,
@@ -337,8 +337,8 @@ namespace CoreServices.Logic
                                    Name = otherLang ? a.GameWeak.Season.SeasonLang.Name : a.GameWeak.Season.Name
                                }
                            },
-                           NextGameWeak = a.GameWeak.IsCurrent == false && 
-                                          parameters.IncludeNextAndPrevGameWeek && 
+                           NextGameWeak = a.GameWeak.IsCurrent == false &&
+                                          parameters.IncludeNextAndPrevGameWeek &&
                                           a.AccountTeam
                                            .AccountTeamGameWeaks
                                            .Any(b => b.GameWeak._365_GameWeakId == (a.GameWeak._365_GameWeakIdValue + 1).ToString()) ?
@@ -352,7 +352,7 @@ namespace CoreServices.Logic
                                 _365_GameWeakId = b.GameWeak._365_GameWeakId,
                                 Fk_Season = b.GameWeak.Fk_Season
                             }).FirstOrDefault() : null,
-                           PrevGameWeak = parameters.IncludeNextAndPrevGameWeek && 
+                           PrevGameWeak = parameters.IncludeNextAndPrevGameWeek &&
                                           a.AccountTeam
                                            .AccountTeamGameWeaks
                                            .Any(b => b.GameWeak._365_GameWeakId == (a.GameWeak._365_GameWeakIdValue - 1).ToString()) ?
@@ -815,7 +815,7 @@ namespace CoreServices.Logic
                                         .FirstOrDefault(),
                                PlayerMarks = a.Player
                                               .PlayerMarks
-                                              .Where(b => b.Count > b.Used)
+                                              .Where(b => b.DateTo >= DateTime.UtcNow)
                                               .Select(b => new PlayerMarkModel
                                               {
                                                   Count = b.Count,
@@ -1031,7 +1031,7 @@ namespace CoreServices.Logic
             return _repository.TeamPlayerType.Count();
         }
         #endregion
-        
+
         #region CommunicationStatus Services
         public IQueryable<CommunicationStatusModel> GetCommunicationStatuses(RequestParameters parameters,
                 bool otherLang)
@@ -1061,7 +1061,7 @@ namespace CoreServices.Logic
             return GetCommunicationStatuses(parameters, otherLang)
                 .ToDictionary(a => a.Id.ToString(), a => a.Name);
         }
-        
+
         public async Task<CommunicationStatus> FindCommunicationStatusbyId(int id, bool trackChanges)
         {
             return await _repository.CommunicationStatus.FindById(id, trackChanges);

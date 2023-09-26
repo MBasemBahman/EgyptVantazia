@@ -175,7 +175,8 @@ else
             </section>
 }
 <!-- END: Content-->
-@section scripts{
+@section scripts {
+    <script src="~/apis/site.js"></script>
     <script>
         function LoadTable() {
             var dt_ajax_table = $('.datatables');
@@ -190,6 +191,7 @@ else
                         data: function (data) {
                             data.Id = @Model.Id;
                             data.Fk_Players = $("#Fk_Players").length > 0 ? $("#Fk_Players").val() : null;
+                            data.Fk_Season = $("#Fk_Season").length > 0 ? $("#Fk_Season").val() : null;
                             data.Fk_GameWeaks = $("#Fk_GameWeaks").length > 0 ? $("#Fk_GameWeaks").val() : null;
                             data.Fk_ScoreStates = $("#Fk_ScoreStates").length > 0 ? $("#Fk_ScoreStates").val() : null;
                             data.Fk_GameWeak = $("#Fk_GameWeak").length > 0 ? $("#Fk_GameWeak").val() : null;
@@ -238,6 +240,12 @@ else
     
         $(document).ready(function () {
             LoadTable();
+        });
+        
+        $(document).on("change", "#Fk_Season", function() {
+          let fk_Season = $(this).val();
+
+          getGameWeak($("#Fk_GameWeaks"), fk_Season, false);
         });
     </script>
 }

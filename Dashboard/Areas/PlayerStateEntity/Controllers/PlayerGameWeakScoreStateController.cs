@@ -167,6 +167,7 @@ namespace Dashboard.Areas.PlayerStateEntity.Controllers
             ViewData["ScoreState"] = _unitOfWork.PlayerState.GetScoreStatesLookUp(new ScoreStateParameters(), otherLang);
             ViewData["GameWeak"] = _unitOfWork.Season.GetGameWeakLookUp(new GameWeakParameters(), otherLang);
             ViewData["Player"] = _unitOfWork.Team.GetPlayerLookUp(new PlayerParameters(), otherLang);
+            ViewData["Season"] = _unitOfWork.Season.GetSeasonLookUp(new SeasonParameters(), otherLang);
         }
     }
 }

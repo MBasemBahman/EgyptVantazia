@@ -34,8 +34,18 @@
                         </select>
                     </div>
                 </div>
+                
+                <div class="col-md-6 col-12">
+                    <div class="mb-1">
+                        <label asp-for="Fk_Season" class="form-label">@Localizer.Get("Season")</label>
+                        <select class="form-control select2" asp-for="Fk_Season" asp-items="@(new SelectList(ViewData["Season"] as Dictionary<string, string>, "Key", "Value"))">
+                            <option value="">@Localizer.Get("All")</option>
+                        </select>
+                        <span asp-validation-for="Fk_Season" class="text-danger"></span>
+                    </div>
+                </div>
 
-                <div class="col-md-12 col-12">
+                <div class="col-md-6 col-12">
                     <div class="mb-1">
                         <label asp-for="Fk_GameWeaks" class="form-label">@Localizer.Get("GameWeak")</label>
                         <select asp-for="Fk_GameWeaks" class="select2 form-select" asp-items="@(new MultiSelectList(ViewData["GameWeak"] as Dictionary<string, string>, "Key", "Value"))">

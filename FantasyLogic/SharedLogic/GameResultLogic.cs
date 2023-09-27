@@ -1,4 +1,5 @@
-﻿using Entities.CoreServicesModels.PlayerScoreModels;
+﻿using CoreServices;
+using Entities.CoreServicesModels.PlayerScoreModels;
 using Entities.DBModels.PlayerScoreModels;
 using FantasyLogic.Calculations;
 using IntegrationWith365.Entities.GameModels;
@@ -66,13 +67,9 @@ namespace FantasyLogic.SharedLogic
         #endregion
 
         #region TotalPoints
-        public async Task UpdatePlayerGameWeakTotalPoints(int fk_PlayerGameWeak)
+        public void UpdatePlayerGameWeakTotalPoints(int fk_PlayerGameWeak)
         {
-            PlayerGameWeak playerGameWeak = await _unitOfWork.PlayerScore.FindPlayerGameWeakbyId(fk_PlayerGameWeak, trackChanges: true);
-            playerGameWeak.TotalPoints = _unitOfWork.PlayerScore.GetPlayerGameWeakScores(new PlayerGameWeakScoreParameters
-            {
-                Fk_PlayerGameWeak = fk_PlayerGameWeak
-            }).Select(a => a.Points).Sum();
+            _unitOfWork.PlayerScore.UpdatePlayerGameWeakTotalPoints(fk_PlayerGameWeak);
         }
         #endregion
     }

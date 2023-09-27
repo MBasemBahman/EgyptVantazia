@@ -1,5 +1,6 @@
 ﻿using Entities.CoreServicesModels.PlayerScoreModels;
 using Entities.DBModels.PlayerScoreModels;
+using Microsoft.Data.SqlClient;
 
 namespace Repository.DBModels.PlayerScoreModels
 {
@@ -67,6 +68,18 @@ namespace Repository.DBModels.PlayerScoreModels
                                            trackChanges: true).ToList();
                 Delete(data);
             }
+        }
+
+        public void UpdatePlayerGameWeakTotalPoints(int fk_PlayerGameWeak)
+        {
+            _ = DBContext.Database.ExecuteSqlRaw(@"UPDATE pgw
+                                                   SET pgw.TotalPoints = (
+                                                       SELECT SUM(pgs.Points)
+                                                       FROM [dbo].[PlayerGameWeakScores] pgs
+                                                       WHERE pgs.fk_PlayerGameWeak = pgw.Id
+                                                   )
+                                                   FROM [dbo].[PlayerGameWeaks] pgw
+                                                   WHERE pgw.Id = @fkPlayerGameWeakId", new SqlParameter("@fkPlayerGameWeakId", fk_PlayerGameWeak));
         }
     }
 

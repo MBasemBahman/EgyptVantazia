@@ -1,5 +1,6 @@
 ﻿using Entities.CoreServicesModels.PlayerScoreModels;
 using Entities.DBModels.PlayerScoreModels;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using static Contracts.EnumData.DBModelsEnum;
 
@@ -90,9 +91,7 @@ namespace Repository.DBModels.PlayerScoreModels
 
         public void DeleteOldPlayerScores(int fk_PlayerGameWeak)
         {
-            List<PlayerGameWeakScore> data = FindByCondition(a => a.Fk_PlayerGameWeak == fk_PlayerGameWeak && 
-                                                                  a.IsCanNotEdit == false, trackChanges: true).ToList();
-            DBContext.PlayerGameWeakScores.RemoveRange(data);
+            _ = DBContext.Database.ExecuteSqlRaw("DELETE FROM [dbo].[PlayerGameWeakScores] WHERE [Fk_PlayerGameWeak] = @fkPlayerGameWeakId", new SqlParameter("@fkPlayerGameWeakId", fk_PlayerGameWeak));
         }
     }
 }

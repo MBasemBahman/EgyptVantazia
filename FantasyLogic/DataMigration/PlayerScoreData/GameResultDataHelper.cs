@@ -449,7 +449,6 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                     if (isOld)
                     {
                         _unitOfWork.PlayerScore.DeleteOldPlayerScores(fk_PlayerGameWeak);
-                        _unitOfWork.Save().Wait();
                     }
 
                     if (memberResult.Stats != null && memberResult.Stats.Any())
@@ -561,7 +560,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                     _gameResultLogic.UpdatePlayerStateScore(otherGoals, substitutions, rankingIndex, playMinutes, (int)ScoreTypeEnum.CleanSheet, "", player.Fk_PlayerPosition, player.Fk_PlayerGameWeak);
                     _gameResultLogic.UpdatePlayerStateScore(otherGoals, substitutions, rankingIndex, playMinutes, (int)ScoreTypeEnum.ReceiveGoals, "", player.Fk_PlayerPosition, player.Fk_PlayerGameWeak);
                     _gameResultLogic.UpdatePlayerStateScore(otherGoals, substitutions, rankingIndex, playMinutes, (int)ScoreTypeEnum.Ranking, "", player.Fk_PlayerPosition, player.Fk_PlayerGameWeak);
-                    await _gameResultLogic.UpdatePlayerGameWeakTotalPoints(player.Fk_PlayerGameWeak);
+                    _gameResultLogic.UpdatePlayerGameWeakTotalPoints(player.Fk_PlayerGameWeak);
                 }
                 await _unitOfWork.Save();
 

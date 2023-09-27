@@ -305,6 +305,11 @@ namespace CoreServices.Logic
             _repository.PlayerGameWeak.ResetPlayerGameWeak(fk_TeamGameWeak, fk_Player, fk_GameWeak, fk_Team);
         }
 
+        public void UpdatePlayerGameWeakTotalPoints(int fk_PlayerGameWeak)
+        {
+            _repository.PlayerGameWeak.UpdatePlayerGameWeakTotalPoints(fk_PlayerGameWeak);
+        }
+
         #endregion
 
         #region PlayerGameWeakScore Services

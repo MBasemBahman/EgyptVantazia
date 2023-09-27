@@ -599,69 +599,14 @@ namespace FantasyLogic.Calculations
 
         public void UpdateAccountTeamGameWeakRanking(_365CompetitionsEnum _365CompetitionsEnum, int gameWeak, int fk_Season)
         {
-            if (gameWeak == 0 || fk_Season == 0)
+            if (gameWeak == 0)
             {
                 GameWeakModelForCalc currentGameWeak = _unitOfWork.Season.GetCurrentGameWeak(_365CompetitionsEnum);
 
                 gameWeak = currentGameWeak.Id;
-                fk_Season = currentGameWeak.Fk_Season;
             }
 
-            List<AccountTeamRanking> accountTeamGameWeakRankings = new();
-            int ranking = 1;
-
-            List<AccountTeamRanking> accountTeamGameWeaks = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
-            {
-                Fk_Season = fk_Season,
-                Fk_GameWeak = gameWeak,
-            }, otherLang: false)
-                .OrderByDescending(a => a.TotalPoints)
-                .Select(a => new AccountTeamRanking
-                {
-                    Id = a.Id,
-                    Fk_Country = a.AccountTeam.Account.Fk_Country,
-                    Fk_FavouriteTeam = a.AccountTeam.Fk_FavouriteTeam
-                })
-                .ToList();
-
-            foreach (AccountTeamRanking accountTeamGameWeak in accountTeamGameWeaks)
-            {
-                accountTeamGameWeakRankings.Add(new AccountTeamRanking
-                {
-                    Id = accountTeamGameWeak.Id,
-                    Fk_Country = accountTeamGameWeak.Fk_Country,
-                    Fk_FavouriteTeam = accountTeamGameWeak.Fk_FavouriteTeam,
-                    GlobalRanking = ranking++
-                });
-            }
-
-            foreach (IGrouping<int, AccountTeamRanking> country in accountTeamGameWeaks.GroupBy(a => a.Fk_Country))
-            {
-                ranking = 1;
-                foreach (AccountTeamRanking accountTeamGameWeak in country.ToList())
-                {
-                    accountTeamGameWeakRankings.First(a => a.Id == accountTeamGameWeak.Id).CountryRanking = ranking++;
-                }
-            }
-
-            foreach (IGrouping<int, AccountTeamRanking> favouriteTeam in accountTeamGameWeaks.GroupBy(a => a.Fk_FavouriteTeam))
-            {
-                ranking = 1;
-                foreach (AccountTeamRanking accountTeamGameWeak in favouriteTeam.ToList())
-                {
-                    accountTeamGameWeakRankings.First(a => a.Id == accountTeamGameWeak.Id).FavouriteTeamRanking = ranking++;
-                }
-            }
-
-            foreach (AccountTeamRanking accountTeamGameWeakRanking in accountTeamGameWeakRankings)
-            {
-                AccountTeamGameWeak accountTeam = _unitOfWork.AccountTeam.FindAccountTeamGameWeakbyId(accountTeamGameWeakRanking.Id, trackChanges: true).Result;
-                accountTeam.GlobalRanking = accountTeamGameWeakRanking.GlobalRanking;
-                accountTeam.CountryRanking = accountTeamGameWeakRanking.CountryRanking;
-                accountTeam.FavouriteTeamRanking = accountTeamGameWeakRanking.FavouriteTeamRanking;
-
-                _unitOfWork.Save().Wait();
-            }
+            _unitOfWork.AccountTeam.UpdateAllAccountTeamGameWeaksRanking(gameWeak);
         }
 
         public void UpdateAccountTeamPoints(int fk_AccountTeam, int fk_Season)

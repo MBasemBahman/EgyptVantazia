@@ -422,11 +422,6 @@ namespace CoreServices.Logic
             return await PagedList<AccountTeamGameWeakModel>.ToPagedList(GetAccountTeamGameWeaks(parameters, otherLang), parameters.PageNumber, parameters.PageSize);
         }
 
-        public void UpdateAccountTeamGameWeakRank(int fk_AccountTeam, int fk_GameWeek)
-        {
-            _repository.AccountTeamGameWeak.UpdateRank(fk_AccountTeam, fk_GameWeek);
-        }
-
 
         public async Task<AccountTeamGameWeak> FindAccountTeamGameWeakbyId(int id, bool trackChanges)
         {
@@ -436,6 +431,11 @@ namespace CoreServices.Logic
         public void CreateAccountTeamGameWeak(AccountTeamGameWeak AccountTeamGameWeak)
         {
             _repository.AccountTeamGameWeak.Create(AccountTeamGameWeak);
+        }
+
+        public void UpdateAllAccountTeamGameWeaksRanking(int fk_GameWeek)
+        {
+            _repository.AccountTeamGameWeak.UpdateAllAccountTeamGameWeaksRanking(fk_GameWeek);
         }
 
         public async Task DeleteAccountTeamGameWeak(int id)

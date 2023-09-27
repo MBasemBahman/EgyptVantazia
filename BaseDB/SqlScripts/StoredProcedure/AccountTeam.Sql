@@ -11,9 +11,9 @@ BEGIN
             FROM [dbo].[AccountTeams] as act
             WHERE act.Fk_Season = @SeasonId
         )
-                                                        UPDATE act
-                                                        SET act.GlobalRanking = gri.NewRank
-                                                        FROM [dbo].[AccountTeams] act
+        UPDATE act
+        SET act.GlobalRanking = gri.NewRank
+        FROM [dbo].[AccountTeams] act
         JOIN RankedItems gri ON act.Id= gri.Id;
 END
 GO

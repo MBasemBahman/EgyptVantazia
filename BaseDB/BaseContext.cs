@@ -183,6 +183,9 @@ namespace BaseDB
         public DbSet<PromoCodeSubscription> PromoCodeSubscriptions { get; set; }
         #endregion
 
+        //string procedureScript = File.ReadAllText("../BaseDB/SqlScripts/StoredProcedure/AccountTeam.Sql");
+        //migrationBuilder.Sql(procedureScript);
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             foreach (IMutableEntityType entityType in modelBuilder.Model.GetEntityTypes()

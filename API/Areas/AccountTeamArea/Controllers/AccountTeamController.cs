@@ -243,8 +243,6 @@ namespace API.Areas.AccountTeamArea.Controllers
                 fk_GameWeak = gameWeak.Id;
             }
 
-            _unitOfWork.AccountTeam.UpdateAccountTeamRank(id, auth.Fk_Season);
-
             _unitOfWork.AccountTeam.UpdateAccountTeamGameWeakRank(id, fk_GameWeak);
 
             if (data.Fk_AcountTeamGameWeek > 0)

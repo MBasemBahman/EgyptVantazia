@@ -1,6 +1,6 @@
 ﻿using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.DBModels.AccountTeamModels;
-using Entities.DBModels.SubscriptionModels;
+using Microsoft.Data.SqlClient;
 using static Contracts.EnumData.DBModelsEnum;
 
 namespace Repository.DBModels.AccountTeamModels
@@ -79,167 +79,13 @@ namespace Repository.DBModels.AccountTeamModels
                    .ToList();
         }
 
-        public void UpdateRank(int id, int fk_Season)
+        public void UpdateAllAccountTeamsRanking(int fk_Season)
         {
-            DateTime lasUpdate = DateTime.UtcNow.AddDays(-1).Date;
+            _ = DBContext.Database.ExecuteSqlRaw("EXEC [dbo].[SP_UpdateAccountTeamGlobalRanking] @SeasonId", new SqlParameter("@SeasonId", fk_Season));
+            _ = DBContext.Database.ExecuteSqlRaw("EXEC [dbo].[SP_UpdateAccountTeamFavouriteTeamRanking] @SeasonId", new SqlParameter("@SeasonId", fk_Season));
+            _ = DBContext.Database.ExecuteSqlRaw("EXEC [dbo].[SP_UpdateAccountTeamCountryRanking] @SeasonId", new SqlParameter("@SeasonId", fk_Season));
+            _ = DBContext.Database.ExecuteSqlRaw("EXEC [dbo].[SP_UpdateAccountTeamGoldSubscriptionRanking] @SeasonId", new SqlParameter("@SeasonId", fk_Season));
 
-            var accountTeamModel = FindByCondition(a => a.Id == id &&
-                                                        (a.GlobalRankingUpdatedAt < lasUpdate ||
-                                                         a.CountryRankingUpdatedAt < lasUpdate ||
-                                                         a.FavouriteTeamRankingUpdatedAt < lasUpdate ||
-                                                         a.GoldSubscriptionUpdatedAt < lasUpdate ||
-                                                         a.UnSubscriptionUpdatedAt < lasUpdate), trackChanges: false)
-                                   .Select(a => new
-                                   {
-                                       a.Id,
-
-                                       a.GlobalRanking,
-                                       a.GlobalRankingUpdatedAt,
-
-                                       a.CountryRanking,
-                                       a.CountryRankingUpdatedAt,
-
-                                       a.FavouriteTeamRanking,
-                                       a.FavouriteTeamRankingUpdatedAt,
-
-                                       a.GoldSubscriptionRanking,
-                                       a.GoldSubscriptionUpdatedAt,
-
-                                       a.UnSubscriptionRanking,
-                                       a.UnSubscriptionUpdatedAt,
-
-                                       a.Account.Fk_Country,
-                                       a.Fk_FavouriteTeam
-
-                                   }).FirstOrDefault();
-
-            if (accountTeamModel == null)
-            {
-                return;
-            }
-
-            var accounts = FindByCondition(a => true, trackChanges: false)
-                           .OrderByDescending(a => a.TotalPoints)
-                           .Select(a => new
-                           {
-                               a.Id,
-                               a.TotalPoints,
-                               a.Fk_FavouriteTeam,
-                               a.Account.Fk_Country,
-                               HaveGoldSubscription = a.Account.AccountSubscriptions.Any(b => b.Fk_Subscription == (int)SubscriptionEnum.Gold &&
-                                                                                              b.IsActive &&
-                                                                                              b.Fk_Season == fk_Season),
-                           })
-                           .ToList();
-
-            AccountTeam accountTeam = FindById(id, trackChanges: true).Result;
-
-            if (accountTeamModel.GlobalRankingUpdatedAt == null ||
-                accountTeamModel.GlobalRankingUpdatedAt < lasUpdate)
-            {
-                int rank = accounts
-                           .Select((item, index) => new
-                           {
-                               item.Id,
-                               index
-                           })
-                           .Where(a => a.Id == id)
-                           .FirstOrDefault().index + 1;
-
-                if (rank != accountTeamModel.GlobalRanking)
-                {
-                    accountTeam.GlobalRanking = rank;
-                    accountTeam.GlobalRankingUpdatedAt = DateTime.UtcNow;
-                }
-            }
-
-            if (accountTeamModel.CountryRankingUpdatedAt == null ||
-               accountTeamModel.CountryRankingUpdatedAt < lasUpdate)
-            {
-                int rank = accounts
-                           .Where(a => a.Fk_Country == accountTeamModel.Fk_Country)
-                           .Select((item, index) => new
-                           {
-                               item.Id,
-                               index
-                           })
-                           .Where(a => a.Id == id)
-                           .FirstOrDefault().index + 1;
-
-                if (rank != accountTeamModel.CountryRanking)
-                {
-                    accountTeam.CountryRanking = rank;
-                    accountTeam.CountryRankingUpdatedAt = DateTime.UtcNow;
-                }
-            }
-
-            if (accountTeamModel.FavouriteTeamRankingUpdatedAt == null ||
-               accountTeamModel.FavouriteTeamRankingUpdatedAt < lasUpdate)
-            {
-                int rank = accounts
-                           .Where(a => a.Fk_FavouriteTeam == accountTeamModel.Fk_FavouriteTeam)
-                           .Select((item, index) => new
-                           {
-                               item.Id,
-                               index
-                           })
-                           .Where(a => a.Id == id)
-                           .FirstOrDefault().index + 1;
-
-                if (rank != accountTeamModel.FavouriteTeamRanking)
-                {
-                    accountTeam.FavouriteTeamRanking = rank;
-                    accountTeam.FavouriteTeamRankingUpdatedAt = DateTime.UtcNow;
-                }
-            }
-
-            if (accountTeamModel.GoldSubscriptionUpdatedAt == null ||
-               accountTeamModel.GoldSubscriptionUpdatedAt < lasUpdate)
-            {
-                if (accounts.Any(a => a.Id == id && a.HaveGoldSubscription == true))
-                {
-                    int rank = accounts
-                          .Where(a => a.HaveGoldSubscription == true)
-                          .Select((item, index) => new
-                          {
-                              item.Id,
-                              index
-                          })
-                          .Where(a => a.Id == id)
-                          .FirstOrDefault().index + 1;
-
-                    if (rank != accountTeamModel.GoldSubscriptionRanking)
-                    {
-                        accountTeam.GoldSubscriptionRanking = rank;
-                    }
-                }
-                accountTeam.GoldSubscriptionUpdatedAt = DateTime.UtcNow;
-            }
-
-            if (accountTeamModel.UnSubscriptionUpdatedAt == null ||
-               accountTeamModel.UnSubscriptionUpdatedAt < lasUpdate)
-            {
-                if (accounts.Any(a => a.Id == id && a.HaveGoldSubscription == false))
-                {
-                    int rank = accounts
-                       .Where(a => a.HaveGoldSubscription == false)
-                       .Select((item, index) => new
-                       {
-                           item.Id,
-                           index
-                       })
-                       .Where(a => a.Id == id)
-                       .FirstOrDefault().index + 1;
-
-                    if (rank != accountTeamModel.UnSubscriptionRanking)
-                    {
-                        accountTeam.UnSubscriptionRanking = rank;
-                    }
-                }
-                accountTeam.UnSubscriptionUpdatedAt = DateTime.UtcNow;
-            }
-
-            _ = DBContext.SaveChanges();
         }
 
         public void UpdateAccountTeamUpdateCards(AccountTeamsUpdateCards updateCards)
@@ -386,9 +232,9 @@ namespace Repository.DBModels.AccountTeamModels
                                            (Fk_Season == 0 || a.Fk_Season == Fk_Season) &&
 
                                            (fk_CommunicationStatus == null || a.Fk_CommunicationStatus == fk_CommunicationStatus) &&
-                                           (fk_CommunicationStatuses == null || !fk_CommunicationStatuses.Any() || 
+                                           (fk_CommunicationStatuses == null || !fk_CommunicationStatuses.Any() ||
                                                 fk_CommunicationStatuses.Contains((int)a.Fk_CommunicationStatus)) &&
-                                           
+
                                            (fk_AccountTeams == null || !fk_AccountTeams.Any() || fk_AccountTeams.Contains(a.Id)));
         }
 

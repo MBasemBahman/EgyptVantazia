@@ -215,10 +215,11 @@ namespace CoreServices.Logic
             return await PagedList<AccountTeamModel>.ToPagedList(accountTeams, parameters.PageNumber, parameters.PageSize);
         }
 
-        public void UpdateAccountTeamRank(int id, int fk_Season)
+        public void UpdateAllAccountTeamsRanking(int fk_Season)
         {
-            _repository.AccountTeam.UpdateRank(id, fk_Season);
+            _repository.AccountTeam.UpdateAllAccountTeamsRanking(fk_Season);
         }
+
         public async Task<AccountTeam> FindAccountTeambyId(int id, bool trackChanges)
         {
             return await _repository.AccountTeam.FindById(id, trackChanges);

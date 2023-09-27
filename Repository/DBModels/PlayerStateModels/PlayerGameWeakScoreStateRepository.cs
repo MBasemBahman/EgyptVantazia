@@ -1,6 +1,7 @@
 ﻿using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.PlayerStateModels;
+using Microsoft.Data.SqlClient;
 
 namespace Repository.DBModels.PlayerStateModels
 {
@@ -40,15 +41,9 @@ namespace Repository.DBModels.PlayerStateModels
                         .FirstOrDefaultAsync();
         }
 
-        public void ResetTop15(int fk_GameWeak)
+        public void UpdateTop15(int fk_GameWeak)
         {
-            List<PlayerGameWeakScoreState> players = FindAll(new PlayerGameWeakScoreStateParameters
-            {
-                Fk_GameWeak = fk_GameWeak,
-                IsTop15 = true
-            }, trackChanges: true).ToList();
-
-            players.ForEach(a => a.Top15 = null);
+            _ = DBContext.Database.ExecuteSqlRaw("EXEC [dbo].[SP_UpdatePlayerGameWeakScoreStateTop15] @GameWeakId", new SqlParameter("@GameWeakId", fk_GameWeak));
         }
 
         public new void Create(PlayerGameWeakScoreState entity)

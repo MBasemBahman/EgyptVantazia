@@ -126,7 +126,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 {
                     if (inDebug)
                     {
-                        await _playerStateCalc.UpdateTop15(teamGameWeak.Fk_GameWeek, teamGameWeak.Fk_Season);
+                        _playerStateCalc.UpdateTop15(teamGameWeak.Fk_GameWeek, teamGameWeak.Fk_Season);
 
                     }
                     else

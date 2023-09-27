@@ -327,50 +327,16 @@ namespace FantasyLogic.Calculations
             }
         }
 
-        public async Task UpdateTop15(int fk_GameWeak, int fk_Season)
+        public void UpdateTop15(int fk_GameWeak, int fk_Season)
         {
             if (fk_GameWeak > 0)
             {
-                _unitOfWork.PlayerState.ResetPlayerGameWeakScoreStateTop15(fk_GameWeak);
-
-                List<PlayerGameWeakScoreState> players = _unitOfWork.PlayerState.FindPlayerGameWeakScoreStates(new PlayerGameWeakScoreStateParameters
-                {
-                    Fk_ScoreState = (int)ScoreStateEnum.Total,
-                    Fk_GameWeak = fk_GameWeak,
-                }, trackChanges: true)
-                .OrderByDescending(a => a.Points)
-                .ThenBy(a => a.Fk_Player)
-                .Skip(0)
-                .Take(15)
-                .ToList();
-
-                int ranking = 1;
-
-                players.ForEach(PlayerGameWeakScore => PlayerGameWeakScore.Top15 = ranking++);
-
-                await _unitOfWork.Save();
+                _unitOfWork.PlayerState.UpdatePlayerGameWeakScoreStateTop15(fk_GameWeak);
             }
 
             if (fk_Season > 0)
             {
-                _unitOfWork.PlayerState.ResetPlayerSeasonScoreStateTop15(fk_Season);
-
-                List<PlayerSeasonScoreState> players = _unitOfWork.PlayerState.FindPlayerSeasonScoreStates(new PlayerSeasonScoreStateParameters
-                {
-                    Fk_ScoreState = (int)ScoreStateEnum.Total,
-                    Fk_Season = fk_Season,
-                }, trackChanges: true)
-                .OrderByDescending(a => a.Points)
-                .ThenBy(a => a.Fk_Player)
-                .Skip(0)
-                .Take(15)
-                .ToList();
-
-                int ranking = 1;
-
-                players.ForEach(PlayerGameWeakScore => PlayerGameWeakScore.Top15 = ranking++);
-
-                await _unitOfWork.Save();
+                _unitOfWork.PlayerState.UpdatePlayerSeasonScoreStateTop15(fk_Season);
             }
 
         }

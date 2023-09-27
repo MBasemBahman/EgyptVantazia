@@ -84,9 +84,9 @@ namespace CoreServices.Logic
             return await _repository.PlayerGameWeakScoreState.FindById(id, trackChanges);
         }
 
-        public void ResetPlayerGameWeakScoreStateTop15(int fk_GameWeak)
+        public void UpdatePlayerGameWeakScoreStateTop15(int fk_GameWeak)
         {
-            _repository.PlayerGameWeakScoreState.ResetTop15(fk_GameWeak);
+            _repository.PlayerGameWeakScoreState.UpdateTop15(fk_GameWeak);
         }
 
         public void CreatePlayerGameWeakScoreState(PlayerGameWeakScoreState PlayerGameWeakScoreState)
@@ -207,9 +207,9 @@ namespace CoreServices.Logic
             return await _repository.PlayerSeasonScoreState.FindById(id, trackChanges);
         }
 
-        public void ResetPlayerSeasonScoreStateTop15(int fk_Season)
+        public void UpdatePlayerSeasonScoreStateTop15(int fk_Season)
         {
-            _repository.PlayerSeasonScoreState.ResetTop15(fk_Season);
+            _repository.PlayerSeasonScoreState.UpdateTop15(fk_Season);
         }
 
         public void CreatePlayerSeasonScoreState(PlayerSeasonScoreState PlayerSeasonScoreState)

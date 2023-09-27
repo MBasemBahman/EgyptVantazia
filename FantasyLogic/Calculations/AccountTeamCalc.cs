@@ -611,21 +611,7 @@ namespace FantasyLogic.Calculations
 
         public void UpdateAccountTeamPoints(int fk_AccountTeam, int fk_Season)
         {
-            int totalPoints = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new AccountTeamGameWeakParameters
-            {
-                Fk_AccountTeam = fk_AccountTeam,
-                Fk_Season = fk_Season,
-            }, otherLang: false)
-                .Select(a => a.TotalPoints ?? 0)
-                .ToList()
-                .Sum();
-
-            AccountTeam accountTeam = _unitOfWork.AccountTeam.FindAccountTeambyId(fk_AccountTeam, trackChanges: true).Result;
-            if (accountTeam != null)
-            {
-                accountTeam.TotalPoints = totalPoints;
-                _unitOfWork.Save().Wait();
-            }
+            _unitOfWork.AccountTeam.UpdateAccountTeamPoints(fk_AccountTeam, fk_Season);
         }
 
         public void UpdateAccountTeamRanking(_365CompetitionsEnum _365CompetitionsEnum)

@@ -220,6 +220,11 @@ namespace CoreServices.Logic
             _repository.AccountTeam.UpdateAllAccountTeamsRanking(fk_Season);
         }
 
+        public void UpdateAccountTeamPoints(int fk_AccountTeam, int fk_Season)
+        {
+            _repository.AccountTeam.UpdateAccountTeamPoints(fk_AccountTeam, fk_Season);
+        }
+
         public async Task<AccountTeam> FindAccountTeambyId(int id, bool trackChanges)
         {
             return await _repository.AccountTeam.FindById(id, trackChanges);

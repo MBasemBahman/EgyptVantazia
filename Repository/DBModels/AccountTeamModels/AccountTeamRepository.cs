@@ -85,7 +85,22 @@ namespace Repository.DBModels.AccountTeamModels
             _ = DBContext.Database.ExecuteSqlRaw("EXEC [dbo].[SP_UpdateAccountTeamFavouriteTeamRanking] @SeasonId", new SqlParameter("@SeasonId", fk_Season));
             _ = DBContext.Database.ExecuteSqlRaw("EXEC [dbo].[SP_UpdateAccountTeamCountryRanking] @SeasonId", new SqlParameter("@SeasonId", fk_Season));
             _ = DBContext.Database.ExecuteSqlRaw("EXEC [dbo].[SP_UpdateAccountTeamGoldSubscriptionRanking] @SeasonId", new SqlParameter("@SeasonId", fk_Season));
+        }
 
+        public void UpdateAccountTeamPoints(int fk_AccountTeam, int fk_Season)
+        {
+            _ = DBContext.Database.ExecuteSqlRaw(@"UPDATE act
+                                                   SET act.TotalPoints = (
+                                                       SELECT SUM(atgw.TotalPoints)
+                                                       FROM [dbo].[AccountTeamGameWeaks] atgw
+                                                       JOIN [dbo].[GameWeaks] gw ON atgw.Fk_GameWeak = gw.Id
+                                                       WHERE atgw.Fk_AccountTeam = act.Id
+                                                       AND gw.Fk_Season = @SeasonId
+                                                   )
+                                                   FROM [dbo].[AccountTeams] act
+                                                   WHERE act.Id = @AccountTeamId", 
+                                                   new SqlParameter("@AccountTeamId", fk_AccountTeam),
+                                                   new SqlParameter("@SeasonId", fk_Season));
         }
 
         public void UpdateAccountTeamUpdateCards(AccountTeamsUpdateCards updateCards)

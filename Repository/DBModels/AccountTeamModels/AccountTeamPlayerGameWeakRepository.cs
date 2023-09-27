@@ -1,5 +1,6 @@
 ﻿using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.DBModels.AccountTeamModels;
+using Microsoft.Data.SqlClient;
 
 namespace Repository.DBModels.AccountTeamModels
 {
@@ -9,24 +10,24 @@ namespace Repository.DBModels.AccountTeamModels
         {
         }
 
-      //  SELECT TOP(1000)
-      // [dbo].[AccountTeamPlayerGameWeaks].[Id],
-      // [dbo].[Players].[Name],
-      // [Fk_AccountTeamPlayer]
-      //,[Fk_TeamPlayerType]
-      //,[Fk_GameWeak]
-      //,[IsPrimary]
-      //,[IsTransfer]
-      //,[Order]
-      //,[Points]
-      //,[HavePointsInTotal]
-      //,[HavePoints]
-      //  FROM[dbo].[AccountTeamPlayerGameWeaks], [dbo].[AccountTeamPlayers], [dbo].[Players]
-      //  where[dbo].[AccountTeamPlayers].[Id] = [dbo].[AccountTeamPlayerGameWeaks].[Fk_AccountTeamPlayer]
-      //  AND
-      //        [dbo].[AccountTeamPlayers].[Fk_AccountTeam] = 413 AND[dbo].[AccountTeamPlayerGameWeaks].[Fk_GameWeak] = 45 AND
-      //        [dbo].[AccountTeamPlayerGameWeaks].[IsTransfer] = 0 AND[dbo].[AccountTeamPlayerGameWeaks].[IsPrimary] = 0 AND
-      //        [dbo].[Players].[Id] = [dbo].[AccountTeamPlayers].Fk_Player
+        //  SELECT TOP(1000)
+        // [dbo].[AccountTeamPlayerGameWeaks].[Id],
+        // [dbo].[Players].[Name],
+        // [Fk_AccountTeamPlayer]
+        //,[Fk_TeamPlayerType]
+        //,[Fk_GameWeak]
+        //,[IsPrimary]
+        //,[IsTransfer]
+        //,[Order]
+        //,[Points]
+        //,[HavePointsInTotal]
+        //,[HavePoints]
+        //  FROM[dbo].[AccountTeamPlayerGameWeaks], [dbo].[AccountTeamPlayers], [dbo].[Players]
+        //  where[dbo].[AccountTeamPlayers].[Id] = [dbo].[AccountTeamPlayerGameWeaks].[Fk_AccountTeamPlayer]
+        //  AND
+        //        [dbo].[AccountTeamPlayers].[Fk_AccountTeam] = 413 AND[dbo].[AccountTeamPlayerGameWeaks].[Fk_GameWeak] = 45 AND
+        //        [dbo].[AccountTeamPlayerGameWeaks].[IsTransfer] = 0 AND[dbo].[AccountTeamPlayerGameWeaks].[IsPrimary] = 0 AND
+        //        [dbo].[Players].[Id] = [dbo].[AccountTeamPlayers].Fk_Player
 
 
         public IQueryable<AccountTeamPlayerGameWeak> FindAll(AccountTeamPlayerGameWeakParameters parameters, bool trackChanges)
@@ -55,28 +56,35 @@ namespace Repository.DBModels.AccountTeamModels
 
         public void ResetPoints(int fk_AccountTeam, int fk_GameWeak)
         {
-            List<AccountTeamPlayerGameWeak> players = FindAll(new AccountTeamPlayerGameWeakParameters
-            {
-                Fk_AccountTeam = fk_AccountTeam,
-                Fk_GameWeak = fk_GameWeak
-            }, trackChanges: true).ToList();
-
-            players.ForEach(a => a.Points = null);
+            _ = DBContext.Database.ExecuteSqlRaw(@"UPDATE atpgw
+                                                   SET atpgw.Points = NULL
+                                                   FROM AccountTeamPlayerGameWeaks AS atpgw
+                                                   WHERE EXISTS (
+                                                       SELECT 1
+                                                       FROM AccountTeamPlayers AS atp
+                                                       WHERE atpgw.fk_AccountTeamPlayer = atp.Id
+                                                         AND atpgw.Fk_GameWeak = @GameWeakId
+                                                         AND atp.fk_AccountTeam = @AccountTeamId
+                                                   );",
+                                                  new SqlParameter("@AccountTeamId", fk_AccountTeam),
+                                                  new SqlParameter("@GameWeakId", fk_GameWeak));
         }
 
         public void ResetTeamPlayers(int fk_AccountTeam, int fk_GameWeak, int fk_AccountTeamGameWeak)
         {
-            AccountTeamGameWeak accountTeamGameWeak = DBContext.AccountTeamGameWeaks
-                                                               .Where(a => a.Id == fk_AccountTeamGameWeak && a.TansfarePoints < 0)
-                                                               .FirstOrDefault();
-            if (accountTeamGameWeak != null)
-            {
-                accountTeamGameWeak.TansfarePoints = 0;
-            }
+            _ = DBContext.Database.ExecuteSqlRaw(@"UPDATE AccountTeamGameWeaks
+                                                   SET TansfarePoints = 0
+                                                   where Id = @AccountTeamGameWeakId
+                                                   AND TansfarePoints < 0;",
+                                                  new SqlParameter("@AccountTeamGameWeakId", fk_AccountTeamGameWeak));
 
-            List<AccountTeamPlayerGameWeak> players = FindByCondition(a => a.Fk_GameWeak == fk_GameWeak && a.AccountTeamPlayer.Fk_AccountTeam == fk_AccountTeam, trackChanges: true).ToList();
-
-            players.ForEach(player => Delete(player));
+            _ = DBContext.Database.ExecuteSqlRaw(@"DELETE atpgw
+                                                   FROM AccountTeamPlayerGameWeaks AS atpgw
+                                                   INNER JOIN AccountTeamPlayers AS atp ON atpgw.fk_AccountTeamPlayer = atp.Id
+                                                   WHERE atpgw.Fk_GameWeak = @GameWeakId
+                                                     AND atp.fk_AccountTeam = @AccountTeamId;",
+                                                  new SqlParameter("@AccountTeamId", fk_AccountTeam),
+                                                  new SqlParameter("@GameWeakId", fk_GameWeak));
         }
 
         public new void Create(AccountTeamPlayerGameWeak entity)

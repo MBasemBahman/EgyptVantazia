@@ -3,17 +3,12 @@ using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.AccountTeamModels;
-using Entities.DBModels.NotificationModels;
 using Entities.DBModels.SeasonModels;
-using Entities.ServicesModels;
 using FantasyLogic.Calculations;
 using FantasyLogic.DataMigration.PlayerScoreData;
-using IntegrationWith365.Entities.GameModels;
 using IntegrationWith365.Entities.GamesModels;
 using IntegrationWith365.Helpers;
-using Services;
 using static Contracts.EnumData.DBModelsEnum;
-using static Entities.EnumData.LogicEnumData;
 
 namespace FantasyLogic.DataMigration.GamesData
 {
@@ -243,7 +238,7 @@ namespace FantasyLogic.DataMigration.GamesData
             }
         }
 
-        public async Task SendNotificationForGameWeakDeadLine(int id)
+        public void SendNotificationForGameWeakDeadLine(int id)
         {
             //Notification notification = new()
             //{
@@ -274,7 +269,7 @@ namespace FantasyLogic.DataMigration.GamesData
             //}
         }
 
-        public async Task SendNotificationForMatch(int id, MatchNotificationEnum matchNotificationEnum)
+        public void SendNotificationForMatch(int id, MatchNotificationEnum matchNotificationEnum)
         {
             //TeamGameWeakModel match = _unitOfWork.Season.GetTeamGameWeaksForNotification(new TeamGameWeakParameters
             //{
@@ -400,7 +395,7 @@ namespace FantasyLogic.DataMigration.GamesData
                 }
                 else
                 {
-                    BackgroundJob.Enqueue(() => TransferAccountTeamPlayers(accounTeam, fk_CurrentGameWeak, fk_PrevGameWeak, prev_365_GameWeakId, fk_Season, resetTeam));
+                    _ = BackgroundJob.Enqueue(() => TransferAccountTeamPlayers(accounTeam, fk_CurrentGameWeak, fk_PrevGameWeak, prev_365_GameWeakId, fk_Season, resetTeam));
                 }
             }
         }

@@ -10,7 +10,7 @@ namespace Repository.DBModels.AccountTeamModels
         {
         }
 
-        //  SELECT TOP(1000)
+        //SELECT TOP(1000)
         // [dbo].[AccountTeamPlayerGameWeaks].[Id],
         // [dbo].[Players].[Name],
         // [Fk_AccountTeamPlayer]
@@ -22,12 +22,12 @@ namespace Repository.DBModels.AccountTeamModels
         //,[Points]
         //,[HavePointsInTotal]
         //,[HavePoints]
-        //  FROM[dbo].[AccountTeamPlayerGameWeaks], [dbo].[AccountTeamPlayers], [dbo].[Players]
-        //  where[dbo].[AccountTeamPlayers].[Id] = [dbo].[AccountTeamPlayerGameWeaks].[Fk_AccountTeamPlayer]
-        //  AND
-        //        [dbo].[AccountTeamPlayers].[Fk_AccountTeam] = 413 AND[dbo].[AccountTeamPlayerGameWeaks].[Fk_GameWeak] = 45 AND
-        //        [dbo].[AccountTeamPlayerGameWeaks].[IsTransfer] = 0 AND[dbo].[AccountTeamPlayerGameWeaks].[IsPrimary] = 0 AND
-        //        [dbo].[Players].[Id] = [dbo].[AccountTeamPlayers].Fk_Player
+        //FROM[dbo].[AccountTeamPlayerGameWeaks], [dbo].[AccountTeamPlayers], [dbo].[Players]
+        //where[dbo].[AccountTeamPlayers].[Id] = [dbo].[AccountTeamPlayerGameWeaks].[Fk_AccountTeamPlayer]
+        //AND
+        //      [dbo].[AccountTeamPlayers].[Fk_AccountTeam] = 413 AND[dbo].[AccountTeamPlayerGameWeaks].[Fk_GameWeak] = 45 AND
+        //      [dbo].[AccountTeamPlayerGameWeaks].[IsTransfer] = 0 AND[dbo].[AccountTeamPlayerGameWeaks].[IsPrimary] = 0 AND
+        //      [dbo].[Players].[Id] = [dbo].[AccountTeamPlayers].Fk_Player
 
 
         public IQueryable<AccountTeamPlayerGameWeak> FindAll(AccountTeamPlayerGameWeakParameters parameters, bool trackChanges)

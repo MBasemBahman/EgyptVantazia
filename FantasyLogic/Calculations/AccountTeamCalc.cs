@@ -119,22 +119,6 @@ namespace FantasyLogic.Calculations
                     jobId = hangfireJobId;
                 }
             }
-
-            //if (inDebug)
-            //{
-            //    UpdateAccountTeamGameWeakRanking(gameWeak, fk_Season);
-            //    UpdateAccountTeamRanking(fk_Season);
-            //}
-            //else
-            //{
-            //    jobId = jobId.IsExisting()
-            //            ? BackgroundJob.ContinueJobWith(jobId, () => UpdateAccountTeamGameWeakRanking(gameWeak, fk_Season))
-            //            : BackgroundJob.Enqueue(() => UpdateAccountTeamGameWeakRanking(gameWeak, fk_Season));
-
-            //    jobId = jobId.IsExisting()
-            //                ? BackgroundJob.ContinueJobWith(jobId, () => UpdateAccountTeamRanking(fk_Season))
-            //                : BackgroundJob.Enqueue(() => UpdateAccountTeamRanking(fk_Season));
-            //}
         }
 
         public AccountTeamCustemClac AccountTeamPlayersCalculations(int fk_AccountTeamGameWeak, int fk_AccountTeam, GameWeakModelForCalc gameWeak, int fk_Season, bool saveChanges = true, bool IgnoreTransfarePoints = false)

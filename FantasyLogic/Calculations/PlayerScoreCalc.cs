@@ -67,7 +67,7 @@ namespace FantasyLogic.Calculations
             }
             else if (score.Fk_ScoreType == (int)ScoreTypeEnum.PenaltiesSaved)
             {
-                score.FinalValue = score.Value.GetUntilOrEmpty("/").ParseToInt();
+                score.FinalValue = score.Value.ParseToInt();
                 score.Points = score.FinalValue * 5;
             }
             else if (score.Fk_ScoreType == (int)ScoreTypeEnum.PenaltyMissed)

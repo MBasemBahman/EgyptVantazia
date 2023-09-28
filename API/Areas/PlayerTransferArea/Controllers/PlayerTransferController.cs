@@ -88,11 +88,6 @@ namespace API.Areas.PlayerTransferArea.Controllers
                 });
             }
 
-            //if (currentTeam.TotalMoney <= 0)
-            //{
-            //    throw new Exception("You not have money for transfers!");
-            //}
-
             if (model.SellPlayers.Count != model.BuyPlayers.Count)
             {
                 throw new Exception("The transfer is not successful. The number of players sold is not the same as the number of players bought!");
@@ -172,13 +167,6 @@ namespace API.Areas.PlayerTransferArea.Controllers
                         throw new Exception("Please select correct players!");
                     }
 
-                    //if (prices.Any(a => a.Id == player.Fk_Player &&
-                    //                    (a.LastTransferTypeEnum == TransferTypeEnum.Selling ||
-                    //                     a.LastTransferTypeEnum == null)))
-                    //{
-                    //    throw new Exception("You can't sell a player, buy him first!");
-                    //}
-
                     if (accountTeamPlayer != null)
                     {
                         sellPlayersList.Add(accountTeamPlayer);
@@ -203,8 +191,6 @@ namespace API.Areas.PlayerTransferArea.Controllers
                 }
 
                 accountTeam.TotalMoney += totalPrice;
-
-                //_unitOfWork.Save().Wait();
             }
             if (model.BuyPlayers != null && model.BuyPlayers.Any())
             {
@@ -213,11 +199,6 @@ namespace API.Areas.PlayerTransferArea.Controllers
                 int freeTransfer = currentTeam.FreeTransfer;
                 foreach (PlayerTransferBuyModel player in model.BuyPlayers)
                 {
-                    //if (prices.Any(a => a.Id == player.Fk_Player && a.LastTransferTypeEnum == TransferTypeEnum.Buying))
-                    //{
-                    //    throw new Exception("You can't buy a player, he already has in your team!");
-                    //}
-
                     double price = prices.Where(a => a.Id == player.Fk_Player).Select(a => a.BuyPrice).FirstOrDefault();
 
                     _unitOfWork.PlayerTransfers.CreatePlayerTransfer(new PlayerTransfer
@@ -250,8 +231,7 @@ namespace API.Areas.PlayerTransferArea.Controllers
 
                     totalPrice += price;
                 }
-                //await _unitOfWork.Save();
-
+                
                 accountTeam.TotalMoney -= totalPrice;
                 accountTeam.FreeTransfer = freeTransfer;
 

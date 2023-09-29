@@ -59,9 +59,6 @@ namespace FantasyLogic.DataMigration.TeamData
 
         public async Task UpdatePlayers(_365CompetitionsEnum _365CompetitionsEnum, TeamForCalc team, List<PlayerPositionForCalc> positions, List<PlayerPositionForCalc> formations, string jobId)
         {
-            _unitOfWork.Team.UpdatePlayerActivation(fk_Team: team.Id, isActive: false);
-            _unitOfWork.Save().Wait();
-
             int _365_TeamId = team._365_TeamId.ParseToInt();
 
             SquadReturn squadsInArabic = await _365Services.GetSquads(_365CompetitionsEnum, new _365SquadsParameters

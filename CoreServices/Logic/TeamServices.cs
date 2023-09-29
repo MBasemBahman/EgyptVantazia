@@ -585,11 +585,6 @@ namespace CoreServices.Logic
             return await _repository.Player.FindBy365Id(id, trackChanges);
         }
 
-        public void UpdatePlayerActivation(int fk_Team, bool isActive)
-        {
-            _repository.Player.UpdateActivation(fk_Team, isActive);
-        }
-
         public void CreatePlayer(Player Player)
         {
             _repository.Player.Create(Player);

@@ -51,11 +51,6 @@ namespace Repository.DBModels.TeamModels
                         .FirstOrDefaultAsync();
         }
 
-        public void UpdateActivation(int fk_Team, bool isActive)
-        {
-            List<Player> players = FindByCondition(a => a.Fk_Team == fk_Team, trackChanges: true).ToList();
-            players.ForEach(a => a.IsActive = isActive);
-        }
         public new void Create(Player entity)
         {
             if (entity._365_PlayerId.IsExisting() && FindByCondition(a => a._365_PlayerId == entity._365_PlayerId, trackChanges: false).Any())
@@ -85,7 +80,7 @@ namespace Repository.DBModels.TeamModels
                     Name = entity.Name,
                 };
 
-                entity.IsActive = false;
+                //entity.IsActive = false;
 
                 entity.PlayerPrices ??= new List<PlayerPrice>
                 {

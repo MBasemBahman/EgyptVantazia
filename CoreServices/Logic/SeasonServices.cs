@@ -432,6 +432,12 @@ namespace CoreServices.Logic
             data.From_365_GameWeakIdValue = --current * duration;
             data.To_365_GameWeakIdValue = data.From_365_GameWeakIdValue + duration;
 
+            int numberOfSteps = data.To_365_GameWeakIdValue - data.From_365_GameWeakIdValue + 1;
+            if (numberOfSteps > duration)
+            {
+                data.From_365_GameWeakIdValue++;
+            }
+
             return data;
         }
         #endregion

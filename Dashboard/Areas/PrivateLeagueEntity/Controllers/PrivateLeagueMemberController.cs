@@ -1,5 +1,6 @@
 ﻿using Dashboard.Areas.PrivateLeagueEntity.Models;
 using Entities.CoreServicesModels.PrivateLeagueModels;
+using Entities.DBModels.PrivateLeagueModels;
 using Entities.RequestFeatures;
 namespace Dashboard.Areas.PrivateLeagueEntity.Controllers
 {
@@ -58,6 +59,24 @@ namespace Dashboard.Areas.PrivateLeagueEntity.Controllers
             DataTableResult<PrivateLeagueMemberDto> dataTableResult = dataTableManager.LoadTable(dtParameters, resultDto, data.MetaData.TotalCount, _unitOfWork.PrivateLeague.GetPrivateLeagueMemberCount());
 
             return Json(dataTableManager.ReturnTable(dataTableResult));
+        }
+
+        [Authorize(DashboardViewEnum.PrivateLeagueMember, AccessLevelEnum.Delete)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            PrivateLeagueMember data = await _unitOfWork.PrivateLeague.FindPrivateLeagueMemberbyId(id, trackChanges: false);
+
+            return View(data != null);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [Authorize(DashboardViewEnum.PrivateLeagueMember, AccessLevelEnum.Delete)]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            await _unitOfWork.PrivateLeague.DeletePrivateLeagueMember(id);
+            await _unitOfWork.Save();
+
+            return RedirectToAction(nameof(Index));
         }
 
         //helper methods

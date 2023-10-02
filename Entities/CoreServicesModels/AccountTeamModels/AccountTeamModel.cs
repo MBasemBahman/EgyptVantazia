@@ -309,9 +309,12 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public double TotalMoney { get; set; }
 
-        #region Cards
+		[DisplayName(nameof(IsVip))]
+		public bool IsVip { get; set; }
 
-        [DisplayName(nameof(BenchBoost))]
+		#region Cards
+
+		[DisplayName(nameof(BenchBoost))]
         [DefaultValue(0)]
         public int BenchBoost { get; set; }
 

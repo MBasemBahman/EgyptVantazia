@@ -163,6 +163,18 @@
                                                 <span asp-validation-for="TripleCaptain" class="text-danger"></span>
                                             </div>
                                         </div>
+
+                                        <div class="col-md-4 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="IsVip" class="form-label"></label>
+                                                <select asp-for="IsVip" class="form-select">
+                                                    <option value="">@Localizer.Get("All")</option>
+                                                    <option value="true">@Localizer.Get("Yes")</option>
+                                                    <option value="false">@Localizer.Get("No")</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
                                         <div class="divider">
                                             <div class="divider-text">@Localizer.Get("Ranking")</div>
                                         </div>

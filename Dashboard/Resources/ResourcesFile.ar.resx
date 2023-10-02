@@ -1515,4 +1515,7 @@
   <data name="Fk_CommunicationStatuses" xml:space="preserve">
     <value>حالات الاتصال</value>
   </data>
+  <data name="IsVip" xml:space="preserve">
+    <value>عضو ذهبي</value>
+  </data>
 </root>

@@ -72,7 +72,11 @@
                                             <th>
                                                 @Html.DisplayNameFor(model => row.Id)
 
-
+                                                        @if (accessLevel.DeleteAccess)
+                                                {
+                                                    <a id="delete" asp-action="Delete">
+                                                    </a>
+                                                }
                                             </th>
                                             <th>@Html.DisplayNameFor(model => row.Account)</th>
                                             <th>@Html.DisplayNameFor(model => row.PrivateLeague)</th>

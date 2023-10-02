@@ -87,4 +87,35 @@ BEGIN
     FROM [dbo].[AccountTeams] act
     JOIN RankedItems gri ON act.Id = gri.Id;
 END
+GO
 
+
+CREATE PROCEDURE [dbo].[SP_UpdateAccountTeamUnSubscriptionRanking]
+    @SeasonId int
+AS
+BEGIN
+    SET NOCOUNT ON;
+    WITH
+        RankedItems
+        AS
+        (
+            SELECT
+                act.Id,
+                act.TotalPoints,
+                ROW_NUMBER() OVER (ORDER BY act.TotalPoints DESC) AS NewRank
+            FROM [dbo].[AccountTeams] as act
+            WHERE act.Fk_Season = @SeasonId
+                AND act.Fk_Account NOT IN (
+            SELECT subs.Fk_Account
+                FROM [dbo].[AccountSubscriptions] AS subs
+                WHERE subs.Fk_Season = @SeasonId
+                    AND subs.IsActive = 1
+                    AND subs.Fk_Subscription = 10
+        )
+        )
+UPDATE act
+SET act.UnSubscriptionRanking = gri.NewRank
+FROM [dbo].[AccountTeams] act
+        JOIN RankedItems gri ON act.Id = gri.Id;
+END
+GO

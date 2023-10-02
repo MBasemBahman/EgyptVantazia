@@ -45,6 +45,8 @@ namespace API.Areas.AccountTeamArea.Controllers
                 parameters.Fk_GameWeak = _unitOfWork.Season.GetNextGameWeakId(_365CompetitionsEnum);
             }
 
+            parameters.Fk_Season = auth.Fk_Season;
+
             PagedList<AccountTeamGameWeakModel> data = await _unitOfWork.AccountTeam.GetAccountTeamGameWeakPaged(parameters, otherLang);
 
             SetPagination(data.MetaData, parameters);

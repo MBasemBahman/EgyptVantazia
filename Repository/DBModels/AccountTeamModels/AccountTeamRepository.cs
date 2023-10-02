@@ -85,6 +85,8 @@ namespace Repository.DBModels.AccountTeamModels
             _ = DBContext.Database.ExecuteSqlRaw("EXEC [dbo].[SP_UpdateAccountTeamFavouriteTeamRanking] @SeasonId", new SqlParameter("@SeasonId", fk_Season));
             _ = DBContext.Database.ExecuteSqlRaw("EXEC [dbo].[SP_UpdateAccountTeamCountryRanking] @SeasonId", new SqlParameter("@SeasonId", fk_Season));
             _ = DBContext.Database.ExecuteSqlRaw("EXEC [dbo].[SP_UpdateAccountTeamGoldSubscriptionRanking] @SeasonId", new SqlParameter("@SeasonId", fk_Season));
+            _ = DBContext.Database.ExecuteSqlRaw("EXEC [dbo].[SP_UpdateAccountTeamUnSubscriptionRanking] @SeasonId", new SqlParameter("@SeasonId", fk_Season));
+
         }
 
         public void UpdateAccountTeamPoints(int fk_AccountTeam, int fk_Season)

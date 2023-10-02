@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.useForm = true;
     ViewBag.userFormRepeater = true;
-    
+
     int returnPage = ViewData["returnPage"] != null ? (int)ViewData["returnPage"] : (int)PlayerMarkReturnPage.Index;
 }
 
@@ -54,7 +54,7 @@
                                     <br />
 
                                     <div class="row mb-1">
-                                        
+
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="Fk_Mark" class="form-label"></label>
@@ -76,7 +76,11 @@
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="Percent" class="form-label"></label>
-                                                <input asp-for="Percent" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Percent"))" />
+                                                <select asp-for="Percent" class="select2 form-select">
+                                                    <option value="25">25%</option>
+                                                    <option value="50">50%</option>
+                                                    <option value="75">75%</option>
+                                                </select>    
                                                 <span asp-validation-for="Percent" class="text-danger"></span>
                                             </div>
                                         </div>
@@ -84,7 +88,7 @@
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="Notes" class="form-label"></label>
-                                                <textarea rows="3" asp-for="Notes" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Notes"))" ></textarea>
+                                                <textarea rows="3" asp-for="Notes" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Notes"))"></textarea>
                                                 <span asp-validation-for="Notes" class="text-danger"></span>
                                             </div>
                                         </div>
@@ -135,7 +139,7 @@
                                         @*         <span asp-validation-for="Fk_TeamGameWeaks" class="text-danger"></span> *@
                                         @*     </div> *@
                                         @* </div> *@
-                                    
+
                                     </div>
 
                                     <hr />
@@ -145,9 +149,9 @@
                                             <button type="reset" class="btn btn-outline-secondary me-1">@Localizer.Get("Reset")</button>
                                             @if (returnPage == (int)PlayerReturnPage.PlayerProfile)
                                             {
-                                                <a asp-action="Profile" asp-controller="Player" asp-area="TeamEntity" 
-                                                   asp-route-id="@Model.Fk_Player" asp-route-returnItem="@((int)PlayerProfileItems.PlayerMark)" 
-                                                   class="btn btn-warning"> @Localizer.Get("Back") </a>
+                                                <a asp-action="Profile" asp-controller="Player" asp-area="TeamEntity"
+                                               asp-route-id="@Model.Fk_Player" asp-route-returnItem="@((int)PlayerProfileItems.PlayerMark)"
+                                               class="btn btn-warning"> @Localizer.Get("Back") </a>
                                             }
                                             else
                                             {

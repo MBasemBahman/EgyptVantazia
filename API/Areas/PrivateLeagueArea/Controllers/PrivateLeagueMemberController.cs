@@ -72,6 +72,8 @@ namespace API.Areas.PrivateLeagueArea.Controllers
             await _unitOfWork.PrivateLeague.DeletePrivateLeagueMember(id);
             await _unitOfWork.Save();
 
+            _unitOfWork.PrivateLeague.UpdatePrivateLeagueMembersPointsAndRanking(id);
+
             return true;
         }
 
@@ -122,6 +124,8 @@ namespace API.Areas.PrivateLeagueArea.Controllers
                 Fk_Account = auth.Fk_Account
             });
             await _unitOfWork.Save();
+
+            _unitOfWork.PrivateLeague.UpdatePrivateLeagueMembersPointsAndRanking(fk_PrivateLeague);
 
             PrivateLeagueModel data = _unitOfWork.PrivateLeague.GetPrivateLeagues(new PrivateLeagueParameters { Id = fk_PrivateLeague }, otherLang).FirstOrDefault();
 

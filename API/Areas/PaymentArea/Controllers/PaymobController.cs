@@ -37,7 +37,7 @@ namespace API.Areas.PaymentArea.Controllers
             _paymobServices = paymobServices;
             _kashierServices = kashierServices;
 
-            _onlinePaymentProvider = OnlinePaymentProviderEnum.Paymob;
+            _onlinePaymentProvider = OnlinePaymentProviderEnum.Kashier;
         }
 
         [HttpPost]

@@ -1,6 +1,4 @@
-﻿using Entities.CoreServicesModels.AccountTeamModels;
-using Entities.CoreServicesModels.PrivateLeagueModels;
-using Entities.DBModels.PrivateLeagueModels;
+﻿using Entities.CoreServicesModels.PrivateLeagueModels;
 using static Contracts.EnumData.DBModelsEnum;
 
 namespace FantasyLogic.Calculations
@@ -38,8 +36,7 @@ namespace FantasyLogic.Calculations
                 Id = id,
             }).Select(a => new
             {
-                a.Id,
-                _365_GameWeakIdValue = a.Fk_GameWeak > 0 ? a.GameWeak._365_GameWeakIdValue : 0
+                a.Id
             }).ToList();
 
             string jobId = "";
@@ -47,13 +44,13 @@ namespace FantasyLogic.Calculations
             {
                 if (indebug)
                 {
-                    _ = UpdatePrivateLeaguesRanking(fk_Season, privateLeague.Id, privateLeague._365_GameWeakIdValue, jobId);
+                    _ = UpdatePrivateLeaguesRanking(privateLeague.Id, jobId);
                 }
                 else
                 {
                     jobId = jobId.IsExisting()
-                            ? BackgroundJob.ContinueJobWith(jobId, () => UpdatePrivateLeaguesRanking(fk_Season, privateLeague.Id, privateLeague._365_GameWeakIdValue, jobId))
-                            : BackgroundJob.Enqueue(() => UpdatePrivateLeaguesRanking(fk_Season, privateLeague.Id, privateLeague._365_GameWeakIdValue, jobId));
+                            ? BackgroundJob.ContinueJobWith(jobId, () => UpdatePrivateLeaguesRanking(privateLeague.Id, jobId))
+                            : BackgroundJob.Enqueue(() => UpdatePrivateLeaguesRanking(privateLeague.Id, jobId));
                 }
             }
         }

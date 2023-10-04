@@ -58,24 +58,9 @@ namespace FantasyLogic.Calculations
             }
         }
 
-        public string UpdatePrivateLeaguesRanking(int fk_Season, int fk_PrivateLeague, int _365_GameWeakIdValue, string jobId)
+        public string UpdatePrivateLeaguesRanking(int fk_PrivateLeague, string jobId)
         {
-            int ranking = 1;
-
-            List<AccountTeamModel> accountTeams = _unitOfWork.AccountTeam.GetPrivateLeaguesPoints(fk_Season, fk_PrivateLeague, _365_GameWeakIdValue);
-
-            foreach (AccountTeamModel accountTeam in accountTeams)
-            {
-                _unitOfWork.PrivateLeague.CreatePrivateLeagueMember(new PrivateLeagueMember
-                {
-                    Fk_Account = accountTeam.Fk_Account,
-                    Fk_PrivateLeague = fk_PrivateLeague,
-                    Ranking = ranking++,
-                    Points = accountTeam.TotalPoints
-                });
-            }
-
-            _unitOfWork.Save().Wait();
+            _unitOfWork.PrivateLeague.UpdatePrivateLeagueMembersPointsAndRanking(fk_PrivateLeague);
 
             return jobId;
         }

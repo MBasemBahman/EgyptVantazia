@@ -32,7 +32,7 @@ namespace Repository.DBModels.PrivateLeagueModels
                         .FirstOrDefaultAsync();
         }
 
-        public void UpdateMemberPointsAndRanking(int fk_PrivateLeague)
+        public void UpdatePrivateLeagueMembersPointsAndRanking(int fk_PrivateLeague)
         {
             _ = DBContext.Database.ExecuteSqlRaw(@"WITH CTE AS (
                                                        SELECT

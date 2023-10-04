@@ -165,6 +165,11 @@ namespace CoreServices.Logic
             return await _repository.PrivateLeagueMember.FindById(id, trackChanges);
         }
 
+        public void UpdatePrivateLeagueMembersPointsAndRanking(int fk_PrivateLeague)
+        {
+            _repository.PrivateLeagueMember.UpdatePrivateLeagueMembersPointsAndRanking(fk_PrivateLeague);
+        }
+
         public void CreatePrivateLeagueMember(PrivateLeagueMember PrivateLeagueMember)
         {
             _repository.PrivateLeagueMember.Create(PrivateLeagueMember);

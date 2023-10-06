@@ -49,17 +49,7 @@ namespace CoreServices.Logic
                            } : null,
                            Name = a.Name,
                            TotalMoney = a.TotalMoney,
-                           TotalTeamPrice = a.AccountTeamPlayers
-                                             .Where(b => b.AccountTeamPlayerGameWeaks
-                                                          .Any(c => c.GameWeak.IsNext &&
-                                                                    c.AccountTeamPlayer.Fk_AccountTeam == a.Id &&
-                                                                    c.IsTransfer == false))
-                                             .SelectMany(b => b.Player
-                                                               .PlayerPrices
-                                                               .OrderByDescending(c => c.Id))
-                                             .GroupBy(b => b.Fk_Player)
-                                             .Select(b => b.FirstOrDefault().SellPrice)
-                                             .Sum(),
+                           TotalTeamPrice = a.TotalTeamPrice,
                            IsVip = a.IsVip,
                            TotalPoints = (parameters.GetMonthPlayer &&
                                      parameters.From_365_GameWeakIdValue >= 0 &&
@@ -223,6 +213,11 @@ namespace CoreServices.Logic
         public void UpdateAccountTeamPoints(int fk_AccountTeam, int fk_Season)
         {
             _repository.AccountTeam.UpdateAccountTeamPoints(fk_AccountTeam, fk_Season);
+        }
+
+        public void UpdateAccountTeamTotalTeamPrice(int fk_AccountTeam, int fk_GameWeak)
+        {
+            _repository.AccountTeam.UpdateTotalTeamPrice(fk_AccountTeam, fk_GameWeak);
         }
 
         public async Task<AccountTeam> FindAccountTeambyId(int id, bool trackChanges)

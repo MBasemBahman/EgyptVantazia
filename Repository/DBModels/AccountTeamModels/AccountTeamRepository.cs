@@ -100,9 +100,40 @@ namespace Repository.DBModels.AccountTeamModels
                                                        AND gw.Fk_Season = @SeasonId
                                                    )
                                                    FROM [dbo].[AccountTeams] act
-                                                   WHERE act.Id = @AccountTeamId", 
+                                                   WHERE act.Id = @AccountTeamId",
                                                    new SqlParameter("@AccountTeamId", fk_AccountTeam),
                                                    new SqlParameter("@SeasonId", fk_Season));
+        }
+
+        public void UpdateTotalTeamPrice(int fk_AccountTeam, int fk_GameWeak)
+        {
+            _ = DBContext.Database.ExecuteSqlRaw(@"UPDATE AccountTeams
+                                                   SET TotalTeamPrice = COALESCE((
+                                                       SELECT SUM(LastSellPrice) AS TotalSellPrice
+                                                       FROM (
+                                                           SELECT
+                                                               pp.SellPrice AS LastSellPrice,
+                                                               ROW_NUMBER() OVER (PARTITION BY pp.Fk_Player ORDER BY pp.Id DESC) AS RowNum
+                                                           FROM AccountTeamPlayers atp
+                                                           INNER JOIN PlayerPrices pp ON atp.Fk_Player = pp.Fk_Player
+                                                           WHERE atp.Fk_AccountTeam = @AccountTeamId
+                                                           AND EXISTS (
+                                                               SELECT 1
+                                                               FROM AccountTeamPlayerGameWeaks atpgw
+                                                               INNER JOIN GameWeaks gw ON atpgw.Fk_GameWeak = gw.Id
+                                                               INNER JOIN AccountTeamPlayers acpl ON atpgw.Fk_AccountTeamPlayer = acpl.Id
+                                                               WHERE acpl.Fk_AccountTeam = atp.Fk_AccountTeam
+                                                               AND acpl.Fk_Player = atp.Fk_Player
+                                                               AND gw.Id = @GameWeakId
+                                                               AND gw.IsNext = 1
+                                                               AND atpgw.IsTransfer = 0
+                                                           )
+                                                       ) AS Subquery
+                                                       WHERE RowNum = 1
+                                                   ),0)
+                                                   WHERE Id = @AccountTeamId;
+                                                   ", new SqlParameter("@AccountTeamId", fk_AccountTeam)
+                                                   , new SqlParameter("@GameWeakId", fk_GameWeak));
         }
 
         public void UpdateAccountTeamUpdateCards(AccountTeamsUpdateCards updateCards)

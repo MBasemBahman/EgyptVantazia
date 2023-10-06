@@ -50,6 +50,9 @@ namespace Entities.DBModels.AccountTeamModels
         [DisplayName(nameof(TotalMoney))]
         public double TotalMoney { get; set; }
 
+        [DisplayName(nameof(TotalTeamPrice))]
+        public double TotalTeamPrice { get; set; }
+
         #endregion
 
         #region Cards

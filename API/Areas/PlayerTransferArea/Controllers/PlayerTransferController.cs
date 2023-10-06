@@ -44,7 +44,7 @@ namespace API.Areas.PlayerTransferArea.Controllers
         [HttpPost]
         [Route(nameof(Create))]
         public async Task<bool> Create(
-            [FromQuery] _365CompetitionsEnum _365CompetitionsEnum, 
+            [FromQuery] _365CompetitionsEnum _365CompetitionsEnum,
             [FromBody] PlayerTransferBulkCreateModel model)
         {
             UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
@@ -231,7 +231,7 @@ namespace API.Areas.PlayerTransferArea.Controllers
 
                     totalPrice += price;
                 }
-                
+
                 accountTeam.TotalMoney -= totalPrice;
                 accountTeam.FreeTransfer = freeTransfer;
 
@@ -263,6 +263,8 @@ namespace API.Areas.PlayerTransferArea.Controllers
             }
 
             await _unitOfWork.Save();
+
+            _unitOfWork.AccountTeam.UpdateAccountTeamTotalTeamPrice(currentTeam.Id, nextGameWeakId);
 
             return true;
         }

@@ -91,7 +91,7 @@ namespace Repository.DBModels.PlayerScoreModels
 
         public void DeleteOldPlayerScores(int fk_PlayerGameWeak)
         {
-            _ = DBContext.Database.ExecuteSqlRaw("DELETE FROM [dbo].[PlayerGameWeakScores] WHERE [Fk_PlayerGameWeak] = @fkPlayerGameWeakId", new SqlParameter("@fkPlayerGameWeakId", fk_PlayerGameWeak));
+            _ = DBContext.Database.ExecuteSqlRaw("DELETE FROM [dbo].[PlayerGameWeakScores] WHERE [Fk_PlayerGameWeak] = @fkPlayerGameWeakId and IsCanNotEdit = 0", new SqlParameter("@fkPlayerGameWeakId", fk_PlayerGameWeak));
         }
     }
 }

@@ -49,7 +49,7 @@ namespace Repository.DBModels.PrivateLeagueModels
                                                        FROM [dbo].[PrivateLeagueMembers] plm
                                                        JOIN [dbo].[PrivateLeagues] pl ON pl.Id = plm.Fk_PrivateLeague
                                                        JOIN [dbo].[GameWeaks] plgw ON plgw.Id = pl.Fk_GameWeak
-                                                       WHERE plm.Fk_PrivateLeague = 6
+                                                       WHERE plm.Fk_PrivateLeague = @PrivateLeagueId
                                                    )
                                                    UPDATE plm
                                                    SET

@@ -118,7 +118,7 @@ namespace CoreServices.Logic
                                ImageUrl = a.Account.StorageUrl + a.Account.ImageUrl,
                                FullName = a.Account.FullName,
                                AccountTeam = a.Account.AccountTeams
-                                                      .Where(b => b.Fk_Season == a.Account.Fk_Season)
+                                                      .Where(b => b.Fk_Season == parameters.Fk_Season)
                                                       .Select(b => new AccountTeamModel
                                                       {
                                                           Id = b.Id,

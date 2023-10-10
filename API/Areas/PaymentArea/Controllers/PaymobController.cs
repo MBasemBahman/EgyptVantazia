@@ -384,8 +384,9 @@ namespace API.Areas.PaymentArea.Controllers
                         accounTeam.WildCard++;
                         accounTeam.IsVip = true;
                         accounTeam.TotalMoney += 3;
+                        accounTeam.HaveGoldSubscription = true;
 
-                        Account account = await _unitOfWork.Account.FindAccountById(accounTeam.Fk_Account, trackChanges: true);
+						Account account = await _unitOfWork.Account.FindAccountById(accounTeam.Fk_Account, trackChanges: true);
                         account.ShowAds = false;
                     }
                     else if (accountSubscription.Fk_Subscription == (int)SubscriptionEnum.TripleCaptain)
@@ -425,6 +426,7 @@ namespace API.Areas.PaymentArea.Controllers
                         Account account = await _unitOfWork.Account.FindAccountById(accounTeam.Fk_Account, trackChanges: true);
                         account.ShowAds = false;
                     }
+
 
                     _unitOfWork.Save().Wait();
                 }

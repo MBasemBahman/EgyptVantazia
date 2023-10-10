@@ -42,9 +42,12 @@ namespace Entities.DBModels.AccountTeamModels
         [Required(ErrorMessage = PropertyAttributeConstants.RequiredMsg)]
         public string Name { get; set; }
 
-        #region Calculations
+		[DisplayName(nameof(HaveGoldSubscription))]
+		public bool HaveGoldSubscription { get; set; }
 
-        [DisplayName(nameof(TotalPoints))]
+		#region Calculations
+
+		[DisplayName(nameof(TotalPoints))]
         public int TotalPoints { get; set; }
 
         [DisplayName(nameof(TotalMoney))]

@@ -165,8 +165,9 @@ namespace Dashboard.Areas.AccountSubscriptionEntity.Controllers
                         accounTeam.WildCard++;
                         accounTeam.IsVip = true;
                         accounTeam.TotalMoney += 3;
+                        accounTeam.HaveGoldSubscription = true;
 
-                        Account account = await _unitOfWork.Account.FindAccountById(accounTeam.Fk_Account, trackChanges: true);
+						Account account = await _unitOfWork.Account.FindAccountById(accounTeam.Fk_Account, trackChanges: true);
                         account.ShowAds = false;
                     }
                     else if (accountSubscriptionDB.Fk_Subscription == (int)SubscriptionEnum.TripleCaptain)
@@ -215,7 +216,6 @@ namespace Dashboard.Areas.AccountSubscriptionEntity.Controllers
                 }
 
                 await _unitOfWork.Save();
-
 
                 return returnPage == (int)AccountSubscriptionReturnPageEnum.Index
                     ? RedirectToAction("Index", "AccountSubscription", new

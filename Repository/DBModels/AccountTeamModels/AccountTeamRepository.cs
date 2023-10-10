@@ -105,7 +105,26 @@ namespace Repository.DBModels.AccountTeamModels
                                                    new SqlParameter("@SeasonId", fk_Season));
         }
 
-        public void UpdateTotalTeamPrice(int fk_AccountTeam, int fk_GameWeak)
+		public void UpdateAccountTeamGold(int fk_AccountTeam, int fk_Season)
+		{
+			_ = DBContext.Database.ExecuteSqlRaw(@"UPDATE act
+                                                   SET act.HaveGoldSubscription = CASE
+                                                       WHEN EXISTS (
+                                                           SELECT 1
+                                                           FROM [dbo].[AccountSubscriptions] AS asub
+                                                           WHERE asub.Fk_Subscription = 10
+                                                           AND asub.Fk_Season = @SeasonId
+                                                           AND asub.IsActive = 1
+                                                       ) THEN 1
+                                                       ELSE 0
+                                                       END
+                                                   FROM [dbo].[Accounts] AS act
+                                                   WHERE act.Id = @AccountTeamId;",
+												   new SqlParameter("@AccountTeamId", fk_AccountTeam),
+												   new SqlParameter("@SeasonId", fk_Season));
+		}
+
+		public void UpdateTotalTeamPrice(int fk_AccountTeam, int fk_GameWeak)
         {
             _ = DBContext.Database.ExecuteSqlRaw(@"UPDATE AccountTeams
                                                    SET TotalTeamPrice = COALESCE((

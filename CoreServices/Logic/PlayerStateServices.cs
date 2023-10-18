@@ -170,6 +170,13 @@ namespace CoreServices.Logic
                                Name = otherLang ? a.Player.PlayerLang.Name : a.Player.Name,
                                ShortName = otherLang ? a.Player.PlayerLang.ShortName : a.Player.ShortName,
                                ImageUrl = !string.IsNullOrEmpty(a.Player.ImageUrl) ? a.Player.StorageUrl + a.Player.ImageUrl : a.Player.Team.ShirtStorageUrl + a.Player.Team.ShirtImageUrl,
+                               Team = new TeamModel
+                               {
+                                   Name = otherLang ? a.Player.Team.TeamLang.Name : a.Player.Team.Name,
+                                   ShortName = otherLang ? a.Player.Team.TeamLang.ShortName : a.Player.Team.ShortName,
+                                   ImageUrl = a.Player.Team.StorageUrl + a.Player.Team.ImageUrl,
+                                   ShirtImageUrl = a.Player.Team.ShirtStorageUrl + a.Player.Team.ShirtImageUrl,
+                               }
                            },
                            ScoreState = new ScoreStateModel
                            {

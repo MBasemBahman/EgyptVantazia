@@ -31,7 +31,7 @@ namespace FantasyLogic.DataMigration.TeamData
 
             foreach (TeamForCalc team in teams)
             {
-                BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => UpdatePlayers(_365CompetitionsEnum, team));
+                BackgroundJob.Enqueue( () => UpdatePlayers(_365CompetitionsEnum, team));
             }
         }
 

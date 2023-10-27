@@ -31,7 +31,7 @@ namespace FantasyLogic.DataMigration.StandingsData
 
             SeasonModelForCalc season = _unitOfWork.Season.GetCurrentSeason(_365CompetitionsEnum);
 
-            _ = BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => UpdateSeasonStandings(_365CompetitionsEnum, teams, season._365_SeasonId.ParseToInt(), season.Id));
+            _ = BackgroundJob.Enqueue( () => UpdateSeasonStandings(_365CompetitionsEnum, teams, season._365_SeasonId.ParseToInt(), season.Id));
         }
 
         public async Task UpdateSeasonStandings(_365CompetitionsEnum _365CompetitionsEnum, List<TeamForCalc> teams, int _365_SeasonId, int fk_Season)
@@ -50,7 +50,7 @@ namespace FantasyLogic.DataMigration.StandingsData
                                    .Select(a => a.Id)
                                    .FirstOrDefault();
 
-                BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => UpdateStanding(row, fk_Season, fk_Team));
+                BackgroundJob.Enqueue( () => UpdateStanding(row, fk_Season, fk_Team));
             }
         }
 

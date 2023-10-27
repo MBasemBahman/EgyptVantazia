@@ -26,7 +26,7 @@ namespace FantasyLogicMicroservices.Areas.TeamDataArea.Controllers
         [Route(nameof(UpdateTeams))]
         public IActionResult UpdateTeams([FromQuery] _365CompetitionsEnum _365CompetitionsEnum)
         {
-            _ = BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => _fantasyUnitOfWork.TeamDataHelper.RunUpdateTeams(_365CompetitionsEnum));
+            _ = BackgroundJob.Enqueue( () => _fantasyUnitOfWork.TeamDataHelper.RunUpdateTeams(_365CompetitionsEnum));
 
             return Ok();
         }

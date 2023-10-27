@@ -32,7 +32,7 @@ namespace FantasyLogic.DataMigration.SeasonData
                 }
                 else
                 {
-                    BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => UpdateGameWeak(round, season.Id));
+                    BackgroundJob.Enqueue( () => UpdateGameWeak(round, season.Id));
                 }
             }
         }

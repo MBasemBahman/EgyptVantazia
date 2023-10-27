@@ -5,7 +5,6 @@ using Entities.DBModels.AccountTeamModels;
 using System.ComponentModel;
 using System.Linq.Dynamic.Core;
 using static Contracts.EnumData.DBModelsEnum;
-using static Contracts.EnumData.HanfireEnum;
 
 namespace FantasyLogic.Calculations
 {
@@ -55,7 +54,7 @@ namespace FantasyLogic.Calculations
                 }
                 else
                 {
-                    _ = BackgroundJob.Enqueue(HanfireQueuesEnum.AccountPoints.ToString(), () => AccountTeamGameWeakCalculations(gameWeak, season, fk_AccountTeam, fk_Players, fk_Teams, inDebug));
+                    _ = BackgroundJob.Enqueue(() => AccountTeamGameWeakCalculations(gameWeak, season, fk_AccountTeam, fk_Players, fk_Teams, inDebug));
                 }
             }
         }
@@ -94,7 +93,7 @@ namespace FantasyLogic.Calculations
                 {
                     string recurringId = AccountGameWeakTeamId + $"{accountTeamGameWeak.Id}";
 
-                    string hangfireJobId = BackgroundJob.Enqueue(HanfireQueuesEnum.AccountPoints.ToString(), () => AccountTeamPlayersCalculations(accountTeamGameWeak.Id, accountTeamGameWeak.Fk_AccountTeam, gameWeak, fk_Season, true, false));
+                    string hangfireJobId = BackgroundJob.Enqueue(() => AccountTeamPlayersCalculations(accountTeamGameWeak.Id, accountTeamGameWeak.Fk_AccountTeam, gameWeak, fk_Season, true, false));
 
                     _hangFireCustomJob.ReplaceJob(hangfireJobId, recurringId);
                 }
@@ -113,7 +112,7 @@ namespace FantasyLogic.Calculations
                 {
                     string recurringId = AccountTeamId + $"{accountTeam}";
 
-                    string hangfireJobId = BackgroundJob.Enqueue(HanfireQueuesEnum.AccountPoints.ToString(), () => UpdateAccountTeamPoints(accountTeam, fk_Season));
+                    string hangfireJobId = BackgroundJob.Enqueue(() => UpdateAccountTeamPoints(accountTeam, fk_Season));
 
                     _hangFireCustomJob.ReplaceJob(hangfireJobId, recurringId);
 

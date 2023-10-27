@@ -82,7 +82,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 }
                 if (runAll)
                 {
-                    _ = BackgroundJob.Enqueue(HanfireQueuesEnum.MatchPoints.ToString(), () => UpdateGameResult(_365CompetitionsEnum, teamGameWeak, scoreTypes, runBonus, inDebug, runAll, stopAll, statisticsOnly));
+                    _ = BackgroundJob.Enqueue( () => UpdateGameResult(_365CompetitionsEnum, teamGameWeak, scoreTypes, runBonus, inDebug, runAll, stopAll, statisticsOnly));
                 }
                 else
                 {
@@ -132,7 +132,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                     }
                     else
                     {
-                        _ = BackgroundJob.Enqueue(HanfireQueuesEnum.MatchPoints.ToString(), () => _playerStateCalc.UpdateTop15(teamGameWeak.Fk_GameWeek, teamGameWeak.Fk_Season));
+                        _ = BackgroundJob.Enqueue( () => _playerStateCalc.UpdateTop15(teamGameWeak.Fk_GameWeek, teamGameWeak.Fk_Season));
                     }
                 }
             }
@@ -176,8 +176,8 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                     }
                     else
                     {
-                        _ = BackgroundJob.Enqueue(HanfireQueuesEnum.MatchPoints.ToString(), () => UpdateStatistic(gameReturn.Game.AwayCompetitor.Statistics, statisticScores, teamGameWeak.Id, match.Fk_Away));
-                        _ = BackgroundJob.Enqueue(HanfireQueuesEnum.MatchPoints.ToString(), () => UpdateStatistic(gameReturn.Game.HomeCompetitor.Statistics, statisticScores, teamGameWeak.Id, match.Fk_Home));
+                        _ = BackgroundJob.Enqueue( () => UpdateStatistic(gameReturn.Game.AwayCompetitor.Statistics, statisticScores, teamGameWeak.Id, match.Fk_Away));
+                        _ = BackgroundJob.Enqueue( () => UpdateStatistic(gameReturn.Game.HomeCompetitor.Statistics, statisticScores, teamGameWeak.Id, match.Fk_Home));
                     }
                 }
                 if (statisticsOnly == false)
@@ -271,7 +271,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                                         {
                                             string JobPlayerId = this.JobPlayerId + teamGameWeak._365_MatchId.ToString() + $"-{member.Id}";
 
-                                            string hangfireJobId = BackgroundJob.Enqueue(HanfireQueuesEnum.MatchPoints.ToString(), () => UpdatePlayerResult(_365CompetitionsEnum, gameReturn, member, player, rankingIndex, teamGameWeak, memberResult, scoreTypes, match, inDebug));
+                                            string hangfireJobId = BackgroundJob.Enqueue( () => UpdatePlayerResult(_365CompetitionsEnum, gameReturn, member, player, rankingIndex, teamGameWeak, memberResult, scoreTypes, match, inDebug));
 
                                             _hangFireCustomJob.ReplaceJob(hangfireJobId, JobPlayerId);
                                         }
@@ -298,7 +298,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                         }
                         else
                         {
-                            _ = BackgroundJob.Enqueue(HanfireQueuesEnum.MatchPoints.ToString(), () => _playerStateCalc.RunPlayersStateCalculations(_365CompetitionsEnum, match.Fk_GameWeak, match._365_MatchId, players, null, false, inDebug));
+                            _ = BackgroundJob.Enqueue( () => _playerStateCalc.RunPlayersStateCalculations(_365CompetitionsEnum, match.Fk_GameWeak, match._365_MatchId, players, null, false, inDebug));
                         }
                     }
                 }

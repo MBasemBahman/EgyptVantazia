@@ -47,7 +47,7 @@ namespace FantasyLogic.DataMigration.GamesData
                 _365_TeamId = a._365_TeamId
             }).ToList();
 
-            _ = BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => UpdateGames(_365CompetitionsEnum, teams));
+            _ = BackgroundJob.Enqueue( () => UpdateGames(_365CompetitionsEnum, teams));
         }
 
         public void UpdateGames(_365CompetitionsEnum _365CompetitionsEnum, List<TeamModelForCalc> teams)
@@ -76,14 +76,14 @@ namespace FantasyLogic.DataMigration.GamesData
                 if (fk_GameWeak > 0)
                 {
                     jobId = jobId.IsExisting()
-                        ? BackgroundJob.ContinueJobWith(jobId, HanfireQueuesEnum.DailyTasks.ToString(), () => UpdateGame(_365CompetitionsEnum, game, fk_Home, fk_Away, fk_GameWeak))
-                        : BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => UpdateGame(_365CompetitionsEnum, game, fk_Home, fk_Away, fk_GameWeak));
+                        ? BackgroundJob.ContinueJobWith(jobId,  () => UpdateGame(_365CompetitionsEnum, game, fk_Home, fk_Away, fk_GameWeak))
+                        : BackgroundJob.Enqueue( () => UpdateGame(_365CompetitionsEnum, game, fk_Home, fk_Away, fk_GameWeak));
                 }
             }
 
             jobId = jobId.IsExisting()
-                    ? BackgroundJob.ContinueJobWith(jobId, HanfireQueuesEnum.DailyTasks.ToString(), () => UpdateGameWeakDeadline(_365CompetitionsEnum, season.Id))
-                    : BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => UpdateGameWeakDeadline(_365CompetitionsEnum, season.Id));
+                    ? BackgroundJob.ContinueJobWith(jobId,  () => UpdateGameWeakDeadline(_365CompetitionsEnum, season.Id))
+                    : BackgroundJob.Enqueue( () => UpdateGameWeakDeadline(_365CompetitionsEnum, season.Id));
         }
 
         public async Task UpdateGame(
@@ -139,13 +139,13 @@ namespace FantasyLogic.DataMigration.GamesData
 
                 GameResultDataHelper gameResultDataHelper = new(_unitOfWork, _365Services);
 
-                match.JobId = BackgroundJob.Schedule(HanfireQueuesEnum.MatchPoints.ToString(), () => gameResultDataHelper.RunUpdateGameResult(_365CompetitionsEnum, new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, false, false, false, false, false), startTime); // بداية الماتش;
-                match.SecondJobId = BackgroundJob.Schedule(HanfireQueuesEnum.MatchPoints.ToString(), () => gameResultDataHelper.RunUpdateGameResult(_365CompetitionsEnum, new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, true, false, false, false, false), startTime.AddMinutes(120)); // احتساب البونص;
-                match.ThirdJobId = BackgroundJob.Schedule(HanfireQueuesEnum.MatchPoints.ToString(), () => gameResultDataHelper.RunUpdateGameResult(_365CompetitionsEnum, new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, true, false, false, true, false), startTime.AddMinutes(200)); // احتساب البونص;
+                match.JobId = BackgroundJob.Schedule( () => gameResultDataHelper.RunUpdateGameResult(_365CompetitionsEnum, new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, false, false, false, false, false), startTime); // بداية الماتش;
+                match.SecondJobId = BackgroundJob.Schedule( () => gameResultDataHelper.RunUpdateGameResult(_365CompetitionsEnum, new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, true, false, false, false, false), startTime.AddMinutes(120)); // احتساب البونص;
+                match.ThirdJobId = BackgroundJob.Schedule( () => gameResultDataHelper.RunUpdateGameResult(_365CompetitionsEnum, new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, true, false, false, true, false), startTime.AddMinutes(200)); // احتساب البونص;
 
-                match.FirstNotificationJobId = BackgroundJob.Schedule(HanfireQueuesEnum.MatchPoints.ToString(), () => SendNotificationForMatch(match.Id, MatchNotificationEnum.StartMatch), startTime);
-                match.SecondNotificationJobId = BackgroundJob.Schedule(HanfireQueuesEnum.MatchPoints.ToString(), () => SendNotificationForMatch(match.Id, MatchNotificationEnum.HalfTime), startTime.AddMinutes(45));
-                match.ThirdNotificationJobId = BackgroundJob.Schedule(HanfireQueuesEnum.MatchPoints.ToString(), () => SendNotificationForMatch(match.Id, MatchNotificationEnum.EndMatch), startTime.AddMinutes(105));
+                match.FirstNotificationJobId = BackgroundJob.Schedule( () => SendNotificationForMatch(match.Id, MatchNotificationEnum.StartMatch), startTime);
+                match.SecondNotificationJobId = BackgroundJob.Schedule( () => SendNotificationForMatch(match.Id, MatchNotificationEnum.HalfTime), startTime.AddMinutes(45));
+                match.ThirdNotificationJobId = BackgroundJob.Schedule( () => SendNotificationForMatch(match.Id, MatchNotificationEnum.EndMatch), startTime.AddMinutes(105));
 
                 _unitOfWork.Save().Wait();
             }
@@ -184,9 +184,9 @@ namespace FantasyLogic.DataMigration.GamesData
 
                     if (deadline > DateTime.UtcNow)
                     {
-                        gameWeak.JobId = BackgroundJob.Schedule(HanfireQueuesEnum.MatchPoints.ToString(), () => UpdateCurrentGameWeak(_365CompetitionsEnum, gameWeak.Id, false, 0, false, false), deadline);
+                        gameWeak.JobId = BackgroundJob.Schedule( () => UpdateCurrentGameWeak(_365CompetitionsEnum, gameWeak.Id, false, 0, false, false), deadline);
 
-                        gameWeak.SecondJobId = BackgroundJob.Schedule(HanfireQueuesEnum.MatchPoints.ToString(), () => SendNotificationForGameWeakDeadLine(gameWeak.Id), deadline.AddMinutes(-60));
+                        gameWeak.SecondJobId = BackgroundJob.Schedule( () => SendNotificationForGameWeakDeadLine(gameWeak.Id), deadline.AddMinutes(-60));
                     }
 
                     gameWeak.Deadline = deadline;
@@ -235,7 +235,7 @@ namespace FantasyLogic.DataMigration.GamesData
             }
             else
             {
-                _ = BackgroundJob.Enqueue(HanfireQueuesEnum.WeaklyTasks.ToString(), () => TransferAccountTeamPlayers(nextGameWeak.Id, gameWeak.Id, gameWeak._365_GameWeakId.ParseToInt(), nextGameWeak.Fk_Season, resetTeam, fk_AccounTeam, inDebug));
+                _ = BackgroundJob.Enqueue( () => TransferAccountTeamPlayers(nextGameWeak.Id, gameWeak.Id, gameWeak._365_GameWeakId.ParseToInt(), nextGameWeak.Fk_Season, resetTeam, fk_AccounTeam, inDebug));
             }
         }
 
@@ -315,7 +315,7 @@ namespace FantasyLogic.DataMigration.GamesData
             //        }
             //        else
             //        {
-            //            teamGameWeak.SecondNotificationJobId = BackgroundJob.Schedule(HanfireQueuesEnum.MatchPoints.ToString(), () => SendNotificationForMatch(match.Id, MatchNotificationEnum.HalfTime), DateTime.UtcNow.AddMinutes(5));
+            //            teamGameWeak.SecondNotificationJobId = BackgroundJob.Schedule( () => SendNotificationForMatch(match.Id, MatchNotificationEnum.HalfTime), DateTime.UtcNow.AddMinutes(5));
             //            _unitOfWork.Save().Wait();
 
             //            return;
@@ -347,7 +347,7 @@ namespace FantasyLogic.DataMigration.GamesData
             //        }
             //        else
             //        {
-            //            teamGameWeak.ThirdNotificationJobId = BackgroundJob.Schedule(HanfireQueuesEnum.MatchPoints.ToString(), () => SendNotificationForMatch(match.Id, MatchNotificationEnum.EndMatch), DateTime.UtcNow.AddMinutes(5));
+            //            teamGameWeak.ThirdNotificationJobId = BackgroundJob.Schedule( () => SendNotificationForMatch(match.Id, MatchNotificationEnum.EndMatch), DateTime.UtcNow.AddMinutes(5));
             //            _unitOfWork.Save().Wait();
 
             //            return;
@@ -396,7 +396,7 @@ namespace FantasyLogic.DataMigration.GamesData
                 }
                 else
                 {
-                    _ = BackgroundJob.Enqueue(HanfireQueuesEnum.WeaklyTasks.ToString(), () => TransferAccountTeamPlayers(accounTeam, fk_CurrentGameWeak, fk_PrevGameWeak, prev_365_GameWeakId, fk_Season, resetTeam));
+                    _ = BackgroundJob.Enqueue( () => TransferAccountTeamPlayers(accounTeam, fk_CurrentGameWeak, fk_PrevGameWeak, prev_365_GameWeakId, fk_Season, resetTeam));
                 }
             }
         }

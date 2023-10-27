@@ -37,7 +37,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 }
                 else
                 {
-                    _ = BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => UpdateMatchStates(_365CompetitionsEnum, _365_MatchId.ParseToInt(), delayMinutes, inDedug));
+                    _ = BackgroundJob.Enqueue( () => UpdateMatchStates(_365CompetitionsEnum, _365_MatchId.ParseToInt(), delayMinutes, inDedug));
                 }
             }
         }
@@ -139,7 +139,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
 
             for (int i = 0; i < statsInArabic.Count; i++)
             {
-                _ = BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => UpdateStat(statsInArabic[i], statsInEnglish[i]));
+                _ = BackgroundJob.Enqueue( () => UpdateStat(statsInArabic[i], statsInEnglish[i]));
 
             }
         }
@@ -181,7 +181,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
 
             for (int i = 0; i < eventsInArabic.Count; i++)
             {
-                _ = BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => UpdateEvent(eventsInArabic[i], eventsInEnglish[i]));
+                _ = BackgroundJob.Enqueue( () => UpdateEvent(eventsInArabic[i], eventsInEnglish[i]));
 
             }
         }
@@ -290,7 +290,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 }
                 else
                 {
-                    _ = BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => UpdateStatistics(statisticsInArabic[i], statisticsInEnglish[i]));
+                    _ = BackgroundJob.Enqueue( () => UpdateStatistics(statisticsInArabic[i], statisticsInEnglish[i]));
                 }
             }
         }

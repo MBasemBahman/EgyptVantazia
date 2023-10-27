@@ -1,8 +1,12 @@
 ﻿using BaseDB;
 using FantasyLogic;
 using Hangfire;
+using Hangfire.Server;
 using Hangfire.SqlServer;
 using IntegrationWith365;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.VisualBasic;
+using static Contracts.EnumData.HanfireEnum;
 
 namespace FantasyLogicMicroservices.Extensions
 {
@@ -152,24 +156,22 @@ namespace FantasyLogicMicroservices.Extensions
            IConfiguration configuration)
         {
             _ = services.AddHangfire(config => config
-                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
-                .UseSimpleAssemblyNameTypeSerializer()
-                .UseRecommendedSerializerSettings()
-                .UseSqlServerStorage(configuration.GetConnectionString("HangfireConnection"), new SqlServerStorageOptions
-                {
-                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
-                    SlidingInvisibilityTimeout = TimeSpan.FromHours(1),
-                    QueuePollInterval = TimeSpan.Zero,
-                    UseRecommendedIsolationLevel = true,
-                    DisableGlobalLocks = true,
-                    JobExpirationCheckInterval = TimeSpan.Zero,
-                }));
+                 .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+                 .UseSimpleAssemblyNameTypeSerializer()
+                 .UseRecommendedSerializerSettings()
+                 .UseSqlServerStorage(configuration.GetConnectionString("HangfireConnection")));
+
             // Add the processing server as IHostedService
             _ = services.AddHangfireServer(a =>
             {
-                a.WorkerCount = 50;
-                a.ServerName = "default";
+                a.WorkerCount = Math.Max(Environment.ProcessorCount * 50, 200);
+                a.Queues = new string[3] {
+                    HanfireQueuesEnum.DailyTasks.ToString(),
+                    HanfireQueuesEnum.AccountPoints.ToString(),
+                    HanfireQueuesEnum.MatchPoints.ToString()
+                };
             });
+
         }
     }
 }

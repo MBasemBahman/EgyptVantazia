@@ -5,6 +5,7 @@ using Entities.CoreServicesModels.SeasonModels;
 using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayerStateModels;
 using static Contracts.EnumData.DBModelsEnum;
+using static Contracts.EnumData.HanfireEnum;
 
 namespace FantasyLogic.Calculations
 {
@@ -81,7 +82,7 @@ namespace FantasyLogic.Calculations
                         {
                             string recurringId = JobGameWeekPlayerId + $"{fk_GameWeak}-{player}";
 
-                            string hangfireJobId = BackgroundJob.Enqueue(() => PlayerStateCalculations(player, 0, fk_GameWeak, playerSelectionCount, playerCaptainCount, inDebug));
+                            string hangfireJobId = BackgroundJob.Enqueue(HanfireQueuesEnum.MatchPoints.ToString(), () => PlayerStateCalculations(player, 0, fk_GameWeak, playerSelectionCount, playerCaptainCount, inDebug));
 
                             _hangFireCustomJob.ReplaceJob(hangfireJobId, recurringId);
                         }
@@ -122,7 +123,7 @@ namespace FantasyLogic.Calculations
                     {
                         string recurringId = JobSeasonPlayerId + $"{fk_Season}-{player}";
 
-                        string hangfireJobId = BackgroundJob.Enqueue(() => PlayerStateCalculations(player, fk_Season, 0, playerSelectionCount, playerCaptainCount, inDebug));
+                        string hangfireJobId = BackgroundJob.Enqueue(HanfireQueuesEnum.MatchPoints.ToString(), () => PlayerStateCalculations(player, fk_Season, 0, playerSelectionCount, playerCaptainCount, inDebug));
 
                         _hangFireCustomJob.ReplaceJob(hangfireJobId, recurringId);
                     }

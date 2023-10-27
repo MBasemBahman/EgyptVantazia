@@ -71,7 +71,8 @@ if (useHangfire)
     {
         AppPath = "",
         DashboardTitle = "schedule jobs",
-        Authorization = new[] { new HangfireAuthorizationFilter() }
+        Authorization = new[] { new HangfireAuthorizationFilter() },
+        
     });
 }
 

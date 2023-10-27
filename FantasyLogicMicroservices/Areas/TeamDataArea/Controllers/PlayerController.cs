@@ -34,7 +34,7 @@ namespace FantasyLogicMicroservices.Areas.TeamDataArea.Controllers
             }
             else
             {
-                _ = BackgroundJob.Enqueue( () => _fantasyUnitOfWork.PlayerDataHelper.RunUpdatePlayers(_365CompetitionsEnum));
+                _ = BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => _fantasyUnitOfWork.PlayerDataHelper.RunUpdatePlayers(_365CompetitionsEnum));
             }
 
             return Ok();

@@ -44,14 +44,14 @@ namespace FantasyLogic.DataMigration.TeamData
                 _365_PositionId = a._365_PositionId
             }).ToList();
 
-            _ = BackgroundJob.Enqueue( () => UpdateTeamsPlayers(_365CompetitionsEnum, teams, positions, formations));
+            _ = BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => UpdateTeamsPlayers(_365CompetitionsEnum, teams, positions, formations));
         }
 
         public void UpdateTeamsPlayers(_365CompetitionsEnum _365CompetitionsEnum, List<TeamForCalc> teams, List<PlayerPositionForCalc> positions, List<PlayerPositionForCalc> formations)
         {
             foreach (TeamForCalc team in teams)
             {
-                BackgroundJob.Enqueue( () => UpdatePlayers(_365CompetitionsEnum, team, positions, formations));
+                BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => UpdatePlayers(_365CompetitionsEnum, team, positions, formations));
             }
         }
 
@@ -87,7 +87,7 @@ namespace FantasyLogic.DataMigration.TeamData
                 if (fk_PlayerPosition != (int)PlayerPositionEnum.Coach)
                 {
 
-                    BackgroundJob.Enqueue( () => UpdatePlayer(athletesInArabic[i], athletesInEnglish[i], team.Id, fk_PlayerPosition, fk_FormationPosition));
+                    BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => UpdatePlayer(athletesInArabic[i], athletesInEnglish[i], team.Id, fk_PlayerPosition, fk_FormationPosition));
                 }
             }
         }

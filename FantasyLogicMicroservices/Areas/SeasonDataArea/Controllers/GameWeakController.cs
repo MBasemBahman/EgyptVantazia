@@ -64,7 +64,7 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
         [Route(nameof(RunRemoveOldRecurringJob))]
         public IActionResult RunRemoveOldRecurringJob()
         {
-            _ = BackgroundJob.Enqueue( () => RemoveOldRecurringJob());
+            _ = BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => RemoveOldRecurringJob());
 
             return Ok();
         }
@@ -123,11 +123,11 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
         [ApiExplorerSettings(IgnoreApi = true)]
         public void RemoveOldRecurringJob()
         {
-            _ = BackgroundJob.Enqueue( () => RemoveAccountTeamRecurringJob());
+            _ = BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => RemoveAccountTeamRecurringJob());
 
-            _ = BackgroundJob.Enqueue( () => RemovePlayersRecurringJob(_365CompetitionsEnum.Egypt));
-            _ = BackgroundJob.Enqueue( () => RemovePlayersRecurringJob(_365CompetitionsEnum.KSA));
-            _ = BackgroundJob.Enqueue( () => RemovePlayersRecurringJob(_365CompetitionsEnum.EPL));
+            _ = BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => RemovePlayersRecurringJob(_365CompetitionsEnum.Egypt));
+            _ = BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => RemovePlayersRecurringJob(_365CompetitionsEnum.KSA));
+            _ = BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => RemovePlayersRecurringJob(_365CompetitionsEnum.EPL));
         }
 
         [ApiExplorerSettings(IgnoreApi = true)]

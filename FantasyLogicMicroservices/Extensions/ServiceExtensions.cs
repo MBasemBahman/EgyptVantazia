@@ -165,6 +165,11 @@ namespace FantasyLogicMicroservices.Extensions
             _ = services.AddHangfireServer(a =>
             {
                 a.WorkerCount = Math.Max(Environment.ProcessorCount * 50, 200);
+                a.Queues = new string[3] {
+                    HanfireQueuesEnum.DailyTasks.ToString(),
+                    HanfireQueuesEnum.AccountPoints.ToString(),
+                    HanfireQueuesEnum.MatchPoints.ToString()
+                };
             });
 
         }

@@ -28,13 +28,13 @@ namespace FantasyLogicMicroservices.Areas.StandingsDataArea.Controllers
         {
             if (_365CompetitionsEnum == 0)
             {
-                _ = BackgroundJob.Enqueue( () => _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings(_365CompetitionsEnum.Egypt));
-                _ = BackgroundJob.Enqueue( () => _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings(_365CompetitionsEnum.KSA));
-                _ = BackgroundJob.Enqueue( () => _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings(_365CompetitionsEnum.EPL));
+                _ = BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings(_365CompetitionsEnum.Egypt));
+                _ = BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings(_365CompetitionsEnum.KSA));
+                _ = BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings(_365CompetitionsEnum.EPL));
             }
             else
             {
-                _ = BackgroundJob.Enqueue( () => _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings(_365CompetitionsEnum));
+                _ = BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings(_365CompetitionsEnum));
             }
 
             return Ok();

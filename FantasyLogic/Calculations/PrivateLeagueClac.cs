@@ -23,7 +23,7 @@ namespace FantasyLogic.Calculations
             }
             else
             {
-                _ = BackgroundJob.Enqueue(() => UpdatePrivateLeaguesRanking(season, fk_GameWeak, id, indebug));
+                _ = BackgroundJob.Enqueue(HanfireQueuesEnum.AccountPoints.ToString(), () => UpdatePrivateLeaguesRanking(season, fk_GameWeak, id, indebug));
             }
         }
 
@@ -48,7 +48,7 @@ namespace FantasyLogic.Calculations
                 }
                 else
                 {
-                    BackgroundJob.Enqueue(() => UpdatePrivateLeaguesRanking(privateLeague.Id));
+                    BackgroundJob.Enqueue(HanfireQueuesEnum.AccountPoints.ToString(), () => UpdatePrivateLeaguesRanking(privateLeague.Id));
                 }
             }
         }

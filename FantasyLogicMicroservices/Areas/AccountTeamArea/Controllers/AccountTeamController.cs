@@ -50,7 +50,7 @@ namespace FantasyLogicMicroservices.Areas.AccountTeamArea.Controllers
             }
             else
             {
-                _ = BackgroundJob.Enqueue( () => _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(_365CompetitionsEnum, fk_GameWeak, fk_AccountTeam, fk_Players, null, inDebug));
+                _ = BackgroundJob.Enqueue(HanfireQueuesEnum.AccountPoints.ToString(), () => _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(_365CompetitionsEnum, fk_GameWeak, fk_AccountTeam, fk_Players, null, inDebug));
             }
 
             return Ok();
@@ -79,7 +79,7 @@ namespace FantasyLogicMicroservices.Areas.AccountTeamArea.Controllers
             }
             else
             {
-                _ = BackgroundJob.Enqueue( () => _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamGameWeakRanking(_365CompetitionsEnum, fk_GameWeak, gameWeek.Fk_Season));
+                _ = BackgroundJob.Enqueue(HanfireQueuesEnum.AccountPoints.ToString(), () => _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamGameWeakRanking(_365CompetitionsEnum, fk_GameWeak, gameWeek.Fk_Season));
             }
             return Ok();
         }
@@ -96,7 +96,7 @@ namespace FantasyLogicMicroservices.Areas.AccountTeamArea.Controllers
             }
             else
             {
-                _ = BackgroundJob.Enqueue( () => _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamRanking(_365CompetitionsEnum));
+                _ = BackgroundJob.Enqueue(HanfireQueuesEnum.AccountPoints.ToString(), () => _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamRanking(_365CompetitionsEnum));
             }
             return Ok();
         }
@@ -125,7 +125,7 @@ namespace FantasyLogicMicroservices.Areas.AccountTeamArea.Controllers
             }
             else
             {
-                _ = BackgroundJob.Enqueue( () => _fantasyUnitOfWork.PrivateLeagueClac.RunPrivateLeaguesRanking(_365CompetitionsEnum, fk_GameWeak, id, indebug));
+                _ = BackgroundJob.Enqueue(HanfireQueuesEnum.AccountPoints.ToString(), () => _fantasyUnitOfWork.PrivateLeagueClac.RunPrivateLeaguesRanking(_365CompetitionsEnum, fk_GameWeak, id, indebug));
             }
 
             return Ok();
@@ -143,7 +143,7 @@ namespace FantasyLogicMicroservices.Areas.AccountTeamArea.Controllers
             }
             else
             {
-                _ = BackgroundJob.Enqueue( () => _unitOfWork.AccountTeam.UpdateAccountTeamUpdateCards(model));
+                _ = BackgroundJob.Enqueue(HanfireQueuesEnum.AccountPoints.ToString(), () => _unitOfWork.AccountTeam.UpdateAccountTeamUpdateCards(model));
             }
 
             return Ok();

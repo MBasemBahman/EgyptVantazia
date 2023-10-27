@@ -2,12 +2,12 @@
 {
     public static class HanfireEnum
     {
-        //public enum HanfireQueuesEnum
-        //{
-        //    DailyTasks,
-        //    WeaklyTasks,
-        //    AccountPoints,
-        //    MatchPoints
-        //}
+        public enum HanfireQueuesEnum
+        {
+            DailyTasks,
+            WeaklyTasks,
+            AccountPoints,
+            MatchPoints
+        }
     }
 }

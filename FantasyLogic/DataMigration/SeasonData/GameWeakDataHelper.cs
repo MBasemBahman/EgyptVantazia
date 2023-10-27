@@ -3,7 +3,6 @@ using Entities.DBModels.SeasonModels;
 using IntegrationWith365.Helpers;
 using System.Diagnostics;
 using static Contracts.EnumData.DBModelsEnum;
-using static Contracts.EnumData.HanfireEnum;
 
 namespace FantasyLogic.DataMigration.SeasonData
 {
@@ -24,6 +23,7 @@ namespace FantasyLogic.DataMigration.SeasonData
 
             List<int> rounds = _gamesHelper.GetAllGames(_365CompetitionsEnum, season._365_SeasonId.ParseToInt()).Result.Select(a => a.RoundNum).Distinct().OrderBy(a => a).ToList();
 
+            string jobId = null;
             foreach (int round in rounds)
             {
                 if (inDebug)
@@ -32,9 +32,13 @@ namespace FantasyLogic.DataMigration.SeasonData
                 }
                 else
                 {
-                    BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => UpdateGameWeak(round, season.Id));
+                    jobId = jobId.IsExisting()
+                    ? BackgroundJob.ContinueJobWith(jobId, () => UpdateGameWeak(round, season.Id))
+                    : BackgroundJob.Enqueue(() => UpdateGameWeak(round, season.Id));
                 }
             }
+
+            //_ = BackgroundJob.ContinueJobWith(jobId, () => UpdateCurrentGameWeak(fk_season, _365_SeasonId));
         }
 
         public async Task UpdateGameWeak(int round, int fk_Season)

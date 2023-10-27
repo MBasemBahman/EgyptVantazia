@@ -2,7 +2,6 @@
 using FantasyLogicMicroservices.Controllers;
 using Hangfire;
 using static Contracts.EnumData.DBModelsEnum;
-using static Contracts.EnumData.HanfireEnum;
 
 namespace FantasyLogicMicroservices.Areas.TeamDataArea.Controllers
 {
@@ -26,7 +25,7 @@ namespace FantasyLogicMicroservices.Areas.TeamDataArea.Controllers
         [Route(nameof(UpdateFormationPositions))]
         public IActionResult UpdateFormationPositions([FromQuery] _365CompetitionsEnum _365CompetitionsEnum)
         {
-            _ = BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => _fantasyUnitOfWork.FormationPositionDataHelper.RunUpdateFormationPositions(_365CompetitionsEnum));
+            _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.FormationPositionDataHelper.RunUpdateFormationPositions(_365CompetitionsEnum));
 
             return Ok();
         }

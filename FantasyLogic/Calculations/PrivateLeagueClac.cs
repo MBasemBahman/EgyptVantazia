@@ -1,6 +1,5 @@
 ﻿using Entities.CoreServicesModels.PrivateLeagueModels;
 using static Contracts.EnumData.DBModelsEnum;
-using static Contracts.EnumData.HanfireEnum;
 
 namespace FantasyLogic.Calculations
 {
@@ -23,7 +22,7 @@ namespace FantasyLogic.Calculations
             }
             else
             {
-                _ = BackgroundJob.Enqueue(HanfireQueuesEnum.AccountPoints.ToString(), () => UpdatePrivateLeaguesRanking(season, fk_GameWeak, id, indebug));
+                _ = BackgroundJob.Enqueue(() => UpdatePrivateLeaguesRanking(season, fk_GameWeak, id, indebug));
             }
         }
 
@@ -40,22 +39,27 @@ namespace FantasyLogic.Calculations
                 a.Id
             }).ToList();
 
+            string jobId = "";
             foreach (var privateLeague in privateLeagues)
             {
                 if (indebug)
                 {
-                    UpdatePrivateLeaguesRanking(privateLeague.Id);
+                    _ = UpdatePrivateLeaguesRanking(privateLeague.Id, jobId);
                 }
                 else
                 {
-                    BackgroundJob.Enqueue(HanfireQueuesEnum.AccountPoints.ToString(), () => UpdatePrivateLeaguesRanking(privateLeague.Id));
+                    jobId = jobId.IsExisting()
+                            ? BackgroundJob.ContinueJobWith(jobId, () => UpdatePrivateLeaguesRanking(privateLeague.Id, jobId))
+                            : BackgroundJob.Enqueue(() => UpdatePrivateLeaguesRanking(privateLeague.Id, jobId));
                 }
             }
         }
 
-        public void UpdatePrivateLeaguesRanking(int fk_PrivateLeague)
+        public string UpdatePrivateLeaguesRanking(int fk_PrivateLeague, string jobId)
         {
             _unitOfWork.PrivateLeague.UpdatePrivateLeagueMembersPointsAndRanking(fk_PrivateLeague);
+
+            return jobId;
         }
     }
 }

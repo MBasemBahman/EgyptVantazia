@@ -3,7 +3,6 @@ using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.StandingsModels;
 using IntegrationWith365.Entities.StandingsModels;
 using static Contracts.EnumData.DBModelsEnum;
-using static Contracts.EnumData.HanfireEnum;
 
 namespace FantasyLogic.DataMigration.StandingsData
 {
@@ -31,7 +30,7 @@ namespace FantasyLogic.DataMigration.StandingsData
 
             SeasonModelForCalc season = _unitOfWork.Season.GetCurrentSeason(_365CompetitionsEnum);
 
-            _ = BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => UpdateSeasonStandings(_365CompetitionsEnum, teams, season._365_SeasonId.ParseToInt(), season.Id));
+            _ = BackgroundJob.Enqueue(() => UpdateSeasonStandings(_365CompetitionsEnum, teams, season._365_SeasonId.ParseToInt(), season.Id));
         }
 
         public async Task UpdateSeasonStandings(_365CompetitionsEnum _365CompetitionsEnum, List<TeamForCalc> teams, int _365_SeasonId, int fk_Season)
@@ -44,13 +43,16 @@ namespace FantasyLogic.DataMigration.StandingsData
 
             List<Row> rows = standings.Standings.SelectMany(a => a.Rows).ToList();
 
+            string jobId = null;
             foreach (Row row in rows)
             {
                 int fk_Team = teams.Where(a => a._365_TeamId == row.Competitor.Id.ToString())
                                    .Select(a => a.Id)
                                    .FirstOrDefault();
 
-                BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => UpdateStanding(row, fk_Season, fk_Team));
+                jobId = jobId.IsExisting()
+                    ? BackgroundJob.ContinueJobWith(jobId, () => UpdateStanding(row, fk_Season, fk_Team))
+                    : BackgroundJob.Enqueue(() => UpdateStanding(row, fk_Season, fk_Team));
             }
         }
 

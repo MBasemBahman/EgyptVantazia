@@ -2,7 +2,6 @@
 using FantasyLogicMicroservices.Controllers;
 using Hangfire;
 using static Contracts.EnumData.DBModelsEnum;
-using static Contracts.EnumData.HanfireEnum;
 
 namespace FantasyLogicMicroservices.Areas.GamesArea.Controllers
 {
@@ -28,13 +27,13 @@ namespace FantasyLogicMicroservices.Areas.GamesArea.Controllers
         {
             if (_365CompetitionsEnum == 0)
             {
-                _ = BackgroundJob.Enqueue(HanfireQueuesEnum.MatchPoints.ToString(), () => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames(_365CompetitionsEnum.Egypt));
-                _ = BackgroundJob.Enqueue(HanfireQueuesEnum.MatchPoints.ToString(), () => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames(_365CompetitionsEnum.KSA));
-                _ = BackgroundJob.Enqueue(HanfireQueuesEnum.MatchPoints.ToString(), () => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames(_365CompetitionsEnum.EPL));
+                _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames(_365CompetitionsEnum.Egypt));
+                _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames(_365CompetitionsEnum.KSA));
+                _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames(_365CompetitionsEnum.EPL));
             }
             else
             {
-                _ = BackgroundJob.Enqueue(HanfireQueuesEnum.MatchPoints.ToString(), () => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames(_365CompetitionsEnum));
+                _ = BackgroundJob.Enqueue(() => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames(_365CompetitionsEnum));
             }
 
             return Ok();

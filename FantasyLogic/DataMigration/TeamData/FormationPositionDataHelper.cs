@@ -3,7 +3,6 @@ using Entities.DBModels.TeamModels;
 using FantasyLogic.DataMigration.StandingsData;
 using IntegrationWith365.Entities.SquadsModels;
 using static Contracts.EnumData.DBModelsEnum;
-using static Contracts.EnumData.HanfireEnum;
 
 namespace FantasyLogic.DataMigration.TeamData
 {
@@ -29,13 +28,16 @@ namespace FantasyLogic.DataMigration.TeamData
                 _365_TeamId = a._365_TeamId
             }).ToList();
 
+            string jobId = null;
             foreach (TeamForCalc team in teams)
             {
-                BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => UpdatePlayers(_365CompetitionsEnum, team));
+                jobId = jobId.IsExisting()
+                ? BackgroundJob.ContinueJobWith(jobId, () => UpdatePlayers(_365CompetitionsEnum, team, jobId))
+                : BackgroundJob.Enqueue(() => UpdatePlayers(_365CompetitionsEnum, team, jobId));
             }
         }
 
-        public async Task UpdatePlayers(_365CompetitionsEnum _365CompetitionsEnum, TeamForCalc team)
+        public async Task UpdatePlayers(_365CompetitionsEnum _365CompetitionsEnum, TeamForCalc team, string jobId)
         {
             int _365_TeamId = team._365_TeamId.ParseToInt();
 

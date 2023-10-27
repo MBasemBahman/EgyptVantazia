@@ -5,7 +5,6 @@ using Entities.DBModels.PlayerScoreModels;
 using IntegrationWith365.Entities.GameModels;
 using IntegrationWith365.Entities.GamesModels;
 using static Contracts.EnumData.DBModelsEnum;
-using static Contracts.EnumData.HanfireEnum;
 
 namespace FantasyLogic.DataMigration.PlayerScoreData
 {
@@ -37,7 +36,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 }
                 else
                 {
-                    _ = BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => UpdateMatchStates(_365CompetitionsEnum, _365_MatchId.ParseToInt(), delayMinutes, inDedug));
+                    _ = BackgroundJob.Schedule(() => UpdateMatchStates(_365CompetitionsEnum, _365_MatchId.ParseToInt(), delayMinutes, inDedug), TimeSpan.FromMinutes(delayMinutes));
                 }
             }
         }
@@ -139,7 +138,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
 
             for (int i = 0; i < statsInArabic.Count; i++)
             {
-                _ = BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => UpdateStat(statsInArabic[i], statsInEnglish[i]));
+                _ = BackgroundJob.Schedule(() => UpdateStat(statsInArabic[i], statsInEnglish[i]), TimeSpan.FromMinutes(delayMinutes));
 
             }
         }
@@ -181,7 +180,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
 
             for (int i = 0; i < eventsInArabic.Count; i++)
             {
-                _ = BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => UpdateEvent(eventsInArabic[i], eventsInEnglish[i]));
+                _ = BackgroundJob.Schedule(() => UpdateEvent(eventsInArabic[i], eventsInEnglish[i]), TimeSpan.FromMinutes(delayMinutes));
 
             }
         }
@@ -290,7 +289,7 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
                 }
                 else
                 {
-                    _ = BackgroundJob.Enqueue(HanfireQueuesEnum.DailyTasks.ToString(), () => UpdateStatistics(statisticsInArabic[i], statisticsInEnglish[i]));
+                    _ = BackgroundJob.Schedule(() => UpdateStatistics(statisticsInArabic[i], statisticsInEnglish[i]), TimeSpan.FromMinutes(delayMinutes));
                 }
             }
         }

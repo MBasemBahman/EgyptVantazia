@@ -4,6 +4,11 @@ namespace Contracts.Extensions
 {
     public static class DateTimeExtensions
     {
+        public static DateTime EgyptTime(this DateTime value)
+        {
+            return value.AddHours(2);
+        }
+
         public static string ToShortDateTimeString(this DateTime value)
         {
             return value.ToString("dd/MM/yyyy hh:mm tt");
@@ -11,7 +16,7 @@ namespace Contracts.Extensions
 
         public static DateTime ToEgypt(this DateTime value)
         {
-            return value.AddHours(3);
+            return value.EgyptTime();
         }
 
         public static string ToLongDateString(this DateTime value)

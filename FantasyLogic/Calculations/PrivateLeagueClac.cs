@@ -39,27 +39,22 @@ namespace FantasyLogic.Calculations
                 a.Id
             }).ToList();
 
-            string jobId = "";
             foreach (var privateLeague in privateLeagues)
             {
                 if (indebug)
                 {
-                    _ = UpdatePrivateLeaguesRanking(privateLeague.Id, jobId);
+                    UpdatePrivateLeaguesRanking(privateLeague.Id);
                 }
                 else
                 {
-                    jobId = jobId.IsExisting()
-                            ? BackgroundJob.ContinueJobWith(jobId, () => UpdatePrivateLeaguesRanking(privateLeague.Id, jobId))
-                            : BackgroundJob.Enqueue(() => UpdatePrivateLeaguesRanking(privateLeague.Id, jobId));
+                    BackgroundJob.Enqueue(() => UpdatePrivateLeaguesRanking(privateLeague.Id));
                 }
             }
         }
 
-        public string UpdatePrivateLeaguesRanking(int fk_PrivateLeague, string jobId)
+        public void UpdatePrivateLeaguesRanking(int fk_PrivateLeague)
         {
             _unitOfWork.PrivateLeague.UpdatePrivateLeagueMembersPointsAndRanking(fk_PrivateLeague);
-
-            return jobId;
         }
     }
 }

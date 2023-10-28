@@ -1,6 +1,7 @@
 ﻿using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.TeamModels;
 using FantasyLogic.DataMigration.StandingsData;
+using Hangfire;
 using IntegrationWith365.Entities.SquadsModels;
 using Microsoft.AspNetCore.Http.Features;
 using static Contracts.EnumData.DBModelsEnum;
@@ -48,16 +49,13 @@ namespace FantasyLogic.DataMigration.TeamData
 
         public void UpdateTeamsPlayers(_365CompetitionsEnum _365CompetitionsEnum, List<TeamForCalc> teams, List<PlayerPositionForCalc> positions, List<PlayerPositionForCalc> formations)
         {
-            string jobId = null;
             foreach (TeamForCalc team in teams)
             {
-                jobId = jobId.IsExisting()
-                    ? BackgroundJob.ContinueJobWith(jobId, () => UpdatePlayers(_365CompetitionsEnum, team, positions, formations, jobId))
-                    : BackgroundJob.Enqueue(() => UpdatePlayers(_365CompetitionsEnum, team, positions, formations, jobId));
+                BackgroundJob.Enqueue(() => UpdatePlayers(_365CompetitionsEnum, team, positions, formations));
             }
         }
 
-        public async Task UpdatePlayers(_365CompetitionsEnum _365CompetitionsEnum, TeamForCalc team, List<PlayerPositionForCalc> positions, List<PlayerPositionForCalc> formations, string jobId)
+        public async Task UpdatePlayers(_365CompetitionsEnum _365CompetitionsEnum, TeamForCalc team, List<PlayerPositionForCalc> positions, List<PlayerPositionForCalc> formations)
         {
             int _365_TeamId = team._365_TeamId.ParseToInt();
 
@@ -89,9 +87,7 @@ namespace FantasyLogic.DataMigration.TeamData
                 if (fk_PlayerPosition != (int)PlayerPositionEnum.Coach)
                 {
 
-                    jobId = jobId.IsExisting()
-                        ? BackgroundJob.ContinueJobWith(jobId, () => UpdatePlayer(athletesInArabic[i], athletesInEnglish[i], team.Id, fk_PlayerPosition, fk_FormationPosition))
-                        : BackgroundJob.Enqueue(() => UpdatePlayer(athletesInArabic[i], athletesInEnglish[i], team.Id, fk_PlayerPosition, fk_FormationPosition));
+                    BackgroundJob.Enqueue(() => UpdatePlayer(athletesInArabic[i], athletesInEnglish[i], team.Id, fk_PlayerPosition, fk_FormationPosition));
                 }
             }
         }

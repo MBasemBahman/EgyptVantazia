@@ -43,16 +43,13 @@ namespace FantasyLogic.DataMigration.StandingsData
 
             List<Row> rows = standings.Standings.SelectMany(a => a.Rows).ToList();
 
-            string jobId = null;
             foreach (Row row in rows)
             {
                 int fk_Team = teams.Where(a => a._365_TeamId == row.Competitor.Id.ToString())
                                    .Select(a => a.Id)
                                    .FirstOrDefault();
 
-                jobId = jobId.IsExisting()
-                    ? BackgroundJob.ContinueJobWith(jobId, () => UpdateStanding(row, fk_Season, fk_Team))
-                    : BackgroundJob.Enqueue(() => UpdateStanding(row, fk_Season, fk_Team));
+                BackgroundJob.Enqueue(() => UpdateStanding(row, fk_Season, fk_Team));
             }
         }
 

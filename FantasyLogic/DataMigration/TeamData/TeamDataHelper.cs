@@ -44,13 +44,9 @@ namespace FantasyLogic.DataMigration.TeamData
             List<Competitor> competitorsInArabic = standingsInArabic.Standings.SelectMany(a => a.Rows.Select(b => b.Competitor)).ToList();
             List<Competitor> competitorsInEnglish = standingsInEnglish.Standings.SelectMany(a => a.Rows.Select(b => b.Competitor)).ToList();
 
-            string jobId = null;
-
             for (int i = 0; i < competitorsInArabic.Count; i++)
             {
-                jobId = jobId.IsExisting()
-                    ? BackgroundJob.ContinueJobWith(jobId, () => UpdateTeam(competitorsInArabic[i], competitorsInEnglish[i], fk_Season))
-                    : BackgroundJob.Enqueue(() => UpdateTeam(competitorsInArabic[i], competitorsInEnglish[i], fk_Season));
+                BackgroundJob.Enqueue(() => UpdateTeam(competitorsInArabic[i], competitorsInEnglish[i], fk_Season));
             }
         }
 

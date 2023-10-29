@@ -169,7 +169,7 @@ namespace API.Areas.PaymentArea.Controllers
                 {
                     Auth_token = auth_token,
                     Amount_cents = amount_cents,
-                    Merchant_order_id = DateTime.Now.ToString("ddMMyyyhhmmss")
+                    Merchant_order_id = DateTime.UtcNow.ToString("ddMMyyyhhmmss")
                 });
 
                 order_id = orderId.ToString();

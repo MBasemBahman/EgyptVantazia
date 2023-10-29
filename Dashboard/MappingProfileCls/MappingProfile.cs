@@ -762,7 +762,7 @@ namespace Dashboard.MappingProfileCls
     {
         public string Convert(DateTime? source, string destination, ResolutionContext context)
         {
-            return source == null ? "" : source.Value.AddHours(2).ToString(ApiConstants.DateTimeStringFormat);
+            return source == null ? "" : source.Value.ToString(ApiConstants.DateTimeStringFormat);
         }
     }
 
@@ -770,7 +770,7 @@ namespace Dashboard.MappingProfileCls
     {
         public string Convert(DateTime source, string destination, ResolutionContext context)
         {
-            return source.AddHours(2).ToString(ApiConstants.DateTimeStringFormat);
+            return source.ToString(ApiConstants.DateTimeStringFormat);
         }
     }
 

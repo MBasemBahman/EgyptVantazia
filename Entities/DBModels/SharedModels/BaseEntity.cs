@@ -14,6 +14,6 @@ namespace Entities.DBModels.SharedModels
         public DateTime CreatedAt { get; set; }
 
         [DisplayName(nameof(CreatedAt))]
-        public string CreatedAtString => CreatedAt.AddHours(2).ToShortDateTimeString();
+        public string CreatedAtString => CreatedAt.ToShortDateTimeString();
     }
 }

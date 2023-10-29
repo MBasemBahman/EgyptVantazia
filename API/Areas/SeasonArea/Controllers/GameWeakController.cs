@@ -63,7 +63,7 @@ namespace API.Areas.SeasonArea.Controllers
 
             _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
 
-            string dataDto = _mapper.Map<string>(_unitOfWork.Season.GetFirstTeamGameWeakMatchDate(_365CompetitionsEnum).Value.AddHours(2));
+            string dataDto = _mapper.Map<string>(_unitOfWork.Season.GetFirstTeamGameWeakMatchDate(_365CompetitionsEnum).Value);
             return dataDto;
         }
 

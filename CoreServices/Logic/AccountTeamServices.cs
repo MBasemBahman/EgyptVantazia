@@ -500,12 +500,12 @@ namespace CoreServices.Logic
 									   .Player
 									   .Team
 									   .HomeGameWeaks.Any(b => b.Fk_GameWeak == a.Fk_GameWeak &&
-															   b.StartTime <= DateTime.UtcNow.AddHours(2)) ||
+															   b.StartTime <= DateTime.UtcNow) ||
 									   a.AccountTeamPlayer
 									   .Player
 									   .Team
 									   .AwayGameWeaks.Any(b => b.Fk_GameWeak == a.Fk_GameWeak &&
-															   b.StartTime <= DateTime.UtcNow.AddHours(2)),
+															   b.StartTime <= DateTime.UtcNow),
 						   IsDelayed = a.AccountTeamPlayer
 									   .Player
 									   .Team
@@ -526,7 +526,7 @@ namespace CoreServices.Logic
 										   .AwayGameWeaks.Any(b => b.Fk_GameWeak == a.Fk_GameWeak),
 						   IsParticipate = _dBContext.PlayerGameWeaks.Any(b => b.Fk_Player == a.AccountTeamPlayer.Fk_Player &&
 																			   b.TeamGameWeak.Fk_GameWeak == a.Fk_GameWeak &&
-																			   b.TeamGameWeak.StartTime <= DateTime.UtcNow.AddHours(2) &&
+																			   b.TeamGameWeak.StartTime <= DateTime.UtcNow &&
 																			   (b.TeamGameWeak.IsEnded == false ||
 																				b.TotalPoints != 0 ||
 																				b.Ranking != 0 ||
@@ -691,13 +691,13 @@ namespace CoreServices.Logic
 													   .Team
 													   .HomeGameWeaks
 													   .Any(c => c.Fk_GameWeak == b.Fk_GameWeak &&
-																 c.StartTime <= DateTime.UtcNow.AddHours(2)) ||
+																 c.StartTime <= DateTime.UtcNow) ||
 													   b.AccountTeamPlayer
 													   .Player
 													   .Team
 													   .AwayGameWeaks
 													   .Any(c => c.Fk_GameWeak == b.Fk_GameWeak &&
-																 c.StartTime <= DateTime.UtcNow.AddHours(2)),
+																 c.StartTime <= DateTime.UtcNow),
 										   Top15 = a.Player
 													.PlayerGameWeakScoreStates
 													.Where(c => c.Fk_GameWeak == b.Fk_GameWeak && c.Top15 != null)
@@ -734,13 +734,13 @@ namespace CoreServices.Logic
 													   .Team
 													   .HomeGameWeaks
 													   .Any(c => c.Fk_GameWeak == b.Fk_GameWeak &&
-																 c.StartTime <= DateTime.UtcNow.AddHours(2)) ||
+																 c.StartTime <= DateTime.UtcNow) ||
 													   b.AccountTeamPlayer
 													   .Player
 													   .Team
 													   .AwayGameWeaks
 													   .Any(c => c.Fk_GameWeak == b.Fk_GameWeak &&
-																 c.StartTime <= DateTime.UtcNow.AddHours(2)),
+																 c.StartTime <= DateTime.UtcNow),
 										   Top15 = a.Player
 													.PlayerGameWeakScoreStates
 													.Where(c => c.Fk_GameWeak == b.Fk_GameWeak && c.Top15 != null)
@@ -772,13 +772,13 @@ namespace CoreServices.Logic
 													   .Team
 													   .HomeGameWeaks
 													   .Any(c => c.Fk_GameWeak == b.Fk_GameWeak &&
-																 c.StartTime <= DateTime.UtcNow.AddHours(2)) ||
+																 c.StartTime <= DateTime.UtcNow) ||
 													   b.AccountTeamPlayer
 													   .Player
 													   .Team
 													   .AwayGameWeaks
 													   .Any(c => c.Fk_GameWeak == b.Fk_GameWeak &&
-																 c.StartTime <= DateTime.UtcNow.AddHours(2)),
+																 c.StartTime <= DateTime.UtcNow),
 										   TeamPlayerType = new TeamPlayerTypeModel
 										   {
 											   Name = otherLang ? b.TeamPlayerType.TeamPlayerTypeLang.Name : b.TeamPlayerType.Name,
@@ -902,7 +902,7 @@ namespace CoreServices.Logic
 							   NextMatches = parameters.IncludeNextMatch ?
 							   _dBContext.Set<TeamGameWeak>()
 										  .Where(b => b.IsActive &&
-													  b.StartTime >= DateTime.UtcNow.AddHours(2) &&
+													  b.StartTime >= DateTime.UtcNow &&
 													  (parameters.FromDeadLine == null || b.StartTime >= parameters.FromDeadLine) &&
 													  (parameters.ToDeadLine == null || b.StartTime <= parameters.ToDeadLine) &&
 													  (b.Fk_Away == a.Player.Fk_Team || b.Fk_Home == a.Player.Fk_Team))

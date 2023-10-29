@@ -11,7 +11,7 @@ namespace Entities.ResponseFeatures
         public TokenResponse(string token, DateTime expires)
         {
             RefreshToken = token;
-            Expires = expires.AddHours(2).ToString("ddd, dd MMM yyy HH:mm:ss 'GMT'", CultureInfo.InvariantCulture);
+            Expires = expires.ToString("ddd, dd MMM yyy HH:mm:ss 'GMT'", CultureInfo.InvariantCulture);
         }
 
         public override string ToString()

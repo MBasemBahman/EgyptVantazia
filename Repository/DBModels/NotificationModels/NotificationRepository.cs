@@ -51,7 +51,7 @@ namespace Repository.DBModels.NotificationModels
             int id,
             List<NotificationOpenTypeEnum> openTypes)
         {
-            DateTime now = DateTime.UtcNow.AddHours(2);
+            DateTime now = DateTime.UtcNow;
             return Notifications.Where(a => (id == 0 || a.Id == id) &&
                                             (openTypes == null || !openTypes.Any() ||
                                              openTypes.Contains(a.OpenType)));

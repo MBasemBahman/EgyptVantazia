@@ -180,7 +180,7 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
 
             if (model.StartTime > DateTime.MinValue)
             {
-                model.StartTime = model.StartTime.AddHours(2);
+                model.StartTime = model.StartTime;
             }
 
             return View(model);

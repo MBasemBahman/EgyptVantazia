@@ -13,7 +13,7 @@ namespace Entities.DBModels.SharedModels
         public DateTime LastModifiedAt { get; set; }
 
         [DisplayName(nameof(LastModifiedAt))]
-        public string LastModifiedAtString => LastModifiedAt.AddHours(2).ToShortDateTimeString();
+        public string LastModifiedAtString => LastModifiedAt.ToShortDateTimeString();
 
         [DisplayName(nameof(LastModifiedBy))]
         public string LastModifiedBy { get; set; }

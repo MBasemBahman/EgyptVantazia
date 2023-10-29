@@ -6,7 +6,7 @@ namespace Contracts.Extensions
     {
         public static DateTime EgyptTime(this DateTime value)
         {
-            return value.AddHours(2);
+            return value;
         }
 
         public static string ToShortDateTimeString(this DateTime value)
@@ -16,7 +16,7 @@ namespace Contracts.Extensions
 
         public static DateTime ToEgypt(this DateTime value)
         {
-            return value.AddHours(2);
+            return value;
         }
 
         public static string ToLongDateString(this DateTime value)

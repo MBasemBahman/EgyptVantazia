@@ -122,7 +122,7 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
                 {
                     if (a.Deadline != null)
                     {
-                        a.Deadline = a.Deadline.Value.AddHours(2);
+                        a.Deadline = a.Deadline.Value;
                     }
                 });
             }

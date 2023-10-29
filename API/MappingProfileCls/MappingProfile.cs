@@ -73,7 +73,7 @@ namespace API.MappingProfileCls
             _ = CreateMap<SeasonModel, SeasonDto>();
             _ = CreateMap<GameWeakModel, GameWeakDto>();
             _ = CreateMap<TeamGameWeakModel, TeamGameWeakDto>()
-                .BeforeMap((s, d) => s.StartTime = s.StartTime.AddHours(2)); ;
+                .BeforeMap((s, d) => s.StartTime = s.StartTime); ;
 
             #endregion
 
@@ -122,7 +122,7 @@ namespace API.MappingProfileCls
         {
             public string Convert(DateTime? source, string destination, ResolutionContext context)
             {
-                return source == null ? "" : source.Value.AddHours(2).ToString(ApiConstants.DateTimeStringFormat);
+                return source == null ? "" : source.Value.ToString(ApiConstants.DateTimeStringFormat);
             }
         }
 
@@ -130,7 +130,7 @@ namespace API.MappingProfileCls
         {
             public string Convert(DateTime source, string destination, ResolutionContext context)
             {
-                return source.AddHours(2).ToString(ApiConstants.DateTimeStringFormat);
+                return source.ToString(ApiConstants.DateTimeStringFormat);
             }
         }
 

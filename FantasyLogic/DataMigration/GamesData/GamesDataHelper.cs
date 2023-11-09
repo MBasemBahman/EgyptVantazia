@@ -138,13 +138,15 @@ namespace FantasyLogic.DataMigration.GamesData
 
                 GameResultDataHelper gameResultDataHelper = new(_unitOfWork, _365Services);
 
-                match.JobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(_365CompetitionsEnum, new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, false, false, false, false, false), startTime); // بداية الماتش;
-                match.SecondJobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(_365CompetitionsEnum, new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, true, false, false, false, false), startTime.AddMinutes(120)); // احتساب البونص;
-                match.ThirdJobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(_365CompetitionsEnum, new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, true, false, false, true, false), startTime.AddMinutes(200)); // احتساب البونص;
+                DateTime scheduleTimeForSchedule = startTime.AddHours(-1);
 
-                match.FirstNotificationJobId = BackgroundJob.Schedule(() => SendNotificationForMatch(match.Id, MatchNotificationEnum.StartMatch), startTime);
-                match.SecondNotificationJobId = BackgroundJob.Schedule(() => SendNotificationForMatch(match.Id, MatchNotificationEnum.HalfTime), startTime.AddMinutes(45));
-                match.ThirdNotificationJobId = BackgroundJob.Schedule(() => SendNotificationForMatch(match.Id, MatchNotificationEnum.EndMatch), startTime.AddMinutes(105));
+                match.JobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(_365CompetitionsEnum, new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, false, false, false, false, false), scheduleTimeForSchedule); // بداية الماتش;
+                match.SecondJobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(_365CompetitionsEnum, new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, true, false, false, false, false), scheduleTimeForSchedule.AddMinutes(120)); // احتساب البونص;
+                match.ThirdJobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(_365CompetitionsEnum, new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, true, false, false, true, false), scheduleTimeForSchedule.AddMinutes(200)); // احتساب البونص;
+
+                match.FirstNotificationJobId = BackgroundJob.Schedule(() => SendNotificationForMatch(match.Id, MatchNotificationEnum.StartMatch), scheduleTimeForSchedule);
+                match.SecondNotificationJobId = BackgroundJob.Schedule(() => SendNotificationForMatch(match.Id, MatchNotificationEnum.HalfTime), scheduleTimeForSchedule.AddMinutes(45));
+                match.ThirdNotificationJobId = BackgroundJob.Schedule(() => SendNotificationForMatch(match.Id, MatchNotificationEnum.EndMatch), scheduleTimeForSchedule.AddMinutes(105));
 
                 _unitOfWork.Save().Wait();
             }
@@ -183,9 +185,11 @@ namespace FantasyLogic.DataMigration.GamesData
 
                     if (deadline > DateTime.UtcNow)
                     {
-                        gameWeak.JobId = BackgroundJob.Schedule(() => UpdateCurrentGameWeak(_365CompetitionsEnum, gameWeak.Id, false, 0, false, false), deadline);
+                        DateTime scheduleTimeForSchedule = deadline.AddHours(-1);
 
-                        gameWeak.SecondJobId = BackgroundJob.Schedule(() => SendNotificationForGameWeakDeadLine(gameWeak.Id), deadline.AddMinutes(-60));
+                        gameWeak.JobId = BackgroundJob.Schedule(() => UpdateCurrentGameWeak(_365CompetitionsEnum, gameWeak.Id, false, 0, false, false), scheduleTimeForSchedule);
+
+                        gameWeak.SecondJobId = BackgroundJob.Schedule(() => SendNotificationForGameWeakDeadLine(gameWeak.Id), scheduleTimeForSchedule.AddMinutes(-60));
                     }
 
                     gameWeak.Deadline = deadline;

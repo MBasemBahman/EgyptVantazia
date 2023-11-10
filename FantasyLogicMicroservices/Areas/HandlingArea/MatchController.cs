@@ -102,15 +102,16 @@ namespace FantasyLogicMicroservices.Areas.HandlingArea
             [FromQuery] int fk_GameWeak,
             [FromQuery] int fk_AccounTeam,
             [FromQuery] bool resetTeam,
+            [FromQuery] bool removeOldTeam,
             [FromQuery] bool inDebug)
         {
             if (inDebug)
             {
-                await ResetAccountTeamTask(fk_GameWeak, fk_AccounTeam, resetTeam, inDebug);
+                await ResetAccountTeamTask(fk_GameWeak, fk_AccounTeam, resetTeam, removeOldTeam, inDebug);
             }
             else
             {
-                _ = BackgroundJob.Enqueue(() => ResetAccountTeamTask(fk_GameWeak, fk_AccounTeam, resetTeam, inDebug));
+                _ = BackgroundJob.Enqueue(() => ResetAccountTeamTask(fk_GameWeak, fk_AccounTeam, resetTeam, removeOldTeam, inDebug));
             }
 
             return Ok();
@@ -120,6 +121,7 @@ namespace FantasyLogicMicroservices.Areas.HandlingArea
         public async Task ResetAccountTeamTask(int fk_GameWeak,
             int fk_AccounTeam,
             bool resetTeam,
+            bool removeOldTeam,
             bool inDebug)
         {
             var teams = _unitOfWork.AccountTeam.GetAccountTeamGameWeaks(new Entities.CoreServicesModels.AccountTeamModels.AccountTeamGameWeakParameters
@@ -154,7 +156,7 @@ namespace FantasyLogicMicroservices.Areas.HandlingArea
                         Fk_AccountTeam = fk_AccounTeam,
                     }, otherLang: false).Any();
 
-                    if (haveTeam == false && gameWeak.IsNext == false)
+                    if ((haveTeam == false || removeOldTeam) && gameWeak.IsNext == false)
                     {
                         count++;
                         _fantasyUnitOfWork.GamesDataHelper.TransferAccountTeamPlayers(nextGameWeak.Id, gameWeak.Id, gameWeak._365_GameWeakId.ParseToInt(), nextGameWeak.Fk_Season, resetTeam, fk_AccounTeam, inDebug);

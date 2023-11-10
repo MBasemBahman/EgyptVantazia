@@ -203,8 +203,16 @@ namespace FantasyLogic.DataMigration.PlayerScoreData
 
                             List<Member> allMembersResults = new();
 
-                            allMembersResults.AddRange(gameReturn.Game.HomeCompetitor.Lineups.Members);
-                            allMembersResults.AddRange(gameReturn.Game.AwayCompetitor.Lineups.Members);
+                            if (gameReturn.Game.HomeCompetitor.Lineups != null && 
+                                gameReturn.Game.HomeCompetitor.Lineups.Members != null)
+                            {
+                                allMembersResults.AddRange(gameReturn.Game.HomeCompetitor.Lineups.Members);
+                            }
+                            if (gameReturn.Game.AwayCompetitor.Lineups != null && 
+                                gameReturn.Game.AwayCompetitor.Lineups.Members != null)
+                            {
+                                allMembersResults.AddRange(gameReturn.Game.AwayCompetitor.Lineups.Members);
+                            }
 
                             allMembersResults.ForEach(a =>
                             {

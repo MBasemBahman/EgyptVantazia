@@ -167,7 +167,7 @@
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a class="modalbtn" href="/SeasonEntity/TeamGameWeak/AddScore?fk_Team=@Model.Fk_Home&fk_PlayerGameWeak=@item.Id">
+                                                    <a href="#" class="add_scores" data-id="@item.Id">
                                                         @Localizer.Get("Add statistics")
                                                     </a>
                                                 </td>
@@ -184,7 +184,6 @@
                             else
                             {
                                 <p>@Localizer.Get("Not Found")</p>
-
                             }
                         </div>
                         <hr />
@@ -230,7 +229,7 @@
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <a class="modalbtn" href="/SeasonEntity/TeamGameWeak/AddScore?fk_Team=@Model.Fk_Home&fk_PlayerGameWeak=@item.Id">
+                                                    <a href="#" class="add_scores" data-id="@item.Id">
                                                         @Localizer.Get("Add statistics")
                                                     </a>
                                                 </td>
@@ -285,117 +284,55 @@
 
 <partial name="_TeamGameWeakModals" view-data="ViewData" />
 
-@section scripts{
+@section scripts {
+    <script src="~/apis/gameTeamWeekProfile.js"></script>
+    
     <script>
-        $(document).ready(function () {
-            $(".navigation navigation-main ul li .active").each(function () {
-                $(this).removeClass("active");
-            });
-
-            $("#d1").load($(".tab-item.active").eq(0).attr("id"));
-            $("#TeamGameWeakList").addClass("active");
-
-            $(".tab-item").each(function () {
-                $(this).on('click', function () {
-                    $("#d1").load($(this).attr('id'));
-                    $(".active").each(function () {
-                        $(this).removeClass("active");
-                    });
-                    $(this).addClass("active");
-                    $("#TeamGameWeakList").addClass("active");
-                });
-            })
-
-        });
-
-        $('body').on('click', '.modalbtn', function () {
-            event.preventDefault();
-            var href = $(this).attr('href');
-            $('.form-content').load(href);
-            $("#Modal").modal("show");
-        });
-
-        // start update_game_result
-        $(document).on("click", ".update_game_result", function(e) {
-          e.preventDefault();
-
-          $(".update_game_result_modal").modal('show');
-        });
-
-        $(document).on("click", ".update_game_result_submit", function (e) {
-            let _365_MatchId = $("input[name=_365_MatchId]").val();
-            let runBonus = $("select[name=RunBonus]").val();
-
-            $.ajax({
-                url: '@Url.Action("UpdateGameResult", "Home", new {area = "Dashboard"})',
-                method: 'post',
-                data: {
-                  fk_TeamGameWeak: '@Model.Id',
-                  _365_MatchId: _365_MatchId,
-                  runBonus: runBonus
-                },
-                success: function(data) {
-                  $("#success").modal('show');
-                }
-            });
-        });
-        // end update_game_result
-
-        // start update_account_team_points
-        $(document).on("click", ".update_account_team_points", function(e) {
-          e.preventDefault();
-
-          $(".update_account_team_points_modal").modal('show');
-        });
-
         $(document).on("click", ".update_account_team_points_submit", function (e) {
             $.ajax({
                 url: '@Url.Action("UpdateAccountTeamPoints", "Home", new {area = "Dashboard"})',
                 method: 'post',
                 data: {
-                  fk_Player: '@Model.Id',
+                    fk_Player: '@Model.Id',
                 },
                 success: function(data) {
-                  $("#success").modal('show');
+                    $("#success").modal('show');
                 }
             });
         });
-        // end update_account_team_points
-
-        // start update_teams_players
+        // END update_account_team_points
+        
+        // START update_teams_players
         $(document).on("click", ".update_teams_players", function (e) {
             $.ajax({
                 url: '@Url.Action("UpdateTeamsPlayers", "TeamGameWeak", new {area = "SeasonEntity"})',
                 method: 'post',
                 data: {
-                  fk_TeamGameWeak: '@Model.Id',
+                    fk_TeamGameWeak: '@Model.Id',
                 },
                 success: function(data) {
-                  $("#success").modal('show');
+                    $("#success").modal('show');
                 }
             });
         });
-        // end update_teams_players
-
-
-        // start edit player_ranking
-        $(document).on("blur", ".player_ranking_input", function (e) {
-            let fk_PlayerGameWeak = $(this).data("fk_playergameweak");
-            let ranking = $(this).val();
-
+        // END update_teams_players
+        
+        $(document).on("click", ".update_game_result_submit", function (e) {
+            let _365_MatchId = $("input[name=_365_MatchId]").val();
+            let runBonus = $("select[name=RunBonus]").val();
+        
             $.ajax({
-                url: '@Url.Action("UpdatePlayerGameWeakRanking", "PlayerGameWeak", new {area = "PlayerScoreEntity"})',
+                url: '@Url.Action("UpdateGameResult", "Home", new {area = "Dashboard"})',
                 method: 'post',
                 data: {
-                  fk_PlayerGameWeak: fk_PlayerGameWeak,
-                  ranking: ranking
-                },
+                fk_TeamGameWeak: '@Model.Id',
+                _365_MatchId: _365_MatchId,
+                runBonus: runBonus
+            },
                 success: function(data) {
-                  $("#success").modal('show');
+                    $("#success").modal('show');
                 }
             });
         });
-        // end edit player_ranking
     </script>
-
 }

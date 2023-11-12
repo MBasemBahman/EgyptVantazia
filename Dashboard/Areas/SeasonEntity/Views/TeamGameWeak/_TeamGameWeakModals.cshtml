@@ -72,3 +72,77 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade text-start text-center add_scores_modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">@Localizer.Get("PlayerGameWeakScore")</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            
+                <div class="row">
+                    <div class="col-xl-12 col-12">
+                        
+                        <div asp-validation-summary="All" class="text-danger">@ViewData["Error"]</div>
+                        <div class="row mb-1">
+
+                            <input type="hidden" name="AddScoresFk_PlayerGameWeak" />
+                            
+                            <div class="col-md-12 col-12">
+                                <div class="mb-1">
+                                    <label class="form-label">@Localizer.Get("ScoreType")</label>
+                                    <select name="AddScoresFk_ScoreType" class="select2 form-select" asp-items="@(new SelectList(ViewData["ScoreType"] as Dictionary<string, string>, "Key", "Value"))">
+                                    </select>
+                                </div>
+                            </div>
+            
+                            <div class="col-md-4 col-12">
+                                <div class="mb-1">
+                                    <label class="form-label">@Localizer.Get("FinalValue")</label>
+                                    <input name="AddScoresFinalValue" required class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("FinalValue"))"/>
+                                </div>
+                            </div>
+            
+                            <div class="col-md-4 col-12">
+                                <div class="mb-1">
+                                    <label class="form-label">@Localizer.Get("GameTime")</label>
+                                    <input name="AddScoresGameTime" required class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get("GameTime"))"/>
+                                </div>
+                            </div>
+            
+                            <div class="col-md-4 col-12">
+                                <div class="mb-1">
+                                    <label class="form-label">@Localizer.Get("IsOut")</label>
+                                    <select name="AddScoresIsOut" class="select2 form-select">
+                                        <option value=""></option>
+                                        <option value="true">@Localizer.Get("Yes")</option>
+                                        <option value="false">@Localizer.Get("No")</option>
+                                    </select>
+                                </div>
+                            </div>
+            
+                            <div class="col-md-12 col-12">
+                                <div class="mb-1">
+                                    <label class="form-label">@Localizer.Get("Points")</label>
+                                    <input name="AddScoresPoints" class="form-control" required placeholder="@Localizer.Get("Enter")  @(Localizer.Get("Points"))"/>
+                                </div>
+                            </div>
+            
+                        </div>
+            
+                        <div class="row">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary me-1 add_scores_submit" data-bs-dismiss="modal">@Localizer.Get("Submit")</button>
+                            </div>
+                        </div>
+            
+                    </div>
+            
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</div>

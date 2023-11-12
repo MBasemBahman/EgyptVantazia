@@ -76,18 +76,6 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
             return Json(dataTableManager.ReturnTable(dataTableResult));
         }
 
-        [HttpGet]
-        public IActionResult AddScore(int fk_PlayerGameWeak)
-        {
-            bool otherLang = (bool)Request.HttpContext.Items[ApiConstants.Language];
-            ViewData["ScoreType"] = _unitOfWork.PlayerScore.GetScoreTypesLookUp(new ScoreTypeParameters { HavePoints = true, IncludeTypeName = true }, otherLang);
-
-            return View(new PlayerGameWeakScoreCreateDto
-            {
-                Fk_PlayerGameWeak = fk_PlayerGameWeak,
-            });
-        }
-
         [HttpPost]
         public async Task<ActionResult> AddScore(PlayerGameWeakScoreCreateDto model)
         {
@@ -149,6 +137,8 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
             ViewData["otherLang"] = otherLang;
 
             ViewData["auth"] = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
+            
+            ViewData["ScoreType"] = _unitOfWork.PlayerScore.GetScoreTypesLookUp(new ScoreTypeParameters { HavePoints = true, IncludeTypeName = true }, otherLang);
 
             return View(data);
         }

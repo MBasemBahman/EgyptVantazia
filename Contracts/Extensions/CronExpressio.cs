@@ -9,6 +9,21 @@ namespace Contracts.Extensions
             return $"*/{minute} * * * *";
         }
 
+        public static string EveryHour(int hour)
+        {
+            return $"0 */{hour} * * *";
+        }
+
+        public static string EveryDay(int hour)
+        {
+            return $"0 {hour} * * *";
+        }
+
+        public static string EveryWeek(DayOfWeek dayOfWeek)
+        {
+            return $"0 0 * * {(int)dayOfWeek}";
+        }
+
         public static string EveryDayOfMonth(int day, int hour, int minute)
         {
             return $"{minute} {hour} {day} * *";

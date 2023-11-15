@@ -70,53 +70,48 @@ namespace FantasyLogicMicroservices.Areas.SeasonDataArea.Controllers
 
         private void DailyRecurringJob()
         {
-            // every 1 hour
-            RecurringJob.AddOrUpdate($"Remove-Update-Matchs", () => RemoveUpdateMatchRecurringJob(), "0 * * * *", TimeZoneInfo.Local);
+            RecurringJob.AddOrUpdate($"Remove-Update-Matchs", () => RemoveUpdateMatchRecurringJob(), CronExpression.EveryHour(1));
 
-            // every 8 hour
-            RecurringJob.AddOrUpdate($"Run-AccountTeams-Calculations-{_365CompetitionsEnum.Egypt}", () => _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(_365CompetitionsEnum.Egypt, 0, 0, null, null, false), "0 */8 * * *", TimeZoneInfo.Local);
-            RecurringJob.AddOrUpdate($"Run-AccountTeams-Calculations-{_365CompetitionsEnum.KSA}", () => _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(_365CompetitionsEnum.KSA, 0, 0, null, null, false), "0 */8 * * *", TimeZoneInfo.Local);
-            RecurringJob.AddOrUpdate($"Run-AccountTeams-Calculations-{_365CompetitionsEnum.EPL}", () => _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(_365CompetitionsEnum.EPL, 0, 0, null, null, false), "0 */8 * * *", TimeZoneInfo.Local);
+            RecurringJob.AddOrUpdate($"Run-AccountTeams-Calculations-{_365CompetitionsEnum.Egypt}", () => _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(_365CompetitionsEnum.Egypt, 0, 0, null, null, false), CronExpression.EveryHour(12));
+            RecurringJob.AddOrUpdate($"Run-AccountTeams-Calculations-{_365CompetitionsEnum.KSA}", () => _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(_365CompetitionsEnum.KSA, 0, 0, null, null, false), CronExpression.EveryHour(12));
+            RecurringJob.AddOrUpdate($"Run-AccountTeams-Calculations-{_365CompetitionsEnum.EPL}", () => _fantasyUnitOfWork.AccountTeamCalc.RunAccountTeamsCalculations(_365CompetitionsEnum.EPL, 0, 0, null, null, false), CronExpression.EveryHour(12));
 
-            // every 14 hour
-            RecurringJob.AddOrUpdate($"Update-PrivateLeagues-Ranking-{_365CompetitionsEnum.Egypt}", () => _fantasyUnitOfWork.PrivateLeagueClac.RunPrivateLeaguesRanking(_365CompetitionsEnum.Egypt, null, 0, false), "0 */14 * * *", TimeZoneInfo.Local);
-            RecurringJob.AddOrUpdate($"Update-PrivateLeagues-Ranking-{_365CompetitionsEnum.KSA}", () => _fantasyUnitOfWork.PrivateLeagueClac.RunPrivateLeaguesRanking(_365CompetitionsEnum.KSA, null, 0, false), "0 */14 * * *", TimeZoneInfo.Local);
-            RecurringJob.AddOrUpdate($"Update-PrivateLeagues-Ranking-{_365CompetitionsEnum.EPL}", () => _fantasyUnitOfWork.PrivateLeagueClac.RunPrivateLeaguesRanking(_365CompetitionsEnum.EPL, null, 0, false), "0 */14 * * *", TimeZoneInfo.Local);
+            RecurringJob.AddOrUpdate($"Update-PrivateLeagues-Ranking-{_365CompetitionsEnum.Egypt}", () => _fantasyUnitOfWork.PrivateLeagueClac.RunPrivateLeaguesRanking(_365CompetitionsEnum.Egypt, null, 0, false), CronExpression.EveryDay(hour: 9));
+            RecurringJob.AddOrUpdate($"Update-PrivateLeagues-Ranking-{_365CompetitionsEnum.KSA}", () => _fantasyUnitOfWork.PrivateLeagueClac.RunPrivateLeaguesRanking(_365CompetitionsEnum.KSA, null, 0, false), CronExpression.EveryDay(hour: 9));
+            RecurringJob.AddOrUpdate($"Update-PrivateLeagues-Ranking-{_365CompetitionsEnum.EPL}", () => _fantasyUnitOfWork.PrivateLeagueClac.RunPrivateLeaguesRanking(_365CompetitionsEnum.EPL, null, 0, false), CronExpression.EveryDay(hour: 9));
 
-            // every 24 hour
-            RecurringJob.AddOrUpdate($"Update-Games-{_365CompetitionsEnum.Egypt}", () => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames(_365CompetitionsEnum.Egypt), "0 5 * * *", TimeZoneInfo.Local);
-            RecurringJob.AddOrUpdate($"Update-Games-{_365CompetitionsEnum.KSA}", () => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames(_365CompetitionsEnum.KSA), "0 5 * * *", TimeZoneInfo.Local);
-            RecurringJob.AddOrUpdate($"Update-Games-{_365CompetitionsEnum.EPL}", () => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames(_365CompetitionsEnum.EPL), "0 5 * * *", TimeZoneInfo.Local);
+            RecurringJob.AddOrUpdate($"Update-Games-{_365CompetitionsEnum.Egypt}", () => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames(_365CompetitionsEnum.Egypt), CronExpression.EveryDay(hour: 5));
+            RecurringJob.AddOrUpdate($"Update-Games-{_365CompetitionsEnum.KSA}", () => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames(_365CompetitionsEnum.KSA), CronExpression.EveryDay(hour: 5));
+            RecurringJob.AddOrUpdate($"Update-Games-{_365CompetitionsEnum.EPL}", () => _fantasyUnitOfWork.GamesDataHelper.RunUpdateGames(_365CompetitionsEnum.EPL), CronExpression.EveryDay(hour: 5));
 
-            RecurringJob.AddOrUpdate($"Update-Standings-{_365CompetitionsEnum.Egypt}", () => _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings(_365CompetitionsEnum.Egypt), "0 6 * * *", TimeZoneInfo.Local);
-            RecurringJob.AddOrUpdate($"Update-Standings-{_365CompetitionsEnum.KSA}", () => _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings(_365CompetitionsEnum.KSA), "0 6 * * *", TimeZoneInfo.Local);
-            RecurringJob.AddOrUpdate($"Update-Standings-{_365CompetitionsEnum.EPL}", () => _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings(_365CompetitionsEnum.EPL), "0 6 * * *", TimeZoneInfo.Local);
+            RecurringJob.AddOrUpdate($"Update-Standings-{_365CompetitionsEnum.Egypt}", () => _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings(_365CompetitionsEnum.Egypt), CronExpression.EveryDay(hour: 6));
+            RecurringJob.AddOrUpdate($"Update-Standings-{_365CompetitionsEnum.KSA}", () => _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings(_365CompetitionsEnum.KSA), CronExpression.EveryDay(hour: 6));
+            RecurringJob.AddOrUpdate($"Update-Standings-{_365CompetitionsEnum.EPL}", () => _fantasyUnitOfWork.StandingsDataHelper.RunUpdateStandings(_365CompetitionsEnum.EPL), CronExpression.EveryDay(hour: 6));
 
-            RecurringJob.AddOrUpdate($"Update-Players-{_365CompetitionsEnum.Egypt}", () => _fantasyUnitOfWork.PlayerDataHelper.RunUpdatePlayers(_365CompetitionsEnum.Egypt), "0 7 * * *", TimeZoneInfo.Local);
-            RecurringJob.AddOrUpdate($"Update-Players-{_365CompetitionsEnum.KSA}", () => _fantasyUnitOfWork.PlayerDataHelper.RunUpdatePlayers(_365CompetitionsEnum.KSA), "0 7 * * *", TimeZoneInfo.Local);
-            RecurringJob.AddOrUpdate($"Update-Players-{_365CompetitionsEnum.EPL}", () => _fantasyUnitOfWork.PlayerDataHelper.RunUpdatePlayers(_365CompetitionsEnum.EPL), "0 7 * * *", TimeZoneInfo.Local);
+            RecurringJob.AddOrUpdate($"Update-Players-{_365CompetitionsEnum.Egypt}", () => _fantasyUnitOfWork.PlayerDataHelper.RunUpdatePlayers(_365CompetitionsEnum.Egypt), CronExpression.EveryDay(hour: 7));
+            RecurringJob.AddOrUpdate($"Update-Players-{_365CompetitionsEnum.KSA}", () => _fantasyUnitOfWork.PlayerDataHelper.RunUpdatePlayers(_365CompetitionsEnum.KSA), CronExpression.EveryDay(hour: 7));
+            RecurringJob.AddOrUpdate($"Update-Players-{_365CompetitionsEnum.EPL}", () => _fantasyUnitOfWork.PlayerDataHelper.RunUpdatePlayers(_365CompetitionsEnum.EPL), CronExpression.EveryDay(hour: 7));
 
             //EPL
-            RecurringJob.AddOrUpdate($"Update-AccountTeam-GameWeak-Ranking-{_365CompetitionsEnum.EPL}", () => _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamGameWeakRanking(_365CompetitionsEnum.EPL, 0, 0), "0 2 * * *", TimeZoneInfo.Local);
-            RecurringJob.AddOrUpdate($"Update-AccountTeam-Ranking-{_365CompetitionsEnum.EPL}", () => _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamRanking(_365CompetitionsEnum.EPL), "0 3 * * *", TimeZoneInfo.Local);
+            RecurringJob.AddOrUpdate($"Update-AccountTeam-GameWeak-Ranking-{_365CompetitionsEnum.EPL}", () => _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamGameWeakRanking(_365CompetitionsEnum.EPL, 0, 0), CronExpression.EveryDay(hour: 6));
+            RecurringJob.AddOrUpdate($"Update-AccountTeam-Ranking-{_365CompetitionsEnum.EPL}", () => _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamRanking(_365CompetitionsEnum.EPL), CronExpression.EveryDay(hour: 6));
 
             //KSA
-            RecurringJob.AddOrUpdate($"Update-AccountTeam-GameWeak-Ranking-{_365CompetitionsEnum.KSA}", () => _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamGameWeakRanking(_365CompetitionsEnum.KSA, 0, 0), "0 4 * * *", TimeZoneInfo.Local);
-            RecurringJob.AddOrUpdate($"Update-AccountTeam-Ranking-{_365CompetitionsEnum.KSA}", () => _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamRanking(_365CompetitionsEnum.KSA), "0 5 * * *", TimeZoneInfo.Local);
+            RecurringJob.AddOrUpdate($"Update-AccountTeam-GameWeak-Ranking-{_365CompetitionsEnum.KSA}", () => _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamGameWeakRanking(_365CompetitionsEnum.KSA, 0, 0), CronExpression.EveryDay(hour: 6));
+            RecurringJob.AddOrUpdate($"Update-AccountTeam-Ranking-{_365CompetitionsEnum.KSA}", () => _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamRanking(_365CompetitionsEnum.KSA), CronExpression.EveryDay(hour: 6));
 
             //Egypt
-            RecurringJob.AddOrUpdate($"Update-AccountTeam-GameWeak-Ranking-{_365CompetitionsEnum.Egypt}", () => _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamGameWeakRanking(_365CompetitionsEnum.Egypt, 0, 0), "0 6 * * *", TimeZoneInfo.Local);
-            RecurringJob.AddOrUpdate($"Update-AccountTeam-Ranking-{_365CompetitionsEnum.Egypt}", () => _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamRanking(_365CompetitionsEnum.Egypt), "0 7 * * *", TimeZoneInfo.Local);
+            RecurringJob.AddOrUpdate($"Update-AccountTeam-GameWeak-Ranking-{_365CompetitionsEnum.Egypt}", () => _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamGameWeakRanking(_365CompetitionsEnum.Egypt, 0, 0), CronExpression.EveryDay(hour: 6));
+            RecurringJob.AddOrUpdate($"Update-AccountTeam-Ranking-{_365CompetitionsEnum.Egypt}", () => _fantasyUnitOfWork.AccountTeamCalc.UpdateAccountTeamRanking(_365CompetitionsEnum.Egypt), CronExpression.EveryDay(hour: 6));
 
-            
+
         }
 
         private void WeeklyRecurringJob()
         {
-            RecurringJob.AddOrUpdate($"Update-Teams-{_365CompetitionsEnum.Egypt}", () => _fantasyUnitOfWork.TeamDataHelper.RunUpdateTeams(_365CompetitionsEnum.Egypt), "0 3 * * 5", TimeZoneInfo.Local);
-            RecurringJob.AddOrUpdate($"Update-Teams-{_365CompetitionsEnum.KSA}", () => _fantasyUnitOfWork.TeamDataHelper.RunUpdateTeams(_365CompetitionsEnum.KSA), "0 3 * * 5", TimeZoneInfo.Local);
-            RecurringJob.AddOrUpdate($"Update-Teams-{_365CompetitionsEnum.EPL}", () => _fantasyUnitOfWork.TeamDataHelper.RunUpdateTeams(_365CompetitionsEnum.EPL), "0 3 * * 5", TimeZoneInfo.Local);
-
+            RecurringJob.AddOrUpdate($"Update-Teams-{_365CompetitionsEnum.Egypt}", () => _fantasyUnitOfWork.TeamDataHelper.RunUpdateTeams(_365CompetitionsEnum.Egypt), CronExpression.EveryWeek(DayOfWeek.Saturday));
+            RecurringJob.AddOrUpdate($"Update-Teams-{_365CompetitionsEnum.KSA}", () => _fantasyUnitOfWork.TeamDataHelper.RunUpdateTeams(_365CompetitionsEnum.KSA), CronExpression.EveryWeek(DayOfWeek.Saturday));
+            RecurringJob.AddOrUpdate($"Update-Teams-{_365CompetitionsEnum.EPL}", () => _fantasyUnitOfWork.TeamDataHelper.RunUpdateTeams(_365CompetitionsEnum.EPL), CronExpression.EveryWeek(DayOfWeek.Saturday));
         }
 
         [ApiExplorerSettings(IgnoreApi = true)]

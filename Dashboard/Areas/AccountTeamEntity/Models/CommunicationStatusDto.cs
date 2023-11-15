@@ -13,6 +13,6 @@ namespace Dashboard.Areas.AccountTeamEntity.Models
         public new string CreatedAt { get; set; }
 
         [DisplayName(nameof(LastModifiedAt))]
-        public new string LastModifiedAt { get; set; }
+        public string LastModifiedAt { get; set; }
     }
 }

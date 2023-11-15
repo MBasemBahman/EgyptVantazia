@@ -138,7 +138,7 @@ namespace FantasyLogic.DataMigration.GamesData
 
                 GameResultDataHelper gameResultDataHelper = new(_unitOfWork, _365Services);
 
-                DateTime scheduleTimeForSchedule = startTime.AddHours(-1);
+                DateTime scheduleTimeForSchedule = startTime;
 
                 match.JobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(_365CompetitionsEnum, new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, false, false, false, false, false), scheduleTimeForSchedule); // بداية الماتش;
                 match.SecondJobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(_365CompetitionsEnum, new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, true, false, false, false, false), scheduleTimeForSchedule.AddMinutes(120)); // احتساب البونص;
@@ -185,7 +185,7 @@ namespace FantasyLogic.DataMigration.GamesData
 
                     if (deadline > DateTime.UtcNow)
                     {
-                        DateTime scheduleTimeForSchedule = deadline.AddHours(-1);
+                        DateTime scheduleTimeForSchedule = deadline;
 
                         gameWeak.JobId = BackgroundJob.Schedule(() => UpdateCurrentGameWeak(_365CompetitionsEnum, gameWeak.Id, false, 0, false, false), scheduleTimeForSchedule);
 

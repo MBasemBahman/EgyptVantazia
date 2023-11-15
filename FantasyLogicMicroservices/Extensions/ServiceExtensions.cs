@@ -152,18 +152,10 @@ namespace FantasyLogicMicroservices.Extensions
            IConfiguration configuration)
         {
             _ = services.AddHangfire(config => config
-                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
                 .UseSimpleAssemblyNameTypeSerializer()
                 .UseRecommendedSerializerSettings()
-                .UseSqlServerStorage(configuration.GetConnectionString("HangfireConnection"), new SqlServerStorageOptions
-                {
-                    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
-                    SlidingInvisibilityTimeout = TimeSpan.FromHours(1),
-                    QueuePollInterval = TimeSpan.Zero,
-                    UseRecommendedIsolationLevel = true,
-                    DisableGlobalLocks = true,
-                    JobExpirationCheckInterval = TimeSpan.Zero,
-                }));
+                .UseSqlServerStorage(configuration.GetConnectionString("HangfireConnection")));
             // Add the processing server as IHostedService
             _ = services.AddHangfireServer(a =>
             {

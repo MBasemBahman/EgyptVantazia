@@ -173,7 +173,7 @@ namespace FantasyLogicMicroservices.Areas.HandlingArea
 		[Route(nameof(RecurringJobCheck))]
 		public IActionResult RecurringJobCheck()
 		{
-			RecurringJob.AddOrUpdate("RecurringJobCheck", () => RecurringJobCheckTask(), CronExpression.EveryMinutes(5), TimeZoneInfo.Local);
+			RecurringJob.AddOrUpdate("RecurringJobCheck", () => RecurringJobCheckTask(), CronExpression.EveryMinutes(5));
 
 			return Ok();
 		}

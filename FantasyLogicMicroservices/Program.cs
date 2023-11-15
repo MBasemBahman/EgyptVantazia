@@ -73,6 +73,8 @@ if (useHangfire)
         DashboardTitle = "schedule jobs",
         Authorization = new[] { new HangfireAuthorizationFilter() }
     });
+
+    BackgroundJob.Enqueue(() => Console.WriteLine("Hello world from Hangfire!"));
 }
 
 app.UseEndpoints(endpoints =>

@@ -168,5 +168,20 @@ namespace FantasyLogicMicroservices.Areas.HandlingArea
 
             }
         }
-    }
+
+		[HttpPost]
+		[Route(nameof(RecurringJobCheck))]
+		public IActionResult RecurringJobCheck()
+		{
+			RecurringJob.AddOrUpdate("RecurringJobCheck", () => RecurringJobCheckTask(), CronExpression.EveryMinutes(5), TimeZoneInfo.Local);
+
+			return Ok();
+		}
+
+		[ApiExplorerSettings(IgnoreApi = true)]
+		public void RecurringJobCheckTask()
+		{
+			return;
+		}
+	}
 }

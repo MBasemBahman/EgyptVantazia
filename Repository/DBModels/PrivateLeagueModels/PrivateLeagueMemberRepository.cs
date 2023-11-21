@@ -32,12 +32,40 @@ namespace Repository.DBModels.PrivateLeagueModels
                         .FirstOrDefaultAsync();
         }
 
-        public void UpdatePrivateLeagueMembersPointsAndRanking(int fk_PrivateLeague)
-        {
-            _ = DBContext.Database.ExecuteSqlRaw("EXEC [dbo].[SP_UpdatePrivateLeagueMembersPointsAndRanking] @PrivateLeagueId", new SqlParameter("@PrivateLeagueId", fk_PrivateLeague));
-        }
+		public void UpdatePrivateLeagueMembersPointsAndRanking(int fk_PrivateLeague)
+		{
+			_ = DBContext.Database.ExecuteSqlRaw(@"WITH CTE AS (
+                                                       SELECT
+                                                           plm.Id AS MemberId,
+                                                           (
+                                                               SELECT SUM(atgw.TotalPoints)
+                                                               FROM [dbo].[AccountTeamGameWeaks] atgw
+                                                               JOIN [dbo].[GameWeaks] gw ON atgw.Fk_GameWeak = gw.Id
+                                                               JOIN [dbo].[AccountTeams] act ON act.Id = atgw.Fk_AccountTeam
+                                                               WHERE plm.Fk_Account = act.Fk_Account
+                                                               AND gw.Fk_Season = plgw.Fk_Season
+                                                               AND gw._365_GameWeakIdValue >= plgw._365_GameWeakIdValue
+                                                           ) AS NewPoints
+                                                       FROM [dbo].[PrivateLeagueMembers] plm
+                                                       JOIN [dbo].[PrivateLeagues] pl ON pl.Id = plm.Fk_PrivateLeague
+                                                       JOIN [dbo].[GameWeaks] plgw ON plgw.Id = pl.Fk_GameWeak
+                                                       WHERE plm.Fk_PrivateLeague = @PrivateLeagueId
+                                                   )
+                                                   UPDATE plm
+                                                   SET
+                                                       Points = CTE.NewPoints,
+                                                       Ranking = (
+                                                           SELECT COUNT(*) + 1
+                                                           FROM CTE c
+                                                           WHERE c.NewPoints > CTE.NewPoints
+                                                       )
+                                                   FROM [dbo].[PrivateLeagueMembers] plm
+                                                   JOIN CTE ON plm.Id = CTE.MemberId;
+                                                   ",
+												   new SqlParameter("@PrivateLeagueId", fk_PrivateLeague));
+		}
 
-        public new void Create(PrivateLeagueMember entity)
+		public new void Create(PrivateLeagueMember entity)
         {
             if (FindByCondition(a => a.Fk_PrivateLeague == entity.Fk_PrivateLeague && a.Fk_Account == entity.Fk_Account, trackChanges: false).Any())
             {

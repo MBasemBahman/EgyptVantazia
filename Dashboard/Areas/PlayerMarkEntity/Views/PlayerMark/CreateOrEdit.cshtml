@@ -55,7 +55,7 @@
 
                                     <div class="row mb-1">
 
-                                        <div class="col-md-6 col-12">
+                                        <div class="col-md-4 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="Fk_Mark" class="form-label"></label>
                                                 <select asp-for="Fk_Mark" class="select2 form-select" asp-items="@(new SelectList(ViewData["Marks"] as Dictionary<string,string>,"Key","Value"))">
@@ -64,7 +64,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6 col-12">
+                                        <div class="col-md-4 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="DateTo" class="form-label"></label>
                                                 <input type="date" asp-for="DateTo" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"DateTo"))" />
@@ -73,7 +73,7 @@
                                         </div>
 
 
-                                        <div class="col-md-6 col-12">
+                                        <div class="col-md-4 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="Percent" class="form-label"></label>
                                                 <select asp-for="Percent" class="select2 form-select">
@@ -89,8 +89,16 @@
                                         <div class="col-md-6 col-12">
                                             <div class="mb-1">
                                                 <label asp-for="Notes" class="form-label"></label>
-                                                <textarea rows="3" asp-for="Notes" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Notes"))"></textarea>
+                                                <textarea rows="3" asp-for="Notes" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Notes{PropertyAttributeConstants.ArLang}"))"></textarea>
                                                 <span asp-validation-for="Notes" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="mb-1">
+                                                <label asp-for="PlayerMarkLang.Notes" class="form-label"></label>
+                                                <textarea rows="3" asp-for="PlayerMarkLang.Notes" class="form-control" placeholder="@Localizer.Get("Enter") @(Localizer.Get($"Notes{PropertyAttributeConstants.EnLang}"))"></textarea>
+                                                <span asp-validation-for="PlayerMarkLang.Notes" class="text-danger"></span>
                                             </div>
                                         </div>
 

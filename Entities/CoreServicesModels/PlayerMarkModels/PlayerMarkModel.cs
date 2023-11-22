@@ -90,7 +90,7 @@ namespace Entities.CoreServicesModels.PlayerMarkModels
         [DisplayName(nameof(Percent))]
         public int Percent { get; set; }
 
-        [DisplayName(nameof(Notes))]
+        [DisplayName($"{nameof(Notes)}{PropertyAttributeConstants.ArLang}")]
         [DataType(DataType.MultilineText)]
         public string Notes { get; set; }
 
@@ -99,5 +99,14 @@ namespace Entities.CoreServicesModels.PlayerMarkModels
 
         [DisplayName(nameof(Fk_PlayerMarkReasonMatches))]
         public List<int> Fk_PlayerMarkReasonMatches { get; set; }
+
+        public PlayerMarkLangModel PlayerMarkLang { get; set; }
+    }
+
+    public class PlayerMarkLangModel
+    {
+        [DisplayName($"{nameof(Notes)}{PropertyAttributeConstants.EnLang}")]
+        [DataType(DataType.MultilineText)]
+        public string Notes { get; set; }
     }
 }

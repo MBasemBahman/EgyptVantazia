@@ -1,4 +1,5 @@
 ﻿using Entities.CoreServicesModels.PlayerMarkModels;
+using Entities.DBModels.LocationModels;
 using Entities.DBModels.PlayerMarkModels;
 
 namespace Repository.DBModels.PlayerMarkModels
@@ -25,11 +26,16 @@ namespace Repository.DBModels.PlayerMarkModels
         public async Task<PlayerMark> FindById(int id, bool trackChanges)
         {
             return await FindByCondition(a => a.Id == id, trackChanges)
+                        .Include(a=>a.PlayerMarkLang)
                         .FirstOrDefaultAsync();
         }
 
         public new void Create(PlayerMark entity)
         {
+            entity.PlayerMarkLang ??= new PlayerMarkLang
+            {
+                Notes = entity.Notes,
+            };
             base.Create(entity);
         }
     }

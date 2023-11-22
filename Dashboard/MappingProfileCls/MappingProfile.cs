@@ -535,6 +535,10 @@ namespace Dashboard.MappingProfileCls
 
             _ = CreateMap<PlayerMarkCreateOrEditModel, PlayerMark>();
 
+            CreateMap<PlayerMarkLangModel, PlayerMarkLang>();
+
+            CreateMap<PlayerMarkLang, PlayerMarkLangModel>();
+
             _ = CreateMap<PlayerMarkModel, PlayerMarkDto>();
 
             _ = CreateMap<PlayerMarkFilter, PlayerMarkParameters>();

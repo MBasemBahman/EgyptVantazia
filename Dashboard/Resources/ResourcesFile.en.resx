@@ -1464,4 +1464,10 @@
   <data name="Fk_CommunicationStatuses" xml:space="preserve">
     <value>Communication Statuses</value>
   </data>
+  <data name="Notes Arabic" xml:space="preserve">
+    <value>Notes Arabic</value>
+  </data>
+  <data name="Notes English" xml:space="preserve">
+    <value>Notes English</value>
+  </data>
 </root>

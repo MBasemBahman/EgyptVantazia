@@ -1518,4 +1518,10 @@
   <data name="IsVip" xml:space="preserve">
     <value>عضو ذهبي</value>
   </data>
+  <data name="Notes Arabic" xml:space="preserve">
+    <value>ملاحظات بالعربية</value>
+  </data>
+  <data name="Notes English" xml:space="preserve">
+    <value>ملاحظات بالانجليزية</value>
+  </data>
 </root>

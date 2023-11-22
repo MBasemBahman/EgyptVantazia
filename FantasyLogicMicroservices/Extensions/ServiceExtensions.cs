@@ -1,7 +1,6 @@
 ﻿using BaseDB;
 using FantasyLogic;
 using Hangfire;
-using Hangfire.SqlServer;
 using IntegrationWith365;
 
 namespace FantasyLogicMicroservices.Extensions
@@ -66,17 +65,23 @@ namespace FantasyLogicMicroservices.Extensions
 
         public static void ConfigureVersioning(this IServiceCollection services)
         {
-            _ = services.AddVersionedApiExplorer(options =>
-            {
-                options.GroupNameFormat = "'v'VVV";
-                options.SubstituteApiVersionInUrl = true;
-            });
-            _ = services.AddApiVersioning(options =>
+            IApiVersioningBuilder apiVersioningBuilder = services.AddApiVersioning(options =>
             {
                 options.ReportApiVersions = true;
-                options.AssumeDefaultVersionWhenUnspecified = true;
                 options.DefaultApiVersion = new ApiVersion(1, 0);
-            });
+                options.AssumeDefaultVersionWhenUnspecified = true;
+            }); // Nuget Package: Asp.Versioning.Mvc
+
+            _ = apiVersioningBuilder.AddApiExplorer(options =>
+            {
+                // add the versioned api explorer, which also adds IApiVersionDescriptionProvider service
+                // note: the specified format code will format the version as "'v'major[.minor][-status]"
+                options.GroupNameFormat = "'v'VVV";
+
+                // note: this option is only necessary when versioning by url segment. the SubstitutionFormat
+                // can also be used to control the format of the API version in route templates
+                options.SubstituteApiVersionInUrl = true;
+            }); // Nuget Package: Asp.Versioning.Mvc.ApiExplorer
         }
 
         public static void ConfigureResponseCaching(this IServiceCollection services)

@@ -41,6 +41,7 @@ global using System.Security.Claims;
 global using System.Text;
 global using TenantConfiguration;
 global using static TenantConfiguration.TenantData;
+global using Asp.Versioning;
 
 
 

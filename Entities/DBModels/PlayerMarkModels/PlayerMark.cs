@@ -29,7 +29,7 @@ namespace Entities.DBModels.PlayerMarkModels
         [DisplayName(nameof(Percent))]
         public int Percent { get; set; }
 
-        [DisplayName(nameof(Notes))]
+        [DisplayName($"{nameof(Notes)}{PropertyAttributeConstants.ArLang}")]
         [DataType(DataType.MultilineText)]
         public string Notes { get; set; }
 
@@ -41,5 +41,14 @@ namespace Entities.DBModels.PlayerMarkModels
 
         [DisplayName(nameof(PlayerMarkGameWeakScores))]
         public List<PlayerMarkGameWeakScore> PlayerMarkGameWeakScores { get; set; }
+
+        [DisplayName(nameof(PlayerMarkLang))]
+        public PlayerMarkLang PlayerMarkLang { get; set; }
+    }
+    public class PlayerMarkLang : LangEntity<PlayerMark>
+    {
+        [DisplayName($"{nameof(Notes)}{PropertyAttributeConstants.EnLang}")]
+        [DataType(DataType.MultilineText)]
+        public string Notes { get; set; }
     }
 }

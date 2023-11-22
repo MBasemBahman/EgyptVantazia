@@ -30,6 +30,7 @@ namespace API.Areas.SeasonArea.Controllers
 
             _365CompetitionsEnum _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
             parameters.Fk_Season = auth.Fk_Season;
+            parameters.IsDelayed = false;
 
             if (parameters.NextGameWeak)
             {

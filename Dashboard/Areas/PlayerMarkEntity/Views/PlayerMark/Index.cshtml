@@ -202,6 +202,8 @@ else
                                 data.Fk_Mark = $("#Fk_Mark").length > 0 ? $("#Fk_Mark").val() : @Model.Fk_Mark;
                                 data.Fk_Teams = $("#Fk_Teams").length > 0 ? $("#Fk_Teams").val() : null;
                                 data.Fk_Players = $("#Fk_Players").length > 0 ? $("#Fk_Players").val() : null;
+                                data.Fk_Season = $("#Fk_Season").length > 0 ? $("#Fk_Season").val() : @Model.Fk_Season;
+
                                 
                                 return JSON.stringify(data);
                             }

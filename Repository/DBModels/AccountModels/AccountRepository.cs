@@ -98,9 +98,9 @@ namespace Repository.DBModels.AccountModels
             return accounts.Where(a => (id == 0 || a.Id == id) &&
 
                                        (string.IsNullOrEmpty(dashboardSearch) || a.Id.ToString().Contains(dashboardSearch)
-                                          || a.User.UserName.ToString().Contains(dashboardSearch) || a.FullName.ToString().Contains(dashboardSearch)
-                                          || a.User.EmailAddress.ToString().Contains(dashboardSearch) || a.User.PhoneNumber.ToString().Contains(dashboardSearch)
-                                          || a.PhoneNumberTwo.ToString().Contains(dashboardSearch)) &&
+                                          || a.User.UserName.Contains(dashboardSearch) || a.FullName.Contains(dashboardSearch)
+                                          || a.User.EmailAddress.Contains(dashboardSearch) || a.User.PhoneNumber.Contains(dashboardSearch)
+                                          || (a.PhoneNumberTwo.Contains(dashboardSearch))) &&
                                        
                                        (showAds == null || a.ShowAds == showAds) &&
 

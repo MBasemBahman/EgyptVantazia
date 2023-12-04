@@ -177,6 +177,9 @@
   <data name="Teams will appear after the first round ends" xml:space="preserve">
     <value>سيتم ظهور الفرق بعد انتهاء الجوله الاولي</value>
   </data>
+  <data name="Temporary High Traffic: Please Try Again Later!" xml:space="preserve">
+    <value>ضغط عالي حاليًا على التطبيق - يُرجى المحاولة لاحقًا!</value>
+  </data>
   <data name="The code is incorrect!" xml:space="preserve">
     <value>الكود غير صحيح!</value>
   </data>

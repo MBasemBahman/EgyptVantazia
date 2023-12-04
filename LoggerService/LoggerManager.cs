@@ -1,4 +1,5 @@
 ﻿using Contracts;
+using Contracts.Extensions;
 using Contracts.Logger;
 using Entities.LogFeatures;
 using Entities.ResponseFeatures;
@@ -45,7 +46,13 @@ namespace LoggerService
 
             if (exception != null)
             {
-                logModel.ErrorMessage = _localization.Get(exception.Message ?? "");
+                string message = exception.Message ?? "";
+                if (message.IsExisting() && message.Contains("timeout"))
+                {
+                    message = "Temporary High Traffic: Please Try Again Later!";
+                }
+
+                logModel.ErrorMessage = _localization.Get(message ?? "");
                 logModel.ExceptionMessage = exception.InnerException == null ? exception.Message : exception.InnerException.Message;
 
                 //logModel.Host = request.Host.Value;

@@ -77,9 +77,10 @@ namespace FantasyLogic.DataMigration.GamesData
 
                 if (fk_GameWeak > 0)
                 {
-                    jobId = jobId.IsExisting()
-                        ? BackgroundJob.ContinueJobWith(jobId, () => UpdateGame(_365CompetitionsEnum, game, fk_Home, fk_Away, fk_GameWeak))
-                        : BackgroundJob.Enqueue(() => UpdateGame(_365CompetitionsEnum, game, fk_Home, fk_Away, fk_GameWeak));
+                    jobId = BackgroundJob.Enqueue(() => UpdateGame(_365CompetitionsEnum, game, fk_Home, fk_Away, fk_GameWeak));
+                    //jobId = jobId.IsExisting()
+                    //    ? BackgroundJob.ContinueJobWith(jobId, () => UpdateGame(_365CompetitionsEnum, game, fk_Home, fk_Away, fk_GameWeak))
+                    //    : BackgroundJob.Enqueue(() => UpdateGame(_365CompetitionsEnum, game, fk_Home, fk_Away, fk_GameWeak));
                 }
             }
 

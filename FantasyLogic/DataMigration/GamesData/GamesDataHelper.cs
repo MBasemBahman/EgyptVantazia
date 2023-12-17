@@ -148,9 +148,9 @@ namespace FantasyLogic.DataMigration.GamesData
                 match.SecondJobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(_365CompetitionsEnum, new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, true, false, false, false, false), scheduleTimeForSchedule.AddMinutes(120)); // احتساب البونص;
                 match.ThirdJobId = BackgroundJob.Schedule(() => gameResultDataHelper.RunUpdateGameResult(_365CompetitionsEnum, new TeamGameWeakParameters { _365_MatchId = game.Id.ToString() }, true, false, false, true, false), scheduleTimeForSchedule.AddMinutes(200)); // احتساب البونص;
 
-                match.FirstNotificationJobId = BackgroundJob.Schedule(() => SendNotificationForMatch(match.Id, MatchNotificationEnum.StartMatch), scheduleTimeForSchedule);
-                match.SecondNotificationJobId = BackgroundJob.Schedule(() => SendNotificationForMatch(match.Id, MatchNotificationEnum.HalfTime), scheduleTimeForSchedule.AddMinutes(45));
-                match.ThirdNotificationJobId = BackgroundJob.Schedule(() => SendNotificationForMatch(match.Id, MatchNotificationEnum.EndMatch), scheduleTimeForSchedule.AddMinutes(105));
+                //match.FirstNotificationJobId = BackgroundJob.Schedule(() => SendNotificationForMatch(match.Id, MatchNotificationEnum.StartMatch), scheduleTimeForSchedule);
+                //match.SecondNotificationJobId = BackgroundJob.Schedule(() => SendNotificationForMatch(match.Id, MatchNotificationEnum.HalfTime), scheduleTimeForSchedule.AddMinutes(45));
+                //match.ThirdNotificationJobId = BackgroundJob.Schedule(() => SendNotificationForMatch(match.Id, MatchNotificationEnum.EndMatch), scheduleTimeForSchedule.AddMinutes(105));
 
                 _unitOfWork.Save().Wait();
             }
@@ -279,6 +279,7 @@ namespace FantasyLogic.DataMigration.GamesData
 
         public async Task SendNotificationForMatch(int id, MatchNotificationEnum matchNotificationEnum)
         {
+            return;
             TeamGameWeakModel match = _unitOfWork.Season.GetTeamGameWeaksForNotification(new TeamGameWeakParameters
             {
                 Id = id

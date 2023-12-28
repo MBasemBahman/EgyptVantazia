@@ -423,6 +423,7 @@ namespace API.Areas.AccountTeamArea.Controllers
             AccountTeamGameWeakModelForCalc teamGameWeak = _unitOfWork.AccountTeam.GetAccountTeamGameWeaksForCalc(new AccountTeamGameWeakParameters
             {
                 Fk_Account = auth.Fk_Account,
+                Fk_AccountTeam = currentTeam.Id,
                 Fk_GameWeak = nextGameWeak.Id
             }).FirstOrDefault();
             if (teamGameWeak == null)
@@ -671,6 +672,7 @@ namespace API.Areas.AccountTeamArea.Controllers
             AccountTeamGameWeakModelForCalc teamGameWeak = _unitOfWork.AccountTeam.GetAccountTeamGameWeaksForCalc(new AccountTeamGameWeakParameters
             {
                 Fk_Account = auth.Fk_Account,
+                Fk_AccountTeam = currentTeam.Id,
                 Fk_GameWeak = nextGameWeak.Id
             }).FirstOrDefault();
             if (teamGameWeak == null)

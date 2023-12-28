@@ -77,6 +77,7 @@ namespace API.Areas.PlayerTransferArea.Controllers
             AccountTeamGameWeakModelForCalc teamGameWeak = _unitOfWork.AccountTeam.GetAccountTeamGameWeaksForCalc(new AccountTeamGameWeakParameters
             {
                 Fk_Account = auth.Fk_Account,
+                Fk_AccountTeam = currentTeam.Id,
                 Fk_GameWeak = nextGameWeakId
             }).FirstOrDefault();
             if (teamGameWeak == null)

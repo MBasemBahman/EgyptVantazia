@@ -176,6 +176,7 @@ namespace BaseDB
         public DbSet<PlayerMarkGameWeakScore> PlayerMarkGameWeakScores { get; set; }
         public DbSet<PlayerMarkGameWeak> PlayerMarkGameWeeks { get; set; }
         public DbSet<PlayerMarkTeamGameWeak> PlayerMarkTeamGameWeaks { get; set; }
+        public DbSet<PlayerMarkReasonMatch> PlayerMarkReasonMatch { get; set; }
         #endregion
 
         #region PromoCode Models

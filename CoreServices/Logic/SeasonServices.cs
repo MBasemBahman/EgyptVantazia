@@ -5,7 +5,7 @@ using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayerScoreModels;
 using Entities.DBModels.SeasonModels;
 using Entities.DBModels.TeamModels;
-using static Contracts.EnumData.DBModelsEnum;
+using static Entities.EnumData.LogicEnumData;
 
 namespace CoreServices.Logic
 {

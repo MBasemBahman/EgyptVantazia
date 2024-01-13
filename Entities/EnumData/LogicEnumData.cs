@@ -54,5 +54,12 @@
             MatchProfile,
             DeadLine
         }
+
+        public enum _365CompetitionsEnum
+        {
+            Egypt = 552,
+            KSA = 649,
+            EPL = 7
+        }
     }
 }

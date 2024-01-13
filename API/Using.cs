@@ -47,6 +47,7 @@ global using System.Text;
 global using TenantConfiguration;
 global using static TenantConfiguration.TenantData;
 global using Asp.Versioning;
+global using static Entities.EnumData.LogicEnumData;
 
 
 

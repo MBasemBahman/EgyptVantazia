@@ -3,6 +3,7 @@ using Entities.CoreServicesModels.PlayerStateModels;
 using Entities.DBModels.PlayerStateModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using static Contracts.EnumData.DBModelsEnum;
+using static Entities.EnumData.LogicEnumData;
 
 namespace API.Areas.PlayerStateArea.Controllers
 {

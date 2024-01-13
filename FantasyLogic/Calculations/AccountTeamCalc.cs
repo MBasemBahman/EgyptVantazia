@@ -5,6 +5,7 @@ using Entities.DBModels.AccountTeamModels;
 using System.ComponentModel;
 using System.Linq.Dynamic.Core;
 using static Contracts.EnumData.DBModelsEnum;
+using static Entities.EnumData.LogicEnumData;
 
 namespace FantasyLogic.Calculations
 {

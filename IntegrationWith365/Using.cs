@@ -1,0 +1,1 @@
+﻿global using static Entities.EnumData.LogicEnumData;

@@ -1,5 +1,6 @@
 ﻿using Entities.CoreServicesModels.TeamModels;
 using Entities.RequestFeatures;
+using static Entities.EnumData.LogicEnumData;
 
 namespace Entities.CoreServicesModels.AccountTeamModels
 {
@@ -26,6 +27,8 @@ namespace Entities.CoreServicesModels.AccountTeamModels
         public DateTime? FromDeadLine { get; set; }
 
         public DateTime? ToDeadLine { get; set; }
+
+        public _365CompetitionsEnum? _365CompetitionsEnum { get; set; }
     }
 
     public class AccountTeamPlayerModel : BaseEntity

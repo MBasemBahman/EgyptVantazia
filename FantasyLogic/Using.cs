@@ -3,3 +3,4 @@ global using CoreServices;
 global using Hangfire;
 global using IntegrationWith365;
 global using IntegrationWith365.Parameters;
+global using static Entities.EnumData.LogicEnumData;

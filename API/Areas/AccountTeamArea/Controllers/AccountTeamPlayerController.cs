@@ -44,6 +44,8 @@ namespace API.Areas.AccountTeamArea.Controllers
 
             _365CompetitionsEnum = (_365CompetitionsEnum)auth.Season._365_CompetitionsId.ParseToInt();
 
+            parameters._365CompetitionsEnum = _365CompetitionsEnum;
+
             if (parameters.Fk_GameWeak > 0)
             {
                 currentGamWeak = _unitOfWork.Season.GetGameWeaksForCalc(new GameWeakParameters

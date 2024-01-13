@@ -1,5 +1,7 @@
 ﻿using Entities.CoreServicesModels.AccountTeamModels;
 using Entities.DBModels.AccountTeamModels;
+using static Contracts.EnumData.DBModelsEnum;
+using static Entities.EnumData.LogicEnumData;
 
 namespace Repository.DBModels.AccountTeamModels
 {
@@ -21,7 +23,8 @@ namespace Repository.DBModels.AccountTeamModels
                            parameters.Fk_GameWeak,
                            parameters.IsCurrent,
                            parameters.IsNextGameWeak,
-                           parameters.IsTransfer);
+                           parameters.IsTransfer,
+                           parameters._365CompetitionsEnum);
         }
 
         public async Task<AccountTeamPlayer> FindById(int id, bool trackChanges)
@@ -81,9 +84,11 @@ namespace Repository.DBModels.AccountTeamModels
             int Fk_GameWeak,
             bool? IsCurrent,
             bool? IsNextGameWeak,
-            bool? IsTransfer)
+            bool? IsTransfer,
+            _365CompetitionsEnum? _365CompetitionsEnum)
         {
             return AccountTeamPlayers.Where(a => (id == 0 || a.Id == id) &&
+                                                 //(_365CompetitionsEnum == null || a.AccountTeam.Season._365_CompetitionsId == _365CompetitionsEnum.ToString()) &&
                                                  (IsTransfer == null ||
                                                   Fk_GameWeak == 0 ||
                                                   a.AccountTeamPlayerGameWeaks

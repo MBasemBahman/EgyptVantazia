@@ -8,6 +8,7 @@ using Entities.CoreServicesModels.TeamModels;
 using Entities.DBModels.PlayerMarkModels;
 using Entities.DBModels.PlayerScoreModels;
 using Entities.RequestFeatures;
+using static Entities.EnumData.LogicEnumData;
 
 namespace Dashboard.Areas.PlayerMarkEntity.Controllers
 {

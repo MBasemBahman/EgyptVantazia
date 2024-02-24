@@ -195,7 +195,7 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
                 UserAuthenticatedDto auth = (UserAuthenticatedDto)Request.HttpContext.Items[ApiConstants.User];
                 TeamGameWeak dataDB = new();
 
-                model.StartTime = model.StartTime.AddHours(-3);
+                //model.StartTime = model.StartTime.AddHours(-3);
 
                 if (id == 0)
                 {

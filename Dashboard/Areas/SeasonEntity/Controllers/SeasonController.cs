@@ -150,10 +150,10 @@ namespace Dashboard.Areas.SeasonEntity.Controllers
                 {
                     model.GameWeaks.ForEach(a =>
                     {
-                        if (a.Deadline != null)
-                        {
-                            a.Deadline = a.Deadline.Value.AddHours(-3);
-                        }
+                        //if (a.Deadline != null)
+                        //{
+                        //    a.Deadline = a.Deadline.Value.AddHours(-3);
+                        //}
                     });
                 }
 

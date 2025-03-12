@@ -15,7 +15,7 @@ namespace IntegrationWith365
         public _365Services(ServicesHttpClient servicesHttp)
         {
             _servicesHttp = servicesHttp;
-            _servicesHttp.BaseUri = "https://webws.365scores.com/web/";
+            _servicesHttp.BaseUri = "";
         }
 
         private static string GetUri(_365CompetitionsEnum _365CompetitionsEnum, string uri, _365Parameters parameters)
